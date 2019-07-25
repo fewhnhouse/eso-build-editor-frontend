@@ -1,24 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <header className="App-header">
+          <h1>FIST BUILD EDITOR</h1>
+        </header>
+        <div className="raidSetup">
+          <div className="raidRole">
+            <h2>Stamwarden</h2>
+          </div>
+          <div className="raidRole">
+            <h2>Stamnecro</h2>
+          </div>
+          <div className="raidRole">
+            <h2>Bombblade</h2>
+          </div>
+          <div className="raidRole">
+            <h2>Dragonknight</h2>
+          </div>
+          <div className="raidRole">
+            <h2>Purgeblade</h2>
+          </div>
+        </div>
+        <div className="raidDetails">
+          <h2>Role specific details</h2>
+          <p>DD role wears pants</p>
+        </div>
+      </div>
     </div>
   );
 }
