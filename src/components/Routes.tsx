@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import Home from "./Home";
-import Build from "./Build";
-import Setup from "./Setup";
-import Details from "./Details";
+import Home from "../pages/home/Home";
+import Build from "../pages/build/Build";
+import Setup from "../pages/setup/Setup";
+import Details from "../pages/home/Details";
 
 export default () => {
   return (
