@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Menu, Icon, Card } from "antd";
+import { Menu, Icon, Card, Divider } from "antd";
 import styled from "styled-components";
 import { abilityFrame } from "../../assets/misc";
 import axios from "axios";
 import { ClickParam } from "antd/lib/menu";
+import skills from "../../skills.json";
+import SkillCard from "./SkillCard";
 
 const { SubMenu } = Menu;
 
@@ -20,6 +22,11 @@ const Ability = styled.img`
   margin: 0px 10px;
 `;
 
+const abilityTypes = [
+  { type: 1, label: "active" },
+  { type: 2, label: "passive" },
+  { type: 3, label: "ultimate" }
+];
 const classes = [
   {
     class: "Nightblade",
@@ -151,11 +158,32 @@ const menuStructure = [
 
 const Content = styled.div`
   padding: 40px;
+  width: 100%;
+  overflow: auto;
 `;
+
+export interface ISkill {
+  cast_time: string;
+  cost: string;
+  effect_1: string;
+  effect_2: string | null;
+  icon: string;
+  id: number;
+  name: string;
+  parent: number | null;
+  pts: number;
+  range: string | null;
+  skillline: number;
+  slug: string;
+  target: string;
+  type: number;
+  unlocks_at: number;
+}
 export default () => {
-  const [skills, setSkills] = useState([]);
+  // const [skills, setSkills] = useState([]);
   const [skillLine, setSkillLine] = useState(0);
   useEffect(() => {
+    /*
     axios
       .get("/skills", {
         headers: {
@@ -166,11 +194,27 @@ export default () => {
         console.log(data);
         setSkills(data);
       });
+      */
   }, []);
   const handleClick = (e: ClickParam) => {
-    console.log("click ", e);
     setSkillLine(parseInt(e.key, 10));
   };
+
+  //TODO: Change to ISkill once data is fetched from network instead of locally
+  const filteredSkills: any[] = skills.filter(
+    (skill: any) => skill.skillline === skillLine
+  );
+
+  const actives = filteredSkills.filter((skill: any) => skill.type === 1);
+  const baseActives = actives.filter((skill: any) => skill.parent === null);
+  const morphedActives = actives.filter((skill: any) => skill.parent !== null);
+  const passives = filteredSkills.filter((skill: any) => skill.type === 2);
+  const ultimates = filteredSkills.filter((skill: any) => skill.type === 3);
+  const morphedUltimates = ultimates.filter(
+    (skill: any) => skill.parent !== null
+  );
+  const baseUltimates = ultimates.filter((skill: any) => skill.parent === null);
+  console.log(baseUltimates, morphedUltimates, ultimates);
   return (
     <div
       style={{
@@ -212,30 +256,45 @@ export default () => {
         ))}
       </Menu>
       <Content>
-        <AbilityBar>
-          {[1, 2, 3, 4, 5].map(e => (
-            <Ability src={abilityFrame} />
-          ))}
-        </AbilityBar>
-        <AbilityBar>
-          {[1, 2, 3, 4, 5].map(e => (
-            <Ability src={abilityFrame} />
-          ))}
-        </AbilityBar>
+        <Divider>Ultimate</Divider>
         <ul>
-          {skills
-            .filter((skill: any) => skill.skillline === skillLine)
-            .map((el: any) => (
-              <li>
-                <img
-                  src={`https://beast.pathfindermediagroup.com/storage/skills/${
-                    el.icon
-                  }`}
-                />
-                {el.name}
-              </li>
-            ))}
+          {baseUltimates.map(base => {
+            const morphs = morphedUltimates.filter(
+              ultimate => ultimate.parent === base.id
+            );
+            return (
+              <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
+            );
+          })}
         </ul>
+        <Divider>Active</Divider>
+        <ul>
+          {baseActives.map(base => {
+            const morphs = morphedActives.filter(
+              morph => morph.parent === base.id
+            );
+            return (
+              <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
+            );
+          })}
+        </ul>
+
+        <Divider>Passive</Divider>
+        <ul>
+          {passives.map(el => (
+            <SkillCard passive skill={el} morph1={el} morph2={el} />
+          ))}
+        </ul>
+        <AbilityBar>
+          {[1, 2, 3, 4, 5].map(e => (
+            <Ability src={abilityFrame} />
+          ))}
+        </AbilityBar>
+        <AbilityBar>
+          {[1, 2, 3, 4, 5].map(e => (
+            <Ability src={abilityFrame} />
+          ))}
+        </AbilityBar>
       </Content>
     </div>
   );
