@@ -1,37 +1,28 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import AppContainer from "./AppContainer";
+import axios from "axios";
+
+//Avoid cors for now
+axios.defaults.baseURL =
+  "https://cors-anywhere.herokuapp.com/" + process.env.REACT_APP_API_URL;
+const CONVERTED_API_TOKEN = btoa(process.env.REACT_APP_API_TOKEN || "");
+axios.defaults.headers.common["Authorization"] = `Basic ${CONVERTED_API_TOKEN}`;
+
+const theme = {
+  primary: "blue"
+};
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <div className="container">
-        <header className="App-header">
-          <h1>FIST BUILD EDITOR</h1>
-        </header>
-        <div className="raidSetup">
-          <div className="raidRole">
-            <h2>Stamwarden</h2>
-          </div>
-          <div className="raidRole">
-            <h2>Stamnecro</h2>
-          </div>
-          <div className="raidRole">
-            <h2>Bomb blade</h2>
-          </div>
-          <div className="raidRole">
-            <h2>Dragonknight</h2>
-          </div>
-          <div className="raidRole">
-            <h2>Purgeblade</h2>
-          </div>
-        </div>
-        <div className="raidDetails">
-          <h2>Role specific details</h2>
-          <p>DD role wears pants</p>
-        </div>
-      </div>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <AppContainer />
+      </ThemeProvider>
+    </Router>
   );
-}
+};
 
 export default App;
