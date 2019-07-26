@@ -1,5 +1,5 @@
 import React from "react";
-import { ISkill } from "./SecondPage";
+import { ISkill } from "./Sets/SecondPage";
 
 export interface IBuildState {
   skills: ISkill[];

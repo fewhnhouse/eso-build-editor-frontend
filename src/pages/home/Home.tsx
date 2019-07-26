@@ -23,7 +23,7 @@ const roles = [
     role: "Stamina DD",
     classes: [
       {
-        description: "",
+        description: "The bestest of DD's in raid",
         class: "Warden",
         race: "Imperial"
       },

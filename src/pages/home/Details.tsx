@@ -3,10 +3,11 @@ import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import { chooseRace, chooseClass } from "../../util/utils";
 import { Divider, Tooltip, Popover } from "antd";
+import GearSlot from "./GearSlot";
 import { head, chest, legs, hands, belt, feet, shoulders, mainHand, offHand, quickslot, ring, neck } from "../../assets/gear";
 import { abilityFrame } from "../../assets/misc";
 import { bugloss, columbine, drink, food, namira } from "../../assets/deco";
-import { leather } from "../../assets/backgrounds/";
+import SkillBars from "../../components/SkillBars";
 
 const RoleTitle = styled.h2`
   font-size: 3em;
@@ -30,7 +31,6 @@ const Wrapper = styled.div`
 
 const GearView = styled.div`
   height: 100vw;
-  background-image: url(${leather});
 `;
 
 const StatsView = styled.div`
@@ -64,43 +64,27 @@ export default ({ match }: RouteComponentProps<any>) => {
         <GearView>
           <SubTitle>Gear</SubTitle>
           <MiniTitle>Apparel</MiniTitle>
-          <Popover placement="top" title="OP DLC set"
-            content="I'm a super op set with no equivalent in the game."
-          >
-            <GearImg src={head} /><br />
-          </Popover>
-          <Popover placement="left" title="OP DLC set"
-            content="Deals 15 000 obvilion damage over 2 seconds."
-          >
-            <GearImg src={shoulders} />
-          </Popover>
-          <GearImg src={chest} /><br />
-          <GearImg src={belt} />
-          <GearImg src={hands} /><br />
-          <GearImg src={legs} />
-          <GearImg src={feet} />
+          <GearSlot place="top" slot={head} title="OP DLC set" content="OP set with random stats" /><br/>
+          <GearSlot place="left" slot={shoulders} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={chest} title="OP DLC set" content="OP set with random stats" /><br/>
+          <GearSlot place="left" slot={belt} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={hands} title="OP DLC set" content="OP set with random stats" /><br/>
+          <GearSlot place="left" slot={legs} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={feet} title="OP DLC set" content="OP set with random stats" /><br/>
           <MiniTitle>Accessories</MiniTitle>
-          <GearImg src={neck} />
-          <GearImg src={ring} />
-          <GearImg src={ring} />
+          <GearSlot place="left" slot={neck} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="bottom" slot={ring} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={ring} title="OP DLC set" content="OP set with random stats" />
           <MiniTitle>Weapons</MiniTitle>
-          <GearImg src={mainHand} />
-          <GearImg src={offHand} /><br />
-          <GearImg src={mainHand} />
-          <GearImg src={offHand} />
+          <GearSlot place="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={offHand} title="OP DLC set" content="OP set with random stats" /><br/>
+          <GearSlot place="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
+          <GearSlot place="right" slot={offHand} title="OP DLC set" content="OP set with random stats" />
         </GearView>
         <SkillsView>
           <SubTitle>Skills</SubTitle>
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} /><br />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
-            <img src={abilityFrame} />
+            <SkillBars/>
+            <SkillBars/>
           <Divider />
           <SubTitle>Consumables</SubTitle>
           <MiniTitle>Foodbuff</MiniTitle>

@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from "react";
 import styled from "styled-components";
-import FirstPage from "./FirstPage";
-import SecondPage from "./SecondPage";
+import FirstPage from "./RaceAndClass/FirstPage";
+import SecondPage from "./Sets/SecondPage";
 import { Tabs } from "antd";
 import {
   BuildContext,
