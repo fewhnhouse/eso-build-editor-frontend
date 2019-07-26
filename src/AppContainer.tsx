@@ -57,7 +57,10 @@ export default () => {
             <Menu.Item key="1">
               <Link to="/">Home</Link>
             </Menu.Item>
-            <Menu.Item key="2">Test</Menu.Item>
+            <Menu.Item key="2">
+              {" "}
+              <Link to="/build/2">Build Editor</Link>
+            </Menu.Item>
           </Menu>
         </div>
         <Popover

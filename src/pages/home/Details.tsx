@@ -2,8 +2,11 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import { chooseRace, chooseClass } from "../../util/utils";
-import { Divider, Tooltip } from "antd";
+import { Divider, Tooltip, Popover } from "antd";
 import { head, chest, legs, hands, belt, feet, shoulders, mainHand, offHand, quickslot, ring, neck } from "../../assets/gear";
+import { abilityFrame } from "../../assets/misc";
+import { bugloss, columbine, drink, food, namira } from "../../assets/deco";
+import { leather } from "../../assets/backgrounds/";
 
 const RoleTitle = styled.h2`
   font-size: 3em;
@@ -26,6 +29,8 @@ const Wrapper = styled.div`
 `;
 
 const GearView = styled.div`
+  height: 100vw;
+  background-image: url(${leather});
 `;
 
 const StatsView = styled.div`
@@ -59,16 +64,16 @@ export default ({ match }: RouteComponentProps<any>) => {
         <GearView>
           <SubTitle>Gear</SubTitle>
           <MiniTitle>Apparel</MiniTitle>
-          <Tooltip title=
-            "Super OP DLC monster set helmet"
+          <Popover placement="top" title="OP DLC set"
+            content="I'm a super op set with no equivalent in the game."
           >
             <GearImg src={head} /><br />
-          </Tooltip>
-          <Tooltip title=
-            "Super OP DLC monster set shoulder"
-          placement="left">
+          </Popover>
+          <Popover placement="left" title="OP DLC set"
+            content="Deals 15 000 obvilion damage over 2 seconds."
+          >
             <GearImg src={shoulders} />
-          </Tooltip>
+          </Popover>
           <GearImg src={chest} /><br />
           <GearImg src={belt} />
           <GearImg src={hands} /><br />
@@ -86,11 +91,22 @@ export default ({ match }: RouteComponentProps<any>) => {
         </GearView>
         <SkillsView>
           <SubTitle>Skills</SubTitle>
-          1 2 3 4 5
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} /><br />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
+            <img src={abilityFrame} />
           <Divider />
           <SubTitle>Consumables</SubTitle>
           <MiniTitle>Foodbuff</MiniTitle>
+          <ClassImg src={food} /> <ClassImg src={drink} /> 
           <MiniTitle>Potions</MiniTitle>
+          <ClassImg src={columbine} /> <ClassImg src={bugloss} /> <ClassImg src={namira} /> 
         </SkillsView>
         <StatsView>
           <SubTitle>Stats</SubTitle>

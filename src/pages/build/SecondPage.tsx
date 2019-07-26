@@ -22,6 +22,20 @@ const Ability = styled.img`
   margin: 0px 10px;
 `;
 
+const AbilityContainer = styled.div`
+  flex: 2;
+  overflow: auto;
+  padding: 40px;
+`;
+
+const AbilityBarContainer = styled.div`
+  flex: 1;
+  height: 100%;
+  padding: 40px;
+
+  background: white;
+`;
+
 const abilityTypes = [
   { type: 1, label: "active" },
   { type: 2, label: "passive" },
@@ -157,9 +171,8 @@ const menuStructure = [
 ];
 
 const Content = styled.div`
-  padding: 40px;
   width: 100%;
-  overflow: auto;
+  display: flex;
 `;
 
 export interface ISkill {
@@ -181,7 +194,7 @@ export interface ISkill {
 }
 export default () => {
   // const [skills, setSkills] = useState([]);
-  const [skillLine, setSkillLine] = useState(0);
+  const [skillLine, setSkillLine] = useState(16);
   useEffect(() => {
     /*
     axios
@@ -214,7 +227,6 @@ export default () => {
     (skill: any) => skill.parent !== null
   );
   const baseUltimates = ultimates.filter((skill: any) => skill.parent === null);
-  console.log(baseUltimates, morphedUltimates, ultimates);
   return (
     <div
       style={{
@@ -233,7 +245,7 @@ export default () => {
           overflowY: "auto",
           textAlign: "left"
         }}
-        defaultSelectedKeys={["sub1-1"]}
+        defaultSelectedKeys={["16"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
       >
@@ -256,45 +268,60 @@ export default () => {
         ))}
       </Menu>
       <Content>
-        <Divider>Ultimate</Divider>
-        <ul>
-          {baseUltimates.map(base => {
-            const morphs = morphedUltimates.filter(
-              ultimate => ultimate.parent === base.id
-            );
-            return (
-              <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
-            );
-          })}
-        </ul>
-        <Divider>Active</Divider>
-        <ul>
-          {baseActives.map(base => {
-            const morphs = morphedActives.filter(
-              morph => morph.parent === base.id
-            );
-            return (
-              <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
-            );
-          })}
-        </ul>
+        <AbilityContainer>
+          <Divider>Ultimate</Divider>
+          <ul>
+            {baseUltimates.map(base => {
+              const morphs = morphedUltimates.filter(
+                ultimate => ultimate.parent === base.id
+              );
+              return (
+                <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
+              );
+            })}
+          </ul>
+          <Divider>Active</Divider>
+          <ul>
+            {baseActives.map(base => {
+              const morphs = morphedActives.filter(
+                morph => morph.parent === base.id
+              );
+              return (
+                <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
+              );
+            })}
+          </ul>
 
-        <Divider>Passive</Divider>
-        <ul>
-          {passives.map(el => (
-            <SkillCard passive skill={el} morph1={el} morph2={el} />
-          ))}
-        </ul>
-        <AbilityBar>
-          {[1, 2, 3, 4, 5].map(e => (
-            <Ability src={abilityFrame} />
-          ))}
-        </AbilityBar>
-        <AbilityBar>
-          {[1, 2, 3, 4, 5].map(e => (
-            <Ability src={abilityFrame} />
-          ))}
-        </AbilityBar>
+          <Divider>Passive</Divider>
+          <ul>
+            {passives.map(el => (
+              <SkillCard passive skill={el} morph1={el} morph2={el} />
+            ))}
+          </ul>
+        </AbilityContainer>
+        <AbilityBarContainer>
+          <Divider>Ultimate</Divider>
+          <Ability src={abilityFrame} />
+
+          <Divider>Active</Divider>
+          <AbilityBar>
+            {[1, 2, 3, 4, 5].map(e => (
+              <Ability src={abilityFrame} />
+            ))}
+          </AbilityBar>
+          <Divider>Ability Bar</Divider>
+
+          <AbilityBar>
+            {[1, 2, 3, 4, 5].map(e => (
+              <Ability src={abilityFrame} />
+            ))}
+          </AbilityBar>
+          <AbilityBar>
+            {[1, 2, 3, 4, 5].map(e => (
+              <Ability src={abilityFrame} />
+            ))}
+          </AbilityBar>
+        </AbilityBarContainer>
       </Content>
     </div>
   );
