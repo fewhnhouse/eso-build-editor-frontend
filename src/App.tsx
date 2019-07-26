@@ -16,7 +16,7 @@ const App: React.FC = () => {
             <h2>Stamnecro</h2>
           </div>
           <div className="raidRole">
-            <h2>Bombblade</h2>
+            <h2>Bomb blade</h2>
           </div>
           <div className="raidRole">
             <h2>Dragonknight</h2>
