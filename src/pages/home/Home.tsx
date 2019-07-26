@@ -1,92 +1,103 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
-import { Card } from "antd";
-
-const { Meta } = Card;
+import Card from "./Card";
+import { Divider } from "antd";
 
 const Setup = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  &::nth-child() {
+    padding: 10px;
+  }
 `;
 
 const Title = styled.h1`
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 4em;
 `;
 
 const roles = [
   {
     role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
+    classes: [
+      {
+        description: "",
+        class: "Warden",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Warden",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Warden",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Necromancer",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Necromancer",
+        race: "Imperial"
+      }
+    ]
   },
   {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
+    role: "Stamina Support",
+    classes: [
+      {
+        description: "",
+        class: "Nightblade",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Templar",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Sorcerer",
+        race: "Imperial"
+      },
+      {
+        description: "",
+        class: "Sorcerer",
+        race: "Imperial"
+      }
+    ]
   },
   {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
+    role: "Magicka DD",
+    classes: [
+      {
+        description: "",
+        class: "Nightblade",
+        race: "Khajiit"
+      }
+    ]
   },
   {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
-  },
-  {
-    role: "Stamina DD",
-    description: "",
-    class: "Warden",
-    race: "Imperial"
+    role: "Magicka Support",
+    classes: [
+      {
+        description: "",
+        class: "Nightblade",
+        race: "Breton"
+      },
+      {
+        description: "",
+        class: "Dragonknight",
+        race: "Breton"
+      }
+    ]
   }
 ];
 
@@ -96,30 +107,24 @@ export default () => {
   const handleRoleClick = (roleName: string) => () => {
     setRole(roleName);
   };
+
   return role !== "" ? (
     <Redirect push to={`/details/${role}`} />
   ) : (
     <>
       <Title>
-        <h1>FIST BUILD EDITOR</h1>
+        FIST+ BUILD EDITOR DELUXE
       </Title>
-      <ul>
-        <li onClick={handleRoleClick("Warden")}>Stamwarden</li>
-        <li>
-          <Link to="/details/purge">Purgeblade</Link>
-        </li>
-      </ul>
-      <Setup>
-        {roles.map(role => (
-          <Card
-            cover={
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-            }
-          >
-            <Meta title={role.role} description={role.class} />
-          </Card>
-        ))}
-      </Setup>
+      {roles.map(role => (
+        <>
+          <Divider>{role.role}</Divider>
+          <Setup>
+            {role.classes.map(classEl => (
+              <Card role={{ role: role.role, esoClass: classEl }} />
+            ))}
+          </Setup>
+        </>
+      ))}
     </>
   );
 };
