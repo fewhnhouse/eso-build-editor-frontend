@@ -1,0 +1,889 @@
+{
+    "skills": [
+        {
+            "classSkills": [
+                {
+                    "class": "nightblade",
+                    "skills": [
+                        {
+                            "id": 99,
+                            "name": "teleport strike",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 100,
+                                    "name": "lotus fan",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 101,
+                                    "name": "ambush",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 127,
+                            "name": "aspect of terror",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 128,
+                                    "name": "mass hysteria",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 129,
+                                    "name": "manifestation of terror",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 96,
+                            "name": "assassin's blade",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 97,
+                                    "name": "killer's blade",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 98,
+                                    "name": "impale",
+                                    "type": "active"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "class": "sorcerer",
+                    "skills": [
+                        {
+                            "id": 13,
+                            "name": "negate magic",
+                            "type": "ultimate",
+                            "morphs": [
+                                {
+                                    "id": 18,
+                                    "name": "absorption field",
+                                    "type": "ultimate"
+                                },
+                                {
+                                    "id": 16,
+                                    "name": "suppression field",
+                                    "type": "ultimate"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 174,
+                            "name": "bolt escape",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 175,
+                                    "name": "streak",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 176,
+                                    "name": "ball of lightning",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 179,
+                            "name": "amplitude",
+                            "type": "passive"
+                        },
+                        {
+                            "id": 71,
+                            "name": "blood magic",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "class": "warden",
+                    "skills": [
+                        {
+                            "id": 308,
+                            "name": "arctic wind",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 309,
+                                    "name": "polar wind",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 311,
+                                    "name": "arctic blast",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 240,
+                            "name": "betty netch",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 242,
+                                    "name": "blue betty",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 243,
+                                    "name": "bull netch",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 244,
+                            "name": "falcon's swiftness",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 246,
+                                    "name": "deceptive predator",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 247,
+                                    "name": "bird of prey",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 279,
+                            "name": "accelerated growth",
+                            "type": "passive"
+                        },
+                        {
+                            "id": 254,
+                            "name": "advanced species",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "class": "templar",
+                    "skills": [
+                        {
+                            "id": 209,
+                            "name": "piercing javelin",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 210,
+                                    "name": "aurora javelin",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 211,
+                                    "name": "binding javelin",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 206,
+                            "name": "puncturing strikes",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 207,
+                                    "name": "biting jabs",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 208,
+                                    "name": "puncturing sweep",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 259,
+                            "name": "backlash",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 260,
+                                    "name": "purifying light",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 263,
+                                    "name": "power of the light",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 218,
+                            "name": "sun shield",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 219,
+                                    "name": "radiant ward",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 220,
+                                    "name": "blazing shield",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 215,
+                            "name": "spear shards",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 216,
+                                    "name": "luminous shards",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 217,
+                                    "name": "blazing spear",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 224,
+                            "name": "balanced warrior",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "class": "dragonknight",
+                    "skills": [
+                        {
+                            "id": 86,
+                            "name": "ash cloud",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 87,
+                                    "name": "cinder storm",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 88,
+                                    "name": "eruption",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 90,
+                            "name": "battle roar",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "class": "necromancer",
+                    "skills": [
+                        {
+                            "id": 769,
+                            "name": "reanimate",
+                            "type": "ultimate",
+                            "morphs": [
+                                {
+                                    "id": 813,
+                                    "name": "animate blastbones",
+                                    "type": "ultimate"
+                                },
+                                {
+                                    "id": 812,
+                                    "name": "renewing animation",
+                                    "type": "ultimate"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 775,
+                            "name": "bone totem",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 808,
+                                    "name": "remote totem",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 809,
+                                    "name": "agony totem",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 786,
+                            "name": "boneyard",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 796,
+                                    "name": "unnerving boneyard",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 797,
+                                    "name": "avid boneyard",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 777,
+                            "name": "bone armor",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 804,
+                                    "name": "beckoning armor",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 805,
+                                    "name": "summoner's armor",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 776,
+                            "name": "bitter harvest",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 806,
+                                    "name": "deaden pain",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 807,
+                                    "name": "necrotic potency",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 787,
+                            "name": "blastbones",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 794,
+                                    "name": "blighted blastbones",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 795,
+                                    "name": "stalking blastbones",
+                                    "type": "active"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "armorSkills": [
+                {
+                    "lightArmor": [
+                        {
+                            "id": 473,
+                            "name": "annulment",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 474,
+                                    "name": "dampen magic",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 475,
+                                    "name": "harness magicka",
+                                    "type": "active"
+                                }
+                            ]
+                        }
+                    ],
+                    "mediumArmor": [
+                        {
+                            "id": 487,
+                            "name": "agility",
+                            "type": "passive"
+                        },
+                        {
+                            "id": 488,
+                            "name": "athletics",
+                            "type": "passive"
+                        }
+                    ]
+                }
+            ],
+            "magesGuild": [
+                {
+                    "id": 596,
+                    "name": "balance",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 594,
+                            "name": "equilibrium",
+                            "type": "active"
+                        },
+                        {
+                            "id": 595,
+                            "name": "spell symmetry",
+                            "type": "active"
+                        }
+                    ]
+                }
+            ],
+            "fightersGuild": [
+                {
+                    "id": 579,
+                    "name": "banish the wicked",
+                    "type": "passive"
+                }
+            ],
+            "undaunted": [
+                {
+                    "id": 625,
+                    "name": "blood altar",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 626,
+                            "name": "sanguine altar",
+                            "type": "active"
+                        },
+                        {
+                            "id": 627,
+                            "name": "overflowing altar",
+                            "type": "active"
+                        }
+                    ]
+                }
+            ],
+            "psijicOrder": [
+                {
+                    "id": 611,
+                    "name": "accelerate",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 612,
+                            "name": "channeled acceleration",
+                            "type": "active"
+                        },
+                        {
+                            "id": 613,
+                            "name": "race against time",
+                            "type": "active"
+                        }
+                    ]
+                }
+            ],
+            "darkBrotherhood": [
+                {
+                    "id": 550,
+                    "name": "blade of woe",
+                    "type": "passive"
+                }
+            ],
+            "vampirism": [
+                {
+                    "id": 535,
+                    "name": "bat swarm",
+                    "type": "ultimate",
+                    "morphs": [
+                        {
+                            "id": 536,
+                            "name": "clouding swarm",
+                            "type": "ultimate"
+                        },
+                        {
+                            "id": 537,
+                            "name": "devouring swarm",
+                            "type": "ultimate"
+                        }
+                    ]
+                },
+                {
+                    "id": 538,
+                    "name": "drain essence",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 540,
+                            "name": "accelerating drain",
+                            "type": "active"
+                        },
+                        {
+                            "id": 539,
+                            "name": "invigorating drain",
+                            "type": "active"
+                        }
+                    ]
+                },
+                {
+                    "id": 541,
+                    "name": "mist form",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 542,
+                            "name": "elusive mist",
+                            "type": "active"
+                        },
+                        {
+                            "id": 543,
+                            "name": "baleful mist",
+                            "type": "active"
+                        }
+                    ]
+                }
+            ],
+            "werewolf": [
+                {
+                    "id": 531,
+                    "name": "blood rage",
+                    "type": "passive"
+                }
+            ],
+            "weaponSkills": [
+                {
+                    "weapon": "restoration staff",
+                    "skills": [
+                        {
+                            "id": 436,
+                            "name": "blessing of protection",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 437,
+                                    "name": "blessing of restoration",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 438,
+                                    "name": "combat prayer",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 448,
+                            "name": "absorb",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "weapon": "destruction staff",
+                    "skills": [
+                        {
+                            "id": 379,
+                            "name": "ancient knowledge",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "weapon": "one hand and shield",
+                    "skills": [
+                        {
+                            "id": 413,
+                            "name": "defensive posture",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 414,
+                                    "name": "defensive stance",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 415,
+                                    "name": "absorb magic",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 426,
+                            "name": "battlefield mobility",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "weapon": "bow",
+                    "skills": [
+                        {
+                            "id": 335,
+                            "name": "rapid fire",
+                            "type": "ultimate",
+                            "morphs": [
+                                {
+                                    "id": 336,
+                                    "name": "toxic barrage",
+                                    "type": "ultimate"
+                                },
+                                {
+                                    "id": 337,
+                                    "name": "ballista",
+                                    "type": "ultimate"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 347,
+                            "name": "arrow spray",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 348,
+                                    "name": "bombard",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 349,
+                                    "name": "acid spray",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 341,
+                            "name": "volley",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 342,
+                                    "name": "endless hail",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 343,
+                                    "name": "arrow barrage",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 354,
+                            "name": "accuracy",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "weapon": "two handed",
+                    "skills": [
+                        {
+                            "id": 450,
+                            "name": "berserker strike",
+                            "type": "ultimate",
+                            "morphs": [
+                                {
+                                    "id": 451,
+                                    "name": "onslaught",
+                                    "type": "ultimate"
+                                },
+                                {
+                                    "id": 452,
+                                    "name": "berserker rage",
+                                    "type": "ultimate"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 470,
+                            "name": "balanced blade",
+                            "type": "passive"
+                        },
+                        {
+                            "id": 472,
+                            "name": "battle rush",
+                            "type": "passive"
+                        }
+                    ]
+                },
+                {
+                    "weapon": "dual wield",
+                    "skills": [
+                        {
+                            "id": 393,
+                            "name": "blade cloak",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 394,
+                                    "name": "quick cloak",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 395,
+                                    "name": "deadly cloak",
+                                    "type": "active"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 387,
+                            "name": "twin slashes",
+                            "type": "active",
+                            "morphs": [
+                                {
+                                    "id": 388,
+                                    "name": "rending slashes",
+                                    "type": "active"
+                                },
+                                {
+                                    "id": 389,
+                                    "name": "blood craze",
+                                    "type": "active"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "racial": [
+                {
+                    "woodElf": [
+                        {
+                            "id": 715,
+                            "name": "acrobat",
+                            "type": "passive"
+                        }
+                    ],
+                    "redguard": [
+                        {
+                            "id": 714,
+                            "name": "adrenaline rush",
+                            "type": "passive"
+                        }
+                    ],
+                    "argonian": [
+                        {
+                            "id": 678,
+                            "name": "amphibian",
+                            "type": "passive"
+                        },
+                        {
+                            "id": 680,
+                            "name": "argonian resistance",
+                            "type": "passive"
+                        }
+                    ],
+                    "darkElf": [
+                        {
+                            "id": 686,
+                            "name": "ashlander",
+                            "type": "passive"
+                        }
+                    ]
+                }
+            ],
+            "allianceWar": [
+                {
+                    "id": 642,
+                    "name": "war horn",
+                    "type": "ultimate",
+                    "morphs": [
+                        {
+                            "id": 643,
+                            "name": "aggressive horn",
+                            "type": "ultimate"
+                        },
+                        {
+                            "id": 644,
+                            "name": "sturdy horn",
+                            "type": "ultimate"
+                        }
+                    ]
+                },
+                {
+                    "id": 660,
+                    "name": "barrier",
+                    "type": "ultimate",
+                    "morphs": [
+                        {
+                            "id": 661,
+                            "name": "replenishing barrier",
+                            "type": "ultimate"
+                        },
+                        {
+                            "id": 662,
+                            "name": "reviving barrier",
+                            "type": "ultimate"
+                        }
+                    ]
+                },
+                {
+                    "id": 651,
+                    "name": "caltrops",
+                    "type": "active",
+                    "morphs": [
+                        {
+                            "id": 652,
+                            "name": "anti-cavalry caltrops",
+                            "type": "active"
+                        },
+                        {
+                            "id": 653,
+                            "name": "razor caltrops",
+                            "type": "active"
+                        }
+                    ]
+                },
+                {
+                    "id": 677,
+                    "name": "battle resurrection",
+                    "type": "passive"
+                }
+            ],
+            "craft": [
+                {
+                    "enchanting": [
+                        {
+                            "id": 737,
+                            "name": "aspect improvement",
+                            "type": "passive"
+                        }
+                    ]
+                }
+            ],
+            "artifacts": [
+                {
+                    "volendrung": [
+                        {
+                            "id": 828,
+                            "name": "accursed charge",
+                            "type": "active"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
