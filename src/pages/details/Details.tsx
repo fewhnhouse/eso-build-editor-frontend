@@ -12,6 +12,11 @@ const { Footer, Content } = Layout;
 
 const { Title, Text } = Typography;
 
+const StyledTitle = styled(Title)`
+  margin-top: 30px;
+  text-align: center;
+`;
+
 const Wrapper = styled(Flex)`
   flex-wrap: wrap;
   text-align: center;
@@ -93,13 +98,17 @@ export default ({ match }: RouteComponentProps<any>) => {
       </Title>
       <Wrapper direction="row" align="baseline" justify="space-around" fluid>
         <GearsView>
-          <Title level={3}>Gear</Title>
+          <StyledTitle level={3}>Gear</StyledTitle>
+          <Divider />
           <GearView />
         </GearsView>
         <SkillsView>
-          <Title level={3}>Skills</Title>
-          {/*<SkillView icons={["1", "2", "3", "4", "5"]} tooltip="top" />
-          <SkillView icons={["1", "2", "3", "4", "5"]} tooltip="bottom" />*/}
+          <StyledTitle level={3}>Skills</StyledTitle>
+          <Divider />
+{/*
+          <SkillView id="1" skillSlots={} tooltip="top" />
+          <SkillView id="2" skillSlots={} tooltip="bottom" />
+*/}
           <Divider />
           <Title level={3}>Mundus</Title>
           <Title level={4}>Atronach</Title>
@@ -112,7 +121,8 @@ export default ({ match }: RouteComponentProps<any>) => {
           <ClassImg src={namira} />
         </SkillsView>
         <StatsView>
-          <Title level={3}>Stats</Title>
+          <StyledTitle level={3}>Stats</StyledTitle>
+          <Divider />
           {stats.map(stat => (
             <>
               {stat.data.map(stat => (

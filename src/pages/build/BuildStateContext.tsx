@@ -48,11 +48,40 @@ interface IBuildAction {
 }
 export const buildReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
-    case "DROP_ABILITY":
+    case "REMOVE_ABILITY": {
+      const { skillId, barIndex } = action.payload;
+      const parsedBarIndex = parseInt(barIndex, 10);
+      const parsedId = parseInt(skillId, 10);
+
+      if (parsedBarIndex === 0) {
+        return {
+          ...state,
+          abilityBarOne: [...state.abilityBarOne].map(slot =>
+            slot.id === parsedId ? { id: 0, index: slot.index } : slot
+          )
+        };
+      } else {
+        return {
+          ...state,
+          abilityBarTwo: [...state.abilityBarTwo].map(slot =>
+            slot.id === parsedId ? { id: 0, index: slot.index } : slot
+          )
+        };
+      }
+      return {
+        ...state
+      };
+    }
+    case "DROP_ABILITY": {
       const { barIndex, destinationIndex, skillId } = action.payload;
       const parsedIndex = parseInt(destinationIndex, 10);
       const parsedId = parseInt(skillId, 10);
-
+      if (
+        state.abilityBarOne.find(slot => slot.id === parsedId) ||
+        state.abilityBarTwo.find(slot => slot.id === parsedId)
+      ) {
+        return { ...state };
+      }
       if (barIndex === 0) {
         return {
           ...state,
@@ -68,6 +97,100 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
           )
         };
       }
+    }
+
+    case "SWAP_ABILITY": {
+      const {
+        sourceIndex,
+        destinationIndex,
+        sourceId,
+        destinationId,
+        sourceBar,
+        destinationBar
+      } = action.payload;
+      const parsedDestinationIndex = parseInt(destinationIndex, 10);
+      const parsedSourceIndex = parseInt(sourceIndex, 10);
+      const parsedDestinationId = parseInt(destinationId, 10);
+      const parsedSourceId = parseInt(sourceId, 10);
+      if (sourceBar === "abilityBar1" && destinationBar === "abilityBar1") {
+        const abilityBarOne = state.abilityBarOne.map(slot => {
+          if (slot.index === parsedDestinationIndex) {
+            return { index: slot.index, id: parsedSourceId };
+          } else if (slot.index === parsedSourceIndex) {
+            return { index: slot.index, id: parsedDestinationId };
+          } else {
+            return slot;
+          }
+        });
+        return {
+          ...state,
+          abilityBarOne
+        };
+      } else if (
+        sourceBar === "abilityBar1" &&
+        destinationBar === "abilityBar2"
+      ) {
+        const abilityBarTwo = state.abilityBarTwo.map(slot => {
+          if (slot.index === parsedDestinationIndex) {
+            return { index: slot.index, id: parsedSourceId };
+          } else {
+            return slot;
+          }
+        });
+        const abilityBarOne = state.abilityBarOne.map(slot => {
+          if (slot.index === parsedSourceIndex) {
+            return { index: slot.index, id: parsedDestinationId };
+          } else {
+            return slot;
+          }
+        });
+        return {
+          ...state,
+          abilityBarOne,
+          abilityBarTwo
+        };
+      } else if (
+        sourceBar === "abilityBar2" &&
+        destinationBar === "abilityBar2"
+      ) {
+        const abilityBarTwo = state.abilityBarOne.map(slot => {
+          if (slot.index === parsedDestinationIndex) {
+            return { index: slot.index, id: parsedSourceId };
+          } else if (slot.index === parsedSourceIndex) {
+            return { index: slot.index, id: parsedDestinationId };
+          } else {
+            return slot;
+          }
+        });
+        return { ...state, abilityBarTwo };
+      } else if (
+        sourceBar === "abilityBar2" &&
+        destinationBar === "abilityBar1"
+      ) {
+        const abilityBarOne = state.abilityBarOne.map(slot => {
+          if (slot.index === parsedDestinationIndex) {
+            return { index: slot.index, id: parsedSourceId };
+          } else {
+            return slot;
+          }
+        });
+        const abilityBarTwo = state.abilityBarTwo.map(slot => {
+          if (slot.index === parsedSourceIndex) {
+            return { index: slot.index, id: parsedDestinationId };
+          } else {
+            return slot;
+          }
+        });
+        return {
+          ...state,
+          abilityBarOne,
+          abilityBarTwo
+        };
+      }
+      return {
+        ...state
+      };
+    }
     case "SELECT_MORPH": {
       const { baseId, morphId } = action.payload;
       return {

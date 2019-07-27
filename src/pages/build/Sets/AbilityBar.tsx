@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext, useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Divider, Card } from "antd";
+import { Divider, Card, Icon } from "antd";
 import { abilityFrame } from "../../../assets/misc";
 import skills from "../../../skills.json";
 import { BuildContext } from "../BuildStateContext";
 import SkillView from "../../../components/SkillView";
 import SkillSlot from "../../../components/SkillSlot";
 import { ISkill } from "../Skills/ThirdPage";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const AbilityBar = styled(Card)`
   height: 100px;
@@ -35,7 +35,7 @@ const AbilityBarContainer = styled.div`
 
 export default () => {
   const [state, dispatch] = useContext(BuildContext);
-
+  const [hasTrash, setHasTrash] = useState(false);
   const {
     selectedSkills,
     skills,
@@ -57,44 +57,74 @@ export default () => {
   const abilityBarOneSkills = getSkills(abilityBarOne);
   const abilityBarTwoSkills = getSkills(abilityBarTwo);
 
-  console.log(activeBarSkills, abilityBarOneSkills);
+  console.log(abilityBarOne);
   const onBeforeDragStart = useCallback(() => {
     /*...*/
   }, []);
 
   const onDragStart = useCallback(start => {
-    console.log("drag start / end", start);
+    const sourceSplit = start.draggableId.split("-");
+    const sourceBar = sourceSplit[0];
+    const sourceId = sourceSplit[1];
+    const sourceIndex = sourceSplit[3];
+    if (sourceBar === "abilityBar1" || sourceBar === "abilityBar2") {
+      setHasTrash(true);
+    }
+
     /*...*/
   }, []);
   const onDragUpdate = useCallback(update => {
     /*...*/
   }, []);
   const onDragEnd = useCallback(end => {
-    if (end.destination) {
-      const sourceSplit = end.draggableId.split("-");
-      const sourceBar = sourceSplit[0];
-      const sourceSkillId = sourceSplit[1];
-      const sourceIndex = sourceSplit[3];
+    setHasTrash(false);
 
+    const sourceSplit = end.draggableId.split("-");
+    const sourceBar = sourceSplit[0];
+    const sourceId = sourceSplit[1];
+    const sourceIndex = sourceSplit[3];
+    if (end.destination) {
       const destinationSplit = end.destination.droppableId.split("-");
       const destinationBar = destinationSplit[0];
-      const destinationSkillId = destinationSplit[1];
+      const destinationId = destinationSplit[1];
       const destinationIndex = destinationSplit[3];
 
-      console.log("drag start / end", end, sourceSkillId, destinationIndex);
+      if (
+        sourceBar === "abilityBar1" ||
+        (sourceBar === "abilityBar2" &&
+          sourceId !== 0 &&
+          end.destination.droppableId === "trash-droppable-1")
+      ) {
+        dispatch!({
+          type: "REMOVE_ABILITY",
+          payload: {
+            skillId: sourceId,
+            barIndex: sourceBar === "abilityBar1" ? 0 : 1
+          }
+        });
+      }
+
       if (sourceBar === "activeBar") {
         dispatch!({
           type: "DROP_ABILITY",
-          payload: { skillId: sourceSkillId, destinationIndex, barIndex: 0 }
+          payload: {
+            skillId: sourceId,
+            destinationIndex,
+            barIndex: destinationBar === "abilityBar1" ? 0 : 1
+          }
         });
       } else {
-        if (sourceBar === destinationBar) {
-          dispatch!({
-            type: "DROP_ABILITY",
-            payload: { skillId: sourceSkillId, destinationIndex, barIndex: 0 }
-          });
-        } else {
-        }
+        dispatch!({
+          type: "SWAP_ABILITY",
+          payload: {
+            sourceIndex,
+            sourceId,
+            sourceBar,
+            destinationIndex,
+            destinationId,
+            destinationBar
+          }
+        });
       }
     }
     // the only one that is required
@@ -163,6 +193,18 @@ export default () => {
             tooltip="top"
           />*/}
         </AbilityBar>
+        <Droppable isDropDisabled={!hasTrash} droppableId={`trash-droppable-1`}>
+          {(provided, snapshot) => (
+            <div
+              style={{ height: 50, width: 50, margin: 50 }}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {provided.placeholder}
+              {hasTrash && <Icon style={{ fontSize: 30 }} type="delete" />}
+            </div>
+          )}
+        </Droppable>
       </AbilityBarContainer>
     </DragDropContext>
   );
