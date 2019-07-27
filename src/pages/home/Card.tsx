@@ -8,6 +8,8 @@ import { chooseRace, chooseClass } from "../../util/utils";
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
+  position: relative;
+  border: 1px solid black;
 `;
 
 const { Meta } = Card;
@@ -48,6 +50,19 @@ interface ICardProps {
   };
 }
 
+const borderColor = (role: string) => {
+  switch (role) {
+    case "Stamina DD":
+      return "lightgreen";
+    case "Stamina Support":
+      return "green";
+    case "Magicka DD":
+      return "cyan";
+    case "Magicka Support":
+      return "yellow";
+  }
+}
+
 export default ({ role }: ICardProps) => {
   const { esoClass } = role;
   const [redirect, setRedirect] = useState(false);
@@ -59,7 +74,7 @@ export default ({ role }: ICardProps) => {
   ) : (
     <StyledCard
       onClick={handleClick}
-      style={{ position: "relative" }}
+      style={{ borderColor: borderColor(role.role) }}
       hoverable
       actions={[
         <RaceContainer>
@@ -78,7 +93,7 @@ export default ({ role }: ICardProps) => {
         }
         style={{ textAlign: "left" }}
         title={esoClass.class}
-        description={"Lorem ipsum"}
+        description={esoClass.description}
       />
     </StyledCard>
   );

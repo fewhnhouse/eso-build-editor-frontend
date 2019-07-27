@@ -7,6 +7,7 @@ export interface FlexProps {
   align: string;
   fluid?: boolean;
   style?: object;
+  wrap?: boolean;
   children?: React.ReactNode | React.ReactNode[];
 }
 
@@ -17,6 +18,7 @@ const StyledFlex = styled.div`
   flex-direction: ${(props: FlexProps) => props.direction || "column"};
   align-items: ${(props: FlexProps) => props.align || "center"};
   justify-content: ${(props: FlexProps) => props.justify || "center"};
+  flex-wrap: ${(props: FlexProps) => props.wrap ? "wrap" : ""}
 `;
 
 const Flex = ({

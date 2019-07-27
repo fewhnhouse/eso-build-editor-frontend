@@ -36,9 +36,6 @@ const TabButton = styled(Button)`
   margin: 0px 10px;
 `;
 
-const theme = {
-  primary: "blue"
-};
 const { Step } = Steps;
 
 const AppContainer = ({ location, match }: RouteComponentProps<any>) => {

@@ -8,9 +8,19 @@ import GearView from "../../components/GearView";
 import { bugloss, columbine, namira, drink, food } from "../../assets/deco";
 import Flex from "../../components/Flex";
 
-const { Footer, Content } = Layout;
-
+const { Content } = Layout;
 const { Title, Text } = Typography;
+
+const Container = styled(Content)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 178px);
+  color: ${props => props.theme.mainBg};
+`;
 
 const StyledTitle = styled(Title)`
   margin-top: 30px;
@@ -18,7 +28,6 @@ const StyledTitle = styled(Title)`
 `;
 
 const Wrapper = styled(Flex)`
-  flex-wrap: wrap;
   text-align: center;
 `;
 
@@ -32,22 +41,6 @@ const GearsView = styled.div``;
 const ClassImg = styled.img`
   width: 35px;
   height: 35px;
-`;
-
-const GearImg = styled.img`
-  width: 50px;
-  height: 50px;
-`;
-
-const Container = styled(Content)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  overflow: auto;
-  height: calc(100vh - 178px);
-  color: rgb(155, 155, 155);
 `;
 
 export default ({ match }: RouteComponentProps<any>) => {
@@ -96,7 +89,7 @@ export default ({ match }: RouteComponentProps<any>) => {
         />
         {match.params.name}
       </Title>
-      <Wrapper direction="row" align="baseline" justify="space-around" fluid>
+      <Wrapper direction="row" align="baseline" justify="space-around" wrap fluid>
         <GearsView>
           <StyledTitle level={3}>Gear</StyledTitle>
           <Divider />

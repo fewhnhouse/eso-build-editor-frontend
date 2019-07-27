@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 import Card from "./Card";
-import { Divider, Layout } from "antd";
+import { Divider, Layout, Typography } from "antd";
+import Flex from "../../components/Flex";
 
-const Setup = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  &::nth-child() {
-    padding: 10px;
-  }
-`;
-const { Footer, Content } = Layout;
+const { Content } = Layout;
+const { Title } = Typography;
 
 const Container = styled(Content)`
   display: flex;
@@ -23,10 +16,13 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: calc(100vh - 178px);
-  color: rgb(155, 155, 155);
+  color: ${props => props.theme.mainBg};
 `;
-const Title = styled.h1`
-  font-size: 4em;
+
+const Setup = styled(Flex)`
+  &::nth-child() {
+    padding: 10px;
+  }
 `;
 
 const roles = [
@@ -34,27 +30,27 @@ const roles = [
     role: "Stamina DD",
     classes: [
       {
-        description: "The bestest of DD's in raid",
+        description: "Main damage + caltrops, Thurvokun.",
         class: "Warden",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Main damage + frost armor, Thurvokun.",
         class: "Warden",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Main damage + frost armor, retreating maneuver, Trollking.",
         class: "Warden",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Main damage, bone colossus & backup ressing ultimate.",
         class: "Necromancer",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Damage & support, ressing ultimate, buffs.",
         class: "Necromancer",
         race: "Imperial"
       }
@@ -64,22 +60,22 @@ const roles = [
     role: "Stamina Support",
     classes: [
       {
-        description: "",
+        description: "Damage and support, heavy on tether ultimates for healing.",
         class: "Nightblade",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Damage and support, nova & remembrance, repentance duty.",
         class: "Templar",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Damage and support, offensive / 1st negate.",
         class: "Sorcerer",
         race: "Imperial"
       },
       {
-        description: "",
+        description: "Damage and support, counter / 2nd negate, main speed duty.",
         class: "Sorcerer",
         race: "Imperial"
       }
@@ -89,7 +85,7 @@ const roles = [
     role: "Magicka DD",
     classes: [
       {
-        description: "",
+        description: "Damage, destro ultimate, just needs to stay alive.",
         class: "Nightblade",
         race: "Khajiit"
       }
@@ -99,12 +95,12 @@ const roles = [
     role: "Magicka Support",
     classes: [
       {
-        description: "",
+        description: "Support, purge and siege shield, bubbles, healing tethers.",
         class: "Nightblade",
         race: "Breton"
       },
       {
-        description: "",
+        description: "Support and synergies, bubbles, banners, talons.",
         class: "Dragonknight",
         race: "Breton"
       }
@@ -127,7 +123,7 @@ export default () => {
       {roles.map(role => (
         <>
           <Divider>{role.role}</Divider>
-          <Setup>
+          <Setup direction="row" align="" justify="center" wrap>
             {role.classes.map(classEl => (
               <Card role={{ role: role.role, esoClass: classEl }} />
             ))}
