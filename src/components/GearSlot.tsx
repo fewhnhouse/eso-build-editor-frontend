@@ -1,28 +1,13 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
-import { chooseRace, chooseClass } from "../../util/utils";
-import { Divider, Tooltip, Popover } from "antd";
-import {
-  head,
-  chest,
-  legs,
-  hands,
-  belt,
-  feet,
-  shoulders,
-  mainHand,
-  offHand,
-  quickslot,
-  ring,
-  neck
-} from "../../assets/gear";
+import { Popover } from "antd";
 
 interface IGearSlotProps {
   slot: string;
   title: string;
   content: string;
-  place:
+  tooltip:
     | "top"
     | "left"
     | "right"
@@ -45,11 +30,11 @@ const GearImg = styled.img`
 
 //<GearSlot prop1={test}/>
 
-export default ({ slot, title, content, place }: IGearSlotProps) => {
+export default ({ slot, title, content, tooltip }: IGearSlotProps) => {
   //const {slot, title, content} = props;
     return (
         <Popover
-            placement={place}
+            placement={tooltip}
             title={title}
             content={content}
         >
