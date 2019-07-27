@@ -33,6 +33,11 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
       };
     default:
       return state;
+    case "SET_SELECTED_SKILLS":
+      return {
+        ...state,
+        selectedSkills: action.payload
+      };
   }
 };
 

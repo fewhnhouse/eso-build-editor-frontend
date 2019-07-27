@@ -12,17 +12,8 @@ import {
 const { TabPane } = Tabs;
 
 export default () => {
-  const [current, setCurrent] = useState(0);
   const [state, dispatch] = useReducer(buildReducer, defaultBuildState);
-
-  const next = () => {
-    setCurrent(current => current + 1);
-  };
-
-  const prev = () => {
-    setCurrent(current => current - 1);
-  };
-
+  console.log(state, dispatch)
   return (
     <BuildContext.Provider value={[state, dispatch]}>
       <SecondPage />

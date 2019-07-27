@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Card, Divider } from "antd";
+import React, { useEffect, useState, useReducer, useContext } from "react";
+import { Divider } from "antd";
 import styled from "styled-components";
-import { abilityFrame } from "../../../assets/misc";
 import axios from "axios";
 import { ClickParam } from "antd/lib/menu";
 import skills from "../../../skills.json";
 import SkillCard from "./SkillCard";
 import Menu from "./Menu";
-
-const AbilityBar = styled(Card)`
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 500px;
-`;
-
-const Ability = styled.img`
-  margin: 0px 10px;
-`;
+import { BuildContext } from "../BuildStateContext";
+import AbilityBar from "./AbilityBar";
 
 const AbilityContainer = styled.div`
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow: auto;
   padding: 40px;
-`;
-
-const AbilityBarContainer = styled.div`
-  flex: 1;
-  height: 100%;
-  padding: 40px;
-
-  background: white;
 `;
 
 const Content = styled.div`
@@ -53,45 +36,75 @@ export interface ISkill {
   range: string | null;
   skillline: number;
   slug: string;
-  target: string;
+  target: string | null;
   type: number;
-  unlocks_at: number;
+  unlocks_at: number | null;
 }
 export default () => {
   // const [skills, setSkills] = useState([]);
   const [skillLine, setSkillLine] = useState(16);
+  const [state, dispatch] = useContext(BuildContext);
+  const [baseActives, setBaseActives] = useState<ISkill[]>([]);
+  const [morphedActives, setMorphedActives] = useState<ISkill[]>([]);
+  const [passives, setPassives] = useState<ISkill[]>([]);
+  const [baseUltimates, setBaseUltimates] = useState<ISkill[]>([]);
+  const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([]);
+
   useEffect(() => {
     /*
     axios
-      .get("/skills", {
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setSkills(data);
-      });
+    .get("/skills", {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    })
+    .then(({ data }) => {
+      console.log(data);
+      setSkills(data);
+    });
       */
   }, []);
   const handleClick = (e: ClickParam) => {
     setSkillLine(parseInt(e.key, 10));
   };
 
-  //TODO: Change to ISkill once data is fetched from network instead of locally
-  const filteredSkills: any[] = skills.filter(
-    (skill: any) => skill.skillline === skillLine
-  );
+  useEffect(() => {
+    const filteredSkills: ISkill[] = skills.filter(
+      (skill: ISkill) => skill.skillline === skillLine
+    );
 
-  const actives = filteredSkills.filter((skill: any) => skill.type === 1);
-  const baseActives = actives.filter((skill: any) => skill.parent === null);
-  const morphedActives = actives.filter((skill: any) => skill.parent !== null);
-  const passives = filteredSkills.filter((skill: any) => skill.type === 2);
-  const ultimates = filteredSkills.filter((skill: any) => skill.type === 3);
-  const morphedUltimates = ultimates.filter(
-    (skill: any) => skill.parent !== null
-  );
-  const baseUltimates = ultimates.filter((skill: any) => skill.parent === null);
+    const actives = filteredSkills.filter((skill: ISkill) => skill.type === 1);
+    const passives = filteredSkills.filter((skill: ISkill) => skill.type === 2);
+    const ultimates = filteredSkills.filter(
+      (skill: ISkill) => skill.type === 3
+    );
+
+    const baseActives = actives.filter(
+      (skill: ISkill) => skill.parent === null
+    );
+
+    const morphedActives = actives.filter(
+      (skill: ISkill) => skill.parent !== null
+    );
+    const morphedUltimates = ultimates.filter(
+      (skill: ISkill) => skill.parent !== null
+    );
+    const baseUltimates = ultimates.filter(
+      (skill: ISkill) => skill.parent === null
+    );
+
+    setMorphedActives(morphedActives);
+    setMorphedUltimates(morphedUltimates);
+    setBaseActives(baseActives);
+    setBaseUltimates(baseUltimates);
+
+    dispatch({
+      type: "SET_SELECTED_SKILLS",
+      payload: baseActives.map((skill: ISkill) => skill.id)
+    });
+  }, []);
+
+  //TODO: Change to ISkill once data is fetched from network instead of locally
   return (
     <div
       style={{
@@ -134,29 +147,7 @@ export default () => {
             ))}
           </ul>
         </AbilityContainer>
-        <AbilityBarContainer>
-          <Divider>Ultimate</Divider>
-          <Ability src={abilityFrame} />
-
-          <Divider>Active</Divider>
-          <AbilityBar>
-            {[1, 2, 3, 4, 5].map(e => (
-              <Ability src={abilityFrame} />
-            ))}
-          </AbilityBar>
-          <Divider>Ability Bar</Divider>
-
-          <AbilityBar>
-            {[1, 2, 3, 4, 5].map(e => (
-              <Ability src={abilityFrame} />
-            ))}
-          </AbilityBar>
-          <AbilityBar>
-            {[1, 2, 3, 4, 5].map(e => (
-              <Ability src={abilityFrame} />
-            ))}
-          </AbilityBar>
-        </AbilityBarContainer>
+        <AbilityBar />
       </Content>
     </div>
   );

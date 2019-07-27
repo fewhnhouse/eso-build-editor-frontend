@@ -103,6 +103,8 @@ const abilityTypes = [
 export default ({ skill, morph1, morph2, passive }: ICardProps) => {
   const [firstActive, setFirstActive] = useState(false);
   const [secondActive, setSecondActive] = useState(false);
+  const [state, dispatch] = useContext(BuildContext);
+  console.log(state, dispatch)
   const handleFirstClick = () => {
     if (firstActive) {
       setFirstActive(false);
