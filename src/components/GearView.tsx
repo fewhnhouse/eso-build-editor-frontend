@@ -1,37 +1,137 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
-import GearSlot from "../components/GearSlot";
-import { head, chest, legs, hands, belt, feet, shoulders, mainHand, offHand, quickslot, ring, neck } from "../assets/gear";
+import GearSlot, { IGearSlotProps } from "../components/GearSlot";
 
-const GearView = styled.div`
-  height: 100vw;
-`;
+import { Typography, Divider } from "antd";
 
-const MiniTitle = styled.h4`
-  font-size: 1em;
-`
+const GearView = styled.div``;
+
+const { Title, Text } = Typography;
+
+interface ISetup {
+  name: string;
+  data: IGearSlotProps[];
+}
 
 export default () => {
-    return (
-        <GearView>
-          <MiniTitle>Apparel</MiniTitle>
-          <GearSlot tooltip="top" slot={head} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot tooltip="left" slot={shoulders} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={chest} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot tooltip="left" slot={belt} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={hands} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot tooltip="left" slot={legs} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={feet} title="OP DLC set" content="OP set with random stats" /><br/>
-          <MiniTitle>Accessories</MiniTitle>
-          <GearSlot tooltip="left" slot={neck} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="bottom" slot={ring} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={ring} title="OP DLC set" content="OP set with random stats" />
-          <MiniTitle>Weapons</MiniTitle>
-          <GearSlot tooltip="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={offHand} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot tooltip="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot tooltip="right" slot={offHand} title="OP DLC set" content="OP set with random stats" />
-        </GearView>
-    )
+  const setups: ISetup[] = [
+    {
+      name: "Apparel",
+      data: [
+        {
+          slot: "head",
+          tooltip: "top",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "shoulders",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "chest",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "belt",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "hands",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "legs",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "feet",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        }
+      ]
+    },
+    {
+      name: "Accessories",
+      data: [
+        {
+          slot: "neck",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "ring",
+          tooltip: "bottom",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "ring",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        }
+      ]
+    },
+    {
+      name: "Weapons",
+      data: [
+        {
+          slot: "mainHand",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "offHand",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "mainHand",
+          tooltip: "left",
+          title: "OP DLC set",
+          content: "Set information here"
+        },
+        {
+          slot: "offHand",
+          tooltip: "right",
+          title: "OP DLC set",
+          content: "Set information here"
+        }
+      ]
+    }
+  ];
+
+  return (
+    <GearView>
+      {setups.map((setup: ISetup) => (
+        <>
+          <Title level={4}>{setup.name}</Title>
+          {setup.data.map((slot: IGearSlotProps) => (
+            <GearSlot
+              slot={slot.slot}
+              tooltip={slot.tooltip}
+              title={slot.title}
+              content={slot.content}
+            />
+          ))}
+        </>
+      ))}
+    </GearView>
+  );
 };

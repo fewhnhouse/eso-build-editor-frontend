@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 import Card from "./Card";
-import { Divider } from "antd";
+import { Divider, Layout } from "antd";
 
 const Setup = styled.div`
   display: flex;
@@ -13,7 +13,18 @@ const Setup = styled.div`
     padding: 10px;
   }
 `;
+const { Footer, Content } = Layout;
 
+const Container = styled(Content)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 178px);
+  color: rgb(155, 155, 155);
+`;
 const Title = styled.h1`
   font-size: 4em;
 `;
@@ -111,10 +122,8 @@ export default () => {
   return role !== "" ? (
     <Redirect push to={`/details/${role}`} />
   ) : (
-    <>
-      <Title>
-        FIST+ BUILD EDITOR DELUXE
-      </Title>
+    <Container>
+      <Title>FIST+ BUILD EDITOR DELUXE</Title>
       {roles.map(role => (
         <>
           <Divider>{role.role}</Divider>
@@ -125,6 +134,6 @@ export default () => {
           </Setup>
         </>
       ))}
-    </>
+    </Container>
   );
 };

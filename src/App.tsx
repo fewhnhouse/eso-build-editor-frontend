@@ -4,11 +4,6 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import AppContainer from "./AppContainer";
 import axios from "axios";
-import {
-  buildReducer,
-  defaultBuildState,
-  BuildContext
-} from "./pages/build/BuildStateContext";
 
 //Avoid cors for now
 axios.defaults.baseURL =
@@ -21,14 +16,10 @@ const theme = {
 };
 
 const App: React.FC = () => {
-  const [state, dispatch] = useReducer(buildReducer, defaultBuildState);
-
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <BuildContext.Provider value={[state, dispatch]}>
-          <AppContainer />
-        </BuildContext.Provider>
+        <AppContainer />
       </ThemeProvider>
     </Router>
   );

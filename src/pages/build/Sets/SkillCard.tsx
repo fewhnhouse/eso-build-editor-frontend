@@ -94,36 +94,71 @@ interface ICardProps {
   morph1: ISkill;
   morph2: ISkill;
   passive?: boolean;
+  ultimate?: boolean;
 }
 const abilityTypes = [
   { type: 1, label: "active" },
   { type: 2, label: "passive" },
   { type: 3, label: "ultimate" }
 ];
-export default ({ skill, morph1, morph2, passive }: ICardProps) => {
-  const [firstActive, setFirstActive] = useState(false);
-  const [secondActive, setSecondActive] = useState(false);
+export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext);
-  console.log(state, dispatch)
+  const { selectedSkills, selectedUltimate } = state!;
+  const firstActive = ultimate
+    ? selectedUltimate === morph1.id
+    : selectedSkills.find(slot => slot.id === morph1.id) !== undefined;
+  const secondActive = ultimate
+    ? selectedUltimate === morph2.id
+    : selectedSkills.find(slot => slot.id === morph2.id) !== undefined;
   const handleFirstClick = () => {
-    if (firstActive) {
-      setFirstActive(false);
-    } else if (!secondActive) {
-      setFirstActive(true);
+    if (ultimate) {
+      dispatch!({
+        type: "SET_SELECTED_ULTIMATE",
+        payload: firstActive ? skill.id : morph1.id
+      });
     } else {
-      setFirstActive(true);
-      setSecondActive(false);
+      if (firstActive) {
+        dispatch!({
+          type: "UNSELECT_MORPH",
+          payload: { baseId: skill.id, morphId: morph1.id }
+        });
+      } else if (!secondActive) {
+        dispatch!({
+          type: "SELECT_MORPH",
+          payload: { baseId: skill.id, morphId: morph1.id }
+        });
+      } else {
+        dispatch!({
+          type: "SWAP_MORPH",
+          payload: { oldMorphId: morph2.id, newMorphId: morph1.id }
+        });
+      }
     }
   };
 
   const handleSecondClick = () => {
-    if (secondActive) {
-      setSecondActive(false);
-    } else if (!firstActive) {
-      setSecondActive(true);
+    if (ultimate) {
+      dispatch!({
+        type: "SET_SELECTED_ULTIMATE",
+        payload: secondActive ? skill.id : morph2.id
+      });
     } else {
-      setFirstActive(false);
-      setSecondActive(true);
+      if (secondActive) {
+        dispatch!({
+          type: "UNSELECT_MORPH",
+          payload: { baseId: skill.id, morphId: morph2.id }
+        });
+      } else if (!firstActive) {
+        dispatch!({
+          type: "SELECT_MORPH",
+          payload: { baseId: skill.id, morphId: morph2.id }
+        });
+      } else {
+        dispatch!({
+          type: "SWAP_MORPH",
+          payload: { oldMorphId: morph1.id, newMorphId: morph2.id }
+        });
+      }
     }
   };
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import {
   Link,
@@ -13,17 +13,6 @@ import WrappedNormalLoginForm from "./components/LoginForm";
 import { leather } from "./assets/backgrounds/";
 
 const { Header, Content, Footer } = Layout;
-
-const Container = styled(Content)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  overflow: auto;
-  height: calc(100vh - 178px);
-  color: rgb(155, 155, 155);
-`;
 
 const Logo = styled.div`
   width: 120px;
@@ -52,19 +41,7 @@ const theme = {
 };
 const { Step } = Steps;
 
-const AppContainer = ({ location, match }: RouteComponentProps) => {
-  const [tab, setTab] = useState(2);
-  const handleTabClick = (tabIndex: number) => () => {
-    setTab(tabIndex);
-  };
-
-  const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1);
-  };
-
-  const handleNextClick = () => {
-    setTab(tabIndex => tabIndex + 1);
-  };
+const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
   return (
     <Layout>
       <StyledHeader>
@@ -80,7 +57,7 @@ const AppContainer = ({ location, match }: RouteComponentProps) => {
               <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/build/2">Build Editor</Link>
+              <Link to="/build/0">Build Editor</Link>
             </Menu.Item>
           </Menu>
         </div>
@@ -100,46 +77,7 @@ const AppContainer = ({ location, match }: RouteComponentProps) => {
           </Button>
         </Popover>
       </StyledHeader>
-      <Container>
-        <Routes />
-      </Container>
-      <Footer
-        style={{
-          display: "flex",
-          alignItems: "center",
-          boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)"
-        }}
-      >
-        {location.pathname.includes("build") && (
-          <>
-            <TabButton
-              onClick={handlePrevClick}
-              disabled={tab === 0}
-              size="large"
-              type="primary"
-            >
-              <Icon type="left" />
-              Prev
-            </TabButton>
-            <Steps progressDot current={tab}>
-              <Step title="Race & Class" description="Select race and class." />
-              <Step title="Skills" description="Select skills." />
-              <Step title="Sets" description="Select sets." />
-              <Step title="Review" description="Review and save." />
-            </Steps>
-            <TabButton
-              onClick={handleNextClick}
-              disabled={tab === 2}
-              size="large"
-              type="primary"
-            >
-              <Icon type="right" />
-              Next
-            </TabButton>
-            <Redirect to={`/build/${tab}`} push />
-          </>
-        )}
-      </Footer>
+      <Routes />
     </Layout>
   );
 };

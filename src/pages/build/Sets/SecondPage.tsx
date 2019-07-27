@@ -40,6 +40,24 @@ export interface ISkill {
   type: number;
   unlocks_at: number | null;
 }
+
+const defaultUltimate: ISkill = {
+  cast_time: "0",
+  cost: "0",
+  effect_1: "0",
+  effect_2: null,
+  icon: "null",
+  id: 0,
+  name: "name",
+  parent: null,
+  pts: 0,
+  range: null,
+  skillline: 0,
+  slug: "",
+  target: null,
+  type: 3,
+  unlocks_at: null
+};
 export default () => {
   // const [skills, setSkills] = useState([]);
   const [skillLine, setSkillLine] = useState(16);
@@ -47,7 +65,7 @@ export default () => {
   const [baseActives, setBaseActives] = useState<ISkill[]>([]);
   const [morphedActives, setMorphedActives] = useState<ISkill[]>([]);
   const [passives, setPassives] = useState<ISkill[]>([]);
-  const [baseUltimates, setBaseUltimates] = useState<ISkill[]>([]);
+  const [baseUltimate, setBaseUltimate] = useState<ISkill>(defaultUltimate);
   const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([]);
 
   useEffect(() => {
@@ -63,8 +81,10 @@ export default () => {
       setSkills(data);
     });
       */
+    dispatch!({ type: "SET_SKILLS", payload: skills });
   }, []);
   const handleClick = (e: ClickParam) => {
+    console.log(e);
     setSkillLine(parseInt(e.key, 10));
   };
 
@@ -89,21 +109,30 @@ export default () => {
     const morphedUltimates = ultimates.filter(
       (skill: ISkill) => skill.parent !== null
     );
-    const baseUltimates = ultimates.filter(
+    const baseUltimate = ultimates.find(
       (skill: ISkill) => skill.parent === null
     );
 
     setMorphedActives(morphedActives);
     setMorphedUltimates(morphedUltimates);
     setBaseActives(baseActives);
-    setBaseUltimates(baseUltimates);
-
-    dispatch({
+    setBaseUltimate(baseUltimate!);
+    setPassives(passives);
+    dispatch!({
       type: "SET_SELECTED_SKILLS",
-      payload: baseActives.map((skill: ISkill) => skill.id)
+      payload: baseActives.map((skill: ISkill, index: number) => ({
+        id: skill.id,
+        index
+      }))
     });
-  }, []);
-
+    dispatch!({
+      type: "SET_SELECTED_ULTIMATE",
+      payload: baseUltimate!.id
+    });
+  }, [skillLine]);
+  const morphs = morphedUltimates.filter(ultimate =>
+    ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
+  );
   //TODO: Change to ISkill once data is fetched from network instead of locally
   return (
     <div
@@ -119,14 +148,12 @@ export default () => {
         <AbilityContainer>
           <Divider>Ultimate</Divider>
           <ul>
-            {baseUltimates.map(base => {
-              const morphs = morphedUltimates.filter(
-                ultimate => ultimate.parent === base.id
-              );
-              return (
-                <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
-              );
-            })}
+            <SkillCard
+              ultimate
+              skill={baseUltimate || baseActives[0]}
+              morph1={morphs[0] || defaultUltimate}
+              morph2={morphs[1] || defaultUltimate}
+            />
           </ul>
           <Divider>Active</Divider>
           <ul>
