@@ -5,6 +5,23 @@ import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
 import { drink } from "../assets/deco";
 
+interface ISkillSlotProps {
+  tooltip:
+  | "top"
+  | "left"
+  | "right"
+  | "bottom"
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight"
+  | "leftTop"
+  | "leftBottom"
+  | "rightTop"
+  | "rightBottom"
+  | undefined;
+}
+
 const SkillFrame = styled.div`
   display: flex;
   align-items: center;
@@ -21,9 +38,9 @@ const SkillImg = styled.img`
   height: 59px;
 `;
 
-export default () => {
+export default ({ tooltip }: ISkillSlotProps) => {
   return (
-    <Popover placement="bottom" title="Skill 1" content="Instagib2000">
+    <Popover placement={tooltip} title="Skill 1" content="Instagib2000">
       <SkillFrame>
         <SkillImg
           src={`https://beast.pathfindermediagroup.com/storage/skills/${"ability_necromancer_010_b.png"}`}

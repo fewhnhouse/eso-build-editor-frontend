@@ -2,12 +2,10 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import { chooseRace, chooseClass } from "../../util/utils";
-import { Divider, Tooltip, Popover } from "antd";
-import GearSlot from "./GearSlot";
-import { head, chest, legs, hands, belt, feet, shoulders, mainHand, offHand, quickslot, ring, neck } from "../../assets/gear";
-import { abilityFrame } from "../../assets/misc";
-import { bugloss, columbine, drink, food, namira } from "../../assets/deco";
-import SkillBars from "../../components/SkillBars";
+import { Divider } from "antd";
+import SkillView from "../../components/SkillView";
+import GearView from "../../components/GearView";
+import { bugloss, columbine, namira, drink, food } from "../../assets/deco";
 
 const RoleTitle = styled.h2`
   font-size: 3em;
@@ -27,10 +25,6 @@ const Wrapper = styled.div`
   width: 100%;
   justify-content: space-evenly;
   flex-wrap: wrap;
-`;
-
-const GearView = styled.div`
-  height: 100vw;
 `;
 
 const StatsView = styled.div`
@@ -61,30 +55,12 @@ export default ({ match }: RouteComponentProps<any>) => {
         {match.params.name}
       </RoleTitle>
       <Wrapper>
-        <GearView>
           <SubTitle>Gear</SubTitle>
-          <MiniTitle>Apparel</MiniTitle>
-          <GearSlot place="top" slot={head} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot place="left" slot={shoulders} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={chest} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot place="left" slot={belt} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={hands} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot place="left" slot={legs} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={feet} title="OP DLC set" content="OP set with random stats" /><br/>
-          <MiniTitle>Accessories</MiniTitle>
-          <GearSlot place="left" slot={neck} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="bottom" slot={ring} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={ring} title="OP DLC set" content="OP set with random stats" />
-          <MiniTitle>Weapons</MiniTitle>
-          <GearSlot place="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={offHand} title="OP DLC set" content="OP set with random stats" /><br/>
-          <GearSlot place="left" slot={mainHand} title="OP DLC set" content="OP set with random stats" />
-          <GearSlot place="right" slot={offHand} title="OP DLC set" content="OP set with random stats" />
-        </GearView>
+          <GearView />
         <SkillsView>
           <SubTitle>Skills</SubTitle>
-            <SkillBars/>
-            <SkillBars/>
+            <SkillView tooltip="top"/>
+            <SkillView tooltip="bottom"/>
           <Divider />
           <SubTitle>Consumables</SubTitle>
           <MiniTitle>Foodbuff</MiniTitle>
