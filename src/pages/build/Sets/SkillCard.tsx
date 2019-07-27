@@ -3,8 +3,8 @@ import { Card, Avatar, Divider, Typography, Popover } from "antd";
 import styled from "styled-components";
 
 import { ISkill } from "./SecondPage";
-import { plus } from "../../assets/misc";
-import { BuildContext } from "./BuildStateContext";
+import { plus } from "../../../assets/misc";
+import { BuildContext } from "../BuildStateContext";
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;

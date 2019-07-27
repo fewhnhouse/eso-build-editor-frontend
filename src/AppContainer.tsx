@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  RouteComponentProps,
+  withRouter,
+  Redirect
+} from "react-router-dom";
 import Routes from "./components/Routes";
 import styled from "styled-components";
-import { Layout, Menu, Button, Popover, Steps } from "antd";
+import { Layout, Menu, Button, Popover, Steps, Icon } from "antd";
 import WrappedNormalLoginForm from "./components/LoginForm";
 import { leather } from "./assets/backgrounds/";
 
@@ -16,7 +21,7 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 164px);
+  height: calc(100vh - 178px);
   color: rgb(155, 155, 155);
 `;
 
@@ -35,6 +40,11 @@ const StyledHeader = styled(Header)`
   justify-content: space-between;
   background-image: url(${leather});
   background-repeat: repeat;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+`;
+
+const TabButton = styled(Button)`
+  margin: 0px 10px;
 `;
 
 const theme = {
@@ -42,7 +52,19 @@ const theme = {
 };
 const { Step } = Steps;
 
-export default () => {
+const AppContainer = ({ location, match }: RouteComponentProps) => {
+  const [tab, setTab] = useState(2);
+  const handleTabClick = (tabIndex: number) => () => {
+    setTab(tabIndex);
+  };
+
+  const handlePrevClick = () => {
+    setTab(tabIndex => tabIndex - 1);
+  };
+
+  const handleNextClick = () => {
+    setTab(tabIndex => tabIndex + 1);
+  };
   return (
     <Layout>
       <StyledHeader>
@@ -58,7 +80,6 @@ export default () => {
               <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item key="2">
-              {" "}
               <Link to="/build/2">Build Editor</Link>
             </Menu.Item>
           </Menu>
@@ -82,13 +103,45 @@ export default () => {
       <Container>
         <Routes />
       </Container>
-      <Footer>
-        <Steps current={1}>
-          <Step title="Finished" description="This is a description." />
-          <Step title="In Progress" description="This is a description." />
-          <Step title="Waiting" description="This is a description." />
-        </Steps>
+      <Footer
+        style={{
+          display: "flex",
+          alignItems: "center",
+          boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)"
+        }}
+      >
+        {location.pathname.includes("build") && (
+          <>
+            <TabButton
+              onClick={handlePrevClick}
+              disabled={tab === 0}
+              size="large"
+              type="primary"
+            >
+              <Icon type="left" />
+              Prev
+            </TabButton>
+            <Steps progressDot current={tab}>
+              <Step title="Race & Class" description="Select race and class." />
+              <Step title="Skills" description="Select skills." />
+              <Step title="Sets" description="Select sets." />
+              <Step title="Review" description="Review and save." />
+            </Steps>
+            <TabButton
+              onClick={handleNextClick}
+              disabled={tab === 2}
+              size="large"
+              type="primary"
+            >
+              <Icon type="right" />
+              Next
+            </TabButton>
+            <Redirect to={`/build/${tab}`} push />
+          </>
+        )}
       </Footer>
     </Layout>
   );
 };
+
+export default withRouter(AppContainer);

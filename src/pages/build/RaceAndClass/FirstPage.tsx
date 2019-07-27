@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider } from "antd";
-import { chooseRace, chooseClass } from "../../util/utils";
+import { chooseRace, chooseClass } from "../../../util/utils";
 import styled from "styled-components";
 import Card from "./Card";
 
