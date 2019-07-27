@@ -90,10 +90,9 @@ export default () => {
       const destinationIndex = destinationSplit[3];
 
       if (
-        sourceBar === "abilityBar1" ||
-        (sourceBar === "abilityBar2" &&
-          sourceId !== 0 &&
-          end.destination.droppableId === "trash-droppable-1")
+        (sourceBar === "abilityBar1" || sourceBar === "abilityBar2") &&
+        sourceId !== 0 &&
+        end.destination.droppableId === "trash-droppable-1"
       ) {
         dispatch!({
           type: "REMOVE_ABILITY",

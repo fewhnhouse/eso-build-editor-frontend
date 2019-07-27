@@ -68,17 +68,16 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
           )
         };
       }
-      return {
-        ...state
-      };
     }
     case "DROP_ABILITY": {
       const { barIndex, destinationIndex, skillId } = action.payload;
       const parsedIndex = parseInt(destinationIndex, 10);
       const parsedId = parseInt(skillId, 10);
       if (
-        state.abilityBarOne.find(slot => slot.id === parsedId) ||
-        state.abilityBarTwo.find(slot => slot.id === parsedId)
+        (barIndex === 0 &&
+          state.abilityBarOne.find(slot => slot.id === parsedId)) ||
+        (barIndex === 1 &&
+          state.abilityBarTwo.find(slot => slot.id === parsedId))
       ) {
         return { ...state };
       }
@@ -102,16 +101,37 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     case "SWAP_ABILITY": {
       const {
         sourceIndex,
-        destinationIndex,
-        sourceId,
-        destinationId,
         sourceBar,
-        destinationBar
+        sourceId,
+        destinationIndex,
+        destinationBar,
+        destinationId
       } = action.payload;
       const parsedDestinationIndex = parseInt(destinationIndex, 10);
       const parsedSourceIndex = parseInt(sourceIndex, 10);
       const parsedDestinationId = parseInt(destinationId, 10);
       const parsedSourceId = parseInt(sourceId, 10);
+      if (sourceBar !== destinationBar) {
+        if (destinationBar == "abilityBar1") {
+          const hasSkill = state.abilityBarOne.find(
+            slot => slot.id === parsedSourceId
+          );
+          if (hasSkill) {
+            return {
+              ...state
+            };
+          }
+        } else if (destinationBar === "abilityBar2") {
+          const hasSkill = state.abilityBarTwo.find(
+            slot => slot.id === parsedSourceId
+          );
+          if (hasSkill) {
+            return {
+              ...state
+            };
+          }
+        }
+      }
       if (sourceBar === "abilityBar1" && destinationBar === "abilityBar1") {
         const abilityBarOne = state.abilityBarOne.map(slot => {
           if (slot.index === parsedDestinationIndex) {
@@ -130,13 +150,6 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
         sourceBar === "abilityBar1" &&
         destinationBar === "abilityBar2"
       ) {
-        const abilityBarTwo = state.abilityBarTwo.map(slot => {
-          if (slot.index === parsedDestinationIndex) {
-            return { index: slot.index, id: parsedSourceId };
-          } else {
-            return slot;
-          }
-        });
         const abilityBarOne = state.abilityBarOne.map(slot => {
           if (slot.index === parsedSourceIndex) {
             return { index: slot.index, id: parsedDestinationId };
@@ -144,6 +157,14 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
             return slot;
           }
         });
+        const abilityBarTwo = state.abilityBarTwo.map(slot => {
+          if (slot.index === parsedDestinationIndex) {
+            return { index: slot.index, id: parsedSourceId };
+          } else {
+            return slot;
+          }
+        });
+
         return {
           ...state,
           abilityBarOne,
@@ -153,7 +174,7 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
         sourceBar === "abilityBar2" &&
         destinationBar === "abilityBar2"
       ) {
-        const abilityBarTwo = state.abilityBarOne.map(slot => {
+        const abilityBarTwo = state.abilityBarTwo.map(slot => {
           if (slot.index === parsedDestinationIndex) {
             return { index: slot.index, id: parsedSourceId };
           } else if (slot.index === parsedSourceIndex) {
