@@ -4,11 +4,12 @@ import { Divider, Card, Icon } from "antd";
 import { BuildContext } from "../BuildStateContext";
 import SkillView from "../../../components/SkillView";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import SkillSlot from "../../../components/SkillSlot";
 
-const AbilityBar = styled(Card)`
+const AbilityBar = styled.div`
   height: 100px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -132,20 +133,15 @@ export default () => {
     >
       <AbilityBarContainer>
         <Divider>Ultimate</Divider>
-        {/*
-
         <SkillSlot
           skillIndex={6}
           id="ultimate"
           index={6}
-          skillId={ultimate ? ultimate.id : 0}
           icon={ultimate ? ultimate.icon : ""}
-          tooltip="top"
         />
-                  */}
 
         <Divider>Active</Divider>
-        <SkillView id="activeBar" skillSlots={activeBarSkills} tooltip="top" />
+        <SkillView id="activeBar" skillSlots={activeBarSkills} />
         <Divider>Ability Bar</Divider>
 
         <AbilityBar>
@@ -153,38 +149,30 @@ export default () => {
             id="abilityBar1"
             droppable
             skillSlots={abilityBarOneSkills}
-            tooltip="top"
           />
-          {/*
 
           <SkillSlot
             skillIndex={6}
             id="abilityBar1-ultimate"
             droppable
             index={6}
-            skillId={0}
             icon={ultimate ? ultimate.icon : ""}
-            tooltip="top"
           />
-                    */}
         </AbilityBar>
+
         <AbilityBar>
           <SkillView
             id="abilityBar2"
             droppable
             skillSlots={abilityBarTwoSkills}
-            tooltip="top"
           />
-          {/*
           <SkillSlot
             skillIndex={-1}
             id="abilityBar2-ultimate"
             index={6}
             droppable
-            skillId={0}
             icon={ultimate ? ultimate.icon : ""}
-            tooltip="top"
-          />*/}
+          />
         </AbilityBar>
         <Droppable isDropDisabled={!hasTrash} droppableId={`trash-droppable-1`}>
           {(provided, snapshot) => (

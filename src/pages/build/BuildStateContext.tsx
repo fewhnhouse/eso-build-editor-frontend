@@ -39,7 +39,9 @@ export const defaultBuildState = {
     { id: 0, index: 2 },
     { id: 0, index: 3 },
     { id: 0, index: 4 }
-  ]
+  ],
+  ultimateOne: { id: 0, index: 5 },
+  ultimateTwo: { id: 0, index: 5 }
 };
 
 interface IBuildAction {
@@ -48,6 +50,8 @@ interface IBuildAction {
 }
 export const buildReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
+    case "DROP_ULTIMATE": {
+    }
     case "REMOVE_ABILITY": {
       const { skillId, barIndex } = action.payload;
       const parsedBarIndex = parseInt(barIndex, 10);

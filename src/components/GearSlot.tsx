@@ -67,6 +67,8 @@ const getImageSource = (slot: string) => {
       return offHand;
     case "quickslot":
       return quickslot;
+    default:
+      return "";
   }
 };
 //<GearSlot prop1={test}/>
@@ -80,6 +82,8 @@ const breakRow = (tooltip: string | undefined) => {
     case "top":
       return true;
     case "bottom":
+      return false;
+    default:
       return false;
   }
 };

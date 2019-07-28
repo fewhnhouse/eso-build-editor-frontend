@@ -5,26 +5,11 @@ import { abilityFrame } from "../assets/misc";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 interface ISkillSlotProps {
-  tooltip:
-    | "top"
-    | "left"
-    | "right"
-    | "bottom"
-    | "topLeft"
-    | "topRight"
-    | "bottomLeft"
-    | "bottomRight"
-    | "leftTop"
-    | "leftBottom"
-    | "rightTop"
-    | "rightBottom"
-    | undefined;
   icon: string;
   droppable?: boolean;
   index: number;
   id: string;
   skillIndex: number;
-  skillId: number;
 }
 
 const SkillFrame = styled.div`
@@ -44,49 +29,51 @@ const SkillImg = styled.img`
 `;
 
 export default ({
-  tooltip,
   icon,
   droppable,
   index,
   id,
-  skillIndex,
-  skillId
+  skillIndex
 }: ISkillSlotProps) => {
   return (
-    <Popover placement={tooltip} title="Skill 1" content="Instagib2000">
-      <Droppable
-        isDropDisabled={!droppable}
-        droppableId={`${id}-droppable-${index}`}
-      >
-        {(provided, snapshot) => (
-          <SkillFrame ref={provided.innerRef} {...provided.droppableProps}>
-            {provided.placeholder}
+    <Droppable
+      isDropDisabled={!droppable}
+      droppableId={`${id}-droppable-${index}`}
+    >
+      {(provided, snapshot) => (
+        <SkillFrame ref={provided.innerRef} {...provided.droppableProps}>
+          {provided.placeholder}
 
-            <Draggable
-              isDragDisabled={icon === ""}
-              draggableId={`${id}-draggable-${index}`}
-              index={index}
-            >
-              {(provided, snapshot) =>
-                icon && skillIndex === index ? (
+          <Draggable
+            isDragDisabled={icon === ""}
+            draggableId={`${id}-draggable-${index}`}
+            index={index}
+          >
+            {(provided, snapshot) =>
+              icon && skillIndex === index ? (
+                <Popover
+                  placement={"top"}
+                  title="Skill 1"
+                  content="Instagib2000"
+                >
                   <SkillImg
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     src={`https://beast.pathfindermediagroup.com/storage/skills/${icon}`}
                   />
-                ) : (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  />
-                )
-              }
-            </Draggable>
-          </SkillFrame>
-        )}
-      </Droppable>
-    </Popover>
+                </Popover>
+              ) : (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                />
+              )
+            }
+          </Draggable>
+        </SkillFrame>
+      )}
+    </Droppable>
   );
 };

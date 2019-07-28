@@ -8,6 +8,7 @@ import { chooseRace, chooseClass } from "../../util/utils";
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
+  border-color: ${(props: { borderColor: string }) => props.borderColor};
 `;
 
 const { Meta } = Card;
@@ -53,6 +54,7 @@ export default ({ role }: ICardProps) => {
     <Redirect push to={`/details/${esoClass.class}`} />
   ) : (
     <StyledCard
+      borderColor={"red"}
       onClick={handleClick}
       style={{ position: "relative" }}
       hoverable
