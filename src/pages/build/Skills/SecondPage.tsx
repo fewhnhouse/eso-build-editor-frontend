@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { Divider, Empty } from "antd";
 import styled from "styled-components";
 import axios from "axios";
-import { ClickParam } from "antd/lib/menu";
 import skills from "../../../skills.json";
 import SkillCard from "./SkillCard";
 import Menu from "./Menu";

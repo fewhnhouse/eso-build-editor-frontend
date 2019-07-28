@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { SkillCardContent } from "../pages/build/Sets/SkillCard";
+import { SkillCardContent } from "../pages/build/Skills/SkillCard";
 
 interface ISkillSlotProps {
   droppable?: boolean;

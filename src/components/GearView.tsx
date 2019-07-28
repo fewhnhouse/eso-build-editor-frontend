@@ -4,7 +4,7 @@ import GearSlot, { IGearSlotProps, IGearSlot } from "../components/GearSlot";
 
 import { Typography } from "antd";
 import Flex from "./Flex";
-import { IGearSetup } from "../pages/build/Skills/RightContent";
+import { IGearSetup } from "../pages/build/Sets/RightContent";
 
 const GearView = styled.div``;
 

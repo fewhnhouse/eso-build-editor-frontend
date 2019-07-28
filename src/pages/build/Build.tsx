@@ -1,13 +1,13 @@
 import React, { useState, useReducer, useEffect } from "react";
 import FirstPage from "./RaceAndClass/FirstPage";
-import SecondPage from "./Sets/SecondPage";
+import SecondPage from "./Skills/SecondPage";
 import {
   BuildContext,
   buildReducer,
   defaultBuildState
 } from "./BuildStateContext";
 import { RouteComponentProps, Redirect } from "react-router";
-import ThirdPage from "./Skills/ThirdPage";
+import ThirdPage from "./Sets/ThirdPage";
 
 import { Layout, Button, Steps, Icon, message } from "antd";
 import styled from "styled-components";

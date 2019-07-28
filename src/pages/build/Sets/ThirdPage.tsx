@@ -16,6 +16,7 @@ import Armor from "./Armor";
 import Jewelry from "./Jewelry";
 import GearView from "../../../components/GearView";
 import RightContent from "./RightContent";
+import { ISet } from "../../../components/GearSlot";
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -30,28 +31,6 @@ const Content = styled.div`
   width: 100%;
   display: flex;
 `;
-
-export interface ISet {
-  id: number;
-  name: string;
-  location: string;
-  type: string;
-  slug: string;
-  bonus_item_1: string | null;
-  bonus_item_2: string | null;
-  bonus_item_3: string | null;
-  bonus_item_4: string | null;
-  bonus_item_5: string | null;
-  has_jewels: number;
-  has_weapons: number;
-  has_heavy_armor: number;
-  has_light_armor: number;
-  has_medium_armor: number;
-  traits_needed: number | null;
-  pts: number;
-  eso_id: null | number;
-  [key: string]: string | null | number;
-}
 
 export default () => {
   // const [skills, setSkills] = useState([]);
