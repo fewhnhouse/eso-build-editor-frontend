@@ -6,6 +6,13 @@ import SkillView from "../../../components/SkillView";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import SkillSlot from "../../../components/SkillSlot";
 
+export const ABILITY_BAR_ONE = "abilityBar1";
+export const ABILITY_BAR_TWO = "abilityBar2";
+export const ACTIVE_BAR = "activeBar";
+export const ACTIVE_ULTIMATE = "activeUltimate";
+export const ULTIMATE_ONE = "ultimate1";
+export const ULTIMATE_TWO = "ultimate2";
+
 const AbilityBar = styled.div`
   height: 100px;
   display: flex;
@@ -34,7 +41,9 @@ export default () => {
     skills,
     selectedUltimate,
     abilityBarOne,
-    abilityBarTwo
+    abilityBarTwo,
+    ultimateOne,
+    ultimateTwo
   } = state!;
 
   const getSkills = (abilityBar: { index: number; id: number }[]) => {
@@ -46,28 +55,29 @@ export default () => {
   const activeBarSkills = getSkills(selectedSkills);
 
   const ultimate = skills.find(skill => skill.id === selectedUltimate);
+  const ultimateSkillOne = skills.find(skill => skill.id === ultimateOne.id);
+  const ultimateSkillTwo = skills.find(skill => skill.id === ultimateTwo.id);
 
   const abilityBarOneSkills = getSkills(abilityBarOne);
   const abilityBarTwoSkills = getSkills(abilityBarTwo);
 
-  const onBeforeDragStart = useCallback(() => {
-    /*...*/
-  }, []);
+  const onBeforeDragStart = useCallback(() => {}, []);
 
   const onDragStart = useCallback(start => {
     const sourceSplit = start.draggableId.split("-");
     const sourceBar = sourceSplit[0];
     const sourceId = sourceSplit[1];
     const sourceIndex = sourceSplit[3];
-    if (sourceBar === "abilityBar1" || sourceBar === "abilityBar2") {
+    if (
+      sourceBar === ABILITY_BAR_ONE ||
+      sourceBar === ABILITY_BAR_TWO ||
+      sourceBar === ULTIMATE_ONE ||
+      sourceBar === ULTIMATE_TWO
+    ) {
       setHasTrash(true);
     }
-
-    /*...*/
   }, []);
-  const onDragUpdate = useCallback(update => {
-    /*...*/
-  }, []);
+  const onDragUpdate = useCallback(update => {}, []);
   const onDragEnd = useCallback(
     end => {
       setHasTrash(false);
@@ -83,17 +93,25 @@ export default () => {
         const destinationIndex = destinationSplit[3];
 
         if (
-          (sourceBar === "abilityBar1" || sourceBar === "abilityBar2") &&
           sourceId !== 0 &&
           end.destination.droppableId === "trash-droppable-1"
         ) {
-          dispatch!({
-            type: "REMOVE_ABILITY",
-            payload: {
-              skillId: sourceId,
-              barIndex: sourceBar === "abilityBar1" ? 0 : 1
-            }
-          });
+          if (sourceBar === ABILITY_BAR_ONE || sourceBar === ABILITY_BAR_TWO) {
+            dispatch!({
+              type: "REMOVE_ABILITY",
+              payload: {
+                skillId: sourceId,
+                barIndex: sourceBar === ABILITY_BAR_ONE ? 0 : 1
+              }
+            });
+          } else if (sourceBar === ULTIMATE_ONE || sourceBar === ULTIMATE_TWO) {
+            dispatch!({
+              type: "REMOVE_ULTIMATE",
+              payload: {
+                barIndex: sourceBar === ULTIMATE_ONE ? 0 : 1
+              }
+            });
+          }
         }
 
         if (sourceBar === "activeBar") {
@@ -102,10 +120,21 @@ export default () => {
             payload: {
               skillId: sourceId,
               destinationIndex,
-              barIndex: destinationBar === "abilityBar1" ? 0 : 1
+              barIndex: destinationBar === ABILITY_BAR_ONE ? 0 : 1
             }
           });
-        } else {
+        } else if (sourceBar === ACTIVE_ULTIMATE) {
+          dispatch!({
+            type: "DROP_ULTIMATE",
+            payload: {
+              skillId: sourceId,
+              barIndex: destinationBar === ULTIMATE_ONE ? 0 : 1
+            }
+          });
+        } else if (
+          sourceBar === ABILITY_BAR_ONE ||
+          sourceBar === "abilityBar2"
+        ) {
           dispatch!({
             type: "SWAP_ABILITY",
             payload: {
@@ -117,9 +146,20 @@ export default () => {
               destinationBar
             }
           });
+        } else if (
+          (sourceBar === ULTIMATE_ONE || sourceBar === ULTIMATE_TWO) &&
+          (destinationBar === ULTIMATE_ONE || destinationBar === ULTIMATE_TWO)
+        ) {
+          dispatch!({
+            type: "SWAP_ULTIMATE",
+            payload: {
+              sourceId,
+              barIndex: destinationBar === ULTIMATE_ONE ? 0 : 1,
+              destinationId
+            }
+          });
         }
       }
-      // the only one that is required
     },
     [dispatch]
   );
@@ -134,44 +174,48 @@ export default () => {
       <AbilityBarContainer>
         <Divider>Ultimate</Divider>
         <SkillSlot
-          skillIndex={6}
-          id="ultimate"
-          index={6}
+          skillIndex={5}
+          id={`${ACTIVE_ULTIMATE}-${ultimate ? ultimate.id : "0"}`}
+          index={5}
           icon={ultimate ? ultimate.icon : ""}
         />
 
         <Divider>Active</Divider>
-        <SkillView id="activeBar" skillSlots={activeBarSkills} />
+        <SkillView id={ACTIVE_BAR} skillSlots={activeBarSkills} />
         <Divider>Ability Bar</Divider>
 
         <AbilityBar>
           <SkillView
-            id="abilityBar1"
+            id={ABILITY_BAR_ONE}
             droppable
             skillSlots={abilityBarOneSkills}
           />
 
           <SkillSlot
-            skillIndex={6}
-            id="abilityBar1-ultimate"
+            skillIndex={5}
+            id={`${ULTIMATE_ONE}-${
+              ultimateSkillOne ? ultimateSkillOne.id : "0"
+            }`}
             droppable
-            index={6}
-            icon={ultimate ? ultimate.icon : ""}
+            index={5}
+            icon={ultimateSkillOne ? ultimateSkillOne.icon : ""}
           />
         </AbilityBar>
 
         <AbilityBar>
           <SkillView
-            id="abilityBar2"
+            id={ABILITY_BAR_TWO}
             droppable
             skillSlots={abilityBarTwoSkills}
           />
           <SkillSlot
-            skillIndex={-1}
-            id="abilityBar2-ultimate"
-            index={6}
+            skillIndex={5}
+            id={`${ULTIMATE_TWO}-${
+              ultimateSkillTwo ? ultimateSkillTwo.id : "0"
+            }`}
+            index={5}
             droppable
-            icon={ultimate ? ultimate.icon : ""}
+            icon={ultimateSkillTwo ? ultimateSkillTwo.icon : ""}
           />
         </AbilityBar>
         <Droppable isDropDisabled={!hasTrash} droppableId={`trash-droppable-1`}>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu, Icon } from "antd";
 import { ClickParam } from "antd/lib/menu";
+import { BuildContext } from "../BuildStateContext";
 
 const { SubMenu } = Menu;
 
@@ -134,10 +135,14 @@ const menuStructure = [
   }
 ];
 
-interface IMenuProps {
-  handleClick: (e: ClickParam) => void;
-}
-export default ({ handleClick }: IMenuProps) => {
+export default () => {
+  const [, dispatch] = useContext(BuildContext);
+  const handleClick = (e: ClickParam) => {
+    dispatch!({
+      type: "SET_SKILLLINE",
+      payload: { skillLine: parseInt(e.key, 10) }
+    });
+  };
   return (
     <Menu
       onClick={handleClick}

@@ -96,7 +96,14 @@ interface ICardProps {
 
 export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext);
-  const { selectedSkills, selectedUltimate } = state!;
+  const { selectedSkillLines, skillLine } = state!;
+  const selectedSkillLine = selectedSkillLines.find(
+    line => line.id === skillLine
+  );
+  if (!selectedSkillLine) {
+    return null;
+  }
+  const { selectedSkills, selectedUltimate } = selectedSkillLine;
   const firstActive = ultimate
     ? selectedUltimate === morph1.id
     : selectedSkills.find(slot => slot.id === morph1.id) !== undefined;
@@ -107,7 +114,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     if (ultimate) {
       dispatch!({
         type: "SET_SELECTED_ULTIMATE",
-        payload: firstActive ? skill.id : morph1.id
+        payload: { id: firstActive ? skill.id : morph1.id }
       });
     } else {
       if (firstActive) {
@@ -133,7 +140,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     if (ultimate) {
       dispatch!({
         type: "SET_SELECTED_ULTIMATE",
-        payload: secondActive ? skill.id : morph2.id
+        payload: { id: secondActive ? skill.id : morph2.id }
       });
     } else {
       if (secondActive) {

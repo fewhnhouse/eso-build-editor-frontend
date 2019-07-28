@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { Card } from "antd";
-import styled from "styled-components";
+import styled, { withTheme, ThemeProps } from "styled-components";
 import { Redirect } from "react-router";
 import { chooseRace, chooseClass } from "../../util/utils";
+import { ITheme } from "../../components/globalStyles";
 
+interface IStyledCardProps {
+  colors: {
+    backgroundColor: string;
+    borderColor: string;
+  };
+}
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
   position: relative;
-  border-color: ${(props: { borderColor: string }) => props.borderColor || ""};
+  border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ""};
+  background-color: ${(props: IStyledCardProps) =>
+    props.colors.backgroundColor || ""};
 `;
 
 const { Meta } = Card;
@@ -37,29 +46,44 @@ export interface IClass {
   description: string;
   race: string;
 }
-interface ICardProps {
+interface ICardProps extends ThemeProps<ITheme> {
   role: {
     role: string;
     esoClass: IClass;
   };
 }
 
-const borderColor = (role: string ) => {
+const setColor = (role: string, theme: ITheme) => {
   switch (role) {
-    case "Stamina DD":
-      return "lightgreen";
+    case "Stamina DD": // ${props => props.theme.stamGreen};
+      return {
+        borderColor: `${theme.roleStamDD}`,
+        backgroundColor: ``
+      };
     case "Stamina Support":
-      return "green";
+      return {
+        borderColor: `${theme.roleStamSupp}`,
+        backgroundColor: ``
+      };
     case "Magicka DD":
-      return "cyan";
+      return {
+        borderColor: `${theme.roleMagDD}`,
+        backgroundColor: ``
+      };
     case "Magicka Support":
-      return "yellow";
+      return {
+        borderColor: `${theme.roleMagSupp}`,
+        backgroundColor: ``
+      };
     default:
-      return "";
+      return {
+        borderColor: "",
+        backgroundColor: ""
+      };
   }
-}
+};
 
-export default ({ role }: ICardProps) => {
+const HomeCard = ({ role, theme }: ICardProps) => {
   const { esoClass } = role;
   const [redirect, setRedirect] = useState(false);
   const handleClick = () => {
@@ -70,7 +94,7 @@ export default ({ role }: ICardProps) => {
   ) : (
     <StyledCard
       onClick={handleClick}
-      borderColor={borderColor(role.role)}
+      colors={setColor(role.role, theme)}
       hoverable
       actions={[
         <RaceContainer>
@@ -94,3 +118,5 @@ export default ({ role }: ICardProps) => {
     </StyledCard>
   );
 };
+
+export default withTheme(HomeCard);

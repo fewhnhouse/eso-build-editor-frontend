@@ -60,8 +60,7 @@ const defaultUltimate: ISkill = {
 };
 export default () => {
   // const [skills, setSkills] = useState([]);
-  const [skillLine, setSkillLine] = useState(16);
-  const [, dispatch] = useContext(BuildContext);
+  const [state, dispatch] = useContext(BuildContext);
   const [baseActives, setBaseActives] = useState<ISkill[]>([]);
   const [morphedActives, setMorphedActives] = useState<ISkill[]>([]);
   const [passives, setPassives] = useState<ISkill[]>([]);
@@ -83,18 +82,19 @@ export default () => {
       */
     dispatch!({ type: "SET_SKILLS", payload: skills });
   }, [dispatch]);
-  const handleClick = (e: ClickParam) => {
-    setSkillLine(parseInt(e.key, 10));
-  };
 
   useEffect(() => {
-    const filteredSkills: ISkill[] = skills.filter(
-      (skill: ISkill) => skill.skillline === skillLine
+    const selectedSkillLine: ISkill[] = skills.filter(
+      (skill: ISkill) => skill.skillline === state!.skillLine
     );
 
-    const actives = filteredSkills.filter((skill: ISkill) => skill.type === 1);
-    const passives = filteredSkills.filter((skill: ISkill) => skill.type === 2);
-    const ultimates = filteredSkills.filter(
+    const actives = selectedSkillLine.filter(
+      (skill: ISkill) => skill.type === 1
+    );
+    const passives = selectedSkillLine.filter(
+      (skill: ISkill) => skill.type === 2
+    );
+    const ultimates = selectedSkillLine.filter(
       (skill: ISkill) => skill.type === 3
     );
 
@@ -118,17 +118,17 @@ export default () => {
     setBaseUltimate(baseUltimate!);
     setPassives(passives);
     dispatch!({
-      type: "SET_SELECTED_SKILLS",
-      payload: baseActives.map((skill: ISkill, index: number) => ({
-        id: skill.id,
-        index
-      }))
+      type: "SET_SELECTED_SKILLS_AND_ULTIMATE",
+      payload: {
+        selectedSkills: baseActives.map((skill: ISkill, index: number) => ({
+          id: skill.id,
+          index
+        })),
+        id: state!.skillLine,
+        ultimate: baseUltimate!.id
+      }
     });
-    dispatch!({
-      type: "SET_SELECTED_ULTIMATE",
-      payload: baseUltimate!.id
-    });
-  }, [skillLine, dispatch]);
+  }, [state!.skillLine, dispatch]);
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );
@@ -142,7 +142,7 @@ export default () => {
         flexDirection: "row"
       }}
     >
-      <Menu handleClick={handleClick} />
+      <Menu />
       <Content>
         <AbilityContainer>
           <Divider>Ultimate</Divider>
