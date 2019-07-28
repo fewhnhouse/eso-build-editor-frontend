@@ -1,32 +1,49 @@
 const theme = {
+
   primary: "blue",
-  healthRed: "red",
-  stamGreen: "green",
-  magBlue: "blue",
+  mainBg: "rgb(155, 155, 155)",
+
+  baseStatColors: {
+    healthRed: "red",
+    stamGreen: "green",
+    magBlue: "blue"
+  },
+
+  dmgStatColors: {
+    statsWeaponDmg: "green",
+    statsSpellDmg: "blue"
+  },
+
+  roleCardColors: {
+    StamDD: "rgb(108, 209, 0)",
+    MagDD: "rgb(0, 136, 209)",
+    StamSupp: "rgb(49, 94, 0)",
+    MagSupp: "rgb(0, 66, 102)"
+  },
+
   statsHeal: "yellow",
-  statsRes: "cyan",
-  statsWeaponDmg: "green",
-  statsSpellDmg: "blue",
-  roleStamDD: "rgb(108, 209, 0)",
-  roleMagDD: "rgb(0, 136, 209)",
-  roleStamSupp: "rgb(49, 94, 0)",
-  roleMagSupp: "rgb(0, 66, 102)",
-  mainBg: "rgb(155, 155, 155)"
+  statsRes: "cyan"
 };
 
 export interface ITheme {
   primary: string;
-  healthRed: string;
-  stamGreen: string;
-  magBlue: string;
+  baseStatColors: {
+    healthRed: string,
+    stamGreen:string,
+    magBlue: string
+  },
   statsHeal: string;
   statsRes: string;
-  statsWeaponDmg: string,
-  statsSpellDmg: string,
-  roleStamDD: string,
-  roleMagDD: string,
-  roleStamSupp: string,
-  roleMagSupp: string,
+  dmgStatColors: {
+    statsWeaponDmg: string,
+    statsSpellDmg: string,
+  },
+  roleCardColors: {
+    StamDD: string,
+    MagDD: string,
+    StamSupp: string,
+    MagSupp: string,
+  },
   mainBg: string;
 }
 

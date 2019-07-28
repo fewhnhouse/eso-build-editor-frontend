@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState } from "react";
+import React, { useContext, useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Divider, Card, Icon } from "antd";
 import { BuildContext } from "../BuildStateContext";
@@ -36,10 +36,12 @@ const AbilityBarContainer = styled.div`
 export default () => {
   const [state, dispatch] = useContext(BuildContext);
   const [hasTrash, setHasTrash] = useState(false);
+  const [activeBarSkills, setActiveBarSkills] = useState<any>([]);
+  const [activeUltimate, setActiveUltimate] = useState<number>(0);
   const {
-    selectedSkills,
+    skillLine,
+    selectedSkillLines,
     skills,
-    selectedUltimate,
     abilityBarOne,
     abilityBarTwo,
     ultimateOne,
@@ -52,9 +54,20 @@ export default () => {
       return { skill, index };
     });
   };
-  const activeBarSkills = getSkills(selectedSkills);
 
-  const ultimate = skills.find(skill => skill.id === selectedUltimate);
+  useEffect(() => {
+    const selectedSkillLine = selectedSkillLines.find(
+      line => line.id === skillLine
+    );
+    if (selectedSkillLine) {
+      const { selectedSkills, selectedUltimate } = selectedSkillLine;
+      const activeSkills = getSkills(selectedSkills);
+      setActiveBarSkills(activeSkills);
+      setActiveUltimate(selectedUltimate);
+    }
+  }, [selectedSkillLines]);
+
+  const ultimate = skills.find(skill => skill.id === activeUltimate);
   const ultimateSkillOne = skills.find(skill => skill.id === ultimateOne.id);
   const ultimateSkillTwo = skills.find(skill => skill.id === ultimateTwo.id);
 

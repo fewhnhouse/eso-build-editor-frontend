@@ -47,38 +47,37 @@ export default ({ match }: RouteComponentProps<any>) => {
     {
       name: "Resources",
       data: [
-        { label: "Health", value: 0 },
-        { label: "Stamina", value: 0 },
-        { label: "Magicka", value: 0 }
+        { label: "Health", value: 25670 },
+        { label: "Stamina", value: 21500 },
+        { label: "Magicka", value: 25999 }
       ]
     },
     {
       name: "Revocery",
       data: [
-        { label: "Health recovery", value: 0 },
-        { label: "Stamina recovery", value: 0 },
-        { label: "Magicka recovery", value: 0 }
+        { label: "Health recovery", value: 555 },
+        { label: "Stamina recovery", value: 1455 },
+        { label: "Magicka recovery", value: 1000 }
       ]
     },
     {
       name: "Damage",
       data: [
-        { label: "Weapon damage", value: 0 },
-        { label: "Weapon critical", value: 0 },
-        { label: "Spell damage", value: 0 },
-        { label: "Spell critical", value: 0 }
+        { label: "Weapon damage", value: 1234 },
+        { label: "Weapon critical", value: 1234 },
+        { label: "Spell damage", value: 234 },
+        { label: "Spell critical", value: 2342 }
       ]
     },
     {
       name: "Resistance",
       data: [
-        { label: "Physical resistance", value: 0 },
-        { label: "Spell resistance", value: 0 },
-        { label: "Critical resistance", value: 0 }
+        { label: "Physical resistance", value: 15899 },
+        { label: "Spell resistance", value: 12400 },
+        { label: "Critical resistance", value: 1750 }
       ]
     }
   ];
-
   return (
     <Container>
       <Title level={3}>
@@ -88,7 +87,13 @@ export default ({ match }: RouteComponentProps<any>) => {
         />
         {match.params.name}
       </Title>
-      <Wrapper direction="row" align="baseline" justify="space-around" wrap fluid>
+      <Wrapper
+        direction="row"
+        align="baseline"
+        justify="space-around"
+        wrap
+        fluid
+      >
         <GearsView>
           <StyledTitle level={3}>Gear</StyledTitle>
           <Divider />
@@ -118,7 +123,9 @@ export default ({ match }: RouteComponentProps<any>) => {
           {stats.map(stat => (
             <>
               {stat.data.map(stat => (
-                <Title level={4}>{stat.label}</Title>
+                <>
+                  <Title level={4}>{stat.label} <span style={{float: "right"}}>{stat.value}</span></Title>
+                </>
               ))}
               <Divider />
             </>

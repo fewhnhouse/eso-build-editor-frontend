@@ -68,6 +68,11 @@ export default () => {
   const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([]);
 
   useEffect(() => {
+    console.log(state);
+    localStorage.setItem("buildState", JSON.stringify(state));
+  }, [state]);
+
+  useEffect(() => {
     /*
     axios
     .get("/skills", {
@@ -125,13 +130,14 @@ export default () => {
           index
         })),
         id: state!.skillLine,
-        ultimate: baseUltimate!.id
+        ultimate: baseUltimate ? baseUltimate!.id : 0
       }
     });
   }, [state!.skillLine, dispatch]);
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );
+  console.log(passives, baseActives, baseUltimate);
 
   return (
     <div
@@ -146,34 +152,42 @@ export default () => {
       <Content>
         <AbilityContainer>
           <Divider>Ultimate</Divider>
-          <ul>
+          {baseUltimate && (
             <SkillCard
               ultimate
               skill={baseUltimate || baseActives[0]}
               morph1={morphs[0] || defaultUltimate}
               morph2={morphs[1] || defaultUltimate}
             />
-          </ul>
-          <Divider>Active</Divider>
-          <ul>
-            {baseActives.map(base => {
-              const morphs = morphedActives.filter(
-                morph => morph.parent === base.id
-              );
-              return (
-                <SkillCard skill={base} morph1={morphs[0]} morph2={morphs[1]} />
-              );
-            })}
-          </ul>
+          )}
+          <Divider>Actives</Divider>
+          {baseActives.length > 0 && (
+            <>
+              {baseActives.map((base, index) => {
+                console.log(base);
+                const morphs = morphedActives.filter(
+                  morph => morph.parent === base.id
+                );
+                return (
+                  <SkillCard
+                    key={index}
+                    skill={base}
+                    morph1={morphs[0]}
+                    morph2={morphs[1]}
+                  />
+                );
+              })}
+            </>
+          )}
 
-          <Divider>Passive</Divider>
-          <ul>
-            {passives.map(el => (
-              <SkillCard passive skill={el} morph1={el} morph2={el} />
+          <Divider>Passives</Divider>
+          <>
+            {passives.map((el, key) => (
+              <SkillCard key={key} passive skill={el} morph1={el} morph2={el} />
             ))}
-          </ul>
+          </>
         </AbilityContainer>
-        <AbilityBar />
+        {baseActives.length > 0 && <AbilityBar />}
       </Content>
     </div>
   );

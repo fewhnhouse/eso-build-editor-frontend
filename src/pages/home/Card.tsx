@@ -57,22 +57,22 @@ const setColor = (role: string, theme: ITheme) => {
   switch (role) {
     case "Stamina DD": // ${props => props.theme.stamGreen};
       return {
-        borderColor: `${theme.roleStamDD}`,
+        borderColor: `${theme.roleCardColors.StamDD}`,
         backgroundColor: ``
       };
     case "Stamina Support":
       return {
-        borderColor: `${theme.roleStamSupp}`,
+        borderColor: `${theme.roleCardColors.StamSupp}`,
         backgroundColor: ``
       };
     case "Magicka DD":
       return {
-        borderColor: `${theme.roleMagDD}`,
+        borderColor: `${theme.roleCardColors.MagDD}`,
         backgroundColor: ``
       };
     case "Magicka Support":
       return {
-        borderColor: `${theme.roleMagSupp}`,
+        borderColor: `${theme.roleCardColors.MagSupp}`,
         backgroundColor: ``
       };
     default:

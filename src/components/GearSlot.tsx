@@ -39,6 +39,7 @@ export interface IGearSlotProps {
 const GearImg = styled.img`
   width: 50px;
   height: 50px;
+  margin: 5px 10px 5px 10px;
 `;
 
 const getImageSource = (slot: string) => {

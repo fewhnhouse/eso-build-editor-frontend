@@ -14,25 +14,15 @@ export interface IBuildState {
     selectedSkills: ISlot[];
     selectedUltimate: number;
   }[];
-  selectedSkills: ISlot[];
   abilityBarOne: ISlot[];
   abilityBarTwo: ISlot[];
   ultimateOne: ISlot;
   ultimateTwo: ISlot;
-  selectedUltimate: number;
 }
 
 export const defaultBuildState = {
   skills: [],
   skillLine: 16,
-  selectedUltimate: 0,
-  selectedSkills: [
-    { id: 0, index: 0 },
-    { id: 0, index: 1 },
-    { id: 0, index: 2 },
-    { id: 0, index: 3 },
-    { id: 0, index: 4 }
-  ],
   activeBar: [
     { id: 0, index: 0 },
     { id: 0, index: 1 },
@@ -183,11 +173,11 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
       if (sourceBar !== destinationBar) {
         if (destinationBar === ABILITY_BAR_ONE) {
           const sourceHasDestinationSkill = state.abilityBarTwo.find(
-            slot => slot.id === parsedDestinationId
+            slot => slot.id === parsedDestinationId && slot.id !== 0
           );
 
           const destinationHasSourceSkill = state.abilityBarOne.find(
-            slot => slot.id === parsedSourceId
+            slot => slot.id === parsedSourceId && slot.id !== 0
           );
 
           if (
@@ -200,11 +190,11 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
           }
         } else if (destinationBar === ABILITY_BAR_TWO) {
           const sourceHasDestinationSkill = state.abilityBarOne.find(
-            slot => slot.id === parsedDestinationId
+            slot => slot.id === parsedDestinationId && slot.id !== 0
           );
 
           const destinationHasSourceSkill = state.abilityBarTwo.find(
-            slot => slot.id === parsedSourceId
+            slot => slot.id === parsedSourceId && slot.id !== 0
           );
 
           if (
@@ -299,6 +289,7 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     }
     case "SELECT_MORPH": {
       const { baseId, morphId } = action.payload;
+      console.log(state.ultimateOne);
       const morphMap = (slot: ISlot) =>
         slot.id === baseId ? { id: morphId, index: slot.index } : slot;
       return {
@@ -310,14 +301,26 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
             ? {
                 id: skillLine.id,
                 selectedSkills: skillLine.selectedSkills.map(morphMap),
-                selectedUltimate: skillLine.selectedUltimate
+                selectedUltimate:
+                  skillLine.selectedUltimate === baseId
+                    ? morphId
+                    : skillLine.selectedUltimate
               }
             : skillLine
-        )
+        ),
+        ultimateOne:
+          state.ultimateOne.id === baseId
+            ? { id: morphId, index: 5 }
+            : state.ultimateOne,
+        ultimateTwo:
+          state.ultimateTwo.id === baseId
+            ? { id: morphId, index: 5 }
+            : state.ultimateTwo
       };
     }
     case "UNSELECT_MORPH": {
       const { baseId, morphId } = action.payload;
+      console.log(state.ultimateOne);
       const morphMap = (slot: ISlot) =>
         slot.id === morphId ? { id: baseId, index: slot.index } : slot;
 
@@ -330,10 +333,21 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
             ? {
                 id: skillLine.id,
                 selectedSkills: skillLine.selectedSkills.map(morphMap),
-                selectedUltimate: skillLine.selectedUltimate
+                selectedUltimate:
+                  skillLine.selectedUltimate === morphId
+                    ? baseId
+                    : skillLine.selectedUltimate
               }
             : skillLine
-        )
+        ),
+        ultimateOne:
+          state.ultimateOne.id === morphId
+            ? { id: baseId, index: 5 }
+            : state.ultimateOne,
+        ultimateTwo:
+          state.ultimateTwo.id === morphId
+            ? { id: baseId, index: 5 }
+            : state.ultimateTwo
       };
     }
     case "SWAP_MORPH": {
@@ -350,26 +364,21 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
             ? {
                 id: skillLine.id,
                 selectedSkills: skillLine.selectedSkills.map(morphMap),
-                selectedUltimate: skillLine.selectedUltimate
+                selectedUltimate:
+                  skillLine.selectedUltimate === oldMorphId
+                    ? newMorphId
+                    : skillLine.selectedUltimate
               }
             : skillLine
-        )
-      };
-    }
-
-    case "SET_SELECTED_ULTIMATE": {
-      const { id } = action.payload;
-      return {
-        ...state,
-        selectedSkillLines: state.selectedSkillLines.map(skillLine =>
-          skillLine.id === state.skillLine
-            ? {
-                id: skillLine.id,
-                selectedSkills: skillLine.selectedSkills,
-                selectedUltimate: id
-              }
-            : skillLine
-        )
+        ),
+        ultimateOne:
+          state.ultimateOne.id === oldMorphId
+            ? { id: newMorphId, index: 5 }
+            : state.ultimateOne,
+        ultimateTwo:
+          state.ultimateTwo.id === oldMorphId
+            ? { id: newMorphId, index: 5 }
+            : state.ultimateTwo
       };
     }
 

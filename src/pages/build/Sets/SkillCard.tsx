@@ -111,54 +111,40 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     ? selectedUltimate === morph2.id
     : selectedSkills.find(slot => slot.id === morph2.id) !== undefined;
   const handleFirstClick = () => {
-    if (ultimate) {
+    if (firstActive) {
       dispatch!({
-        type: "SET_SELECTED_ULTIMATE",
-        payload: { id: firstActive ? skill.id : morph1.id }
+        type: "UNSELECT_MORPH",
+        payload: { baseId: skill.id, morphId: morph1.id }
+      });
+    } else if (!secondActive) {
+      dispatch!({
+        type: "SELECT_MORPH",
+        payload: { baseId: skill.id, morphId: morph1.id }
       });
     } else {
-      if (firstActive) {
-        dispatch!({
-          type: "UNSELECT_MORPH",
-          payload: { baseId: skill.id, morphId: morph1.id }
-        });
-      } else if (!secondActive) {
-        dispatch!({
-          type: "SELECT_MORPH",
-          payload: { baseId: skill.id, morphId: morph1.id }
-        });
-      } else {
-        dispatch!({
-          type: "SWAP_MORPH",
-          payload: { oldMorphId: morph2.id, newMorphId: morph1.id }
-        });
-      }
+      dispatch!({
+        type: "SWAP_MORPH",
+        payload: { oldMorphId: morph2.id, newMorphId: morph1.id }
+      });
     }
   };
 
   const handleSecondClick = () => {
-    if (ultimate) {
+    if (secondActive) {
       dispatch!({
-        type: "SET_SELECTED_ULTIMATE",
-        payload: { id: secondActive ? skill.id : morph2.id }
+        type: "UNSELECT_MORPH",
+        payload: { baseId: skill.id, morphId: morph2.id }
+      });
+    } else if (!firstActive) {
+      dispatch!({
+        type: "SELECT_MORPH",
+        payload: { baseId: skill.id, morphId: morph2.id }
       });
     } else {
-      if (secondActive) {
-        dispatch!({
-          type: "UNSELECT_MORPH",
-          payload: { baseId: skill.id, morphId: morph2.id }
-        });
-      } else if (!firstActive) {
-        dispatch!({
-          type: "SELECT_MORPH",
-          payload: { baseId: skill.id, morphId: morph2.id }
-        });
-      } else {
-        dispatch!({
-          type: "SWAP_MORPH",
-          payload: { oldMorphId: morph1.id, newMorphId: morph2.id }
-        });
-      }
+      dispatch!({
+        type: "SWAP_MORPH",
+        payload: { oldMorphId: morph1.id, newMorphId: morph2.id }
+      });
     }
   };
   return (

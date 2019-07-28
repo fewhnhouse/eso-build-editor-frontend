@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import FirstPage from "./RaceAndClass/FirstPage";
 import SecondPage from "./Sets/SecondPage";
 import {
@@ -9,7 +9,7 @@ import {
 import { RouteComponentProps, Redirect } from "react-router";
 import ThirdPage from "./Skills/ThirdPage";
 
-import { Layout, Button, Steps, Icon } from "antd";
+import { Layout, Button, Steps, Icon, message } from "antd";
 import styled from "styled-components";
 
 const { Footer, Content } = Layout;
@@ -29,7 +29,18 @@ const TabButton = styled(Button)`
 `;
 const { Step } = Steps;
 export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
-  const [state, dispatch] = useReducer(buildReducer, defaultBuildState);
+  const savedBuildState = localStorage.getItem("buildState");
+
+  useEffect(() => {
+    const savedBuildState = localStorage.getItem("buildState");
+    if (savedBuildState) {
+      message.info("Your settings have been restored.");
+    }
+  }, []);
+  const [state, dispatch] = useReducer(
+    buildReducer,
+    savedBuildState ? JSON.parse(savedBuildState) : defaultBuildState
+  );
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10) || 0);
 
