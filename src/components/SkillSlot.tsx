@@ -3,13 +3,32 @@ import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import { SkillCardContent } from "../pages/build/Sets/SkillCard";
 
 interface ISkillSlotProps {
-  icon: string;
   droppable?: boolean;
   index: number;
-  id: string;
   skillIndex: number;
+  id: string;
+  skill?: ISkill;
+}
+
+export interface ISkill {
+  cast_time: string;
+  cost: string;
+  effect_1: string;
+  effect_2: string | null;
+  icon: string;
+  id: number;
+  name: string;
+  parent: number | null;
+  pts: number;
+  range: string | null;
+  skillline: number;
+  slug: string;
+  target: string | null;
+  type: number;
+  unlocks_at: number | null;
 }
 
 const SkillFrame = styled.div`
@@ -29,11 +48,11 @@ const SkillImg = styled.img`
 `;
 
 export default ({
-  icon,
   droppable,
   index,
+  skillIndex,
   id,
-  skillIndex
+  skill
 }: ISkillSlotProps) => {
   return (
     <Droppable
@@ -45,22 +64,23 @@ export default ({
           {provided.placeholder}
 
           <Draggable
-            isDragDisabled={icon === ""}
+            isDragDisabled={skill === undefined}
             draggableId={`${id}-draggable-${index}`}
             index={index}
           >
             {(provided, snapshot) =>
-              icon && skillIndex === index ? (
+              skill && skillIndex === index ? (
                 <Popover
                   placement={"top"}
-                  title="Skill 1"
-                  content="Instagib2000"
+                  content={<SkillCardContent skill={skill} />}
                 >
                   <SkillImg
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${icon}`}
+                    src={`https://beast.pathfindermediagroup.com/storage/skills/${
+                      skill.icon
+                    }`}
                   />
                 </Popover>
               ) : (

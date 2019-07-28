@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import SkillSlot from "./SkillSlot";
-import { ISkill } from "../pages/build/Sets/SecondPage";
+import SkillSlot, { ISkill } from "./SkillSlot";
 
 interface ISKillViewProps {
-  skillSlots: { index: number; skill: ISkill | undefined }[];
+  skillSlots: { index: number; skill: ISkill| undefined }[];
   droppable?: boolean;
   id: string;
 }
@@ -23,7 +22,7 @@ export default ({ skillSlots, droppable, id }: ISKillViewProps) => {
           index={index}
           droppable={droppable}
           skillIndex={skillSlot.index}
-          icon={skillSlot.skill ? skillSlot.skill.icon : ""}
+          skill={skillSlot ? skillSlot.skill : undefined}
         />
       ))}
     </SkillView>

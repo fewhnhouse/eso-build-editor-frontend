@@ -185,16 +185,15 @@ export default () => {
       onDragEnd={onDragEnd}
     >
       <AbilityBarContainer>
-
         <Divider>Active Selection</Divider>
         <AbilityBar>
           <SkillView id={ACTIVE_BAR} skillSlots={activeBarSkills} />
           {ultimate && (
             <SkillSlot
+              skill={ultimate}
               skillIndex={5}
               id={`${ACTIVE_ULTIMATE}-${ultimate ? ultimate.id : "0"}`}
               index={5}
-              icon={ultimate ? ultimate.icon : ""}
             />
           )}
         </AbilityBar>
@@ -214,7 +213,7 @@ export default () => {
             }`}
             droppable
             index={5}
-            icon={ultimateSkillOne ? ultimateSkillOne.icon : ""}
+            skill={ultimateSkillOne}
           />
         </AbilityBar>
 
@@ -231,7 +230,7 @@ export default () => {
             }`}
             index={5}
             droppable
-            icon={ultimateSkillTwo ? ultimateSkillTwo.icon : ""}
+            skill={ultimateSkillTwo}
           />
         </AbilityBar>
         <Droppable isDropDisabled={!hasTrash} droppableId={`trash-droppable-1`}>

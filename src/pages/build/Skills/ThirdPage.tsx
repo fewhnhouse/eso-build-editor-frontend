@@ -31,24 +31,6 @@ const Content = styled.div`
   display: flex;
 `;
 
-export interface ISkill {
-  cast_time: string;
-  cost: string;
-  effect_1: string;
-  effect_2: string | null;
-  icon: string;
-  id: number;
-  name: string;
-  parent: number | null;
-  pts: number;
-  range: string | null;
-  skillline: number;
-  slug: string;
-  target: string;
-  type: number;
-  unlocks_at: number;
-}
-
 export interface ISet {
   id: number;
   name: string;

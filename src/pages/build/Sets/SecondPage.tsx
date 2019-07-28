@@ -8,6 +8,7 @@ import SkillCard from "./SkillCard";
 import Menu from "./Menu";
 import { BuildContext } from "../BuildStateContext";
 import AbilityBar from "./AbilityBar";
+import { ISkill } from "../../../components/SkillSlot.jsx";
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -22,24 +23,6 @@ const Content = styled.div`
   width: 100%;
   display: flex;
 `;
-
-export interface ISkill {
-  cast_time: string;
-  cost: string;
-  effect_1: string;
-  effect_2: string | null;
-  icon: string;
-  id: number;
-  name: string;
-  parent: number | null;
-  pts: number;
-  range: string | null;
-  skillline: number;
-  slug: string;
-  target: string | null;
-  type: number;
-  unlocks_at: number | null;
-}
 
 const defaultUltimate: ISkill = {
   cast_time: "0",

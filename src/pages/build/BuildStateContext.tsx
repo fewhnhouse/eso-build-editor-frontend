@@ -1,6 +1,6 @@
 import React from "react"; // { useReducer }
-import { ISkill } from "./Sets/SecondPage";
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "./Sets/AbilityBar";
+import { ISkill } from "../../components/SkillSlot";
 
 interface ISlot {
   id: number;

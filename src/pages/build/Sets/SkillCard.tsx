@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Card, Divider, Popover } from "antd";
 import styled from "styled-components";
 
-import { ISkill } from "./SecondPage";
 import { BuildContext } from "../BuildStateContext";
+import { ISkill } from "../../../components/SkillSlot";
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
@@ -155,7 +155,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
         passive
           ? []
           : [
-              <Popover content={<CardContent skill={morph1} />}>
+              <Popover content={<SkillCardContent skill={morph1} />}>
                 <RaceContainer onClick={handleFirstClick}>
                   <MorphLabel active={firstActive} disabled={secondActive}>
                     {morph1.name}
@@ -169,7 +169,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   />
                 </RaceContainer>
               </Popover>,
-              <Popover content={<CardContent skill={morph2} />}>
+              <Popover content={<SkillCardContent skill={morph2} />}>
                 <RaceContainer onClick={handleSecondClick}>
                   <MorphLabel active={secondActive} disabled={firstActive}>
                     {morph2.name}
@@ -186,12 +186,12 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
             ]
       }
     >
-      <CardContent skill={skill} />
+      <SkillCardContent skill={skill} />
     </StyledCard>
   );
 };
 
-const CardContent = ({ skill }: { skill: ISkill }) => {
+export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   const isMagicka = skill.cost.includes("Magicka");
   const isStamina = skill.cost.includes("Magicka");
   const isFree = skill.cost.includes("Nothing");
