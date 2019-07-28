@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Card, Avatar, Divider, Typography } from "antd";
+import { Card } from "antd";
 import styled from "styled-components";
-
 import { Redirect } from "react-router";
 import { chooseRace, chooseClass } from "../../util/utils";
 
@@ -9,7 +8,7 @@ const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
   position: relative;
-  border: 1px solid black;
+  border-color: ${(props: { borderColor: string }) => props.borderColor || ""};
 `;
 
 const { Meta } = Card;
@@ -50,7 +49,7 @@ interface ICardProps {
   };
 }
 
-const borderColor = (role: string) => {
+const borderColor = (role: string ) => {
   switch (role) {
     case "Stamina DD":
       return "lightgreen";
@@ -60,6 +59,8 @@ const borderColor = (role: string) => {
       return "cyan";
     case "Magicka Support":
       return "yellow";
+    default:
+      return "";
   }
 }
 
@@ -74,7 +75,7 @@ export default ({ role }: ICardProps) => {
   ) : (
     <StyledCard
       onClick={handleClick}
-      style={{ borderColor: borderColor(role.role) }}
+      borderColor={borderColor(role.role)}
       hoverable
       actions={[
         <RaceContainer>
