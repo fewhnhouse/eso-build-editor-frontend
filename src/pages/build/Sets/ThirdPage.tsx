@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  Divider,
-  List,
-  AutoComplete,
-  Tag,
-  Tabs,
-  Card,
-  Select,
-  Empty
-} from "antd";
+import React, { useEffect, useState, useContext } from "react";
+import { Divider, Tabs, Card, Select, Empty } from "antd";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Weapons from "./Weapons";
 import Armor from "./Armor";
 import Jewelry from "./Jewelry";
-import GearView from "../../../components/GearView";
 import RightContent from "./RightContent";
+import { BuildContext } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
 const { TabPane } = Tabs;
-const { Option } = Select;
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -34,7 +24,8 @@ const Content = styled.div`
 
 export default () => {
   // const [skills, setSkills] = useState([]);
-  const [set, setSet] = useState<ISet | null>(null);
+  const [state, dispatch] = useContext(BuildContext);
+  const [selectedSet, setSelectedSet] = useState<ISet | undefined>(undefined);
   useEffect(() => {
     /*
     axios
@@ -50,9 +41,12 @@ export default () => {
       */
   }, []);
 
-  const handleSetClick = (set: ISet) => () => {
-    setSet(set);
-  };
+  useEffect(() => {
+    if (state!.selectedSet) {
+      setSelectedSet(state!.selectedSet);
+    }
+    console.log(selectedSet);
+  }, [state!.selectedSet]);
 
   return (
     <div
@@ -63,16 +57,16 @@ export default () => {
         flexDirection: "row"
       }}
     >
-      <Menu handleClick={handleSetClick} />
+      <Menu />
       <Content>
-        {set ? (
+        {selectedSet ? (
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <Card title={set && set.name}>
+              <Card hoverable title={selectedSet && selectedSet.name}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   {[1, 2, 3, 4, 5].map(i => (
-                    <span>{set && set[`bonus_item_${i}`]}</span>
+                    <span>{selectedSet && selectedSet[`bonus_item_${i}`]}</span>
                   ))}
                 </div>
               </Card>

@@ -8,6 +8,7 @@ import { bugloss, columbine, namira, drink, food } from "../../assets/deco";
 import Flex from "../../components/Flex";
 import { ITheme } from "../../components/globalStyles";
 import SkillView from "../../components/SkillView";
+import SkillSlot from "../../components/SkillSlot";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -128,6 +129,24 @@ const Details = ({ match, theme }: IDetails) => {
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
+          <SkillView id={"bar1"} droppable skillSlots=
+            {[
+              {index: 1, skill: undefined}, 
+              {index: 2, skill: undefined},
+              {index: 3, skill: undefined}, 
+              {index: 4, skill: undefined}, 
+              {index: 5, skill: undefined}, 
+            ]}
+          />
+          <SkillView id={"bar2"} droppable skillSlots=
+            {[
+              {index: 1, skill: undefined}, 
+              {index: 2, skill: undefined},
+              {index: 3, skill: undefined}, 
+              {index: 4, skill: undefined}, 
+              {index: 5, skill: undefined}, 
+            ]}
+          />
           {/*
           <SkillView skillSlots={[{index: 0, skill: undefined}, {index: 1, skill: undefined}]} id="0" />
           <SkillView skillSlots={[{index: 0, skill: undefined}, {index: 1, skill: undefined}]} id="1" />

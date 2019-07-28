@@ -2,9 +2,24 @@ import React, { useContext } from "react";
 import { Menu, Icon } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { BuildContext } from "../BuildStateContext";
+import castle from "../../../assets/icons/castle-ico.png";
+import circle from "../../../assets/icons/circle-ico.png";
+import torch from "../../../assets/icons/torch-ico.png";
+import hammer from "../../../assets/icons/hammer-ico.png";
+import leaf from "../../../assets/icons/leaf-ico.png";
+import myt from "../../../assets/icons/myt-ico.png";
+import shield from "../../../assets/icons/shield-ico.png";
+import helmet from "../../../assets/icons/helmet-ico.png";
 
+import styled from "styled-components";
+import Flex from "../../../components/Flex";
 const { SubMenu } = Menu;
 
+const EsoIcon = styled.img`
+  height: 16px;
+  width: 16px;
+  margin-right: 10px;
+`;
 const classes = [
   {
     class: "Nightblade",
@@ -61,10 +76,12 @@ const myClass = classes.find(esoClass => esoClass.class === "Sorcerer");
 const menuStructure = [
   {
     title: "Class",
+    icon: torch,
     items: myClass ? myClass.items : []
   },
   {
     title: "Weapon",
+    icon: shield,
     items: [
       { title: "Two Handed", id: 16 },
       { title: "One Hand and Shield", id: 17 },
@@ -76,6 +93,7 @@ const menuStructure = [
   },
   {
     title: "Armor",
+    icon: helmet,
     items: [
       { title: "Light Armor", id: 22 },
       { title: "Medium Armor", id: 23 },
@@ -84,6 +102,7 @@ const menuStructure = [
   },
   {
     title: "World",
+    icon: circle,
     items: [
       { title: "Soul Magic", id: 25 },
       { title: "Legerdemain", id: 28 },
@@ -93,6 +112,7 @@ const menuStructure = [
   },
   {
     title: "Guild",
+    icon: myt,
     items: [
       { title: "Mages Guild", id: 30 },
       { title: "Fighters Guild", id: 29 },
@@ -104,10 +124,12 @@ const menuStructure = [
   },
   {
     title: "Alliance War",
+    icon: castle,
     items: [{ title: "Assault", id: 35 }, { title: "Support", id: 36 }]
   },
   {
     title: "Racial",
+    icon: leaf,
     items: [
       { title: "Breton", id: 44 },
       { title: "Redguard", id: 45 },
@@ -123,6 +145,7 @@ const menuStructure = [
   },
   {
     title: "Craft",
+    icon: hammer,
     items: [
       { title: "Alchemy", id: 37 },
       { title: "Blacksmithing", id: 1 },
@@ -161,10 +184,10 @@ export default () => {
         <SubMenu
           key={`sub${index}`}
           title={
-            <span>
-              <Icon type="mail" />
+            <Flex direction="row" justify="flex-start" align="center">
+              <EsoIcon src={menu.icon} />
               <span>{menu.title}</span>
-            </span>
+            </Flex>
           }
         >
           {menu.items.map(

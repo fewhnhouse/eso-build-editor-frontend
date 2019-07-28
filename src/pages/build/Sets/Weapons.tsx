@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Divider, Select, Radio, Typography } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
@@ -30,8 +30,9 @@ import {
   prismatic,
   rage
 } from "../../../assets/glyphs";
-import { OptionProps } from "antd/lib/select";
+import { OptionProps, SelectValue } from "antd/lib/select";
 import { CustomSelect, SelectWithTitle } from "./CustomSelect";
+import { BuildContext } from "../BuildStateContext";
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
@@ -165,10 +166,22 @@ export default () => {
       icon: citrine
     }
   ];
-  const [weaponType, setWeaponType] = useState("onehanded");
   const onChange = (e: RadioChangeEvent) => {
-    setWeaponType(e.target.value);
+    dispatch!({
+      type: "SET_WEAPON_TYPE",
+      payload: { weaponType: e.target.value }
+    });
   };
+
+  const onChangeSelect = (
+    index: number,
+    actionType: string,
+    type: "selectedTraits" | "selectedGlyphs"
+  ) => (value: SelectValue) => {
+    dispatch!({ type: actionType, payload: { index, value, type } });
+  };
+  const [state, dispatch] = useContext(BuildContext);
+  const { weaponType, weapons } = state!;
   return (
     <StyledFlex direction="column" justify="center" align="center">
       <Radio.Group onChange={onChange} defaultValue="onehanded">
@@ -181,6 +194,7 @@ export default () => {
           <>
             <Select
               size="large"
+              onChange={onChangeSelect(0, "SET_WEAPONS", "selectedGlyphs")}
               placeholder="Select Mainhand"
               style={{ flex: 1, margin: "0px 10px" }}
             >
@@ -191,6 +205,7 @@ export default () => {
             </Select>
             <Select
               size="large"
+              onChange={onChangeSelect(1, "SET_WEAPONS", "selectedGlyphs")}
               placeholder="Select Off-Hand"
               style={{ flex: 1, margin: "0px 10px" }}
             >
@@ -204,6 +219,7 @@ export default () => {
         ) : (
           <Select
             size="large"
+            onChange={onChangeSelect(0, "SET_WEAPONS", "selectedGlyphs")}
             placeholder="Select a weapon"
             style={{ flex: 1, margin: "0px 10px" }}
           >
@@ -220,7 +236,11 @@ export default () => {
       <Divider>Enchants</Divider>
       <SelectContainer>
         {weaponType === "twohanded" ? (
-          <StyledSelectWithTitle title="Main Hand" items={glyphs} />
+          <StyledSelectWithTitle
+            onChange={onChangeSelect(0, "SET_WEAPON_STATS", "selectedGlyphs")}
+            title="Main Hand"
+            items={glyphs}
+          />
         ) : (
           <Flex
             style={{ width: "100%" }}
@@ -228,15 +248,25 @@ export default () => {
             justify="center"
             align="flex-start"
           >
-            <StyledSelectWithTitle title="Main Hand" items={glyphs} />
-            <StyledSelectWithTitle title="Off Hand" items={glyphs} />
+            <StyledSelectWithTitle
+              onChange={onChangeSelect(0, "SET_WEAPON_STATS", "selectedGlyphs")}
+              title="Main Hand"
+              items={glyphs}
+            />
+            <StyledSelectWithTitle
+              onChange={onChangeSelect(1, "SET_WEAPON_STATS", "selectedGlyphs")}
+              title="Off Hand"
+              items={glyphs}
+            />
           </Flex>
         )}
       </SelectContainer>
       <SelectContainer>
         <Divider>Traits</Divider>
         {weaponType === "twohanded" ? (
-          <StyledSelectWithTitle title="Main Hand"
+          <StyledSelectWithTitle
+            onChange={onChangeSelect(0, "SET_WEAPON_STATS", "selectedTraits")}
+            title="Main Hand"
             dropdownMenuStyle={{ top: -30, position: "absolute" }}
             items={traits}
           />
@@ -247,8 +277,16 @@ export default () => {
             justify="center"
             align="flex-start"
           >
-            <StyledSelectWithTitle title="Main Hand" items={traits} />
-            <StyledSelectWithTitle title="Off Hand" items={traits} />
+            <StyledSelectWithTitle
+              onChange={onChangeSelect(0, "SET_WEAPON_STATS", "selectedTraits")}
+              title="Main Hand"
+              items={traits}
+            />
+            <StyledSelectWithTitle
+              onChange={onChangeSelect(1, "SET_WEAPON_STATS", "selectedTraits")}
+              title="Off Hand"
+              items={traits}
+            />
           </Flex>
         )}
       </SelectContainer>

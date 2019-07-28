@@ -4,6 +4,8 @@ import { skillReducer } from "./reducers/skillReducer";
 import { skillBarReducer } from "./reducers/skillBarReducer";
 import { number } from "prop-types";
 import { ISet } from "../../components/GearSlot";
+import { setReducer } from "./reducers/setReducer";
+import { SelectValue } from "antd/lib/select";
 
 export interface ISlot {
   id: number;
@@ -23,17 +25,15 @@ export interface IBuildState {
   ultimateTwo: ISlot;
   selectedSet?: ISet;
   weaponType: string;
-  weapons: string[];
-  stats: {
-    weapons: IStats;
-    armor: IStats;
-    jewelry: IStats;
-  };
+  weapons: SelectValue[];
+  weaponStats: IStats;
+  armorStats: IStats;
+  jewelryStats: IStats;
 }
 
 export interface IStats {
-  selectedGlyphs: number[];
-  selectedTraits: number[];
+  selectedGlyphs: SelectValue[];
+  selectedTraits: SelectValue[];
 }
 
 export const defaultBuildState = {
@@ -66,7 +66,18 @@ export const defaultBuildState = {
   selectedSet: undefined,
   weaponType: "onehanded",
   weapons: [],
-  stats: []
+  weaponStats: {
+    selectedGlyphs: [],
+    selectedTraits: []
+  },
+  armorStats: {
+    selectedGlyphs: [],
+    selectedTraits: []
+  },
+  jewelryStats: {
+    selectedGlyphs: [],
+    selectedTraits: []
+  }
 };
 
 export interface IBuildAction {
@@ -91,7 +102,11 @@ const combineReducers = (
 };
 
 export const buildReducer = (state: IBuildState, action: IBuildAction) => {
-  return combineReducers(state, action, [skillReducer, skillBarReducer]);
+  return combineReducers(state, action, [
+    skillReducer,
+    skillBarReducer,
+    setReducer
+  ]);
 };
 
 export const BuildContext = React.createContext<
