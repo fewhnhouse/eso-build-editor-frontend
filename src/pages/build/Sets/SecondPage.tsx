@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Divider } from "antd";
 import styled from "styled-components";
 import axios from "axios";
@@ -61,7 +61,7 @@ const defaultUltimate: ISkill = {
 export default () => {
   // const [skills, setSkills] = useState([]);
   const [skillLine, setSkillLine] = useState(16);
-  const [state, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext);
   const [baseActives, setBaseActives] = useState<ISkill[]>([]);
   const [morphedActives, setMorphedActives] = useState<ISkill[]>([]);
   const [passives, setPassives] = useState<ISkill[]>([]);
@@ -82,9 +82,8 @@ export default () => {
     });
       */
     dispatch!({ type: "SET_SKILLS", payload: skills });
-  }, []);
+  }, [dispatch]);
   const handleClick = (e: ClickParam) => {
-    console.log(e);
     setSkillLine(parseInt(e.key, 10));
   };
 
@@ -129,11 +128,11 @@ export default () => {
       type: "SET_SELECTED_ULTIMATE",
       payload: baseUltimate!.id
     });
-  }, [skillLine]);
+  }, [skillLine, dispatch]);
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );
-  //TODO: Change to ISkill once data is fetched from network instead of locally
+
   return (
     <div
       style={{

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Avatar, Divider, Typography } from "antd";
+import { Card } from "antd";
 import styled from "styled-components";
 
 import { Redirect } from "react-router";
@@ -15,11 +15,6 @@ const { Meta } = Card;
 const Image = styled.img`
   width: 20px;
   height: 20px;
-`;
-
-const RaceImage = styled.img`
-  height: 18px;
-  width: 18px;
 `;
 
 const MyAvatar = styled.img`

@@ -55,12 +55,6 @@ const classes = [
   }
 ];
 
-const abilityTypes = [
-    { type: 1, label: "active" },
-    { type: 2, label: "passive" },
-    { type: 3, label: "ultimate" }
-  ];
-  
 const myClass = classes.find(esoClass => esoClass.class === "Sorcerer");
 
 const menuStructure = [

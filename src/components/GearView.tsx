@@ -1,13 +1,12 @@
 import React from "react";
-import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import GearSlot, { IGearSlotProps } from "../components/GearSlot";
 
-import { Typography, Divider } from "antd";
+import { Typography } from "antd";
 
 const GearView = styled.div``;
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 interface ISetup {
   name: string;

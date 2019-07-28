@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react"; // { useState, useEffect }
 import "./App.css";
-import {
-  Link,
-  RouteComponentProps,
-  withRouter,
-  Redirect
-} from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom"; // Redirect
 import Routes from "./components/Routes";
 import styled from "styled-components";
-import { Layout, Menu, Button, Popover, Steps, Icon } from "antd";
+import { Layout, Menu, Button, Popover } from "antd"; // Icon
 import WrappedNormalLoginForm from "./components/LoginForm";
 import { leather } from "./assets/backgrounds/";
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 const Logo = styled.div`
   width: 120px;
@@ -31,15 +26,6 @@ const StyledHeader = styled(Header)`
   background-repeat: repeat;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `;
-
-const TabButton = styled(Button)`
-  margin: 0px 10px;
-`;
-
-const theme = {
-  primary: "blue"
-};
-const { Step } = Steps;
 
 const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
   return (
