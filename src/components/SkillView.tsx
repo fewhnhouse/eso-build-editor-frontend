@@ -12,7 +12,6 @@ interface ISKillViewProps {
 const SkillView = styled.div`
   display: flex;
   flex-direction: row;
-  width: 320px;
 `;
 
 export default ({ skillSlots, droppable, id }: ISKillViewProps) => {

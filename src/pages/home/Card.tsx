@@ -15,6 +15,9 @@ const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ""};
   background-color: ${(props: IStyledCardProps) =>
     props.colors.backgroundColor || ""};
@@ -39,6 +42,7 @@ const RaceContainer = styled.div`
   padding: 0px 10px;
   justify-content: space-between;
   align-items: center;
+
 `;
 
 export interface IClass {
@@ -57,23 +61,23 @@ const setColor = (role: string, theme: ITheme) => {
   switch (role) {
     case "Stamina DD": // ${props => props.theme.stamGreen};
       return {
-        borderColor: `${theme.roleCardColors.StamDD}`,
-        backgroundColor: ``
+        borderColor: ``,
+        backgroundColor: `${theme.roleCardColors.StamPale}`
       };
     case "Stamina Support":
       return {
-        borderColor: `${theme.roleCardColors.StamSupp}`,
-        backgroundColor: ``
+        borderColor: ``,
+        backgroundColor: `${theme.roleCardColors.StamSuppPale}`
       };
     case "Magicka DD":
       return {
-        borderColor: `${theme.roleCardColors.MagDD}`,
-        backgroundColor: ``
+        borderColor: ``,
+        backgroundColor: `${theme.roleCardColors.MagPale}`
       };
     case "Magicka Support":
       return {
-        borderColor: `${theme.roleCardColors.MagSupp}`,
-        backgroundColor: ``
+        borderColor: ``,
+        backgroundColor: `${theme.roleCardColors.MagSuppPale}`
       };
     default:
       return {

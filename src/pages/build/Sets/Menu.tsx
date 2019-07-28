@@ -136,7 +136,7 @@ const menuStructure = [
 ];
 
 export default () => {
-  const [, dispatch] = useContext(BuildContext);
+  const [state, dispatch] = useContext(BuildContext);
   const handleClick = (e: ClickParam) => {
     dispatch!({
       type: "SET_SKILLLINE",
@@ -153,8 +153,8 @@ export default () => {
         overflowY: "auto",
         textAlign: "left"
       }}
-      defaultSelectedKeys={["16"]}
-      defaultOpenKeys={["sub1"]}
+      defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ""] : []}
+      defaultOpenKeys={[]}
       mode="inline"
     >
       {menuStructure.map((menu, index) => (

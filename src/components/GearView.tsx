@@ -1,134 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import GearSlot, { IGearSlotProps } from "../components/GearSlot";
+import GearSlot, { IGearSlotProps, IGearSlot } from "../components/GearSlot";
 
 import { Typography } from "antd";
+import Flex from "./Flex";
+import { IGearSetup } from "../pages/build/Skills/RightContent";
 
 const GearView = styled.div``;
 
 const { Title } = Typography;
 
-interface ISetup {
-  name: string;
-  data: IGearSlotProps[];
-}
-
-export default () => {
-  const setups: ISetup[] = [
-    {
-      name: "Apparel",
-      data: [
-        {
-          slot: "head",
-          tooltip: "top",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "shoulders",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "chest",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "belt",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "hands",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "legs",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "feet",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        }
-      ]
-    },
-    {
-      name: "Accessories",
-      data: [
-        {
-          slot: "neck",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "ring",
-          tooltip: "bottom",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "ring",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        }
-      ]
-    },
-    {
-      name: "Weapons",
-      data: [
-        {
-          slot: "mainHand",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "offHand",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "mainHand",
-          tooltip: "left",
-          title: "OP DLC set",
-          content: "Set information here"
-        },
-        {
-          slot: "offHand",
-          tooltip: "right",
-          title: "OP DLC set",
-          content: "Set information here"
-        }
-      ]
-    }
-  ];
-
+export default ({ setups, id }: { setups: IGearSetup[]; id: number }) => {
   return (
     <GearView>
-      {setups.map((setup: ISetup) => (
+      {setups.map((setup: IGearSetup) => (
         <>
           <Title level={4}>{setup.name}</Title>
-          {setup.data.map((slot: IGearSlotProps) => (
-            <GearSlot
-              slot={slot.slot}
-              tooltip={slot.tooltip}
-              title={slot.title}
-              content={slot.content}
-            />
-          ))}
+          <Flex direction="row" justify="center" align="center">
+            {setup.data.map((slot: IGearSlot, index: number) => (
+              <GearSlot
+                droppable
+                id={`${setup.name}-${id}`}
+                slot={slot}
+                index={index}
+              />
+            ))}
+          </Flex>
         </>
       ))}
     </GearView>

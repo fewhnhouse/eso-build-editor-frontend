@@ -114,7 +114,7 @@ export default () => {
       {roles.map(role => (
         <>
           <Divider>{role.role}</Divider>
-          <Setup direction="row" align="" justify="center" wrap>
+          <Setup direction="row" align="stretch" justify="center" wrap>
             {role.classes.map(classEl => (
               <Card role={{ role: role.role, esoClass: classEl }} />
             ))}

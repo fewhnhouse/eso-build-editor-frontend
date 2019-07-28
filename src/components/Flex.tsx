@@ -9,6 +9,7 @@ export interface FlexProps {
   style?: object;
   wrap?: boolean;
   children?: React.ReactNode | React.ReactNode[];
+  className?: string;
 }
 
 const StyledFlex = styled.div`
@@ -18,7 +19,7 @@ const StyledFlex = styled.div`
   flex-direction: ${(props: FlexProps) => props.direction || "column"};
   align-items: ${(props: FlexProps) => props.align || "center"};
   justify-content: ${(props: FlexProps) => props.justify || "center"};
-  flex-wrap: ${(props: FlexProps) => props.wrap ? "wrap" : ""}
+  flex-wrap: ${(props: FlexProps) => (props.wrap ? "wrap" : "")};
 `;
 
 const Flex = ({
@@ -27,9 +28,11 @@ const Flex = ({
   children,
   fluid,
   style,
-  align
+  align,
+  className
 }: FlexProps) => (
   <StyledFlex
+    className={className}
     align={align}
     direction={direction}
     justify={justify}

@@ -22,7 +22,7 @@ export interface IBuildState {
 
 export const defaultBuildState = {
   skills: [],
-  skillLine: 16,
+  skillLine: 0,
   activeBar: [
     { id: 0, index: 0 },
     { id: 0, index: 1 },

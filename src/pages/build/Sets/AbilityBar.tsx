@@ -185,16 +185,19 @@ export default () => {
       onDragEnd={onDragEnd}
     >
       <AbilityBarContainer>
-        <Divider>Ultimate</Divider>
-        <SkillSlot
-          skillIndex={5}
-          id={`${ACTIVE_ULTIMATE}-${ultimate ? ultimate.id : "0"}`}
-          index={5}
-          icon={ultimate ? ultimate.icon : ""}
-        />
 
-        <Divider>Active</Divider>
-        <SkillView id={ACTIVE_BAR} skillSlots={activeBarSkills} />
+        <Divider>Active Selection</Divider>
+        <AbilityBar>
+          <SkillView id={ACTIVE_BAR} skillSlots={activeBarSkills} />
+          {ultimate && (
+            <SkillSlot
+              skillIndex={5}
+              id={`${ACTIVE_ULTIMATE}-${ultimate ? ultimate.id : "0"}`}
+              index={5}
+              icon={ultimate ? ultimate.icon : ""}
+            />
+          )}
+        </AbilityBar>
         <Divider>Ability Bar</Divider>
 
         <AbilityBar>

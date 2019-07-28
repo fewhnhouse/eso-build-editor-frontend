@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Divider } from "antd";
+import { Divider, Empty } from "antd";
 import styled from "styled-components";
 import axios from "axios";
 import { ClickParam } from "antd/lib/menu";
@@ -137,7 +137,6 @@ export default () => {
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );
-  console.log(passives, baseActives, baseUltimate);
 
   return (
     <div
@@ -150,43 +149,63 @@ export default () => {
     >
       <Menu />
       <Content>
-        <AbilityContainer>
-          <Divider>Ultimate</Divider>
-          {baseUltimate && (
-            <SkillCard
-              ultimate
-              skill={baseUltimate || baseActives[0]}
-              morph1={morphs[0] || defaultUltimate}
-              morph2={morphs[1] || defaultUltimate}
-            />
-          )}
-          <Divider>Actives</Divider>
-          {baseActives.length > 0 && (
-            <>
-              {baseActives.map((base, index) => {
-                console.log(base);
-                const morphs = morphedActives.filter(
-                  morph => morph.parent === base.id
-                );
-                return (
-                  <SkillCard
-                    key={index}
-                    skill={base}
-                    morph1={morphs[0]}
-                    morph2={morphs[1]}
-                  />
-                );
-              })}
-            </>
-          )}
+        {state!.skillLine !== 0 ? (
+          <AbilityContainer>
+            <Divider>Ultimate</Divider>
+            {baseUltimate && (
+              <SkillCard
+                ultimate
+                skill={baseUltimate || baseActives[0]}
+                morph1={morphs[0] || defaultUltimate}
+                morph2={morphs[1] || defaultUltimate}
+              />
+            )}
+            <Divider>Actives</Divider>
+            {baseActives.length > 0 && (
+              <>
+                {baseActives.map((base, index) => {
+                  console.log(base);
+                  const morphs = morphedActives.filter(
+                    morph => morph.parent === base.id
+                  );
+                  return (
+                    <SkillCard
+                      key={index}
+                      skill={base}
+                      morph1={morphs[0]}
+                      morph2={morphs[1]}
+                    />
+                  );
+                })}
+              </>
+            )}
 
-          <Divider>Passives</Divider>
-          <>
-            {passives.map((el, key) => (
-              <SkillCard key={key} passive skill={el} morph1={el} morph2={el} />
-            ))}
-          </>
-        </AbilityContainer>
+            <Divider>Passives</Divider>
+            <>
+              {passives.map((el, key) => (
+                <SkillCard
+                  key={key}
+                  passive
+                  skill={el}
+                  morph1={el}
+                  morph2={el}
+                />
+              ))}
+            </>
+          </AbilityContainer>
+        ) : (
+          <Empty
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flex: 2,
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            Select a Skill Line to get started.
+          </Empty>
+        )}
         {baseActives.length > 0 && <AbilityBar />}
       </Content>
     </div>
