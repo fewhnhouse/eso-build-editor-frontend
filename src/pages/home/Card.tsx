@@ -18,11 +18,6 @@ const Image = styled.img`
   height: 20px;
 `;
 
-const RaceImage = styled.img`
-  height: 18px;
-  width: 18px;
-`;
-
 const MyAvatar = styled.img`
   width: 26px;
   height: 26px;

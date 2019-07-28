@@ -1,6 +1,6 @@
-import React, { useReducer } from "react";
+import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import AppContainer from "./AppContainer";
 import GlobalStyles from "./components/GlobalStyles"

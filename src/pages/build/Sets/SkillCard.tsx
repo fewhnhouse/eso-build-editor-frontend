@@ -1,17 +1,14 @@
-import React, { useState, useContext } from "react";
-import { Card, Avatar, Divider, Typography, Popover } from "antd";
+import React, { useContext } from "react";
+import { Card, Divider, Popover } from "antd";
 import styled from "styled-components";
 
 import { ISkill } from "./SecondPage";
-import { plus } from "../../../assets/misc";
 import { BuildContext } from "../BuildStateContext";
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 450px;
 `;
-
-const { Meta } = Card;
 
 const Image = styled.img`
   width: 40px;
@@ -96,11 +93,7 @@ interface ICardProps {
   passive?: boolean;
   ultimate?: boolean;
 }
-const abilityTypes = [
-  { type: 1, label: "active" },
-  { type: 2, label: "passive" },
-  { type: 3, label: "ultimate" }
-];
+
 export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext);
   const { selectedSkills, selectedUltimate } = state!;

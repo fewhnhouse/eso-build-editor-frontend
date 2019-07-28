@@ -1,9 +1,7 @@
 import React from "react";
-import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
-import { drink } from "../assets/deco";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 interface ISkillSlotProps {

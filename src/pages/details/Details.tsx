@@ -1,9 +1,8 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
-import { chooseRace, chooseClass } from "../../util/utils";
+import { chooseClass } from "../../util/utils";
 import { Divider, Layout, Typography } from "antd";
-import SkillView from "../../components/SkillView";
 import GearView from "../../components/GearView";
 import { bugloss, columbine, namira, drink, food } from "../../assets/deco";
 import Flex from "../../components/Flex";
@@ -98,7 +97,7 @@ export default ({ match }: RouteComponentProps<any>) => {
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
-{/*
+          {/*
           <SkillView id="1" skillSlots={} tooltip="top" />
           <SkillView id="2" skillSlots={} tooltip="bottom" />
 */}
