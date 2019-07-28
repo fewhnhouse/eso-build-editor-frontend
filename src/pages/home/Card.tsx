@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Card } from "antd";
 import styled from "styled-components";
-
 import { Redirect } from "react-router";
 import { chooseRace, chooseClass } from "../../util/utils";
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 250px;
-  border-color: ${(props: { borderColor: string }) => props.borderColor};
+  position: relative;
+  border-color: ${(props: { borderColor: string }) => props.borderColor || ""};
 `;
 
 const { Meta } = Card;
@@ -44,6 +44,21 @@ interface ICardProps {
   };
 }
 
+const borderColor = (role: string ) => {
+  switch (role) {
+    case "Stamina DD":
+      return "lightgreen";
+    case "Stamina Support":
+      return "green";
+    case "Magicka DD":
+      return "cyan";
+    case "Magicka Support":
+      return "yellow";
+    default:
+      return "";
+  }
+}
+
 export default ({ role }: ICardProps) => {
   const { esoClass } = role;
   const [redirect, setRedirect] = useState(false);
@@ -54,9 +69,8 @@ export default ({ role }: ICardProps) => {
     <Redirect push to={`/details/${esoClass.class}`} />
   ) : (
     <StyledCard
-      borderColor={"red"}
       onClick={handleClick}
-      style={{ position: "relative" }}
+      borderColor={borderColor(role.role)}
       hoverable
       actions={[
         <RaceContainer>
@@ -75,7 +89,7 @@ export default ({ role }: ICardProps) => {
         }
         style={{ textAlign: "left" }}
         title={esoClass.class}
-        description={"Lorem ipsum"}
+        description={esoClass.description}
       />
     </StyledCard>
   );

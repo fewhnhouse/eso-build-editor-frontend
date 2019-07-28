@@ -27,6 +27,10 @@ const StyledHeader = styled(Header)`
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `;
 
+const TabButton = styled(Button)`
+  margin: 0px 10px;
+`;
+
 const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
   return (
     <Layout>
