@@ -1,16 +1,15 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
-import { chooseRace, chooseClass } from "../../util/utils";
+import { chooseClass } from "../../util/utils";
 import { Divider, Layout, Typography } from "antd";
-import SkillView from "../../components/SkillView";
 import GearView from "../../components/GearView";
 import { bugloss, columbine, namira, drink, food } from "../../assets/deco";
 import Flex from "../../components/Flex";
 
-const { Footer, Content } = Layout;
+const { Content } = Layout;
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const StyledTitle = styled(Title)`
   margin-top: 30px;
@@ -32,11 +31,6 @@ const GearsView = styled.div``;
 const ClassImg = styled.img`
   width: 35px;
   height: 35px;
-`;
-
-const GearImg = styled.img`
-  width: 50px;
-  height: 50px;
 `;
 
 const Container = styled(Content)`
@@ -105,7 +99,7 @@ export default ({ match }: RouteComponentProps<any>) => {
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
-{/*
+          {/*
           <SkillView id="1" skillSlots={} tooltip="top" />
           <SkillView id="2" skillSlots={} tooltip="bottom" />
 */}

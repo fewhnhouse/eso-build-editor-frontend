@@ -221,15 +221,6 @@ interface ISetTagProps {
   traitsNeeded: boolean;
 }
 
-const TypeTag = ({ type }: { type: string }) => {
-  if (type === "Trial") {
-  } else if (type === "Dungeon") {
-  } else if (type === "Overland") {
-  } else if (type === "Monster") {
-  } else if (type === "PvP") {
-  } else if (type === "Arena") {
-  }
-};
 const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,

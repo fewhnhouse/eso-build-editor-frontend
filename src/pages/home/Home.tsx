@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link, Redirect } from "react-router-dom";
 import Card from "./Card";
 import { Divider, Layout } from "antd";
 
@@ -13,7 +12,7 @@ const Setup = styled.div`
     padding: 10px;
   }
 `;
-const { Footer, Content } = Layout;
+const { Content } = Layout;
 
 const Container = styled(Content)`
   display: flex;
@@ -113,15 +112,7 @@ const roles = [
 ];
 
 export default () => {
-  const [role, setRole] = useState("");
-
-  const handleRoleClick = (roleName: string) => () => {
-    setRole(roleName);
-  };
-
-  return role !== "" ? (
-    <Redirect push to={`/details/${role}`} />
-  ) : (
+  return (
     <Container>
       <Title>FIST+ BUILD EDITOR DELUXE</Title>
       {roles.map(role => (

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react"; // { useReducer }
 import { ISkill } from "./Sets/SecondPage";
 
 export interface IBuildState {
@@ -112,7 +112,7 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
       const parsedDestinationId = parseInt(destinationId, 10);
       const parsedSourceId = parseInt(sourceId, 10);
       if (sourceBar !== destinationBar) {
-        if (destinationBar == "abilityBar1") {
+        if (destinationBar === "abilityBar1") {
           const hasSkill = state.abilityBarOne.find(
             slot => slot.id === parsedSourceId
           );

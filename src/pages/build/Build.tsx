@@ -4,13 +4,12 @@ import SecondPage from "./Sets/SecondPage";
 import {
   BuildContext,
   buildReducer,
-  defaultBuildState,
-  IBuildState
+  defaultBuildState
 } from "./BuildStateContext";
 import { RouteComponentProps, Redirect } from "react-router";
 import ThirdPage from "./Skills/ThirdPage";
 
-import { Layout, Menu, Button, Popover, Steps, Icon } from "antd";
+import { Layout, Button, Steps, Icon } from "antd";
 import styled from "styled-components";
 
 const { Footer, Content } = Layout;
@@ -33,9 +32,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [state, dispatch] = useReducer(buildReducer, defaultBuildState);
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10) || 0);
-  const handleTabClick = (tabIndex: number) => () => {
-    setTab(tabIndex);
-  };
 
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
@@ -44,7 +40,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const handleNextClick = () => {
     setTab(tabIndex => tabIndex + 1);
   };
-
 
   return (
     <BuildContext.Provider value={[state, dispatch]}>
