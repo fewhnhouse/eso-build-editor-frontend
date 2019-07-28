@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import AppContainer from "./AppContainer";
-import GlobalStyles from "./components/GlobalStyles"
+import globalStyles from "./components/globalStyles";
 import axios from "axios";
 
 //Avoid cors for now
@@ -12,7 +12,7 @@ axios.defaults.baseURL =
 const CONVERTED_API_TOKEN = btoa(process.env.REACT_APP_API_TOKEN || "");
 axios.defaults.headers.common["Authorization"] = `Basic ${CONVERTED_API_TOKEN}`;
 
-const theme = GlobalStyles;
+const theme = globalStyles;
 
 const App: React.FC = () => {
   return (
