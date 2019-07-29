@@ -69,6 +69,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       <Footer
         style={{
           display: "flex",
+          zIndex: 100,
           alignItems: "center",
           boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)"
         }}

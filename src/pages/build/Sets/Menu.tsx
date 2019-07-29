@@ -77,56 +77,62 @@ export default () => {
         />
       ) : (
         <>
-          <Flex direction="row" justify="center" align="flex-start">
-            <AutoComplete
-              size="large"
-              style={{ margin: "10px", width: "100%" }}
-              placeholder="input here"
-              optionLabelProp="value"
-            />
-            <StyledIconBtn
-              type="primary"
-              ghost
-              style={{ marginTop: 10, marginRight: 10 }}
-              onClick={handleIconClick(true)}
-              icon="double-left"
-            />
-          </Flex>
           <Flex
-            direction="row"
+            direction="column"
             justify="center"
             align="center"
-            style={{ margin: "0px 10px" }}
+            style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px", padding: "5px" }}
           >
-            <CheckableTag checked={true}>Arena</CheckableTag>
-            <CheckableTag checked={true}>Monster</CheckableTag>
-            <CheckableTag checked={true}>PvP</CheckableTag>
-            <CheckableTag checked={true}>Overland</CheckableTag>
-            <CheckableTag checked={true}>Trial</CheckableTag>
-            <CheckableTag checked={true}>Dungeon</CheckableTag>
+            <Flex
+              direction="row"
+              justify="center"
+              align="flex-start"
+              style={{ width: "100%" }}
+            >
+              <AutoComplete
+                size="large"
+                style={{ margin: "10px", width: "100%" }}
+                placeholder="input here"
+                optionLabelProp="value"
+              />
+              <StyledIconBtn
+                type="primary"
+                ghost
+                style={{ marginTop: 10, marginRight: 10 }}
+                onClick={handleIconClick(true)}
+                icon="double-left"
+              />
+            </Flex>
+            <Flex
+              direction="row"
+              justify="center"
+              align="center"
+              style={{ margin: "0px 10px" }}
+            >
+              <CheckableTag checked={true}>Arena</CheckableTag>
+              <CheckableTag checked={true}>Monster</CheckableTag>
+              <CheckableTag checked={true}>PvP</CheckableTag>
+              <CheckableTag checked={true}>Overland</CheckableTag>
+              <CheckableTag checked={true}>Trial</CheckableTag>
+              <CheckableTag checked={true}>Dungeon</CheckableTag>
+            </Flex>
+            <Divider
+              style={{
+                margin: "10px 0px"
+              }}
+            />
+            <Flex
+              direction="row"
+              justify="center"
+              align="center"
+              style={{ margin: "0px 10px" }}
+            >
+              <CheckableTag checked={true}>Light</CheckableTag>
+              <CheckableTag checked={true}>Medium</CheckableTag>
+              <CheckableTag checked={true}>Heavy</CheckableTag>
+              <CheckableTag checked={true}>Crafted</CheckableTag>
+            </Flex>
           </Flex>
-          <Divider
-            style={{
-              margin: "10px 0px"
-            }}
-          />
-          <Flex
-            direction="row"
-            justify="center"
-            align="center"
-            style={{ margin: "0px 10px" }}
-          >
-            <CheckableTag checked={true}>Light</CheckableTag>
-            <CheckableTag checked={true}>Medium</CheckableTag>
-            <CheckableTag checked={true}>Heavy</CheckableTag>
-            <CheckableTag checked={true}>Crafted</CheckableTag>
-          </Flex>
-          <Divider
-            style={{
-              margin: "10px 0px 0px 0px",
-              boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px"
-            }}
-          />
 
           <List
             style={{ height: "100%", overflow: "auto" }}
