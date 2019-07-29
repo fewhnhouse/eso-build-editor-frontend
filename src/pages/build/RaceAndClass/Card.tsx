@@ -6,6 +6,7 @@ const { Meta } = Card;
 
 interface IRootCard {
   title: string;
+  description: string;
   imageSource: string | undefined;
 }
 
@@ -28,7 +29,7 @@ interface IMetaProps {
 
 const CoverContainer = styled.div`
   display: flex;
-  width: 200px;
+  width: 250px;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -39,8 +40,9 @@ const StyledCard = styled(Card)`
   background: ${(props: IMetaProps) =>
     props.selected ? "rgba(0, 0, 0,0.1)" : "white"};
   border-color: ${(props: IMetaProps) => (props.selected ? "#1890ff" : "")};
+  width: 250px;
 `;
-const MyCard = ({ title, imageSource, type }: ICardProps) => {
+const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext);
   const selected =
     type === "SET_CLASS" ? state!.class === title : state!.race === title;
@@ -77,7 +79,7 @@ const MyCard = ({ title, imageSource, type }: ICardProps) => {
           </CoverContainer>
         }
       >
-        <Meta title={title} description="This is the description" />
+        <Meta title={title} description={description} />
       </StyledCard>
     </Popconfirm>
   ) : (
@@ -90,17 +92,21 @@ const MyCard = ({ title, imageSource, type }: ICardProps) => {
         </CoverContainer>
       }
     >
-      <Meta title={title} description="This is the description" />
+      <Meta title={title} description={description} />
     </StyledCard>
   );
 };
 
-export const EsoClassCard = ({ title, imageSource }: IRootCard) => {
+export const EsoClassCard = ({
+  title,
+  imageSource,
+  description
+}: IRootCard) => {
   const [state, dispatch] = useContext(BuildContext);
 
-  return <MyCard title={title} imageSource={imageSource} type="SET_CLASS" />;
+  return <MyCard title={title} imageSource={imageSource} type="SET_CLASS" description={description}/>;
 };
 
-export const RaceCard = ({ title, imageSource }: IRootCard) => (
-  <MyCard title={title} imageSource={imageSource} type="SET_RACE" />
+export const RaceCard = ({ title, imageSource, description }: IRootCard) => (
+  <MyCard title={title} imageSource={imageSource} type="SET_RACE" description={description}/>
 );

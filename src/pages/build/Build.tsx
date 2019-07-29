@@ -54,12 +54,12 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
 
   const isDisabled =
     tab === 2 ||
-    (tab === 0 && (state.race === "" || state.class === "")) ||
+    (tab === 0 && (state.race === "" || state.class === ""))/* ||
     (tab === 1 &&
       (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
         state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
         state.ultimateOne.id === 0 ||
-        state.ultimateTwo.id === 0));
+        state.ultimateTwo.id === 0))*/;
 
   const setTooltipTitle = () => {
     if (!isDisabled) {
