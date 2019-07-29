@@ -33,6 +33,7 @@ export interface IBuildState {
   jewelryStats: IStats;
   race: string;
   class: string;
+  setTabKey: string;
 }
 
 export interface IStats {
@@ -84,7 +85,8 @@ export const defaultBuildState = {
     selectedTraits: ["", "", ""]
   },
   race: "",
-  class: ""
+  class: "",
+  setTabKey: "weapons"
 };
 
 export interface IBuildAction {

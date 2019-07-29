@@ -124,17 +124,33 @@ export default () => {
     dispatch!({ type: actionType, payload: { index, value, type } });
   };
   const [state, dispatch] = useContext(BuildContext);
-  const { armorType, armorStats } = state!;
-
+  const { armorType, armorStats, selectedSet } = state!;
+  console.log(selectedSet);
   return (
     <StyledFlex direction="column" justify="center" align="center">
       <Radio.Group
+        value={armorType}
         onChange={onChange}
-        defaultValue={armorType || "mediumarmor"}
+        defaultValue={armorType}
       >
-        <Radio.Button value="lightarmor">Light Armor</Radio.Button>
-        <Radio.Button value="mediumarmor">Medium Armor</Radio.Button>
-        <Radio.Button value="heavyarmor">Heavy Armor</Radio.Button>
+        <Radio.Button
+          disabled={selectedSet!.has_light_armor === 0}
+          value="lightarmor"
+        >
+          Light Armor
+        </Radio.Button>
+        <Radio.Button
+          disabled={selectedSet!.has_medium_armor === 0}
+          value="mediumarmor"
+        >
+          Medium Armor
+        </Radio.Button>
+        <Radio.Button
+          disabled={selectedSet!.has_heavy_armor === 0}
+          value="heavyarmor"
+        >
+          Heavy Armor
+        </Radio.Button>
       </Radio.Group>
 
       <Divider>Enchants</Divider>

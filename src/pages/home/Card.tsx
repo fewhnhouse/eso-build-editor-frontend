@@ -42,7 +42,6 @@ const RaceContainer = styled.div`
   padding: 0px 10px;
   justify-content: space-between;
   align-items: center;
-
 `;
 
 export interface IClass {
@@ -61,23 +60,23 @@ const setColor = (role: string, theme: ITheme) => {
   switch (role) {
     case "Stamina DD": // ${props => props.theme.stamGreen};
       return {
-        borderColor: ``,
-        backgroundColor: `${theme.roleCardColors.StamPale}`
+        borderColor: `${theme.roleCardColors.StamDD}`,
+        backgroundColor: ``
       };
     case "Stamina Support":
       return {
-        borderColor: ``,
-        backgroundColor: `${theme.roleCardColors.StamSuppPale}`
+        borderColor: `${theme.roleCardColors.StamSupp}`,
+        backgroundColor: ``
       };
     case "Magicka DD":
       return {
-        borderColor: ``,
-        backgroundColor: `${theme.roleCardColors.MagPale}`
+        borderColor: `${theme.roleCardColors.MagDD}`,
+        backgroundColor: ``
       };
     case "Magicka Support":
       return {
-        borderColor: ``,
-        backgroundColor: `${theme.roleCardColors.MagSuppPale}`
+        borderColor: `${theme.roleCardColors.MagSupp}`,
+        backgroundColor: ``
       };
     default:
       return {
@@ -115,7 +114,7 @@ const HomeCard = ({ role, theme }: ICardProps) => {
         avatar={
           <MyAvatar title={esoClass.class} src={chooseClass(esoClass.class)} />
         }
-        style={{ textAlign: "left" }}
+        style={{ textAlign: "left"}}
         title={esoClass.class}
         description={esoClass.description}
       />

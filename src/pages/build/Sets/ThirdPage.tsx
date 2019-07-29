@@ -49,9 +49,13 @@ export default () => {
     if (state!.selectedSet) {
       setSelectedSet(state!.selectedSet);
     }
-    console.log(selectedSet);
   }, [state!.selectedSet]);
 
+  const { setTabKey } = state!;
+  const handleTabChange = (key: string) => {
+    console.log(key)
+    dispatch!({ type: "SET_SET_TAB_KEY", payload: { setTabKey: key } });
+  };
   return (
     <div
       style={{
@@ -74,14 +78,34 @@ export default () => {
                   ))}
                 </div>
               </Card>
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="Weapons" key="1">
+              <Tabs
+                onChange={handleTabChange}
+                activeKey={setTabKey}
+                defaultActiveKey="1"
+              >
+                <TabPane
+                  disabled={!selectedSet!.has_weapons}
+                  tab="Weapons"
+                  key="weapons"
+                >
                   <Weapons />
                 </TabPane>
-                <TabPane tab="Armor" key="2">
+                <TabPane
+                  disabled={
+                    !selectedSet!.has_heavy_armor &&
+                    !selectedSet!.has_medium_armor &&
+                    !selectedSet!.has_light_armor
+                  }
+                  tab="Armor"
+                  key="armor"
+                >
                   <Armor />
                 </TabPane>
-                <TabPane tab="Jewelry" key="3">
+                <TabPane
+                  disabled={!selectedSet!.has_jewels}
+                  tab="Jewelry"
+                  key="jewelry"
+                >
                   <Jewelry />
                 </TabPane>
               </Tabs>

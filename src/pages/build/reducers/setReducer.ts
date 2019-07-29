@@ -1,5 +1,6 @@
 import { ISlot, IBuildAction, IBuildState, IStats } from "../BuildStateContext";
 import { OptionProps, SelectValue } from "antd/lib/select";
+import { ISet } from "../../../components/GearSlot";
 
 interface ISelectPayload {
   value: SelectValue;
@@ -7,13 +8,32 @@ interface ISelectPayload {
   type: "selectedGlyphs" | "selectedTraits";
 }
 export const setReducer = (state: IBuildState, action: IBuildAction) => {
-  console.log(action, state);
   switch (action.type) {
     case "SET_ITEMSET":
-      const { selectedSet } = action.payload;
+      const { selectedSet }: { selectedSet: ISet } = action.payload;
+      const { armorType } = state;
+      const swapArmor =
+        (armorType === "lightarmor" && selectedSet.has_light_armor === 0) ||
+        (armorType === "mediumarmor" && selectedSet.has_medium_armor === 0) ||
+        (armorType === "heavyarmor" && selectedSet.has_heavy_armor === 0);
+      const hasWeapons = selectedSet.has_weapons;
+      const hasJewels = selectedSet.has_jewels;
+      const hasArmor =
+        selectedSet.has_heavy_armor ||
+        selectedSet.has_medium_armor ||
+        selectedSet.has_light_armor;
+
       return {
         ...state,
-        selectedSet: selectedSet
+        selectedSet: selectedSet,
+        armorType: swapArmor
+          ? selectedSet.has_medium_armor === 1
+            ? "mediumarmor"
+            : selectedSet.has_heavy_armor === 1
+            ? "heavyarmor"
+            : "lightarmor"
+          : state.armorType,
+        setTabKey: hasWeapons ? "weapons" : hasArmor ? "armor" : "jewelry"
       };
     case "SET_WEAPON_TYPE":
       const { weaponType } = action.payload;
@@ -60,6 +80,13 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
         jewelryStats: updateStats(type, value, state.jewelryStats, index)
+      };
+    }
+    case "SET_SET_TAB_KEY": {
+      const { setTabKey } = action.payload;
+      return {
+        ...state,
+        setTabKey
       };
     }
     default:

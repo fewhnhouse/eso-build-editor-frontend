@@ -14,13 +14,13 @@ const theme = {
   },
 
   roleCardColors: {
-    StamDD: "rgb(108, 209, 0)",
-    StamPale: "rgb(243, 255, 230)",
-    MagDD: "rgb(0, 136, 209)",
+    StamDD: "rgb(169, 212, 102)",
+    StamPale: "rgb(250, 255, 242)",
+    MagDD: "rgb(128, 210, 255)",
     MagPale: "rgb(224, 244, 255)",
-    StamSupp: "rgb(49, 94, 0)",
+    StamSupp: "rgb(109, 237, 186)",
     StamSuppPale: "rgb(236, 242, 230)",
-    MagSupp: "rgb(0, 66, 102)",
+    MagSupp: "rgb(181, 135, 255)",
     MagSuppPale: "rgb(216, 223, 227)"
   },
 

@@ -67,7 +67,7 @@ export default () => {
   };
   return (
     <ListContainer collapsed={collapsed}>
-      {collapsed ? (
+      {collapsed && (
         <StyledIconBtn
           type="primary"
           ghost
@@ -75,96 +75,107 @@ export default () => {
           onClick={handleIconClick(false)}
           icon="double-right"
         />
-      ) : (
-        <>
+      )}
+      <>
+        <Flex
+          direction="column"
+          justify="center"
+          align="center"
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px",
+            padding: "5px",
+            opacity: collapsed ? 0 : 1,
+            pointerEvents: collapsed ? "none" : "all",
+            transition: "opacity 0.2s ease-in-out"
+          }}
+        >
           <Flex
-            direction="column"
+            direction="row"
+            justify="center"
+            align="flex-start"
+            style={{ width: "100%" }}
+          >
+            <AutoComplete
+              size="large"
+              style={{ margin: "10px", width: "100%" }}
+              placeholder="input here"
+              optionLabelProp="value"
+            />
+            <StyledIconBtn
+              type="primary"
+              ghost
+              style={{ marginTop: 10, marginRight: 10 }}
+              onClick={handleIconClick(true)}
+              icon="double-left"
+            />
+          </Flex>
+          <Flex
+            direction="row"
             justify="center"
             align="center"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px", padding: "5px" }}
+            style={{ margin: "0px 10px" }}
           >
-            <Flex
-              direction="row"
-              justify="center"
-              align="flex-start"
-              style={{ width: "100%" }}
-            >
-              <AutoComplete
-                size="large"
-                style={{ margin: "10px", width: "100%" }}
-                placeholder="input here"
-                optionLabelProp="value"
-              />
-              <StyledIconBtn
-                type="primary"
-                ghost
-                style={{ marginTop: 10, marginRight: 10 }}
-                onClick={handleIconClick(true)}
-                icon="double-left"
-              />
-            </Flex>
-            <Flex
-              direction="row"
-              justify="center"
-              align="center"
-              style={{ margin: "0px 10px" }}
-            >
-              <CheckableTag checked={true}>Arena</CheckableTag>
-              <CheckableTag checked={true}>Monster</CheckableTag>
-              <CheckableTag checked={true}>PvP</CheckableTag>
-              <CheckableTag checked={true}>Overland</CheckableTag>
-              <CheckableTag checked={true}>Trial</CheckableTag>
-              <CheckableTag checked={true}>Dungeon</CheckableTag>
-            </Flex>
-            <Divider
-              style={{
-                margin: "10px 0px"
-              }}
-            />
-            <Flex
-              direction="row"
-              justify="center"
-              align="center"
-              style={{ margin: "0px 10px" }}
-            >
-              <CheckableTag checked={true}>Light</CheckableTag>
-              <CheckableTag checked={true}>Medium</CheckableTag>
-              <CheckableTag checked={true}>Heavy</CheckableTag>
-              <CheckableTag checked={true}>Crafted</CheckableTag>
-            </Flex>
+            <CheckableTag checked={true}>Arena</CheckableTag>
+            <CheckableTag checked={true}>Monster</CheckableTag>
+            <CheckableTag checked={true}>PvP</CheckableTag>
+            <CheckableTag checked={true}>Overland</CheckableTag>
+            <CheckableTag checked={true}>Trial</CheckableTag>
+            <CheckableTag checked={true}>Dungeon</CheckableTag>
           </Flex>
-
-          <List
-            style={{ height: "100%", overflow: "auto" }}
-            dataSource={sets}
-            renderItem={item => (
-              <StyledListItem onClick={handleClick(item)}>
-                <div style={{ width: 140, display: "flex" }}>
-                  <ArmorTypeTag
-                    hasHeavyArmor={item.has_heavy_armor === 1}
-                    hasMediumArmor={item.has_medium_armor === 1}
-                    hasLightArmor={item.has_light_armor === 1}
-                    traitsNeeded={item.traits_needed !== null}
-                  />
-                  <StyledTag color="geekblue">{item.type}</StyledTag>
-                </div>
-                <div
-                  style={{
-                    textAlign: "left",
-                    flex: 2,
-                    fontWeight:
-                      state!.selectedSet && item.id === state!.selectedSet.id
-                        ? 500
-                        : 400
-                  }}
-                >
-                  {item.name}
-                </div>
-              </StyledListItem>
-            )}
+          <Divider
+            style={{
+              margin: "10px 0px"
+            }}
           />
-        </>
-      )}
+          <Flex
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ margin: "0px 10px" }}
+          >
+            <CheckableTag checked={true}>Light</CheckableTag>
+            <CheckableTag checked={true}>Medium</CheckableTag>
+            <CheckableTag checked={true}>Heavy</CheckableTag>
+            <CheckableTag checked={true}>Crafted</CheckableTag>
+          </Flex>
+        </Flex>
+
+        <List
+          style={{
+            height: "100%",
+            overflow: "auto",
+            opacity: collapsed ? 0 : 1,
+            pointerEvents: collapsed ? "none" : "all",
+            transition: "opacity 0.2s ease-in-out"
+          }}
+          dataSource={sets}
+          renderItem={item => (
+            <StyledListItem onClick={handleClick(item)}>
+              <div style={{ width: 140, display: "flex" }}>
+                <ArmorTypeTag
+                  hasHeavyArmor={item.has_heavy_armor === 1}
+                  hasMediumArmor={item.has_medium_armor === 1}
+                  hasLightArmor={item.has_light_armor === 1}
+                  traitsNeeded={item.traits_needed !== null}
+                />
+                <StyledTag color="geekblue">{item.type}</StyledTag>
+              </div>
+              <div
+                style={{
+                  textAlign: "left",
+                  flex: 2,
+                  fontWeight:
+                    state!.selectedSet && item.id === state!.selectedSet.id
+                      ? 500
+                      : 400
+                }}
+              >
+                {item.name}
+              </div>
+            </StyledListItem>
+          )}
+        />
+      </>
     </ListContainer>
   );
 };
