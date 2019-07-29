@@ -1,4 +1,4 @@
-import { IBuildState } from "./../BuildStateContext";
+import { IBuildState, defaultBuildState } from "./../BuildStateContext";
 import { ISkill } from "../../../components/SkillSlot";
 import { ISlot, IBuildAction } from "../BuildStateContext";
 
@@ -121,6 +121,22 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
         skillLine
+      };
+    case "RESET_SKILLS":
+      const {
+        activeBar,
+        abilityBarOne,
+        abilityBarTwo,
+        ultimateOne,
+        ultimateTwo
+      } = defaultBuildState;
+      return {
+        ...state,
+        activeBar,
+        abilityBarOne,
+        abilityBarTwo,
+        ultimateOne,
+        ultimateTwo
       };
     default:
       return state;

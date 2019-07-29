@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Divider } from "antd";
 import { chooseRace, chooseClass } from "../../../util/utils";
 import styled from "styled-components";
-import Card from "./Card";
+import { EsoClassCard, RaceCard } from "./Card";
+import { BuildContext } from "../BuildStateContext";
 
 const CardContainer = styled.div`
   display: flex;
@@ -11,6 +12,10 @@ const CardContainer = styled.div`
   justify-content: center;
 `;
 export default () => {
+  const [state] = useContext(BuildContext);
+  useEffect(() => {
+    localStorage.setItem("buildState", JSON.stringify(state));
+  }, [state]);
   return (
     <div>
       <Divider>Race</Divider>
@@ -27,7 +32,7 @@ export default () => {
           "Nord",
           "Redguard"
         ].map(race => (
-          <Card title={race} imageSource={chooseRace(race)} />
+          <RaceCard title={race} imageSource={chooseRace(race)} />
         ))}
       </CardContainer>
       <Divider>Class</Divider>
@@ -40,7 +45,7 @@ export default () => {
           "Nightblade",
           "Templar"
         ].map(esoClass => (
-          <Card title={esoClass} imageSource={chooseClass(esoClass)} />
+          <EsoClassCard title={esoClass} imageSource={chooseClass(esoClass)} />
         ))}
       </CardContainer>
     </div>

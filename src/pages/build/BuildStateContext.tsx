@@ -6,6 +6,7 @@ import { number } from "prop-types";
 import { ISet } from "../../components/GearSlot";
 import { setReducer } from "./reducers/setReducer";
 import { SelectValue } from "antd/lib/select";
+import { raceNameReducer } from "./reducers/raceNameReducer";
 
 export interface ISlot {
   id: number;
@@ -30,6 +31,8 @@ export interface IBuildState {
   weaponStats: IStats;
   armorStats: IStats;
   jewelryStats: IStats;
+  race: string;
+  class: string;
 }
 
 export interface IStats {
@@ -79,7 +82,9 @@ export const defaultBuildState = {
   jewelryStats: {
     selectedGlyphs: ["", "", ""],
     selectedTraits: ["", "", ""]
-  }
+  },
+  race: "",
+  class: ""
 };
 
 export interface IBuildAction {
@@ -107,7 +112,8 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
   return combineReducers(state, action, [
     skillReducer,
     skillBarReducer,
-    setReducer
+    setReducer,
+    raceNameReducer
   ]);
 };
 

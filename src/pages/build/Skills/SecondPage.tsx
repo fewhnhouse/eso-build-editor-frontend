@@ -50,7 +50,6 @@ export default () => {
   const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([]);
 
   useEffect(() => {
-    console.log(state);
     localStorage.setItem("buildState", JSON.stringify(state));
   }, [state]);
 
