@@ -9,6 +9,8 @@ import Flex from "../../components/Flex";
 import { ITheme } from "../../components/globalStyles";
 import SkillView from "../../components/SkillView";
 import SkillSlot from "../../components/SkillSlot";
+import { IBuildState } from "../build/BuildStateContext";
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -105,6 +107,10 @@ const statColor = (label: string, theme: ITheme) => {
 };
 
 const Details = ({ match, theme }: IDetails) => {
+  const buildState = localStorage.getItem("buildState");
+  const parsedBuildState: IBuildState = JSON.parse(buildState || "");
+  console.log(parsedBuildState);
+
   return (
     <Container>
       <Title level={3}>
@@ -124,33 +130,30 @@ const Details = ({ match, theme }: IDetails) => {
         <GearsView>
           <StyledTitle level={3}>Gear</StyledTitle>
           <Divider />
-          <GearView setups={[]} id={0} />
         </GearsView>
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
-          <SkillView id={"bar1"} droppable skillSlots=
-            {[
-              {index: 1, skill: undefined}, 
-              {index: 2, skill: undefined},
-              {index: 3, skill: undefined}, 
-              {index: 4, skill: undefined}, 
-              {index: 5, skill: undefined}, 
-            ]}
+          <SkillView
+            id={ABILITY_BAR_ONE}
+            disabled={true}
+            skillSlots={parsedBuildState.abilityBarOne.map(barItem => ({
+              index: barItem.id,
+              skill: parsedBuildState.skills.find(
+                skill => skill.id === barItem.id
+              )
+            }))}
           />
-          <SkillView id={"bar2"} droppable skillSlots=
-            {[
-              {index: 1, skill: undefined}, 
-              {index: 2, skill: undefined},
-              {index: 3, skill: undefined}, 
-              {index: 4, skill: undefined}, 
-              {index: 5, skill: undefined}, 
-            ]}
+          <SkillView
+            id={ABILITY_BAR_TWO}
+            disabled={true}
+            skillSlots={parsedBuildState.abilityBarTwo.map(barItem => ({
+              index: barItem.id,
+              skill: parsedBuildState.skills.find(
+                skill => skill.id === barItem.id
+              )
+            }))}
           />
-          {/*
-          <SkillView skillSlots={[{index: 0, skill: undefined}, {index: 1, skill: undefined}]} id="0" />
-          <SkillView skillSlots={[{index: 0, skill: undefined}, {index: 1, skill: undefined}]} id="1" />
-          */}
           <Divider />
           <Title level={3}>Mundus</Title>
           <Title level={4}>Atronach</Title>
@@ -165,20 +168,20 @@ const Details = ({ match, theme }: IDetails) => {
         <StatsView>
           <StyledTitle level={3}>Stats</StyledTitle>
           <Divider />
-          {stats.map(stat => (
-            <>
-              {stat.data.map(stat => (
-                <>
+          {stats.map((stat, index) => (
+            <div key={index}>
+              {stat.data.map((innerStats, innerIndex) => (
+                <div key={innerIndex}>
                   <Title level={4}>
-                    {stat.label}
-                    <StyledStatLabel color={statColor(stat.label, theme)}>
-                      {stat.value}
+                    {innerStats.label}
+                    <StyledStatLabel color={statColor(innerStats.label, theme)}>
+                      {innerStats.value}
                     </StyledStatLabel>
                   </Title>
-                </>
+                </div>
               ))}
               <Divider />
-            </>
+            </div>
           ))}
         </StatsView>
       </Wrapper>

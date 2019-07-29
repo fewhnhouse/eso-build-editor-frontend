@@ -1,9 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import styled from "styled-components";
 import { Divider } from "antd";
 import GearView from "../../../components/GearView";
 import { DragDropContext } from "react-beautiful-dnd";
-import { IGearSlot } from "../../../components/GearSlot";
+import { IGearSlot, ISet } from "../../../components/GearSlot";
+import { BuildContext } from "../BuildStateContext";
+import {
+  selectIcon,
+  Gear,
+  actualRing,
+  actualNeck,
+  mainHand
+} from "../../../assets/gear";
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -15,133 +23,217 @@ const OuterContainer = styled.div`
   background: white;
 `;
 
-export interface IGearSetup {
-  name: string;
-  data: IGearSlot[];
-}
+const getSetups = ({
+  armorType,
+  selectedSet,
+  mainHand,
+  offHand,
+  twoHand
+}: {
+  armorType: string;
+  selectedSet: ISet;
+  mainHand: string;
+  offHand: string;
+  twoHand: string;
+}) => {
+  return [
+    {
+      id: "bigpieces",
+      label: "Big Pieces",
+      data: [
+        {
+          slot: "head",
+          icon: selectIcon(armorType + "Head"),
+          set: selectedSet
+        },
 
-const setups: IGearSetup[] = [
-  {
-    name: "Big Pieces",
-    data: [
-      {
-        slot: "head",
-        tooltip: "top",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
+        {
+          slot: "chest",
+          icon: selectIcon(armorType + "Chest"),
+          set: selectedSet
+        },
 
-      {
-        slot: "chest",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
+        {
+          slot: "legs",
+          icon: selectIcon(armorType + "Legs"),
+          set: selectedSet
+        }
+      ]
+    },
+    {
+      id: "smallpieces",
+      label: "Small Pieces",
+      data: [
+        {
+          slot: "shoulders",
+          icon: selectIcon(armorType + "Shoulders"),
+          set: selectedSet
+        },
 
-      {
-        slot: "legs",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      }
-    ]
-  },
-  {
-    name: "Small Pieces",
-    data: [
-      {
-        slot: "shoulders",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
+        {
+          slot: "waist",
+          icon: selectIcon(armorType + "Waist"),
+          set: selectedSet
+        },
+        {
+          slot: "hands",
+          icon: selectIcon(armorType + "Hands"),
+          set: selectedSet
+        },
 
-      {
-        slot: "belt",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-      {
-        slot: "hands",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-
-      {
-        slot: "feet",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      }
-    ]
-  },
-  {
-    name: "Accessories",
-    data: [
-      {
-        slot: "neck",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-      {
-        slot: "ring",
-        tooltip: "bottom",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-      {
-        slot: "ring",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      }
-    ]
-  },
-  {
-    name: "Frontbar",
-    data: [
-      {
-        slot: "mainHand",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-      {
-        slot: "offHand",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      }
-    ]
-  },
-  {
-    name: "Backbar",
-    data: [
-      {
-        slot: "mainHand",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
-      {
-        slot: "offHand",
-        tooltip: "right",
-        title: "OP DLC set",
-        content: "Set information here"
-      }
-    ]
-  }
-];
+        {
+          slot: "feet",
+          icon: selectIcon(armorType + "Feet"),
+          set: selectedSet
+        }
+      ]
+    },
+    {
+      id: "jewelry",
+      label: "Jewelry",
+      data: [
+        {
+          slot: "neck",
+          icon: actualNeck,
+          set: selectedSet
+        },
+        {
+          slot: "ring1",
+          icon: actualRing,
+          set: selectedSet
+        },
+        {
+          slot: "ring2",
+          icon: actualRing,
+          set: selectedSet
+        }
+      ]
+    },
+    {
+      id: "onehanded",
+      label: "One Handed",
+      data: [
+        {
+          slot: "mainHand",
+          icon: mainHand ? selectIcon(mainHand) : undefined,
+          set: selectedSet
+        },
+        {
+          slot: "offHand",
+          icon: offHand ? selectIcon(offHand) : undefined,
+          set: selectedSet
+        }
+      ]
+    },
+    {
+      id: "twohanded",
+      label: "Two Handed",
+      data: [
+        {
+          slot: "mainHand",
+          icon: twoHand ? selectIcon(twoHand) : undefined,
+          set: selectedSet
+        }
+      ]
+    }
+  ];
+};
 
 export default () => {
-  const onBeforeDragStart = useCallback(() => {}, []);
+  const [state, dispatch] = useContext(BuildContext);
 
-  const onDragStart = useCallback(start => {}, []);
+  const onBeforeDragStart = useCallback(() => {}, []);
+  const onDragStart = useCallback(start => {
+    console.log("drag start");
+  }, []);
   const onDragUpdate = useCallback(update => {}, []);
-  const onDragEnd = useCallback(end => {}, []);
+  const onDragEnd = useCallback(end => {
+    console.log("drag end", end);
+    if (end.draggableId && end.destination) {
+      const sourceSplit = end.draggableId.split("-");
+      const destinationSplit = end.destination.droppableId.split("-");
+      const [sourceGroup, sourceId, sourceSlot] = sourceSplit;
+      const [
+        destinationGroup,
+        destinationId,
+        destinationSlot
+      ] = destinationSplit;
+      if (sourceSlot === destinationSlot) {
+        dispatch!({
+          type: "DROP_SET_ITEM",
+          payload: {
+            id: sourceId,
+            slot: destinationSlot,
+            group: destinationGroup
+          }
+        });
+      }
+    }
+  }, []);
+
+  const {
+    setTabKey,
+    armorType,
+    weapons,
+    weaponType,
+    bigPieceSelection,
+    smallPieceSelection,
+    frontbarSelection,
+    backbarSelection,
+    jewelrySelection,
+    selectedSet
+  } = state!;
+
+  console.log(weapons);
+  const mainWeapon =
+    weaponType === "onehanded" && weapons[0]
+      ? weapons[0]
+          .toString()
+          .split("main-")[1]
+          .toLowerCase()
+      : "";
+  const offWeapon =
+    weaponType === "onehanded" && weapons[1]
+      ? weapons[1]
+          .toString()
+          .split("off-")[1]
+          .toLowerCase()
+      : "";
+  const twoWeapon =
+    weaponType === "twohanded" && weapons[0]
+      ? weapons[0]
+          .toString()
+          .split("two-")[1]
+          .toLowerCase()
+      : "";
+  const armor = armorType.split("armor")[0];
+  const mySetups = getSetups({
+    armorType: armor,
+    mainHand: mainWeapon,
+    selectedSet: selectedSet!,
+    offHand: offWeapon,
+    twoHand: twoWeapon
+  });
+  const showGear = (key: string) => {
+    if (key === "weapons") {
+      if (weaponType === "onehanded") {
+        return mySetups.filter(setup => setup.id === "onehanded");
+      } else {
+        return mySetups.filter(setup => setup.id === "twohanded");
+      }
+    } else if (key === "armor") {
+      return mySetups.filter(
+        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
+      );
+      if (armorType === "heavyarmor") {
+      } else if (armorType === "mediumarmor") {
+      } else {
+      }
+    } else {
+      return mySetups.filter(setup => setup.id === "jewelry");
+    }
+  };
+
   return (
     <DragDropContext
       onBeforeDragStart={onBeforeDragStart}
@@ -151,13 +243,31 @@ export default () => {
     >
       <OuterContainer>
         <Divider>Active Selection</Divider>
-        <GearView
-          setups={setups.filter(setup => setup.name === "Big Pieces" || setup.name === "Small Pieces")}
-          id={1}
-        />
+        <GearView setups={showGear(setTabKey)} />
 
         <Divider>Setup</Divider>
-        <GearView setups={setups} id={2} />
+        <GearView
+          droppable
+          setups={[
+            {
+              id: "bigpieces",
+              label: "Big Pieces",
+              data: bigPieceSelection || []
+            },
+            {
+              id: "smallpieces",
+              label: "Small Pieces",
+              data: smallPieceSelection || []
+            },
+            { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
+            {
+              id: "frontbar",
+              label: "Frontbar",
+              data: frontbarSelection || []
+            },
+            { id: "backbar", label: "Backbar", data: backbarSelection || [] }
+          ]}
+        />
       </OuterContainer>
     </DragDropContext>
   );

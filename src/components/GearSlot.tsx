@@ -22,27 +22,14 @@ export interface IGearSlotProps {
   slot: IGearSlot;
   index: number;
   droppable?: boolean;
+  draggable?: boolean;
   id: string;
 }
 
 export interface IGearSlot {
   slot: string;
-  title: string;
-  content: string;
-  tooltip:
-    | "top"
-    | "left"
-    | "right"
-    | "bottom"
-    | "topLeft"
-    | "topRight"
-    | "bottomLeft"
-    | "bottomRight"
-    | "leftTop"
-    | "leftBottom"
-    | "rightTop"
-    | "rightBottom"
-    | undefined;
+  set?: ISet
+  icon?: string;
 }
 
 const GearImg = styled.img`
@@ -58,8 +45,10 @@ const GearFrame = styled.div`
   height: 64px;
   border: 2px solid rgba(0, 0, 0, 0.45);
   border-radius: 4px;
-  background-image: url(${(props: { backgroundSource: string }) =>
-    props.backgroundSource});
+  background-image: url(${(props: {
+    hasIcon: boolean;
+    backgroundSource: string;
+  }) => (props.hasIcon ? "" : props.backgroundSource)});
   background-repeat: no-repeat;
 `;
 
@@ -93,7 +82,7 @@ const getImageSource = (slot: string) => {
       return head;
     case "shoulders":
       return shoulders;
-    case "belt":
+    case "waist":
       return belt;
     case "hands":
       return hands;
@@ -101,7 +90,9 @@ const getImageSource = (slot: string) => {
       return feet;
     case "chest":
       return chest;
-    case "ring":
+    case "ring1":
+      return ring;
+    case "ring2":
       return ring;
     case "neck":
       return neck;
@@ -132,38 +123,39 @@ const breakRow = (tooltip: string | undefined) => {
   }
 };
 
-export default ({ slot, index, droppable, id }: IGearSlotProps) => {
+export default ({ slot, index, droppable, draggable, id }: IGearSlotProps) => {
   //const {slot, title, content} = props;
   return (
     <div style={{ margin: "5px 10px 5px 10px" }}>
       <Droppable
         isDropDisabled={!droppable}
-        droppableId={`${id}-${slot}-droppable-${index}`}
+        droppableId={`${id}-${slot.slot}-droppable-${index}`}
       >
         {(provided, snapshot) => (
           <GearFrame
+            hasIcon={slot.icon !== undefined}
             ref={provided.innerRef}
             {...provided.droppableProps}
             backgroundSource={getImageSource(slot.slot)}
           >
             {provided.placeholder}
             <Draggable
-              isDragDisabled={false}
-              draggableId={`${id}-${slot}-draggable-${index}`}
+              isDragDisabled={!draggable}
+              draggableId={`${id}-${slot.slot}-draggable-${index}`}
               index={index}
             >
               {(provided, snapshot) =>
-                slot !== undefined ? (
+                slot.icon !== undefined ? (
                   <Popover
                     placement={"top"}
-                    title={slot.title}
-                    content={slot.content}
+                    title={slot.set ? slot.set.name : "Title"}
+                    content={"content"}
                   >
                     <GearImg
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      src={diamond}
+                      src={slot.icon}
                     />
                   </Popover>
                 ) : (

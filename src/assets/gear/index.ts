@@ -41,6 +41,8 @@ import lightHead from "./gear__light_head_a.png";
 import lightLegs from "./gear__light_legs_a.png";
 import lightShoulders from "./gear__light_shoulders_a.png";
 import lightWaist from "./gear__light_waist_a.png";
+import actualRing from "./gear_ring_a.png";
+import actualNeck from "./gear_neck_a.png";
 
 export {
   belt,
@@ -85,7 +87,9 @@ export {
   lightFeet,
   lightHands,
   lightHead,
-  lightWaist
+  lightWaist,
+  actualRing,
+  actualNeck
 };
 
 export type Gear =
@@ -121,7 +125,7 @@ export type Gear =
   | "lightHands"
   | "lightLegs";
 
-export const selectIcon = (gear: Gear) => {
+export const selectIcon = (gear: string) => {
   switch (gear) {
     case "axe1h":
       return axe1h;

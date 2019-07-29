@@ -2,11 +2,11 @@ import React from "react"; // { useReducer }
 import { ISkill } from "../../components/SkillSlot";
 import { skillReducer } from "./reducers/skillReducer";
 import { skillBarReducer } from "./reducers/skillBarReducer";
-import { number } from "prop-types";
 import { ISet } from "../../components/GearSlot";
 import { setReducer } from "./reducers/setReducer";
 import { SelectValue } from "antd/lib/select";
 import { raceNameReducer } from "./reducers/raceNameReducer";
+import { setBarReducer } from "./reducers/setBarReducer";
 
 export interface ISlot {
   id: number;
@@ -14,6 +14,7 @@ export interface ISlot {
 }
 export interface IBuildState {
   skills: ISkill[];
+  sets: ISet[];
   skillLine: number;
   selectedSkillLines: {
     id: number;
@@ -25,15 +26,26 @@ export interface IBuildState {
   ultimateOne: ISlot;
   ultimateTwo: ISlot;
   selectedSet?: ISet;
-  weaponType: string;
-  armorType: string;
+  weaponType: "onehanded" | "twohanded";
+  armorType: "lightarmor" | "mediumarmor" | "heavyarmor";
   weapons: SelectValue[];
   weaponStats: IStats;
   armorStats: IStats;
   jewelryStats: IStats;
   race: string;
   class: string;
-  setTabKey: string;
+  setTabKey: "armor" | "jewelry" | "weapons";
+  bigPieceSelection: ISetSelection[];
+  smallPieceSelection: ISetSelection[];
+  jewelrySelection: ISetSelection[];
+  frontbarSelection: ISetSelection[];
+  backbarSelection: ISetSelection[];
+}
+
+interface ISetSelection {
+  icon?: string;
+  slot: string;
+  selectedSet?: ISet;
 }
 
 export interface IStats {
@@ -43,6 +55,7 @@ export interface IStats {
 
 export const defaultBuildState = {
   skills: [],
+  sets: [],
   skillLine: 0,
   activeBar: [
     { id: 0, index: 0 },
@@ -64,6 +77,30 @@ export const defaultBuildState = {
     { id: 0, index: 2 },
     { id: 0, index: 3 },
     { id: 0, index: 4 }
+  ],
+  bigPieceSelection: [
+    { slot: "head", selectedSet: undefined, icon: undefined },
+    { slot: "legs", selectedSet: undefined, icon: undefined },
+    { slot: "chest", selectedSet: undefined, icon: undefined }
+  ],
+  smallPieceSelection: [
+    { slot: "shoulders", selectedSet: undefined, icon: undefined },
+    { slot: "waist", selectedSet: undefined, icon: undefined },
+    { slot: "hands", selectedSet: undefined, icon: undefined },
+    { slot: "feet", selectedSet: undefined, icon: undefined }
+  ],
+  jewelrySelection: [
+    { slot: "neck", selectedSet: undefined, icon: undefined },
+    { slot: "ring1", selectedSet: undefined, icon: undefined },
+    { slot: "ring2", selectedSet: undefined, icon: undefined }
+  ],
+  frontbarSelection: [
+    { slot: "mainHand", selectedSet: undefined, icon: undefined },
+    { slot: "offHand", selectedSet: undefined, icon: undefined }
+  ],
+  backbarSelection: [
+    { slot: "mainHand", selectedSet: undefined, icon: undefined },
+    { slot: "offHand", selectedSet: undefined, icon: undefined }
   ],
   ultimateOne: { id: 0, index: 5 },
   ultimateTwo: { id: 0, index: 5 },
@@ -115,6 +152,7 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     skillReducer,
     skillBarReducer,
     setReducer,
+    setBarReducer,
     raceNameReducer
   ]);
 };

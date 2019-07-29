@@ -10,7 +10,9 @@ interface ISkillSlotProps {
   index: number;
   skillIndex: number;
   id: string;
+  disabled?: boolean;
   skill?: ISkill;
+  tooltipPos?: "top" | "bottom" | undefined;
 }
 
 export interface ISkill {
@@ -52,9 +54,25 @@ export default ({
   index,
   skillIndex,
   id,
-  skill
+  skill,
+  disabled,
+  tooltipPos
 }: ISkillSlotProps) => {
-  return (
+  return disabled ? (
+    skill !== undefined ? (
+      <SkillFrame>
+        <Popover placement={tooltipPos} content={<SkillCardContent skill={skill} />}>
+          <SkillImg
+            src={`https://beast.pathfindermediagroup.com/storage/skills/${
+              skill.icon
+            }`}
+          />
+        </Popover>
+      </SkillFrame>
+    ) : (
+      <SkillFrame />
+    )
+  ) : (
     <Droppable
       isDropDisabled={!droppable}
       droppableId={`${id}-droppable-${index}`}
@@ -71,7 +89,7 @@ export default ({
             {(provided, snapshot) =>
               skill && skillIndex === index ? (
                 <Popover
-                  placement={"top"}
+                  placement={tooltipPos}
                   content={<SkillCardContent skill={skill} />}
                 >
                   <SkillImg

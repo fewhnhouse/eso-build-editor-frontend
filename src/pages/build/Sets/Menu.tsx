@@ -65,6 +65,22 @@ export default () => {
   ) => {
     dispatch!({ type: "SET_ITEMSET", payload: { selectedSet: set } });
   };
+  useEffect(() => {
+    /*
+    axios
+      .get("/skills", {
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setSkills(data);
+      });
+      */
+    dispatch!({ type: "SET_SETS", payload: { sets } });
+  }, [dispatch]);
+
   return (
     <ListContainer collapsed={collapsed}>
       {collapsed && (

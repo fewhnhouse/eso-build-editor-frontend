@@ -26,20 +26,6 @@ export default () => {
   // const [skills, setSkills] = useState([]);
   const [state, dispatch] = useContext(BuildContext);
   const [selectedSet, setSelectedSet] = useState<ISet | undefined>(undefined);
-  useEffect(() => {
-    /*
-    axios
-      .get("/skills", {
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setSkills(data);
-      });
-      */
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
@@ -53,7 +39,7 @@ export default () => {
 
   const { setTabKey } = state!;
   const handleTabChange = (key: string) => {
-    console.log(key)
+    console.log(key);
     dispatch!({ type: "SET_SET_TAB_KEY", payload: { setTabKey: key } });
   };
   return (

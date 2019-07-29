@@ -9,6 +9,12 @@ interface ISelectPayload {
 }
 export const setReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
+    case "SET_SETS":
+      const { sets } = action.payload;
+      return {
+        ...state,
+        sets
+      };
     case "SET_ITEMSET":
       const { selectedSet }: { selectedSet: ISet } = action.payload;
       const { armorType } = state;

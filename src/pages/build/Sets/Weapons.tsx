@@ -54,11 +54,6 @@ const StyledSelectContainer = styled(Flex)`
   flex-wrap: wrap;
 `;
 
-const SelectContainer = styled(Flex)`
-  height: 150px;
-  width: 100%;
-  flex-wrap: wrap;
-`;
 
 const OptionIcon = styled.img`
   width: 24px;
@@ -269,7 +264,7 @@ export default () => {
                 .filter(weapon => weapon.type !== "shield")
                 .map(weapon => (
                   <Option
-                    value={`main-${weapon.label}`}
+                    value={`main-${weapon.type}`}
                     style={{
                       width: "100%",
                       display: "flex",
@@ -297,7 +292,7 @@ export default () => {
                     justifyContent: "space-between",
                     alignItems: "center"
                   }}
-                  value={`off-${weapon.label}`}
+                  value={`off-${weapon.type}`}
                 >
                   {weapon.label}
                   <OptionIcon src={selectIcon(weapon.type)} />
@@ -321,7 +316,7 @@ export default () => {
                   justifyContent: "space-between",
                   alignItems: "center"
                 }}
-                value={`two-${weapon.label}`}
+                value={`two-${weapon.type}`}
               >
                 {weapon.label}
                 <OptionIcon src={selectIcon(weapon.type)} />
