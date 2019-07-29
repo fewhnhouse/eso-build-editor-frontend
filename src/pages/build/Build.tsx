@@ -9,7 +9,7 @@ import {
 import { RouteComponentProps, Redirect } from "react-router";
 import ThirdPage from "./Sets/ThirdPage";
 
-import { Layout, Button, Steps, Icon, message } from "antd";
+import { Layout, Button, Steps, Icon, message, Tooltip } from "antd";
 import styled from "styled-components";
 
 const { Footer, Content } = Layout;
@@ -52,6 +52,28 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
     setTab(tabIndex => tabIndex + 1);
   };
 
+  const isDisabled =
+    tab === 2 ||
+    (tab === 0 && (state.race === "" || state.class === "")) ||
+    (tab === 1 &&
+      (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
+        state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
+        state.ultimateOne.id === 0 ||
+        state.ultimateTwo.id === 0));
+
+  const setTooltipTitle = () => {
+    if (!isDisabled) {
+      return "";
+    }
+    switch (tab) {
+      case 0:
+        return "Select a Race and a Class to progress.";
+      case 1:
+        return "Fill your bars with Skills to progress.";
+      case 2:
+        return "Slot sets to progress."
+    }
+  };
   return (
     <BuildContext.Provider value={[state, dispatch]}>
       <Container>
@@ -89,25 +111,17 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           <Step title="Sets" description="Select sets." />
           <Step title="Review" description="Review and save." />
         </Steps>
-        <TabButton
-          onClick={handleNextClick}
-          disabled={
-            tab === 2 ||
-            (tab === 0 && (state.race === "" || state.class === "")) ||
-            (tab === 1 &&
-              (state.abilityBarOne.find(skill => skill.id === 0) !==
-                undefined ||
-                state.abilityBarTwo.find(skill => skill.id === 0) !==
-                  undefined ||
-                state.ultimateOne.id === 0 ||
-                state.ultimateTwo.id === 0))
-          }
-          size="large"
-          type="primary"
-        >
-          <Icon type="right" />
-          Next
-        </TabButton>
+        <Tooltip title={setTooltipTitle()}>
+          <TabButton
+            onClick={handleNextClick}
+            disabled={isDisabled}
+            size="large"
+            type="primary"
+          >
+            <Icon type="right" />
+            Next
+          </TabButton>
+        </Tooltip>
         <Redirect to={`/build/${tab}`} push />
       </Footer>
     </BuildContext.Provider>

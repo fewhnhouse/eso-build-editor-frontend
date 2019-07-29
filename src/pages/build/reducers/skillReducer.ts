@@ -136,7 +136,8 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
         abilityBarOne,
         abilityBarTwo,
         ultimateOne,
-        ultimateTwo
+        ultimateTwo,
+        skillLine: 0
       };
     default:
       return state;
