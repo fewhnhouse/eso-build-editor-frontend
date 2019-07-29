@@ -20,22 +20,27 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
         weaponType,
-        weapons: [],
+        weapons: ["", ""],
         weaponStats: {
-          selectedGlyphs: [],
-          selectedTraits: []
+          selectedGlyphs: ["", ""],
+          selectedTraits: ["", ""]
         }
       };
+    case "SET_ARMOR_TYPE": {
+      const { armorType } = action.payload;
+      return {
+        ...state,
+        armorType
+      };
+    }
     case "SET_WEAPONS": {
       const { value, index } = action.payload;
       return {
         ...state,
-        weapons:
-          state.weapons.length > index
-            ? state.weapons.map((w, i) => (i === index ? value : w))
-            : [...state.weapons, value]
+        weapons: state.weapons.map((w, i) => (i === index ? value : w))
       };
     }
+
     case "SET_WEAPON_STATS": {
       const { value, index, type }: ISelectPayload = action.payload;
       return {
@@ -69,15 +74,9 @@ const updateStats = (
   index: number
 ) => {
   return {
-    [type]:
-      stateStats[type].length > index
-        ? stateStats[type].map((stat: any, i: number) =>
-            i === index ? value : stat
-          )
-        : {
-            [type]: [...stateStats[type], value],
-            ...stateStats
-          },
-    ...stateStats
+    ...stateStats,
+    [type]: stateStats[type].map((stat: any, i: number) =>
+      i === index ? value : stat
+    )
   };
 };

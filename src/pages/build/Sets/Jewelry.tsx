@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Divider, Select, Radio, Typography } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
 import styled from "styled-components";
 import {
-  sapphire,
-  garnet,
-  diamond,
-  bloodstone,
-  fortifiedNirncrux,
-  sardonyx,
-  emerald,
-  quartz,
-  almandine,
   slaughterStone,
   dibellium,
   gildinWax,
@@ -40,6 +31,8 @@ import {
   rage
 } from "../../../assets/glyphs";
 import { SelectWithTitle } from "./CustomSelect";
+import { SelectValue } from "antd/lib/select";
+import { BuildContext } from "../BuildStateContext";
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
@@ -200,30 +193,70 @@ export default () => {
     }
   ];
 
+  const onChangeSelect = (
+    index: number,
+    actionType: string,
+    type: "selectedTraits" | "selectedGlyphs"
+  ) => (value: SelectValue) => {
+    dispatch!({ type: actionType, payload: { index, value, type } });
+  };
+  const [state, dispatch] = useContext(BuildContext);
+  const { jewelryStats } = state!;
+
   return (
     <StyledFlex direction="column" justify="center" align="center">
       <Divider>Glyphs</Divider>
       <Flex
-        style={{ width: "100%", height: 150 }}
+        style={{ width: "100%", minHeigt: 150, flexWrap: "wrap" }}
         direction="row"
         justify="space-between"
         align="flex-start"
       >
-        <StyledSelectWithTitle title="Necklace" items={glyphs} />
-        <StyledSelectWithTitle title="Ring 1" items={glyphs} />
-        <StyledSelectWithTitle title="Ring 2" items={glyphs} />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedGlyphs[0]}
+          onChange={onChangeSelect(0, "SET_JEWELRY_STATS", "selectedGlyphs")}
+          title="Necklace"
+          items={glyphs}
+        />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedGlyphs[1]}
+          onChange={onChangeSelect(1, "SET_JEWELRY_STATS", "selectedGlyphs")}
+          title="Ring 1"
+          items={glyphs}
+        />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedGlyphs[2]}
+          onChange={onChangeSelect(2, "SET_JEWELRY_STATS", "selectedGlyphs")}
+          title="Ring 2"
+          items={glyphs}
+        />
       </Flex>
 
       <Divider>Traits</Divider>
       <Flex
-        style={{ width: "100%", height: 150 }}
+        style={{ width: "100%", minHeigt: 150, flexWrap: "wrap" }}
         direction="row"
         justify="space-between"
         align="flex-start"
       >
-        <StyledSelectWithTitle title="Necklace" items={traits} />
-        <StyledSelectWithTitle title="Ring 1" items={traits} />
-        <StyledSelectWithTitle title="Ring 2" items={traits} />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedTraits[0]}
+          onChange={onChangeSelect(0, "SET_JEWELRY_STATS", "selectedTraits")}
+          title="Necklace"
+          items={traits}
+        />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedTraits[1]}
+          onChange={onChangeSelect(1, "SET_JEWELRY_STATS", "selectedTraits")}
+          title="Ring 1"
+          items={traits}
+        />
+        <StyledSelectWithTitle
+          value={jewelryStats.selectedTraits[2]}
+          onChange={onChangeSelect(2, "SET_JEWELRY_STATS", "selectedTraits")}
+          title="Ring 2"
+          items={traits}
+        />
       </Flex>
     </StyledFlex>
   );
@@ -231,5 +264,8 @@ export default () => {
 
 const StyledSelectWithTitle = styled(SelectWithTitle)`
   flex: 1;
+  min-width: 250px;
+  max-width: 250px;
+
   margin: 0px 10px;
 `;

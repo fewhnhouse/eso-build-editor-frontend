@@ -42,6 +42,10 @@ export default () => {
   }, []);
 
   useEffect(() => {
+    localStorage.setItem("buildState", JSON.stringify(state));
+  }, [state]);
+
+  useEffect(() => {
     if (state!.selectedSet) {
       setSelectedSet(state!.selectedSet);
     }

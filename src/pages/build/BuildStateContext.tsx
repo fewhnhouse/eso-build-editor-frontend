@@ -25,6 +25,7 @@ export interface IBuildState {
   ultimateTwo: ISlot;
   selectedSet?: ISet;
   weaponType: string;
+  armorType: string;
   weapons: SelectValue[];
   weaponStats: IStats;
   armorStats: IStats;
@@ -65,18 +66,19 @@ export const defaultBuildState = {
   selectedSkillLines: [],
   selectedSet: undefined,
   weaponType: "onehanded",
-  weapons: [],
+  armorType: "mediumarmor",
+  weapons: ["", ""],
   weaponStats: {
-    selectedGlyphs: [],
-    selectedTraits: []
+    selectedGlyphs: ["", ""],
+    selectedTraits: ["", ""]
   },
   armorStats: {
-    selectedGlyphs: [],
-    selectedTraits: []
+    selectedGlyphs: ["", "", "", "", "", "", ""],
+    selectedTraits: ["", "", "", "", "", "", ""]
   },
   jewelryStats: {
-    selectedGlyphs: [],
-    selectedTraits: []
+    selectedGlyphs: ["", "", ""],
+    selectedTraits: ["", "", ""]
   }
 };
 

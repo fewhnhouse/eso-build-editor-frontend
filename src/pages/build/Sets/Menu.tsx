@@ -92,7 +92,12 @@ export default () => {
               icon="double-left"
             />
           </Flex>
-          <Flex direction="row" justify="center" align="center">
+          <Flex
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ margin: "0px 10px" }}
+          >
             <CheckableTag checked={true}>Arena</CheckableTag>
             <CheckableTag checked={true}>Monster</CheckableTag>
             <CheckableTag checked={true}>PvP</CheckableTag>
@@ -100,20 +105,28 @@ export default () => {
             <CheckableTag checked={true}>Trial</CheckableTag>
             <CheckableTag checked={true}>Dungeon</CheckableTag>
           </Flex>
-          <Divider style={{ margin: "10px 0px" }} />
-          <div
+          <Divider
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
+              margin: "10px 0px"
             }}
+          />
+          <Flex
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ margin: "0px 10px" }}
           >
             <CheckableTag checked={true}>Light</CheckableTag>
             <CheckableTag checked={true}>Medium</CheckableTag>
             <CheckableTag checked={true}>Heavy</CheckableTag>
             <CheckableTag checked={true}>Crafted</CheckableTag>
-          </div>
-          <Divider style={{ margin: "5px 0px" }} />
+          </Flex>
+          <Divider
+            style={{
+              margin: "10px 0px 0px 0px",
+              boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px"
+            }}
+          />
 
           <List
             style={{ height: "100%", overflow: "auto" }}
