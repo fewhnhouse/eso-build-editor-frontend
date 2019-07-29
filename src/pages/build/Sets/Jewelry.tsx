@@ -36,6 +36,7 @@ import { BuildContext } from "../BuildStateContext";
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
+  overflow-y: auto;
 `;
 
 const StyledSelect = styled(Select)`

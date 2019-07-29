@@ -9,6 +9,8 @@ const OuterContainer = styled.div`
   flex: 1;
   height: 100%;
   padding: 40px;
+  overflow: auto;
+  max-width: 400px;
 
   background: white;
 `;
@@ -20,7 +22,7 @@ export interface IGearSetup {
 
 const setups: IGearSetup[] = [
   {
-    name: "Apparel",
+    name: "Big Pieces",
     data: [
       {
         slot: "head",
@@ -28,18 +30,32 @@ const setups: IGearSetup[] = [
         title: "OP DLC set",
         content: "Set information here"
       },
-      {
-        slot: "shoulders",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
+
       {
         slot: "chest",
         tooltip: "right",
         title: "OP DLC set",
         content: "Set information here"
       },
+
+      {
+        slot: "legs",
+        tooltip: "left",
+        title: "OP DLC set",
+        content: "Set information here"
+      }
+    ]
+  },
+  {
+    name: "Small Pieces",
+    data: [
+      {
+        slot: "shoulders",
+        tooltip: "left",
+        title: "OP DLC set",
+        content: "Set information here"
+      },
+
       {
         slot: "belt",
         tooltip: "left",
@@ -52,12 +68,7 @@ const setups: IGearSetup[] = [
         title: "OP DLC set",
         content: "Set information here"
       },
-      {
-        slot: "legs",
-        tooltip: "left",
-        title: "OP DLC set",
-        content: "Set information here"
-      },
+
       {
         slot: "feet",
         tooltip: "right",
@@ -141,7 +152,7 @@ export default () => {
       <OuterContainer>
         <Divider>Active Selection</Divider>
         <GearView
-          setups={setups.filter(setup => setup.name === "Apparel")}
+          setups={setups.filter(setup => setup.name === "Big Pieces" || setup.name === "Small Pieces")}
           id={1}
         />
 
