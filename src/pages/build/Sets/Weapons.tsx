@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Divider, Select, Radio, Typography } from "antd";
+import { Divider, Select, Radio, Typography, Icon } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
 import styled from "styled-components";
@@ -33,13 +33,15 @@ import {
 import { OptionProps, SelectValue } from "antd/lib/select";
 import { CustomSelect, SelectWithTitle } from "./CustomSelect";
 import { BuildContext } from "../BuildStateContext";
+import { selectIcon, Gear } from "../../../assets/gear";
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
 `;
 
 const StyledSelectWithTitle = styled(SelectWithTitle)`
-  min-width: 250px;
+  min-width: 350px;
+  max-width: 350px;
   flex: 1;
   margin: 0px 10px;
 `;
@@ -47,6 +49,8 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
 const StyledSelectContainer = styled(Flex)`
   margin: 20px;
   width: 100%;
+  min-width: 250px;
+  max-width: 250px;
   flex-wrap: wrap;
 `;
 
@@ -54,6 +58,12 @@ const SelectContainer = styled(Flex)`
   height: 150px;
   width: 100%;
   flex-wrap: wrap;
+`;
+
+const OptionIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
 `;
 
 const { Option } = Select;
@@ -118,6 +128,59 @@ export default () => {
       icon: prismatic
     }
   ];
+
+  const weaponTypes: {
+    oneHanded: { type: Gear; label: string }[];
+    twoHanded: { type: Gear; label: string }[];
+  } = {
+    oneHanded: [
+      {
+        type: "axe1h",
+        label: "Axe"
+      },
+
+      {
+        type: "sword1h",
+        label: "Sword"
+      },
+
+      {
+        type: "hammer1h",
+        label: "Hammer"
+      },
+      {
+        type: "dagger",
+        label: "Dagger"
+      },
+      {
+        type: "shield",
+        label: "Shield"
+      }
+    ],
+    twoHanded: [
+      {
+        type: "hammer2h",
+        label: "Hammer"
+      },
+      {
+        type: "sword2h",
+        label: "Sword"
+      },
+      {
+        type: "bow",
+        label: "Bow"
+      },
+      {
+        type: "staff",
+        label: "Staff"
+      },
+
+      {
+        type: "axe2h",
+        label: "Axe"
+      }
+    ]
+  };
 
   const traits = [
     {
@@ -202,10 +265,22 @@ export default () => {
               placeholder="Select Mainhand"
               style={{ flex: 1, margin: "10px 10px", minWidth: 150 }}
             >
-              <Option value="main-dagger">Dagger</Option>
-              <Option value="main-sword">Sword</Option>
-              <Option value="main-mace">Mace</Option>
-              <Option value="main-axe">Axe</Option>
+              {weaponTypes.oneHanded
+                .filter(weapon => weapon.type !== "shield")
+                .map(weapon => (
+                  <Option
+                    value={`main-${weapon.label}`}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center"
+                    }}
+                  >
+                    {weapon.label}
+                    <OptionIcon src={selectIcon(weapon.type)} />
+                  </Option>
+                ))}
             </Select>
             <Select
               size="large"
@@ -214,11 +289,20 @@ export default () => {
               placeholder="Select Off-Hand"
               style={{ flex: 1, margin: "0px 10px", minWidth: 150 }}
             >
-              <Option value="off-dagger">Dagger</Option>
-              <Option value="off-sword">Sword</Option>
-              <Option value="off-mace">Mace</Option>
-              <Option value="off-axe">Axe</Option>
-              <Option value="off-shield">Shield</Option>
+              {weaponTypes.oneHanded.map(weapon => (
+                <Option
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                  value={`off-${weapon.label}`}
+                >
+                  {weapon.label}
+                  <OptionIcon src={selectIcon(weapon.type)} />
+                </Option>
+              ))}
             </Select>
           </>
         ) : (
@@ -229,13 +313,20 @@ export default () => {
             placeholder="Select a weapon"
             style={{ flex: 1, margin: "0px 10px" }}
           >
-            <Option value="two-restoration">Restoration Staff</Option>
-            <Option value="two-fire">Fire Staff</Option>
-            <Option value="two-shock">Shock Staff</Option>
-            <Option value="two-frost">Frost Staff</Option>
-            <Option value="two-sword">Sword</Option>
-            <Option value="two-maul">Maul</Option>
-            <Option value="two-axe">Axe</Option>
+            {weaponTypes.twoHanded.map(weapon => (
+              <Option
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+                value={`two-${weapon.label}`}
+              >
+                {weapon.label}
+                <OptionIcon src={selectIcon(weapon.type)} />
+              </Option>
+            ))}
           </Select>
         )}
       </StyledSelectContainer>
