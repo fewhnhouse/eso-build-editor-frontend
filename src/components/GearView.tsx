@@ -17,11 +17,12 @@ export interface IGearSetup {
 export default ({
   setups,
   droppable,
+  disabled,
 }: {
   setups: IGearSetup[]
   droppable?: boolean
+  disabled?: boolean
 }) => {
-  console.log(setups, droppable)
   return (
     <GearView>
       {setups.map((setup: IGearSetup) => (
@@ -35,6 +36,7 @@ export default ({
           >
             {setup.data.map((slot: IGearSlot, index: number) => (
               <GearSlot
+                disabled={disabled}
                 draggable={slot.icon !== undefined}
                 droppable={droppable}
                 id={`${setup.id}-${slot.set ? slot.set.id : 0}`}
