@@ -7,8 +7,7 @@ import styled from 'styled-components'
 import { SelectValue } from 'antd/lib/select'
 import { SelectWithTitle } from './CustomSelect'
 import { BuildContext } from '../BuildStateContext'
-import { selectIcon, Gear } from '../../../assets/gear'
-import { weaponTypes, weaponGlyphs, weaponTraits } from './data'
+import { weaponGlyphs, weaponTraits } from './data'
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
@@ -25,21 +24,6 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
   margin: 0px 10px;
 `
 
-const StyledSelectContainer = styled(Flex)`
-  margin: 20px;
-  width: 100%;
-  min-width: 250px;
-  max-width: 250px;
-  flex-wrap: wrap;
-`
-
-const OptionIcon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-left: 5px;
-`
-
-const { Option } = Select
 export default () => {
   const onChange = (e: RadioChangeEvent) => {
     dispatch!({
@@ -49,11 +33,11 @@ export default () => {
   }
 
   const onChangeSelect = (
-    index: number,
+    indices: number[],
     actionType: string,
     type: 'selectedTraits' | 'selectedGlyphs'
   ) => (value: SelectValue) => {
-    dispatch!({ type: actionType, payload: { index, value, type } })
+    dispatch!({ type: actionType, payload: { indices, value, type } })
   }
   const [state, dispatch] = useContext(BuildContext)
   const { weaponType, weaponStats } = state!
@@ -69,7 +53,7 @@ export default () => {
       {weaponType === 'twohanded' ? (
         <StyledSelectWithTitle
           value={weaponStats.selectedGlyphs[0]}
-          onChange={onChangeSelect(0, 'SET_WEAPON_STATS', 'selectedGlyphs')}
+          onChange={onChangeSelect([0], 'SET_WEAPON_STATS', 'selectedGlyphs')}
           title='Main Hand'
           items={weaponGlyphs}
         />
@@ -82,13 +66,13 @@ export default () => {
         >
           <StyledSelectWithTitle
             value={weaponStats.selectedGlyphs[0]}
-            onChange={onChangeSelect(0, 'SET_WEAPON_STATS', 'selectedGlyphs')}
+            onChange={onChangeSelect([0], 'SET_WEAPON_STATS', 'selectedGlyphs')}
             title='Main Hand'
             items={weaponGlyphs}
           />
           <StyledSelectWithTitle
             value={weaponStats.selectedGlyphs[1]}
-            onChange={onChangeSelect(1, 'SET_WEAPON_STATS', 'selectedGlyphs')}
+            onChange={onChangeSelect([1], 'SET_WEAPON_STATS', 'selectedGlyphs')}
             title={
               <OffHandTitle>
                 <span>Off hand</span>
@@ -104,7 +88,7 @@ export default () => {
       {weaponType === 'twohanded' ? (
         <StyledSelectWithTitle
           value={weaponStats.selectedTraits[0]}
-          onChange={onChangeSelect(0, 'SET_WEAPON_STATS', 'selectedTraits')}
+          onChange={onChangeSelect([0], 'SET_WEAPON_STATS', 'selectedTraits')}
           title='Main Hand'
           items={weaponTraits}
         />
@@ -117,13 +101,13 @@ export default () => {
         >
           <StyledSelectWithTitle
             value={weaponStats.selectedTraits[0]}
-            onChange={onChangeSelect(0, 'SET_WEAPON_STATS', 'selectedTraits')}
+            onChange={onChangeSelect([0], 'SET_WEAPON_STATS', 'selectedTraits')}
             title='Main Hand'
             items={weaponTraits}
           />
           <StyledSelectWithTitle
             value={weaponStats.selectedTraits[1]}
-            onChange={onChangeSelect(1, 'SET_WEAPON_STATS', 'selectedTraits')}
+            onChange={onChangeSelect([1], 'SET_WEAPON_STATS', 'selectedTraits')}
             title={
               <OffHandTitle>
                 <span>Off hand</span>

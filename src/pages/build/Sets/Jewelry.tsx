@@ -25,11 +25,11 @@ const StyledIcon = styled.img`
 const { Option } = Select
 export default () => {
   const onChangeSelect = (
-    index: number,
+    indices: number[],
     actionType: string,
     type: 'selectedTraits' | 'selectedGlyphs'
   ) => (value: SelectValue) => {
-    dispatch!({ type: actionType, payload: { index, value, type } })
+    dispatch!({ type: actionType, payload: { indices, value, type } })
   }
   const [state, dispatch] = useContext(BuildContext)
   const { jewelryStats } = state!
@@ -45,19 +45,19 @@ export default () => {
       >
         <StyledSelectWithTitle
           value={jewelryStats.selectedGlyphs[0]}
-          onChange={onChangeSelect(0, 'SET_JEWELRY_STATS', 'selectedGlyphs')}
+          onChange={onChangeSelect([0], 'SET_JEWELRY_STATS', 'selectedGlyphs')}
           title='Necklace'
           items={jewelryGlyphs}
         />
         <StyledSelectWithTitle
           value={jewelryStats.selectedGlyphs[1]}
-          onChange={onChangeSelect(1, 'SET_JEWELRY_STATS', 'selectedGlyphs')}
+          onChange={onChangeSelect([1], 'SET_JEWELRY_STATS', 'selectedGlyphs')}
           title='Ring 1'
           items={jewelryGlyphs}
         />
         <StyledSelectWithTitle
           value={jewelryStats.selectedGlyphs[2]}
-          onChange={onChangeSelect(2, 'SET_JEWELRY_STATS', 'selectedGlyphs')}
+          onChange={onChangeSelect([2], 'SET_JEWELRY_STATS', 'selectedGlyphs')}
           title='Ring 2'
           items={jewelryGlyphs}
         />
@@ -72,19 +72,19 @@ export default () => {
       >
         <StyledSelectWithTitle
           value={jewelryStats.selectedTraits[0]}
-          onChange={onChangeSelect(0, 'SET_JEWELRY_STATS', 'selectedTraits')}
+          onChange={onChangeSelect([0], 'SET_JEWELRY_STATS', 'selectedTraits')}
           title='Necklace'
           items={jewelryTraits}
         />
         <StyledSelectWithTitle
           value={jewelryStats.selectedTraits[1]}
-          onChange={onChangeSelect(1, 'SET_JEWELRY_STATS', 'selectedTraits')}
+          onChange={onChangeSelect([1], 'SET_JEWELRY_STATS', 'selectedTraits')}
           title='Ring 1'
           items={jewelryTraits}
         />
         <StyledSelectWithTitle
           value={jewelryStats.selectedTraits[2]}
-          onChange={onChangeSelect(2, 'SET_JEWELRY_STATS', 'selectedTraits')}
+          onChange={onChangeSelect([2], 'SET_JEWELRY_STATS', 'selectedTraits')}
           title='Ring 2'
           items={jewelryTraits}
         />

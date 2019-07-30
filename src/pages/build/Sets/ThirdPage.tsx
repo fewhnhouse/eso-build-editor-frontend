@@ -5,7 +5,7 @@ import Menu from "./Menu";
 import Weapons from "./Weapons";
 import Armor from "./Armor";
 import Jewelry from "./Jewelry";
-import RightContent from "./RightContent";
+import RightContent from "./SetBar";
 import { BuildContext } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
@@ -29,6 +29,7 @@ export default () => {
 
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
+    console.log(state)
   }, [state]);
 
   useEffect(() => {

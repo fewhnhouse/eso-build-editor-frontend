@@ -3,15 +3,9 @@ import styled from 'styled-components'
 import { Divider } from 'antd'
 import GearView from '../../../components/GearView'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { IGearSlot, ISet } from '../../../components/GearSlot'
+import { ISet } from '../../../components/GearSlot'
 import { BuildContext } from '../BuildStateContext'
-import {
-  selectIcon,
-  Gear,
-  actualRing,
-  actualNeck,
-  mainHand,
-} from '../../../assets/gear'
+import { selectIcon, actualRing, actualNeck } from '../../../assets/gear'
 
 const OuterContainer = styled.div`
   flex: 1;
