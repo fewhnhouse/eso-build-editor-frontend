@@ -1,25 +1,25 @@
-import React from "react";
-import styled from "styled-components";
-import GearSlot, { IGearSlotProps, IGearSlot } from "../components/GearSlot";
+import React from 'react'
+import styled from 'styled-components'
+import GearSlot, { IGearSlotProps, IGearSlot } from '../components/GearSlot'
 
-import { Typography } from "antd";
-import Flex from "./Flex";
+import { Typography } from 'antd'
+import Flex from './Flex'
 
-const GearView = styled.div``;
+const GearView = styled.div``
 
-const { Title } = Typography;
+const { Title } = Typography
 
 export interface IGearSetup {
-  label: string;
-  id: string;
-  data: IGearSlot[];
+  label: string
+  id: string
+  data: IGearSlot[]
 }
 export default ({
   setups,
-  droppable
+  droppable,
 }: {
-  setups: IGearSetup[];
-  droppable?: boolean;
+  setups: IGearSetup[]
+  droppable?: boolean
 }) => {
   console.log(setups, droppable)
   return (
@@ -27,7 +27,12 @@ export default ({
       {setups.map((setup: IGearSetup) => (
         <>
           <Title level={4}>{setup.label}</Title>
-          <Flex direction="row" justify="center" align="center">
+          <Flex
+            direction='row'
+            justify='center'
+            align='center'
+            style={{ flexWrap: 'wrap' }}
+          >
             {setup.data.map((slot: IGearSlot, index: number) => (
               <GearSlot
                 draggable={slot.icon !== undefined}
@@ -41,5 +46,5 @@ export default ({
         </>
       ))}
     </GearView>
-  );
-};
+  )
+}

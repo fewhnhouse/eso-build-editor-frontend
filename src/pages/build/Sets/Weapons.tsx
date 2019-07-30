@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Divider, Select, Radio } from 'antd'
+import { Divider, Select, Radio, Checkbox } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import Flex from '../../../components/Flex'
 import styled from 'styled-components'
@@ -13,7 +13,11 @@ import { weaponTypes, weaponGlyphs, weaponTraits } from './data'
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
 `
-
+const OffHandTitle = styled.div`
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+`
 const StyledSelectWithTitle = styled(SelectWithTitle)`
   min-width: 350px;
   max-width: 350px;
@@ -52,89 +56,14 @@ export default () => {
     dispatch!({ type: actionType, payload: { index, value, type } })
   }
   const [state, dispatch] = useContext(BuildContext)
-  const { weaponType, weapons, weaponStats } = state!
+  const { weaponType, weaponStats } = state!
   return (
     <StyledFlex direction='column' justify='center' align='center'>
       <Radio.Group onChange={onChange} defaultValue={weaponType || 'onehanded'}>
         <Radio.Button value='onehanded'>One Handed</Radio.Button>
         <Radio.Button value='twohanded'>Two Handed</Radio.Button>
       </Radio.Group>
-      <Divider />
-      <StyledSelectContainer direction='row' justify='center' align='center'>
-        {weaponType === 'onehanded' ? (
-          <>
-            <Select
-              size='large'
-              value={weapons[0]}
-              onChange={onChangeSelect(0, 'SET_WEAPONS', 'selectedGlyphs')}
-              placeholder='Select Mainhand'
-              style={{ flex: 1, margin: '10px 10px', minWidth: 150 }}
-            >
-              {weaponTypes.oneHanded
-                .filter(weapon => weapon.type !== 'shield')
-                .map(weapon => (
-                  <Option
-                    value={`main-${weapon.type}`}
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {weapon.label}
-                    <OptionIcon src={selectIcon(weapon.type)} />
-                  </Option>
-                ))}
-            </Select>
-            <Select
-              size='large'
-              value={weapons[1]}
-              onChange={onChangeSelect(1, 'SET_WEAPONS', 'selectedGlyphs')}
-              placeholder='Select Off-Hand'
-              style={{ flex: 1, margin: '0px 10px', minWidth: 150 }}
-            >
-              {weaponTypes.oneHanded.map(weapon => (
-                <Option
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                  value={`off-${weapon.type}`}
-                >
-                  {weapon.label}
-                  <OptionIcon src={selectIcon(weapon.type)} />
-                </Option>
-              ))}
-            </Select>
-          </>
-        ) : (
-          <Select
-            size='large'
-            value={weapons[0]}
-            onChange={onChangeSelect(0, 'SET_WEAPONS', 'selectedGlyphs')}
-            placeholder='Select a weapon'
-            style={{ flex: 1, margin: '0px 10px' }}
-          >
-            {weaponTypes.twoHanded.map(weapon => (
-              <Option
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-                value={`two-${weapon.type}`}
-              >
-                {weapon.label}
-                <OptionIcon src={selectIcon(weapon.type)} />
-              </Option>
-            ))}
-          </Select>
-        )}
-      </StyledSelectContainer>
+
       <Divider>Enchants</Divider>
 
       {weaponType === 'twohanded' ? (
@@ -160,7 +89,12 @@ export default () => {
           <StyledSelectWithTitle
             value={weaponStats.selectedGlyphs[1]}
             onChange={onChangeSelect(1, 'SET_WEAPON_STATS', 'selectedGlyphs')}
-            title='Off Hand'
+            title={
+              <OffHandTitle>
+                <span>Off hand</span>
+                <Checkbox>Use Shield</Checkbox>
+              </OffHandTitle>
+            }
             items={weaponGlyphs}
           />
         </Flex>
@@ -190,7 +124,12 @@ export default () => {
           <StyledSelectWithTitle
             value={weaponStats.selectedTraits[1]}
             onChange={onChangeSelect(1, 'SET_WEAPON_STATS', 'selectedTraits')}
-            title='Off Hand'
+            title={
+              <OffHandTitle>
+                <span>Off hand</span>
+                <Checkbox>Use Shield</Checkbox>
+              </OffHandTitle>
+            }
             items={weaponTraits}
           />
         </Flex>
