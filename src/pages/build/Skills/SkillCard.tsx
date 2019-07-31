@@ -105,26 +105,28 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   }
   const { selectedSkills, selectedUltimate } = selectedSkillLine;
   const firstActive = ultimate
-    ? selectedUltimate === morph1.id
-    : selectedSkills.find(slot => slot.id === morph1.id) !== undefined;
+    ? selectedUltimate && selectedUltimate.id === morph1.id
+    : selectedSkills.find(slot => slot.skill && slot.skill.id === morph1.id) !==
+      undefined;
   const secondActive = ultimate
-    ? selectedUltimate === morph2.id
-    : selectedSkills.find(slot => slot.id === morph2.id) !== undefined;
+    ? selectedUltimate && selectedUltimate.id === morph2.id
+    : selectedSkills.find(slot => slot.skill && slot.skill.id === morph2.id) !==
+      undefined;
   const handleFirstClick = () => {
     if (firstActive) {
       dispatch!({
         type: "UNSELECT_MORPH",
-        payload: { baseId: skill.id, morphId: morph1.id }
+        payload: { baseSkill: skill, morph: morph1 }
       });
     } else if (!secondActive) {
       dispatch!({
         type: "SELECT_MORPH",
-        payload: { baseId: skill.id, morphId: morph1.id }
+        payload: { baseSkill: skill, morph: morph1 }
       });
     } else {
       dispatch!({
         type: "SWAP_MORPH",
-        payload: { oldMorphId: morph2.id, newMorphId: morph1.id }
+        payload: { oldMorph: morph2, newMorph: morph1 }
       });
     }
   };
@@ -133,17 +135,17 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     if (secondActive) {
       dispatch!({
         type: "UNSELECT_MORPH",
-        payload: { baseId: skill.id, morphId: morph2.id }
+        payload: { baseSkill: skill, morph: morph2 }
       });
     } else if (!firstActive) {
       dispatch!({
         type: "SELECT_MORPH",
-        payload: { baseId: skill.id, morphId: morph2.id }
+        payload: { baseSkill: skill, morph: morph2 }
       });
     } else {
       dispatch!({
         type: "SWAP_MORPH",
-        payload: { oldMorphId: morph1.id, newMorphId: morph2.id }
+        payload: { oldMorph: morph1, newMorph: morph2 }
       });
     }
   };
@@ -157,11 +159,14 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
           : [
               <Popover content={<SkillCardContent skill={morph1} />}>
                 <RaceContainer onClick={handleFirstClick}>
-                  <MorphLabel active={firstActive} disabled={secondActive}>
+                  <MorphLabel
+                    active={firstActive || false}
+                    disabled={secondActive || false}
+                  >
                     {morph1.name}
                   </MorphLabel>
                   <Image
-                    active={firstActive}
+                    active={firstActive || false}
                     title={morph1.name}
                     src={`https://beast.pathfindermediagroup.com/storage/skills/${
                       morph1.icon
@@ -171,11 +176,14 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
               </Popover>,
               <Popover content={<SkillCardContent skill={morph2} />}>
                 <RaceContainer onClick={handleSecondClick}>
-                  <MorphLabel active={secondActive} disabled={firstActive}>
+                  <MorphLabel
+                    active={secondActive || false}
+                    disabled={firstActive || false}
+                  >
                     {morph2.name}
                   </MorphLabel>
                   <Image
-                    active={secondActive}
+                    active={secondActive || false}
                     title={morph2.name}
                     src={`https://beast.pathfindermediagroup.com/storage/skills/${
                       morph2.icon

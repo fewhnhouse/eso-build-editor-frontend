@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Icon, Button } from "antd";
+import { List, Tag, AutoComplete, Divider, Button } from "antd";
 import styled from "styled-components";
 import sets from "../../../sets.json";
 import { ISet } from "../../../components/GearSlot";

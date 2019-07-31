@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Divider, Empty } from "antd";
 import styled from "styled-components";
-import axios from "axios";
 import skills from "../../../skills.json";
 import SkillCard from "./SkillCard";
 import Menu from "./Menu";
 import { BuildContext } from "../BuildStateContext";
 import AbilityBar from "./AbilityBar";
 import { ISkill } from "../../../components/SkillSlot.jsx";
+import { DndProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -52,6 +53,8 @@ export default () => {
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
   }, [state]);
+
+  const { skillLine } = state!;
 
   useEffect(() => {
     /*
@@ -107,88 +110,89 @@ export default () => {
       type: "SET_SELECTED_SKILLS_AND_ULTIMATE",
       payload: {
         selectedSkills: baseActives.map((skill: ISkill, index: number) => ({
-          id: skill.id,
+          skill,
           index
         })),
         id: state!.skillLine,
-        ultimate: baseUltimate ? baseUltimate!.id : 0
+        ultimate: baseUltimate || undefined
       }
     });
-  }, [state!.skillLine, dispatch]);
+  }, [skillLine, dispatch]);
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "row"
-      }}
-    >
-      <Menu />
-      <Content>
-        {state!.skillLine !== 0 ? (
-          <AbilityContainer>
-            <Divider>Ultimate</Divider>
-            {baseUltimate && (
-              <SkillCard
-                ultimate
-                skill={baseUltimate || baseActives[0]}
-                morph1={morphs[0] || defaultUltimate}
-                morph2={morphs[1] || defaultUltimate}
-              />
-            )}
-            <Divider>Actives</Divider>
-            {baseActives.length > 0 && (
-              <>
-                {baseActives.map((base, index) => {
-                  console.log(base);
-                  const morphs = morphedActives.filter(
-                    morph => morph.parent === base.id
-                  );
-                  return (
-                    <SkillCard
-                      key={index}
-                      skill={base}
-                      morph1={morphs[0]}
-                      morph2={morphs[1]}
-                    />
-                  );
-                })}
-              </>
-            )}
-
-            <Divider>Passives</Divider>
-            <>
-              {passives.map((el, key) => (
+    <DndProvider backend={HTML5Backend}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "row"
+        }}
+      >
+        <Menu />
+        <Content>
+          {state!.skillLine !== 0 ? (
+            <AbilityContainer>
+              <Divider>Ultimate</Divider>
+              {baseUltimate && (
                 <SkillCard
-                  key={key}
-                  passive
-                  skill={el}
-                  morph1={el}
-                  morph2={el}
+                  ultimate
+                  skill={baseUltimate || baseActives[0]}
+                  morph1={morphs[0] || defaultUltimate}
+                  morph2={morphs[1] || defaultUltimate}
                 />
-              ))}
-            </>
-          </AbilityContainer>
-        ) : (
-          <Empty
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flex: 2,
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
-            Select a Skill Line to get started.
-          </Empty>
-        )}
-        {baseActives.length > 0 && <AbilityBar />}
-      </Content>
-    </div>
+              )}
+              <Divider>Actives</Divider>
+              {baseActives.length > 0 && (
+                <>
+                  {baseActives.map((base, index) => {
+                    const morphs = morphedActives.filter(
+                      morph => morph.parent === base.id
+                    );
+                    return (
+                      <SkillCard
+                        key={index}
+                        skill={base}
+                        morph1={morphs[0]}
+                        morph2={morphs[1]}
+                      />
+                    );
+                  })}
+                </>
+              )}
+
+              <Divider>Passives</Divider>
+              <>
+                {passives.map((el, key) => (
+                  <SkillCard
+                    key={key}
+                    passive
+                    skill={el}
+                    morph1={el}
+                    morph2={el}
+                  />
+                ))}
+              </>
+            </AbilityContainer>
+          ) : (
+            <Empty
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flex: 2,
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              Select a Skill Line to get started.
+            </Empty>
+          )}
+          {baseActives.length > 0 && <AbilityBar />}
+        </Content>
+      </div>
+    </DndProvider>
   );
 };

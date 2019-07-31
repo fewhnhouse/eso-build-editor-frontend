@@ -1,11 +1,12 @@
-import React, { useCallback, useContext } from 'react'
-import styled from 'styled-components'
-import { Divider } from 'antd'
-import GearView from '../../../components/GearView'
-import { DragDropContext } from 'react-beautiful-dnd'
-import { ISet } from '../../../components/GearSlot'
-import { BuildContext } from '../BuildStateContext'
-import { selectIcon, actualRing, actualNeck } from '../../../assets/gear'
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { Divider } from "antd";
+import GearView from "../../../components/GearView";
+import { ISet } from "../../../components/GearSlot";
+import { BuildContext } from "../BuildStateContext";
+import { selectIcon, actualRing, actualNeck } from "../../../assets/gear";
+import { DndProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -15,190 +16,161 @@ const OuterContainer = styled.div`
   max-width: 400px;
 
   background: white;
-`
+`;
 
 const getSetups = ({
   armorType,
   selectedSet,
   mainHand,
   offHand,
-  twoHand,
+  twoHand
 }: {
-  armorType: string
-  selectedSet: ISet
-  mainHand: string
-  offHand: string
-  twoHand: string
+  armorType: string;
+  selectedSet: ISet;
+  mainHand: string;
+  offHand: string;
+  twoHand: string;
 }) => {
   return [
     {
-      id: 'bigpieces',
-      label: 'Big Pieces',
+      id: "bigpieces",
+      label: "Big Pieces",
       data: [
         {
-          slot: 'head',
-          icon: selectIcon(armorType + 'Head'),
-          set: selectedSet,
+          slot: "head",
+          icon: selectIcon(armorType + "Head"),
+          set: selectedSet
         },
 
         {
-          slot: 'chest',
-          icon: selectIcon(armorType + 'Chest'),
-          set: selectedSet,
+          slot: "chest",
+          icon: selectIcon(armorType + "Chest"),
+          set: selectedSet
         },
 
         {
-          slot: 'legs',
-          icon: selectIcon(armorType + 'Legs'),
-          set: selectedSet,
-        },
-      ],
+          slot: "legs",
+          icon: selectIcon(armorType + "Legs"),
+          set: selectedSet
+        }
+      ]
     },
     {
-      id: 'smallpieces',
-      label: 'Small Pieces',
+      id: "smallpieces",
+      label: "Small Pieces",
       data: [
         {
-          slot: 'shoulders',
-          icon: selectIcon(armorType + 'Shoulders'),
-          set: selectedSet,
+          slot: "shoulders",
+          icon: selectIcon(armorType + "Shoulders"),
+          set: selectedSet
         },
 
         {
-          slot: 'waist',
-          icon: selectIcon(armorType + 'Waist'),
-          set: selectedSet,
+          slot: "waist",
+          icon: selectIcon(armorType + "Waist"),
+          set: selectedSet
         },
         {
-          slot: 'hands',
-          icon: selectIcon(armorType + 'Hands'),
-          set: selectedSet,
+          slot: "hands",
+          icon: selectIcon(armorType + "Hands"),
+          set: selectedSet
         },
 
         {
-          slot: 'feet',
-          icon: selectIcon(armorType + 'Feet'),
-          set: selectedSet,
-        },
-      ],
+          slot: "feet",
+          icon: selectIcon(armorType + "Feet"),
+          set: selectedSet
+        }
+      ]
     },
     {
-      id: 'jewelry',
-      label: 'Jewelry',
+      id: "jewelry",
+      label: "Jewelry",
       data: [
         {
-          slot: 'neck',
+          slot: "neck",
           icon: actualNeck,
-          set: selectedSet,
+          set: selectedSet
         },
         {
-          slot: 'ring1',
+          slot: "ring1",
           icon: actualRing,
-          set: selectedSet,
+          set: selectedSet
         },
         {
-          slot: 'ring2',
+          slot: "ring2",
           icon: actualRing,
-          set: selectedSet,
-        },
-      ],
+          set: selectedSet
+        }
+      ]
     },
     {
-      id: 'onehanded',
-      label: 'One Handed',
+      id: "onehanded",
+      label: "One Handed",
       data: [
         {
-          slot: 'mainHand',
-          icon: selectIcon('dagger'),
-          set: selectedSet,
+          slot: "eitherHand",
+          icon: selectIcon("dagger"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('axe1h'),
-          set: selectedSet,
+          slot: "eitherHand",
+          icon: selectIcon("axe1h"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('hammer1h'),
-          set: selectedSet,
+          slot: "eitherHand",
+          icon: selectIcon("hammer1h"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('sword1h'),
-          set: selectedSet,
+          slot: "eitherHand",
+          icon: selectIcon("sword1h"),
+          set: selectedSet
         },
         {
-          slot: 'offhand',
-          icon: selectIcon('shield'),
-          set: selectedSet,
-        },
-      ],
+          slot: "offHand",
+          icon: selectIcon("shield"),
+          set: selectedSet
+        }
+      ]
     },
     {
-      id: 'twohanded',
-      label: 'Two Handed',
+      id: "twohanded",
+      label: "Two Handed",
       data: [
         {
-          slot: 'mainHand',
-          icon: selectIcon('bow'),
-          set: selectedSet,
+          slot: "mainHand",
+          icon: selectIcon("bow"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('staff'),
-          set: selectedSet,
+          slot: "mainHand",
+          icon: selectIcon("staff"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('sword2h'),
-          set: selectedSet,
+          slot: "mainHand",
+          icon: selectIcon("sword2h"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('axe2h'),
-          set: selectedSet,
+          slot: "mainHand",
+          icon: selectIcon("axe2h"),
+          set: selectedSet
         },
         {
-          slot: 'mainHand',
-          icon: selectIcon('hammer2h'),
-          set: selectedSet,
-        },
-      ],
-    },
-  ]
-}
+          slot: "mainHand",
+          icon: selectIcon("hammer2h"),
+          set: selectedSet
+        }
+      ]
+    }
+  ];
+};
 
 export default () => {
-  const [state, dispatch] = useContext(BuildContext)
-
-  const onBeforeDragStart = useCallback(() => {}, [])
-  const onDragStart = useCallback(start => {
-    console.log('drag start')
-  }, [])
-  const onDragUpdate = useCallback(update => {}, [])
-  const onDragEnd = useCallback(end => {
-    console.log('drag end', end)
-    if (end.draggableId && end.destination) {
-      const sourceSplit = end.draggableId.split('-')
-      const destinationSplit = end.destination.droppableId.split('-')
-      const [sourceGroup, sourceId, sourceSlot] = sourceSplit
-      const [
-        destinationGroup,
-        destinationId,
-        destinationSlot,
-      ] = destinationSplit
-      if (sourceSlot === destinationSlot) {
-        dispatch!({
-          type: 'DROP_SET_ITEM',
-          payload: {
-            id: sourceId,
-            slot: destinationSlot,
-            group: destinationGroup,
-          },
-        })
-      }
-    }
-  }, [])
+  const [state] = useContext(BuildContext);
 
   const {
     setTabKey,
@@ -210,102 +182,97 @@ export default () => {
     frontbarSelection,
     backbarSelection,
     jewelrySelection,
-    selectedSet,
-  } = state!
+    selectedSet
+  } = state!;
 
   const mainWeapon =
-    weaponType === 'onehanded' && weapons[0]
+    weaponType === "onehanded" && weapons[0]
       ? weapons[0]
           .toString()
-          .split('main-')[1]
+          .split("main-")[1]
           .toLowerCase()
-      : ''
+      : "";
   const offWeapon =
-    weaponType === 'onehanded' && weapons[1]
+    weaponType === "onehanded" && weapons[1]
       ? weapons[1]
           .toString()
-          .split('off-')[1]
+          .split("off-")[1]
           .toLowerCase()
-      : ''
+      : "";
   const twoWeapon =
-    weaponType === 'twohanded' && weapons[0]
+    weaponType === "twohanded" && weapons[0]
       ? weapons[0]
           .toString()
-          .split('two-')[1]
+          .split("two-")[1]
           .toLowerCase()
-      : ''
-  const armor = armorType.split('armor')[0]
+      : "";
+  const armor = armorType.split("armor")[0];
   const mySetups = getSetups({
     armorType: armor,
     mainHand: mainWeapon,
     selectedSet: selectedSet!,
     offHand: offWeapon,
-    twoHand: twoWeapon,
-  })
+    twoHand: twoWeapon
+  });
   const showGear = (key: string) => {
-    if (key === 'weapons') {
-      if (weaponType === 'onehanded') {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+    if (key === "weapons") {
+      if (weaponType === "onehanded") {
+        return mySetups.filter(setup => setup.id === "onehanded");
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter(setup => setup.id === "twohanded");
       }
-    } else if (key === 'armor') {
+    } else if (key === "armor") {
       return mySetups.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
-      )
+        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
+      );
     } else {
-      return mySetups.filter(setup => setup.id === 'jewelry')
+      return mySetups.filter(setup => setup.id === "jewelry");
     }
-  }
+  };
 
   const selectedSetup = [
     {
-      id: 'bigpieces',
-      label: 'Big Pieces',
-      data: bigPieceSelection || [],
+      id: "bigpieces",
+      label: "Big Pieces",
+      data: bigPieceSelection || []
     },
     {
-      id: 'smallpieces',
-      label: 'Small Pieces',
-      data: smallPieceSelection || [],
+      id: "smallpieces",
+      label: "Small Pieces",
+      data: smallPieceSelection || []
     },
-    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
+    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
     {
-      id: 'frontbar',
-      label: 'Frontbar',
-      data: frontbarSelection || [],
+      id: "frontbar",
+      label: "Frontbar",
+      data: frontbarSelection || []
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
-  ]
+    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
+  ];
 
   const showSetup = (key: string) => {
-    if (key === 'weapons') {
+    if (key === "weapons") {
       return selectedSetup.filter(
-        setup => setup.id === 'frontbar' || setup.id === 'backbar'
-      )
-    } else if (key === 'armor') {
+        setup => setup.id === "frontbar" || setup.id === "backbar"
+      );
+    } else if (key === "armor") {
       return selectedSetup.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
-      )
+        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
+      );
     } else {
-      return selectedSetup.filter(setup => setup.id === 'jewelry')
+      return selectedSetup.filter(setup => setup.id === "jewelry");
     }
-  }
+  };
 
   return (
-    <DragDropContext
-      onBeforeDragStart={onBeforeDragStart}
-      onDragStart={onDragStart}
-      onDragUpdate={onDragUpdate}
-      onDragEnd={onDragEnd}
-    >
+    <DndProvider backend={HTML5Backend}>
       <OuterContainer>
         <Divider>Active Selection</Divider>
-        <GearView setups={showGear(setTabKey)} />
+        <GearView newGear setups={showGear(setTabKey)} />
 
         <Divider>Setup</Divider>
-        <GearView droppable setups={showSetup(setTabKey)} />
+        <GearView newGear droppable setups={showSetup(setTabKey)} />
       </OuterContainer>
-    </DragDropContext>
-  )
-}
+    </DndProvider>
+  );
+};

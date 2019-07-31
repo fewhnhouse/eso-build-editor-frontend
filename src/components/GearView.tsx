@@ -1,52 +1,55 @@
-import React from 'react'
-import styled from 'styled-components'
-import GearSlot, { IGearSlotProps, IGearSlot } from '../components/GearSlot'
+import React from "react";
+import styled from "styled-components";
 
-import { Typography } from 'antd'
-import Flex from './Flex'
+import { Typography } from "antd";
+import Flex from "./Flex";
+import GearSlot, { IGearSlot } from "./GearSlot";
 
-const GearView = styled.div``
+const GearView = styled.div``;
 
-const { Title } = Typography
+const { Title } = Typography;
 
 export interface IGearSetup {
-  label: string
-  id: string
-  data: IGearSlot[]
+  label: string;
+  id: string;
+  data: IGearSlot[];
 }
 export default ({
   setups,
   droppable,
-  disabled,
+  newGear,
+  disabled
 }: {
-  setups: IGearSetup[]
-  droppable?: boolean
-  disabled?: boolean
+  setups: IGearSetup[];
+  droppable?: boolean;
+  disabled?: boolean;
+  newGear?: boolean;
 }) => {
   return (
     <GearView>
-      {setups.map((setup: IGearSetup) => (
-        <>
+      {setups.map((setup: IGearSetup, index) => (
+        <div key={"setup" + index}>
           <Title level={4}>{setup.label}</Title>
           <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ flexWrap: 'wrap' }}
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ flexWrap: "wrap" }}
           >
-            {setup.data.map((slot: IGearSlot, index: number) => (
-              <GearSlot
-                disabled={disabled}
-                draggable={slot.icon !== undefined}
-                droppable={droppable}
-                id={`${setup.id}-${slot.set ? slot.set.id : 0}`}
-                slot={slot}
-                index={index}
-              />
-            ))}
+            {setup.data.map((slot: IGearSlot, index: number) => {
+              return (
+                <GearSlot
+                  disabled={disabled}
+                  droppable={droppable}
+                  slot={slot}
+                  group={setup.id}
+                  key={"drop" + slot.slot + index}
+                />
+              );
+            })}
           </Flex>
-        </>
+        </div>
       ))}
     </GearView>
-  )
-}
+  );
+};

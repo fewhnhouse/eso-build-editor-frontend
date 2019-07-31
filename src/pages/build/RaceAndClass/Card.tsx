@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Card, Popconfirm } from "antd";
 import { BuildContext } from "../BuildStateContext";
@@ -102,11 +102,22 @@ export const EsoClassCard = ({
   imageSource,
   description
 }: IRootCard) => {
-  const [state, dispatch] = useContext(BuildContext);
 
-  return <MyCard title={title} imageSource={imageSource} type="SET_CLASS" description={description}/>;
+  return (
+    <MyCard
+      title={title}
+      imageSource={imageSource}
+      type="SET_CLASS"
+      description={description}
+    />
+  );
 };
 
 export const RaceCard = ({ title, imageSource, description }: IRootCard) => (
-  <MyCard title={title} imageSource={imageSource} type="SET_RACE" description={description}/>
+  <MyCard
+    title={title}
+    imageSource={imageSource}
+    type="SET_RACE"
+    description={description}
+  />
 );
