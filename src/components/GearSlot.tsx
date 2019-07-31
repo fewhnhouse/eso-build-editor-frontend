@@ -15,8 +15,7 @@ import {
   ring,
   neck
 } from "../assets/gear";
-import { Droppable, Draggable } from "react-beautiful-dnd";
-import { useDrag, useDrop, DragObjectWithType } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import { BuildContext } from "../pages/build/BuildStateContext";
 
 export interface IGearSlot {

@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
-import { Droppable, Draggable } from "react-beautiful-dnd";
 import { SkillCardContent } from "../pages/build/Skills/SkillCard";
 import { BuildContext } from "../pages/build/BuildStateContext";
 import { useDrag, useDrop } from "react-dnd";

@@ -1,6 +1,6 @@
-import React, { useContext, useCallback, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import { Divider, Card, Icon } from "antd";
+import { Divider, Icon } from "antd";
 import { BuildContext, ISkillSelection } from "../BuildStateContext";
 import SkillView from "../../../components/SkillView";
 import { ISkill } from "../../../components/SkillSlot";
@@ -61,11 +61,10 @@ export default () => {
     newBarOne,
     newBarTwo,
     ultimateOne,
-    ultimateTwo,
-    hasTrash
+    ultimateTwo
   } = state!;
 
-  const [{ canDrop, isOver }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: ["ultimate", "skill"],
     drop: (item: any, monitor) => {
       console.log(item);

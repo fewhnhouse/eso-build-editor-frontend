@@ -1,8 +1,7 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Divider } from "antd";
 import GearView from "../../../components/GearView";
-import { DragDropContext } from "react-beautiful-dnd";
 import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
 import { selectIcon, actualRing, actualNeck } from "../../../assets/gear";
@@ -171,36 +170,7 @@ const getSetups = ({
 };
 
 export default () => {
-  const [state, dispatch] = useContext(BuildContext);
-
-  const onBeforeDragStart = useCallback(() => {}, []);
-  const onDragStart = useCallback(start => {
-    console.log("drag start");
-  }, []);
-  const onDragUpdate = useCallback(update => {}, []);
-  const onDragEnd = useCallback(end => {
-    console.log("drag end", end);
-    if (end.draggableId && end.destination) {
-      const sourceSplit = end.draggableId.split("-");
-      const destinationSplit = end.destination.droppableId.split("-");
-      const [sourceGroup, sourceId, sourceSlot] = sourceSplit;
-      const [
-        destinationGroup,
-        destinationId,
-        destinationSlot
-      ] = destinationSplit;
-      if (sourceSlot === destinationSlot) {
-        dispatch!({
-          type: "DROP_SET_ITEM",
-          payload: {
-            id: sourceId,
-            slot: destinationSlot,
-            group: destinationGroup
-          }
-        });
-      }
-    }
-  }, []);
+  const [state] = useContext(BuildContext);
 
   const {
     setTabKey,

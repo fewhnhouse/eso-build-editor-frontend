@@ -54,6 +54,8 @@ export default () => {
     localStorage.setItem("buildState", JSON.stringify(state));
   }, [state]);
 
+  const { skillLine } = state!;
+
   useEffect(() => {
     /*
     axios
@@ -115,7 +117,7 @@ export default () => {
         ultimate: baseUltimate || undefined
       }
     });
-  }, [state!.skillLine, dispatch]);
+  }, [skillLine, dispatch]);
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
   );

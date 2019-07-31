@@ -16,6 +16,10 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           ultimateTwo: skill
         };
+      } else {
+        return {
+          ...state
+        };
       }
     }
     case "REMOVE_ULTIMATE": {
@@ -30,6 +34,8 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           ultimateTwo: undefined
         };
+      } else {
+        return { ...state };
       }
     }
     case "SWAP_ULTIMATE": {
@@ -143,7 +149,6 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         sourceBarIndex,
         sourceSkill,
         destinationIndex,
-        destinationBarIndex,
         destinationSkill
       } = action.payload;
       const hasDestinationSkill =

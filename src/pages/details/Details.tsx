@@ -8,12 +8,11 @@ import { food, immoPot, triPot } from '../../assets/deco'
 import Flex from '../../components/Flex'
 import { ITheme } from '../../components/globalStyles'
 import SkillView from '../../components/SkillView'
-import SkillSlot from '../../components/SkillSlot'
 import { IBuildState } from '../build/BuildStateContext'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../build/Skills/AbilityBar'
 
 const { Content } = Layout
-const { Title, Text } = Typography
+const { Title } = Typography
 
 interface IDetails extends ThemeProps<ITheme>, RouteComponentProps<any> {}
 
@@ -126,7 +125,6 @@ const StatsView = styled.div`
 `
 
 const SkillsView = styled.div``
-const GearsView = styled.div``
 
 const ClassImg = styled.img`
   width: 35px;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Divider, Tabs, Card, Select, Empty } from "antd";
+import { Divider, Tabs, Card, Empty } from "antd";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Weapons from "./Weapons";
@@ -29,7 +29,6 @@ export default () => {
 
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
-    console.log(state);
   }, [state]);
 
   useEffect(() => {
