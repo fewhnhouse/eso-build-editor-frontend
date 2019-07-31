@@ -186,17 +186,17 @@ const statColor = (label: string, theme: ITheme) => {
 }
 
 const Details = ({ match, theme }: IDetails) => {
-  const buildState = localStorage.getItem('buildState')
-
+  const buildState = localStorage.getItem('buildState');
   const parsedBuildState: IBuildState = buildState
     ? JSON.parse(buildState)
     : undefined
-  console.log(parsedBuildState)
+
   const bigPieces = parsedBuildState.bigPieceSelection;
   const smallPieces = parsedBuildState.smallPieceSelection;
   const frontBar = parsedBuildState.frontbarSelection;
   const backBar = parsedBuildState.backbarSelection;
   const jewelry = parsedBuildState.jewelrySelection;
+  
   const savedSetups = [
     {
       id: "bigpieces",
