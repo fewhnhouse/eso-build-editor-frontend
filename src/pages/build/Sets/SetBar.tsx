@@ -253,12 +253,42 @@ export default () => {
       return mySetups.filter(
         setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
       )
-      if (armorType === 'heavyarmor') {
-      } else if (armorType === 'mediumarmor') {
-      } else {
-      }
     } else {
       return mySetups.filter(setup => setup.id === 'jewelry')
+    }
+  }
+
+  const selectedSetup = [
+    {
+      id: 'bigpieces',
+      label: 'Big Pieces',
+      data: bigPieceSelection || [],
+    },
+    {
+      id: 'smallpieces',
+      label: 'Small Pieces',
+      data: smallPieceSelection || [],
+    },
+    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
+    {
+      id: 'frontbar',
+      label: 'Frontbar',
+      data: frontbarSelection || [],
+    },
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
+  ]
+
+  const showSetup = (key: string) => {
+    if (key === 'weapons') {
+      return selectedSetup.filter(
+        setup => setup.id === 'frontbar' || setup.id === 'backbar'
+      )
+    } else if (key === 'armor') {
+      return selectedSetup.filter(
+        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
+      )
+    } else {
+      return selectedSetup.filter(setup => setup.id === 'jewelry')
     }
   }
 
@@ -274,28 +304,7 @@ export default () => {
         <GearView setups={showGear(setTabKey)} />
 
         <Divider>Setup</Divider>
-        <GearView
-          droppable
-          setups={[
-            {
-              id: 'bigpieces',
-              label: 'Big Pieces',
-              data: bigPieceSelection || [],
-            },
-            {
-              id: 'smallpieces',
-              label: 'Small Pieces',
-              data: smallPieceSelection || [],
-            },
-            { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
-            {
-              id: 'frontbar',
-              label: 'Frontbar',
-              data: frontbarSelection || [],
-            },
-            { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
-          ]}
-        />
+        <GearView droppable setups={showSetup(setTabKey)} />
       </OuterContainer>
     </DragDropContext>
   )

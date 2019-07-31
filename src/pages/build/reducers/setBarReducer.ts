@@ -3,7 +3,6 @@ import { ISlot, IBuildAction, IBuildState } from "../BuildStateContext";
 import { selectIcon, actualNeck, actualRing } from "../../../assets/gear";
 
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
-  console.log(state);
   switch (action.type) {
     case "DROP_SET_ITEM":
       const {
