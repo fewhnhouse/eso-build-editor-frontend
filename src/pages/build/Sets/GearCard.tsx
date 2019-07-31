@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Card, Divider, Popover } from "antd";
 import styled from "styled-components";
 
-import { BuildContext } from "../build/BuildStateContext";
-import { IGearSlot, IGearSlotProps } from "../../components/GearSlot";
+import { BuildContext } from "../BuildStateContext";
+import { IGearSlot, IGearSlotProps } from "../../../components/GearSlot";
 
 interface IGearCard extends IGearSlotProps {
     

@@ -16,7 +16,7 @@ import {
   neck,
 } from '../assets/gear'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import GearCard from "../pages/build/GearCard"
+import GearCard from "../pages/build/Sets/GearCard"
 
 export interface IGearSlotProps {
   slot: IGearSlot
