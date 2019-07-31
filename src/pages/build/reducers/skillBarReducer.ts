@@ -23,7 +23,6 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
     }
     case "REMOVE_ULTIMATE": {
       const { barIndex } = action.payload;
-
       if (barIndex === 0) {
         return {
           ...state,
@@ -192,6 +191,12 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         })
       };
     }
+    case "SET_HAS_TRASH":
+      const { hasTrash } = action.payload;
+      return {
+        ...state,
+        hasTrash
+      };
 
     default:
       return state;

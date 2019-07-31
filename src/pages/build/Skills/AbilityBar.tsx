@@ -5,9 +5,9 @@ import { BuildContext, ISkillSelection } from "../BuildStateContext";
 import SkillView from "../../../components/SkillView";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import SkillSlot, { ISkill } from "../../../components/SkillSlot";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import { useDrop } from "react-dnd";
 import NewSkillSlot from "../../../components/NewSkillSlot";
+import Flex from "../../../components/Flex";
 
 export const ABILITY_BAR_ONE = "abilityBar1";
 export const ABILITY_BAR_TWO = "abilityBar2";
@@ -36,9 +36,22 @@ const AbilityBarContainer = styled.div`
   background: white;
 `;
 
+const TrashContainer = styled.div`
+  background: #fafafa;
+  border: 1px dashed
+    ${(props: { hasTrash: boolean }) =>
+      props.hasTrash ? "#40a9ff" : "#d9d9d9"};
+  border-radius: 4px;
+  width: 250px;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default () => {
   const [state, dispatch] = useContext(BuildContext);
-  const [hasTrash, setHasTrash] = useState(false);
   const [activeBarSkills, setActiveBarSkills] = useState<ISkillSelection[]>([]);
   const [activeUltimate, setActiveUltimate] = useState<ISkill | undefined>(
     undefined
@@ -49,8 +62,35 @@ export default () => {
     newBarOne,
     newBarTwo,
     ultimateOne,
-    ultimateTwo
+    ultimateTwo,
+    hasTrash
   } = state!;
+
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: ["ultimate", "skill"],
+    drop: (item: any, monitor) => {
+      console.log(item);
+      if (item.type === "ultimate") {
+        dispatch!({
+          type: "REMOVE_ULTIMATE",
+          payload: { barIndex: item.abilityBar }
+        });
+      } else {
+        dispatch!({
+          type: "REMOVE_ABILITY",
+          payload: { barIndex: item.abilityBar, skill: item.skill }
+        });
+      }
+      dispatch!({
+        type: "SET_HAS_TRASH",
+        payload: { hasTrash: false }
+      });
+    },
+    collect: monitor => ({
+      canDrop: !!monitor.canDrop(),
+      isOver: !!monitor.isOver(),
+    })
+  });
 
   useEffect(() => {
     const selectedSkillLine = selectedSkillLines.find(
@@ -63,8 +103,13 @@ export default () => {
     }
   }, [selectedSkillLines, skillLine]);
   return (
-    <DndProvider backend={HTML5Backend}>
-      <AbilityBarContainer>
+    <AbilityBarContainer>
+      <Flex
+        direction="column"
+        justify="space-around"
+        align="center"
+        style={{ height: "100%" }}
+      >
         <Divider>Active Selection</Divider>
         <AbilityBar>
           <SkillView
@@ -110,20 +155,16 @@ export default () => {
             skillIndex={5}
           />
         </AbilityBar>
-        {/*
-        <Droppable isDropDisabled={!hasTrash} droppableId={`trash-droppable-1`}>
-          {(provided, snapshot) => (
-            <div
-              style={{ height: 50, width: 50, margin: 50 }}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {provided.placeholder}
-              {hasTrash && <Icon style={{ fontSize: 30 }} type="delete" />}
-            </div>
-          )}
-        </Droppable>*/}
-      </AbilityBarContainer>
-    </DndProvider>
+        <TrashContainer hasTrash={isOver} ref={drop}>
+          <Icon
+            style={{
+              fontSize: 30,
+              color: isOver ? "#40a9ff" : "rgb(155,155,155)"
+            }}
+            type="delete"
+          />
+        </TrashContainer>
+      </Flex>
+    </AbilityBarContainer>
   );
 };

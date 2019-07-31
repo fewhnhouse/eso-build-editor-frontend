@@ -14,6 +14,7 @@ export interface ISlot {
 }
 export interface IBuildState {
   skills: ISkill[];
+  hasTrash: boolean;
   sets: ISet[];
   skillLine: number;
   selectedSkillLines: {
@@ -65,7 +66,7 @@ export const defaultBuildState = {
   skills: [],
   sets: [],
   skillLine: 0,
-
+  hasTrash: false,
   newBarOne: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },

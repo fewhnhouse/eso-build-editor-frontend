@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
@@ -59,7 +59,6 @@ export default ({
   abilityBar
 }: ISkillSlotProps) => {
   const [, dispatch] = useContext(BuildContext);
-
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: {
       type: skillIndex === 5 ? "ultimate" : "skill",
@@ -72,6 +71,15 @@ export default ({
       didDrop: !!monitor.didDrop()
     })
   });
+
+  useEffect(() => {
+    dispatch!({
+      type: "SET_HAS_TRASH",
+      payload: {
+        hasTrash: isDragging
+      }
+    });
+  }, [isDragging]);
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: skillIndex === 5 ? "ultimate" : "skill",
     drop: (item: any, monitor) => {
