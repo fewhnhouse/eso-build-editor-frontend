@@ -1,7 +1,5 @@
-import bugloss from "./bugloss_ico.png";
-import columbine from "./columbine_ico.png";
-import drink from "./drink_ico.png";
-import food from "./food_ico.png";
-import namira from "./namira_ico.png";
+import immoPot from "./consumable_potion_001_type_005.png";
+import triPot from "./consumable_potion_008_type_005.png";
+import food from "./crafting_meat_001.png";
 
-export { bugloss, columbine, drink, food, namira };
+export {food, immoPot, triPot };

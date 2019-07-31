@@ -4,7 +4,7 @@ import styled, { withTheme, ThemeProps } from 'styled-components'
 import { chooseClass } from '../../util/utils'
 import { Divider, Layout, Typography } from 'antd'
 import GearView from '../../components/GearView'
-import { bugloss, columbine, namira, drink, food } from '../../assets/deco'
+import { food, immoPot, triPot } from '../../assets/deco'
 import Flex from '../../components/Flex'
 import { ITheme } from '../../components/globalStyles'
 import SkillView from '../../components/SkillView'
@@ -79,16 +79,7 @@ const setups = [
       },
       {
         slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'offhand',
-      },
+      }
     ],
   },
   {
@@ -99,17 +90,8 @@ const setups = [
         slot: 'mainHand',
       },
       {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      },
+        slot: 'offHand',
+      }
     ],
   },
 ]
@@ -210,6 +192,38 @@ const Details = ({ match, theme }: IDetails) => {
     ? JSON.parse(buildState)
     : undefined
   console.log(parsedBuildState)
+  const bigPieces = parsedBuildState.bigPieceSelection;
+  const smallPieces = parsedBuildState.smallPieceSelection;
+  const frontBar = parsedBuildState.frontbarSelection;
+  const backBar = parsedBuildState.backbarSelection;
+  const jewelry = parsedBuildState.jewelrySelection;
+  const savedSetups = [
+    {
+      id: "bigpieces",
+      label: "Big pieces",
+      data: bigPieces
+    },
+    {
+      id: "smallpieces",
+      label: "Small pieces",
+      data: smallPieces
+    },
+    {
+      id: "mainhand",
+      label: "Main hand",
+      data: frontBar
+    },
+    {
+      id: "offhand",
+      label: "Off hand",
+      data: backBar
+    },
+    {
+      id: "jewelry",
+      label: "Jewelry",
+      data: jewelry
+    }
+  ]
 
   return (
     <Container>
@@ -227,7 +241,7 @@ const Details = ({ match, theme }: IDetails) => {
         wrap
         fluid
       >
-        <GearView disabled setups={setups} />
+        <GearView disabled setups={parsedBuildState ? savedSetups : setups} />
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
@@ -276,11 +290,7 @@ const Details = ({ match, theme }: IDetails) => {
           <Title level={4}>Atronach</Title>
           <Divider />
           <Title level={3}>Consumables</Title>
-          <Title level={4}>Foodbuff</Title>
-          <ClassImg src={food} /> <ClassImg src={drink} />
-          <Title level={4}>Potions</Title>
-          <ClassImg src={columbine} /> <ClassImg src={bugloss} />
-          <ClassImg src={namira} />
+          <ClassImg src={food} /> <ClassImg src={immoPot} /> <ClassImg src={triPot} />
         </SkillsView>
         <StatsView>
           <StyledTitle level={3}>Stats</StyledTitle>
