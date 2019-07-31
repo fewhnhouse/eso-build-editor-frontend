@@ -40,11 +40,19 @@ export default ({
             {setup.data.map((slot: IGearSlot, index: number) => {
               if (droppable) {
                 return (
-                  <DropComponent slot={slot} group={setup.id} key={index} />
+                  <DropComponent
+                    slot={slot}
+                    group={setup.id}
+                    key={"drop"+slot.slot + index}
+                  />
                 );
               } else {
                 return (
-                  <DragComponent slot={slot} group={setup.id} key={index} />
+                  <DragComponent
+                    slot={slot}
+                    group={setup.id}
+                    key={"drag"+slot.slot + index}
+                  />
                 );
               }
             })}
