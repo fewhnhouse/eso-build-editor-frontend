@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Menu, Icon } from "antd";
+import { Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { BuildContext } from "../BuildStateContext";
 import castle from "../../../assets/icons/castle-ico.png";

@@ -1,5 +1,4 @@
-import { ISkill } from "../../../components/SkillSlot";
-import { ISlot, IBuildAction, IBuildState } from "../BuildStateContext";
+import { IBuildAction, IBuildState } from "../BuildStateContext";
 
 export const raceNameReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {

@@ -31,8 +31,8 @@ export const CustomSelect = ({
     placeholder='Select a glyph'
     {...props}
   >
-    {items.map(item => (
-      <Option value={item.type}>
+    {items.map((item, index) => (
+      <Option value={item.type} key={index}>
         <Flex direction='column' justify='flex-start' align='flex-start'>
           <Flex
             style={{ width: '100%' }}

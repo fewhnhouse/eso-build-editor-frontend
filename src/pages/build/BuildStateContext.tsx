@@ -14,17 +14,18 @@ export interface ISlot {
 }
 export interface IBuildState {
   skills: ISkill[];
+  hasTrash: boolean;
   sets: ISet[];
   skillLine: number;
   selectedSkillLines: {
     id: number;
-    selectedSkills: ISlot[];
-    selectedUltimate: number;
+    selectedSkills: ISkillSelection[];
+    selectedUltimate?: ISkill;
   }[];
   abilityBarOne: ISlot[];
   abilityBarTwo: ISlot[];
-  ultimateOne: ISlot;
-  ultimateTwo: ISlot;
+  ultimateOne?: ISkill;
+  ultimateTwo?: ISkill;
   selectedSet?: ISet;
   weaponType: "onehanded" | "twohanded";
   armorType: "lightarmor" | "mediumarmor" | "heavyarmor";
@@ -40,6 +41,14 @@ export interface IBuildState {
   jewelrySelection: ISetSelection[];
   frontbarSelection: ISetSelection[];
   backbarSelection: ISetSelection[];
+  newBarOne: ISkillSelection[];
+  newActiveBar: ISkillSelection[];
+  newBarTwo: ISkillSelection[];
+}
+
+export interface ISkillSelection {
+  index: number;
+  skill?: ISkill;
 }
 
 interface ISetSelection {
@@ -57,27 +66,29 @@ export const defaultBuildState = {
   skills: [],
   sets: [],
   skillLine: 0,
-  activeBar: [
-    { id: 0, index: 0 },
-    { id: 0, index: 1 },
-    { id: 0, index: 2 },
-    { id: 0, index: 3 },
-    { id: 0, index: 4 }
+  hasTrash: false,
+  newBarOne: [
+    { index: 0, skill: undefined },
+    { index: 1, skill: undefined },
+    { index: 2, skill: undefined },
+    { index: 3, skill: undefined },
+    { index: 4, skill: undefined }
   ],
-  abilityBarOne: [
-    { id: 0, index: 0 },
-    { id: 0, index: 1 },
-    { id: 0, index: 2 },
-    { id: 0, index: 3 },
-    { id: 0, index: 4 }
+  newBarTwo: [
+    { index: 0, skill: undefined },
+    { index: 1, skill: undefined },
+    { index: 2, skill: undefined },
+    { index: 3, skill: undefined },
+    { index: 4, skill: undefined }
   ],
-  abilityBarTwo: [
-    { id: 0, index: 0 },
-    { id: 0, index: 1 },
-    { id: 0, index: 2 },
-    { id: 0, index: 3 },
-    { id: 0, index: 4 }
+  newActiveBar: [
+    { index: 0, skill: undefined },
+    { index: 1, skill: undefined },
+    { index: 2, skill: undefined },
+    { index: 3, skill: undefined },
+    { index: 4, skill: undefined }
   ],
+
   bigPieceSelection: [
     { slot: "head", selectedSet: undefined, icon: undefined },
     { slot: "legs", selectedSet: undefined, icon: undefined },
@@ -102,8 +113,8 @@ export const defaultBuildState = {
     { slot: "mainHand", selectedSet: undefined, icon: undefined },
     { slot: "offHand", selectedSet: undefined, icon: undefined }
   ],
-  ultimateOne: { id: 0, index: 5 },
-  ultimateTwo: { id: 0, index: 5 },
+  ultimateOne: undefined,
+  ultimateTwo: undefined,
   selectedSkillLines: [],
   selectedSet: undefined,
   weaponType: "onehanded",

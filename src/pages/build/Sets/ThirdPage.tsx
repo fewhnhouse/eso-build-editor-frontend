@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Divider, Tabs, Card, Select, Empty } from "antd";
+import { Divider, Tabs, Card, Empty } from "antd";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Weapons from "./Weapons";
@@ -41,7 +41,6 @@ export default () => {
 
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
-    console.log(state)
   }, [state]);
 
   useEffect(() => {
@@ -73,7 +72,9 @@ export default () => {
               <StyledCard hoverable title={selectedSet && selectedSet.name}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   {[1, 2, 3, 4, 5].map(i => (
-                    <span>{selectedSet && selectedSet[`bonus_item_${i}`]}</span>
+                    <span key={i}>
+                      {selectedSet && selectedSet[`bonus_item_${i}`]}
+                    </span>
                   ))}
                 </div>
               </StyledCard>
