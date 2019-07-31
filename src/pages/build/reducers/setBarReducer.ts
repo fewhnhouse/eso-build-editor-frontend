@@ -1,16 +1,24 @@
 import { ISkill } from "../../../components/SkillSlot";
 import { ISlot, IBuildAction, IBuildState } from "../BuildStateContext";
 import { selectIcon, actualNeck, actualRing } from "../../../assets/gear";
+import { ISet } from "../../../components/NewGearSlot";
 
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
     case "DROP_SET_ITEM":
       const {
-        id,
+        set,
         slot,
-        group
-      }: { id: string; slot: string; group: string } = action.payload;
-      const set = state.sets.find(set => set.id === parseInt(id, 10));
+        group,
+        icon,
+        type
+      }: {
+        set: ISet;
+        slot: string;
+        group: string;
+        icon: string;
+        type: string;
+      } = action.payload;
       if (group === "jewelry") {
         return {
           ...state,
@@ -19,7 +27,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
               ? {
                   set,
                   slot,
-                  icon: slot === "neck" ? actualNeck : actualRing
+                  icon
                 }
               : jewelry
           )
@@ -32,23 +40,10 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
               ? {
                   set,
                   slot,
-                  icon:
-                  slot === "mainHand" || slot === "twoHand"
-                  ? state.weapons[0]
-                        ? selectIcon(
-                            state.weapons[0]
-                              .toString()
-                              .split(
-                                state.weaponType === "twohanded"
-                                  ? "two-"
-                                  : "main-"
-                              )[1]
-                          )
-                        : undefined
-                      : state.weapons[1]
-                      ? selectIcon(state.weapons[1].toString().split("off-")[1])
-                      : undefined
+                  icon
                 }
+              : type === "mainHand" && frontbar.slot === "offHand"
+              ? { set: undefined, slot: frontbar.slot, icon: undefined }
               : frontbar
           )
         };
@@ -60,23 +55,10 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
               ? {
                   set,
                   slot,
-                  icon:
-                    slot === "mainHand" || slot === "twoHand"
-                      ? state.weapons[0]
-                        ? selectIcon(
-                            state.weapons[0]
-                              .toString()
-                              .split(
-                                state.weaponType === "twohanded"
-                                  ? "two-"
-                                  : "main-"
-                              )[1]
-                          )
-                        : undefined
-                      : state.weapons[1]
-                      ? selectIcon(state.weapons[1].toString().split("off-")[1])
-                      : undefined
+                  icon
                 }
+              : type === "mainHand" && backbar.slot === "offHand"
+              ? { set: undefined, slot: backbar.slot, icon: undefined }
               : backbar
           )
         };
@@ -88,11 +70,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
               ? {
                   set,
                   slot,
-                  icon: selectIcon(
-                    state.armorType.split("armor")[0] +
-                      slot.charAt(0).toUpperCase() +
-                      slot.slice(1)
-                  )
+                  icon
                 }
               : bigPiece
           )
@@ -105,11 +83,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
               ? {
                   set,
                   slot,
-                  icon: selectIcon(
-                    state.armorType.split("armor")[0] +
-                      slot.charAt(0).toUpperCase() +
-                      slot.slice(1)
-                  )
+                  icon
                 }
               : smallPiece
           )

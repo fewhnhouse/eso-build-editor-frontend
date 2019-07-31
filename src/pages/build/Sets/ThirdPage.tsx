@@ -29,7 +29,7 @@ export default () => {
 
   useEffect(() => {
     localStorage.setItem("buildState", JSON.stringify(state));
-    console.log(state)
+    console.log(state);
   }, [state]);
 
   useEffect(() => {
@@ -61,7 +61,9 @@ export default () => {
               <Card hoverable title={selectedSet && selectedSet.name}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   {[1, 2, 3, 4, 5].map(i => (
-                    <span>{selectedSet && selectedSet[`bonus_item_${i}`]}</span>
+                    <span key={i}>
+                      {selectedSet && selectedSet[`bonus_item_${i}`]}
+                    </span>
                   ))}
                 </div>
               </Card>
