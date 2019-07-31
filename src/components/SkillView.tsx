@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import SkillSlot, { ISkill } from "./SkillSlot";
 import { ABILITY_BAR_ONE } from "../pages/build/Skills/AbilityBar";
+import NewSkillSlot from "./NewSkillSlot";
 
 interface ISKillViewProps {
-  skillSlots: { index: number; skill: ISkill | undefined }[];
+  skillSlots: { index: number; skill?: ISkill }[];
   droppable?: boolean;
   id: string;
+  abilityBar?: number;
   disabled?: boolean;
 }
 
@@ -15,7 +17,13 @@ const SkillView = styled.div`
   flex-direction: row;
 `;
 
-export default ({ skillSlots, droppable, id, disabled }: ISKillViewProps) => {
+export default ({
+  skillSlots,
+  droppable,
+  id,
+  abilityBar,
+  disabled
+}: ISKillViewProps) => {
   const pos = (id: string) => {
     if (id === ABILITY_BAR_ONE) {
       return "top";
@@ -25,9 +33,9 @@ export default ({ skillSlots, droppable, id, disabled }: ISKillViewProps) => {
   return (
     <SkillView>
       {skillSlots.map((skillSlot, index) => (
-        <SkillSlot
-          id={`${id}-${skillSlot.skill ? skillSlot.skill.id : "0"}`}
-          index={index}
+        <NewSkillSlot
+          abilityBar={abilityBar}
+          key={index + skillSlot.index}
           disabled={disabled}
           droppable={droppable}
           skillIndex={skillSlot.index}

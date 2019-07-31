@@ -107,11 +107,11 @@ export default () => {
       type: "SET_SELECTED_SKILLS_AND_ULTIMATE",
       payload: {
         selectedSkills: baseActives.map((skill: ISkill, index: number) => ({
-          id: skill.id,
+          skill,
           index
         })),
         id: state!.skillLine,
-        ultimate: baseUltimate ? baseUltimate!.id : 0
+        ultimate: baseUltimate || undefined
       }
     });
   }, [state!.skillLine, dispatch]);
@@ -145,7 +145,6 @@ export default () => {
             {baseActives.length > 0 && (
               <>
                 {baseActives.map((base, index) => {
-                  console.log(base);
                   const morphs = morphedActives.filter(
                     morph => morph.parent === base.id
                   );

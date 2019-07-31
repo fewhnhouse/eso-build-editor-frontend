@@ -4,7 +4,7 @@ import GearSlot, { IGearSlotProps, IGearSlot } from "../components/GearSlot";
 
 import { Typography } from "antd";
 import Flex from "./Flex";
-import { DropComponent, DragComponent } from "./NewGearSlot";
+import { DnDComponent } from "./NewGearSlot";
 
 const GearView = styled.div``;
 
@@ -38,23 +38,15 @@ export default ({
             style={{ flexWrap: "wrap" }}
           >
             {setup.data.map((slot: IGearSlot, index: number) => {
-              if (droppable) {
-                return (
-                  <DropComponent
-                    slot={slot}
-                    group={setup.id}
-                    key={"drop"+slot.slot + index}
-                  />
-                );
-              } else {
-                return (
-                  <DragComponent
-                    slot={slot}
-                    group={setup.id}
-                    key={"drag"+slot.slot + index}
-                  />
-                );
-              }
+              return (
+                <DnDComponent
+                  disabled={disabled}
+                  droppable={droppable}
+                  slot={slot}
+                  group={setup.id}
+                  key={"drop" + slot.slot + index}
+                />
+              );
             })}
           </Flex>
         </div>
