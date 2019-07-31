@@ -22,6 +22,18 @@ const Content = styled.div`
   display: flex;
 `;
 
+const StyledCard = styled(Card)`
+  margin: 0 auto;
+  width: 450px;
+  position: relative;
+`;
+
+const Image = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+`;
+
 export default () => {
   // const [skills, setSkills] = useState([]);
   const [state, dispatch] = useContext(BuildContext);
@@ -58,13 +70,13 @@ export default () => {
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <Card hoverable title={selectedSet && selectedSet.name}>
+              <StyledCard hoverable title={selectedSet && selectedSet.name}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   {[1, 2, 3, 4, 5].map(i => (
                     <span>{selectedSet && selectedSet[`bonus_item_${i}`]}</span>
                   ))}
                 </div>
-              </Card>
+              </StyledCard>
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}

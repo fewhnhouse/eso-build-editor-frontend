@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Popover } from 'antd'
+import { Popover, Avatar, Card } from 'antd'
 import {
   head,
   chest,
@@ -16,7 +16,7 @@ import {
   neck,
 } from '../assets/gear'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import { diamond } from '../assets/traits'
+import GearCard from "../pages/build/GearCard"
 
 export interface IGearSlotProps {
   slot: IGearSlot
@@ -107,22 +107,6 @@ const getImageSource = (slot: string) => {
       return ''
   }
 }
-//<GearSlot prop1={test}/>
-
-const breakRow = (tooltip: string | undefined) => {
-  switch (tooltip) {
-    case 'left':
-      return false
-    case 'right':
-      return true
-    case 'top':
-      return true
-    case 'bottom':
-      return false
-    default:
-      return false
-  }
-}
 
 export default ({
   slot,
@@ -132,7 +116,6 @@ export default ({
   id,
   disabled,
 }: IGearSlotProps) => {
-  //const {slot, title, content} = props;
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
       {disabled ? (
@@ -144,7 +127,7 @@ export default ({
             <Popover
               placement={'top'}
               title={slot.set ? slot.set.name : 'Title'}
-              content={'content'}
+              content={<GearCard index={index} id={id} slot={slot} />}
             >
               <GearImg src={slot.icon} />
             </Popover>
@@ -173,7 +156,7 @@ export default ({
                     <Popover
                       placement={'top'}
                       title={slot.set ? slot.set.name : 'Title'}
-                      content={'content'}
+                      content={<GearCard index={index} id={id} slot={slot} />}
                     >
                       <GearImg
                         ref={provided.innerRef}
