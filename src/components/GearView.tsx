@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import GearSlot, { IGearSlotProps, IGearSlot } from "../components/GearSlot";
 
 import { Typography } from "antd";
 import Flex from "./Flex";
-import { DnDComponent } from "./NewGearSlot";
+import GearSlot, { IGearSlot } from "./GearSlot";
 
 const GearView = styled.div``;
 
@@ -39,7 +38,7 @@ export default ({
           >
             {setup.data.map((slot: IGearSlot, index: number) => {
               return (
-                <DnDComponent
+                <GearSlot
                   disabled={disabled}
                   droppable={droppable}
                   slot={slot}

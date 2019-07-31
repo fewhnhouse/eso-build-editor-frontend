@@ -1,8 +1,5 @@
 import { IBuildState } from "./../BuildStateContext";
-import { ABILITY_BAR_TWO } from "../Skills/AbilityBar";
-import { ISkill } from "../../../components/SkillSlot";
-import { ISlot, IBuildAction } from "../BuildStateContext";
-import { ABILITY_BAR_ONE } from "../Skills/AbilityBar";
+import { IBuildAction } from "../BuildStateContext";
 
 export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {

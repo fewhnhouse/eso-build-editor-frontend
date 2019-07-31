@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import SkillSlot, { ISkill } from "./SkillSlot";
 import { ABILITY_BAR_ONE } from "../pages/build/Skills/AbilityBar";
-import NewSkillSlot from "./NewSkillSlot";
+import NewSkillSlot, { ISkill } from "./SkillSlot";
 
 interface ISKillViewProps {
   skillSlots: { index: number; skill?: ISkill }[];

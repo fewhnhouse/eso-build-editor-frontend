@@ -1,7 +1,5 @@
-import { ISkill } from "../../../components/SkillSlot";
-import { ISlot, IBuildAction, IBuildState } from "../BuildStateContext";
-import { selectIcon, actualNeck, actualRing } from "../../../assets/gear";
-import { ISet } from "../../../components/NewGearSlot";
+import { IBuildAction, IBuildState } from "../BuildStateContext";
+import { ISet } from "../../../components/GearSlot";
 
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {

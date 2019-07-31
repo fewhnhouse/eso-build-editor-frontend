@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { Divider, Card, Icon } from "antd";
 import { BuildContext, ISkillSelection } from "../BuildStateContext";
 import SkillView from "../../../components/SkillView";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import SkillSlot, { ISkill } from "../../../components/SkillSlot";
+import { ISkill } from "../../../components/SkillSlot";
 import { useDrop } from "react-dnd";
-import NewSkillSlot from "../../../components/NewSkillSlot";
+import SkillSlot from "../../../components/SkillSlot";
 import Flex from "../../../components/Flex";
 
 export const ABILITY_BAR_ONE = "abilityBar1";
@@ -88,7 +87,7 @@ export default () => {
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver()
     })
   });
 
@@ -117,7 +116,7 @@ export default () => {
             id={ACTIVE_BAR}
             skillSlots={activeBarSkills}
           />
-          <NewSkillSlot
+          <SkillSlot
             abilityBar={-1}
             skill={activeUltimate || undefined}
             skillIndex={5}
@@ -133,7 +132,7 @@ export default () => {
             skillSlots={newBarOne}
           />
 
-          <NewSkillSlot
+          <SkillSlot
             abilityBar={0}
             droppable
             skill={ultimateOne || undefined}
@@ -148,7 +147,7 @@ export default () => {
             droppable
             skillSlots={newBarTwo}
           />
-          <NewSkillSlot
+          <SkillSlot
             abilityBar={1}
             droppable
             skill={ultimateTwo || undefined}

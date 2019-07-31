@@ -3,8 +3,7 @@ import {
   defaultBuildState,
   ISkillSelection
 } from "./../BuildStateContext";
-import { ISkill } from "../../../components/SkillSlot";
-import { ISlot, IBuildAction } from "../BuildStateContext";
+import { IBuildAction } from "../BuildStateContext";
 
 export const skillReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {

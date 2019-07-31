@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Popover } from "antd";
 import { abilityFrame } from "../assets/misc";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { SkillCardContent } from "../pages/build/Skills/SkillCard";
+import { BuildContext } from "../pages/build/BuildStateContext";
+import { useDrag, useDrop } from "react-dnd";
 
 interface ISkillSlotProps {
   droppable?: boolean;
-  index: number;
   skillIndex: number;
-  id: string;
   disabled?: boolean;
+  abilityBar?: number;
   skill?: ISkill;
   tooltipPos?: "top" | "bottom" | undefined;
 }
@@ -51,67 +52,139 @@ const SkillImg = styled.img`
 
 export default ({
   droppable,
-  index,
   skillIndex,
-  id,
   skill,
   disabled,
-  tooltipPos
+  tooltipPos,
+  abilityBar
 }: ISkillSlotProps) => {
+  const [, dispatch] = useContext(BuildContext);
+  const [{ isDragging, didDrop }, drag] = useDrag({
+    item: {
+      type: skillIndex === 5 ? "ultimate" : "skill",
+      skill,
+      index: skillIndex,
+      abilityBar
+    },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+      didDrop: !!monitor.didDrop()
+    })
+  });
+
+  useEffect(() => {
+    dispatch!({
+      type: "SET_HAS_TRASH",
+      payload: {
+        hasTrash: isDragging
+      }
+    });
+  }, [isDragging]);
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: skillIndex === 5 ? "ultimate" : "skill",
+    drop: (item: any, monitor) => {
+      if (item.type === "ultimate") {
+        if (item.abilityBar === -1) {
+          dispatch!({
+            type: "DROP_ULTIMATE",
+            payload: {
+              barIndex: abilityBar,
+              skill: item.skill
+            }
+          });
+        } else {
+          dispatch!({
+            type: "SWAP_ULTIMATE",
+            payload: {
+              barIndex: item.abilityBar,
+              destinationSkill: skill,
+              sourceSkill: item.skill
+            }
+          });
+        }
+      } else {
+        if (item.abilityBar === abilityBar) {
+          dispatch!({
+            type: "SWAP_ABILITY_SAME",
+            payload: {
+              barIndex: item.abilityBar,
+              destinationIndex: item.index,
+              destinationSkill: item.skill,
+              sourceIndex: skillIndex,
+              sourceSkill: skill
+            }
+          });
+        } else if (item.abilityBar !== -1 && item.abilityBar !== abilityBar) {
+          dispatch!({
+            type: "SWAP_ABILITY_DIFFERENT",
+            payload: {
+              sourceBarIndex: item.abilityBar,
+              destinationBarIndex: abilityBar,
+              destinationIndex: skillIndex,
+              destinationSkill: skill,
+              sourceIndex: item.index,
+              sourceSkill: item.skill
+            }
+          });
+        } else {
+          dispatch!({
+            type: "DROP_ABILITY",
+            payload: {
+              barIndex: abilityBar,
+              destinationIndex: skillIndex,
+              skill: item.skill
+            }
+          });
+        }
+      }
+    },
+    collect: monitor => ({
+      canDrop: !!monitor.canDrop(),
+      isOver: !!monitor.isOver()
+    })
+  });
   return disabled ? (
-    skill !== undefined ? (
-      <SkillFrame>
-        <Popover placement={tooltipPos} content={<SkillCardContent skill={skill} />}>
+    <DisabledSkillSlot />
+  ) : (
+    <SkillFrame ref={drop}>
+      {skill !== undefined && !isDragging ? (
+        <Popover
+          placement={tooltipPos}
+          content={<SkillCardContent skill={skill} />}
+        >
           <SkillImg
+            ref={drag}
             src={`https://beast.pathfindermediagroup.com/storage/skills/${
               skill.icon
             }`}
           />
         </Popover>
-      </SkillFrame>
-    ) : (
-      <SkillFrame />
-    )
-  ) : (
-    <Droppable
-      isDropDisabled={!droppable}
-      droppableId={`${id}-droppable-${index}`}
-    >
-      {(provided, snapshot) => (
-        <SkillFrame ref={provided.innerRef} {...provided.droppableProps}>
-          {provided.placeholder}
-
-          <Draggable
-            isDragDisabled={skill === undefined}
-            draggableId={`${id}-draggable-${index}`}
-            index={index}
-          >
-            {(provided, snapshot) =>
-              skill && skillIndex === index ? (
-                <Popover
-                  placement={tooltipPos}
-                  content={<SkillCardContent skill={skill} />}
-                >
-                  <SkillImg
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${
-                      skill.icon
-                    }`}
-                  />
-                </Popover>
-              ) : (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                />
-              )
-            }
-          </Draggable>
-        </SkillFrame>
+      ) : skill !== undefined ? (
+        <SkillImg
+          ref={drag}
+          src={`https://beast.pathfindermediagroup.com/storage/skills/${
+            skill.icon
+          }`}
+        />
+      ) : (
+        <div />
       )}
-    </Droppable>
+    </SkillFrame>
+  );
+};
+
+const DisabledSkillSlot = ({ skill }: { skill?: ISkill }) => {
+  return skill !== undefined ? (
+    <SkillFrame>
+      <Popover placement={"top"} content={<SkillCardContent skill={skill} />}>
+        <SkillImg
+          src={`https://beast.pathfindermediagroup.com/storage/skills/${
+            skill.icon
+          }`}
+        />
+      </Popover>
+    </SkillFrame>
+  ) : (
+    <SkillFrame />
   );
 };
