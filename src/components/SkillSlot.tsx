@@ -1,36 +1,35 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import { Popover } from "antd";
-import { abilityFrame } from "../assets/misc";
-import { SkillCardContent } from "../pages/build/Skills/SkillCard";
-import { BuildContext } from "../pages/build/BuildStateContext";
-import { useDrag, useDrop } from "react-dnd";
+import React, { useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import { Popover } from 'antd'
+import { abilityFrame } from '../assets/misc'
+import { SkillCardContent } from '../pages/build/Skills/SkillCard'
+import { BuildContext } from '../pages/build/BuildStateContext'
+import { useDrag, useDrop } from 'react-dnd'
 
 interface ISkillSlotProps {
-  droppable?: boolean;
-  skillIndex: number;
-  disabled?: boolean;
-  abilityBar?: number;
-  skill?: ISkill;
-  tooltipPos?: "top" | "bottom" | undefined;
+  droppable?: boolean
+  skillIndex: number
+  abilityBar?: number
+  skill?: ISkill
+  tooltipPos?: 'top' | 'bottom' | undefined
 }
 
 export interface ISkill {
-  cast_time: string;
-  cost: string;
-  effect_1: string;
-  effect_2: string | null;
-  icon: string;
-  id: number;
-  name: string;
-  parent: number | null;
-  pts: number;
-  range: string | null;
-  skillline: number;
-  slug: string;
-  target: string | null;
-  type: number;
-  unlocks_at: number | null;
+  cast_time: string
+  cost: string
+  effect_1: string
+  effect_2: string | null
+  icon: string
+  id: number
+  name: string
+  parent: number | null
+  pts: number
+  range: string | null
+  skillline: number
+  slug: string
+  target: string | null
+  type: number
+  unlocks_at: number | null
 }
 
 const SkillFrame = styled.div`
@@ -42,109 +41,106 @@ const SkillFrame = styled.div`
   margin: 0;
   background-image: url(${abilityFrame});
   background-repeat: no-repeat;
-`;
+`
 
 const SkillImg = styled.img`
   width: 59px;
   height: 59px;
-`;
+`
 
 export default ({
   droppable,
   skillIndex,
   skill,
-  disabled,
   tooltipPos,
-  abilityBar
+  abilityBar,
 }: ISkillSlotProps) => {
-  const [, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext)
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: {
-      type: skillIndex === 5 ? "ultimate" : "skill",
+      type: skillIndex === 5 ? 'ultimate' : 'skill',
       skill,
       index: skillIndex,
-      abilityBar
+      abilityBar,
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop()
-    })
-  });
+      didDrop: !!monitor.didDrop(),
+    }),
+  })
 
   useEffect(() => {
     dispatch!({
-      type: "SET_HAS_TRASH",
+      type: 'SET_HAS_TRASH',
       payload: {
-        hasTrash: isDragging
-      }
-    });
-  }, [isDragging]);
+        hasTrash: isDragging,
+      },
+    })
+  }, [isDragging])
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: skillIndex === 5 ? "ultimate" : "skill",
+    accept: skillIndex === 5 ? 'ultimate' : 'skill',
     drop: (item: any, monitor) => {
-      if (item.type === "ultimate") {
+      if (item.type === 'ultimate') {
         if (item.abilityBar === -1) {
           dispatch!({
-            type: "DROP_ULTIMATE",
+            type: 'DROP_ULTIMATE',
             payload: {
               barIndex: abilityBar,
-              skill: item.skill
-            }
-          });
+              skill: item.skill,
+            },
+          })
         } else {
           dispatch!({
-            type: "SWAP_ULTIMATE",
+            type: 'SWAP_ULTIMATE',
             payload: {
               barIndex: item.abilityBar,
               destinationSkill: skill,
-              sourceSkill: item.skill
-            }
-          });
+              sourceSkill: item.skill,
+            },
+          })
         }
       } else {
         if (item.abilityBar === abilityBar) {
           dispatch!({
-            type: "SWAP_ABILITY_SAME",
+            type: 'SWAP_ABILITY_SAME',
             payload: {
               barIndex: item.abilityBar,
               destinationIndex: item.index,
               destinationSkill: item.skill,
               sourceIndex: skillIndex,
-              sourceSkill: skill
-            }
-          });
+              sourceSkill: skill,
+            },
+          })
         } else if (item.abilityBar !== -1 && item.abilityBar !== abilityBar) {
           dispatch!({
-            type: "SWAP_ABILITY_DIFFERENT",
+            type: 'SWAP_ABILITY_DIFFERENT',
             payload: {
               sourceBarIndex: item.abilityBar,
               destinationBarIndex: abilityBar,
               destinationIndex: skillIndex,
               destinationSkill: skill,
               sourceIndex: item.index,
-              sourceSkill: item.skill
-            }
-          });
+              sourceSkill: item.skill,
+            },
+          })
         } else {
           dispatch!({
-            type: "DROP_ABILITY",
+            type: 'DROP_ABILITY',
             payload: {
               barIndex: abilityBar,
               destinationIndex: skillIndex,
-              skill: item.skill
-            }
-          });
+              skill: item.skill,
+            },
+          })
         }
       }
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver()
-    })
-  });
-  return disabled ? (
-    <DisabledSkillSlot />
-  ) : (
+      isOver: !!monitor.isOver(),
+    }),
+  })
+  return (
     <SkillFrame ref={drop}>
       {skill !== undefined && !isDragging ? (
         <Popover
@@ -169,13 +165,13 @@ export default ({
         <div />
       )}
     </SkillFrame>
-  );
-};
+  )
+}
 
-const DisabledSkillSlot = ({ skill }: { skill?: ISkill }) => {
+export const DisplaySlot = ({ skill }: { skill?: ISkill }) => {
   return skill !== undefined ? (
     <SkillFrame>
-      <Popover placement={"top"} content={<SkillCardContent skill={skill} />}>
+      <Popover placement={'top'} content={<SkillCardContent skill={skill} />}>
         <SkillImg
           src={`https://beast.pathfindermediagroup.com/storage/skills/${
             skill.icon
@@ -185,5 +181,5 @@ const DisabledSkillSlot = ({ skill }: { skill?: ISkill }) => {
     </SkillFrame>
   ) : (
     <SkillFrame />
-  );
-};
+  )
+}
