@@ -1,18 +1,27 @@
+const themeGlobals = {
+  lineHeight: "1.5",
+  titleSize: "16px",
+  textSize: "14px",
+  textAlign: "left",
+  bottomMargin: "8px",
+  rightPadding: "16px"
+}
+
 const theme = {
+  flexDisplay: "flex",
+  ttWidth: "400px",
+  relativePos: "relative",
   primary: "blue",
   mainBg: "rgb(155, 155, 155)",
-
   baseStatColors: {
     healthRed: "red",
     stamGreen: "green",
     magBlue: "blue"
   },
-
   dmgStatColors: {
     statsWeaponDmg: "green",
     statsSpellDmg: "blue"
   },
-
   roleCardColors: {
     StamDD: "rgb(169, 212, 102)",
     StamPale: "rgb(250, 255, 242)",
@@ -23,12 +32,19 @@ const theme = {
     MagSupp: "rgb(181, 135, 255)",
     MagSuppPale: "rgb(216, 223, 227)"
   },
-
   statsHeal: "yellow",
-  statsRes: "cyan"
+  statsRes: "cyan",
+  MyAvatar: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "3px"
+  },
 };
 
 export interface ITheme {
+  flexDisplay: string,
+  ttWidth: string,
+  relativePos: string,
   primary: string;
   baseStatColors: {
     healthRed: string;
