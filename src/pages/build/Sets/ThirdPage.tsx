@@ -8,6 +8,7 @@ import Jewelry from "./Jewelry";
 import RightContent from "./SetBar";
 import { BuildContext } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
+import GearCard from "./GearCard";
 
 const { TabPane } = Tabs;
 
@@ -69,15 +70,7 @@ export default () => {
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <StyledCard hoverable title={selectedSet && selectedSet.name}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {[1, 2, 3, 4, 5].map(i => (
-                    <span key={i}>
-                      {selectedSet && selectedSet[`bonus_item_${i}`]}
-                    </span>
-                  ))}
-                </div>
-              </StyledCard>
+              <GearCard set={selectedSet}/>
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
