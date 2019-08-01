@@ -1,37 +1,29 @@
 import React, { useContext } from "react";
-import { Card, Divider, Popover } from "antd";
+import { Card, Divider, Popover, Tag } from "antd";
 import styled from "styled-components";
+import { ISet, IGearSlot } from "../../../components/GearSlot";
+import CheckableTag from "antd/lib/tag/CheckableTag";
 
-import { BuildContext } from "../BuildStateContext";
-import { IGearSlot, IGearSlotProps } from "../../../components/GearSlot";
-
-interface IGearCard extends IGearSlotProps {
-    
-}
 
 {/**** MOVE THESE STYLES TO GLOBAL STYLES ****/}
-const ToolTip = styled.div`
+const StyledCard = styled(Card)`
   display: "flex";
-  width: 400px;
+  margin: 0 auto;
+  width: 450px;
   position: relative;
 `
-
 const MyAvatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 3px;
 `;
-
 const AvatarContainer = styled.div`
   padding-right: 16px;
 `;
-
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
-  text-align: left;
 `;
-
 const Title = styled.div`
   font-size: 16px;
   line-height: 1.5;
@@ -41,21 +33,87 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
+`; 
+const StyledTag = styled(Tag)`
+  min-width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export default (gearProp: IGearCard) => {
-    return (
-        <ToolTip>
-            <AvatarContainer>
-            <MyAvatar
-                title={gearProp.slot.set ? gearProp.slot.set.type : "Title"}
-                src={gearProp.slot.icon}
-            />
-            </AvatarContainer>
-            <Description>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                {gearProp.slot.set ? gearProp.slot.set.slug : "Set"}
-            </div>
-            </Description>
-        </ToolTip>
-    )}
+interface IGearCard {
+  set: ISet;
+}
+
+interface ISetTagProps {
+  hasHeavyArmor: boolean;
+  hasMediumArmor: boolean;
+  hasLightArmor: boolean;
+  traitsNeeded: boolean;
+}
+
+const ArmorTypeTag = ({
+  hasHeavyArmor,
+  hasMediumArmor,
+  hasLightArmor,
+  traitsNeeded
+}: ISetTagProps) => {
+  if (traitsNeeded) {
+    return null;
+  } else {
+    if (hasHeavyArmor && hasMediumArmor && hasLightArmor) {
+      return <StyledTag color="purple">All</StyledTag>;
+    } else if (hasHeavyArmor) {
+      return <StyledTag color="red">Heavy</StyledTag>;
+    } else if (hasMediumArmor) {
+      return <StyledTag color="green">Medium</StyledTag>;
+    } else {
+      return <StyledTag color="blue">Light</StyledTag>;
+    }
+  }
+};
+
+export default ({set}: IGearCard) => {
+  return (
+      <StyledCard hoverable title={set.name}>
+        <StyledTag color="#1890ff">{set.type}</StyledTag>
+        <ArmorTypeTag
+          hasHeavyArmor={set.has_heavy_armor === 1}
+          hasMediumArmor={set.has_medium_armor === 1}
+          hasLightArmor={set.has_light_armor === 1}
+          traitsNeeded={set.traits_needed !== null}
+        />
+        <Description>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {[2, 3, 4, 5].map(i => (
+              <span key={i}>
+                {i}/5: {set && set[`bonus_item_${i}`]}
+              </span>
+            ))}
+          </div>
+        </Description>
+      </StyledCard>
+  )
+}
+
+interface ISelectedSet {
+  gear: IGearSlot;
+  trait: string;
+  enchant: string;
+}
+
+export const GearCardContent = ({gear, trait, enchant}: ISelectedSet) => {
+  return (
+    <div>
+      <StyledCard>
+        <Title>{gear.set? gear.set.name : "Title"} <br /> {gear.slot} <br /> {gear.set ? gear.set.type : "Type"}</Title>
+        <Divider />
+        <Description>
+          Trait: {trait} <br/>
+          Enchant: {enchant}
+        </Description>
+      </StyledCard>
+    </div>
+  )
+}
+

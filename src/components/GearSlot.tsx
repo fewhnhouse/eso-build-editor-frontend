@@ -17,6 +17,7 @@ import {
 } from '../assets/gear'
 import { useDrag, useDrop } from 'react-dnd'
 import { BuildContext } from '../pages/build/BuildStateContext'
+import { GearCardContent } from "../pages/build/Sets/GearCard"
 
 export interface IGearSlot {
   slot: string
@@ -157,8 +158,6 @@ export default ({
       isOver: !!monitor.isOver(),
     }),
   })
-
-  //const {slot, title, content} = props;
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
       <GearFrame
@@ -170,9 +169,12 @@ export default ({
         {slot.icon !== undefined ? (
           <Popover
             placement={'top'}
-            title={slot.set ? slot.set.name : 'Title'}
-            content={'content'}
-          >
+            content={
+              <GearCardContent
+                gear={slot}
+                trait={"infused"}
+                enchant={"Max magicka 1024"}/>
+            }>
             <GearImg ref={drag} src={slot.icon} />
           </Popover>
         ) : (
@@ -192,9 +194,12 @@ export const DisplaySlot = ({ slot }: { slot: IGearSlot }) => {
       {slot.icon !== undefined ? (
         <Popover
           placement={'top'}
-          title={slot.set ? slot.set.name : 'Title'}
-          content={'content'}
-        >
+          content={
+            <GearCardContent
+              gear={slot} 
+              trait={"infused"} 
+              enchant={"Max magicka 1024"}/>
+          }>
           <GearImg src={slot.icon} />
         </Popover>
       ) : null}
