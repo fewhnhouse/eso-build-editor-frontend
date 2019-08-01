@@ -1,34 +1,35 @@
-import React, { useContext } from "react";
-import { Card, Divider, Popover } from "antd";
-import styled from "styled-components";
+import React, { useContext } from 'react'
+import { Card, Divider, Popover } from 'antd'
+import styled from 'styled-components'
 
-import { BuildContext } from "../BuildStateContext";
-import { ISkill } from "../../../components/SkillSlot";
+import { BuildContext } from '../BuildStateContext'
+import { ISkill } from '../../../components/SkillSlot'
+import { animated, useSpring } from 'react-spring'
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
   width: 450px;
-`;
+`
 
 const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 3px;
   border: ${(props: { active: boolean }) =>
-    props.active ? "2px solid #1890ff" : "none"};
+    props.active ? '2px solid #1890ff' : 'none'};
   filter: ${(props: { active: boolean }) =>
-    props.active ? "" : "grayscale()"};
-`;
+    props.active ? '' : 'grayscale()'};
+`
 
 const MyAvatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 3px;
-`;
+`
 
 const AvatarContainer = styled.div`
   padding-right: 16px;
-`;
+`
 
 const RaceContainer = styled.div`
   display: flex;
@@ -37,15 +38,15 @@ const RaceContainer = styled.div`
   padding: 0px 10px;
   justify-content: space-between;
   align-items: center;
-`;
+`
 
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? "#2ecc71" : "rgba(0, 0, 0, 0.45)"};
+    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
-`;
+`
 
 const Title = styled.div`
   font-size: 16px;
@@ -56,102 +57,103 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`;
+`
 
 const CostSpan = styled.span`
   font-weight: 400;
   color: ${(props: { type: string }) =>
-    props.type === "Ultimate"
-      ? "#8e44ad"
-      : props.type === "Magicka"
-      ? "#2980b9"
-      : props.type === "Stamina"
-      ? "#27ae60"
-      : "#4b6584"};
-`;
+    props.type === 'Ultimate'
+      ? '#8e44ad'
+      : props.type === 'Magicka'
+      ? '#2980b9'
+      : props.type === 'Stamina'
+      ? '#27ae60'
+      : '#4b6584'};
+`
 
 const MorphLabel = styled.span`
   font-size: 16px;
   font-weight: 500;
   max-width: 140px;
   color: ${(props: { active: boolean; disabled: boolean }) =>
-    props.active ? "#1890ff" : props.disabled ? "" : "rgba(0,0,0,0.85)"};
+    props.active ? '#1890ff' : props.disabled ? '' : 'rgba(0,0,0,0.85)'};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
+`
 
 export interface IClass {
-  class: string;
-  description: string;
-  race: string;
+  class: string
+  description: string
+  race: string
 }
 interface ICardProps {
-  skill: ISkill;
-  morph1: ISkill;
-  morph2: ISkill;
-  passive?: boolean;
-  ultimate?: boolean;
+  skill: ISkill
+  morph1: ISkill
+  morph2: ISkill
+  passive?: boolean
+  ultimate?: boolean
 }
 
 export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
-  const [state, dispatch] = useContext(BuildContext);
-  const { selectedSkillLines, skillLine } = state!;
+  const [state, dispatch] = useContext(BuildContext)
+  const { selectedSkillLines, skillLine } = state!
   const selectedSkillLine = selectedSkillLines.find(
     line => line.id === skillLine
-  );
+  )
   if (!selectedSkillLine) {
-    return null;
+    return null
   }
-  const { selectedSkills, selectedUltimate } = selectedSkillLine;
+  const { selectedSkills, selectedUltimate } = selectedSkillLine
   const firstActive = ultimate
     ? selectedUltimate && selectedUltimate.id === morph1.id
     : selectedSkills.find(slot => slot.skill && slot.skill.id === morph1.id) !==
-      undefined;
+      undefined
   const secondActive = ultimate
     ? selectedUltimate && selectedUltimate.id === morph2.id
     : selectedSkills.find(slot => slot.skill && slot.skill.id === morph2.id) !==
-      undefined;
+      undefined
   const handleFirstClick = () => {
     if (firstActive) {
       dispatch!({
-        type: "UNSELECT_MORPH",
-        payload: { baseSkill: skill, morph: morph1 }
-      });
+        type: 'UNSELECT_MORPH',
+        payload: { baseSkill: skill, morph: morph1 },
+      })
     } else if (!secondActive) {
       dispatch!({
-        type: "SELECT_MORPH",
-        payload: { baseSkill: skill, morph: morph1 }
-      });
+        type: 'SELECT_MORPH',
+        payload: { baseSkill: skill, morph: morph1 },
+      })
     } else {
       dispatch!({
-        type: "SWAP_MORPH",
-        payload: { oldMorph: morph2, newMorph: morph1 }
-      });
+        type: 'SWAP_MORPH',
+        payload: { oldMorph: morph2, newMorph: morph1 },
+      })
     }
-  };
+  }
 
   const handleSecondClick = () => {
     if (secondActive) {
       dispatch!({
-        type: "UNSELECT_MORPH",
-        payload: { baseSkill: skill, morph: morph2 }
-      });
+        type: 'UNSELECT_MORPH',
+        payload: { baseSkill: skill, morph: morph2 },
+      })
     } else if (!firstActive) {
       dispatch!({
-        type: "SELECT_MORPH",
-        payload: { baseSkill: skill, morph: morph2 }
-      });
+        type: 'SELECT_MORPH',
+        payload: { baseSkill: skill, morph: morph2 },
+      })
     } else {
       dispatch!({
-        type: "SWAP_MORPH",
-        payload: { oldMorph: morph1, newMorph: morph2 }
-      });
+        type: 'SWAP_MORPH',
+        payload: { oldMorph: morph1, newMorph: morph2 },
+      })
     }
-  };
+  }
+
   return (
     <StyledCard
-      style={{ position: "relative" }}
+      style={{ position: 'relative' }}
       hoverable
       actions={
         passive
@@ -190,21 +192,21 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                     }`}
                   />
                 </RaceContainer>
-              </Popover>
+              </Popover>,
             ]
       }
     >
       <SkillCardContent skill={skill} />
     </StyledCard>
-  );
-};
+  )
+}
 
 export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
-  const isMagicka = skill.cost.includes("Magicka");
-  const isStamina = skill.cost.includes("Magicka");
-  const isFree = skill.cost.includes("Nothing");
+  const isMagicka = skill.cost.includes('Magicka')
+  const isStamina = skill.cost.includes('Magicka')
+  const isFree = skill.cost.includes('Nothing')
   return (
-    <div style={{ display: "flex", maxWidth: 400 }}>
+    <div style={{ display: 'flex', maxWidth: 400 }}>
       <AvatarContainer>
         <MyAvatar
           title={skill.name}
@@ -220,28 +222,28 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
             <CostSpan
               type={
                 skill.type === 3
-                  ? "Ultimate"
+                  ? 'Ultimate'
                   : isMagicka
-                  ? "Magicka"
+                  ? 'Magicka'
                   : isStamina
-                  ? "Stamina"
-                  : "Free"
+                  ? 'Stamina'
+                  : 'Free'
               }
             >
-              {isFree ? "Free" : skill.cost}
+              {isFree ? 'Free' : skill.cost}
             </CostSpan>
             {` | ${skill.range ? skill.range : skill.target}`}
           </Description>
         )}
-        <Divider style={{ margin: "5px 0px" }} />
+        <Divider style={{ margin: '5px 0px' }} />
         <Description>{skill.effect_1}</Description>
         {skill.effect_2 && (
           <>
-            <Divider style={{ margin: "5px 0px" }} />
+            <Divider style={{ margin: '5px 0px' }} />
             <Description newEffect>New Effect: {skill.effect_2}</Description>
           </>
         )}
       </div>
     </div>
-  );
-};
+  )
+}

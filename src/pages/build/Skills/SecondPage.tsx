@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Divider, Empty } from "antd";
-import styled from "styled-components";
-import skills from "../../../skills.json";
-import SkillCard from "./SkillCard";
-import Menu from "./Menu";
-import { BuildContext } from "../BuildStateContext";
-import AbilityBar from "./AbilityBar";
-import { ISkill } from "../../../components/SkillSlot.jsx";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import React, { useEffect, useState, useContext } from 'react'
+import { Divider, Empty } from 'antd'
+import styled from 'styled-components'
+import skills from '../../../skills.json'
+import SkillCard from './SkillCard'
+import Menu from './Menu'
+import { BuildContext } from '../BuildStateContext'
+import AbilityBar from './AbilityBar'
+import { ISkill } from '../../../components/SkillSlot.jsx'
+import { DndProvider } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { useTrail, animated } from 'react-spring'
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -17,44 +18,44 @@ const AbilityContainer = styled.div`
   align-items: center;
   overflow: auto;
   padding: 40px;
-`;
+`
 
 const Content = styled.div`
   width: 100%;
   display: flex;
-`;
+`
 
 const defaultUltimate: ISkill = {
-  cast_time: "0",
-  cost: "0",
-  effect_1: "0",
+  cast_time: '0',
+  cost: '0',
+  effect_1: '0',
   effect_2: null,
-  icon: "null",
+  icon: 'null',
   id: 0,
-  name: "name",
+  name: 'name',
   parent: null,
   pts: 0,
   range: null,
   skillline: 0,
-  slug: "",
+  slug: '',
   target: null,
   type: 3,
-  unlocks_at: null
-};
+  unlocks_at: null,
+}
 export default () => {
   // const [skills, setSkills] = useState([]);
-  const [state, dispatch] = useContext(BuildContext);
-  const [baseActives, setBaseActives] = useState<ISkill[]>([]);
-  const [morphedActives, setMorphedActives] = useState<ISkill[]>([]);
-  const [passives, setPassives] = useState<ISkill[]>([]);
-  const [baseUltimate, setBaseUltimate] = useState<ISkill>(defaultUltimate);
-  const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([]);
+  const [state, dispatch] = useContext(BuildContext)
+  const [baseActives, setBaseActives] = useState<ISkill[]>([])
+  const [morphedActives, setMorphedActives] = useState<ISkill[]>([])
+  const [passives, setPassives] = useState<ISkill[]>([])
+  const [baseUltimate, setBaseUltimate] = useState<ISkill>(defaultUltimate)
+  const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([])
 
   useEffect(() => {
-    localStorage.setItem("buildState", JSON.stringify(state));
-  }, [state]);
+    localStorage.setItem('buildState', JSON.stringify(state))
+  }, [state])
 
-  const { skillLine } = state!;
+  const { skillLine } = state!
 
   useEffect(() => {
     /*
@@ -69,67 +70,75 @@ export default () => {
       setSkills(data);
     });
       */
-    dispatch!({ type: "SET_SKILLS", payload: skills });
-  }, [dispatch]);
+    dispatch!({ type: 'SET_SKILLS', payload: skills })
+  }, [dispatch])
 
   useEffect(() => {
     const selectedSkillLine: ISkill[] = skills.filter(
       (skill: ISkill) => skill.skillline === state!.skillLine
-    );
+    )
 
     const actives = selectedSkillLine.filter(
       (skill: ISkill) => skill.type === 1
-    );
+    )
     const passives = selectedSkillLine.filter(
       (skill: ISkill) => skill.type === 2
-    );
+    )
     const ultimates = selectedSkillLine.filter(
       (skill: ISkill) => skill.type === 3
-    );
+    )
 
-    const baseActives = actives.filter(
-      (skill: ISkill) => skill.parent === null
-    );
+    const baseActives = actives.filter((skill: ISkill) => skill.parent === null)
 
     const morphedActives = actives.filter(
       (skill: ISkill) => skill.parent !== null
-    );
+    )
     const morphedUltimates = ultimates.filter(
       (skill: ISkill) => skill.parent !== null
-    );
+    )
     const baseUltimate = ultimates.find(
       (skill: ISkill) => skill.parent === null
-    );
-
-    setMorphedActives(morphedActives);
-    setMorphedUltimates(morphedUltimates);
-    setBaseActives(baseActives);
-    setBaseUltimate(baseUltimate!);
-    setPassives(passives);
+    )
+    setMorphedActives(morphedActives)
+    setMorphedUltimates(morphedUltimates)
+    setBaseActives(baseActives)
+    setBaseUltimate(baseUltimate!)
+    setPassives(passives)
     dispatch!({
-      type: "SET_SELECTED_SKILLS_AND_ULTIMATE",
+      type: 'SET_SELECTED_SKILLS_AND_ULTIMATE',
       payload: {
         selectedSkills: baseActives.map((skill: ISkill, index: number) => ({
           skill,
-          index
+          index,
         })),
         id: state!.skillLine,
-        ultimate: baseUltimate || undefined
-      }
-    });
-  }, [skillLine, dispatch]);
+        ultimate: baseUltimate || undefined,
+      },
+    })
+  }, [skillLine, dispatch])
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.id ? baseUltimate.id : 0
-  );
+  )
+
+  const [trail, set]: any = useTrail(baseActives.length, () => ({
+    opacity: 0,
+    transform: 'translate(0px, -40px)',
+  }))
+
+  useEffect(() => {
+    setTimeout(() => {
+      set({ opacity: 1, transform: 'translate(0px, 0px)' })
+    }, 300)
+  }, [baseActives])
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "row"
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
         }}
       >
         <Menu />
@@ -148,18 +157,20 @@ export default () => {
               <Divider>Actives</Divider>
               {baseActives.length > 0 && (
                 <>
-                  {baseActives.map((base, index) => {
+                  {trail.map(({ opacity, transform }: any, index: number) => {
                     const morphs = morphedActives.filter(
-                      morph => morph.parent === base.id
-                    );
+                      morph => morph.parent === baseActives[index].id
+                    )
                     return (
-                      <SkillCard
-                        key={index}
-                        skill={base}
-                        morph1={morphs[0]}
-                        morph2={morphs[1]}
-                      />
-                    );
+                      <animated.div style={{ opacity, transform }}>
+                        <SkillCard
+                          key={index}
+                          skill={baseActives[index]}
+                          morph1={morphs[0]}
+                          morph2={morphs[1]}
+                        />
+                      </animated.div>
+                    )
                   })}
                 </>
               )}
@@ -180,11 +191,11 @@ export default () => {
           ) : (
             <Empty
               style={{
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
                 flex: 2,
-                flexDirection: "column",
-                alignItems: "center"
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               Select a Skill Line to get started.
@@ -194,5 +205,5 @@ export default () => {
         </Content>
       </div>
     </DndProvider>
-  );
-};
+  )
+}
