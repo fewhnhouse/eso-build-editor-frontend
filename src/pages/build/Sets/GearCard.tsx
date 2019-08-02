@@ -100,22 +100,21 @@ export default ({ set }: IGearCard) => {
 
 interface ISelectedSet {
   gear: ISetSelection;
-  trait: string;
-  enchant: string;
 }
 
-export const GearCardContent = ({ gear, trait, enchant }: ISelectedSet) => {
+export const GearCardContent = ({ gear }: ISelectedSet) => {
   return (
     <div>
       <StyledCard>
         <Title>
-          {gear.selectedSet ? gear.selectedSet.name : "Title"} <br />{" "}
-          {gear.slot} <br /> {gear.selectedSet ? gear.selectedSet.type : "Type"}
+          {gear.slot} <br />
+          {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
+          {gear.selectedSet ? gear.selectedSet.type : "Set type"}
         </Title>
         <Divider />
         <Description>
-          Trait: {gear.trait ? gear.trait.type : ""} <br />
-          Enchant: {gear.glyph ? gear.glyph.type : ""}
+          <b>Trait:</b> {gear.trait ? gear.trait.type : ""}. {gear.trait ? gear.trait.description : ""} <br />
+          <b>Enchant:</b> {gear.glyph ? gear.glyph.type : ""}. {gear.glyph ? gear.glyph.description : ""}
         </Description>
       </StyledCard>
     </div>

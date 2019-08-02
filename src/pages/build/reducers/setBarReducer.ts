@@ -23,40 +23,86 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
           jewelrySelection: state.jewelrySelection.map(jewelry =>
             jewelry.slot === slot
               ? {
-                  set,
+                  selectedSet: set,
                   slot,
-                  icon
+                  icon,
+                  glyph: jewelry.glyph,
+                  trait: jewelry.trait
                 }
               : jewelry
           )
         };
       } else if (group === "frontbar") {
+        if (type === Slot.mainHand && state.weaponType === "twohanded") {
+          return {
+            ...state,
+            frontbarSelection: state.frontbarSelection.map(frontbar =>
+              frontbar.slot === slot
+                ? {
+                    selectedSet: set,
+                    slot,
+                    icon,
+                    glyph: frontbar.glyph,
+                    trait: frontbar.trait
+                  }
+                : {
+                    selectedSet: undefined,
+                    slot: frontbar.slot,
+                    icon: undefined,
+                    trait: undefined,
+                    glyph: undefined
+                  }
+            )
+          };
+        }
         return {
           ...state,
           frontbarSelection: state.frontbarSelection.map(frontbar =>
             frontbar.slot === slot
               ? {
-                  set,
+                  selectedSet: set,
                   slot,
-                  icon
+                  icon,
+                  glyph: frontbar.glyph,
+                  trait: frontbar.trait
                 }
-              : type === "mainHand" && frontbar.slot === Slot.offHand
-              ? { set: undefined, slot: frontbar.slot, icon: undefined }
               : frontbar
           )
         };
       } else if (group === "backbar") {
+        if (type === Slot.mainHand && state.weaponType === "twohanded") {
+          return {
+            ...state,
+            backbarSelection: state.backbarSelection.map(backbar =>
+              backbar.slot === slot
+                ? {
+                    selectedSet: set,
+                    slot,
+                    icon,
+                    glyph: backbar.glyph,
+                    trait: backbar.trait
+                  }
+                : {
+                    selectedSet: undefined,
+                    slot: backbar.slot,
+                    icon: undefined,
+                    trait: undefined,
+                    glyph: undefined
+                  }
+            )
+          };
+        }
         return {
           ...state,
           backbarSelection: state.backbarSelection.map(backbar =>
             backbar.slot === slot
               ? {
-                  set,
+                  selectedSet: set,
                   slot,
-                  icon
+                  icon,
+                  glyph: backbar.glyph,
+                  trait: backbar.trait
                 }
-              : type === "mainHand" && backbar.slot === Slot.offHand
-              ? { set: undefined, slot: backbar.slot, icon: undefined }
               : backbar
           )
         };
@@ -66,9 +112,11 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
           bigPieceSelection: state.bigPieceSelection.map(bigPiece =>
             bigPiece.slot === slot
               ? {
-                  set,
+                  selectedSet: set,
                   slot,
-                  icon
+                  icon,
+                  glyph: bigPiece.glyph,
+                  trait: bigPiece.trait
                 }
               : bigPiece
           )
@@ -79,9 +127,11 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
           smallPieceSelection: state.smallPieceSelection.map(smallPiece =>
             smallPiece.slot === slot
               ? {
-                  set,
+                  selectedSet: set,
                   slot,
-                  icon
+                  icon,
+                  glyph: smallPiece.glyph,
+                  trait: smallPiece.trait
                 }
               : smallPiece
           )

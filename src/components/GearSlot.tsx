@@ -166,11 +166,7 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
           <Popover
             placement={"top"}
             content={
-              <GearCardContent
-                gear={slot}
-                trait={"infused"}
-                enchant={"Max magicka 1024"}
-              />
+              <GearCardContent gear={slot} />
             }
           >
             <GearImg ref={drag} src={slot.icon} />
@@ -193,11 +189,7 @@ export const DisplaySlot = ({ slot }: { slot: ISetSelection }) => {
         <Popover
           placement={"top"}
           content={
-            <GearCardContent
-              gear={slot}
-              trait={"infused"}
-              enchant={"Max magicka 1024"}
-            />
+            <GearCardContent gear={slot} />
           }
         >
           <GearImg src={slot.icon} />

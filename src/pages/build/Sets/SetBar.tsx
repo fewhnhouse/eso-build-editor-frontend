@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Divider } from "antd";
 import GearView from "../../../components/GearView";
 import { ISet } from "../../../components/GearSlot";
-import { BuildContext, Slot, ISetSelection } from "../BuildStateContext";
+import { BuildContext, Slot } from "../BuildStateContext";
 import { selectIcon, actualRing, actualNeck } from "../../../assets/gear";
 import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
@@ -24,7 +24,7 @@ interface ISetup {
   data: {
     slot: Slot;
     icon: string | undefined;
-    set: ISet | undefined;
+    selectedSet: ISet | undefined;
   }[];
 }
 const getSetups = ({
@@ -48,19 +48,19 @@ const getSetups = ({
         {
           slot: Slot.head,
           icon: selectIcon(armorType + "Head"),
-          set: selectedSet
+          selectedSet
         },
 
         {
           slot: Slot.chest,
           icon: selectIcon(armorType + "Chest"),
-          set: selectedSet
+          selectedSet
         },
 
         {
           slot: Slot.legs,
           icon: selectIcon(armorType + "Legs"),
-          set: selectedSet
+          selectedSet
         }
       ]
     },
@@ -71,24 +71,24 @@ const getSetups = ({
         {
           slot: Slot.shoulders,
           icon: selectIcon(armorType + "Shoulders"),
-          set: selectedSet
+          selectedSet
         },
 
         {
           slot: Slot.waist,
           icon: selectIcon(armorType + "Waist"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.hands,
           icon: selectIcon(armorType + "Hands"),
-          set: selectedSet
+          selectedSet
         },
 
         {
           slot: Slot.feet,
           icon: selectIcon(armorType + "Feet"),
-          set: selectedSet
+          selectedSet
         }
       ]
     },
@@ -99,17 +99,17 @@ const getSetups = ({
         {
           slot: Slot.neck,
           icon: actualNeck,
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.ring1,
           icon: actualRing,
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.ring2,
           icon: actualRing,
-          set: selectedSet
+          selectedSet
         }
       ]
     },
@@ -120,27 +120,27 @@ const getSetups = ({
         {
           slot: Slot.eitherHand,
           icon: selectIcon("dagger"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.eitherHand,
           icon: selectIcon("axe1h"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.eitherHand,
           icon: selectIcon("hammer1h"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.eitherHand,
           icon: selectIcon("sword1h"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.offHand,
           icon: selectIcon("shield"),
-          set: selectedSet
+          selectedSet
         }
       ]
     },
@@ -151,27 +151,27 @@ const getSetups = ({
         {
           slot: Slot.mainHand,
           icon: selectIcon("bow"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.mainHand,
           icon: selectIcon("staff"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.mainHand,
           icon: selectIcon("sword2h"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.mainHand,
           icon: selectIcon("axe2h"),
-          set: selectedSet
+          selectedSet
         },
         {
           slot: Slot.mainHand,
           icon: selectIcon("hammer2h"),
-          set: selectedSet
+          selectedSet
         }
       ]
     }
@@ -224,7 +224,13 @@ export default () => {
     twoHand: twoWeapon
   });
   const showGear = (key: string) => {
-    if (key === "weapons") {
+    if (key === "frontbar") {
+      if (weaponType === "onehanded") {
+        return mySetups.filter(setup => setup.id === "onehanded");
+      } else {
+        return mySetups.filter(setup => setup.id === "twohanded");
+      }
+    } else if (key === "backbar") {
       if (weaponType === "onehanded") {
         return mySetups.filter(setup => setup.id === "onehanded");
       } else {
@@ -260,10 +266,10 @@ export default () => {
   ];
 
   const showSetup = (key: string) => {
-    if (key === "weapons") {
-      return selectedSetup.filter(
-        setup => setup.id === "frontbar" || setup.id === "backbar"
-      );
+    if (key === "frontbar") {
+      return selectedSetup.filter(setup => setup.id === "frontbar");
+    } else if (key === "backbar") {
+      return selectedSetup.filter(setup => setup.id === "backbar");
     } else if (key === "armor") {
       return selectedSetup.filter(
         setup => setup.id === "bigpieces" || setup.id === "smallpieces"

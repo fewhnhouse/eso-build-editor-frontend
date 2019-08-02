@@ -113,11 +113,24 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
-          <Step title="Race & Class" description="Select race and class." />
-          <Step title="Skills" description="Select skills." />
-          <Step title="Sets" description="Select sets." />
+          <Step
+            style={{ whiteSpace: "nowrap" }}
+            title="Race & Class"
+            description="Select race and class."
+          />
+          <Step
+            style={{ whiteSpace: "nowrap" }}
+            title="Skills"
+            description="Select skills."
+          />
+          <Step
+            style={{ whiteSpace: "nowrap" }}
+            title="Sets"
+            description="Select sets."
+          />
           <Step
             title="Consumables"
+            style={{ whiteSpace: "nowrap" }}
             description="Select mundus, potions, food."
           />
           <Step title="Review" description="Review and save." />

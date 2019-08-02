@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Divider, Radio, Checkbox } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
@@ -25,22 +25,13 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
   margin: 0px 10px;
 `;
 
-export default () => {
+export default ({ bar }: { bar: "frontbar" | "backbar" }) => {
   const [state, dispatch] = useContext(BuildContext);
-  const [shieldFront, setShieldFront] = useState(false);
-  const [shieldBack, setShieldBack] = useState(false);
+  const [shield, setShield] = useState(false);
   const { weaponType, frontbarSelection, backbarSelection } = state!;
 
-  const frontMainHand = frontbarSelection.find(
-    slot => slot.slot === Slot.mainHand
-  );
-  const frontOffHand = frontbarSelection.find(
-    slot => slot.slot === Slot.offHand
-  );
-  const backMainHand = backbarSelection.find(
-    slot => slot.slot === Slot.mainHand
-  );
-  const backOffHand = backbarSelection.find(slot => slot.slot === Slot.offHand);
+  const [mainHand, setMainHand] = useState<any>(undefined);
+  const [offHand, setOffHand] = useState<any>(undefined);
 
   const onChange = (e: RadioChangeEvent) => {
     dispatch!({
@@ -49,16 +40,28 @@ export default () => {
     });
   };
 
+  useEffect(() => {
+    console.log("state update");
+    const { weaponType, frontbarSelection, backbarSelection } = state!;
+    setMainHand(
+      [...(bar === "frontbar" ? frontbarSelection : backbarSelection)].find(
+        slot => slot.slot === Slot.mainHand
+      )
+    );
+    setOffHand(
+      [...(bar === "frontbar" ? frontbarSelection : backbarSelection)].find(
+        slot => slot.slot === Slot.offHand
+      )
+    );
+  }, [state]);
+
   const onChangeSelect = (
     slots: Slot[],
     actionType: string,
     type: "selectedTraits" | "selectedGlyphs",
     itemType: "frontbar" | "backbar"
   ) => (value: SelectValue) => {
-    if (
-      (itemType === "frontbar" && shieldFront) ||
-      (itemType === "backbar" && shieldBack)
-    ) {
+    if (shield && slots[0] === Slot.offHand) {
       const itemValue =
         type === "selectedTraits"
           ? armorTraits.find(trait => trait.type === value)
@@ -95,7 +98,18 @@ export default () => {
     type: "selectedTraits" | "selectedGlyphs",
     itemType: "frontbar" | "backbar"
   ) => (e: CheckboxChangeEvent) => {
-    onChangeSelect([Slot.offHand], "SET_WEAPON_STATS", type, itemType)("");
+    onChangeSelect(
+      [Slot.offHand],
+      "SET_WEAPON_STATS",
+      "selectedGlyphs",
+      itemType
+    )("");
+    onChangeSelect(
+      [Slot.offHand],
+      "SET_WEAPON_STATS",
+      "selectedTraits",
+      itemType
+    )("");
     setState(e.target.checked);
   };
 
@@ -105,14 +119,20 @@ export default () => {
         <Radio.Button value="onehanded">One Handed</Radio.Button>
         <Radio.Button value="twohanded">Two Handed</Radio.Button>
       </Radio.Group>
-
+      {weaponType !== "twohanded" && (
+        <Checkbox
+          style={{ margin: "20px 0px 10px 0px" }}
+          onChange={onChangeCheckbox(setShield, "selectedGlyphs", bar)}
+          value={shield}
+        >
+          Use Shield
+        </Checkbox>
+      )}
       <Divider>Enchants</Divider>
 
       {weaponType === "twohanded" ? (
         <StyledSelectWithTitle
-          value={
-            frontMainHand && frontMainHand.glyph ? frontMainHand.glyph.type : ""
-          }
+          value={mainHand && mainHand.glyph ? mainHand.glyph.type : ""}
           onChange={onChangeSelect(
             [Slot.mainHand],
             "SET_WEAPON_STATS",
@@ -130,46 +150,26 @@ export default () => {
           align="flex-start"
         >
           <StyledSelectWithTitle
-            value={
-              frontMainHand && frontMainHand.glyph
-                ? frontMainHand.glyph.type
-                : ""
-            }
+            value={mainHand && mainHand.glyph ? mainHand.glyph.type : ""}
             onChange={onChangeSelect(
               [Slot.mainHand],
               "SET_WEAPON_STATS",
               "selectedGlyphs",
-              "frontbar"
+              bar
             )}
             title="Main Hand"
             items={weaponGlyphs}
           />
           <StyledSelectWithTitle
-            value={
-              frontOffHand && frontOffHand.glyph ? frontOffHand.glyph.type : ""
-            }
+            value={offHand && offHand.glyph ? offHand.glyph.type : ""}
             onChange={onChangeSelect(
               [Slot.offHand],
               "SET_WEAPON_STATS",
               "selectedGlyphs",
-              "frontbar"
+              bar
             )}
-            title={
-              <OffHandTitle>
-                <span>Off hand</span>
-                <Checkbox
-                  onChange={onChangeCheckbox(
-                    setShieldFront,
-                    "selectedGlyphs",
-                    "frontbar"
-                  )}
-                  value={shieldFront}
-                >
-                  Use Shield
-                </Checkbox>
-              </OffHandTitle>
-            }
-            items={shieldFront ? armorGlyphs : weaponGlyphs}
+            title="Off Hand"
+            items={shield ? armorGlyphs : weaponGlyphs}
           />
         </Flex>
       )}
@@ -177,14 +177,12 @@ export default () => {
       <Divider>Traits</Divider>
       {weaponType === "twohanded" ? (
         <StyledSelectWithTitle
-          value={
-            backMainHand && backMainHand.trait ? backMainHand.trait.type : ""
-          }
+          value={mainHand && mainHand.trait ? mainHand.trait.type : ""}
           onChange={onChangeSelect(
             [Slot.mainHand],
             "SET_WEAPON_STATS",
             "selectedTraits",
-            "backbar"
+            bar
           )}
           title="Main Hand"
           items={weaponTraits}
@@ -197,44 +195,26 @@ export default () => {
           align="flex-start"
         >
           <StyledSelectWithTitle
-            value={
-              backMainHand && backMainHand.trait ? backMainHand.trait.type : ""
-            }
+            value={mainHand && mainHand.trait ? mainHand.trait.type : ""}
             onChange={onChangeSelect(
               [Slot.mainHand],
               "SET_WEAPON_STATS",
               "selectedTraits",
-              "backbar"
+              bar
             )}
             title="Main Hand"
             items={weaponTraits}
           />
           <StyledSelectWithTitle
-            value={
-              backOffHand && backOffHand.trait ? backOffHand.trait.type : ""
-            }
+            value={offHand && offHand.trait ? offHand.trait.type : ""}
             onChange={onChangeSelect(
               [Slot.offHand],
               "SET_WEAPON_STATS",
               "selectedTraits",
-              "backbar"
+              bar
             )}
-            title={
-              <OffHandTitle>
-                <span>Off hand</span>
-                <Checkbox
-                  onChange={onChangeCheckbox(
-                    setShieldBack,
-                    "selectedTraits",
-                    "backbar"
-                  )}
-                  value={shieldBack}
-                >
-                  Use Shield
-                </Checkbox>
-              </OffHandTitle>
-            }
-            items={shieldBack ? armorTraits : weaponTraits}
+            title="Off Hand"
+            items={shield ? armorTraits : weaponTraits}
           />
         </Flex>
       )}

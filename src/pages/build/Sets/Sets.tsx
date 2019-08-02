@@ -70,7 +70,7 @@ export default () => {
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <GearCard set={selectedSet}/>
+              <GearCard set={selectedSet} />
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
@@ -78,10 +78,17 @@ export default () => {
               >
                 <TabPane
                   disabled={!selectedSet!.has_weapons}
-                  tab="Weapons"
-                  key="weapons"
+                  tab="Front-Bar"
+                  key="frontbar"
                 >
-                  <Weapons />
+                  <Weapons bar="frontbar"/>
+                </TabPane>
+                <TabPane
+                  disabled={!selectedSet!.has_weapons}
+                  tab="Back-Bar"
+                  key="backbar"
+                >
+                  <Weapons bar="backbar"/>
                 </TabPane>
                 <TabPane
                   disabled={
