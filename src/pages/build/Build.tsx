@@ -1,16 +1,16 @@
 import React, { useState, useReducer, useEffect } from "react";
-import FirstPage from "./RaceAndClass/FirstPage";
-import SecondPage from "./Skills/SecondPage";
 import {
   BuildContext,
   buildReducer,
   defaultBuildState
 } from "./BuildStateContext";
 import { RouteComponentProps, Redirect } from "react-router";
-import ThirdPage from "./Sets/ThirdPage";
-
 import { Layout, Button, Steps, Icon, message, Tooltip } from "antd";
 import styled from "styled-components";
+import Consumables from "./consumables/Consumables";
+import Sets from "./Sets/Sets";
+import Skills from "./Skills/Skills";
+import RaceClass from "./RaceAndClass/RaceClass";
 
 const { Footer, Content } = Layout;
 
@@ -53,8 +53,11 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   };
 
   const isDisabled =
-    tab === 2 ||
-    (tab === 0 && (state.race === "" || state.class === ""))/* ||
+      tab === 3 ||
+      (tab === 0 &&
+        (state.race === "" ||
+          state.class ===
+            "")) /* ||
     (tab === 1 &&
       (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
         state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
@@ -71,18 +74,20 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       case 1:
         return "Fill your bars with Skills to progress.";
       case 2:
-        return "Slot sets to progress."
+        return "Slot sets to progress.";
     }
   };
   return (
     <BuildContext.Provider value={[state, dispatch]}>
       <Container>
         {id === "0" ? (
-          <FirstPage />
+          <RaceClass />
         ) : id === "1" ? (
-          <SecondPage />
+          <Skills />
         ) : id === "2" ? (
-          <ThirdPage />
+          <Sets />
+        ) : id === "3" ? (
+          <Consumables />
         ) : (
           <Redirect to="/build/0" />
         )}
@@ -109,6 +114,10 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           <Step title="Race & Class" description="Select race and class." />
           <Step title="Skills" description="Select skills." />
           <Step title="Sets" description="Select sets." />
+          <Step
+            title="Consumables"
+            description="Select mundus, potions, food."
+          />
           <Step title="Review" description="Review and save." />
         </Steps>
         <Tooltip title={setTooltipTitle()}>

@@ -1,99 +1,53 @@
-import React from 'react'
-import { RouteComponentProps } from 'react-router'
-import styled, { withTheme, ThemeProps } from 'styled-components'
-import { chooseClass } from '../../util/utils'
-import { Divider, Layout, Typography } from 'antd'
-import GearView from '../../components/GearView'
-import { food, immoPot, triPot } from '../../assets/deco'
-import Flex from '../../components/Flex'
-import { ITheme } from '../../components/globalStyles'
-import SkillView from '../../components/SkillView'
-import { IBuildState } from '../build/BuildStateContext'
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../build/Skills/AbilityBar'
+import React from "react";
+import { RouteComponentProps } from "react-router";
+import styled, { withTheme, ThemeProps } from "styled-components";
+import { chooseClass } from "../../util/utils";
+import { Divider, Layout, Typography } from "antd";
+import GearView from "../../components/GearView";
+import { food, immoPot, triPot } from "../../assets/deco";
+import Flex from "../../components/Flex";
+import { ITheme } from "../../components/globalStyles";
+import SkillView from "../../components/SkillView";
+import { IBuildState } from "../build/BuildStateContext";
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
 
-const { Content } = Layout
-const { Title } = Typography
+const { Content } = Layout;
+const { Title } = Typography;
 
 interface IDetails extends ThemeProps<ITheme>, RouteComponentProps<any> {}
 
 const setups = [
   {
-    id: 'bigpieces',
-    label: 'Big Pieces',
-    data: [
-      {
-        slot: 'head',
-      },
-
-      {
-        slot: 'chest',
-      },
-
-      {
-        slot: 'legs',
-      },
-    ],
+    id: "bigpieces",
+    label: "Big Pieces",
+    data: [{ slot: "head" }, { slot: "chest" }, { slot: "legs" }]
   },
   {
-    id: 'smallpieces',
-    label: 'Small Pieces',
+    id: "smallpieces",
+    label: "Small Pieces",
     data: [
-      {
-        slot: 'shoulders',
-      },
-
-      {
-        slot: 'waist',
-      },
-      {
-        slot: 'hands',
-      },
-
-      {
-        slot: 'feet',
-      },
-    ],
+      { slot: "shoulders" },
+      { slot: "waist" },
+      { slot: "hands" },
+      { slot: "feet" }
+    ]
   },
   {
-    id: 'jewelry',
-    label: 'Jewelry',
-    data: [
-      {
-        slot: 'neck',
-      },
-      {
-        slot: 'ring1',
-      },
-      {
-        slot: 'ring2',
-      },
-    ],
+    id: "jewelry",
+    label: "Jewelry",
+    data: [{ slot: "neck" }, { slot: "ring1" }, { slot: "ring2" }]
   },
   {
-    id: 'onehanded',
-    label: 'One Handed',
-    data: [
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'mainHand',
-      }
-    ],
+    id: "onehanded",
+    label: "One Handed",
+    data: [{ slot: "mainHand" }, { slot: "mainHand" }]
   },
   {
-    id: 'twohanded',
-    label: 'Two Handed',
-    data: [
-      {
-        slot: 'mainHand',
-      },
-      {
-        slot: 'offHand',
-      }
-    ],
-  },
-]
+    id: "twohanded",
+    label: "Two Handed",
+    data: [{ slot: "mainHand" }, { slot: "offHand" }]
+  }
+];
 
 const Container = styled(Content)`
   display: flex;
@@ -104,97 +58,100 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: ${props => props.theme.mainBg};
-`
+`;
 
 const StyledTitle = styled(Title)`
   margin-top: 30px;
   text-align: center;
-`
+`;
 
 const StyledStatLabel = styled.span`
   float: right;
-  color: ${(props: { color: string }) => props.color || ''};
-`
+  color: ${(props: { color: string }) => props.color || ""};
+`;
 
 const Wrapper = styled(Flex)`
   text-align: center;
-`
+`;
 
 const StatsView = styled.div`
   text-align: left;
-`
+`;
 
-const SkillsView = styled.div``
+const SkillsView = styled.div``;
 
 const ClassImg = styled.img`
   width: 35px;
   height: 35px;
-`
+`;
 
 const stats = [
   {
-    name: 'Resources',
+    name: "Resources",
     data: [
-      { label: 'Health', value: 25670 },
-      { label: 'Stamina', value: 21500 },
-      { label: 'Magicka', value: 25999 },
-    ],
+      { label: "Health", value: 25670 },
+      { label: "Stamina", value: 21500 },
+      { label: "Magicka", value: 25999 }
+    ]
   },
   {
-    name: 'Revocery',
+    name: "Revocery",
     data: [
-      { label: 'Health recovery', value: 555 },
-      { label: 'Stamina recovery', value: 1455 },
-      { label: 'Magicka recovery', value: 1000 },
-    ],
+      { label: "Health recovery", value: 555 },
+      { label: "Stamina recovery", value: 1455 },
+      { label: "Magicka recovery", value: 1000 }
+    ]
   },
   {
-    name: 'Damage',
+    name: "Damage",
     data: [
-      { label: 'Weapon damage', value: 1234 },
-      { label: 'Weapon critical', value: 1234 },
-      { label: 'Spell damage', value: 234 },
-      { label: 'Spell critical', value: 2342 },
-    ],
+      { label: "Weapon damage", value: 1234 },
+      { label: "Weapon critical", value: 1234 },
+      { label: "Spell damage", value: 234 },
+      { label: "Spell critical", value: 2342 }
+    ]
   },
   {
-    name: 'Resistance',
+    name: "Resistance",
     data: [
-      { label: 'Physical resistance', value: 15899 },
-      { label: 'Spell resistance', value: 12400 },
-      { label: 'Critical resistance', value: 1750 },
-    ],
-  },
-]
+      { label: "Physical resistance", value: 15899 },
+      { label: "Spell resistance", value: 12400 },
+      { label: "Critical resistance", value: 1750 }
+    ]
+  }
+];
 
 const statColor = (label: string, theme: ITheme) => {
-  if (label.includes('Health')) {
-    return theme.baseStatColors.healthRed
-  } else if (label.includes('Magicka') || label.includes('Spell')) {
-    return theme.baseStatColors.magBlue
+  if (label.includes("Health")) {
+    return theme.baseStatColors.healthRed;
+  } else if (label.includes("Magicka") || label.includes("Spell")) {
+    return theme.baseStatColors.magBlue;
   } else if (
-    label.includes('Stamina') ||
-    label.includes('Weapon') ||
-    label.includes('Physical')
+    label.includes("Stamina") ||
+    label.includes("Weapon") ||
+    label.includes("Physical")
   ) {
-    return theme.baseStatColors.stamGreen
-  } else if (label.includes('resistance')) {
-    return theme.statsRes
-  } else return ''
-}
+    return theme.baseStatColors.stamGreen;
+  } else if (label.includes("resistance")) {
+    return theme.statsRes;
+  } else return "";
+};
 
 const Details = ({ match, theme }: IDetails) => {
-  const buildState = localStorage.getItem('buildState');
+  const buildState = localStorage.getItem("buildState");
   const parsedBuildState: IBuildState = buildState
     ? JSON.parse(buildState)
-    : undefined
+    : undefined;
 
   const bigPieces = parsedBuildState.bigPieceSelection;
   const smallPieces = parsedBuildState.smallPieceSelection;
   const frontBar = parsedBuildState.frontbarSelection;
   const backBar = parsedBuildState.backbarSelection;
   const jewelry = parsedBuildState.jewelrySelection;
-  
+  const armorStats = parsedBuildState.armorStats;
+  const jewelryStats = parsedBuildState.jewelryStats;
+  const weaponStats = parsedBuildState.weaponStats;
+
   const savedSetups = [
     {
       id: "bigpieces",
@@ -221,7 +178,7 @@ const Details = ({ match, theme }: IDetails) => {
       label: "Jewelry",
       data: jewelry
     }
-  ]
+  ];
 
   return (
     <Container>
@@ -233,13 +190,26 @@ const Details = ({ match, theme }: IDetails) => {
         {match.params.name}
       </Title>
       <Wrapper
-        direction='row'
-        align='baseline'
-        justify='space-around'
+        direction="row"
+        align="baseline"
+        justify="space-around"
         wrap
         fluid
       >
-        <GearView disabled setups={parsedBuildState ? savedSetups : setups} />
+        <GearView
+          disabled
+          enchants={{
+            weaponEnchants: weaponStats.selectedGlyphs,
+            armorEnchants: armorStats.selectedGlyphs,
+            jewelryEnchants: jewelryStats.selectedGlyphs
+          }}
+          traits={{
+            weaponTraits: weaponStats.selectedTraits,
+            armorTraits: armorStats.selectedTraits,
+            jewelryTraits: jewelryStats.selectedTraits
+          }}
+          setups={parsedBuildState ? savedSetups : setups}
+        />
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
@@ -252,14 +222,14 @@ const Details = ({ match, theme }: IDetails) => {
                     index: barItem.id,
                     skill: parsedBuildState.skills.find(
                       skill => skill.id === barItem.id
-                    ),
+                    )
                   }))
                 : [
                     { index: 0, skill: undefined },
                     { index: 1, skill: undefined },
                     { index: 2, skill: undefined },
                     { index: 3, skill: undefined },
-                    { index: 4, skill: undefined },
+                    { index: 4, skill: undefined }
                   ]
             }
           />
@@ -272,14 +242,14 @@ const Details = ({ match, theme }: IDetails) => {
                     index: barItem.id,
                     skill: parsedBuildState.skills.find(
                       skill => skill.id === barItem.id
-                    ),
+                    )
                   }))
                 : [
                     { index: 0, skill: undefined },
                     { index: 1, skill: undefined },
                     { index: 2, skill: undefined },
                     { index: 3, skill: undefined },
-                    { index: 4, skill: undefined },
+                    { index: 4, skill: undefined }
                   ]
             }
           />
@@ -288,7 +258,8 @@ const Details = ({ match, theme }: IDetails) => {
           <Title level={4}>Atronach</Title>
           <Divider />
           <Title level={3}>Consumables</Title>
-          <ClassImg src={food} /> <ClassImg src={immoPot} /> <ClassImg src={triPot} />
+          <ClassImg src={food} /> <ClassImg src={immoPot} />{" "}
+          <ClassImg src={triPot} />
         </SkillsView>
         <StatsView>
           <StyledTitle level={3}>Stats</StyledTitle>
@@ -311,7 +282,7 @@ const Details = ({ match, theme }: IDetails) => {
         </StatsView>
       </Wrapper>
     </Container>
-  )
-}
+  );
+};
 
-export default withTheme(Details)
+export default withTheme(Details);

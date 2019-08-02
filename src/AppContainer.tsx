@@ -27,6 +27,11 @@ const StyledHeader = styled(Header)`
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `;
 
+const getSelectedKey = (pathname: string) => {
+  if (pathname.includes("build")) return "2";
+  else if (pathname.includes("raid")) return "3";
+  return "1";
+};
 const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
   return (
     <Layout>
@@ -36,7 +41,7 @@ const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[getSelectedKey(location.pathname)]}
             style={{ lineHeight: "64px" }}
           >
             <Menu.Item key="1">
@@ -44,6 +49,9 @@ const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
             </Menu.Item>
             <Menu.Item key="2">
               <Link to="/build/0">Build Editor</Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Link to="/raid/0">Raid Editor</Link>
             </Menu.Item>
           </Menu>
         </div>

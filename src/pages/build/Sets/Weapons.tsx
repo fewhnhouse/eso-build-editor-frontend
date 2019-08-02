@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Divider, Radio, Checkbox } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
@@ -7,7 +7,8 @@ import styled from "styled-components";
 import { SelectValue } from "antd/lib/select";
 import { SelectWithTitle } from "./CustomSelect";
 import { BuildContext } from "../BuildStateContext";
-import { weaponGlyphs, weaponTraits } from "./data";
+import { weaponGlyphs, weaponTraits, armorGlyphs, armorTraits } from "./data";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
@@ -39,8 +40,19 @@ export default () => {
   ) => (value: SelectValue) => {
     dispatch!({ type: actionType, payload: { indices, value, type } });
   };
+  const onChangeCheckbox = (
+    setState: React.Dispatch<React.SetStateAction<boolean>>,
+    type: "selectedTraits" | "selectedGlyphs"
+  ) => (e: CheckboxChangeEvent) => {
+    onChangeSelect([1], "SET_WEAPON_STATS", type)("");
+    setState(e.target.checked);
+  };
+
   const [state, dispatch] = useContext(BuildContext);
+  const [shieldFront, setShieldFront] = useState(false);
+  const [shieldBack, setShieldBack] = useState(false);
   const { weaponType, weaponStats } = state!;
+
   return (
     <StyledFlex direction="column" justify="center" align="center">
       <Radio.Group onChange={onChange} defaultValue={weaponType || "onehanded"}>
@@ -76,10 +88,15 @@ export default () => {
             title={
               <OffHandTitle>
                 <span>Off hand</span>
-                <Checkbox>Use Shield</Checkbox>
+                <Checkbox
+                  onChange={onChangeCheckbox(setShieldFront, "selectedGlyphs")}
+                  value={shieldFront}
+                >
+                  Use Shield
+                </Checkbox>
               </OffHandTitle>
             }
-            items={weaponGlyphs}
+            items={shieldFront ? armorGlyphs : weaponGlyphs}
           />
         </Flex>
       )}
@@ -111,10 +128,15 @@ export default () => {
             title={
               <OffHandTitle>
                 <span>Off hand</span>
-                <Checkbox>Use Shield</Checkbox>
+                <Checkbox
+                  onChange={onChangeCheckbox(setShieldBack, "selectedTraits")}
+                  value={shieldBack}
+                >
+                  Use Shield
+                </Checkbox>
               </OffHandTitle>
             }
-            items={weaponTraits}
+            items={shieldBack ? armorGlyphs : weaponGlyphs}
           />
         </Flex>
       )}
