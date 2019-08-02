@@ -119,7 +119,9 @@ const Details = ({ match, theme }: IDetails) => {
     smallPieceSelection,
     frontbarSelection,
     backbarSelection,
-    jewelrySelection
+    jewelrySelection,
+    mundus,
+    buff
   } = parsedBuildState;
 
   const selectedSetup = [
@@ -173,11 +175,11 @@ const Details = ({ match, theme }: IDetails) => {
           />
           <Divider />
           <Title level={3}>Mundus</Title>
-          <Title level={4}>Atronach</Title>
+          <Title level={4}>{mundus.name}: {mundus.effect} by {mundus.value}.</Title>
           <Divider />
           <Title level={3}>Consumables</Title>
-          <ClassImg src={food} /> <ClassImg src={immoPot} />{" "}
-          <ClassImg src={triPot} />
+          <Title level={4}>{buff.name}: <br /> {buff.buffDescription} </Title> <br />
+          <ClassImg src={immoPot} /> <ClassImg src={triPot} />
         </SkillsView>
         <StatsView>
           <StyledTitle level={3}>Stats</StyledTitle>

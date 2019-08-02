@@ -1,3 +1,4 @@
+import { Slot } from "./../../pages/build/BuildStateContext";
 import belt from "./gearslot_belt.png";
 import chest from "./gearslot_chest.png";
 import feet from "./gearslot_feet.png";
@@ -125,7 +126,7 @@ export type Gear =
   | "lightHands"
   | "lightLegs";
 
-export const selectIcon = (gear: string) => {
+export const selectWeapon = (gear: string) => {
   switch (gear) {
     case "axe1h":
       return axe1h;
@@ -145,51 +146,77 @@ export const selectIcon = (gear: string) => {
       return bow;
     case "staff":
       return staff;
-    case "heavyChest":
-      return heavyChest;
-    case "heavyLegs":
-      return heavyLegs;
-    case "heavyWaist":
-      return heavyWaist;
-    case "heavyFeet":
-      return heavyFeet;
-    case "heavyHands":
-      return heavyHands;
-    case "heavyHead":
-      return heavyHead;
-    case "heavyShoulders":
-      return heavyShoulders;
-    case "mediumChest":
-      return mediumChest;
-    case "mediumLegs":
-      return mediumLegs;
-    case "mediumWaist":
-      return mediumWaist;
-    case "mediumFeet":
-      return mediumFeet;
-    case "mediumHands":
-      return mediumHands;
-    case "mediumHead":
-      return mediumHead;
-    case "mediumShoulders":
-      return mediumShoulders;
-    case "lightHead":
-      return lightHead;
-    case "lightShoulders":
-      return lightShoulders;
-    case "lightChest":
-      return lightChest;
-    case "lightFeet":
-      return lightFeet;
-    case "lightLegs":
-      return lightLegs;
-    case "lightWaist":
-      return lightWaist;
-    case "lightHands":
-      return lightHands;
     case "shield":
       return shield;
     default:
       return;
+  }
+};
+
+export const selectJewelry = (item: Slot) => {
+  switch (item) {
+    case Slot.ring1:
+      return actualRing;
+    case Slot.ring2:
+      return actualRing;
+    case Slot.neck:
+      return actualNeck;
+    default:
+      return;
+  }
+};
+
+export const selectArmor = (type: string, item: Slot) => {
+  if (type === "light") {
+    switch (item) {
+      case Slot.chest:
+        return heavyChest;
+      case Slot.legs:
+        return heavyLegs;
+      case Slot.waist:
+        return heavyWaist;
+      case Slot.feet:
+        return heavyFeet;
+      case Slot.hands:
+        return heavyHands;
+      case Slot.head:
+        return heavyHead;
+      case Slot.shoulders:
+        return heavyShoulders;
+    }
+  } else if (type === "medium") {
+    switch (item) {
+      case Slot.chest:
+        return mediumChest;
+      case Slot.legs:
+        return mediumLegs;
+      case Slot.waist:
+        return mediumWaist;
+      case Slot.feet:
+        return mediumFeet;
+      case Slot.hands:
+        return mediumHands;
+      case Slot.head:
+        return mediumHead;
+      case Slot.shoulders:
+        return mediumShoulders;
+    }
+  } else {
+    switch (item) {
+      case Slot.head:
+        return lightHead;
+      case Slot.shoulders:
+        return lightShoulders;
+      case Slot.chest:
+        return lightChest;
+      case Slot.feet:
+        return lightFeet;
+      case Slot.legs:
+        return lightLegs;
+      case Slot.waist:
+        return lightWaist;
+      case Slot.hands:
+        return lightHands;
+    }
   }
 };

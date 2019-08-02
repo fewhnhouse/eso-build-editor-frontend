@@ -3,8 +3,14 @@ import styled from "styled-components";
 import { Divider } from "antd";
 import GearView from "../../../components/GearView";
 import { ISet } from "../../../components/GearSlot";
-import { BuildContext, Slot } from "../BuildStateContext";
-import { selectIcon, actualRing, actualNeck } from "../../../assets/gear";
+import { BuildContext, Slot, ISetSelection } from "../BuildStateContext";
+import {
+  selectArmor,
+  selectWeapon,
+  selectJewelry,
+  actualRing,
+  actualNeck
+} from "../../../assets/gear";
 import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
@@ -30,88 +36,53 @@ interface ISetup {
 const getSetups = ({
   armorType,
   selectedSet,
-  mainHand,
-  offHand,
-  twoHand
+  bigPieceSelection,
+  smallPieceSelection,
+  jewelrySelection,
+  frontbarSelection,
+  backbarSelection
 }: {
   armorType: string;
-  selectedSet: ISet;
-  mainHand: string;
-  offHand: string;
-  twoHand: string;
+  selectedSet?: ISet;
+  bigPieceSelection: ISetSelection[];
+  smallPieceSelection: ISetSelection[];
+  jewelrySelection: ISetSelection[];
+  frontbarSelection: ISetSelection[];
+  backbarSelection: ISetSelection[];
 }): ISetup[] => {
   return [
     {
       id: "bigpieces",
       label: "Big Pieces",
-      data: [
-        {
-          slot: Slot.head,
-          icon: selectIcon(armorType + "Head"),
-          selectedSet
-        },
-
-        {
-          slot: Slot.chest,
-          icon: selectIcon(armorType + "Chest"),
-          selectedSet
-        },
-
-        {
-          slot: Slot.legs,
-          icon: selectIcon(armorType + "Legs"),
-          selectedSet
-        }
-      ]
+      data: bigPieceSelection.map(bigPiece => ({
+        slot: bigPiece.slot,
+        icon: selectArmor(armorType, bigPiece.slot),
+        selectedSet: bigPiece.selectedSet,
+        glyph: bigPiece.glyph,
+        trait: bigPiece.trait
+      }))
     },
     {
       id: "smallpieces",
       label: "Small Pieces",
-      data: [
-        {
-          slot: Slot.shoulders,
-          icon: selectIcon(armorType + "Shoulders"),
-          selectedSet
-        },
-
-        {
-          slot: Slot.waist,
-          icon: selectIcon(armorType + "Waist"),
-          selectedSet
-        },
-        {
-          slot: Slot.hands,
-          icon: selectIcon(armorType + "Hands"),
-          selectedSet
-        },
-
-        {
-          slot: Slot.feet,
-          icon: selectIcon(armorType + "Feet"),
-          selectedSet
-        }
-      ]
+      data: smallPieceSelection.map(smallPiece => ({
+        slot: smallPiece.slot,
+        icon: selectArmor(armorType, smallPiece.slot),
+        selectedSet: smallPiece.selectedSet,
+        glyph: smallPiece.glyph,
+        trait: smallPiece.trait
+      }))
     },
     {
       id: "jewelry",
       label: "Jewelry",
-      data: [
-        {
-          slot: Slot.neck,
-          icon: actualNeck,
-          selectedSet
-        },
-        {
-          slot: Slot.ring1,
-          icon: actualRing,
-          selectedSet
-        },
-        {
-          slot: Slot.ring2,
-          icon: actualRing,
-          selectedSet
-        }
-      ]
+      data: jewelrySelection.map(jewelry => ({
+        slot: jewelry.slot,
+        icon: selectJewelry(jewelry.slot),
+        selectedSet: jewelry.selectedSet,
+        glyph: jewelry.glyph,
+        trait: jewelry.trait
+      }))
     },
     {
       id: "onehanded",
@@ -119,27 +90,27 @@ const getSetups = ({
       data: [
         {
           slot: Slot.eitherHand,
-          icon: selectIcon("dagger"),
+          icon: selectWeapon("dagger"),
           selectedSet
         },
         {
           slot: Slot.eitherHand,
-          icon: selectIcon("axe1h"),
+          icon: selectWeapon("axe1h"),
           selectedSet
         },
         {
           slot: Slot.eitherHand,
-          icon: selectIcon("hammer1h"),
+          icon: selectWeapon("hammer1h"),
           selectedSet
         },
         {
           slot: Slot.eitherHand,
-          icon: selectIcon("sword1h"),
+          icon: selectWeapon("sword1h"),
           selectedSet
         },
         {
           slot: Slot.offHand,
-          icon: selectIcon("shield"),
+          icon: selectWeapon("shield"),
           selectedSet
         }
       ]
@@ -150,27 +121,27 @@ const getSetups = ({
       data: [
         {
           slot: Slot.mainHand,
-          icon: selectIcon("bow"),
+          icon: selectWeapon("bow"),
           selectedSet
         },
         {
           slot: Slot.mainHand,
-          icon: selectIcon("staff"),
+          icon: selectWeapon("staff"),
           selectedSet
         },
         {
           slot: Slot.mainHand,
-          icon: selectIcon("sword2h"),
+          icon: selectWeapon("sword2h"),
           selectedSet
         },
         {
           slot: Slot.mainHand,
-          icon: selectIcon("axe2h"),
+          icon: selectWeapon("axe2h"),
           selectedSet
         },
         {
           slot: Slot.mainHand,
-          icon: selectIcon("hammer2h"),
+          icon: selectWeapon("hammer2h"),
           selectedSet
         }
       ]
@@ -218,10 +189,12 @@ export default () => {
   const armor = armorType.split("armor")[0];
   const mySetups = getSetups({
     armorType: armor,
-    mainHand: mainWeapon,
-    selectedSet: selectedSet!,
-    offHand: offWeapon,
-    twoHand: twoWeapon
+    selectedSet,
+    bigPieceSelection,
+    smallPieceSelection,
+    frontbarSelection,
+    backbarSelection,
+    jewelrySelection
   });
   const showGear = (key: string) => {
     if (key === "frontbar") {

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Button } from "antd";
+import { List, Tag, Divider, Button, Input } from "antd";
 import styled from "styled-components";
 import sets from "../../../sets.json";
 import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
 import Flex from "../../../components/Flex";
+import { animated, useTrail } from "react-spring";
 
 const { Item } = List;
 const { CheckableTag } = Tag;
@@ -51,10 +52,12 @@ const StyledIconBtn = styled(Button)`
 
 export default () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [state, dispatch] = useContext(BuildContext);
   useEffect(() => {
     if (state!.selectedSet) {
       setCollapsed(true);
+      setSearchText("");
     }
   }, [state!.selectedSet]);
   const handleIconClick = (collapse: boolean) => () => {
@@ -66,21 +69,26 @@ export default () => {
     dispatch!({ type: "SET_ITEMSET", payload: { selectedSet: set } });
   };
   useEffect(() => {
-    /*
-    axios
-      .get("/skills", {
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setSkills(data);
-      });
-      */
     dispatch!({ type: "SET_SETS", payload: { sets } });
   }, [dispatch]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const filteredSets = sets.filter(set =>
+    set.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const trail = useTrail(filteredSets.length, {
+    opacity: 1,
+    transform: "translate(0px, 0px)",
+    from: {
+      opacity: 0,
+      transform: "translate(0px, -40px)"
+    },
+    config: { mass: 1, tension: 3000, friction: 100 }
+  });
   return (
     <ListContainer collapsed={collapsed}>
       {collapsed && (
@@ -111,11 +119,14 @@ export default () => {
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <AutoComplete
+            <Input
+              placeholder="Search for Sets"
+              allowClear
+              value={searchText}
+              onChange={handleSearchChange}
               size="large"
+              type="text"
               style={{ margin: "10px", width: "100%" }}
-              placeholder="input here"
-              optionLabelProp="value"
             />
             <StyledIconBtn
               type="primary"
@@ -164,32 +175,37 @@ export default () => {
             pointerEvents: collapsed ? "none" : "all",
             transition: "opacity 0.2s ease-in-out"
           }}
-          dataSource={sets}
-          renderItem={item => (
-            <StyledListItem onClick={handleClick(item)}>
-              <div style={{ width: 140, display: "flex" }}>
-                <ArmorTypeTag
-                  hasHeavyArmor={item.has_heavy_armor === 1}
-                  hasMediumArmor={item.has_medium_armor === 1}
-                  hasLightArmor={item.has_light_armor === 1}
-                  traitsNeeded={item.traits_needed !== null}
-                />
-                <StyledTag color="geekblue">{item.type}</StyledTag>
-              </div>
-              <div
-                style={{
-                  textAlign: "left",
-                  flex: 2,
-                  fontWeight:
-                    state!.selectedSet && item.id === state!.selectedSet.id
-                      ? 500
-                      : 400
-                }}
-              >
-                {item.name}
-              </div>
-            </StyledListItem>
-          )}
+          dataSource={trail}
+          renderItem={(style: any, index) => {
+            const item = filteredSets[index];
+            return (
+              <animated.div style={style}>
+                <StyledListItem onClick={handleClick(item)}>
+                  <div style={{ width: 140, display: "flex" }}>
+                    <ArmorTypeTag
+                      hasHeavyArmor={item.has_heavy_armor === 1}
+                      hasMediumArmor={item.has_medium_armor === 1}
+                      hasLightArmor={item.has_light_armor === 1}
+                      traitsNeeded={item.traits_needed !== null}
+                    />
+                    <StyledTag color="geekblue">{item.type}</StyledTag>
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "left",
+                      flex: 2,
+                      fontWeight:
+                        state!.selectedSet && item.id === state!.selectedSet.id
+                          ? 500
+                          : 400
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                </StyledListItem>
+              </animated.div>
+            );
+          }}
         />
       </>
     </ListContainer>

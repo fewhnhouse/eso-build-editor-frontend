@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Button, Card } from "antd";
+import { List, Tag, AutoComplete, Divider, Button, Card, Input } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
@@ -152,16 +152,22 @@ export default () => {
   ) => {
     dispatch!({ type: "SET_BUFF", payload: { buff } });
   };
-
-  const trail = useTrail(allBuffs.length, {
+  const [searchText, setSearchText] = useState("");
+  const filteredBuffs = allBuffs.filter(buff =>
+    buff.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  const trail = useTrail(filteredBuffs.length, {
     opacity: 1,
     transform: "translate(0px, 0px)",
     from: {
       opacity: 0,
       transform: "translate(0px, -40px)"
-    }
+    },
+    config: { mass: 1, tension: 2000, friction: 300 }
   });
-
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
   return (
     <ListContainer>
       <>
@@ -181,11 +187,14 @@ export default () => {
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <AutoComplete
+            <Input
+              placeholder="Search for Sets"
+              allowClear
+              value={searchText}
+              onChange={handleSearchChange}
               size="large"
+              type="text"
               style={{ margin: "10px", width: "100%" }}
-              placeholder="input here"
-              optionLabelProp="value"
             />
           </Flex>
           <Flex
@@ -226,7 +235,7 @@ export default () => {
           }}
           dataSource={trail}
           renderItem={(style: any, index) => {
-            const item = allBuffs[index];
+            const item = filteredBuffs[index];
             return (
               <animated.div style={style}>
                 <StyledCard

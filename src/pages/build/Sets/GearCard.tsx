@@ -42,6 +42,10 @@ const StyledTag = styled(Tag)`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+const IconImg = styled.img`
+    width: 15px;
+    height: 15px;
+`
 
 interface IGearCard {
   set: ISet;
@@ -112,9 +116,21 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           {gear.selectedSet ? gear.selectedSet.type : "Set type"}
         </Title>
         <Divider />
-        <Description>
-          <b>Trait:</b> {gear.trait ? gear.trait.type : ""}. {gear.trait ? gear.trait.description : ""} <br />
-          <b>Enchant:</b> {gear.glyph ? gear.glyph.type : ""}. {gear.glyph ? gear.glyph.description : ""}
+        <Description style={{display: "flex", flexDirection: "row"}}>
+          <div>
+            <IconImg src={gear.trait ? gear.trait.icon : ""} />
+            <b>{gear.trait ? gear.trait.type : ""}</b>
+          </div>
+          <div> 
+            {gear.trait ? gear.trait.description : ""}
+          </div>
+        </Description>
+        <Description style={{display: "flex", flexDirection: "row"}}>
+          <div>
+            <IconImg src={gear.glyph ? gear.glyph.icon : ""} />
+            <b>{gear.glyph ? gear.glyph.type : ""}</b>
+            </div>
+          <div> {gear.glyph ? gear.glyph.description : ""} </div>
         </Description>
       </StyledCard>
     </div>

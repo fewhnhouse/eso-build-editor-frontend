@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Button, Card } from "antd";
+import { List, Tag, AutoComplete, Divider, Button, Card, Input } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
@@ -74,16 +74,23 @@ export default () => {
   ) => {
     dispatch!({ type: "SET_MUNDUS", payload: { mundus } });
   };
-
-  const trail = useTrail(mundusStones.length, {
+  const [searchText, setSearchText] = useState("");
+  const filteredMundusStones = mundusStones.filter(mundus =>
+    mundus.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  const trail = useTrail(filteredMundusStones.length, {
     opacity: 1,
     transform: "translate(0px, 0px)",
     from: {
       opacity: 0,
       transform: "translate(0px, -40px)"
-    }
-  });
+    },
+    config: { mass: 1, tension: 2000, friction: 200 }
 
+  });
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
   return (
     <ListContainer>
       <>
@@ -103,11 +110,14 @@ export default () => {
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <AutoComplete
+            <Input
+              placeholder="Search for Sets"
+              allowClear
+              value={searchText}
+              onChange={handleSearchChange}
               size="large"
+              type="text"
               style={{ margin: "10px", width: "100%" }}
-              placeholder="input here"
-              optionLabelProp="value"
             />
           </Flex>
         </Flex>
@@ -120,7 +130,7 @@ export default () => {
           }}
           dataSource={trail}
           renderItem={(style: any, index) => {
-            const item = mundusStones[index];
+            const item = filteredMundusStones[index];
             return (
               <animated.div style={style}>
                 <StyledCard
