@@ -137,9 +137,9 @@ export default ({ bar }: { bar: "frontbar" | "backbar" }) => {
             [Slot.mainHand],
             "SET_WEAPON_STATS",
             "selectedGlyphs",
-            "frontbar"
+            bar
           )}
-          title="Main Hand"
+          title="Both Hands"
           items={weaponGlyphs}
         />
       ) : (
@@ -184,7 +184,7 @@ export default ({ bar }: { bar: "frontbar" | "backbar" }) => {
             "selectedTraits",
             bar
           )}
-          title="Main Hand"
+          title="Both Hands"
           items={weaponTraits}
         />
       ) : (
