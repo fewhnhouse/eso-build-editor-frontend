@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { Card, Divider, Popover, Tag } from "antd";
+import { Card, Divider, Popover, Tag, Typography } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
 import CheckableTag from "antd/lib/tag/CheckableTag";
 import { ISetSelection } from "../BuildStateContext";
+import Flex from "../../../components/Flex";
 
 {
   /**** MOVE THESE STYLES TO GLOBAL STYLES ****/
@@ -13,6 +14,10 @@ const StyledCard = styled(Card)`
   margin: 0 auto;
   width: 450px;
   position: relative;
+`;
+
+const Container = styled.div`
+  width: 350px;
 `;
 const MyAvatar = styled.img`
   width: 40px;
@@ -43,9 +48,16 @@ const StyledTag = styled(Tag)`
   text-overflow: ellipsis;
 `;
 const IconImg = styled.img`
-    width: 15px;
-    height: 15px;
-`
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+`;
+
+const GlyphIconImg = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+`;
 
 interface IGearCard {
   set: ISet;
@@ -108,31 +120,61 @@ interface ISelectedSet {
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
   return (
-    <div>
-      <StyledCard>
-        <Title>
-          {gear.slot} <br />
-          {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
-          {gear.selectedSet ? gear.selectedSet.type : "Set type"}
-        </Title>
-        <Divider />
-        <Description style={{display: "flex", flexDirection: "row"}}>
-          <div>
+    <Container>
+      <Title style={{ textAlign: "center" }}>
+        {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
+        {gear.selectedSet ? gear.selectedSet.type : "Set type"}
+      </Title>
+      <Divider style={{ margin: "5px 0px" }} />
+
+      <Description>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {[2, 3, 4, 5].map(i => (
+            <span key={i}>
+              {i}/5: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
+            </span>
+          ))}
+        </div>
+      </Description>
+      <Divider style={{ margin: "5px 0px" }} />
+      <Flex direction="column" justify="space-around" align="flex-start">
+        <Description
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            margin: "5px 0px"
+          }}
+        >
+          <Flex direction="row" justify="flex-start" align="center">
             <IconImg src={gear.trait ? gear.trait.icon : ""} />
             <b>{gear.trait ? gear.trait.type : ""}</b>
-          </div>
-          <div> 
+          </Flex>
+          <span style={{ color: "rgba(0,0,0,0.45)" }}>
             {gear.trait ? gear.trait.description : ""}
-          </div>
+          </span>
         </Description>
-        <Description style={{display: "flex", flexDirection: "row"}}>
-          <div>
-            <IconImg src={gear.glyph ? gear.glyph.icon : ""} />
+        <Divider style={{ margin: "5px 0px" }} />
+        <Description
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            margin: "5px 0px"
+          }}
+        >
+          <Flex direction="row" justify="flex-start" align="center">
+            <GlyphIconImg
+              src={gear.glyph ? gear.glyph.icon : ""}
+              style={{ marginRight: 5 }}
+            />
             <b>{gear.glyph ? gear.glyph.type : ""}</b>
-            </div>
-          <div> {gear.glyph ? gear.glyph.description : ""} </div>
+          </Flex>
+          <span style={{ color: "rgba(0,0,0,0.45)" }}>
+            {gear.glyph ? gear.glyph.description : ""}
+          </span>
         </Description>
-      </StyledCard>
-    </div>
+      </Flex>
+    </Container>
   );
 };

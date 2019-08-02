@@ -187,7 +187,7 @@ export const DisplaySlot = ({ slot }: { slot: ISetSelection }) => {
     >
       {slot.icon !== undefined ? (
         <Popover
-          placement={"top"}
+          placement="left"
           content={
             <GearCardContent gear={slot} />
           }

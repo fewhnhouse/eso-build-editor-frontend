@@ -116,6 +116,7 @@ export default () => {
             skillSlots={activeBarSkills}
           />
           <SkillSlot
+            style={{ marginLeft: 10 }}
             abilityBar={-1}
             skill={activeUltimate || undefined}
             skillIndex={5}
@@ -132,6 +133,7 @@ export default () => {
           />
 
           <SkillSlot
+            style={{ marginLeft: 10 }}
             abilityBar={0}
             droppable
             skill={ultimateOne || undefined}

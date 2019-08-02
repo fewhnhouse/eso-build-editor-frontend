@@ -52,7 +52,6 @@ export default () => {
 
   const { setTabKey } = state!;
   const handleTabChange = (key: string) => {
-    console.log(key);
     dispatch!({ type: "SET_SET_TAB_KEY", payload: { setTabKey: key } });
   };
   return (
@@ -74,7 +73,7 @@ export default () => {
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
-                defaultActiveKey="1"
+                defaultActiveKey="frontbar"
               >
                 <TabPane
                   disabled={!selectedSet!.has_weapons}
