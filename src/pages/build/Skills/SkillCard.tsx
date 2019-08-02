@@ -60,7 +60,7 @@ const Title = styled.div`
 `
 
 const CostSpan = styled.span`
-  font-weight: 400;
+  font-weight: 500;
   color: ${(props: { type: string }) =>
     props.type === 'Ultimate'
       ? '#8e44ad'
@@ -203,7 +203,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
 
 export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   const isMagicka = skill.cost.includes('Magicka')
-  const isStamina = skill.cost.includes('Magicka')
+  const isStamina = skill.cost.includes('Stamina')
   const isFree = skill.cost.includes('Nothing')
   return (
     <div style={{ display: 'flex', maxWidth: 400 }}>

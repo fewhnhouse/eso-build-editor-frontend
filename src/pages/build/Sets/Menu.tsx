@@ -11,11 +11,12 @@ const { Item } = List;
 const { CheckableTag } = Tag;
 
 const ListContainer = styled.div`
-  width: ${(props: { collapsed: boolean }) =>
-    props.collapsed ? "60px" : "450px"};
+  width: ${(props: { collapsed: boolean }) => (props.collapsed ? "60px" : "")};
+  flex: ${(props: { collapsed: boolean }) => (props.collapsed ? 0 : 1)};
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
+  max-width: 450px;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `;

@@ -28,6 +28,7 @@ const AbilityBarContainer = styled.div`
   flex: 1;
   height: 100%;
   padding: 40px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
