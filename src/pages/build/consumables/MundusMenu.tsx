@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Button } from "antd";
+import { List, Tag, AutoComplete, Divider, Button, Card } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
@@ -11,6 +11,9 @@ import {
 import { specialFood } from "../../../assets/specialbuff/food";
 import { drinks, IDrink } from "../../../assets/drinks";
 import { food, IFood } from "../../../assets/food";
+import { mundusStones, IMundus } from "../../../assets/mundus";
+import Meta from "antd/lib/card/Meta";
+import { useTrail, animated } from "react-spring";
 
 const { Item } = List;
 const { CheckableTag } = Tag;
@@ -41,40 +44,45 @@ const StyledListItem = styled(Item)`
   }
 `;
 
+const StyledCard = styled(Card)`
+  border-color: ${(props: { active: boolean }) =>
+    props.active ? "rgb(21, 136, 246)" : "rgb(232, 232, 232)"};
+  background: ${(props: { active: boolean }) =>
+    props.active ? "rgba(0,0,0,0.05)" : "white"};
+  border-width: 2px;
+  margin: 10px;
+`;
+
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
-const StyledIconBtn = styled(Button)`
-  margin: 10px;
-  height: 40px;
+const MyAvatar = styled.img`
   width: 40px;
+  height: 40px;
+  border-radius: 3px;
 `;
-
 export default () => {
-  const specialBuffs: ISpecialBuff[] = [...specialDrinks, ...specialFood];
-  const normalBuffs: (IDrink | IFood)[] = [...drinks, ...food];
   const [state, dispatch] = useContext(BuildContext);
-  const handleClick = (buff: ISpecialBuff) => (
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { mundus } = state!;
+  const handleClick = (mundus: IMundus) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {};
-  useEffect(() => {
-    /*
-    axios
-      .get("/skills", {
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setSkills(data);
-      });
-      */
-  }, [dispatch]);
+  ) => {
+    dispatch!({ type: "SET_MUNDUS", payload: { mundus } });
+  };
+
+  const trail = useTrail(mundusStones.length, {
+    opacity: 1,
+    transform: "translate(0px, 0px)",
+    from: {
+      opacity: 0,
+      transform: "translate(0px, -40px)"
+    }
+  });
 
   return (
     <ListContainer>
@@ -102,35 +110,6 @@ export default () => {
               optionLabelProp="value"
             />
           </Flex>
-          <Flex
-            direction="row"
-            justify="center"
-            align="center"
-            style={{ margin: "0px 10px" }}
-          >
-            <CheckableTag checked={true}>Arena</CheckableTag>
-            <CheckableTag checked={true}>Monster</CheckableTag>
-            <CheckableTag checked={true}>PvP</CheckableTag>
-            <CheckableTag checked={true}>Overland</CheckableTag>
-            <CheckableTag checked={true}>Trial</CheckableTag>
-            <CheckableTag checked={true}>Dungeon</CheckableTag>
-          </Flex>
-          <Divider
-            style={{
-              margin: "10px 0px"
-            }}
-          />
-          <Flex
-            direction="row"
-            justify="center"
-            align="center"
-            style={{ margin: "0px 10px" }}
-          >
-            <CheckableTag checked={true}>Light</CheckableTag>
-            <CheckableTag checked={true}>Medium</CheckableTag>
-            <CheckableTag checked={true}>Heavy</CheckableTag>
-            <CheckableTag checked={true}>Crafted</CheckableTag>
-          </Flex>
         </Flex>
 
         <List
@@ -139,45 +118,25 @@ export default () => {
             overflow: "auto",
             transition: "opacity 0.2s ease-in-out"
           }}
-          dataSource={specialBuffs}
-          renderItem={item => (
-            <StyledListItem onClick={handleClick(item)}>
-              <div style={{ width: 140, display: "flex" }}>
-                <AttributeTag
-                  hasHealth={item.buffDescription.includes("Health")}
-                  hasMagicka={item.buffDescription.includes("Magicka")}
-                  hasStamina={item.buffDescription.includes("Stamina")}
-                />
-                <BuffTypeTag
-                  isSpecialDrink={
-                    specialDrinks.find(
-                      drink => drink.buffDescription === item.buffDescription
-                    ) !== undefined
-                  }
-                  isSpecialFood={
-                    specialFood.find(
-                      food => food.buffDescription === item.buffDescription
-                    ) !== undefined
-                  }
-                  isFood={
-                    food.find(food => food.icon === item.icon) !== undefined
-                  }
-                  isDrink={
-                    drinks.find(drink => drink.icon === item.icon) !== undefined
-                  }
-                />
-                <QualityTag quality={4} />
-              </div>
-              <div
-                style={{
-                  textAlign: "left",
-                  flex: 2
-                }}
-              >
-                {item.name}
-              </div>
-            </StyledListItem>
-          )}
+          dataSource={trail}
+          renderItem={(style: any, index) => {
+            const item = mundusStones[index];
+            return (
+              <animated.div style={style}>
+                <StyledCard
+                  active={item.id === (mundus && mundus.id)}
+                  hoverable
+                  onClick={handleClick(item)}
+                >
+                  <Meta
+                    avatar={<MyAvatar src={item.icon} />}
+                    title={item.name}
+                    description={item.effect + " by " + item.value}
+                  />
+                </StyledCard>
+              </animated.div>
+            );
+          }}
         />
       </>
     </ListContainer>

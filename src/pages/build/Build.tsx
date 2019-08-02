@@ -11,6 +11,7 @@ import Consumables from "./consumables/Consumables";
 import Sets from "./Sets/Sets";
 import Skills from "./Skills/Skills";
 import RaceClass from "./RaceAndClass/RaceClass";
+import Details from "../details/Details";
 
 const { Footer, Content } = Layout;
 
@@ -53,11 +54,10 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   };
 
   const isDisabled =
-      tab === 3 ||
-      (tab === 0 &&
-        (state.race === "" ||
-          state.class ===
-            "")) /* ||
+      tab === 0 &&
+      (state.race === "" ||
+        state.class ===
+          "") /* ||
     (tab === 1 &&
       (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
         state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
@@ -88,6 +88,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           <Sets />
         ) : id === "3" ? (
           <Consumables />
+        ) : id === "4" ? (
+          <Details />
         ) : (
           <Redirect to="/build/0" />
         )}

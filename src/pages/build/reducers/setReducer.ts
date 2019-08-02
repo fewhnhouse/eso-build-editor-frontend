@@ -1,11 +1,14 @@
-import { IBuildAction, IBuildState, IStats } from "../BuildStateContext";
+import { Slot, ISetSelection } from "./../BuildStateContext";
+import { IBuildAction, IBuildState } from "../BuildStateContext";
 import { SelectValue } from "antd/lib/select";
 import { ISet } from "../../../components/GearSlot";
+import { IGlyph, ITrait } from "../Sets/data";
 
 interface ISelectPayload {
-  value: SelectValue;
-  indices: number[];
+  value: IGlyph | ITrait;
+  slots: Slot[];
   type: "selectedGlyphs" | "selectedTraits";
+  itemType: "bigPieces" | "smallPieces" | "frontbar" | "backbar";
 }
 
 export const setReducer = (state: IBuildState, action: IBuildAction) => {
@@ -15,6 +18,18 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
         sets
+      };
+    case "SET_BUFF":
+      const { buff } = action.payload;
+      return {
+        ...state,
+        buff
+      };
+    case "SET_MUNDUS":
+      const { mundus } = action.payload;
+      return {
+        ...state,
+        mundus
       };
     case "SET_ITEMSET":
       const { selectedSet }: { selectedSet: ISet } = action.payload;
@@ -68,24 +83,63 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
     }
 
     case "SET_WEAPON_STATS": {
-      const { value, indices, type }: ISelectPayload = action.payload;
-      return {
-        ...state,
-        weaponStats: updateStats(type, value, state.weaponStats, indices)
-      };
+      const { value, slots, type, itemType }: ISelectPayload = action.payload;
+      if (itemType === "frontbar") {
+        return {
+          ...state,
+          frontbarSelection: updateStats(
+            type,
+            value,
+            state.frontbarSelection,
+            slots
+          )
+        };
+      } else {
+        return {
+          ...state,
+          backbarSelection: updateStats(
+            type,
+            value,
+            state.backbarSelection,
+            slots
+          )
+        };
+      }
     }
     case "SET_ARMOR_STATS": {
-      const { value, indices, type }: ISelectPayload = action.payload;
-      return {
-        ...state,
-        armorStats: updateStats(type, value, state.armorStats, indices)
-      };
+      const { value, slots, type, itemType }: ISelectPayload = action.payload;
+      if (itemType === "bigPieces") {
+        return {
+          ...state,
+          bigPieceSelection: updateStats(
+            type,
+            value,
+            state.bigPieceSelection,
+            slots
+          )
+        };
+      } else {
+        return {
+          ...state,
+          smallPieceSelection: updateStats(
+            type,
+            value,
+            state.smallPieceSelection,
+            slots
+          )
+        };
+      }
     }
     case "SET_JEWELRY_STATS": {
-      const { value, indices, type }: ISelectPayload = action.payload;
+      const { value, slots, type }: ISelectPayload = action.payload;
       return {
         ...state,
-        jewelryStats: updateStats(type, value, state.jewelryStats, indices)
+        jewelrySelection: updateStats(
+          type,
+          value,
+          state.jewelrySelection,
+          slots
+        )
       };
     }
     case "SET_SET_TAB_KEY": {
@@ -102,14 +156,18 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
 
 const updateStats = (
   type: "selectedGlyphs" | "selectedTraits",
-  value: SelectValue,
-  stateStats: IStats,
-  indices: number[]
+  value: IGlyph | ITrait,
+  stateStats: ISetSelection[],
+  slots: Slot[]
 ) => {
-  return {
-    ...stateStats,
-    [type]: stateStats[type].map((stat: any, i: number) =>
-      indices.includes(i) ? value : stat
-    )
-  };
+  console.log(slots, value, stateStats, type);
+  return stateStats.map(stat =>
+    slots.includes(stat.slot)
+      ? {
+          ...stat,
+          glyph: type === "selectedGlyphs" ? value : stat.glyph,
+          trait: type === "selectedTraits" ? value : stat.trait
+        }
+      : stat
+  );
 };

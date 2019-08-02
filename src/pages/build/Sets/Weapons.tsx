@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { SelectValue } from "antd/lib/select";
 import { SelectWithTitle } from "./CustomSelect";
-import { BuildContext } from "../BuildStateContext";
+import { BuildContext, Slot } from "../BuildStateContext";
 import { weaponGlyphs, weaponTraits, armorGlyphs, armorTraits } from "./data";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
@@ -26,6 +26,22 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
 `;
 
 export default () => {
+  const [state, dispatch] = useContext(BuildContext);
+  const [shieldFront, setShieldFront] = useState(false);
+  const [shieldBack, setShieldBack] = useState(false);
+  const { weaponType, frontbarSelection, backbarSelection } = state!;
+
+  const frontMainHand = frontbarSelection.find(
+    slot => slot.slot === Slot.mainHand
+  );
+  const frontOffHand = frontbarSelection.find(
+    slot => slot.slot === Slot.offHand
+  );
+  const backMainHand = backbarSelection.find(
+    slot => slot.slot === Slot.mainHand
+  );
+  const backOffHand = backbarSelection.find(slot => slot.slot === Slot.offHand);
+
   const onChange = (e: RadioChangeEvent) => {
     dispatch!({
       type: "SET_WEAPON_TYPE",
@@ -34,24 +50,54 @@ export default () => {
   };
 
   const onChangeSelect = (
-    indices: number[],
+    slots: Slot[],
     actionType: string,
-    type: "selectedTraits" | "selectedGlyphs"
+    type: "selectedTraits" | "selectedGlyphs",
+    itemType: "frontbar" | "backbar"
   ) => (value: SelectValue) => {
-    dispatch!({ type: actionType, payload: { indices, value, type } });
+    if (
+      (itemType === "frontbar" && shieldFront) ||
+      (itemType === "backbar" && shieldBack)
+    ) {
+      const itemValue =
+        type === "selectedTraits"
+          ? armorTraits.find(trait => trait.type === value)
+          : armorGlyphs.find(glyph => glyph.type === value);
+
+      dispatch!({
+        type: actionType,
+        payload: {
+          slots,
+          value: itemValue,
+          type,
+          itemType
+        }
+      });
+    } else {
+      const itemValue =
+        type === "selectedTraits"
+          ? weaponTraits.find(trait => trait.type === value)
+          : weaponGlyphs.find(glyph => glyph.type === value);
+
+      dispatch!({
+        type: actionType,
+        payload: {
+          slots,
+          value: itemValue,
+          type,
+          itemType
+        }
+      });
+    }
   };
   const onChangeCheckbox = (
     setState: React.Dispatch<React.SetStateAction<boolean>>,
-    type: "selectedTraits" | "selectedGlyphs"
+    type: "selectedTraits" | "selectedGlyphs",
+    itemType: "frontbar" | "backbar"
   ) => (e: CheckboxChangeEvent) => {
-    onChangeSelect([1], "SET_WEAPON_STATS", type)("");
+    onChangeSelect([Slot.offHand], "SET_WEAPON_STATS", type, itemType)("");
     setState(e.target.checked);
   };
-
-  const [state, dispatch] = useContext(BuildContext);
-  const [shieldFront, setShieldFront] = useState(false);
-  const [shieldBack, setShieldBack] = useState(false);
-  const { weaponType, weaponStats } = state!;
 
   return (
     <StyledFlex direction="column" justify="center" align="center">
@@ -64,8 +110,15 @@ export default () => {
 
       {weaponType === "twohanded" ? (
         <StyledSelectWithTitle
-          value={weaponStats.selectedGlyphs[0]}
-          onChange={onChangeSelect([0], "SET_WEAPON_STATS", "selectedGlyphs")}
+          value={
+            frontMainHand && frontMainHand.glyph ? frontMainHand.glyph.type : ""
+          }
+          onChange={onChangeSelect(
+            [Slot.mainHand],
+            "SET_WEAPON_STATS",
+            "selectedGlyphs",
+            "frontbar"
+          )}
           title="Main Hand"
           items={weaponGlyphs}
         />
@@ -77,19 +130,39 @@ export default () => {
           align="flex-start"
         >
           <StyledSelectWithTitle
-            value={weaponStats.selectedGlyphs[0]}
-            onChange={onChangeSelect([0], "SET_WEAPON_STATS", "selectedGlyphs")}
+            value={
+              frontMainHand && frontMainHand.glyph
+                ? frontMainHand.glyph.type
+                : ""
+            }
+            onChange={onChangeSelect(
+              [Slot.mainHand],
+              "SET_WEAPON_STATS",
+              "selectedGlyphs",
+              "frontbar"
+            )}
             title="Main Hand"
             items={weaponGlyphs}
           />
           <StyledSelectWithTitle
-            value={weaponStats.selectedGlyphs[1]}
-            onChange={onChangeSelect([1], "SET_WEAPON_STATS", "selectedGlyphs")}
+            value={
+              frontOffHand && frontOffHand.glyph ? frontOffHand.glyph.type : ""
+            }
+            onChange={onChangeSelect(
+              [Slot.offHand],
+              "SET_WEAPON_STATS",
+              "selectedGlyphs",
+              "frontbar"
+            )}
             title={
               <OffHandTitle>
                 <span>Off hand</span>
                 <Checkbox
-                  onChange={onChangeCheckbox(setShieldFront, "selectedGlyphs")}
+                  onChange={onChangeCheckbox(
+                    setShieldFront,
+                    "selectedGlyphs",
+                    "frontbar"
+                  )}
                   value={shieldFront}
                 >
                   Use Shield
@@ -104,8 +177,15 @@ export default () => {
       <Divider>Traits</Divider>
       {weaponType === "twohanded" ? (
         <StyledSelectWithTitle
-          value={weaponStats.selectedTraits[0]}
-          onChange={onChangeSelect([0], "SET_WEAPON_STATS", "selectedTraits")}
+          value={
+            backMainHand && backMainHand.trait ? backMainHand.trait.type : ""
+          }
+          onChange={onChangeSelect(
+            [Slot.mainHand],
+            "SET_WEAPON_STATS",
+            "selectedTraits",
+            "backbar"
+          )}
           title="Main Hand"
           items={weaponTraits}
         />
@@ -117,26 +197,44 @@ export default () => {
           align="flex-start"
         >
           <StyledSelectWithTitle
-            value={weaponStats.selectedTraits[0]}
-            onChange={onChangeSelect([0], "SET_WEAPON_STATS", "selectedTraits")}
+            value={
+              backMainHand && backMainHand.trait ? backMainHand.trait.type : ""
+            }
+            onChange={onChangeSelect(
+              [Slot.mainHand],
+              "SET_WEAPON_STATS",
+              "selectedTraits",
+              "backbar"
+            )}
             title="Main Hand"
             items={weaponTraits}
           />
           <StyledSelectWithTitle
-            value={weaponStats.selectedTraits[1]}
-            onChange={onChangeSelect([1], "SET_WEAPON_STATS", "selectedTraits")}
+            value={
+              backOffHand && backOffHand.trait ? backOffHand.trait.type : ""
+            }
+            onChange={onChangeSelect(
+              [Slot.offHand],
+              "SET_WEAPON_STATS",
+              "selectedTraits",
+              "backbar"
+            )}
             title={
               <OffHandTitle>
                 <span>Off hand</span>
                 <Checkbox
-                  onChange={onChangeCheckbox(setShieldBack, "selectedTraits")}
+                  onChange={onChangeCheckbox(
+                    setShieldBack,
+                    "selectedTraits",
+                    "backbar"
+                  )}
                   value={shieldBack}
                 >
                   Use Shield
                 </Checkbox>
               </OffHandTitle>
             }
-            items={shieldBack ? armorGlyphs : weaponGlyphs}
+            items={shieldBack ? armorTraits : weaponTraits}
           />
         </Flex>
       )}

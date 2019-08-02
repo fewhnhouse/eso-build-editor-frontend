@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Divider } from "antd";
 import GearView from "../../../components/GearView";
 import { ISet } from "../../../components/GearSlot";
-import { BuildContext } from "../BuildStateContext";
+import { BuildContext, Slot, ISetSelection } from "../BuildStateContext";
 import { selectIcon, actualRing, actualNeck } from "../../../assets/gear";
 import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
@@ -18,6 +18,15 @@ const OuterContainer = styled.div`
   background: white;
 `;
 
+interface ISetup {
+  id: string;
+  label: string;
+  data: {
+    slot: Slot;
+    icon: string | undefined;
+    set: ISet | undefined;
+  }[];
+}
 const getSetups = ({
   armorType,
   selectedSet,
@@ -30,26 +39,26 @@ const getSetups = ({
   mainHand: string;
   offHand: string;
   twoHand: string;
-}) => {
+}): ISetup[] => {
   return [
     {
       id: "bigpieces",
       label: "Big Pieces",
       data: [
         {
-          slot: "head",
+          slot: Slot.head,
           icon: selectIcon(armorType + "Head"),
           set: selectedSet
         },
 
         {
-          slot: "chest",
+          slot: Slot.chest,
           icon: selectIcon(armorType + "Chest"),
           set: selectedSet
         },
 
         {
-          slot: "legs",
+          slot: Slot.legs,
           icon: selectIcon(armorType + "Legs"),
           set: selectedSet
         }
@@ -60,24 +69,24 @@ const getSetups = ({
       label: "Small Pieces",
       data: [
         {
-          slot: "shoulders",
+          slot: Slot.shoulders,
           icon: selectIcon(armorType + "Shoulders"),
           set: selectedSet
         },
 
         {
-          slot: "waist",
+          slot: Slot.waist,
           icon: selectIcon(armorType + "Waist"),
           set: selectedSet
         },
         {
-          slot: "hands",
+          slot: Slot.hands,
           icon: selectIcon(armorType + "Hands"),
           set: selectedSet
         },
 
         {
-          slot: "feet",
+          slot: Slot.feet,
           icon: selectIcon(armorType + "Feet"),
           set: selectedSet
         }
@@ -88,17 +97,17 @@ const getSetups = ({
       label: "Jewelry",
       data: [
         {
-          slot: "neck",
+          slot: Slot.neck,
           icon: actualNeck,
           set: selectedSet
         },
         {
-          slot: "ring1",
+          slot: Slot.ring1,
           icon: actualRing,
           set: selectedSet
         },
         {
-          slot: "ring2",
+          slot: Slot.ring2,
           icon: actualRing,
           set: selectedSet
         }
@@ -109,27 +118,27 @@ const getSetups = ({
       label: "One Handed",
       data: [
         {
-          slot: "eitherHand",
+          slot: Slot.eitherHand,
           icon: selectIcon("dagger"),
           set: selectedSet
         },
         {
-          slot: "eitherHand",
+          slot: Slot.eitherHand,
           icon: selectIcon("axe1h"),
           set: selectedSet
         },
         {
-          slot: "eitherHand",
+          slot: Slot.eitherHand,
           icon: selectIcon("hammer1h"),
           set: selectedSet
         },
         {
-          slot: "eitherHand",
+          slot: Slot.eitherHand,
           icon: selectIcon("sword1h"),
           set: selectedSet
         },
         {
-          slot: "offHand",
+          slot: Slot.offHand,
           icon: selectIcon("shield"),
           set: selectedSet
         }
@@ -140,27 +149,27 @@ const getSetups = ({
       label: "Two Handed",
       data: [
         {
-          slot: "mainHand",
+          slot: Slot.mainHand,
           icon: selectIcon("bow"),
           set: selectedSet
         },
         {
-          slot: "mainHand",
+          slot: Slot.mainHand,
           icon: selectIcon("staff"),
           set: selectedSet
         },
         {
-          slot: "mainHand",
+          slot: Slot.mainHand,
           icon: selectIcon("sword2h"),
           set: selectedSet
         },
         {
-          slot: "mainHand",
+          slot: Slot.mainHand,
           icon: selectIcon("axe2h"),
           set: selectedSet
         },
         {
-          slot: "mainHand",
+          slot: Slot.mainHand,
           icon: selectIcon("hammer2h"),
           set: selectedSet
         }
@@ -268,10 +277,10 @@ export default () => {
     <DndProvider backend={HTML5Backend}>
       <OuterContainer>
         <Divider>Active Selection</Divider>
-        <GearView newGear setups={showGear(setTabKey)} />
+        <GearView setups={showGear(setTabKey)} />
 
         <Divider>Setup</Divider>
-        <GearView newGear droppable setups={showSetup(setTabKey)} />
+        <GearView droppable setups={showSetup(setTabKey)} />
       </OuterContainer>
     </DndProvider>
   );

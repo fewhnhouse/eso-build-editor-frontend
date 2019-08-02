@@ -1,7 +1,13 @@
-import React from "react";
-import Menu from "./Menu";
+import React, { useContext, useEffect } from "react";
+import BuffMenu from "./BuffMenu";
+import MundusMenu from "./MundusMenu";
+import { BuildContext } from "../BuildStateContext";
 
 export default () => {
+  const [state] = useContext(BuildContext);
+  useEffect(() => {
+    localStorage.setItem("buildState", JSON.stringify(state));
+  }, [state]);
   return (
     <div
       style={{
@@ -11,8 +17,8 @@ export default () => {
         flexDirection: "row"
       }}
     >
-      <Menu />
-      <div style={{flex: 1}}>Mundus</div>
+      <BuffMenu />
+      <MundusMenu />
     </div>
   );
 };

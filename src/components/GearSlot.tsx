@@ -16,14 +16,12 @@ import {
   neck
 } from "../assets/gear";
 import { useDrag, useDrop } from "react-dnd";
-import { BuildContext } from "../pages/build/BuildStateContext";
+import {
+  BuildContext,
+  Slot,
+  ISetSelection
+} from "../pages/build/BuildStateContext";
 import { GearCardContent } from "../pages/build/Sets/GearCard";
-
-export interface IGearSlot {
-  slot: string;
-  set?: ISet;
-  icon?: string;
-}
 
 const GearImg = styled.img`
   width: 64px;
@@ -107,13 +105,13 @@ const getImageSource = (slot: string) => {
 };
 
 export interface IGearSlotProps {
-  slot: IGearSlot;
+  slot: ISetSelection;
   droppable?: boolean;
   group: string;
 }
 
 export interface IDragProps {
-  slot: IGearSlot;
+  slot: ISetSelection;
   group: string;
 }
 
@@ -121,7 +119,7 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
   const [, dispatch] = useContext(BuildContext);
 
   const [{ isDragging, didDrop }, drag] = useDrag({
-    item: { type: slot.slot, set: slot.set, icon: slot.icon },
+    item: { type: slot.slot, set: slot.selectedSet, icon: slot.icon },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop()
@@ -131,8 +129,8 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: [
       slot.slot,
-      ...(slot.slot === "mainHand" || slot.slot === "offHand"
-        ? ["eitherHand"]
+      ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
+        ? [Slot.eitherHand]
         : [])
     ],
     drop: (item: any, monitor) => {
@@ -185,7 +183,7 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
   );
 };
 
-export const DisplaySlot = ({ slot }: { slot: IGearSlot }) => {
+export const DisplaySlot = ({ slot }: { slot: ISetSelection }) => {
   return (
     <GearFrame
       hasIcon={slot.icon !== undefined}

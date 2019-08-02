@@ -1,5 +1,5 @@
 import apprentice from "./ON-icon-mundusstone-Apprentice.png";
-import atronarch from "./ON-icon-mundusstone-Atronarch.png";
+import atronarch from "./ON-icon-mundusstone-Atronach.png";
 import lady from "./ON-icon-mundusstone-Lady.png";
 import lord from "./ON-icon-mundusstone-Lord.png";
 import lover from "./ON-icon-mundusstone-Lover.png";
@@ -22,9 +22,10 @@ export interface IMundus {
   effect: string;
   value: string | number;
   icon: string;
+  id: number;
 }
 
-export const mundus: IMundus[] = [
+export const mundusStones: IMundus[] = [
   {
     name: "The Apprentice",
     location: {
@@ -34,7 +35,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Spell Damage",
     value: 238,
-    icon: apprentice
+    icon: apprentice,
+    id: 1
   },
   {
     name: "The Atronarch",
@@ -45,7 +47,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Magicka Recovery	",
     value: 238,
-    icon: atronarch
+    icon: atronarch,
+    id: 2
   },
   {
     name: "The Lady",
@@ -56,7 +59,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Physical and Spell Resistance",
     value: 2752,
-    icon: lady
+    icon: lady,
+    id: 3
   },
   {
     name: "The Lord",
@@ -67,7 +71,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Maximum Health",
     value: 2231,
-    icon: lord
+    icon: lord,
+    id: 4
   },
   {
     name: "The Lover",
@@ -78,7 +83,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Physical and Spell Penetration",
     value: 2752,
-    icon: lover
+    icon: lover,
+    id: 5
   },
   {
     name: "The Mage",
@@ -89,7 +95,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Maximum Magicka",
     value: 2028,
-    icon: mage
+    icon: mage,
+    id: 6
   },
   {
     name: "The Ritual",
@@ -100,7 +107,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Healing Done",
     value: "10%",
-    icon: ritual
+    icon: ritual,
+    id: 7
   },
   {
     name: "The Serpent",
@@ -111,7 +119,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Stamina Recovery",
     value: 238,
-    icon: serpent
+    icon: serpent,
+    id: 8
   },
   {
     name: "The Shadow",
@@ -122,7 +131,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Critical Damage done",
     value: "13%",
-    icon: shadow
+    icon: shadow,
+    id: 9
   },
   {
     name: "The Steed",
@@ -133,7 +143,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Health Recovery and Movement Speed",
     value: "238 / 10%",
-    icon: steed
+    icon: steed,
+    id: 10
   },
   {
     name: "The Theif",
@@ -144,7 +155,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Weapon and Spell Critical Strike ratings",
     value: 1633,
-    icon: thief
+    icon: thief,
+    id: 11
   },
   {
     name: "The Tower",
@@ -155,7 +167,8 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Maximum Stamina",
     value: 2028,
-    icon: tower
+    icon: tower,
+    id: 12
   },
   {
     name: "The Warrior",
@@ -166,6 +179,7 @@ export const mundus: IMundus[] = [
     },
     effect: "Increases Weapon Damage",
     value: 238,
-    icon: warrior
+    icon: warrior,
+    id: 13
   }
 ];

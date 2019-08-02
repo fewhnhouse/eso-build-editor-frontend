@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import { Card, Divider, Popover, Tag } from "antd";
 import styled from "styled-components";
-import { ISet, IGearSlot } from "../../../components/GearSlot";
+import { ISet } from "../../../components/GearSlot";
 import CheckableTag from "antd/lib/tag/CheckableTag";
+import { ISetSelection } from "../BuildStateContext";
 
-
-{/**** MOVE THESE STYLES TO GLOBAL STYLES ****/}
+{
+  /**** MOVE THESE STYLES TO GLOBAL STYLES ****/
+}
 const StyledCard = styled(Card)`
   display: "flex";
   margin: 0 auto;
   width: 450px;
   position: relative;
-`
+`;
 const MyAvatar = styled.img`
   width: 40px;
   height: 40px;
@@ -33,7 +35,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`; 
+`;
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
@@ -73,47 +75,49 @@ const ArmorTypeTag = ({
   }
 };
 
-export default ({set}: IGearCard) => {
+export default ({ set }: IGearCard) => {
   return (
-      <StyledCard hoverable title={set.name}>
-        <StyledTag color="#1890ff">{set.type}</StyledTag>
-        <ArmorTypeTag
-          hasHeavyArmor={set.has_heavy_armor === 1}
-          hasMediumArmor={set.has_medium_armor === 1}
-          hasLightArmor={set.has_light_armor === 1}
-          traitsNeeded={set.traits_needed !== null}
-        />
-        <Description>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {[2, 3, 4, 5].map(i => (
-              <span key={i}>
-                {i}/5: {set && set[`bonus_item_${i}`]}
-              </span>
-            ))}
-          </div>
-        </Description>
-      </StyledCard>
-  )
-}
+    <StyledCard hoverable title={set.name}>
+      <StyledTag color="#1890ff">{set.type}</StyledTag>
+      <ArmorTypeTag
+        hasHeavyArmor={set.has_heavy_armor === 1}
+        hasMediumArmor={set.has_medium_armor === 1}
+        hasLightArmor={set.has_light_armor === 1}
+        traitsNeeded={set.traits_needed !== null}
+      />
+      <Description>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {[2, 3, 4, 5].map(i => (
+            <span key={i}>
+              {i}/5: {set && set[`bonus_item_${i}`]}
+            </span>
+          ))}
+        </div>
+      </Description>
+    </StyledCard>
+  );
+};
 
 interface ISelectedSet {
-  gear: IGearSlot;
+  gear: ISetSelection;
   trait: string;
   enchant: string;
 }
 
-export const GearCardContent = ({gear, trait, enchant}: ISelectedSet) => {
+export const GearCardContent = ({ gear, trait, enchant }: ISelectedSet) => {
   return (
     <div>
       <StyledCard>
-        <Title>{gear.set? gear.set.name : "Title"} <br /> {gear.slot} <br /> {gear.set ? gear.set.type : "Type"}</Title>
+        <Title>
+          {gear.selectedSet ? gear.selectedSet.name : "Title"} <br />{" "}
+          {gear.slot} <br /> {gear.selectedSet ? gear.selectedSet.type : "Type"}
+        </Title>
         <Divider />
         <Description>
-          Trait: {trait} <br/>
-          Enchant: {enchant}
+          Trait: {gear.trait ? gear.trait.type : ""} <br />
+          Enchant: {gear.glyph ? gear.glyph.type : ""}
         </Description>
       </StyledCard>
     </div>
-  )
-}
-
+  );
+};

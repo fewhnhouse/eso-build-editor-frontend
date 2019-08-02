@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import styled, { withTheme, ThemeProps } from "styled-components";
 import { chooseClass } from "../../util/utils";
 import { Divider, Layout, Typography } from "antd";
@@ -8,46 +8,17 @@ import { food, immoPot, triPot } from "../../assets/deco";
 import Flex from "../../components/Flex";
 import { ITheme } from "../../components/globalStyles";
 import SkillView from "../../components/SkillView";
-import { IBuildState } from "../build/BuildStateContext";
+import {
+  IBuildState,
+  Slot,
+  defaultBuildState
+} from "../build/BuildStateContext";
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 interface IDetails extends ThemeProps<ITheme>, RouteComponentProps<any> {}
-
-const setups = [
-  {
-    id: "bigpieces",
-    label: "Big Pieces",
-    data: [{ slot: "head" }, { slot: "chest" }, { slot: "legs" }]
-  },
-  {
-    id: "smallpieces",
-    label: "Small Pieces",
-    data: [
-      { slot: "shoulders" },
-      { slot: "waist" },
-      { slot: "hands" },
-      { slot: "feet" }
-    ]
-  },
-  {
-    id: "jewelry",
-    label: "Jewelry",
-    data: [{ slot: "neck" }, { slot: "ring1" }, { slot: "ring2" }]
-  },
-  {
-    id: "onehanded",
-    label: "One Handed",
-    data: [{ slot: "mainHand" }, { slot: "mainHand" }]
-  },
-  {
-    id: "twohanded",
-    label: "Two Handed",
-    data: [{ slot: "mainHand" }, { slot: "offHand" }]
-  }
-];
 
 const Container = styled(Content)`
   display: flex;
@@ -141,45 +112,35 @@ const Details = ({ match, theme }: IDetails) => {
   const buildState = localStorage.getItem("buildState");
   const parsedBuildState: IBuildState = buildState
     ? JSON.parse(buildState)
-    : undefined;
+    : defaultBuildState;
 
-  const bigPieces = parsedBuildState.bigPieceSelection;
-  const smallPieces = parsedBuildState.smallPieceSelection;
-  const frontBar = parsedBuildState.frontbarSelection;
-  const backBar = parsedBuildState.backbarSelection;
-  const jewelry = parsedBuildState.jewelrySelection;
-  const armorStats = parsedBuildState.armorStats;
-  const jewelryStats = parsedBuildState.jewelryStats;
-  const weaponStats = parsedBuildState.weaponStats;
+  const {
+    bigPieceSelection,
+    smallPieceSelection,
+    frontbarSelection,
+    backbarSelection,
+    jewelrySelection
+  } = parsedBuildState;
 
-  const savedSetups = [
+  const selectedSetup = [
     {
       id: "bigpieces",
-      label: "Big pieces",
-      data: bigPieces
+      label: "Big Pieces",
+      data: bigPieceSelection || []
     },
     {
       id: "smallpieces",
-      label: "Small pieces",
-      data: smallPieces
+      label: "Small Pieces",
+      data: smallPieceSelection || []
     },
+    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
     {
-      id: "mainhand",
-      label: "Main hand",
-      data: frontBar
+      id: "frontbar",
+      label: "Frontbar",
+      data: frontbarSelection || []
     },
-    {
-      id: "offhand",
-      label: "Off hand",
-      data: backBar
-    },
-    {
-      id: "jewelry",
-      label: "Jewelry",
-      data: jewelry
-    }
+    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
   ];
-
   return (
     <Container>
       <Title level={3}>
@@ -196,62 +157,19 @@ const Details = ({ match, theme }: IDetails) => {
         wrap
         fluid
       >
-        <GearView
-          disabled
-          enchants={{
-            weaponEnchants: weaponStats.selectedGlyphs,
-            armorEnchants: armorStats.selectedGlyphs,
-            jewelryEnchants: jewelryStats.selectedGlyphs
-          }}
-          traits={{
-            weaponTraits: weaponStats.selectedTraits,
-            armorTraits: armorStats.selectedTraits,
-            jewelryTraits: jewelryStats.selectedTraits
-          }}
-          setups={parsedBuildState ? savedSetups : setups}
-        />
+        <GearView disabled setups={selectedSetup} />
         <SkillsView>
           <StyledTitle level={3}>Skills</StyledTitle>
           <Divider />
           <SkillView
             id={ABILITY_BAR_ONE}
             disabled={true}
-            skillSlots={
-              parsedBuildState
-                ? parsedBuildState.abilityBarOne.map(barItem => ({
-                    index: barItem.id,
-                    skill: parsedBuildState.skills.find(
-                      skill => skill.id === barItem.id
-                    )
-                  }))
-                : [
-                    { index: 0, skill: undefined },
-                    { index: 1, skill: undefined },
-                    { index: 2, skill: undefined },
-                    { index: 3, skill: undefined },
-                    { index: 4, skill: undefined }
-                  ]
-            }
+            skillSlots={parsedBuildState.newBarOne}
           />
           <SkillView
             id={ABILITY_BAR_TWO}
             disabled={true}
-            skillSlots={
-              parsedBuildState
-                ? parsedBuildState.abilityBarTwo.map(barItem => ({
-                    index: barItem.id,
-                    skill: parsedBuildState.skills.find(
-                      skill => skill.id === barItem.id
-                    )
-                  }))
-                : [
-                    { index: 0, skill: undefined },
-                    { index: 1, skill: undefined },
-                    { index: 2, skill: undefined },
-                    { index: 3, skill: undefined },
-                    { index: 4, skill: undefined }
-                  ]
-            }
+            skillSlots={parsedBuildState.newBarTwo}
           />
           <Divider />
           <Title level={3}>Mundus</Title>
@@ -285,4 +203,4 @@ const Details = ({ match, theme }: IDetails) => {
   );
 };
 
-export default withTheme(Details);
+export default withTheme(withRouter(Details));

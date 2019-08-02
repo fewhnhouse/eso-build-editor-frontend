@@ -7,6 +7,9 @@ import { setReducer } from "./reducers/setReducer";
 import { SelectValue } from "antd/lib/select";
 import { raceNameReducer } from "./reducers/raceNameReducer";
 import { setBarReducer } from "./reducers/setBarReducer";
+import { ITrait, IGlyph } from "./Sets/data";
+import { IMundus } from "../../assets/mundus";
+import { ISpecialBuff } from "../../assets/specialbuff/drinks";
 
 export interface ISlot {
   id: number;
@@ -22,17 +25,12 @@ export interface IBuildState {
     selectedSkills: ISkillSelection[];
     selectedUltimate?: ISkill;
   }[];
-  abilityBarOne: ISlot[];
-  abilityBarTwo: ISlot[];
   ultimateOne?: ISkill;
   ultimateTwo?: ISkill;
   selectedSet?: ISet;
   weaponType: "onehanded" | "twohanded";
   armorType: "lightarmor" | "mediumarmor" | "heavyarmor";
   weapons: SelectValue[];
-  weaponStats: IStats;
-  armorStats: IStats;
-  jewelryStats: IStats;
   race: string;
   class: string;
   setTabKey: "armor" | "jewelry" | "weapons";
@@ -44,6 +42,8 @@ export interface IBuildState {
   newBarOne: ISkillSelection[];
   newActiveBar: ISkillSelection[];
   newBarTwo: ISkillSelection[];
+  mundus: IMundus;
+  buff: ISpecialBuff;
 }
 
 export interface ISkillSelection {
@@ -51,21 +51,37 @@ export interface ISkillSelection {
   skill?: ISkill;
 }
 
-interface ISetSelection {
-  icon?: string;
-  slot: string;
-  selectedSet?: ISet;
+export enum Slot {
+  head = "HEAD",
+  mainHand = "MAIN_HAND",
+  offHand = "OFF_HAND",
+  eitherHand = "EITHER_HAND",
+  shoulders = "SHOULDERS",
+  chest = "CHEST",
+  legs = "LEGS",
+  waist = "WAIST",
+  feet = "FEET",
+  hands = "HANDS",
+  ring = "RING",
+  neck = "NECK",
+  ring1 = "RING1",
+  ring2 = "RING2"
 }
 
-export interface IStats {
-  selectedGlyphs: SelectValue[];
-  selectedTraits: SelectValue[];
+export interface ISetSelection {
+  icon?: string;
+  slot: Slot;
+  selectedSet?: ISet;
+  trait?: ITrait;
+  glyph?: IGlyph;
 }
 
 export const defaultBuildState = {
   skills: [],
   sets: [],
   skillLine: 0,
+  mundus: undefined,
+  buff: undefined,
   hasTrash: false,
   newBarOne: [
     { index: 0, skill: undefined },
@@ -90,28 +106,112 @@ export const defaultBuildState = {
   ],
 
   bigPieceSelection: [
-    { slot: "head", selectedSet: undefined, icon: undefined },
-    { slot: "legs", selectedSet: undefined, icon: undefined },
-    { slot: "chest", selectedSet: undefined, icon: undefined }
+    {
+      slot: Slot.head,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.legs,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.chest,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    }
   ],
   smallPieceSelection: [
-    { slot: "shoulders", selectedSet: undefined, icon: undefined },
-    { slot: "waist", selectedSet: undefined, icon: undefined },
-    { slot: "hands", selectedSet: undefined, icon: undefined },
-    { slot: "feet", selectedSet: undefined, icon: undefined }
+    {
+      slot: Slot.shoulders,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.waist,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.hands,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.feet,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    }
   ],
   jewelrySelection: [
-    { slot: "neck", selectedSet: undefined, icon: undefined },
-    { slot: "ring1", selectedSet: undefined, icon: undefined },
-    { slot: "ring2", selectedSet: undefined, icon: undefined }
+    {
+      slot: Slot.neck,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.ring1,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.ring2,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    }
   ],
   frontbarSelection: [
-    { slot: "mainHand", selectedSet: undefined, icon: undefined },
-    { slot: "offHand", selectedSet: undefined, icon: undefined }
+    {
+      slot: Slot.mainHand,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.offHand,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    }
   ],
   backbarSelection: [
-    { slot: "mainHand", selectedSet: undefined, icon: undefined },
-    { slot: "offHand", selectedSet: undefined, icon: undefined }
+    {
+      slot: Slot.mainHand,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    },
+    {
+      slot: Slot.offHand,
+      selectedSet: undefined,
+      icon: undefined,
+      trait: undefined,
+      glyph: undefined
+    }
   ],
   ultimateOne: undefined,
   ultimateTwo: undefined,
@@ -120,18 +220,6 @@ export const defaultBuildState = {
   weaponType: "onehanded",
   armorType: "mediumarmor",
   weapons: ["", ""],
-  weaponStats: {
-    selectedGlyphs: ["", ""],
-    selectedTraits: ["", ""]
-  },
-  armorStats: {
-    selectedGlyphs: ["", "", "", "", "", "", ""],
-    selectedTraits: ["", "", "", "", "", "", ""]
-  },
-  jewelryStats: {
-    selectedGlyphs: ["", "", ""],
-    selectedTraits: ["", "", ""]
-  },
   race: "",
   class: "",
   setTabKey: "weapons"

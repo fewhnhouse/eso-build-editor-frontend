@@ -18,6 +18,8 @@ export interface ISpecialBuff {
   duration: number;
   notes: string;
   icon: string;
+  type?: string;
+  quality: 1 | 2 | 3 | 4;
 }
 
 export const specialDrinks: ISpecialBuff[] = [
@@ -29,7 +31,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "A hearty mulled wine enjoyed during the New Life Festival. This Nord drink is always served piping hot.	",
     duration: 120,
     notes: "New Life Festival",
-    icon: snowBear
+    icon: snowBear,
+    quality: 1
   },
   {
     name: "Bergama Warning Fire",
@@ -39,7 +42,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "A seasonal drink enjoyed during the New Life Festival. This Redguard drink is served piping hot, and sharpens the imbiber's wits rather than dulls them.",
     duration: 120,
     notes: "New Life Festival",
-    icon: bergama
+    icon: bergama,
+    quality: 2
   },
   {
     name: "Betnikh Twice-Spiked Ale",
@@ -49,7 +53,8 @@ export const specialDrinks: ISpecialBuff[] = [
       'A seasonal drink enjoyed during the New Life Festival. This Orc ale is exceptionally foamy, which helps create "gastric affirmation."',
     duration: 120,
     notes: "New Life Festival",
-    icon: betnikh
+    icon: betnikh,
+    quality: 2
   },
   {
     name: 'Bowl of "Peeled Eyeballs"',
@@ -59,7 +64,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "A bowl of peeled grapes and cold noodles in fruit broth. Tasty, and a laugh riot at coven parties!",
     duration: 120,
     notes: "Witches Festival",
-    icon: peeledEyeballs
+    icon: peeledEyeballs,
+    quality: 2
   },
   {
     name: "Ghastly Eye Bowl",
@@ -69,7 +75,8 @@ export const specialDrinks: ISpecialBuff[] = [
       '"Eyeballs" and live worms in a chilled banana and fleshfly broth. Squirms inside all the way down!',
     duration: 120,
     notes: "Witches Festival",
-    icon: ghastlyEyeBowl
+    icon: ghastlyEyeBowl,
+    quality: 2
   },
   {
     name: "Orzorga's Red Frothgar",
@@ -77,7 +84,8 @@ export const specialDrinks: ISpecialBuff[] = [
     description: "Ice-cold dredged berry mash, in the old Orcish style.",
     duration: 120,
     notes: "Orsinium",
-    icon: tea
+    icon: tea,
+    quality: 2
   },
   {
     name: "Dubious Camoran Throne",
@@ -87,7 +95,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "A dessert cocktail of jagga, rotmeth, and sweetbread puree. Definitely Green Pact Compliant.",
     duration: 120,
     notes: "Jester's Festival",
-    icon: camoranThrone
+    icon: camoranThrone,
+    quality: 3
   },
   {
     name: "Spring-Loaded Infusion",
@@ -97,7 +106,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "Brewed from potable liquids in the Clockwork City. Probably volatile, and quite eye-opening.",
     duration: 120,
     notes: "Clockwork City",
-    icon: tin
+    icon: tin,
+    quality: 3
   },
   {
     name: "Witchmother's Party Punch",
@@ -106,7 +116,8 @@ export const specialDrinks: ISpecialBuff[] = [
     description: "An ice-cold punch of fruit mash and rye alcohol.",
     duration: 120,
     notes: "Witches Festival",
-    icon: witchmotherPartyPunch
+    icon: witchmotherPartyPunch,
+    quality: 3
   },
   {
     name: "Witchmother's Potent Brew",
@@ -115,7 +126,8 @@ export const specialDrinks: ISpecialBuff[] = [
     description: "It smells… dangerous. Toxic. And those are definitely bones.",
     duration: 120,
     notes: "Witches Festival",
-    icon: witchmotherPotentBrew
+    icon: witchmotherPotentBrew,
+    quality: 3
   },
   {
     name: "Double Bloody Mara",
@@ -125,7 +137,8 @@ export const specialDrinks: ISpecialBuff[] = [
       "It reeks of cold blood, herbs, spices, and alcohol. Down the hatch!",
     duration: 120,
     notes: "Witches Festival",
-    icon: bloodyMara
+    icon: bloodyMara,
+    quality: 4
   },
   {
     name: "Hissmir Fish-Eye Rye",
@@ -135,6 +148,7 @@ export const specialDrinks: ISpecialBuff[] = [
       "A seasonal beverage enjoyed during the New Life Festival. This Argonian drink has a terrible smell, which is why it should be imbibed only with plugged nostrils.",
     duration: 120,
     notes: "New Life Festival",
-    icon: hissimir
+    icon: hissimir,
+    quality: 4
   }
 ];

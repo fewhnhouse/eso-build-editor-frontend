@@ -1,4 +1,4 @@
-import { IBuildAction, IBuildState } from "../BuildStateContext";
+import { IBuildAction, IBuildState, Slot } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
@@ -12,7 +12,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         type
       }: {
         set: ISet;
-        slot: string;
+        slot: Slot;
         group: string;
         icon: string;
         type: string;
@@ -40,7 +40,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   slot,
                   icon
                 }
-              : type === "mainHand" && frontbar.slot === "offHand"
+              : type === "mainHand" && frontbar.slot === Slot.offHand
               ? { set: undefined, slot: frontbar.slot, icon: undefined }
               : frontbar
           )
@@ -55,7 +55,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   slot,
                   icon
                 }
-              : type === "mainHand" && backbar.slot === "offHand"
+              : type === "mainHand" && backbar.slot === Slot.offHand
               ? { set: undefined, slot: backbar.slot, icon: undefined }
               : backbar
           )

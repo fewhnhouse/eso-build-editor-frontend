@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 import { Typography } from "antd";
 import Flex from "./Flex";
-import GearSlot, { IGearSlot, DisplaySlot } from "./GearSlot";
+import GearSlot, { DisplaySlot } from "./GearSlot";
+import { ISetSelection } from "../pages/build/BuildStateContext";
 
 const GearView = styled.div``;
 
@@ -12,7 +13,7 @@ const { Title } = Typography;
 export interface IGearSetup {
   id: string;
   label: string;
-  data: IGearSlot[];
+  data: ISetSelection[];
 }
 
 export interface IEnchants {
@@ -31,19 +32,9 @@ interface IGearViewProps {
   setups: IGearSetup[];
   droppable?: boolean;
   disabled?: boolean;
-  newGear?: boolean;
-  enchants?: IEnchants;
-  traits?: ITraits;
 }
 
-export default ({
-  setups,
-  droppable,
-  newGear,
-  disabled,
-  enchants,
-  traits
-}: IGearViewProps) => {
+export default ({ setups, droppable, disabled }: IGearViewProps) => {
   return (
     <GearView>
       {setups.map((setup: IGearSetup, index) => (
@@ -55,7 +46,7 @@ export default ({
             align="center"
             style={{ flexWrap: "wrap" }}
           >
-            {setup.data.map((slot: IGearSlot, index: number) => {
+            {setup.data.map((slot: ISetSelection, index: number) => {
               return disabled ? (
                 <DisplaySlot slot={slot} />
               ) : (
