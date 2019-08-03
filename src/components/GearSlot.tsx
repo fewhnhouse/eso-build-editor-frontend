@@ -134,8 +134,6 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
         : [])
     ],
     drop: (item: any, monitor) => {
-      console.log("drop", item, group);
-
       dispatch!({
         type: "DROP_SET_ITEM",
         payload: {
@@ -157,7 +155,7 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
       <GearFrame
         canDrop={droppable && canDrop}
         hasIcon={slot.icon !== undefined}
-        ref={drop}
+        ref={droppable ? drop : undefined}
         backgroundSource={getImageSource(slot.slot)}
       >
         {slot.icon !== undefined && isDragging ? (
