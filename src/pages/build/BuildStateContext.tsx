@@ -72,6 +72,12 @@ export interface ISetSelection {
   icon?: string;
   slot: Slot;
   selectedSet?: ISet;
+  type?:
+    | "lightarmor"
+    | "mediumarmor"
+    | "heavyarmor"
+    | "onehanded"
+    | "twohanded";
   trait?: ITrait;
   glyph?: IGlyph;
 }

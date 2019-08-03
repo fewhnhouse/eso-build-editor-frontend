@@ -57,7 +57,7 @@ const getSetups = ({
       data: bigPieceSelection.map(bigPiece => ({
         slot: bigPiece.slot,
         icon: selectArmor(armorType, bigPiece.slot),
-        selectedSet: bigPiece.selectedSet,
+        selectedSet,
         glyph: bigPiece.glyph,
         trait: bigPiece.trait
       }))
@@ -68,7 +68,7 @@ const getSetups = ({
       data: smallPieceSelection.map(smallPiece => ({
         slot: smallPiece.slot,
         icon: selectArmor(armorType, smallPiece.slot),
-        selectedSet: smallPiece.selectedSet,
+        selectedSet,
         glyph: smallPiece.glyph,
         trait: smallPiece.trait
       }))
@@ -79,7 +79,7 @@ const getSetups = ({
       data: jewelrySelection.map(jewelry => ({
         slot: jewelry.slot,
         icon: selectJewelry(jewelry.slot),
-        selectedSet: jewelry.selectedSet,
+        selectedSet,
         glyph: jewelry.glyph,
         trait: jewelry.trait
       }))
@@ -165,27 +165,6 @@ export default () => {
     selectedSet
   } = state!;
 
-  const mainWeapon =
-    weaponType === "onehanded" && weapons[0]
-      ? weapons[0]
-          .toString()
-          .split("main-")[1]
-          .toLowerCase()
-      : "";
-  const offWeapon =
-    weaponType === "onehanded" && weapons[1]
-      ? weapons[1]
-          .toString()
-          .split("off-")[1]
-          .toLowerCase()
-      : "";
-  const twoWeapon =
-    weaponType === "twohanded" && weapons[0]
-      ? weapons[0]
-          .toString()
-          .split("two-")[1]
-          .toLowerCase()
-      : "";
   const armor = armorType.split("armor")[0];
   const mySetups = getSetups({
     armorType: armor,

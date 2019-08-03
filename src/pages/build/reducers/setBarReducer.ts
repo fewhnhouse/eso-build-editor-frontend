@@ -2,6 +2,7 @@ import { IBuildAction, IBuildState, Slot } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
+  console.log(state);
   switch (action.type) {
     case "DROP_SET_ITEM":
       const {
@@ -42,12 +43,14 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                     selectedSet: set,
                     slot,
                     icon,
+                    type: state.weaponType,
                     glyph: frontbar.glyph,
                     trait: frontbar.trait
                   }
                 : {
                     selectedSet: undefined,
                     slot: frontbar.slot,
+                    type: undefined,
                     icon: undefined,
                     trait: undefined,
                     glyph: undefined
@@ -63,6 +66,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   selectedSet: set,
                   slot,
                   icon,
+                  type: state.weaponType,
                   glyph: frontbar.glyph,
                   trait: frontbar.trait
                 }
@@ -79,12 +83,14 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                     selectedSet: set,
                     slot,
                     icon,
+                    type: state.weaponType,
                     glyph: backbar.glyph,
                     trait: backbar.trait
                   }
                 : {
                     selectedSet: undefined,
                     slot: backbar.slot,
+                    type: undefined,
                     icon: undefined,
                     trait: undefined,
                     glyph: undefined
@@ -100,6 +106,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   selectedSet: set,
                   slot,
                   icon,
+                  type: state.weaponType,
                   glyph: backbar.glyph,
                   trait: backbar.trait
                 }
@@ -115,6 +122,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   selectedSet: set,
                   slot,
                   icon,
+                  type: state.armorType,
                   glyph: bigPiece.glyph,
                   trait: bigPiece.trait
                 }
@@ -130,6 +138,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   selectedSet: set,
                   slot,
                   icon,
+                  type: state.armorType,
                   glyph: smallPiece.glyph,
                   trait: smallPiece.trait
                 }
