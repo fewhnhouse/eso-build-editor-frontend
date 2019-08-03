@@ -25,22 +25,22 @@ export interface IBuildState {
     selectedSkills: ISkillSelection[];
     selectedUltimate?: ISkill;
   }[];
-  ultimateOne?: ISkill;
-  ultimateTwo?: ISkill;
+  newActiveBar: ISkillSelection[];
   selectedSet?: ISet;
   weaponType: "onehanded" | "twohanded";
   armorType: "lightarmor" | "mediumarmor" | "heavyarmor";
   weapons: SelectValue[];
+  setTabKey: "armor" | "jewelry" | "frontbar" | "backbar";
   race: string;
   class: string;
-  setTabKey: "armor" | "jewelry" | "weapons";
   bigPieceSelection: ISetSelection[];
   smallPieceSelection: ISetSelection[];
   jewelrySelection: ISetSelection[];
   frontbarSelection: ISetSelection[];
   backbarSelection: ISetSelection[];
   newBarOne: ISkillSelection[];
-  newActiveBar: ISkillSelection[];
+  ultimateOne?: ISkill;
+  ultimateTwo?: ISkill;
   newBarTwo: ISkillSelection[];
   mundus: IMundus;
   buff: ISpecialBuff;
@@ -222,7 +222,7 @@ export const defaultBuildState = {
   weapons: ["", ""],
   race: "",
   class: "",
-  setTabKey: "weapons"
+  setTabKey: "armor"
 };
 
 export interface IBuildAction {
