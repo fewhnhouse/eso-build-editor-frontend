@@ -10,6 +10,11 @@ const GearView = styled.div``;
 
 const { Title } = Typography;
 
+const StyledTitle = styled(Title)`
+  margin-bottom: 5px !important;
+  margin-top: 10px;
+`
+
 export interface IGearSetup {
   id: string;
   label: string;
@@ -39,7 +44,7 @@ export default ({ setups, droppable, disabled }: IGearViewProps) => {
     <GearView>
       {setups.map((setup: IGearSetup, index) => (
         <div key={"setup" + index}>
-          <Title level={4}>{setup.label}</Title>
+          <StyledTitle level={4}>{setup.label}</StyledTitle>
           <Flex
             direction="row"
             justify="center"
