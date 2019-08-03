@@ -143,7 +143,7 @@ export default ({
     })
   });
   return (
-    <SkillFrame ref={drop} style={style}>
+    <SkillFrame ref={droppable ? drop : undefined} style={style}>
       {skill !== undefined && !isDragging ? (
         <Popover
           placement={tooltipPos}

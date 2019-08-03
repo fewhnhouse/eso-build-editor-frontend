@@ -112,6 +112,7 @@ export default () => {
         <Divider>Active Selection</Divider>
         <AbilityBar>
           <SkillView
+            droppable={false}
             abilityBar={-1}
             id={ACTIVE_BAR}
             skillSlots={activeBarSkills}
