@@ -68,7 +68,7 @@ const CostSpan = styled.span`
       ? '#2980b9'
       : props.type === 'Stamina'
       ? '#27ae60'
-      : '#4b6584'};
+      : '#e74c3c'};
 `
 
 const MorphLabel = styled.span`
