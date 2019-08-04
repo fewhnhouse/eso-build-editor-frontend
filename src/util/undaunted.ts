@@ -227,7 +227,7 @@ export const undaunted = [
     {
         name: "Domihaus",
         type: "shoulders",
-        icon: "domihaus_shoulders.png"
+        icon: "minotaur_shoulders.png"
     },
     {
         name: "Pirate Skeleton",
