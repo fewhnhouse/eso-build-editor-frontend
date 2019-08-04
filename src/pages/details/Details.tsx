@@ -4,19 +4,18 @@ import styled, { withTheme, ThemeProps } from "styled-components";
 import { chooseClass } from "../../util/utils";
 import { Divider, Layout, Typography } from "antd";
 import GearView from "../../components/GearView";
-import { food, immoPot, triPot } from "../../assets/deco";
+import { immoPot, triPot } from "../../assets/deco";
 import Flex from "../../components/Flex";
 import { ITheme } from "../../components/globalStyles";
 import SkillView from "../../components/SkillView";
 import {
   IBuildState,
-  Slot,
   defaultBuildState
 } from "../build/BuildStateContext";
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
 
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface IDetails extends ThemeProps<ITheme>, RouteComponentProps<any> {}
 
@@ -29,31 +28,134 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: ${props => props.theme.mainBg};
-`;
-
+`
 const StyledTitle = styled(Title)`
-  margin-top: 30px;
-  text-align: center;
+  margin-bottom: 5px !important;
+`
+const Wrapper = styled(Flex)`
+`
+const RightSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px;
+`
+const LeftSide = styled.div`
+  max-width: 500px;
+`
+const SkillsView = styled.div`
+  margin-bottom: 10px;
+`
+const MiscView = styled.div`
+  max-width: 500px;
+`
+const ClassImg = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+`
+
+const Details = ({ match, theme }: IDetails) => {
+  const buildState = localStorage.getItem("buildState");
+  const parsedBuildState: IBuildState = buildState
+    ? JSON.parse(buildState)
+    : defaultBuildState;
+
+  const {
+    bigPieceSelection,
+    smallPieceSelection,
+    frontbarSelection,
+    backbarSelection,
+    jewelrySelection,
+    mundus,
+    buff
+    } = parsedBuildState;
+
+  const selectedSetup = [
+    {
+      id: "bigpieces",
+      label: "Big Pieces",
+      data: bigPieceSelection || []
+    },
+    {
+      id: "smallpieces",
+      label: "Small Pieces",
+      data: smallPieceSelection || []
+    },
+    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
+    {
+      id: "frontbar",
+      label: "Frontbar",
+      data: frontbarSelection || []
+    },
+    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
+  ];
+
+  const splitDesc = (desc: string) => {
+    const newDesc = desc.split(".", 2).map(item => {
+      return <span>{item}.<br/></span>
+    })
+    return (newDesc)
+  }
+
+  return (
+    <Container>
+      <Title level={1}>
+        <ClassImg
+          title={parsedBuildState.class}
+          src={chooseClass(parsedBuildState.class)}
+        />
+        {parsedBuildState.class}
+      </Title>
+      <Wrapper direction="row" align="flex-start" justify="space-evenly" wrap fluid>
+        <LeftSide>
+          <Divider />
+          <GearView disabled setups={selectedSetup} />
+        </LeftSide>
+        <RightSide>
+        <Divider />
+          <SkillsView>
+            <StyledTitle level={4}>Skills</StyledTitle>
+            <SkillView
+              id={ABILITY_BAR_ONE}
+              disabled={true}
+              skillSlots={parsedBuildState.newBarOne}
+            />
+            <SkillView
+              id={ABILITY_BAR_TWO}
+              disabled={true}
+              skillSlots={parsedBuildState.newBarTwo}
+            />
+          </SkillsView>
+          <Divider />
+          <MiscView>
+            <StyledTitle level={4}>Mundus</StyledTitle>
+            <Flex direction="row" justify="center" align="center">
+              <ClassImg src={mundus.icon} />
+              <Text strong>{mundus.name}</Text><br />
+            </Flex>
+            <Text> {mundus.effect} by {mundus.value}.</Text>
+            <Divider />
+            <StyledTitle level={4}>Consumables</StyledTitle>
+            <ClassImg src={buff.icon} /><Text strong>{buff.name}</Text> <br />
+            <Text>{splitDesc(buff.buffDescription)}</Text>
+          </MiscView>
+        </RightSide>
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default withTheme(withRouter(Details));
+
+/*
+const StatsView = styled.div`
+  text-align: left;
 `;
 
 const StyledStatLabel = styled.span`
   float: right;
   color: ${(props: { color: string }) => props.color || ""};
-`;
-
-const Wrapper = styled(Flex)`
-  text-align: center;
-`;
-
-const StatsView = styled.div`
-  text-align: left;
-`;
-
-const SkillsView = styled.div``;
-
-const ClassImg = styled.img`
-  width: 35px;
-  height: 35px;
 `;
 
 const stats = [
@@ -108,101 +210,24 @@ const statColor = (label: string, theme: ITheme) => {
   } else return "";
 };
 
-const Details = ({ match, theme }: IDetails) => {
-  const buildState = localStorage.getItem("buildState");
-  const parsedBuildState: IBuildState = buildState
-    ? JSON.parse(buildState)
-    : defaultBuildState;
+  <StatsView>
+    <StyledTitle level={3}>Stats</StyledTitle>
+    <Divider />
+    {stats.map((stat, index) => (
+      <div key={index}>
+        {stat.data.map((innerStats, innerIndex) => (
+          <div key={innerIndex}>
+            <Title level={4}>
+              {innerStats.label}
+              <StyledStatLabel color={statColor(innerStats.label, theme)}>
+                {innerStats.value}
+              </StyledStatLabel>
+            </Title>
+          </div>
+        ))}
+        <Divider />
+      </div>
+    ))}
+  </StatsView>
 
-  const {
-    bigPieceSelection,
-    smallPieceSelection,
-    frontbarSelection,
-    backbarSelection,
-    jewelrySelection,
-    mundus,
-    buff
-  } = parsedBuildState;
-
-  const selectedSetup = [
-    {
-      id: "bigpieces",
-      label: "Big Pieces",
-      data: bigPieceSelection || []
-    },
-    {
-      id: "smallpieces",
-      label: "Small Pieces",
-      data: smallPieceSelection || []
-    },
-    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
-    {
-      id: "frontbar",
-      label: "Frontbar",
-      data: frontbarSelection || []
-    },
-    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
-  ];
-  return (
-    <Container>
-      <Title level={3}>
-        <ClassImg
-          title={match.params.name}
-          src={chooseClass(match.params.name)}
-        />
-        {match.params.name}
-      </Title>
-      <Wrapper
-        direction="row"
-        align="baseline"
-        justify="space-around"
-        wrap
-        fluid
-      >
-        <GearView disabled setups={selectedSetup} />
-        <SkillsView>
-          <StyledTitle level={3}>Skills</StyledTitle>
-          <Divider />
-          <SkillView
-            id={ABILITY_BAR_ONE}
-            disabled={true}
-            skillSlots={parsedBuildState.newBarOne}
-          />
-          <SkillView
-            id={ABILITY_BAR_TWO}
-            disabled={true}
-            skillSlots={parsedBuildState.newBarTwo}
-          />
-          <Divider />
-          <Title level={3}>Mundus</Title>
-          <Title level={4}>{mundus.name}: {mundus.effect} by {mundus.value}.</Title>
-          <Divider />
-          <Title level={3}>Consumables</Title>
-          <Title level={4}>{buff.name}: <br /> {buff.buffDescription} </Title> <br />
-          <ClassImg src={immoPot} /> <ClassImg src={triPot} />
-        </SkillsView>
-        <StatsView>
-          <StyledTitle level={3}>Stats</StyledTitle>
-          <Divider />
-          {stats.map((stat, index) => (
-            <div key={index}>
-              {stat.data.map((innerStats, innerIndex) => (
-                <div key={innerIndex}>
-                  <Title level={4}>
-                    {innerStats.label}
-                    <StyledStatLabel color={statColor(innerStats.label, theme)}>
-                      {innerStats.value}
-                    </StyledStatLabel>
-                  </Title>
-                </div>
-              ))}
-              <Divider />
-            </div>
-          ))}
-        </StatsView>
-      </Wrapper>
-    </Container>
-  );
-};
-
-export default withTheme(withRouter(Details));
+*/
