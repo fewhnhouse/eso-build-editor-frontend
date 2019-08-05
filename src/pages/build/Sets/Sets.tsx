@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 
 const AbilityContainer = styled.div`
   flex: 2;
-  overflow: auto;
+  overflow-y: auto;
   padding: 40px;
 `;
 

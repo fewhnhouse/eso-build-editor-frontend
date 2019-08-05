@@ -40,7 +40,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000',
+  uri: process.env.REACT_APP_GRAPHQL_URL,
   headers: {
     headers: {
       authorization: localStorage.getItem('auth-token') || '',
