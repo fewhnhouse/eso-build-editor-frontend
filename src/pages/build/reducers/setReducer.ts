@@ -160,7 +160,6 @@ const updateStats = (
   stateStats: ISetSelection[],
   slots: Slot[]
 ) => {
-  console.log(slots, value, stateStats, type);
   return stateStats.map(stat =>
     slots.includes(stat.slot)
       ? {
