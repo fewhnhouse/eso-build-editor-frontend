@@ -166,12 +166,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [createBuild] = useMutation<any, any>(CREATE_BUILD)
   const { mundus, buff, ultimateOne, ultimateTwo } = state!
 
-  const selectedMundus: any = useQuery(GET_MUNDUS_STONE, {
-    variables: { name: mundus.name },
-  })
-  const selectedBuff: any = useQuery(GET_BUFF, {
-    variables: { name: buff.name },
-  })
   const selectedUltimateOne: any = useQuery(GET_SKILL, {
     variables: { id: ultimateOne ? ultimateOne.id : 0 },
   })
@@ -275,7 +269,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
 
     console.log(
       bigPieceSetSelections,
-      smallPieceSelection,
+      smallPieceSetSelections,
       jewelrySetSelections,
       frontbarSetSelections,
       backbarSetSelections,
@@ -289,8 +283,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           name: 'Test Build',
           race,
           esoClass: 'Warden',
-          mundusStone: { connect: { id: selectedMundus.id } },
-          buff: { connect: { id: selectedBuff.id } },
+          mundusStone: { connect: { name: mundus.name } },
+          buff: { connect: { name: buff.name } },
           bigPieceSelection: {
             connect: bigPieceSetSelections.data.createSetSelections.map(
               (selection: any) => ({
@@ -326,8 +320,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
               })
             ),
           },
-          ultimateOne: { connect: { id: selectedUltimateOne.id } },
-          ultimateTwo: { connect: { id: selectedUltimateTwo.id } },
+          ultimateOne: { connect: { skillId: ultimateOne ? ultimateOne.id : 0 } },
+          ultimateTwo: { connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 } },
           newBarOne: {
             connect: frontbarSkillSelections.data.createSkillSelections.map(
               (selection: any) => ({
