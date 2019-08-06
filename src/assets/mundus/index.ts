@@ -39,7 +39,7 @@ export const mundusStones: IMundus[] = [
     id: 1
   },
   {
-    name: "The Atronarch",
+    name: "The Atronach",
     location: {
       aldmeri: "Greenshade",
       daggerfall: "Rivenspire",

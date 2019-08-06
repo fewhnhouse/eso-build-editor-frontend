@@ -12,7 +12,7 @@ const { CheckableTag } = Tag;
 
 const ListContainer = styled.div`
   width: ${(props: { collapsed: boolean }) => (props.collapsed ? "60px" : "")};
-  flex: ${(props: { collapsed: boolean }) => (props.collapsed ? 0 : 1)};
+  flex: ${(props: { collapsed: boolean }) => (props.collapsed ? "" : 1)};
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
