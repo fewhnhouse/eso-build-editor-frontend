@@ -1,39 +1,16 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import {
-  Typography,
-  Input,
-  Divider,
-  InputNumber,
-  Radio,
-  Form,
-  Select,
-  Checkbox,
-} from 'antd';
+import { Typography, Input, Divider, Select } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Flex from '../../../components/Flex';
-import TextArea from 'antd/lib/input/TextArea';
 import { RaidContext } from '../RaidStateContext';
+import AccessRights from './AccessRights';
 
-const { Title, Text } = Typography;
 const GeneralContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
 `;
-
-const Wrapper = styled(Flex)`
-  width: 100%;
-`;
-const LeftSide = styled(Flex)`
-  width: 500px;
-  max-width: 800px;
-`;
-const RightSide = styled(Flex)`
-  width: 500px;
-  max-width: 800px;
-`;
-const ContentFlex = styled(Flex)``;
 
 const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [state, dispatch] = useContext(RaidContext);
@@ -56,20 +33,6 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
       payload: { applicationArea: value },
     });
   };
-
-  const handleEditChange = (values:string[]) => {
-    dispatch!({
-      type: 'SET_CAN_EDIT',
-      payload: { canEdit: values },
-    });
-  }
-
-  const handleViewChange = (values: string[]) => {
-    dispatch!({
-      type: 'SET_CAN_VIEW',
-      payload: { canView: values },
-    });
-  }
 
   return (
     <>
@@ -141,52 +104,7 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
       </GeneralContainer>
       <Divider>Access Rights</Divider>
       <GeneralContainer>
-        <Flex direction="row" justify="space-around" align="center">
-          <Flex
-            style={{ flex: 1, margin: 10 }}
-            direction="column"
-            justify="flex-start"
-            align="center"
-          >
-            <Typography.Text strong>Can Edit</Typography.Text>
-
-            <Select
-              mode="multiple"
-              style={{ width: 300 }}
-              defaultValue={canEdit}
-              onChange={handleEditChange}
-              size="large"
-              placeholder="Select users..."
-            >
-              <Select.Option value="user1">User1</Select.Option>
-              <Select.Option value="user2">User2</Select.Option>
-              <Select.Option value="user3">User3</Select.Option>
-              <Select.Option value="user4">User4</Select.Option>
-            </Select>
-          </Flex>
-          <Flex
-            style={{ flex: 1, margin: 10 }}
-            direction="column"
-            justify="flex-start"
-            align="center"
-          >
-            <Typography.Text strong>Can View</Typography.Text>
-
-            <Select
-              mode="multiple"
-              style={{ width: 300 }}
-              defaultValue={canView}
-              onChange={handleViewChange}
-              size="large"
-              placeholder="Select users..."
-            >
-              <Select.Option value="user1">User1</Select.Option>
-              <Select.Option value="user2">User2</Select.Option>
-              <Select.Option value="user3">User3</Select.Option>
-              <Select.Option value="user4">User4</Select.Option>
-            </Select>
-          </Flex>
-        </Flex>
+        <AccessRights />
       </GeneralContainer>
     </>
   );
