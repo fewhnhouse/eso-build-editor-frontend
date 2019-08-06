@@ -111,9 +111,7 @@ export default () => {
   const handleBuildNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_BUILD_NAME', payload: { name: e.target.value } });
   };
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
       type: 'SET_DESCRIPTION',
       payload: { description: e.target.value },
@@ -144,16 +142,16 @@ export default () => {
     <div>
       <Divider>General Information</Divider>
       <GeneralContainer>
-        <Flex direction="row" justify="space-around" align="center">
+        <Flex direction="column" justify="space-around" align="center">
           <Flex
-            style={{  margin: 10, width: 250 }}
+            style={{ margin: 10, width: 400 }}
             direction="column"
             justify="flex-start"
             align="flex-start"
           >
             <Typography.Text strong>Build Name</Typography.Text>
             <Input
-              style={{ width: 250 }}
+              style={{ width: 400 }}
               size="large"
               value={name}
               onChange={handleBuildNameChange}
@@ -161,14 +159,31 @@ export default () => {
             />
           </Flex>
           <Flex
-            style={{  margin: 10, width: 250 }}
+            style={{ margin: 10, width: 400 }}
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Typography.Text strong>Description</Typography.Text>
+
+            <Input
+              size="large"
+              style={{ width: 400 }}
+              value={description}
+              onChange={handleDescriptionChange}
+              placeholder="Type description..."
+            />
+          </Flex>
+
+          <Flex
+            style={{ margin: 10, width: 400 }}
             direction="column"
             justify="flex-start"
             align="flex-start"
           >
             <Typography.Text strong>Application Area</Typography.Text>
             <Select
-              style={{ width: 250 }}
+              style={{ width: 400 }}
               value={applicationArea}
               onChange={handleApplicationAreaChange}
               size="large"
@@ -194,7 +209,7 @@ export default () => {
           </Flex>
 
           <Flex
-            style={{  margin: 10, width: 250 }}
+            style={{ margin: 10, width: 400 }}
             direction="column"
             justify="flex-start"
             align="flex-start"
@@ -203,7 +218,7 @@ export default () => {
 
             <Select
               size="large"
-              style={{ width: 250 }}
+              style={{ width: 400 }}
               value={role}
               onChange={handleRoleChange}
               placeholder="Select application area..."
@@ -214,22 +229,6 @@ export default () => {
               <Select.Option value="pve_raid">Tank</Select.Option>
             </Select>
           </Flex>
-        </Flex>
-        <Flex
-          style={{ flex: 1, margin: 'auto' }}
-          direction="column"
-          justify="flex-start"
-          align="center"
-        >
-          <Typography.Text strong>Description</Typography.Text>
-
-          <TextArea
-            rows={3}
-            style={{ width: 400 }}
-            value={description}
-            onChange={handleDescriptionChange}
-            placeholder="Type description..."
-          />
         </Flex>
         <Flex
           style={{ flex: 1, margin: 10 }}

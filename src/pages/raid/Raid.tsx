@@ -1,11 +1,29 @@
-import React, { useState, useReducer } from "react";
-import styled from "styled-components";
-import { Layout, Icon, Button, Steps, Tooltip, Typography, Input, Divider, InputNumber, Radio, Form } from "antd";
-import { RouteComponentProps, Redirect } from "react-router";
-import Flex from "../../components/Flex";
-import TextArea from "antd/lib/input/TextArea";
-import { BuildContext, buildReducer, defaultBuildState } from "../build/BuildStateContext";
-import RaidGeneral from "./RaidGeneral/RaidGeneral";
+import React, { useState, useReducer, useEffect } from 'react';
+import styled from 'styled-components';
+import {
+  Layout,
+  Icon,
+  Button,
+  Steps,
+  Tooltip,
+  Typography,
+  Input,
+  Divider,
+  InputNumber,
+  Radio,
+  Form,
+  message,
+} from 'antd';
+import { RouteComponentProps, Redirect } from 'react-router';
+import Flex from '../../components/Flex';
+import TextArea from 'antd/lib/input/TextArea';
+import {
+  BuildContext,
+  buildReducer,
+  defaultBuildState,
+} from '../build/BuildStateContext';
+import RaidGeneral from './RaidGeneral/RaidGeneral';
+import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -23,28 +41,44 @@ const Container = styled(Content)`
 `;
 
 const Wrapper = styled(Flex)`
- width: 100%;
-`
+  width: 100%;
+`;
 const LeftSide = styled(Flex)`
   width: 500px;
   max-width: 800px;
-`
+`;
 const RightSide = styled(Flex)`
   width: 500px;
   max-width: 800px;
-`
-const ContentFlex = styled(Flex)``
+`;
+const ContentFlex = styled(Flex)``;
 
 const TabButton = styled(Button)`
   margin: 0px 10px;
 `;
 
+export default ({
+  match,
+  location,
+  history,
+}: RouteComponentProps<{ id: string }>) => {
+  const savedRaidState = localStorage.getItem('raidState');
 
-export default ({ match, location, history }: RouteComponentProps<{ id: string }>) => {
+  useEffect(() => {
+    const savedRaidState = localStorage.getItem('raidState');
+    if (savedRaidState) {
+      console.log(JSON.parse(savedRaidState));
+      message.info('Your settings have been restored.');
+    }
+  }, []);
+  const [state, dispatch] = useReducer(
+    raidReducer,
+    savedRaidState ? JSON.parse(savedRaidState) : defaultRaidState
+  );
   //goggle.de?search=finland
-  const { id } = match.params
+  const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10));
-  
+
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
   };
@@ -56,31 +90,31 @@ export default ({ match, location, history }: RouteComponentProps<{ id: string }
   const setTooltipTitle = () => {
     switch (tab) {
       case 0:
-        return "Select some general Information.";
+        return 'Select some general Information.';
       case 1:
-        return "Select the builds of your Setup.";
+        return 'Select the builds of your Setup.';
       case 2:
-        return "Confirm and Save.";
+        return 'Confirm and Save.';
     }
   };
 
   return (
-    <>
+    <RaidContext.Provider value={[state, dispatch]}>
       <Container>
         {id === '0' ? (
           <RaidGeneral />
         ) : id === '1' ? (
-          <RaidGeneral/>
+          <RaidGeneral />
         ) : (
-          <Redirect to='/raid/0' />
+          <Redirect to="/raid/0" />
         )}
       </Container>
       <Footer
         style={{
-          display: "flex",
+          display: 'flex',
           zIndex: 100,
-          alignItems: "center",
-          boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)"
+          alignItems: 'center',
+          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
         }}
       >
         <TabButton
@@ -94,18 +128,18 @@ export default ({ match, location, history }: RouteComponentProps<{ id: string }
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
-            style={{ whiteSpace: "nowrap" }}
+            style={{ whiteSpace: 'nowrap' }}
             title="General Information"
             description="Add general Raid info."
           />
           <Step
-            style={{ whiteSpace: "nowrap" }}
+            style={{ whiteSpace: 'nowrap' }}
             title="Builds"
             description="Add builds to your setup."
           />
           <Step
             title="Review"
-            style={{ whiteSpace: "nowrap" }}
+            style={{ whiteSpace: 'nowrap' }}
             description="Review and save."
           />
         </Steps>
@@ -122,6 +156,6 @@ export default ({ match, location, history }: RouteComponentProps<{ id: string }
         </Tooltip>
         <Redirect to={`/raid/${tab}`} push />
       </Footer>
-    </>
+    </RaidContext.Provider>
   );
 };
