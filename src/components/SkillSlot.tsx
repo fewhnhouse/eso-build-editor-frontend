@@ -11,6 +11,7 @@ interface ISkillSlotProps {
   skillIndex: number;
   style?: React.CSSProperties;
   abilityBar?: number;
+  size?: 'small' | 'normal';
   skill?: ISkill;
   tooltipPos?: 'top' | 'bottom' | undefined;
 }
@@ -37,16 +38,20 @@ const SkillFrame = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '64px' : '48px'};
+  height: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '64px' : '48px'};
   margin: 0;
   background-image: url(${abilityFrame});
   background-repeat: no-repeat;
 `;
 
 const SkillImg = styled.img`
-  width: 59px;
-  height: 59px;
+  width: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '59px' : '43px'};
+  height: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '59px' : '43px'};
 `;
 
 export default ({
@@ -56,6 +61,7 @@ export default ({
   tooltipPos,
   abilityBar,
   style,
+  size = 'normal',
 }: ISkillSlotProps) => {
   const [, dispatch] = useContext(BuildContext);
   const [{ isDragging, didDrop }, drag] = useDrag({
@@ -143,13 +149,14 @@ export default ({
     }),
   });
   return (
-    <SkillFrame ref={droppable ? drop : undefined} style={style}>
+    <SkillFrame size={size} ref={droppable ? drop : undefined} style={style}>
       {skill !== undefined && !isDragging ? (
         <Popover
           placement={tooltipPos}
           content={<SkillCardContent skill={skill} />}
         >
           <SkillImg
+            size={size}
             ref={drag}
             src={`https://beast.pathfindermediagroup.com/storage/skills/${
               skill.icon
@@ -158,6 +165,7 @@ export default ({
         </Popover>
       ) : skill !== undefined ? (
         <SkillImg
+          size={size}
           ref={drag}
           src={`https://beast.pathfindermediagroup.com/storage/skills/${
             skill.icon
@@ -173,14 +181,17 @@ export default ({
 export const DisplaySlot = ({
   skill,
   style,
+  size = 'small',
 }: {
   skill?: ISkill;
   style?: CSSProperties;
+  size?: 'small' | 'normal';
 }) => {
   return skill !== undefined ? (
-    <SkillFrame style={style}>
+    <SkillFrame size={size} style={style}>
       <Popover placement={'top'} content={<SkillCardContent skill={skill} />}>
         <SkillImg
+          size={size}
           src={`https://beast.pathfindermediagroup.com/storage/skills/${
             skill.icon
           }`}
@@ -188,6 +199,6 @@ export const DisplaySlot = ({
       </Popover>
     </SkillFrame>
   ) : (
-    <SkillFrame style={style}/>
+    <SkillFrame size={size} style={style} />
   );
 };
