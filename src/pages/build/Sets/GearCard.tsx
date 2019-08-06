@@ -19,14 +19,6 @@ const StyledCard = styled(Card)`
 const Container = styled.div`
   width: 350px;
 `;
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-`;
-const AvatarContainer = styled.div`
-  padding-right: 16px;
-`;
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;

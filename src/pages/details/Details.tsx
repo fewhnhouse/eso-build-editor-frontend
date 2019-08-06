@@ -137,7 +137,7 @@ const Details = ({ match, theme }: IDetails) => {
             <Text> {mundus ? mundus.effect : "Mundus effect"} by {mundus? mundus.value : "mundus value"}.</Text>
             <Divider />
             <StyledTitle level={4}>Consumables</StyledTitle>
-            <ClassImg src={buff? buff.icon : "Buff icon"} /><Text strong>{buff? buff.name: "Buff name"}{buff.type ? `, `+buff.type : "Buff type"}</Text> <br />
+            <ClassImg src={buff? buff.icon : "Buff icon"} /><Text strong>{buff? buff.name: "Buff name"}{buff? buff.type : "Buff type"}</Text> <br />
             <Text>{splitDesc(buff? buff.buffDescription : "description")}</Text>
           </MiscView>
         </RightSide>
