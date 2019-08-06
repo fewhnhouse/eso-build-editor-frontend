@@ -7,23 +7,14 @@ import {
   Steps,
   Tooltip,
   Typography,
-  Input,
-  Divider,
-  InputNumber,
-  Radio,
-  Form,
   message,
 } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router';
 import Flex from '../../components/Flex';
-import TextArea from 'antd/lib/input/TextArea';
-import {
-  BuildContext,
-  buildReducer,
-  defaultBuildState,
-} from '../build/BuildStateContext';
-import RaidGeneral from './RaidGeneral/RaidGeneral';
+
+import RaidGeneral from './general/RaidGeneral';
 import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
+import Builds from './builds/Builds';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -104,7 +95,7 @@ export default ({
         {id === '0' ? (
           <RaidGeneral />
         ) : id === '1' ? (
-          <RaidGeneral />
+          <Builds />
         ) : (
           <Redirect to="/raid/0" />
         )}

@@ -1,21 +1,21 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer, useEffect } from 'react';
 import {
   BuildContext,
   buildReducer,
   defaultBuildState,
-} from './BuildStateContext'
-import { RouteComponentProps, Redirect } from 'react-router'
-import { Layout, Button, Steps, Icon, message, Tooltip } from 'antd'
-import styled from 'styled-components'
-import Consumables from './consumables/Consumables'
-import Sets from './Sets/Sets'
-import Skills from './Skills/Skills'
-import RaceClass from './RaceAndClass/RaceClass'
-import Details from '../details/Details'
-import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+} from './BuildStateContext';
+import { RouteComponentProps, Redirect } from 'react-router';
+import { Layout, Button, Steps, Icon, message, Tooltip } from 'antd';
+import styled from 'styled-components';
+import Consumables from './consumables/Consumables';
+import Sets from './Sets/Sets';
+import Skills from './Skills/Skills';
+import RaceClass from './RaceAndClass/RaceClass';
+import Details from '../details/Details';
+import gql from 'graphql-tag';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 
-const { Footer, Content } = Layout
+const { Footer, Content } = Layout;
 
 const Container = styled(Content)`
   display: flex;
@@ -26,10 +26,10 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: rgb(155, 155, 155);
-`
+`;
 const TabButton = styled(Button)`
   margin: 0px 10px;
-`
+`;
 
 interface IBuildCreateData {}
 const CREATE_BUILD = gql`
@@ -39,7 +39,7 @@ const CREATE_BUILD = gql`
       name
     }
   }
-`
+`;
 
 const GET_SKILL = gql`
   query skill($id: Int!) {
@@ -47,7 +47,7 @@ const GET_SKILL = gql`
       id
     }
   }
-`
+`;
 
 const GET_MUNDUS_STONE = gql`
   query mundusStone($name: String) {
@@ -55,7 +55,7 @@ const GET_MUNDUS_STONE = gql`
       id
     }
   }
-`
+`;
 
 const GET_BUFF = gql`
   query buff($name: String!) {
@@ -63,7 +63,7 @@ const GET_BUFF = gql`
       id
     }
   }
-`
+`;
 
 const GET_RACE = gql`
   query race($name: String!) {
@@ -71,7 +71,7 @@ const GET_RACE = gql`
       id
     }
   }
-`
+`;
 
 const GET_CLASS = gql`
   query class($name: String!) {
@@ -79,7 +79,7 @@ const GET_CLASS = gql`
       id
     }
   }
-`
+`;
 
 //where: { setId_in: [10, 11, 12] }
 const GET_SETS = gql`
@@ -88,7 +88,7 @@ const GET_SETS = gql`
       id
     }
   }
-`
+`;
 //where: { skillId_in: [10, 11, 12] }
 const GET_SKILLS = gql`
   query skills($where: SkillWhereInput!) {
@@ -96,13 +96,20 @@ const GET_SKILLS = gql`
       id
     }
   }
-`
+`;
 
 interface ISetSelectionData {
-  slots: string[]
-  glyphDescriptions: string[]
-  traitDescriptions: string[]
-  setIds: number[]
+  slots: string[];
+  glyphDescriptions: string[];
+  traitDescriptions: string[];
+  setIds: number[];
+  types: (
+    | 'onehanded'
+    | 'mediumarmor'
+    | 'twohanded'
+    | 'lightarmor'
+    | 'heavyarmor'
+    | undefined)[];
 }
 
 const CREATE_SET_SELECTIONS = gql`
@@ -121,11 +128,11 @@ const CREATE_SET_SELECTIONS = gql`
       id
     }
   }
-`
+`;
 
 interface ISkillSelectionData {
-  skillIds: number[]
-  indices: number[]
+  skillIds: number[];
+  indices: number[];
 }
 
 const CREATE_SKILL_SELECTIONS = gql`
@@ -134,44 +141,44 @@ const CREATE_SKILL_SELECTIONS = gql`
       id
     }
   }
-`
-const { Step } = Steps
+`;
+const { Step } = Steps;
 export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
-  const savedBuildState = localStorage.getItem('buildState')
+  const savedBuildState = localStorage.getItem('buildState');
 
   useEffect(() => {
-    const savedBuildState = localStorage.getItem('buildState')
+    const savedBuildState = localStorage.getItem('buildState');
     if (savedBuildState) {
-      console.log(JSON.parse(savedBuildState))
-      message.info('Your settings have been restored.')
+      console.log(JSON.parse(savedBuildState));
+      message.info('Your settings have been restored.');
     }
-  }, [])
+  }, []);
   const [state, dispatch] = useReducer(
     buildReducer,
     savedBuildState ? JSON.parse(savedBuildState) : defaultBuildState
-  )
-  const { id } = match.params
-  const [tab, setTab] = useState(parseInt(id, 10) || 0)
+  );
+  const { id } = match.params;
+  const [tab, setTab] = useState(parseInt(id, 10) || 0);
 
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1)
-  }
+    setTab(tabIndex => tabIndex - 1);
+  };
 
   const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
     CREATE_SKILL_SELECTIONS
-  )
+  );
   const [createSetSelections] = useMutation<any, ISetSelectionData>(
     CREATE_SET_SELECTIONS
-  )
-  const [createBuild] = useMutation<any, any>(CREATE_BUILD)
-  const { mundus, buff, ultimateOne, ultimateTwo } = state!
+  );
+  const [createBuild] = useMutation<any, any>(CREATE_BUILD);
+  const { mundus, buff, ultimateOne, ultimateTwo } = state!;
 
   const selectedUltimateOne: any = useQuery(GET_SKILL, {
     variables: { id: ultimateOne ? ultimateOne.id : 0 },
-  })
+  });
   const selectedUltimateTwo: any = useQuery(GET_SKILL, {
     variables: { id: ultimateTwo ? ultimateTwo.id : 0 },
-  })
+  });
 
   const handleSave = async () => {
     const {
@@ -183,22 +190,28 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       jewelrySelection,
       newBarOne,
       newBarTwo,
-    } = state!
+      applicationArea,
+      role,
+      name,
+      mainResource,
+      description,
+    } = state!;
     const frontbarSkillSelections: any = await createSkillSelections({
       variables: {
         indices: newBarOne.map(sel => sel.index),
         skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.id : 0)),
       },
-    })
+    });
     const backbarSkillSelections: any = await createSkillSelections({
       variables: {
         indices: newBarTwo.map(sel => sel.index),
         skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.id : 0)),
       },
-    })
+    });
     const bigPieceSetSelections: any = await createSetSelections({
       variables: {
         slots: bigPieceSelection.map(piece => piece.slot),
+        types: bigPieceSelection.map(piece => piece.type),
         setIds: bigPieceSelection.map(piece =>
           piece.selectedSet ? piece.selectedSet.id : 0
         ),
@@ -209,10 +222,11 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           piece.trait ? piece.trait.description : ''
         ),
       },
-    })
+    });
     const smallPieceSetSelections: any = await createSetSelections({
       variables: {
         slots: smallPieceSelection.map(piece => piece.slot),
+        types: smallPieceSelection.map(piece => piece.type),
         setIds: smallPieceSelection.map(piece =>
           piece.selectedSet ? piece.selectedSet.id : 0
         ),
@@ -223,10 +237,11 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           piece.trait ? piece.trait.description : ''
         ),
       },
-    })
+    });
     const jewelrySetSelections: any = await createSetSelections({
       variables: {
         slots: jewelrySelection.map(piece => piece.slot),
+        types: jewelrySelection.map(piece => piece.type),
         setIds: jewelrySelection.map(piece =>
           piece.selectedSet ? piece.selectedSet.id : 0
         ),
@@ -237,10 +252,11 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           piece.trait ? piece.trait.description : ''
         ),
       },
-    })
+    });
     const frontbarSetSelections: any = await createSetSelections({
       variables: {
         slots: frontbarSelection.map(piece => piece.slot),
+        types: frontbarSelection.map(piece => piece.type),
         setIds: frontbarSelection.map(piece =>
           piece.selectedSet ? piece.selectedSet.id : 0
         ),
@@ -251,10 +267,11 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           piece.trait ? piece.trait.description : ''
         ),
       },
-    })
+    });
     const backbarSetSelections: any = await createSetSelections({
       variables: {
         slots: backbarSelection.map(piece => piece.slot),
+        types: backbarSelection.map(piece => piece.type),
         setIds: backbarSelection.map(piece =>
           piece.selectedSet ? piece.selectedSet.id : 0
         ),
@@ -265,7 +282,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           piece.trait ? piece.trait.description : ''
         ),
       },
-    })
+    });
 
     console.log(
       bigPieceSetSelections,
@@ -275,14 +292,16 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       backbarSetSelections,
       frontbarSkillSelections,
       backbarSkillSelections
-    )
+    );
 
     const build: any = await createBuild({
       variables: {
         data: {
-          name: 'Test Build',
+          name,
           race,
           esoClass: 'Warden',
+          applicationArea,
+          role,
           mundusStone: { connect: { name: mundus.name } },
           buff: { connect: { name: buff.name } },
           bigPieceSelection: {
@@ -320,8 +339,12 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
               })
             ),
           },
-          ultimateOne: { connect: { skillId: ultimateOne ? ultimateOne.id : 0 } },
-          ultimateTwo: { connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 } },
+          ultimateOne: {
+            connect: { skillId: ultimateOne ? ultimateOne.id : 0 },
+          },
+          ultimateTwo: {
+            connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 },
+          },
           newBarOne: {
             connect: frontbarSkillSelections.data.createSkillSelections.map(
               (selection: any) => ({
@@ -338,25 +361,25 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           },
         },
       },
-    })
+    });
 
-    console.log(build)
-  }
+    console.log(build);
+  };
 
   const handleNextClick = () => {
     if (tab === 4) {
-      console.log('save')
-      handleSave()
+      console.log('save');
+      handleSave();
     } else {
-      setTab(tabIndex => tabIndex + 1)
+      setTab(tabIndex => tabIndex + 1);
     }
-  }
+  };
 
   const isDisabled =
     tab === 0 &&
     (state.race === '' ||
       state.class ===
-        '') /* ||
+        ''); /* ||
     (tab === 1 &&
       (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
         state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
@@ -365,21 +388,20 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
 
   const setTooltipTitle = () => {
     if (!isDisabled) {
-      return ''
+      return '';
     }
     switch (tab) {
       case 0:
-        return 'Select a Race and a Class to progress.'
+        return 'Select a Race and a Class to progress.';
       case 1:
-        return 'Fill your bars with Skills to progress.'
+        return 'Fill your bars with Skills to progress.';
       case 2:
-        return 'Slot sets to progress.'
+        return 'Slot sets to progress.';
     }
-  }
+  };
 
   return (
     <BuildContext.Provider value={[state, dispatch]}>
-
       <Container>
         {id === '0' ? (
           <RaceClass />
@@ -392,7 +414,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         ) : id === '4' ? (
           <Details />
         ) : (
-          <Redirect to='/build/0' />
+          <Redirect to="/build/0" />
         )}
       </Container>
 
@@ -407,41 +429,41 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
-          size='large'
-          type='primary'
+          size="large"
+          type="primary"
         >
-          <Icon type='left' />
+          <Icon type="left" />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title='Race & Class'
-            description='Select race and class.'
+            title="Race & Class"
+            description="Select race and class."
           />
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title='Skills'
-            description='Select skills.'
+            title="Skills"
+            description="Select skills."
           />
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title='Sets'
-            description='Select sets.'
+            title="Sets"
+            description="Select sets."
           />
           <Step
-            title='Consumables'
+            title="Consumables"
             style={{ whiteSpace: 'nowrap' }}
-            description='Select mundus, potions, food.'
+            description="Select mundus, potions, food."
           />
-          <Step title='Review' description='Review and save.' />
+          <Step title="Review" description="Review and save." />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
           <TabButton
             onClick={handleNextClick}
             disabled={isDisabled}
-            size='large'
-            type='primary'
+            size="large"
+            type="primary"
           >
             <Icon type={tab === 4 ? 'save' : 'right'} />
             {tab === 4 ? 'Save' : 'Next'}
@@ -450,5 +472,5 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         <Redirect to={`/build/${tab}`} push />
       </Footer>
     </BuildContext.Provider>
-  )
-}
+  );
+};
