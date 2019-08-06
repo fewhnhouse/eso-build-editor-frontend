@@ -298,7 +298,7 @@ export default () => {
 
 const StyledSelectWithTitle = styled(SelectWithTitle)`
   flex: 1;
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 320px;
+  max-width: 320px;
   margin: 0px 10px;
 `;
