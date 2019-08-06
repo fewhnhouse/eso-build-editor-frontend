@@ -264,6 +264,7 @@ export default () => {
         </Flex>
 
         <List
+          loading={loading}
           style={{
             height: '100%',
             overflow: 'auto',
