@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import styled from "styled-components";
-import { Layout, Icon, Button, Steps, Tooltip } from "antd";
+import { Layout, Icon, Button, Steps, Tooltip, Typography, Input, Divider, InputNumber, Radio, Form } from "antd";
 import { RouteComponentProps, Redirect } from "react-router";
+import Flex from "../../components/Flex";
+import TextArea from "antd/lib/input/TextArea";
+import { BuildContext, buildReducer, defaultBuildState } from "../build/BuildStateContext";
+import RaidGeneral from "./RaidGeneral/RaidGeneral";
+
 const { Footer, Content } = Layout;
 const { Step } = Steps;
+const { Title, Text } = Typography;
 
 const Container = styled(Content)`
   display: flex;
@@ -13,17 +19,32 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: calc(100vh - 178px);
-  color: rgb(155, 155, 155);
+  color: ${props => props.theme.mainBg};
 `;
+
+const Wrapper = styled(Flex)`
+ width: 100%;
+`
+const LeftSide = styled(Flex)`
+  width: 500px;
+  max-width: 800px;
+`
+const RightSide = styled(Flex)`
+  width: 500px;
+  max-width: 800px;
+`
+const ContentFlex = styled(Flex)``
 
 const TabButton = styled(Button)`
   margin: 0px 10px;
 `;
-export default ({ match }: RouteComponentProps<{ id: string }>) => {
-  const { id } = match.params;
 
-  const [tab, setTab] = useState(0);
 
+export default ({ match, location, history }: RouteComponentProps<{ id: string }>) => {
+  //goggle.de?search=finland
+  const { id } = match.params
+  const [tab, setTab] = useState(parseInt(id, 10));
+  
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
   };
@@ -46,7 +67,13 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   return (
     <>
       <Container>
-        <div>Raid</div>
+        {id === '0' ? (
+          <RaidGeneral />
+        ) : id === '1' ? (
+          <RaidGeneral/>
+        ) : (
+          <Redirect to='/raid/0' />
+        )}
       </Container>
       <Footer
         style={{

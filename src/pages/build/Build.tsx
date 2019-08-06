@@ -376,8 +376,10 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         return 'Slot sets to progress.'
     }
   }
+
   return (
     <BuildContext.Provider value={[state, dispatch]}>
+
       <Container>
         {id === '0' ? (
           <RaceClass />
