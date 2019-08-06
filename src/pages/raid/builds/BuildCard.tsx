@@ -8,6 +8,7 @@ import {
 } from '../../build/Skills/AbilityBar';
 import { DisplaySlot } from '../../../components/SkillSlot';
 import { Card, Divider, Collapse, Icon } from 'antd';
+import GearView from '../../../components/GearView';
 const { Panel } = Collapse;
 
 const MyAvatar = styled.img`
@@ -118,29 +119,52 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
                 />
               </AbilityBar>
             </Panel>
-            <Panel header="Sets" key="2" style={customPanelStyle}>
-              <AbilityBar>
-                <SkillView
-                  id={ABILITY_BAR_ONE}
-                  disabled
-                  skillSlots={item.newBarOne}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateOne || undefined}
-                />
-              </AbilityBar>
-              <AbilityBar>
-                <SkillView
-                  id={ABILITY_BAR_TWO}
-                  disabled
-                  skillSlots={item.newBarTwo}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateTwo || undefined}
-                />
-              </AbilityBar>
+            <Panel header="Weapons" key="2" style={customPanelStyle}>
+              <GearView
+                size="small"
+                setups={[
+                  {
+                    id: 'frontbar',
+                    label: 'Frontbar',
+                    data: item.frontbarSelection,
+                  },
+                  {
+                    id: 'backbar',
+                    label: 'Backbar',
+                    data: item.backbarSelection,
+                  },
+                ]}
+              />
+            </Panel>
+            <Panel header="Armor" key="3" style={customPanelStyle}>
+              <GearView
+                size="small"
+                setups={[
+                  {
+                    id: 'bigpieces',
+                    label: 'Big Pieces',
+                    data: item.bigPieceSelection,
+                  },
+                  {
+                    id: 'smallpieces',
+                    label: 'Small Pieces',
+                    data: item.smallPieceSelection,
+                  },
+                ]}
+              />
+            </Panel>
+
+            <Panel header="Jewelry" key="4" style={customPanelStyle}>
+              <GearView
+                size="small"
+                setups={[
+                  {
+                    id: 'jewelry',
+                    label: 'Jewelry',
+                    data: item.jewelrySelection,
+                  },
+                ]}
+              />
             </Panel>
           </Collapse>
           <div

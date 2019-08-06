@@ -31,8 +31,21 @@ const GET_BUILDS = gql`
   fragment SetSelection on SetSelection {
     icon
     slot
+    type
     selectedSet {
       name
+      location
+      type
+      bonus_item_1
+      bonus_item_2
+      bonus_item_3
+      bonus_item_4
+      bonus_item_5
+      has_jewels
+      has_weapons
+      has_heavy_armor
+      has_light_armor
+      has_medium_armor
     }
     trait {
       type

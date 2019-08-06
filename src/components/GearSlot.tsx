@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { Popover } from "antd";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { Popover } from 'antd';
 import {
   head,
   chest,
@@ -13,39 +13,44 @@ import {
   offHand,
   quickslot,
   ring,
-  neck
-} from "../assets/gear";
-import { useDrag, useDrop } from "react-dnd";
+  neck,
+} from '../assets/gear';
+import { useDrag, useDrop } from 'react-dnd';
 import {
   BuildContext,
   Slot,
-  ISetSelection
-} from "../pages/build/BuildStateContext";
-import { GearCardContent } from "../pages/build/Sets/GearCard";
+  ISetSelection,
+} from '../pages/build/BuildStateContext';
+import { GearCardContent } from '../pages/build/Sets/GearCard';
 
 const GearImg = styled.img`
-  width: 64px;
-  height: 64px;
+  width: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '64px' : '48px'};
+  height: ${(props: { size: 'normal' | 'small' }) =>
+    props.size === 'normal' ? '64px' : '48px'};
 `;
 
 interface IGearFrameProps {
   hasIcon: boolean;
   canDrop?: boolean;
   backgroundSource: string;
+  size: 'normal' | 'small';
 }
 
 const GearFrame = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: ${(props: IGearFrameProps) =>
+    props.size === 'normal' ? '64px' : '48px'};
+  height: ${(props: IGearFrameProps) =>
+    props.size === 'normal' ? '64px' : '48px'};
   border: 2px solid;
   border-color: ${(props: IGearFrameProps) =>
-    props.canDrop ? "#27ae60" : "rgba(0, 0, 0, 0.45)"};
+    props.canDrop ? '#27ae60' : 'rgba(0, 0, 0, 0.45)'};
   border-radius: 4px;
   background-image: url(${(props: IGearFrameProps) =>
-    props.hasIcon ? "" : props.backgroundSource});
+    props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
 `;
 
@@ -73,34 +78,34 @@ export interface ISet {
 
 const getImageSource = (slot: string) => {
   switch (slot) {
-    case "legs":
+    case 'legs':
       return legs;
-    case "head":
+    case 'head':
       return head;
-    case "shoulders":
+    case 'shoulders':
       return shoulders;
-    case "waist":
+    case 'waist':
       return belt;
-    case "hands":
+    case 'hands':
       return hands;
-    case "feet":
+    case 'feet':
       return feet;
-    case "chest":
+    case 'chest':
       return chest;
-    case "ring1":
+    case 'ring1':
       return ring;
-    case "ring2":
+    case 'ring2':
       return ring;
-    case "neck":
+    case 'neck':
       return neck;
-    case "mainHand":
+    case 'mainHand':
       return mainHand;
-    case "offHand":
+    case 'offHand':
       return offHand;
-    case "quickslot":
+    case 'quickslot':
       return quickslot;
     default:
-      return "";
+      return '';
   }
 };
 
@@ -108,6 +113,7 @@ export interface IGearSlotProps {
   slot: ISetSelection;
   droppable?: boolean;
   group: string;
+  size?: 'normal' | 'small';
 }
 
 export interface IDragProps {
@@ -115,15 +121,20 @@ export interface IDragProps {
   group: string;
 }
 
-export default ({ slot, droppable, group }: IGearSlotProps) => {
+export default ({
+  slot,
+  droppable,
+  group,
+  size = 'normal',
+}: IGearSlotProps) => {
   const [, dispatch] = useContext(BuildContext);
 
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: { type: slot.slot, set: slot.selectedSet, icon: slot.icon },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop()
-    })
+      didDrop: !!monitor.didDrop(),
+    }),
   });
 
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -131,43 +142,39 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
         ? [Slot.eitherHand]
-        : [])
+        : []),
     ],
     drop: (item: any, monitor) => {
       dispatch!({
-        type: "DROP_SET_ITEM",
+        type: 'DROP_SET_ITEM',
         payload: {
           set: item.set,
           icon: item.icon,
           slot: slot.slot,
           type: item.type,
-          group
-        }
+          group,
+        },
       });
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver()
-    })
+      isOver: !!monitor.isOver(),
+    }),
   });
   return (
-    <div style={{ margin: "5px 10px 5px 10px" }}>
+    <div style={{ margin: '5px 10px 5px 10px' }}>
       <GearFrame
+        size={size}
         canDrop={droppable && canDrop}
         hasIcon={slot.icon !== undefined}
         ref={droppable ? drop : undefined}
         backgroundSource={getImageSource(slot.slot)}
       >
         {slot.icon !== undefined && isDragging ? (
-          <GearImg ref={drag} src={slot.icon} />
+          <GearImg size={size} ref={drag} src={slot.icon} />
         ) : slot.icon !== undefined ? (
-          <Popover
-            placement={"top"}
-            content={
-              <GearCardContent gear={slot} />
-            }
-          >
-            <GearImg ref={drag} src={slot.icon} />
+          <Popover placement={'top'} content={<GearCardContent gear={slot} />}>
+            <GearImg size={size} ref={drag} src={slot.icon} />
           </Popover>
         ) : (
           <div />
@@ -177,20 +184,22 @@ export default ({ slot, droppable, group }: IGearSlotProps) => {
   );
 };
 
-export const DisplaySlot = ({ slot }: { slot: ISetSelection }) => {
+export const DisplaySlot = ({
+  slot,
+  size,
+}: {
+  slot: ISetSelection;
+  size: 'normal' | 'small';
+}) => {
   return (
     <GearFrame
+      size={size}
       hasIcon={slot.icon !== undefined}
       backgroundSource={getImageSource(slot.slot)}
     >
       {slot.icon !== undefined ? (
-        <Popover
-          placement="left"
-          content={
-            <GearCardContent gear={slot} />
-          }
-        >
-          <GearImg src={slot.icon} />
+        <Popover placement="left" content={<GearCardContent gear={slot} />}>
+          <GearImg size={size} src={slot.icon} />
         </Popover>
       ) : null}
     </GearFrame>

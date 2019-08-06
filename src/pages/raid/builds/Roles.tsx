@@ -77,11 +77,13 @@ export default () => {
         roles.length > 0 &&
         roles.map((role, index) => (
           <React.Fragment key={'dropper-' + index}>
-            <Divider>{role.roleName}</Divider>
+            <Divider>
+              <Typography.Title level={3}>{role.roleName}</Typography.Title>
+            </Divider>
             <Flex
               direction="row"
               justify="space-between"
-              style={{ flexWrap: 'wrap', width: "100%", padding: 20 }}
+              style={{ flexWrap: 'wrap', width: '100%', padding: 20 }}
               align="center"
             >
               {role.builds.map((build, buildIndex) => (
