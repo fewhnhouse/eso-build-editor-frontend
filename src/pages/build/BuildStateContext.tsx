@@ -7,7 +7,6 @@ import { setReducer } from './reducers/setReducer';
 import { SelectValue } from 'antd/lib/select';
 import { raceNameReducer } from './reducers/raceNameReducer';
 import { setBarReducer } from './reducers/setBarReducer';
-import { ITrait, IGlyph } from './Sets/data';
 import { IMundus } from '../../assets/mundus';
 import { ISpecialBuff } from '../../assets/specialbuff/drinks';
 
@@ -83,10 +82,17 @@ export interface ISetSelection {
     | 'heavyarmor'
     | 'onehanded'
     | 'twohanded';
-  trait?: ITrait;
-  glyph?: IGlyph;
+  trait?: IModification;
+  glyph?: IModification;
 }
 
+export interface IModification {
+  type: string;
+  modificationType: 'glyph' | 'trait';
+  itemType: 'armor' | 'weapon' | 'jewelry';
+  description: string;
+  icon: string;
+}
 export const defaultBuildState = {
   skills: [],
   sets: [],
@@ -94,12 +100,12 @@ export const defaultBuildState = {
   mundus: undefined,
   buff: undefined,
   hasTrash: false,
-  applicationArea: "",
-  esoClass: "",
-  role: "",
-  name: "",
-  mainResource: "hybrid",
-  description: "",
+  applicationArea: '',
+  esoClass: '',
+  role: '',
+  name: '',
+  mainResource: 'hybrid',
+  description: '',
   newBarOne: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },

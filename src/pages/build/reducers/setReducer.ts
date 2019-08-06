@@ -1,10 +1,9 @@
-import { Slot, ISetSelection } from "./../BuildStateContext";
+import { Slot, ISetSelection, IModification } from "./../BuildStateContext";
 import { IBuildAction, IBuildState } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
-import { IGlyph, ITrait } from "../Sets/data";
 
 interface ISelectPayload {
-  value: IGlyph | ITrait;
+  value: IModification;
   slots: Slot[];
   type: "selectedGlyphs" | "selectedTraits";
   itemType: "bigPieces" | "smallPieces" | "frontbar" | "backbar";
@@ -155,7 +154,7 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
 
 const updateStats = (
   type: "selectedGlyphs" | "selectedTraits",
-  value: IGlyph | ITrait,
+  value: IModification,
   stateStats: ISetSelection[],
   slots: Slot[]
 ) => {
