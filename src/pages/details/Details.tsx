@@ -131,14 +131,14 @@ const Details = ({ match, theme }: IDetails) => {
           <MiscView>
             <StyledTitle level={4}>Mundus</StyledTitle>
             <Flex direction="row" justify="center" align="center">
-              <ClassImg src={mundus.icon} />
-              <Text strong>{mundus.name}</Text><br />
+              <ClassImg src={mundus? mundus.icon : "Mundus icon"} />
+              <Text strong>{mundus? mundus.name : "Mundus name"}</Text><br />
             </Flex>
-            <Text> {mundus.effect} by {mundus.value}.</Text>
+            <Text> {mundus ? mundus.effect : "Mundus effect"} by {mundus? mundus.value : "mundus value"}.</Text>
             <Divider />
             <StyledTitle level={4}>Consumables</StyledTitle>
-            <ClassImg src={buff.icon} /><Text strong>{buff.name}{buff.type ? `, `+buff.type : ""}</Text> <br />
-            <Text>{splitDesc(buff.buffDescription)}</Text>
+            <ClassImg src={buff? buff.icon : "Buff icon"} /><Text strong>{buff? buff.name: "Buff name"}{buff.type ? `, `+buff.type : "Buff type"}</Text> <br />
+            <Text>{splitDesc(buff? buff.buffDescription : "description")}</Text>
           </MiscView>
         </RightSide>
       </Wrapper>

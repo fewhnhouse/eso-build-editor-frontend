@@ -123,11 +123,7 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
     <Container>
       <Title style={{ textAlign: "center" }}>
         {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
-<<<<<<< HEAD
-        {gear.type? gear.type : "Piece type"}<br />
-=======
         {gear.type ? gear.type : ""}<br />
->>>>>>> master
         {gear.selectedSet ? gear.selectedSet.type : "Set type"}
       </Title>
       <Divider style={{ margin: "5px 0px" }} />
