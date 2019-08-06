@@ -1,12 +1,12 @@
-import React from "react";
-import { Card, Divider, Tag } from "antd";
-import styled from "styled-components";
-import { ISet } from "../../../components/GearSlot";
-import { ISetSelection } from "../BuildStateContext";
-import Flex from "../../../components/Flex";
+import React from 'react';
+import { Card, Divider, Tag } from 'antd';
+import styled from 'styled-components';
+import { ISet } from '../../../components/GearSlot';
+import { ISetSelection } from '../BuildStateContext';
+import Flex from '../../../components/Flex';
 
 const StyledCard = styled(Card)`
-  display: "flex";
+  display: 'flex';
   margin: 0 auto;
   width: 450px;
   position: relative;
@@ -67,7 +67,7 @@ const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded
+  traitsNeeded,
 }: ISetTagProps) => {
   if (traitsNeeded) {
     return null;
@@ -95,7 +95,7 @@ export default ({ set }: IGearCard) => {
         traitsNeeded={set.traits_needed !== null}
       />
       <Description>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           {[2, 3, 4, 5].map(i => (
             <span key={i}>
               {i}/5: {set && set[`bonus_item_${i}`]}
@@ -112,30 +112,31 @@ interface ISelectedSet {
 }
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
-
   const gearTypeTag = (gearType: string) => {
-    switch(gearType) {
-      case("lightarmor"):
+    switch (gearType) {
+      case 'lightarmor':
         return <StyledTag color="blue">Light</StyledTag>;
-      case ("mediumarmor"):
+      case 'mediumarmor':
         return <StyledTag color="green">Medium</StyledTag>;
-      case ("heavyarmor"):
+      case 'heavyarmor':
         return <StyledTag color="red">Heavy</StyledTag>;
       default:
         return <StyledTag>Default type</StyledTag>;
     }
-  }
+  };
 
   return (
     <Container>
       <Title>
-        {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
+        {gear.selectedSet ? gear.selectedSet.name : 'Set name'} <br />
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : "No gear type"}
-      <StyledTag color={"#108ee9"}>{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
-      <Divider style={{ margin: "5px 0px" }} />
+      {gear.type ? gearTypeTag(gear.type) : 'No gear type'}
+      <StyledTag color={'#108ee9'}>
+        {gear.selectedSet ? gear.selectedSet.type : 'No type'}
+      </StyledTag>
+      <Divider style={{ margin: '5px 0px' }} />
       <Description>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           {[2, 3, 4, 5].map(i => (
             <span key={i}>
               {i}/5: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
@@ -143,45 +144,56 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           ))}
         </div>
       </Description>
-      <Divider style={{ margin: "5px 0px" }} />
+      <Divider style={{ margin: '5px 0px' }} />
       <Flex direction="column" justify="space-around" align="flex-start">
         <Description
           style={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
-            margin: "5px 0px"
+            margin: '5px 0px',
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-            {gear.trait ?
-              <IconImg src={gear.trait.icon} /> 
-              : "Trait not selected."
-            }
-            <b>{gear.trait ? gear.trait.type : ""}</b>
+            {gear.trait ? (
+              <IconImg
+                src={`${
+                  process.env.REACT_APP_IMAGE_SERVICE
+                }/images/traits/${encodeURI(gear.trait.icon)}`}
+              />
+            ) : (
+              'Trait not selected.'
+            )}
+            <b>{gear.trait ? gear.trait.type : ''}</b>
           </Flex>
-          <span style={{ color: "rgba(0,0,0,0.45)" }}>
-            {gear.trait ? gear.trait.description : ""}
+          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
+            {gear.trait ? gear.trait.description : ''}
           </span>
         </Description>
-        <Divider style={{ margin: "5px 0px" }} />
+        <Divider style={{ margin: '5px 0px' }} />
         <Description
           style={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
-            margin: "5px 0px"
+            margin: '5px 0px',
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-          {gear.glyph ?
-              <GlyphIconImg src={gear.glyph.icon} style={{ marginRight: 5 }} /> 
-              : "Glyph not selected."
-            }
-            <b>{gear.glyph ? gear.glyph.type : ""}</b>
+            {gear.glyph ? (
+              <GlyphIconImg
+                src={`${
+                  process.env.REACT_APP_IMAGE_SERVICE
+                }/images/glyphs/${encodeURI(gear.glyph.icon)}`}
+                style={{ marginRight: 5 }}
+              />
+            ) : (
+              'Glyph not selected.'
+            )}
+            <b>{gear.glyph ? gear.glyph.type : ''}</b>
           </Flex>
-          <span style={{ color: "rgba(0,0,0,0.45)" }}>
-            {gear.glyph ? gear.glyph.description : ""}
+          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
+            {gear.glyph ? gear.glyph.description : ''}
           </span>
         </Description>
       </Flex>
