@@ -1,15 +1,15 @@
-import React from "react"; // { useReducer }
-import { ISkill } from "../../components/SkillSlot";
-import { skillReducer } from "./reducers/skillReducer";
-import { skillBarReducer } from "./reducers/skillBarReducer";
-import { ISet } from "../../components/GearSlot";
-import { setReducer } from "./reducers/setReducer";
-import { SelectValue } from "antd/lib/select";
-import { raceNameReducer } from "./reducers/raceNameReducer";
-import { setBarReducer } from "./reducers/setBarReducer";
-import { ITrait, IGlyph } from "./Sets/data";
-import { IMundus } from "../../assets/mundus";
-import { ISpecialBuff } from "../../assets/specialbuff/drinks";
+import React from 'react'; // { useReducer }
+import { ISkill } from '../../components/SkillSlot';
+import { skillReducer } from './reducers/skillReducer';
+import { skillBarReducer } from './reducers/skillBarReducer';
+import { ISet } from '../../components/GearSlot';
+import { setReducer } from './reducers/setReducer';
+import { SelectValue } from 'antd/lib/select';
+import { raceNameReducer } from './reducers/raceNameReducer';
+import { setBarReducer } from './reducers/setBarReducer';
+import { ITrait, IGlyph } from './Sets/data';
+import { IMundus } from '../../assets/mundus';
+import { ISpecialBuff } from '../../assets/specialbuff/drinks';
 
 export interface ISlot {
   id: number;
@@ -27,12 +27,17 @@ export interface IBuildState {
   }[];
   newActiveBar: ISkillSelection[];
   selectedSet?: ISet;
-  weaponType: "onehanded" | "twohanded";
-  armorType: "lightarmor" | "mediumarmor" | "heavyarmor";
+  weaponType: 'onehanded' | 'twohanded';
+  armorType: 'lightarmor' | 'mediumarmor' | 'heavyarmor';
   weapons: SelectValue[];
-  setTabKey: "armor" | "jewelry" | "frontbar" | "backbar";
+  setTabKey: 'armor' | 'jewelry' | 'frontbar' | 'backbar';
   race: string;
   class: string;
+  name: string;
+  applicationArea: string;
+  role: string;
+  description: string;
+  mainResource: string;
   bigPieceSelection: ISetSelection[];
   smallPieceSelection: ISetSelection[];
   jewelrySelection: ISetSelection[];
@@ -52,20 +57,20 @@ export interface ISkillSelection {
 }
 
 export enum Slot {
-  head = "HEAD",
-  mainHand = "MAIN_HAND",
-  offHand = "OFF_HAND",
-  eitherHand = "EITHER_HAND",
-  shoulders = "SHOULDERS",
-  chest = "CHEST",
-  legs = "LEGS",
-  waist = "WAIST",
-  feet = "FEET",
-  hands = "HANDS",
-  ring = "RING",
-  neck = "NECK",
-  ring1 = "RING1",
-  ring2 = "RING2"
+  head = 'HEAD',
+  mainHand = 'MAIN_HAND',
+  offHand = 'OFF_HAND',
+  eitherHand = 'EITHER_HAND',
+  shoulders = 'SHOULDERS',
+  chest = 'CHEST',
+  legs = 'LEGS',
+  waist = 'WAIST',
+  feet = 'FEET',
+  hands = 'HANDS',
+  ring = 'RING',
+  neck = 'NECK',
+  ring1 = 'RING1',
+  ring2 = 'RING2',
 }
 
 export interface ISetSelection {
@@ -73,11 +78,11 @@ export interface ISetSelection {
   slot: Slot;
   selectedSet?: ISet;
   type?:
-    | "lightarmor"
-    | "mediumarmor"
-    | "heavyarmor"
-    | "onehanded"
-    | "twohanded";
+    | 'lightarmor'
+    | 'mediumarmor'
+    | 'heavyarmor'
+    | 'onehanded'
+    | 'twohanded';
   trait?: ITrait;
   glyph?: IGlyph;
 }
@@ -89,26 +94,31 @@ export const defaultBuildState = {
   mundus: undefined,
   buff: undefined,
   hasTrash: false,
+  applicationArea: "",
+  role: "",
+  name: "",
+  mainResource: "hybrid",
+  description: "",
   newBarOne: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },
     { index: 2, skill: undefined },
     { index: 3, skill: undefined },
-    { index: 4, skill: undefined }
+    { index: 4, skill: undefined },
   ],
   newBarTwo: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },
     { index: 2, skill: undefined },
     { index: 3, skill: undefined },
-    { index: 4, skill: undefined }
+    { index: 4, skill: undefined },
   ],
   newActiveBar: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },
     { index: 2, skill: undefined },
     { index: 3, skill: undefined },
-    { index: 4, skill: undefined }
+    { index: 4, skill: undefined },
   ],
 
   bigPieceSelection: [
@@ -117,22 +127,22 @@ export const defaultBuildState = {
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.legs,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.chest,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
-    }
+      glyph: undefined,
+    },
   ],
   smallPieceSelection: [
     {
@@ -140,29 +150,29 @@ export const defaultBuildState = {
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.waist,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.hands,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.feet,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
-    }
+      glyph: undefined,
+    },
   ],
   jewelrySelection: [
     {
@@ -170,22 +180,22 @@ export const defaultBuildState = {
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.ring1,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.ring2,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
-    }
+      glyph: undefined,
+    },
   ],
   frontbarSelection: [
     {
@@ -193,15 +203,15 @@ export const defaultBuildState = {
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.offHand,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
-    }
+      glyph: undefined,
+    },
   ],
   backbarSelection: [
     {
@@ -209,26 +219,26 @@ export const defaultBuildState = {
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
+      glyph: undefined,
     },
     {
       slot: Slot.offHand,
       selectedSet: undefined,
       icon: undefined,
       trait: undefined,
-      glyph: undefined
-    }
+      glyph: undefined,
+    },
   ],
   ultimateOne: undefined,
   ultimateTwo: undefined,
   selectedSkillLines: [],
   selectedSet: undefined,
-  weaponType: "onehanded",
-  armorType: "mediumarmor",
-  weapons: ["", ""],
-  race: "",
-  class: "",
-  setTabKey: "armor"
+  weaponType: 'onehanded',
+  armorType: 'mediumarmor',
+  weapons: ['', ''],
+  race: '',
+  class: '',
+  setTabKey: 'armor',
 };
 
 export interface IBuildAction {
@@ -258,7 +268,7 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     skillBarReducer,
     setReducer,
     setBarReducer,
-    raceNameReducer
+    raceNameReducer,
   ]);
 };
 

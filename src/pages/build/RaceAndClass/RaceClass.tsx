@@ -1,23 +1,25 @@
-import React, { useContext, useEffect } from 'react'
-import { Divider, Input, Select, Typography } from 'antd'
-import { chooseRace, chooseClass } from '../../../util/utils'
-import styled from 'styled-components'
-import { EsoClassCard, RaceCard } from './Card'
-import { BuildContext } from '../BuildStateContext'
+import React, { useContext, useEffect } from 'react';
+import { Divider, Input, Select, Typography, Radio } from 'antd';
+import { chooseRace, chooseClass } from '../../../util/utils';
+import styled from 'styled-components';
+import { EsoClassCard, RaceCard } from './Card';
+import { BuildContext } from '../BuildStateContext';
+import { RadioChangeEvent } from 'antd/lib/radio';
+import Flex from '../../../components/Flex';
+const { TextArea } = Input;
 
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-`
+`;
 
 const GeneralContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 400px;
-`
+`;
 export default () => {
   const races = [
     {
@@ -70,7 +72,7 @@ export default () => {
       description:
         'The racial skills of the Redguards reflect their ancestral legacy as swordmasters, giving them bonuses to shields, stamina, stamina regeneration, stamina regeneration during combat, and duration of effects from food.',
     },
-  ]
+  ];
 
   const classes = [
     {
@@ -99,31 +101,154 @@ export default () => {
       description:
         'These traveling knights call upon the powers of light and the burning sun to deal massive damage to their enemies while restoring health, magicka, and stamina to their allies.',
     },
-  ]
-  const [state] = useContext(BuildContext)
+  ];
+  const [state, dispatch] = useContext(BuildContext);
+  const { name, applicationArea, mainResource, role, description } = state!;
   useEffect(() => {
-    localStorage.setItem('buildState', JSON.stringify(state))
-  }, [state])
+    localStorage.setItem('buildState', JSON.stringify(state));
+  }, [state]);
+
+  const handleBuildNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch!({ type: 'SET_BUILD_NAME', payload: { name: e.target.value } });
+  };
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    dispatch!({
+      type: 'SET_DESCRIPTION',
+      payload: { description: e.target.value },
+    });
+  };
+
+  const handleApplicationAreaChange = (value: string) => {
+    dispatch!({
+      type: 'SET_APPLICATION_AREA',
+      payload: { applicationArea: value },
+    });
+  };
+
+  const handleRoleChange = (value: string) => {
+    dispatch!({
+      type: 'SET_ROLE',
+      payload: { role: value },
+    });
+  };
+
+  const handleResourceChange = (e: RadioChangeEvent) => {
+    dispatch!({
+      type: 'SET_MAIN_RESOURCE',
+      payload: { mainResource: e.target.value },
+    });
+  };
   return (
     <div>
       <Divider>General Information</Divider>
       <GeneralContainer>
-        <Typography.Text>Build Name</Typography.Text>
-        <Input size='large' placeholder='Type name...' />
-        <Typography.Text>Application Area</Typography.Text>
+        <Flex direction="row" justify="space-around" align="center">
+          <Flex
+            style={{  margin: 10, width: 250 }}
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Typography.Text strong>Build Name</Typography.Text>
+            <Input
+              style={{ width: 250 }}
+              size="large"
+              value={name}
+              onChange={handleBuildNameChange}
+              placeholder="Type name..."
+            />
+          </Flex>
+          <Flex
+            style={{  margin: 10, width: 250 }}
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Typography.Text strong>Application Area</Typography.Text>
+            <Select
+              style={{ width: 250 }}
+              value={applicationArea}
+              onChange={handleApplicationAreaChange}
+              size="large"
+              placeholder="Select application area..."
+            >
+              <Select.Option value="battlegrounds">Battlegrounds</Select.Option>
+              <Select.Option value="cyrodiil_raid">
+                Cyrodiil - Raid
+              </Select.Option>
+              <Select.Option value="cyrodiil_smallscale">
+                Cyrodiil - Small Scale
+              </Select.Option>
+              <Select.Option value="cyrodiil_solo">
+                Cyrodiil - Solo
+              </Select.Option>
+              <Select.Option value="pve_dungeons">PvE - Dungeons</Select.Option>
+              <Select.Option value="pve_arena">PvE - Arena</Select.Option>
+              <Select.Option value="pve_raid">PvE - Raids</Select.Option>
+              <Select.Option value="pve_openworld">
+                PvE - Open World
+              </Select.Option>
+            </Select>
+          </Flex>
 
-        <Select size='large' placeholder="Select application area...">
-          <Select.Option value='battlegrounds'>Battlegrounds</Select.Option>
-          <Select.Option value='cyrodiil_raid'>Cyrodiil - Raid</Select.Option>
-          <Select.Option value='cyrodiil_smallscale'>
-            Cyrodiil - Small Scale
-          </Select.Option>
-          <Select.Option value='cyrodiil_solo'>Cyrodiil - Solo</Select.Option>
-          <Select.Option value='pve_dungeons'>PvE - Dungeons</Select.Option>
-          <Select.Option value='pve_arena'>PvE - Arena</Select.Option>
-          <Select.Option value='pve_raid'>PvE - Raids</Select.Option>
-          <Select.Option value='pve_openworld'>PvE - Open World</Select.Option>
-        </Select>
+          <Flex
+            style={{  margin: 10, width: 250 }}
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Typography.Text strong>Role</Typography.Text>
+
+            <Select
+              size="large"
+              style={{ width: 250 }}
+              value={role}
+              onChange={handleRoleChange}
+              placeholder="Select application area..."
+            >
+              <Select.Option value="battlegrounds">Healer</Select.Option>
+              <Select.Option value="cyrodiil_raid">Damage Dealer</Select.Option>
+              <Select.Option value="pve_arena">Support</Select.Option>
+              <Select.Option value="pve_raid">Tank</Select.Option>
+            </Select>
+          </Flex>
+        </Flex>
+        <Flex
+          style={{ flex: 1, margin: 'auto' }}
+          direction="column"
+          justify="flex-start"
+          align="center"
+        >
+          <Typography.Text strong>Description</Typography.Text>
+
+          <TextArea
+            rows={3}
+            style={{ width: 400 }}
+            value={description}
+            onChange={handleDescriptionChange}
+            placeholder="Type description..."
+          />
+        </Flex>
+        <Flex
+          style={{ flex: 1, margin: 10 }}
+          direction="column"
+          justify="flex-start"
+          align="center"
+        >
+          <Typography.Text strong>Main Resource</Typography.Text>
+          <Radio.Group
+            value={mainResource}
+            onChange={handleResourceChange}
+            defaultValue="b"
+            buttonStyle="solid"
+          >
+            <Radio.Button value="magicka">Magicka</Radio.Button>
+            <Radio.Button value="hybrid">Hybrid</Radio.Button>
+            <Radio.Button value="stamina">Stamina</Radio.Button>
+          </Radio.Group>
+        </Flex>
       </GeneralContainer>
 
       <Divider>Race</Divider>
@@ -147,5 +272,5 @@ export default () => {
         ))}
       </CardContainer>
     </div>
-  )
-}
+  );
+};
