@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import { Popover } from "antd";
-import { abilityFrame } from "../assets/misc";
-import { SkillCardContent } from "../pages/build/Skills/SkillCard";
-import { BuildContext } from "../pages/build/BuildStateContext";
-import { useDrag, useDrop } from "react-dnd";
+import React, { useContext, useEffect } from 'react';
+import styled, { CSSProperties } from 'styled-components';
+import { Popover } from 'antd';
+import { abilityFrame } from '../assets/misc';
+import { SkillCardContent } from '../pages/build/Skills/SkillCard';
+import { BuildContext } from '../pages/build/BuildStateContext';
+import { useDrag, useDrop } from 'react-dnd';
 
 interface ISkillSlotProps {
   droppable?: boolean;
@@ -12,7 +12,7 @@ interface ISkillSlotProps {
   style?: React.CSSProperties;
   abilityBar?: number;
   skill?: ISkill;
-  tooltipPos?: "top" | "bottom" | undefined;
+  tooltipPos?: 'top' | 'bottom' | undefined;
 }
 
 export interface ISkill {
@@ -55,92 +55,92 @@ export default ({
   skill,
   tooltipPos,
   abilityBar,
-  style
+  style,
 }: ISkillSlotProps) => {
   const [, dispatch] = useContext(BuildContext);
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: {
-      type: skillIndex === 5 ? "ultimate" : "skill",
+      type: skillIndex === 5 ? 'ultimate' : 'skill',
       skill,
       index: skillIndex,
-      abilityBar
+      abilityBar,
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop()
-    })
+      didDrop: !!monitor.didDrop(),
+    }),
   });
 
   useEffect(() => {
     dispatch!({
-      type: "SET_HAS_TRASH",
+      type: 'SET_HAS_TRASH',
       payload: {
-        hasTrash: isDragging
-      }
+        hasTrash: isDragging,
+      },
     });
   }, [isDragging]);
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: skillIndex === 5 ? "ultimate" : "skill",
+    accept: skillIndex === 5 ? 'ultimate' : 'skill',
     drop: (item: any, monitor) => {
-      if (item.type === "ultimate") {
+      if (item.type === 'ultimate') {
         if (item.abilityBar === -1) {
           dispatch!({
-            type: "DROP_ULTIMATE",
+            type: 'DROP_ULTIMATE',
             payload: {
               barIndex: abilityBar,
-              skill: item.skill
-            }
+              skill: item.skill,
+            },
           });
         } else {
           dispatch!({
-            type: "SWAP_ULTIMATE",
+            type: 'SWAP_ULTIMATE',
             payload: {
               barIndex: item.abilityBar,
               destinationSkill: skill,
-              sourceSkill: item.skill
-            }
+              sourceSkill: item.skill,
+            },
           });
         }
       } else {
         if (item.abilityBar === abilityBar) {
           dispatch!({
-            type: "SWAP_ABILITY_SAME",
+            type: 'SWAP_ABILITY_SAME',
             payload: {
               barIndex: item.abilityBar,
               destinationIndex: item.index,
               destinationSkill: item.skill,
               sourceIndex: skillIndex,
-              sourceSkill: skill
-            }
+              sourceSkill: skill,
+            },
           });
         } else if (item.abilityBar !== -1 && item.abilityBar !== abilityBar) {
           dispatch!({
-            type: "SWAP_ABILITY_DIFFERENT",
+            type: 'SWAP_ABILITY_DIFFERENT',
             payload: {
               sourceBarIndex: item.abilityBar,
               destinationBarIndex: abilityBar,
               destinationIndex: skillIndex,
               destinationSkill: skill,
               sourceIndex: item.index,
-              sourceSkill: item.skill
-            }
+              sourceSkill: item.skill,
+            },
           });
         } else {
           dispatch!({
-            type: "DROP_ABILITY",
+            type: 'DROP_ABILITY',
             payload: {
               barIndex: abilityBar,
               destinationIndex: skillIndex,
-              skill: item.skill
-            }
+              skill: item.skill,
+            },
           });
         }
       }
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver()
-    })
+      isOver: !!monitor.isOver(),
+    }),
   });
   return (
     <SkillFrame ref={droppable ? drop : undefined} style={style}>
@@ -170,10 +170,16 @@ export default ({
   );
 };
 
-export const DisplaySlot = ({ skill }: { skill?: ISkill }) => {
+export const DisplaySlot = ({
+  skill,
+  style,
+}: {
+  skill?: ISkill;
+  style?: CSSProperties;
+}) => {
   return skill !== undefined ? (
-    <SkillFrame>
-      <Popover placement={"top"} content={<SkillCardContent skill={skill} />}>
+    <SkillFrame style={style}>
+      <Popover placement={'top'} content={<SkillCardContent skill={skill} />}>
         <SkillImg
           src={`https://beast.pathfindermediagroup.com/storage/skills/${
             skill.icon
@@ -182,6 +188,6 @@ export const DisplaySlot = ({ skill }: { skill?: ISkill }) => {
       </Popover>
     </SkillFrame>
   ) : (
-    <SkillFrame />
+    <SkillFrame style={style}/>
   );
 };
