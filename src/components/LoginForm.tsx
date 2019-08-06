@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import { FormComponentProps } from 'antd/lib/form';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -20,37 +21,33 @@ const StyledForm = styled(Form)`
   flex-direction: column;
 `;
 
-const LoginForm = ({ form }: { form: any }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface LoginFormProps extends FormComponentProps {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
   const handleSubmit = (e: React.SyntheticEvent<any>) => {
     e.preventDefault();
-    login({ variables: { email, password } });
     form.validateFields((err: any, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        login({
+          variables: { email: values.email, password: values.password },
+        });
       }
     });
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
   };
 
   const [login, { error, data }] = useMutation<
     { login: { token: string } },
     { email: string; password: string }
-  >(LOGIN, { variables: { email, password } });
+  >(LOGIN);
 
   if (error) {
     message.error(error.message);
   }
   if (data) {
     console.log('data', data);
+    setLoggedIn(true);
     localStorage.setItem('token', data.login.token);
   }
 
@@ -58,12 +55,10 @@ const LoginForm = ({ form }: { form: any }) => {
   return (
     <StyledForm onSubmit={handleSubmit} className="login-form">
       <Form.Item>
-        {getFieldDecorator('username', {
-          rules: [{ required: true, message: 'Please input your username!' }],
+        {getFieldDecorator('email', {
+          rules: [{ required: true, message: 'Please input your email!' }],
         })(
           <Input
-            value={email}
-            onChange={handleEmailChange}
             prefix={<Icon type="email" style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder="Email"
           />
@@ -74,8 +69,6 @@ const LoginForm = ({ form }: { form: any }) => {
           rules: [{ required: true, message: 'Please input your Password!' }],
         })(
           <Input
-            value={password}
-            onChange={handlePasswordChange}
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
             type="password"
             placeholder="Password"
@@ -105,6 +98,8 @@ const LoginForm = ({ form }: { form: any }) => {
   );
 };
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
+const WrappedNormalLoginForm = Form.create<LoginFormProps>({
+  name: 'normal_login',
+})(LoginForm);
 
 export default WrappedNormalLoginForm;
