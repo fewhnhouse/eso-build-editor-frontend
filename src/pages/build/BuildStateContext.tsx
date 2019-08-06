@@ -32,7 +32,7 @@ export interface IBuildState {
   weapons: SelectValue[];
   setTabKey: 'armor' | 'jewelry' | 'frontbar' | 'backbar';
   race: string;
-  class: string;
+  esoClass: string;
   name: string;
   applicationArea: string;
   role: string;
@@ -95,6 +95,7 @@ export const defaultBuildState = {
   buff: undefined,
   hasTrash: false,
   applicationArea: "",
+  esoClass: "",
   role: "",
   name: "",
   mainResource: "hybrid",

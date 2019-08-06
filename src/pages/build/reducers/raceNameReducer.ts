@@ -48,7 +48,7 @@ export const raceNameReducer = (state: IBuildState, action: IBuildAction) => {
       const { payload } = action;
       return {
         ...state,
-        class: payload,
+        esoClass: payload,
       };
     }
     default:

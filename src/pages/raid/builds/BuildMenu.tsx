@@ -82,6 +82,7 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
+      id
       name
       race
       esoClass

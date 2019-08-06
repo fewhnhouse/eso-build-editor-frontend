@@ -101,10 +101,10 @@ const Details = ({ match, theme }: IDetails) => {
     <Container>
       <Title level={1}>
         <ClassImg
-          title={parsedBuildState.class}
-          src={chooseClass(parsedBuildState.class)}
+          title={parsedBuildState.esoClass}
+          src={chooseClass(parsedBuildState.esoClass)}
         />
-        {parsedBuildState.class}
+        {parsedBuildState.esoClass}
       </Title>
       <Wrapper direction="row" align="flex-start" justify="space-evenly" wrap fluid>
         <LeftSide>

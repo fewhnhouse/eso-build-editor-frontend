@@ -102,7 +102,7 @@ export default () => {
     setCollapsed(collapse)
   }
 
-  const myClass = classes.find(esoClass => esoClass.class === state!.class)
+  const myClass = classes.find(esoClass => esoClass.class === state!.esoClass)
 
   const menuStructure = [
     {
