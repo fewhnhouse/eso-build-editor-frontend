@@ -159,7 +159,7 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
               <IconImg
                 src={`${
                   process.env.REACT_APP_IMAGE_SERVICE
-                }/images/traits/${encodeURI(gear.trait.icon)}`}
+                }/traits/${encodeURI(gear.trait.icon)}`}
               />
             ) : (
               'Trait not selected.'
@@ -184,7 +184,7 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
               <GlyphIconImg
                 src={`${
                   process.env.REACT_APP_IMAGE_SERVICE
-                }/images/glyphs/${encodeURI(gear.glyph.icon)}`}
+                }/glyphs/${encodeURI(gear.glyph.icon)}`}
                 style={{ marginRight: 5 }}
               />
             ) : (
