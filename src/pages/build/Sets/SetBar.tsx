@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { Divider } from "antd";
-import GearView from "../../../components/GearView";
-import { ISet } from "../../../components/GearSlot";
-import { BuildContext, Slot, ISetSelection } from "../BuildStateContext";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { Divider } from 'antd';
+import GearView from '../../../components/GearView';
+import { ISet } from '../../../components/GearSlot';
+import { BuildContext, Slot, ISetSelection } from '../BuildStateContext';
 import {
   selectArmor,
   selectWeapon,
   selectJewelry,
   actualRing,
-  actualNeck
-} from "../../../assets/gear";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+  actualNeck,
+} from '../../../assets/gear';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -40,7 +40,8 @@ const getSetups = ({
   smallPieceSelection,
   jewelrySelection,
   frontbarSelection,
-  backbarSelection
+  backbarSelection,
+  weight,
 }: {
   armorType: string;
   selectedSet?: ISet;
@@ -49,103 +50,106 @@ const getSetups = ({
   jewelrySelection: ISetSelection[];
   frontbarSelection: ISetSelection[];
   backbarSelection: ISetSelection[];
+  weight: string;
 }): ISetup[] => {
   return [
     {
-      id: "bigpieces",
-      label: "Big Pieces",
+      id: 'bigpieces',
+      label: 'Big Pieces',
       data: bigPieceSelection.map(bigPiece => ({
         slot: bigPiece.slot,
+        type: weight,
         icon: selectArmor(armorType, bigPiece.slot),
         selectedSet,
         glyph: bigPiece.glyph,
-        trait: bigPiece.trait
-      }))
+        trait: bigPiece.trait,
+      })),
     },
     {
-      id: "smallpieces",
-      label: "Small Pieces",
+      id: 'smallpieces',
+      label: 'Small Pieces',
       data: smallPieceSelection.map(smallPiece => ({
         slot: smallPiece.slot,
+        type: weight,
         icon: selectArmor(armorType, smallPiece.slot),
         selectedSet,
         glyph: smallPiece.glyph,
-        trait: smallPiece.trait
-      }))
+        trait: smallPiece.trait,
+      })),
     },
     {
-      id: "jewelry",
-      label: "Jewelry",
+      id: 'jewelry',
+      label: 'Jewelry',
       data: jewelrySelection.map(jewelry => ({
         slot: jewelry.slot,
         icon: selectJewelry(jewelry.slot),
         selectedSet,
         glyph: jewelry.glyph,
-        trait: jewelry.trait
-      }))
+        trait: jewelry.trait,
+      })),
     },
     {
-      id: "onehanded",
-      label: "One Handed",
+      id: 'onehanded',
+      label: 'One Handed',
       data: [
         {
           slot: Slot.eitherHand,
-          icon: selectWeapon("dagger"),
-          selectedSet
+          icon: selectWeapon('dagger'),
+          selectedSet,
         },
         {
           slot: Slot.eitherHand,
-          icon: selectWeapon("axe1h"),
-          selectedSet
+          icon: selectWeapon('axe1h'),
+          selectedSet,
         },
         {
           slot: Slot.eitherHand,
-          icon: selectWeapon("hammer1h"),
-          selectedSet
+          icon: selectWeapon('hammer1h'),
+          selectedSet,
         },
         {
           slot: Slot.eitherHand,
-          icon: selectWeapon("sword1h"),
-          selectedSet
+          icon: selectWeapon('sword1h'),
+          selectedSet,
         },
         {
           slot: Slot.offHand,
-          icon: selectWeapon("shield"),
-          selectedSet
-        }
-      ]
+          icon: selectWeapon('shield'),
+          selectedSet,
+        },
+      ],
     },
     {
-      id: "twohanded",
-      label: "Two Handed",
+      id: 'twohanded',
+      label: 'Two Handed',
       data: [
         {
           slot: Slot.mainHand,
-          icon: selectWeapon("bow"),
-          selectedSet
+          icon: selectWeapon('bow'),
+          selectedSet,
         },
         {
           slot: Slot.mainHand,
-          icon: selectWeapon("staff"),
-          selectedSet
+          icon: selectWeapon('staff'),
+          selectedSet,
         },
         {
           slot: Slot.mainHand,
-          icon: selectWeapon("sword2h"),
-          selectedSet
+          icon: selectWeapon('sword2h'),
+          selectedSet,
         },
         {
           slot: Slot.mainHand,
-          icon: selectWeapon("axe2h"),
-          selectedSet
+          icon: selectWeapon('axe2h'),
+          selectedSet,
         },
         {
           slot: Slot.mainHand,
-          icon: selectWeapon("hammer2h"),
-          selectedSet
-        }
-      ]
-    }
+          icon: selectWeapon('hammer2h'),
+          selectedSet,
+        },
+      ],
+    },
   ];
 };
 
@@ -162,10 +166,10 @@ export default () => {
     frontbarSelection,
     backbarSelection,
     jewelrySelection,
-    selectedSet
+    selectedSet,
   } = state!;
 
-  const armor = armorType.split("armor")[0];
+  const armor = armorType.split('armor')[0];
   const mySetups = getSetups({
     armorType: armor,
     selectedSet,
@@ -173,61 +177,62 @@ export default () => {
     smallPieceSelection,
     frontbarSelection,
     backbarSelection,
-    jewelrySelection
+    jewelrySelection,
+    weight: armorType,
   });
   const showGear = (key: string) => {
-    if (key === "frontbar") {
-      if (weaponType === "onehanded") {
-        return mySetups.filter(setup => setup.id === "onehanded");
+    if (key === 'frontbar') {
+      if (weaponType === 'onehanded') {
+        return mySetups.filter(setup => setup.id === 'onehanded');
       } else {
-        return mySetups.filter(setup => setup.id === "twohanded");
+        return mySetups.filter(setup => setup.id === 'twohanded');
       }
-    } else if (key === "backbar") {
-      if (weaponType === "onehanded") {
-        return mySetups.filter(setup => setup.id === "onehanded");
+    } else if (key === 'backbar') {
+      if (weaponType === 'onehanded') {
+        return mySetups.filter(setup => setup.id === 'onehanded');
       } else {
-        return mySetups.filter(setup => setup.id === "twohanded");
+        return mySetups.filter(setup => setup.id === 'twohanded');
       }
-    } else if (key === "armor") {
+    } else if (key === 'armor') {
       return mySetups.filter(
-        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
+        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
       );
     } else {
-      return mySetups.filter(setup => setup.id === "jewelry");
+      return mySetups.filter(setup => setup.id === 'jewelry');
     }
   };
 
   const selectedSetup = [
     {
-      id: "bigpieces",
-      label: "Big Pieces",
-      data: bigPieceSelection || []
+      id: 'bigpieces',
+      label: 'Big Pieces',
+      data: bigPieceSelection || [],
     },
     {
-      id: "smallpieces",
-      label: "Small Pieces",
-      data: smallPieceSelection || []
+      id: 'smallpieces',
+      label: 'Small Pieces',
+      data: smallPieceSelection || [],
     },
-    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
+    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
-      id: "frontbar",
-      label: "Frontbar",
-      data: frontbarSelection || []
+      id: 'frontbar',
+      label: 'Frontbar',
+      data: frontbarSelection || [],
     },
-    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ];
 
   const showSetup = (key: string) => {
-    if (key === "frontbar") {
-      return selectedSetup.filter(setup => setup.id === "frontbar");
-    } else if (key === "backbar") {
-      return selectedSetup.filter(setup => setup.id === "backbar");
-    } else if (key === "armor") {
+    if (key === 'frontbar') {
+      return selectedSetup.filter(setup => setup.id === 'frontbar');
+    } else if (key === 'backbar') {
+      return selectedSetup.filter(setup => setup.id === 'backbar');
+    } else if (key === 'armor') {
       return selectedSetup.filter(
-        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
+        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
       );
     } else {
-      return selectedSetup.filter(setup => setup.id === "jewelry");
+      return selectedSetup.filter(setup => setup.id === 'jewelry');
     }
   };
 

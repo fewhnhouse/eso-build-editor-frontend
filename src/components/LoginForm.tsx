@@ -1,8 +1,9 @@
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import { FormComponentProps } from 'antd/lib/form';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -14,56 +15,122 @@ const LOGIN = gql`
     }
   }
 `;
+
+const REGISTER = gql`
+  mutation signup($username: String!, $email: String!, $password: String!) {
+    signup(email: $email, name: $username, password: $password) {
+      token
+      user {
+        name
+      }
+    }
+  }
+`;
 const StyledForm = styled(Form)`
   display: flex;
-  width: '250px';
+  width: '300px';
   flex-direction: column;
 `;
 
-const LoginForm = ({ form }: { form: any }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+interface ILoginResult {
+  login: {
+    token: string;
+  };
+}
+
+interface IRegisterData extends ILoginData {
+  username: string;
+}
+
+interface IRegisterResult {
+  signup: {
+    token: string;
+  };
+}
+
+interface LoginFormProps extends FormComponentProps {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
+  const [register, setRegister] = useState(false);
+  const [mutateLogin, loginResult] = useMutation<ILoginResult, ILoginData>(
+    LOGIN
+  );
+  const [mutateRegister, registerResult] = useMutation<
+    IRegisterResult,
+    IRegisterData
+  >(REGISTER);
+
   const handleSubmit = (e: React.SyntheticEvent<any>) => {
     e.preventDefault();
-    login({ variables: { email, password } });
     form.validateFields((err: any, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        if (register) {
+          mutateRegister({
+            variables: {
+              email: values.email,
+              username: values.username,
+              password: values.password,
+            },
+          });
+        } else {
+          mutateLogin({
+            variables: { email: values.email, password: values.password },
+          });
+        }
       }
     });
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const [login, { error, data }] = useMutation<
-    { login: { token: string } },
-    { email: string; password: string }
-  >(LOGIN, { variables: { email, password } });
-
-  if (error) {
-    message.error(error.message);
-  }
-  if (data) {
-    console.log('data', data);
-    localStorage.setItem('token', data.login.token);
-  }
+  useEffect(() => {
+    if (loginResult.error || registerResult.error) {
+      message.error(
+        loginResult.error ? loginResult.error : registerResult.error
+      );
+    }
+    if (loginResult.data || registerResult.data) {
+      console.log(loginResult, registerResult);
+      setLoggedIn(true);
+      if (register && registerResult) {
+        localStorage.setItem(
+          'token',
+          registerResult.data ? registerResult.data.signup.token : ''
+        );
+      } else if (!register && loginResult) {
+        localStorage.setItem(
+          'token',
+          loginResult.data ? loginResult.data.login.token : ''
+        );
+      }
+    }
+  }, [loginResult, registerResult]);
 
   const { getFieldDecorator } = form;
   return (
     <StyledForm onSubmit={handleSubmit} className="login-form">
+      {register && (
+        <Form.Item>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+            />
+          )}
+        </Form.Item>
+      )}
       <Form.Item>
-        {getFieldDecorator('username', {
-          rules: [{ required: true, message: 'Please input your username!' }],
+        {getFieldDecorator('email', {
+          rules: [{ required: true, message: 'Please input your email!' }],
         })(
           <Input
-            value={email}
-            onChange={handleEmailChange}
             prefix={<Icon type="email" style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder="Email"
           />
@@ -74,8 +141,6 @@ const LoginForm = ({ form }: { form: any }) => {
           rules: [{ required: true, message: 'Please input your Password!' }],
         })(
           <Input
-            value={password}
-            onChange={handlePasswordChange}
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
             type="password"
             placeholder="Password"
@@ -87,9 +152,11 @@ const LoginForm = ({ form }: { form: any }) => {
           valuePropName: 'checked',
           initialValue: true,
         })(<Checkbox>Remember me</Checkbox>)}
-        <a className="login-form-forgot" href="/resetPassword">
-          Forgot password
-        </a>
+        {!register && (
+          <a className="login-form-forgot" href="/resetPassword">
+            Forgot password
+          </a>
+        )}
       </Form.Item>
       <Form.Item>
         <Button
@@ -98,13 +165,19 @@ const LoginForm = ({ form }: { form: any }) => {
           htmlType="submit"
           className="login-form-button"
         >
-          Log in
+          {register ? 'Register' : 'Login'}
         </Button>
+        Or{' '}
+        <a onClick={() => setRegister(register => !register)}>
+          {register ? 'login.' : 'register now!'}
+        </a>
       </Form.Item>
     </StyledForm>
   );
 };
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
+const WrappedNormalLoginForm = Form.create<LoginFormProps>({
+  name: 'normal_login',
+})(LoginForm);
 
 export default WrappedNormalLoginForm;
