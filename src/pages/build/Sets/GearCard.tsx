@@ -84,7 +84,20 @@ const ArmorTypeTag = ({
   }
 };
 
+const totalBonus = (set: ISet) => {
+  if(set.bonus_item_5 !== null || set.bonus_item_4 !== null) {
+    return [2, 3, 4, 5];
+  } else if (set.bonus_item_4 !== null ) {
+    return [2, 3, 4];
+  } else if (set.bonus_item_3 !== null ) {
+    return [2, 3];
+  } else if (set.bonus_item_2 !== null) {
+    return [2];
+  } else return [1];
+}
+
 export default ({ set }: IGearCard) => {
+  
   return (
     <StyledCard hoverable title={set.name}>
       <StyledTag color="#1890ff">{set.type}</StyledTag>
@@ -96,9 +109,9 @@ export default ({ set }: IGearCard) => {
       />
       <Description>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {[2, 3, 4, 5].map(i => (
+          {totalBonus(set).map(i => (
             <span key={i}>
-              {i}/5: {set && set[`bonus_item_${i}`]}
+              {i} pcs: {set && set[`bonus_item_${i}`]}
             </span>
           ))}
         </div>
@@ -121,8 +134,12 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
         return <StyledTag color="green">Medium</StyledTag>;
       case ("heavyarmor"):
         return <StyledTag color="red">Heavy</StyledTag>;
+      case ("onehanded"):
+        return <StyledTag color="#108ee9">Onehanded</StyledTag>;
+      case ("twohanded"):
+        return <StyledTag color="#108ee9">Twohanded</StyledTag>;
       default:
-        return <StyledTag>Default type</StyledTag>;
+        return "";
     }
   }
 
@@ -131,16 +148,19 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
       <Title>
         {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : "No gear type"}
+      {gear.type ? gearTypeTag(gear.type) : ""}
       <StyledTag color={"#108ee9"}>{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
       <Divider style={{ margin: "5px 0px" }} />
       <Description>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {[2, 3, 4, 5].map(i => (
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {gear.selectedSet ? 
+          totalBonus(gear.selectedSet).map(i => (
             <span key={i}>
-              {i}/5: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
+              {i} pcs: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
             </span>
-          ))}
+          ))
+        : <span></span>
+        }
         </div>
       </Description>
       <Divider style={{ margin: "5px 0px" }} />
