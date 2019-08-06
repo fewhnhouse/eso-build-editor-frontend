@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { Typography, Input, Divider, Select } from 'antd';
+import { Typography, Input, Divider, Select, Slider } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Flex from '../../../components/Flex';
 import { RaidContext } from '../RaidStateContext';
 import AccessRights from './AccessRights';
+import { SliderValue } from 'antd/lib/slider';
 
 const GeneralContainer = styled.div`
   display: flex;
@@ -12,10 +13,27 @@ const GeneralContainer = styled.div`
   margin: auto;
 `;
 
+const marks = {
+  1: '1',
+  6: '6',
+  12: '12',
+  18: '18',
+  24: '24',
+};
+
 const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [state, dispatch] = useContext(RaidContext);
 
-  const { name, description, applicationArea } = state!;
+  const {
+    name,
+    description,
+    applicationArea,
+    groupSize,
+  } = state!;
+
+  useEffect(() => {
+    localStorage.setItem('raidState', JSON.stringify(state));
+  }, [state]);
 
   const handleRaidNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_RAID_NAME', payload: { name: e.target.value } });
@@ -31,6 +49,13 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
     dispatch!({
       type: 'SET_RAID_APPLICATION_AREA',
       payload: { applicationArea: value },
+    });
+  };
+
+  const handleGroupSizeChange = (value: SliderValue) => {
+    dispatch!({
+      type: 'SET_GROUP_SIZE',
+      payload: { groupSize: value },
     });
   };
 
@@ -99,6 +124,24 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
                 PvE - Open World
               </Select.Option>
             </Select>
+          </Flex>
+          <Flex
+            style={{ margin: 10, width: 400 }}
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Typography.Text strong>Group Size</Typography.Text>
+
+            <Slider
+              style={{ width: 380 }}
+              min={1}
+              max={24}
+              marks={marks}
+              step={1}
+              onChange={handleGroupSizeChange}
+              defaultValue={groupSize}
+            />
           </Flex>
         </Flex>
       </GeneralContainer>

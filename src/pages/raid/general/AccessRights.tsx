@@ -43,6 +43,8 @@ export default () => {
         <Typography.Text strong>Can Edit</Typography.Text>
 
         <Select
+          allowClear
+          loading={loading}
           mode="multiple"
           style={{ width: 300 }}
           defaultValue={canEdit}
@@ -66,6 +68,8 @@ export default () => {
         <Typography.Text strong>Can View</Typography.Text>
 
         <Select
+          allowClear
+          loading={loading}
           mode="multiple"
           style={{ width: 300 }}
           defaultValue={canView}

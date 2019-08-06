@@ -185,7 +185,7 @@ export default () => {
             style={{ width: "100%" }}
           >
             <Input
-              placeholder="Search for Sets"
+              placeholder="Search for Food"
               allowClear
               value={searchText}
               onChange={handleSearchChange}

@@ -24,10 +24,10 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
       };
     }
     case 'SET_GROUP_SIZE': {
-      const { size } = action.payload;
+      const { groupSize } = action.payload;
       return {
         ...state,
-        size,
+        groupSize,
       };
     }
     case 'SET_RAID_DESCRIPTION': {
@@ -51,6 +51,7 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
         applicationArea,
       };
     }
+    
     default:
       return state;
   }
