@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Divider, Tabs, Card, Empty } from "antd";
+import { Divider, Tabs, Empty } from "antd";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Weapons from "./Weapons";
@@ -21,18 +21,6 @@ const AbilityContainer = styled.div`
 const Content = styled.div`
   flex: 3;
   display: flex;
-`;
-
-const StyledCard = styled(Card)`
-  margin: 0 auto;
-  width: 450px;
-  position: relative;
-`;
-
-const Image = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
 `;
 
 export default () => {

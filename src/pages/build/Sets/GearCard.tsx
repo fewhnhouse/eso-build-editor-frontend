@@ -1,14 +1,10 @@
-import React, { useContext } from "react";
-import { Card, Divider, Popover, Tag, Typography } from "antd";
+import React from "react";
+import { Card, Divider, Tag } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
-import CheckableTag from "antd/lib/tag/CheckableTag";
 import { ISetSelection } from "../BuildStateContext";
 import Flex from "../../../components/Flex";
 
-{
-  /**** MOVE THESE STYLES TO GLOBAL STYLES ****/
-}
 const StyledCard = styled(Card)`
   display: "flex";
   margin: 0 auto;
@@ -19,18 +15,12 @@ const StyledCard = styled(Card)`
 const Container = styled.div`
   width: 350px;
 `;
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-`;
-const AvatarContainer = styled.div`
-  padding-right: 16px;
-`;
+
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
 `;
+
 const Title = styled.div`
   font-size: 16px;
   line-height: 1.5;
@@ -41,12 +31,15 @@ const Title = styled.div`
   text-overflow: ellipsis;
   text-align: left;
 `;
+
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 `;
+
 const IconImg = styled.img`
   width: 30px;
   height: 30px;
@@ -119,15 +112,28 @@ interface ISelectedSet {
 }
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
+
+  const gearTypeTag = (gearType: string) => {
+    switch(gearType) {
+      case("lightarmor"):
+        return <StyledTag color="blue">Light</StyledTag>;
+      case ("mediumarmor"):
+        return <StyledTag color="green">Medium</StyledTag>;
+      case ("heavyarmor"):
+        return <StyledTag color="red">Heavy</StyledTag>;
+      default:
+        return <StyledTag>Default type</StyledTag>;
+    }
+  }
+
   return (
     <Container>
-      <Title style={{ textAlign: "center" }}>
+      <Title>
         {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
-        {gear.type ? gear.type : ""}<br />
-        {gear.selectedSet ? gear.selectedSet.type : "Set type"}
       </Title>
+      {gear.type ? gearTypeTag(gear.type) : "No gear type"}
+      <StyledTag color={"#108ee9"}>{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
       <Divider style={{ margin: "5px 0px" }} />
-
       <Description>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {[2, 3, 4, 5].map(i => (
@@ -148,7 +154,10 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-            <IconImg src={gear.trait ? gear.trait.icon : ""} />
+            {gear.trait ?
+              <IconImg src={gear.trait.icon} /> 
+              : "Trait not selected."
+            }
             <b>{gear.trait ? gear.trait.type : ""}</b>
           </Flex>
           <span style={{ color: "rgba(0,0,0,0.45)" }}>
@@ -165,10 +174,10 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-            <GlyphIconImg
-              src={gear.glyph ? gear.glyph.icon : ""}
-              style={{ marginRight: 5 }}
-            />
+          {gear.glyph ?
+              <GlyphIconImg src={gear.glyph.icon} style={{ marginRight: 5 }} /> 
+              : "Glyph not selected."
+            }
             <b>{gear.glyph ? gear.glyph.type : ""}</b>
           </Flex>
           <span style={{ color: "rgba(0,0,0,0.45)" }}>

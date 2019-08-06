@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { List, Tag, AutoComplete, Divider, Button, Card, Input } from "antd";
+import React, { useContext, useState } from "react";
+import { List, Tag, Divider, Card, Input } from "antd";
 import styled from "styled-components";
-import { ISet } from "../../../components/GearSlot";
 import { BuildContext } from "../BuildStateContext";
 import Flex from "../../../components/Flex";
 import {
@@ -9,12 +8,10 @@ import {
   ISpecialBuff
 } from "../../../assets/specialbuff/drinks";
 import { specialFood } from "../../../assets/specialbuff/food";
-import { drinks, IDrink } from "../../../assets/drinks";
-import { food, IFood } from "../../../assets/food";
-import Meta from "antd/lib/card/Meta";
+import { drinks } from "../../../assets/drinks";
+import { food } from "../../../assets/food";
 import { useTrail, animated } from "react-spring";
 
-const { Item } = List;
 const { CheckableTag } = Tag;
 
 const ListContainer = styled.div`

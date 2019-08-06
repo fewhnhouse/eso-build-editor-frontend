@@ -3,7 +3,7 @@ import './App.css';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'; // Redirect
 import Routes from './components/Routes';
 import styled from 'styled-components';
-import { Layout, Menu, Button, Popover, Avatar, Spin, Skeleton } from 'antd'; // Icon
+import { Layout, Menu, Button, Popover, Avatar, Spin } from 'antd'; // Icon
 import WrappedNormalLoginForm from './components/LoginForm';
 import { leather } from './assets/backgrounds/';
 import { useQuery } from '@apollo/react-hooks';

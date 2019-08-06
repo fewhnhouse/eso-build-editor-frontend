@@ -28,8 +28,6 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
     name,
     description,
     applicationArea,
-    canEdit,
-    canView,
     groupSize,
   } = state!;
 

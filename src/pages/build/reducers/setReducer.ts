@@ -1,6 +1,5 @@
 import { Slot, ISetSelection } from "./../BuildStateContext";
 import { IBuildAction, IBuildState } from "../BuildStateContext";
-import { SelectValue } from "antd/lib/select";
 import { ISet } from "../../../components/GearSlot";
 import { IGlyph, ITrait } from "../Sets/data";
 
