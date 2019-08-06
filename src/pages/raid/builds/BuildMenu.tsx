@@ -1,13 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { List, Tag, Divider, Card, Input } from 'antd';
 import styled from 'styled-components';
-import {
-  specialDrinks,
-  ISpecialBuff,
-} from '../../../assets/specialbuff/drinks';
-import { specialFood } from '../../../assets/specialbuff/food';
-import { drinks } from '../../../assets/drinks';
-import { food } from '../../../assets/food';
+import { ISpecialBuff } from '../../../assets/specialbuff/drinks';
 import { useTrail, animated } from 'react-spring';
 import { RaidContext } from '../RaidStateContext';
 import Flex from '../../../components/Flex';
@@ -18,9 +12,8 @@ import {
   ABILITY_BAR_TWO,
   ABILITY_BAR_ONE,
 } from '../../build/Skills/AbilityBar';
-import SkillSlot, { DisplaySlot } from '../../../components/SkillSlot';
+import { DisplaySlot } from '../../../components/SkillSlot';
 
-const { Item } = List;
 const { CheckableTag } = Tag;
 
 const ListContainer = styled.div`
@@ -175,7 +168,7 @@ const GET_BUILDS = gql`
   }
 `;
 export default () => {
-  const [state, dispatch] = useContext(RaidContext);
+  const [, dispatch] = useContext(RaidContext);
   const { loading, error, data } = useQuery(GET_BUILDS);
   console.log(loading, error, data);
 
