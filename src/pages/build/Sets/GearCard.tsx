@@ -6,9 +6,8 @@ import CheckableTag from "antd/lib/tag/CheckableTag";
 import { ISetSelection } from "../BuildStateContext";
 import Flex from "../../../components/Flex";
 
-{
-  /**** MOVE THESE STYLES TO GLOBAL STYLES ****/
-}
+const { Text } = Typography;
+
 const StyledCard = styled(Card)`
   display: "flex";
   margin: 0 auto;
@@ -19,10 +18,12 @@ const StyledCard = styled(Card)`
 const Container = styled.div`
   width: 350px;
 `;
+
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
 `;
+
 const Title = styled.div`
   font-size: 16px;
   line-height: 1.5;
@@ -33,12 +34,14 @@ const Title = styled.div`
   text-overflow: ellipsis;
   text-align: left;
 `;
+
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-overflow: ellipsis;
 `;
+
 const IconImg = styled.img`
   width: 30px;
   height: 30px;
@@ -111,15 +114,28 @@ interface ISelectedSet {
 }
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
+
+  const gearTypeTag = (gearType: string) => {
+    switch(gearType) {
+      case("lightarmor"):
+        return <StyledTag color="blue">Light</StyledTag>;
+      case ("mediumarmor"):
+        return <StyledTag color="green">Medium</StyledTag>;
+      case ("heavyarmor"):
+        return <StyledTag color="red">Heavy</StyledTag>;
+      default:
+        return <StyledTag>Default type</StyledTag>;
+    }
+  }
+
   return (
     <Container>
-      <Title style={{ textAlign: "center" }}>
+      <Title>
         {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
-        {gear.type ? gear.type : ""}<br />
-        {gear.selectedSet ? gear.selectedSet.type : "Set type"}
       </Title>
+      {gear.type ? gearTypeTag(gear.type) : ""} &nbsp;
+      <Text>{gear.selectedSet ? gear.selectedSet.type : ""}</Text>
       <Divider style={{ margin: "5px 0px" }} />
-
       <Description>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {[2, 3, 4, 5].map(i => (
