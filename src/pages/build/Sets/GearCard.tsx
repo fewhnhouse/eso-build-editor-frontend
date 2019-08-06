@@ -38,8 +38,9 @@ const Title = styled.div`
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
-  /* overflow: hidden; */
+  overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 `;
 
 const IconImg = styled.img`
@@ -133,8 +134,8 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
       <Title>
         {gear.selectedSet ? gear.selectedSet.name : "Set name"} <br />
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : ""} &nbsp;
-      <Text>{gear.selectedSet ? gear.selectedSet.type : ""}</Text>
+      {gear.type ? gearTypeTag(gear.type) : "No gear type"}
+      <StyledTag color={"#108ee9"}>{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
       <Divider style={{ margin: "5px 0px" }} />
       <Description>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -156,7 +157,10 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-            <IconImg src={gear.trait ? gear.trait.icon : ""} />
+            {gear.trait ?
+              <IconImg src={gear.trait.icon} /> 
+              : "Trait not selected."
+            }
             <b>{gear.trait ? gear.trait.type : ""}</b>
           </Flex>
           <span style={{ color: "rgba(0,0,0,0.45)" }}>
@@ -173,10 +177,10 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
           }}
         >
           <Flex direction="row" justify="flex-start" align="center">
-            <GlyphIconImg
-              src={gear.glyph ? gear.glyph.icon : ""}
-              style={{ marginRight: 5 }}
-            />
+          {gear.glyph ?
+              <GlyphIconImg src={gear.glyph.icon} style={{ marginRight: 5 }} /> 
+              : "Glyph not selected."
+            }
             <b>{gear.glyph ? gear.glyph.type : ""}</b>
           </Flex>
           <span style={{ color: "rgba(0,0,0,0.45)" }}>
