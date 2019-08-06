@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import { Card, Divider, Popover, Tag, Typography } from "antd";
+import React from "react";
+import { Card, Divider, Tag } from "antd";
 import styled from "styled-components";
 import { ISet } from "../../../components/GearSlot";
-import CheckableTag from "antd/lib/tag/CheckableTag";
 import { ISetSelection } from "../BuildStateContext";
 import Flex from "../../../components/Flex";
-
-const { Text } = Typography;
 
 const StyledCard = styled(Card)`
   display: "flex";

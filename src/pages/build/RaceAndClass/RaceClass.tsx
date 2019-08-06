@@ -6,7 +6,6 @@ import { EsoClassCard, RaceCard } from './Card';
 import { BuildContext } from '../BuildStateContext';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import Flex from '../../../components/Flex';
-const { TextArea } = Input;
 
 const CardContainer = styled.div`
   display: flex;

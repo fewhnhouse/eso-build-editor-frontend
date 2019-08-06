@@ -6,28 +6,14 @@ import {
   Button,
   Steps,
   Tooltip,
-  Typography,
-  Input,
-  Divider,
-  InputNumber,
-  Radio,
-  Form,
   message,
 } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router';
-import Flex from '../../components/Flex';
-import TextArea from 'antd/lib/input/TextArea';
-import {
-  BuildContext,
-  buildReducer,
-  defaultBuildState,
-} from '../build/BuildStateContext';
 import RaidGeneral from './RaidGeneral/RaidGeneral';
 import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
-const { Title, Text } = Typography;
 
 const Container = styled(Content)`
   display: flex;
@@ -40,27 +26,12 @@ const Container = styled(Content)`
   color: ${props => props.theme.mainBg};
 `;
 
-const Wrapper = styled(Flex)`
-  width: 100%;
-`;
-const LeftSide = styled(Flex)`
-  width: 500px;
-  max-width: 800px;
-`;
-const RightSide = styled(Flex)`
-  width: 500px;
-  max-width: 800px;
-`;
-const ContentFlex = styled(Flex)``;
-
 const TabButton = styled(Button)`
   margin: 0px 10px;
 `;
 
 export default ({
-  match,
-  location,
-  history,
+  match
 }: RouteComponentProps<{ id: string }>) => {
   const savedRaidState = localStorage.getItem('raidState');
 

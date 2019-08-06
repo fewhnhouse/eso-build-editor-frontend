@@ -7,9 +7,7 @@ import { BuildContext, Slot, ISetSelection } from '../BuildStateContext';
 import {
   selectArmor,
   selectWeapon,
-  selectJewelry,
-  actualRing,
-  actualNeck,
+  selectJewelry
 } from '../../../assets/gear';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -39,8 +37,6 @@ const getSetups = ({
   bigPieceSelection,
   smallPieceSelection,
   jewelrySelection,
-  frontbarSelection,
-  backbarSelection,
   weight,
 }: {
   armorType: string;
@@ -159,7 +155,6 @@ export default () => {
   const {
     setTabKey,
     armorType,
-    weapons,
     weaponType,
     bigPieceSelection,
     smallPieceSelection,

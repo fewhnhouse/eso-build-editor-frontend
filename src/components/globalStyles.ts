@@ -1,12 +1,3 @@
-const themeGlobals = {
-  lineHeight: "1.5",
-  titleSize: "16px",
-  textSize: "14px",
-  textAlign: "left",
-  bottomMargin: "8px",
-  rightPadding: "16px"
-}
-
 const theme = {
   flexDisplay: "flex",
   ttWidth: "400px",

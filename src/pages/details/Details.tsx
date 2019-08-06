@@ -4,7 +4,6 @@ import styled, { withTheme, ThemeProps } from "styled-components";
 import { chooseClass } from "../../util/utils";
 import { Divider, Layout, Typography } from "antd";
 import GearView from "../../components/GearView";
-import { immoPot, triPot } from "../../assets/deco";
 import Flex from "../../components/Flex";
 import { ITheme } from "../../components/globalStyles";
 import SkillView from "../../components/SkillView";

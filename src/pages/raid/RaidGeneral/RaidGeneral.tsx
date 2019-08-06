@@ -15,7 +15,7 @@ const GeneralContainer = styled.div`
 const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [state, dispatch] = useContext(RaidContext);
 
-  const { name, description, applicationArea, canEdit, canView } = state!;
+  const { name, description, applicationArea } = state!;
 
   const handleRaidNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_RAID_NAME', payload: { name: e.target.value } });

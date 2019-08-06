@@ -3,7 +3,6 @@ import { Divider, Radio, Checkbox } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import Flex from "../../../components/Flex";
 import styled from "styled-components";
-
 import { SelectValue } from "antd/lib/select";
 import { SelectWithTitle } from "./CustomSelect";
 import { BuildContext, Slot } from "../BuildStateContext";
@@ -13,11 +12,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
 `;
-const OffHandTitle = styled.div`
-  display: flex;
-  width: 350px;
-  justify-content: space-between;
-`;
+
 const StyledSelectWithTitle = styled(SelectWithTitle)`
   min-width: 350px;
   max-width: 350px;
@@ -28,7 +23,7 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
 export default ({ bar }: { bar: "frontbar" | "backbar" }) => {
   const [state, dispatch] = useContext(BuildContext);
   const [shield, setShield] = useState(false);
-  const { weaponType, frontbarSelection, backbarSelection } = state!;
+  const { weaponType } = state!;
 
   const [mainHand, setMainHand] = useState<any>(undefined);
   const [offHand, setOffHand] = useState<any>(undefined);
@@ -42,7 +37,7 @@ export default ({ bar }: { bar: "frontbar" | "backbar" }) => {
 
   useEffect(() => {
     console.log("state update");
-    const { weaponType, frontbarSelection, backbarSelection } = state!;
+    const { frontbarSelection, backbarSelection } = state!;
     setMainHand(
       [...(bar === "frontbar" ? frontbarSelection : backbarSelection)].find(
         slot => slot.slot === Slot.mainHand
