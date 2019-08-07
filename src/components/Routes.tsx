@@ -5,6 +5,7 @@ import Build from '../pages/build/Build';
 import Setup from '../pages/setup/Setup';
 import Details from '../pages/details/Details';
 import Raid from '../pages/raid/Raid';
+import Verify from './Verify';
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean;
@@ -17,6 +18,7 @@ export default ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path="/verify/:token" component={Verify} />
       <Route exact path="/setup" component={Setup} />
       <ProtectedRoute
         loggedIn={isLoggedIn}
