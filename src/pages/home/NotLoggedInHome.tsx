@@ -1,16 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Button } from 'antd'
+import { Typography, Divider, Button, Icon } from 'antd'
 import Flex from '../../components/Flex'
 import { Link } from 'react-router-dom';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
-const Wrapper = styled(Flex)``
+const Wrapper = styled(Flex)`
+    padding-top: 20px;
+`
 
 const LeftSide = styled(Flex)`
   flex: 1;
-  height: 70%;
 `
 
 const Center = styled(Flex)`
@@ -18,12 +19,22 @@ const Center = styled(Flex)`
   background-color: white;
   border: 1px lightgrey solid;
   border-radius: 5px;
-  height: 70%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `
 
 const RightSide = styled(Flex)`
   flex: 1;
-  height: 70%;
+`
+
+const StyledButton = styled(Button)`
+    width: 300px;
+    margin-top: 10px;
+`
+
+const StyledIcon = styled(Icon)`
+    float: left;
+    line-height: 1.5 !important;
 `
 
 export default () => {
@@ -31,28 +42,35 @@ export default () => {
         <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
             <LeftSide direction={"column"} justify={""} align={""}>
                 <Title level={1}>Get started</Title>
-                <Button type="primary" size="large">
+                <StyledButton size="large">
+                    <StyledIcon type="plus" />
                     <Link to={"/build/0"}>Create a build</Link>
-                </Button>
-                <Button size="large" icon="search">
-                    <Link to={"/raid/0"}>Browse raid setups </Link>
-                </Button>
-                <Button size="large" icon="search">
-                    <Link to={"/build/0"}>Browse builds</Link>
-                </Button>
+                </StyledButton>
+                <StyledButton size="large">
+                    <StyledIcon type="plus-square" />
+                    <Link to={"/build/0"}>Create a raid setup</Link>
+                </StyledButton>
+                <StyledButton size="large">
+                    <StyledIcon type="search" />
+                    <Link to={"/build/0"}>Browse builds and setups</Link>
+                </StyledButton>
             </LeftSide>
             <Center direction={"column"} justify={""} align={""}>
                 <Title level={1}>Welcome to Build Editor!</Title>
-                <p>
+                <Text>
                     Build Editor allows you to create and save builds<br />
                     and combine them to complete raid setups -<br />
                     to be shared with friends, guilds and communities,<br />
                     or saved privately as you choose. 
-                </p>
+                </Text>
+                <Title level={4}>
+                    <Icon type="arrow-left" style={{marginRight: "5px"}} /> Get building!
+                </Title>
             </Center>
             <RightSide direction={"column"} justify={""} align={""}>
                 <Title level={1}>Build Editor news</Title>
-                <Title level={2}>Latest in Build Editor</Title><br />
+                <Title level={2}>Release 1.0</Title>
+                <Text>Build Editor 1.0 is here!</Text>
             </RightSide>
         </Wrapper>
     )

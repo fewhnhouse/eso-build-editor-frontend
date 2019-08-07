@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Select } from 'antd'
+import { Typography, Collapse, Button, Icon, Card } from 'antd'
 import Flex from '../../components/Flex'
 import { Link } from 'react-router-dom';
 
-const { Option } = Select;
-
-const { Title } = Typography;
+const { Panel } = Collapse;
+const { Title, Text } = Typography;
 
 const Wrapper = styled(Flex)``
 
@@ -23,31 +22,88 @@ const RightSide = styled(Flex)`
   flex: 1;
 `
 
+const StyledButton = styled(Button)`
+    width: 300px;
+    margin-top: 10px;
+`
+
+const StyledIcon = styled(Icon)`
+    float: left;
+    line-height: 1.5 !important;
+`
+
+const StyledCollapse = styled(Collapse)`
+    width: 100%;
+`
+
+const StyledCard = styled(Card)`
+    width: 250px;
+    float: left;
+    align-self: center;
+`
+
+const userInformation = {
+        user: "UserName",
+        raidSetups: [
+            {
+                setupName: "25man IC raid",
+                description: "Multipurpose smallscale setup"
+            },
+            {
+                setupName: "Magplar solo",
+                description: "Most useless PvP build"
+            }
+        ],
+        builds: [
+            {
+                buildName: "Wrobel's Revenge",
+                description: "Guaranteed hatewhispers 24/7"
+            }
+        ]
+    }
+
 export default () => {
     return (
         <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
             <LeftSide direction={"column"} justify={""} align={""}>
-                <Title level={2}>
+                <Title level={1}>Building</Title>
+                <StyledButton size="large">
+                    <StyledIcon type="plus" />
                     <Link to={"/build/0"}>Create a build</Link>
-                </Title>
-                <Title level={2}>
-                    <Link to={"/raid/0"}>Create a raid setup</Link>
-                </Title>
+                </StyledButton>
+                <StyledButton size="large">
+                    <StyledIcon type="plus-square" />
+                    <Link to={"/build/0"}>Create a raid setup</Link>
+                </StyledButton>
+                <StyledButton size="large">
+                    <StyledIcon type="search" />
+                    <Link to={"/build/0"}>Browse builds and setups</Link>
+                </StyledButton>
             </LeftSide>
             <Center direction={"column"} justify={""} align={""}>
-                <Title level={1}>Your profile</Title>
-                <Divider>Saved builds</Divider>
-                <Select defaultValue={"Op build 1"} style={{width: "200px"}}>
-                    <Option value={"Op build 1"}>Op build 1</Option>
-                    <Option value={"Garbage build"}>Garbage build</Option>
-                    <Option value={"Mediocre build"}>Mediocre build</Option>
-                </Select>
-                <Divider>Saved raid setups</Divider>
-                <Select defaultValue={"Black Rose Prison"} style={{width: "200px"}}>
-                    <Option value={"24man solozerg"}>24man solozerg</Option>
-                    <Option value={"Black Rose Prison"}>Garbage build</Option>
-                    <Option value={"Craglorn trials 12man"}>Craglorn trials 12man</Option>
-                </Select>
+                <Title level={1}>Hello {userInformation.user}!</Title>
+                <StyledCollapse>
+                    <Panel header="My builds" key="1">
+                        {userInformation.builds ? 
+                            userInformation.builds.map( build => {
+                                return (
+                                    <StyledCard title={build.buildName} hoverable>
+                                        {build.description}
+                                    </StyledCard>
+                                )
+                        }): "You have no saved builds yet." }
+                    </Panel>
+                    <Panel header="My raids" key="2">
+                        {userInformation.raidSetups ? 
+                            userInformation.raidSetups.map( raid => {
+                                return (
+                                    <StyledCard title={raid.setupName} hoverable>
+                                        {raid.description}
+                                    </StyledCard>
+                                )
+                        }): "You have no saved raids yet." }
+                    </Panel>
+                </StyledCollapse>
             </Center>
             <RightSide direction={"column"} justify={""} align={""}>
                 <Title level={1}>Build Editor news</Title>
