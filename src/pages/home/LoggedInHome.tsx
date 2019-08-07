@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Collapse, Button, Icon, Card } from 'antd'
+import { Typography, Collapse, Button, Icon, Card, List } from 'antd'
 import Flex from '../../components/Flex'
 import { Link } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
 
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
@@ -38,24 +40,129 @@ const StyledCollapse = styled(Collapse)`
 
 const StyledCard = styled(Card)`
     width: 250px;
-    float: left;
-    align-self: center;
+
 `
+
+const GET_BUILDS = gql`
+  fragment SetSelection on SetSelection {
+    icon
+    slot
+    type
+    selectedSet {
+      name
+      location
+      type
+      bonus_item_1
+      bonus_item_2
+      bonus_item_3
+      bonus_item_4
+      bonus_item_5
+      has_jewels
+      has_weapons
+      has_heavy_armor
+      has_light_armor
+      has_medium_armor
+    }
+    trait {
+      type
+      description
+      icon
+    }
+    glyph {
+      type
+      description
+      icon
+    }
+  }
+
+  fragment Skill on Skill {
+    name
+    skillId
+    icon
+    range
+    type
+    cost
+    effect_1
+    effect_2
+    target
+  }
+
+  fragment SkillSelection on SkillSelection {
+    index
+    skill {
+      ...Skill
+    }
+  }
+  query builds(
+    $where: BuildWhereInput
+    $orderBy: BuildOrderByInput
+    $first: Int
+    $last: Int
+    $skip: Int
+    $after: String
+    $before: String
+  ) {
+    builds(
+      where: $where
+      orderBy: $orderBy
+      first: $first
+      last: $last
+      skip: $skip
+      after: $after
+      before: $before
+    ) {
+      id
+      name
+      race
+      esoClass
+      frontbarSelection {
+        ...SetSelection
+      }
+      backbarSelection {
+        ...SetSelection
+      }
+      newBarOne {
+        ...SkillSelection
+      }
+      newBarTwo {
+        ...SkillSelection
+      }
+      ultimateOne {
+        ...Skill
+      }
+      ultimateTwo {
+        ...Skill
+      }
+      bigPieceSelection {
+        ...SetSelection
+      }
+      smallPieceSelection {
+        ...SetSelection
+      }
+      jewelrySelection {
+        ...SetSelection
+      }
+    }
+  }
+`;
 
 const userInformation = {
         user: "UserName",
         raidSetups: [
             {
+                raidID: 1,
                 setupName: "25man IC raid",
                 description: "Multipurpose smallscale setup"
             },
             {
-                setupName: "Magplar solo",
-                description: "Most useless PvP build"
+                raidID: 2,
+                setupName: "Magplar duo",
+                description: "Most useless PvP group"
             }
         ],
         builds: [
             {
+                buildID: 1,
                 buildName: "Wrobel's Revenge",
                 description: "Guaranteed hatewhispers 24/7"
             }
@@ -63,6 +170,10 @@ const userInformation = {
     }
 
 export default () => {
+
+    const { loading, error, data } = useQuery(GET_BUILDS);
+    const userBuilds = data && data.builds ? data.builds : "";
+
     return (
         <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
             <LeftSide direction={"column"} justify={""} align={""}>
@@ -84,24 +195,37 @@ export default () => {
                 <Title level={1}>Hello {userInformation.user}!</Title>
                 <StyledCollapse>
                     <Panel header="My builds" key="1">
-                        {userInformation.builds ? 
-                            userInformation.builds.map( build => {
-                                return (
-                                    <StyledCard title={build.buildName} hoverable>
-                                        {build.description}
-                                    </StyledCard>
-                                )
-                        }): "You have no saved builds yet." }
+                        { data.builds ? 
+                            <List
+                                grid={{ gutter: 16, column: 2 }}
+                                dataSource={userBuilds}
+                                renderItem={ (item, index) => {
+                                    const find = userBuilds[index];
+                                    return (
+                                        <List.Item style={{width: "250px"}}>
+                                            <StyledCard key={find.id} title={find.name} hoverable>
+                                                {find.race} {find.esoClass}
+                                            </StyledCard>
+                                        </List.Item>
+                                    );
+                                }}>
+                            </List>
+                            : "You have no saved builds yet." }
                     </Panel>
                     <Panel header="My raids" key="2">
-                        {userInformation.raidSetups ? 
-                            userInformation.raidSetups.map( raid => {
-                                return (
-                                    <StyledCard title={raid.setupName} hoverable>
-                                        {raid.description}
-                                    </StyledCard>
-                                )
-                        }): "You have no saved raids yet." }
+                        {userInformation.builds ? 
+                            <List
+                                grid={{ gutter: 16, column: 2 }}
+                                dataSource={userInformation.raidSetups}
+                                renderItem={item => (
+                                    <List.Item style={{width: "250px"}}>
+                                        <StyledCard key={item.raidID} title={item.setupName} hoverable>
+                                            {item.description}
+                                        </StyledCard>
+                                    </List.Item>
+                                )}>
+                            </List>
+                        : "You have no saved raids yet." }
                     </Panel>
                 </StyledCollapse>
             </Center>
