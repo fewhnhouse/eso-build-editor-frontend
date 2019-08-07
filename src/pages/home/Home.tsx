@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Layout, Typography, Divider } from 'antd'
 import Flex from '../../components/Flex'
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import NotLoggedInHome from './NotLoggedInHome';
+import LoggedInHome from './LoggedInHome';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const { Content } = Layout
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const Container = styled(Content)`
   display: flex;
@@ -17,35 +22,25 @@ const Container = styled(Content)`
   color: ${props => props.theme.mainBg};
 `
 
-const Wrapper = styled(Flex)``
-
-const LeftSide = styled(Flex)`
-  flex: 1;
-`
-
-const RightSide = styled(Flex)`
-  flex: 1;
-`
-
 const StyledTitle = styled.h1`
   margin-top: 20px;
   font-size: 50px;
 `
 
-export default () => {
+interface IHomeProps {
+  loggedIn: boolean
+}
+const Home = ({loggedIn}: IHomeProps) => {
+/* client.cache.writeData({ data: { loggedIn: false } }); */
+/* { userLogged }:any ? */
   return (
     <Container>
       <Divider>
         <StyledTitle>FIST Build Editor</StyledTitle>
       </Divider>
-      <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
-        <LeftSide direction={"row"} justify={""} align={"flex-start"}>
-          <Title level={1}>Welcome to Build Editor!</Title>
-        </LeftSide>
-        <RightSide direction={"row"} justify={""} align={"flex-start"}>
-          <Title level={1}>Get started</Title>
-        </RightSide>
-      </Wrapper>
+    { loggedIn ? <LoggedInHome /> : <NotLoggedInHome /> }
     </Container>
   )
 }
+
+export default Home;
