@@ -150,7 +150,7 @@ const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
           </Popover>
         )}
       </StyledHeader>
-      <Routes />
+      <Routes isLoggedIn={loggedIn} />
     </Layout>
   );
 };
