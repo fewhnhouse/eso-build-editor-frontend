@@ -7,35 +7,17 @@ import { RaidContext } from '../RaidStateContext';
 import Flex from '../../../components/Flex';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import SkillView from '../../../components/SkillView';
-import {
-  ABILITY_BAR_TWO,
-  ABILITY_BAR_ONE,
-} from '../../build/Skills/AbilityBar';
-import { DisplaySlot } from '../../../components/SkillSlot';
+import BuildCard from './BuildCard';
 
 const { CheckableTag } = Tag;
 
 const ListContainer = styled.div`
-  flex: 1;
+  width: 500px;
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
-`;
-
-const AvatarContainer = styled.div`
-  padding-right: 16px;
-`;
-
-const StyledCard = styled(Card)`
-  border-color: ${(props: { active: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
-  background: ${(props: { active: boolean }) =>
-    props.active ? 'rgba(0,0,0,0.05)' : 'white'};
-  border-width: 2px;
-  margin: 10px;
 `;
 
 const StyledTag = styled(Tag)`
@@ -44,47 +26,26 @@ const StyledTag = styled(Tag)`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  border: 2px solid rgba(0, 0, 0, 0.45);
-`;
-
-const Description = styled.div`
-  font-size: 14px;
-  line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
-`;
-
-const Title = styled.div`
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: left;
-`;
-
-const AbilityBar = styled.div`
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
 
 const GET_BUILDS = gql`
   fragment SetSelection on SetSelection {
     icon
     slot
+    type
     selectedSet {
       name
+      location
+      type
+      bonus_item_1
+      bonus_item_2
+      bonus_item_3
+      bonus_item_4
+      bonus_item_5
+      has_jewels
+      has_weapons
+      has_heavy_armor
+      has_light_armor
+      has_medium_armor
     }
     trait {
       type
@@ -134,6 +95,7 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
+      id
       name
       race
       esoClass
@@ -170,13 +132,7 @@ const GET_BUILDS = gql`
 export default () => {
   const [, dispatch] = useContext(RaidContext);
   const { loading, error, data } = useQuery(GET_BUILDS);
-  console.log(loading, error, data);
 
-  const handleClick = (buff: ISpecialBuff) => (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    dispatch!({ type: 'SET_BUFF', payload: { buff } });
-  };
   const [searchText, setSearchText] = useState('');
   const filteredBuilds =
     data && data.builds
@@ -229,7 +185,7 @@ export default () => {
             direction="row"
             justify="center"
             align="center"
-            style={{ margin: '0px 10px' }}
+            style={{ margin: '0px 10px', overflow: 'auto' }}
           >
             <CheckableTag checked={true}>Dragonknight</CheckableTag>
             <CheckableTag checked={true}>Warden</CheckableTag>
@@ -267,56 +223,7 @@ export default () => {
             const item = filteredBuilds[index];
             return (
               <animated.div style={style}>
-                <StyledCard
-                  hoverable
-                  active={item.name === 'asd'}
-                  onClick={handleClick(item)}
-                >
-                  <div style={{ display: 'flex', maxWidth: 400 }}>
-                    <AvatarContainer>
-                      <MyAvatar title={item.name} src={item.icon} />
-                    </AvatarContainer>
-                    <div>
-                      <Title>{item.name}</Title>
-
-                      <Divider style={{ margin: '5px 0px' }} />
-                      <AbilityBar>
-                        <SkillView
-                          id={ABILITY_BAR_ONE}
-                          disabled
-                          skillSlots={item.newBarOne}
-                        />
-                        <DisplaySlot
-                          style={{ marginLeft: 10 }}
-                          skill={item.ultimateOne || undefined}
-                        />
-                      </AbilityBar>
-                      <AbilityBar>
-                        <SkillView
-                          id={ABILITY_BAR_TWO}
-                          disabled
-                          skillSlots={item.newBarTwo}
-                        />
-                        <DisplaySlot
-                          style={{ marginLeft: 10 }}
-                          skill={item.ultimateTwo || undefined}
-                        />
-                      </AbilityBar>
-
-                      <div
-                        style={{
-                          width: 140,
-                          display: 'flex',
-                          margin: '10px 0px',
-                        }}
-                      >
-                        {/*tags*/}
-                      </div>
-                      <Description>{item.esoClass}</Description>
-                      <Description>{item.race}</Description>
-                    </div>
-                  </div>
-                </StyledCard>
+                <BuildCard item={item} />
               </animated.div>
             );
           }}

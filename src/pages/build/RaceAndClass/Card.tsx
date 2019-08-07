@@ -45,7 +45,7 @@ const StyledCard = styled(Card)`
 const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext);
   const selected =
-    type === "SET_CLASS" ? state!.class === title : state!.race === title;
+    type === "SET_CLASS" ? state!.esoClass === title : state!.race === title;
   const handleClick = () => {
     dispatch!({
       type,
@@ -63,7 +63,7 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
 
   const cancel = () => {};
 
-  return !selected && state!.class !== "" && type === "SET_CLASS" ? (
+  return !selected && state!.esoClass !== "" && type === "SET_CLASS" ? (
     <Popconfirm
       title="Are you sure you want to swap classes? This will reset all your skills."
       onConfirm={confirm}

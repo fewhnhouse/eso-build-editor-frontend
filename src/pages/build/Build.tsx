@@ -183,6 +183,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const handleSave = async () => {
     const {
       race,
+      esoClass,
       frontbarSelection,
       backbarSelection,
       bigPieceSelection,
@@ -299,7 +300,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         data: {
           name,
           race,
-          esoClass: 'Warden',
+          esoClass,
           applicationArea,
           role,
           mundusStone: { connect: { name: mundus.name } },
@@ -378,7 +379,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const isDisabled =
     tab === 0 &&
     (state.race === '' ||
-      state.class ===
+      state.esoClass ===
         ''); /* ||
     (tab === 1 &&
       (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||

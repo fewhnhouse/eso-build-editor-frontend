@@ -101,10 +101,10 @@ const Details = ({ match, theme }: IDetails) => {
     <Container>
       <Title level={1}>
         <ClassImg
-          title={parsedBuildState.class}
-          src={chooseClass(parsedBuildState.class)}
+          title={parsedBuildState.esoClass}
+          src={chooseClass(parsedBuildState.esoClass)}
         />
-        {parsedBuildState.class} "{parsedBuildState.name}"
+        {parsedBuildState.esoClass} "{parsedBuildState.name}"
       </Title>
       <Title level={4}>
         {parsedBuildState.race} {parsedBuildState.applicationArea} <br />
