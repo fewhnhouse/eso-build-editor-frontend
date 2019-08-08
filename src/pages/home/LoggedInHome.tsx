@@ -1,46 +1,35 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Collapse, Button, Icon, Card, List } from 'antd'
+import { Typography, Button, Icon, Card, List } from 'antd'
 import Flex from '../../components/Flex'
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import UserHomeCard from './UserHomeCard';
 
-const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
 const Wrapper = styled(Flex)``
 
 const LeftSide = styled(Flex)`
   flex: 1;
+  justify-content: center;
 `
 
 const Center = styled(Flex)`
   flex: 1;
-  justify-content: normal;
+  justify-content: center;
 `
 
 const RightSide = styled(Flex)`
   flex: 1;
-`
-
-const StyledButton = styled(Button)`
-    width: 300px;
-    margin-top: 10px;
-`
-
-const StyledIcon = styled(Icon)`
-    float: left;
-    line-height: 1.5 !important;
-`
-
-const StyledCollapse = styled(Collapse)`
-    width: 100%;
+  background-color: lightgrey;
 `
 
 const StyledCard = styled(Card)`
-    width: 250px;
-
+    width: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
 `
 
 const GET_BUILDS = gql`
@@ -176,62 +165,30 @@ export default () => {
 
     return (
         <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
-            <LeftSide direction={"column"} justify={""} align={""}>
-                <Title level={1}>Building</Title>
-                <StyledButton size="large">
-                    <StyledIcon type="plus" />
-                    <Link to={"/build/0"}>Create a build</Link>
-                </StyledButton>
-                <StyledButton size="large">
-                    <StyledIcon type="plus-square" />
-                    <Link to={"/build/0"}>Create a raid setup</Link>
-                </StyledButton>
-                <StyledButton size="large">
-                    <StyledIcon type="search" />
-                    <Link to={"/build/0"}>Browse builds and setups</Link>
-                </StyledButton>
+            <LeftSide direction={"column"} justify={"center"} align={""}>
+                <Title level={2}>My builds ({userBuilds.length})</Title>
+                { data.builds ? 
+                    <UserHomeCard userBuilds={data.builds} />
+                : "You have no saved builds yet." }
             </LeftSide>
-            <Center direction={"column"} justify={""} align={""}>
-                <Title level={1}>Hello {userInformation.user}!</Title>
-                <StyledCollapse>
-                    <Panel header="My builds" key="1">
-                        { data.builds ? 
-                            <List
-                                grid={{ gutter: 16, column: 2 }}
-                                dataSource={userBuilds}
-                                renderItem={ (item, index) => {
-                                    const find = userBuilds[index];
-                                    return (
-                                        <List.Item style={{width: "250px"}}>
-                                            <StyledCard key={find.id} title={find.name} hoverable>
-                                                {find.race} {find.esoClass}
-                                            </StyledCard>
-                                        </List.Item>
-                                    );
-                                }}>
-                            </List>
-                            : "You have no saved builds yet." }
-                    </Panel>
-                    <Panel header="My raids" key="2">
-                        {userInformation.builds ? 
-                            <List
-                                grid={{ gutter: 16, column: 2 }}
-                                dataSource={userInformation.raidSetups}
-                                renderItem={item => (
-                                    <List.Item style={{width: "250px"}}>
-                                        <StyledCard key={item.raidID} title={item.setupName} hoverable>
-                                            {item.description}
-                                        </StyledCard>
-                                    </List.Item>
-                                )}>
-                            </List>
-                        : "You have no saved raids yet." }
-                    </Panel>
-                </StyledCollapse>
+            <Center direction={"column"} justify={"center"} align={""}>
+                <Title level={2}>My raids ({userInformation.raidSetups.length})</Title>
+                    {userInformation.builds ? 
+                        <List style={{maxHeight: "500px", overflowY: "scroll"}}
+                            dataSource={userInformation.raidSetups}
+                            renderItem={item => (
+                                <List.Item style={{justifyContent: "center"}}>
+                                    <StyledCard key={item.raidID} title={item.setupName} hoverable>
+                                        {item.description}
+                                    </StyledCard>
+                                </List.Item>
+                            )}>
+                        </List>
+                    : "You have no saved raids yet." }
             </Center>
             <RightSide direction={"column"} justify={""} align={""}>
-                <Title level={1}>Build Editor news</Title>
-                <Title level={2}>Latest in Build Editor</Title><br /> 
+                <Title level={2}>Discovery</Title>
+                <Title level={2}>Activity</Title>
             </RightSide>
         </Wrapper>
     )
