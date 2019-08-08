@@ -66,6 +66,10 @@ const HomeHeader = styled.div`
   background-color: sandybrown;
 `
 
+const Content = styled.div`
+  padding: 40px;
+`
+
 export default () => {
   return (
     <>
@@ -76,34 +80,35 @@ export default () => {
           placeholder='Search for builds and raids...'
         />
       </HomeHeader>
+      <Content>
+        <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
+        <Text style={{ maxWidth: '400px' }}>
+          Build Editor allows you to create and save builds and combine them to
+          complete raid setups - to be shared with friends, guilds and
+          communities, or saved privately as you choose.
+        </Text>
+        <Divider />
 
-      <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
-      <Text style={{ maxWidth: '400px' }}>
-        Build Editor allows you to create and save builds and combine them to
-        complete raid setups - to be shared with friends, guilds and
-        communities, or saved privately as you choose.
-      </Text>
-      <Divider />
-
-      <Wrapper direction={'row'} justify={''} align={'flex-start'}>
-        <LeftSide direction={'column'} justify={'space-between'} align={''}>
-          <Title level={3}>Builds</Title>
-          <Text>Create, share, save and edit builds</Text>
-          <Button type='primary' ghost={true}>
-            Create
-          </Button>
-        </LeftSide>
-        <Center direction={'column'} justify={'space-between'} align={''}>
-          <Title level={3}>Overview</Title>
-        </Center>
-        <RightSide direction={'column'} justify={'space-between'} align={''}>
-          <Title level={3}>Raids</Title>
-          <Text>Create, share, save and edit raids</Text>
-          <Button type='primary' ghost={true}>
-            Create
-          </Button>
-        </RightSide>
-      </Wrapper>
+        <Wrapper direction={'row'} justify={''} align={'flex-start'}>
+          <LeftSide direction={'column'} justify={'space-between'} align={''}>
+            <Title level={3}>Builds</Title>
+            <Text>Create, share, save and edit builds</Text>
+            <Button type='primary' ghost={true}>
+              Create
+            </Button>
+          </LeftSide>
+          <Center direction={'column'} justify={'space-between'} align={''}>
+            <Title level={3}>Overview</Title>
+          </Center>
+          <RightSide direction={'column'} justify={'space-between'} align={''}>
+            <Title level={3}>Raids</Title>
+            <Text>Create, share, save and edit raids</Text>
+            <Button type='primary' ghost={true}>
+              Create
+            </Button>
+          </RightSide>
+        </Wrapper>
+      </Content>
     </>
   )
 }
