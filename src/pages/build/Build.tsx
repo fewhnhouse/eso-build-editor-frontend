@@ -14,6 +14,7 @@ import RaceClass from './RaceAndClass/RaceClass';
 import Details from '../details/Details';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import SuccessNotification from './SuccessNotification';
 
 const { Footer, Content } = Layout;
 
@@ -143,7 +144,9 @@ const CREATE_SKILL_SELECTIONS = gql`
   }
 `;
 const { Step } = Steps;
+
 export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
+  const [successVisibility, setVisibility] = useState(false);
   const savedBuildState = localStorage.getItem('buildState');
 
   useEffect(() => {
@@ -365,6 +368,9 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
     });
 
     console.log(build);
+    localStorage.removeItem('buildState');
+    setVisibility(true);
+
   };
 
   const handleNextClick = () => {
@@ -403,6 +409,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
 
   return (
     <BuildContext.Provider value={[state, dispatch]}>
+      <SuccessNotification visibility={successVisibility}/>
       <Container>
         {id === '0' ? (
           <RaceClass />
