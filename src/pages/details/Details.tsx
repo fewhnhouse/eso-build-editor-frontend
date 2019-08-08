@@ -108,7 +108,12 @@ const Details = ({ match, theme }: IDetails) => {
           title={parsedBuildState.esoClass}
           src={chooseClass(parsedBuildState.esoClass)}
         />
-        {parsedBuildState.esoClass}
+        {parsedBuildState.esoClass} "{parsedBuildState.name}"
+      </Title>
+      <Title level={4}>
+        {parsedBuildState.race} {parsedBuildState.applicationArea} <br />
+        {parsedBuildState.mainResource} {parsedBuildState.role} <br/>
+        {parsedBuildState.description}
       </Title>
       <Wrapper
         direction="row"

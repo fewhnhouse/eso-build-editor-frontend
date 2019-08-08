@@ -17,7 +17,7 @@ const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
 export default ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" render={() => <Home loggedIn={isLoggedIn}/>} />
       <Route exact path="/verify/:token" component={Verify} />
       <Route exact path="/setup" component={Setup} />
       <ProtectedRoute

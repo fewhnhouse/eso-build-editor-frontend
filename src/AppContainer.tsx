@@ -98,9 +98,11 @@ const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
               <Menu.Item key="2" disabled={error !== undefined}>
                 <Link to="/build/0">Build Editor</Link>
               </Menu.Item>
-
               <Menu.Item key="3" disabled={error !== undefined}>
                 <Link to="/raid/0">Raid Editor</Link>
+              </Menu.Item>
+              <Menu.Item key="4" disabled={error !== undefined}>
+                <Link to="/raidoverview/">Raid Overview</Link>
               </Menu.Item>
             </Menu>
           ) : (
