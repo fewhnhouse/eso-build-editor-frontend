@@ -95,24 +95,30 @@ const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
   };
 
   useEffect(() => {
-    if (loginResult.error || registerResult.error) {
-      message.error(
-        loginResult.error ? loginResult.error : registerResult.error
-      );
-    }
-    if (loginResult.data || registerResult.data) {
-      console.log(loginResult, registerResult);
-      setLoggedIn(true);
-      notification.success({
-        message: 'Registration successful.',
-        description:
-          'Check your Inbox. We have sent you a Mail to validate your account.',
-      });
-      if (!register && loginResult) {
+    if (loginResult.called) {
+      if (loginResult.error !== undefined) {
+        message.error(loginResult.error.message);
+      }
+
+      if (loginResult.data) {
+        setLoggedIn(true);
         localStorage.setItem(
           'token',
           loginResult.data ? loginResult.data.login.token : ''
         );
+      }
+    } else if (registerResult.called) {
+      console.log(registerResult);
+      if (registerResult.error !== undefined) {
+        message.error(registerResult.error.message);
+      }
+      if (registerResult.data) {
+        setLoggedIn(true);
+        notification.success({
+          message: 'Registration successful.',
+          description:
+            'Check your Inbox. We have sent you a Mail to validate your account.',
+        });
       }
     }
   }, [loginResult, registerResult]);
@@ -166,6 +172,7 @@ const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
       </Form.Item>
       <Form.Item>
         <Button
+          loading={loginResult.loading || registerResult.loading}
           style={{ width: '100%' }}
           type="primary"
           htmlType="submit"

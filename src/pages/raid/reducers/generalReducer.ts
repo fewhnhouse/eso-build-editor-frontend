@@ -11,9 +11,16 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
     }
     case 'SET_CAN_EDIT': {
       const { canEdit } = action.payload;
+
       return {
         ...state,
         canEdit,
+        /*canView: [
+          ...state.canView,
+          ...canEdit.filter(
+            (editId: string) => !state.canView.includes(editId)
+          ),
+        ],*/
       };
     }
     case 'SET_PUBLISHED': {
@@ -51,7 +58,7 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
         applicationArea,
       };
     }
-    
+
     default:
       return state;
   }
