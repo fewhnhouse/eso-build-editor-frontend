@@ -15,7 +15,7 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 178px);
+  height: calc(100vh - 64px);
   color: ${props => props.theme.mainBg};
 `
 

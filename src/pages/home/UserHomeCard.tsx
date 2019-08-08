@@ -11,8 +11,8 @@ const StyledCard = styled(Card)`
 
 const StyledList = styled(List)`
     overflow-y: scroll;
-    background-color: #d1d1d1;
-    height: 500px;
+    height: 300px;
+    background: white;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 `
