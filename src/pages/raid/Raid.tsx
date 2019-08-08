@@ -1,17 +1,13 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
-import {
-  Layout,
-  Icon,
-  Button,
-  Steps,
-  Tooltip,
-  message,
-} from 'antd';
+import { Layout, Icon, Button, Steps, Tooltip, message } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router';
 import RaidGeneral from './general/RaidGeneral';
 import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
 import Builds from './builds/Builds';
+import Review from './review/Review';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -31,9 +27,24 @@ const TabButton = styled(Button)`
   margin: 0px 10px;
 `;
 
-export default ({
-  match
-}: RouteComponentProps<{ id: string }>) => {
+const CREATE_RAID = gql`
+  mutation createRaid($data: RaidCreateInput!) {
+    createRaid(data: $data) {
+      id
+      name
+    }
+  }
+`;
+
+const CREATE_ROLE = gql`
+  mutation createRole($name: String!, $buildIds: [ID!]!) {
+    createRole(name: $name, buildIds: $buildIds) {
+      id
+    }
+  }
+`;
+
+export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const savedRaidState = localStorage.getItem('raidState');
 
   useEffect(() => {
@@ -55,8 +66,60 @@ export default ({
     setTab(tabIndex => tabIndex - 1);
   };
 
+  const createRoleMutation = useMutation<any, any>(CREATE_ROLE);
+  const [createRole] = createRoleMutation;
+  const createRaidMutation = useMutation<any, any>(CREATE_RAID);
+  const [createRaid] = createRaidMutation;
+
+  const handleSave = async () => {
+    const {
+      name,
+      roles,
+      applicationArea,
+      canEdit,
+      canView,
+      published,
+      builds,
+    } = state!;
+    console.log(roles);
+    const createdRoles = await Promise.all(
+      roles.map(
+        async role =>
+          await createRole({
+            variables: {
+              name: role.roleName,
+              buildIds: role.builds.map(build => build.id),
+            },
+          })
+      )
+    );
+
+    console.log(createdRoles);
+
+    const createdRaid = await createRaid({
+      variables: {
+        data: {
+          name,
+          applicationArea,
+          canEdit: { connect: canEdit.map(id => ({ id })) },
+          canView: { connect: canView.map(id => ({ id })) },
+          published,
+          roles: {
+            connect: createdRoles.map((createdRole: any) => ({
+              id: createdRole.data.createRole.id,
+            })),
+          },
+        },
+      },
+    });
+  };
   const handleNextClick = () => {
-    setTab(tabIndex => tabIndex + 1);
+    if (tab === 2) {
+      console.log('save');
+      handleSave();
+    } else {
+      setTab(tabIndex => tabIndex + 1);
+    }
   };
 
   const setTooltipTitle = () => {
@@ -77,6 +140,8 @@ export default ({
           <RaidGeneral />
         ) : id === '1' ? (
           <Builds />
+        ) : id === '2' ? (
+          <Review />
         ) : (
           <Redirect to="/raid/0" />
         )}
@@ -122,8 +187,8 @@ export default ({
             size="large"
             type="primary"
           >
-            <Icon type="right" />
-            Next
+            <Icon type={tab === 2 ? 'save' : 'right'} />
+            {tab === 2 ? 'Save' : 'Next'}
           </TabButton>
         </Tooltip>
         <Redirect to={`/raid/${tab}`} push />
