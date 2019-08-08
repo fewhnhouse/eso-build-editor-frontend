@@ -1,4 +1,12 @@
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import {
+  Form,
+  Icon,
+  Input,
+  Button,
+  Checkbox,
+  message,
+  notification,
+} from 'antd';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
@@ -19,10 +27,8 @@ const LOGIN = gql`
 const REGISTER = gql`
   mutation signup($username: String!, $email: String!, $password: String!) {
     signup(email: $email, name: $username, password: $password) {
-      token
-      user {
-        name
-      }
+      name
+      id
     }
   }
 `;
@@ -97,12 +103,12 @@ const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
     if (loginResult.data || registerResult.data) {
       console.log(loginResult, registerResult);
       setLoggedIn(true);
-      if (register && registerResult) {
-        localStorage.setItem(
-          'token',
-          registerResult.data ? registerResult.data.signup.token : ''
-        );
-      } else if (!register && loginResult) {
+      notification.success({
+        message: 'Registration successful.',
+        description:
+          'Check your Inbox. We have sent you a Mail to validate your account.',
+      });
+      if (!register && loginResult) {
         localStorage.setItem(
           'token',
           loginResult.data ? loginResult.data.login.token : ''

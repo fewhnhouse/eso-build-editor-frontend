@@ -1,17 +1,14 @@
-import React from "react";
-import { RouteComponentProps, withRouter } from "react-router";
-import styled, { withTheme, ThemeProps } from "styled-components";
-import { chooseClass } from "../../util/utils";
-import { Divider, Layout, Typography } from "antd";
-import GearView from "../../components/GearView";
-import Flex from "../../components/Flex";
-import { ITheme } from "../../components/globalStyles";
-import SkillView from "../../components/SkillView";
-import {
-  IBuildState,
-  defaultBuildState
-} from "../build/BuildStateContext";
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
+import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import styled, { withTheme, ThemeProps } from 'styled-components';
+import { chooseClass } from '../../util/utils';
+import { Divider, Layout, Typography } from 'antd';
+import GearView from '../../components/GearView';
+import Flex from '../../components/Flex';
+import { ITheme } from '../../components/globalStyles';
+import SkillView from '../../components/SkillView';
+import { IBuildState, defaultBuildState } from '../build/BuildStateContext';
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../build/Skills/AbilityBar';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -27,35 +24,38 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: ${props => props.theme.mainBg};
-`
+`;
 const StyledTitle = styled(Title)`
   margin-bottom: 5px !important;
-`
-const Wrapper = styled(Flex)`
-`
+`;
+const Wrapper = styled(Flex)``;
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 500px;
-`
+`;
 const LeftSide = styled.div`
   max-width: 500px;
-`
+`;
 const SkillsView = styled.div`
   margin-bottom: 10px;
-`
+`;
 const MiscView = styled.div`
   max-width: 500px;
-`
+`;
 const ClassImg = styled.img`
   width: 30px;
   height: 30px;
   margin-right: 5px;
-`
+`;
 
 const Details = ({ match, theme }: IDetails) => {
-  const buildState = localStorage.getItem("buildState");
+  const { id } = match.params;
+  if(id) {
+    console.log(id);
+  }
+  const buildState = localStorage.getItem('buildState');
   const parsedBuildState: IBuildState = buildState
     ? JSON.parse(buildState)
     : defaultBuildState;
@@ -67,35 +67,39 @@ const Details = ({ match, theme }: IDetails) => {
     backbarSelection,
     jewelrySelection,
     mundus,
-    buff
-    } = parsedBuildState;
+    buff,
+  } = parsedBuildState;
 
   const selectedSetup = [
     {
-      id: "bigpieces",
-      label: "Big Pieces",
-      data: bigPieceSelection || []
+      id: 'bigpieces',
+      label: 'Big Pieces',
+      data: bigPieceSelection || [],
     },
     {
-      id: "smallpieces",
-      label: "Small Pieces",
-      data: smallPieceSelection || []
+      id: 'smallpieces',
+      label: 'Small Pieces',
+      data: smallPieceSelection || [],
     },
-    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
+    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
-      id: "frontbar",
-      label: "Frontbar",
-      data: frontbarSelection || []
+      id: 'frontbar',
+      label: 'Frontbar',
+      data: frontbarSelection || [],
     },
-    { id: "backbar", label: "Backbar", data: backbarSelection || [] }
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ];
 
   const splitDesc = (desc: string) => {
-    const newDesc = desc.split(".", 2).map(item => {
-      return <span>{item}.<br/></span>
-    })
-    return (newDesc)
-  }
+    const newDesc = desc.split('.', 2).map(item => {
+      return (
+        <span>
+          {item}.<br />
+        </span>
+      );
+    });
+    return newDesc;
+  };
 
   return (
     <Container>
@@ -111,13 +115,19 @@ const Details = ({ match, theme }: IDetails) => {
         {parsedBuildState.mainResource} {parsedBuildState.role} <br/>
         {parsedBuildState.description}
       </Title>
-      <Wrapper direction="row" align="flex-start" justify="space-evenly" wrap fluid>
+      <Wrapper
+        direction="row"
+        align="flex-start"
+        justify="space-evenly"
+        wrap
+        fluid
+      >
         <LeftSide>
           <Divider />
           <GearView disabled setups={selectedSetup} />
         </LeftSide>
         <RightSide>
-        <Divider />
+          <Divider />
           <SkillsView>
             <StyledTitle level={4}>Skills</StyledTitle>
             <SkillView
@@ -135,14 +145,26 @@ const Details = ({ match, theme }: IDetails) => {
           <MiscView>
             <StyledTitle level={4}>Mundus</StyledTitle>
             <Flex direction="row" justify="center" align="center">
-              <ClassImg src={mundus? mundus.icon : "Mundus icon"} />
-              <Text strong>{mundus? mundus.name : "Mundus name"}</Text><br />
+              <ClassImg src={mundus ? mundus.icon : 'Mundus icon'} />
+              <Text strong>{mundus ? mundus.name : 'Mundus name'}</Text>
+              <br />
             </Flex>
-            <Text> {mundus ? mundus.effect : "Mundus effect"} by {mundus? mundus.value : "mundus value"}.</Text>
+            <Text>
+              {' '}
+              {mundus ? mundus.effect : 'Mundus effect'} by{' '}
+              {mundus ? mundus.value : 'mundus value'}.
+            </Text>
             <Divider />
             <StyledTitle level={4}>Consumables</StyledTitle>
-            <ClassImg src={buff? buff.icon : "Buff icon"} /><Text strong>{buff? buff.name: "Buff name"}{buff? buff.type : "Buff type"}</Text> <br />
-            <Text>{splitDesc(buff? buff.buffDescription : "description")}</Text>
+            <ClassImg src={buff ? buff.icon : 'Buff icon'} />
+            <Text strong>
+              {buff ? buff.name : 'Buff name'}
+              {buff ? buff.type : 'Buff type'}
+            </Text>{' '}
+            <br />
+            <Text>
+              {splitDesc(buff ? buff.buffDescription : 'description')}
+            </Text>
           </MiscView>
         </RightSide>
       </Wrapper>
