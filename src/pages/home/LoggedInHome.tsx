@@ -1,194 +1,128 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Button, Icon, Card, List } from 'antd'
+import { Typography, Button, Divider, Input } from 'antd'
 import Flex from '../../components/Flex'
-import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import UserHomeCard from './UserHomeCard';
 
-const { Title, Text } = Typography;
+const { Search } = Input;
+const { Title } = Typography;
 
-const Wrapper = styled(Flex)``
+const Wrapper = styled(Flex)`
+  width: 100%;
+  flex-wrap: wrap;
+`
 
 const LeftSide = styled(Flex)`
-  flex: 1;
   justify-content: center;
+  flex: 1;
+  min-height: 300px;
 `
 
 const Center = styled(Flex)`
-  flex: 1;
   justify-content: center;
+  flex: 1;
+  min-height: 300px;
+`
+
+const ListCard = styled.div`
+  width: 60%;
+  min-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.20);
+  min-height: 300px;
 `
 
 const RightSide = styled(Flex)`
+  height: 100%;
   flex: 1;
-  background-color: lightgrey;
 `
 
-const StyledCard = styled(Card)`
-    width: 400px;
-    margin-left: 20px;
-    margin-right: 20px;
+const RightWrapper = styled.div`
+  height: 100%;
+  box-shadow: -15px 0px 13px -11px rgba(0,0,0,0.20);
+  min-width: 300px;
 `
 
-const GET_BUILDS = gql`
-  fragment SetSelection on SetSelection {
-    icon
-    slot
-    type
-    selectedSet {
-      name
-      location
-      type
-      bonus_item_1
-      bonus_item_2
-      bonus_item_3
-      bonus_item_4
-      bonus_item_5
-      has_jewels
-      has_weapons
-      has_heavy_armor
-      has_light_armor
-      has_medium_armor
-    }
-    trait {
-      type
-      description
-      icon
-    }
-    glyph {
-      type
-      description
-      icon
-    }
-  }
+const StyledTitle = styled(Flex)`
+  background-color: #e8e8e8;
+  margin-bottom: 0;
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+`
 
-  fragment Skill on Skill {
-    name
-    skillId
-    icon
-    range
-    type
-    cost
-    effect_1
-    effect_2
-    target
-  }
+const CardTitle = styled(Title)`
+  display: flex;
+  margin-bottom: 0;
+  width: 100%;
+  justify-content: space-between;
+`
 
-  fragment SkillSelection on SkillSelection {
-    index
-    skill {
-      ...Skill
-    }
-  }
-  query builds(
-    $where: BuildWhereInput
-    $orderBy: BuildOrderByInput
-    $first: Int
-    $last: Int
-    $skip: Int
-    $after: String
-    $before: String
-  ) {
-    builds(
-      where: $where
-      orderBy: $orderBy
-      first: $first
-      last: $last
-      skip: $skip
-      after: $after
-      before: $before
-    ) {
-      id
+const StyledSearch = styled(Search)`
+
+`
+
+const ME = gql`
+  query {
+    me {
       name
-      race
-      esoClass
-      frontbarSelection {
-        ...SetSelection
-      }
-      backbarSelection {
-        ...SetSelection
-      }
-      newBarOne {
-        ...SkillSelection
-      }
-      newBarTwo {
-        ...SkillSelection
-      }
-      ultimateOne {
-        ...Skill
-      }
-      ultimateTwo {
-        ...Skill
-      }
-      bigPieceSelection {
-        ...SetSelection
-      }
-      smallPieceSelection {
-        ...SetSelection
-      }
-      jewelrySelection {
-        ...SetSelection
+      builds {
+        id
+        name
+        esoClass
+        race
+        applicationArea
       }
     }
   }
 `;
 
-const userInformation = {
-        user: "UserName",
-        raidSetups: [
-            {
-                raidID: 1,
-                setupName: "25man IC raid",
-                description: "Multipurpose smallscale setup"
-            },
-            {
-                raidID: 2,
-                setupName: "Magplar duo",
-                description: "Most useless PvP group"
-            }
-        ],
-        builds: [
-            {
-                buildID: 1,
-                buildName: "Wrobel's Revenge",
-                description: "Guaranteed hatewhispers 24/7"
-            }
-        ]
-    }
-
 export default () => {
 
-    const { loading, error, data } = useQuery(GET_BUILDS);
-    const userBuilds = data && data.builds ? data.builds : "";
+    const { loading, error, data } = useQuery(ME);
 
     return (
-        <Wrapper direction={"row"} justify={"center"} align={"flex-start"} fluid>
+        <Wrapper direction={"row"} justify={""} align={""} wrap fluid>
             <LeftSide direction={"column"} justify={"center"} align={""}>
-                <Title level={2}>My builds ({userBuilds.length})</Title>
-                { data.builds ? 
-                    <UserHomeCard userBuilds={data.builds} />
+              <ListCard>
+                <StyledTitle direction={"column"} justify={""} align={""}>
+                  <CardTitle level={3}>
+                    MY BUILDS
+                    <Button type="primary" ghost={true}>Create</Button>
+                  </CardTitle>
+                  <StyledSearch placeholder="Search for builds" />
+                </StyledTitle>
+                { data && data.me ? 
+                  <UserHomeCard userBuilds={data.me.builds} />
                 : "You have no saved builds yet." }
+              </ListCard>
             </LeftSide>
             <Center direction={"column"} justify={"center"} align={""}>
-                <Title level={2}>My raids ({userInformation.raidSetups.length})</Title>
-                    {userInformation.builds ? 
-                        <List style={{maxHeight: "500px", overflowY: "scroll"}}
-                            dataSource={userInformation.raidSetups}
-                            renderItem={item => (
-                                <List.Item style={{justifyContent: "center"}}>
-                                    <StyledCard key={item.raidID} title={item.setupName} hoverable>
-                                        {item.description}
-                                    </StyledCard>
-                                </List.Item>
-                            )}>
-                        </List>
-                    : "You have no saved raids yet." }
+              <ListCard>
+                <StyledTitle direction={"column"} justify={""} align={""}>
+                <CardTitle level={3}>
+                  MY RAIDS
+                  <Button type="primary" ghost={true}>Create</Button>
+                </CardTitle>
+                  <StyledSearch placeholder="Search for raids" />
+                </StyledTitle>
+                { data && data.me ? 
+                <UserHomeCard userBuilds={data.me.builds} />
+                : "You have no saved builds yet." }
+              </ListCard>
             </Center>
-            <RightSide direction={"column"} justify={""} align={""}>
-                <Title level={2}>Discovery</Title>
-                <Title level={2}>Activity</Title>
+            <RightSide direction={"column"} justify={"flex-start"} align={"flex-end"}>
+              <RightWrapper>
+                <div style={{height: "30%"}}>
+                  <Title level={4} style={{paddingTop: "20px"}}>DISCOVERY</Title>
+                </div>
+                <Divider />
+                <div>
+                  <Title level={4}>ACTIVITY</Title>
+                </div>
+              </RightWrapper>
             </RightSide>
         </Wrapper>
     )

@@ -4,13 +4,25 @@ import styled from "styled-components";
 import { IBuildState } from "../build/BuildStateContext";
 
 const StyledCard = styled(Card)`
-    width: 350px;
-    margin-left: 20px;
-    margin-right: 20px;
+    background-color: #e8e8e8;
+    width: 90%;
+    min-width: 250px;
+`
+
+const StyledList = styled(List)`
+    overflow-y: scroll;
+    background-color: #d1d1d1;
+    height: 500px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 `
 
 interface IBuildProps extends IBuildState {
-    id: number
+    id: number,
+    name: string,
+    esoClass: string,
+    race: string,
+    applicationArea: string
 }
 
 interface IUserBuildsProps {
@@ -19,19 +31,19 @@ interface IUserBuildsProps {
 
 const UserHomeCard = ({userBuilds}: IUserBuildsProps) => {
     return (
-        <List style={{width: "100%", maxHeight: "500px", overflowY: "scroll"}}
+        <StyledList
             dataSource={userBuilds}
             renderItem={ (item, index) => {
                 const find = userBuilds[index];
                 return (
                     <List.Item style={{justifyContent: "center"}}>
                         <StyledCard key={find.id} title={find.name} hoverable>
-                            {find.race} {find.esoClass}
+                            Build id: {find.id}<br />{find.applicationArea} {find.race} {find.esoClass}
                         </StyledCard>
                     </List.Item>
                 );
             }}>
-        </List>
+        </StyledList>
     )
 }
 

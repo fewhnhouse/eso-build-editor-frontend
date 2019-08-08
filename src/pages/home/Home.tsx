@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Typography, Divider } from 'antd'
-import Flex from '../../components/Flex'
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Layout, Typography, Divider, Input } from 'antd'
 import NotLoggedInHome from './NotLoggedInHome';
 import LoggedInHome from './LoggedInHome';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 
 const { Content } = Layout
-const { Title, Text } = Typography
+const { Text } = Typography
+const { Search } = Input;
 
 const Container = styled(Content)`
   display: flex;
@@ -27,17 +24,40 @@ const StyledTitle = styled.h1`
   font-size: 50px;
 `
 
+const HomeHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  min-height: 100px;
+  margin: 0;
+  padding: 0;
+  background-color: sandybrown;
+`
+
 interface IHomeProps {
   loggedIn: boolean
 }
 const Home = ({loggedIn}: IHomeProps) => {
-/* client.cache.writeData({ data: { loggedIn: false } }); */
-/* { userLogged }:any ? */
   return (
     <Container>
-      <Divider>
-        <StyledTitle>FIST Build Editor</StyledTitle>
-      </Divider>
+        { loggedIn ? 
+          ""
+        :
+        <>
+          <HomeHeader>
+            <Search size="large" style={{maxWidth: "400px", maxHeight: "20px"}} placeholder="Search for builds and raids..." />
+          </HomeHeader>
+          <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
+            <Text style={{maxWidth: "400px"}}>
+              Build Editor allows you to create and save builds and combine them to complete raid setups -
+              to be shared with friends, guilds and communities, or saved privately as you choose.
+            </Text>
+            <Divider />
+          </>
+        }
     { loggedIn ? <LoggedInHome /> : <NotLoggedInHome /> }
     </Container>
   )
