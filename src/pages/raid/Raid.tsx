@@ -94,6 +94,12 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
       )
     );
 
+    //make sure everyone who can edit can also view
+    const enhancedCanView: string[] = [
+      ...canView,
+      ...canEdit.filter(editId => !canView.includes(editId)),
+    ];
+
     console.log(createdRoles);
 
     const createdRaid = await createRaid({
@@ -102,7 +108,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
           name,
           applicationArea,
           canEdit: { connect: canEdit.map(id => ({ id })) },
-          canView: { connect: canView.map(id => ({ id })) },
+          canView: { connect: enhancedCanView.map(id => ({ id })) },
           published,
           roles: {
             connect: createdRoles.map((createdRole: any) => ({
