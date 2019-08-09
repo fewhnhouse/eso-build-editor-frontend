@@ -5,7 +5,6 @@ import Routes from './components/Routes';
 import styled from 'styled-components';
 import { Layout, Menu, Button, Popover, Avatar, Spin } from 'antd'; // Icon
 import WrappedNormalLoginForm from './components/LoginForm';
-import { leather } from './assets/backgrounds/';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -32,7 +31,6 @@ const StyledHeader = styled(Header)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-image: url(${leather});
   background-repeat: repeat;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `;

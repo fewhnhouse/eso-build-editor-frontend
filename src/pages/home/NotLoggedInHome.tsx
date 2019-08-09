@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Typography, Divider, Icon, Button, Input } from 'antd'
 import Flex from '../../components/Flex'
+import { header } from '../../assets/backgrounds/index'
 
 const { Search } = Input
 
@@ -59,11 +60,12 @@ const HomeHeader = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 200px;
-  min-height: 100px;
+  height: 250px;
+  min-height: 150px;
   margin: 0;
   padding: 0;
-  background-color: sandybrown;
+  background-image: url(${header});
+  background-position: center;
 `
 
 const Content = styled.div`
