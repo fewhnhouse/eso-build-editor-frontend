@@ -9,6 +9,8 @@ import { ITheme } from '../../components/globalStyles';
 import SkillView from '../../components/SkillView';
 import { IBuildState, defaultBuildState } from '../build/BuildStateContext';
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../build/Skills/AbilityBar';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -50,32 +52,268 @@ const ClassImg = styled.img`
   margin-right: 5px;
 `;
 
-const Details = ({ match, theme }: IDetails) => {
-  const { id } = match.params;
-  if(id) {
-    console.log(id);
+const buildByID = gql`
+  query Builds($id: ID!){
+    builds (where: {id: $id}) {
+      owner {
+        name
+      }
+      name
+      applicationArea
+      role
+      race
+      esoClass
+      bigPieceSelection {
+        icon
+        slot
+        type
+        selectedSet {
+          name
+          type
+          bonus_item_1
+          bonus_item_2
+          bonus_item_3
+          bonus_item_4
+          bonus_item_5
+          has_jewels
+          has_weapons
+          has_heavy_armor
+          has_light_armor
+          has_medium_armor
+        }
+        trait {
+          type
+          itemType
+          description
+          icon
+        }
+        glyph {
+          type
+          itemType
+          description
+          icon
+        }
+      }
+      smallPieceSelection {
+        icon
+        slot
+        type
+        selectedSet {
+          name
+          type
+          bonus_item_1
+          bonus_item_2
+          bonus_item_3
+          bonus_item_4
+          bonus_item_5
+          has_jewels
+          has_weapons
+          has_heavy_armor
+          has_light_armor
+          has_medium_armor
+        }
+        trait {
+          type
+          itemType
+          description
+          icon
+        }
+        glyph {
+          type
+          itemType
+          description
+          icon
+        }
+      }
+      jewelrySelection {
+        icon
+        slot
+        type
+        selectedSet {
+          name
+          type
+          bonus_item_1
+          bonus_item_2
+          bonus_item_3
+          bonus_item_4
+          bonus_item_5
+          has_jewels
+          has_weapons
+          has_heavy_armor
+          has_light_armor
+          has_medium_armor
+        }
+        trait {
+          type
+          itemType
+          description
+          icon
+        }
+        glyph {
+          type
+          itemType
+          description
+          icon
+        }
+      }
+      frontbarSelection {
+        icon
+        slot
+        type
+        selectedSet {
+          name
+          type
+          bonus_item_1
+          bonus_item_2
+          bonus_item_3
+          bonus_item_4
+          bonus_item_5
+          has_jewels
+          has_weapons
+          has_heavy_armor
+          has_light_armor
+          has_medium_armor
+        }
+        trait {
+          type
+          itemType
+          description
+          icon
+        }
+        glyph {
+          type
+          itemType
+          description
+          icon
+        }
+      }
+      backbarSelection {
+        icon
+        slot
+        type
+        selectedSet {
+          name
+          type
+          bonus_item_1
+          bonus_item_2
+          bonus_item_3
+          bonus_item_4
+          bonus_item_5
+          has_jewels
+          has_weapons
+          has_heavy_armor
+          has_light_armor
+          has_medium_armor
+        }
+        trait {
+          type
+          itemType
+          description
+          icon
+        }
+        glyph {
+          type
+          itemType
+          description
+          icon
+        }
+      }
+      newBarOne {
+        index
+        skill {
+          skillId
+          target
+          cast_time
+          cost
+          effect_1
+          effect_2
+          icon
+          name
+          type
+        }
+      }
+      newBarTwo {
+        index
+        skill {
+          skillId
+          target
+          cast_time
+          cost
+          effect_1
+          effect_2
+          icon
+          name
+          type
+        }
+      }
+      ultimateOne {
+        skillId
+        target
+        cast_time
+        cost
+        effect_1
+        effect_2
+        icon
+        name
+        type
+      }
+      ultimateTwo {
+        skillId
+        target
+        cast_time
+        cost
+        effect_1
+        effect_2
+        icon
+        name
+        type
+      }
+      mundusStone {
+        name
+        effect
+        value
+        icon
+      }
+      buff {
+        name
+        buffDescription
+        icon
+        buffType
+      }
+    } 
   }
+`
+
+const Details = ({ match, theme }: IDetails) => {
+
+  const { id } = match.params;
+  const { loading, error, data } = useQuery(buildByID, {variables: {id}});
+
   const buildState = localStorage.getItem('buildState');
   const parsedBuildState: IBuildState = buildState
     ? JSON.parse(buildState)
     : defaultBuildState;
 
-  const {
-    bigPieceSelection,
-    smallPieceSelection,
-    frontbarSelection,
-    backbarSelection,
-    jewelrySelection,
-    mundus,
-    buff,
-    esoClass,
-    name,
-    race,
-    mainResource,
-    applicationArea,
-    role,
-    description
-  } = parsedBuildState;
+  if ( data && data.builds ) {
+
+    const {
+      name,
+      bigPieceSelection,
+      smallPieceSelection,
+      frontbarSelection,
+      backbarSelection,
+      jewelrySelection,
+      mundusStone,
+      buff,
+      esoClass,
+      race,
+      mainResource,
+      applicationArea,
+      role,
+      description,
+      newBarOne,
+      newBarTwo
+    } = data.builds[0];
 
   const selectedSetup = [
     {
@@ -100,7 +338,7 @@ const Details = ({ match, theme }: IDetails) => {
   const splitDesc = (desc: string) => {
     const newDesc = desc.split('.', 2).map(item => {
       return (
-        <span>
+        <span key={item}>
           {item}.<br />
         </span>
       );
@@ -115,7 +353,8 @@ const Details = ({ match, theme }: IDetails) => {
           title={esoClass}
           src={chooseClass(esoClass)}
         />
-        {esoClass} "{name}"
+        {name}<br />
+        {esoClass}
       </Title>
       <Title level={4}>
         {race} {applicationArea} <br />
@@ -140,43 +379,43 @@ const Details = ({ match, theme }: IDetails) => {
             <SkillView
               id={ABILITY_BAR_ONE}
               disabled={true}
-              skillSlots={parsedBuildState.newBarOne}
+              skillSlots={newBarOne}
             />
             <SkillView
               id={ABILITY_BAR_TWO}
               disabled={true}
-              skillSlots={parsedBuildState.newBarTwo}
+              skillSlots={newBarTwo}
             />
           </SkillsView>
           <Divider />
           <MiscView>
             <StyledTitle level={4}>Mundus</StyledTitle>
             <Flex direction="row" justify="center" align="center">
-              <ClassImg src={mundus ? mundus.icon : 'Mundus icon'} />
-              <Text strong>{mundus ? mundus.name : 'Mundus name'}</Text>
+              <ClassImg src={mundusStone.icon} />
+              <Text strong>{mundusStone.name}</Text>
               <br />
             </Flex>
             <Text>
-              {' '}
-              {mundus ? mundus.effect : 'Mundus effect'} by{' '}
-              {mundus ? mundus.value : 'mundus value'}.
+              {mundusStone.effect} by {mundusStone.value}.
             </Text>
             <Divider />
             <StyledTitle level={4}>Consumables</StyledTitle>
-            <ClassImg src={buff ? buff.icon : 'Buff icon'} />
+            <ClassImg src={buff.icon} />
             <Text strong>
-              {buff ? buff.name : 'Buff name'}
-              {buff ? buff.type : 'Buff type'}
-            </Text>{' '}
+              {buff.name} {buff.buffType}
+            </Text>
             <br />
             <Text>
-              {splitDesc(buff ? buff.buffDescription : 'description')}
+              {buff.buffDescription}
             </Text>
           </MiscView>
         </RightSide>
       </Wrapper>
     </Container>
   );
+  } else {
+    return <>{console.log("data invalid")}</>
+  }
 };
 
 export default withTheme(withRouter(Details));

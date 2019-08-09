@@ -32,7 +32,7 @@ export default ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         path="/raid/:id"
         component={Raid}
       />
-      <Route exact path="/details/:name" component={Details} />
+      <Route exact path="/details/:id" component={Details} />
     </Switch>
   );
 };
