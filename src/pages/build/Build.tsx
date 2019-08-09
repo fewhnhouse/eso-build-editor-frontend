@@ -22,7 +22,6 @@ import RaceClass from './RaceAndClass/RaceClass';
 import Details from '../details/Details';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import SuccessNotification from './SuccessNotification';
 import Flex from '../../components/Flex';
 
 const { Footer, Content } = Layout;
