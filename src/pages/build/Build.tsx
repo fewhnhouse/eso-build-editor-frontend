@@ -5,7 +5,15 @@ import {
   defaultBuildState,
 } from './BuildStateContext';
 import { RouteComponentProps, Redirect } from 'react-router';
-import { Layout, Button, Steps, Icon, message, Tooltip } from 'antd';
+import {
+  Layout,
+  Button,
+  Steps,
+  Icon,
+  message,
+  Tooltip,
+  notification,
+} from 'antd';
 import styled from 'styled-components';
 import Consumables from './consumables/Consumables';
 import Sets from './Sets/Sets';
@@ -15,6 +23,7 @@ import Details from '../details/Details';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import SuccessNotification from './SuccessNotification';
+import Flex from '../../components/Flex';
 
 const { Footer, Content } = Layout;
 
@@ -146,7 +155,6 @@ const CREATE_SKILL_SELECTIONS = gql`
 const { Step } = Steps;
 
 export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
-  const [successVisibility, setVisibility] = useState(false);
   const savedBuildState = localStorage.getItem('buildState');
 
   useEffect(() => {
@@ -160,6 +168,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
     buildReducer,
     savedBuildState ? JSON.parse(savedBuildState) : defaultBuildState
   );
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10) || 0);
 
@@ -176,14 +186,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [createBuild] = useMutation<any, any>(CREATE_BUILD);
   const { mundus, buff, ultimateOne, ultimateTwo } = state!;
 
-  const selectedUltimateOne: any = useQuery(GET_SKILL, {
-    variables: { id: ultimateOne ? ultimateOne.id : 0 },
-  });
-  const selectedUltimateTwo: any = useQuery(GET_SKILL, {
-    variables: { id: ultimateTwo ? ultimateTwo.id : 0 },
-  });
-
   const handleSave = async () => {
+    setLoading(true);
     const {
       race,
       esoClass,
@@ -288,16 +292,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       },
     });
 
-    console.log(
-      bigPieceSetSelections,
-      smallPieceSetSelections,
-      jewelrySetSelections,
-      frontbarSetSelections,
-      backbarSetSelections,
-      frontbarSkillSelections,
-      backbarSkillSelections
-    );
-
     const build: any = await createBuild({
       variables: {
         data: {
@@ -367,10 +361,29 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       },
     });
 
-    console.log(build);
     localStorage.removeItem('buildState');
-    setVisibility(true);
-
+    notification.success({
+      message: 'Build creation successful',
+      description: (
+        <Flex direction="column" align="center" justify="center">
+          <div>
+            Your build was successfully saved. You can now view it and share it
+            with others!
+          </div>
+          <Flex
+            style={{ width: '100%', marginTop: 10 }}
+            direction="row"
+            align="center"
+            justify="space-between"
+          >
+            <Button icon="share-alt">Share link</Button>
+            <Button>Go to Build</Button>
+          </Flex>
+        </Flex>
+      ),
+    });
+    setLoading(false);
+    setSaved(true);
   };
 
   const handleNextClick = () => {
@@ -409,7 +422,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
 
   return (
     <BuildContext.Provider value={[state, dispatch]}>
-      <SuccessNotification visibility={successVisibility}/>
       <Container>
         {id === '0' ? (
           <RaceClass />
@@ -468,13 +480,15 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         </Steps>
         <Tooltip title={setTooltipTitle()}>
           <TabButton
+            // style={{minWidth: 120}}
+            loading={loading}
             onClick={handleNextClick}
-            disabled={isDisabled}
+            disabled={isDisabled || saved}
             size="large"
             type="primary"
           >
-            <Icon type={tab === 4 ? 'save' : 'right'} />
             {tab === 4 ? 'Save' : 'Next'}
+            <Icon type={tab === 4 ? (loading ? '' : 'save') : 'right'} />
           </TabButton>
         </Tooltip>
         <Redirect to={`/build/${tab}`} push />
