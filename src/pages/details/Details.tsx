@@ -68,6 +68,13 @@ const Details = ({ match, theme }: IDetails) => {
     jewelrySelection,
     mundus,
     buff,
+    esoClass,
+    name,
+    race,
+    mainResource,
+    applicationArea,
+    role,
+    description
   } = parsedBuildState;
 
   const selectedSetup = [
@@ -105,15 +112,15 @@ const Details = ({ match, theme }: IDetails) => {
     <Container>
       <Title level={1}>
         <ClassImg
-          title={parsedBuildState.esoClass}
-          src={chooseClass(parsedBuildState.esoClass)}
+          title={esoClass}
+          src={chooseClass(esoClass)}
         />
-        {parsedBuildState.esoClass} "{parsedBuildState.name}"
+        {esoClass} "{name}"
       </Title>
       <Title level={4}>
-        {parsedBuildState.race} {parsedBuildState.applicationArea} <br />
-        {parsedBuildState.mainResource} {parsedBuildState.role} <br/>
-        {parsedBuildState.description}
+        {race} {applicationArea} <br />
+        {mainResource} {role} <br/>
+        {description}
       </Title>
       <Wrapper
         direction="row"
