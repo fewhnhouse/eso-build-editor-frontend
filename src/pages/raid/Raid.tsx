@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import styled from 'styled-components';
-import { Layout, Icon, Button, Steps, Tooltip, message } from 'antd';
+import { Layout, Icon, Button, Steps, Tooltip, message, notification } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router';
 import RaidGeneral from './general/RaidGeneral';
 import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
@@ -8,6 +8,7 @@ import Builds from './builds/Builds';
 import Review from './review/Review';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import Flex from '../../components/Flex';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -46,6 +47,8 @@ const CREATE_ROLE = gql`
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const savedRaidState = localStorage.getItem('raidState');
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const savedRaidState = localStorage.getItem('raidState');
@@ -72,53 +75,87 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const [createRaid] = createRaidMutation;
 
   const handleSave = async () => {
-    const {
-      name,
-      roles,
-      applicationArea,
-      canEdit,
-      canView,
-      published,
-      builds,
-    } = state!;
-    console.log(roles);
-    const createdRoles = await Promise.all(
-      roles.map(
-        async role =>
-          await createRole({
-            variables: {
-              name: role.roleName,
-              buildIds: role.builds.map(build => build.id),
+    setLoading(true);
+    try { 
+      const {
+        name,
+        roles,
+        applicationArea,
+        canEdit,
+        canView,
+        published,
+        builds,
+      } = state!;
+      console.log(roles);
+      const createdRoles = await Promise.all(
+        roles.map(
+          async role =>
+            await createRole({
+              variables: {
+                name: role.roleName,
+                buildIds: role.builds.map(build => build.id),
+              },
+            })
+        )
+      );
+
+      //make sure everyone who can edit can also view
+      const enhancedCanView: string[] = [
+        ...canView,
+        ...canEdit.filter(editId => !canView.includes(editId)),
+      ];
+
+      console.log(createdRoles);
+
+      const createdRaid = await createRaid({
+        variables: {
+          data: {
+            name,
+            applicationArea,
+            canEdit: { connect: canEdit.map(id => ({ id })) },
+            canView: { connect: enhancedCanView.map(id => ({ id })) },
+            published,
+            roles: {
+              connect: createdRoles.map((createdRole: any) => ({
+                id: createdRole.data.createRole.id,
+              })),
             },
-          })
-      )
-    );
-
-    //make sure everyone who can edit can also view
-    const enhancedCanView: string[] = [
-      ...canView,
-      ...canEdit.filter(editId => !canView.includes(editId)),
-    ];
-
-    console.log(createdRoles);
-
-    const createdRaid = await createRaid({
-      variables: {
-        data: {
-          name,
-          applicationArea,
-          canEdit: { connect: canEdit.map(id => ({ id })) },
-          canView: { connect: enhancedCanView.map(id => ({ id })) },
-          published,
-          roles: {
-            connect: createdRoles.map((createdRole: any) => ({
-              id: createdRole.data.createRole.id,
-            })),
           },
         },
-      },
-    });
+      });
+
+      notification.success({
+        message: 'Raid creation successful',
+        description: (
+          <Flex direction="column" align="center" justify="center">
+            <div>
+              Your build was successfully saved. You can now view it and share
+              it with others!
+            </div>
+            <Flex
+              style={{ width: '100%', marginTop: 10 }}
+              direction="row"
+              align="center"
+              justify="space-between"
+            >
+              <Button icon="share-alt">Share link</Button>
+              <Button>Go to Raid</Button>
+            </Flex>
+          </Flex>
+        ),
+      });
+    } catch(e) {
+      notification.error({
+        message: 'Raid creation failed',
+        description: 'Your raid could not be saved. Try again later.',
+      });
+    }
+
+    setLoading(false);
+    setSaved(true);
+
   };
+
   const handleNextClick = () => {
     if (tab === 2) {
       console.log('save');
@@ -189,7 +226,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         <Tooltip title={setTooltipTitle()}>
           <TabButton
             onClick={handleNextClick}
-            disabled={false}
+            disabled={false || saved}
             size="large"
             type="primary"
           >
