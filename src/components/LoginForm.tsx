@@ -60,7 +60,7 @@ interface IRegisterResult {
 }
 
 interface LoginFormProps extends FormComponentProps {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 const LoginForm = ({ form, setLoggedIn }: LoginFormProps) => {
   const [register, setRegister] = useState(false);
