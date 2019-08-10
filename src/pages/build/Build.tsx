@@ -438,7 +438,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         ) : id === '3' ? (
           <Consumables />
         ) : id === '4' ? (
-          <Details />
+          <Details local={true} />
         ) : (
           <Redirect to="/build/0" />
         )}
