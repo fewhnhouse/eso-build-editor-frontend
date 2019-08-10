@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Typography, Button, Divider, Input } from 'antd'
 import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import UserHomeCard from './UserHomeCard'
+import { Redirect } from 'react-router'
 
 const { Search } = Input
 const { Title } = Typography
@@ -93,7 +94,14 @@ const ME = gql`
 
 export default () => {
   const { loading, error, data } = useQuery(ME)
+  const [redirect, setRedirect] = useState('')
 
+  const handleCreateClick = (path: string) => () => {
+    setRedirect(path)
+  }
+  if (redirect !== '') {
+    return <Redirect to={redirect} push />
+  }
   return (
     <OuterWrapper
       direction='row'
@@ -110,7 +118,7 @@ export default () => {
         fluid
       >
         <InputContainer direction='row' align='center' justify='center'>
-          <Input placeholder="Search for raids" style={{ width: 400 }} />
+          <Input placeholder='Search for raids' style={{ width: 400 }} />
         </InputContainer>
         <Wrapper direction={'row'} justify='center' align='center' wrap fluid>
           <LeftSide direction={'column'} justify={'center'} align='center'>
@@ -118,7 +126,7 @@ export default () => {
               <StyledTitle direction={'column'} justify='center' align='center'>
                 <CardTitle level={3}>
                   MY BUILDS
-                  <Button type='primary' ghost={true}>
+                  <Button type='primary' ghost={true} onClick={handleCreateClick("/build/0")}>
                     Create
                   </Button>
                 </CardTitle>
@@ -136,7 +144,7 @@ export default () => {
               <StyledTitle direction={'column'} justify={''} align={''}>
                 <CardTitle level={3}>
                   MY RAIDS
-                  <Button type='primary' ghost={true}>
+                  <Button type='primary' ghost={true} onClick={handleCreateClick("/raid/0")}>
                     Create
                   </Button>
                 </CardTitle>
