@@ -76,7 +76,7 @@ export default () => {
       <HomeHeader>
         <Search
           size='large'
-          style={{ maxWidth: '400px', maxHeight: '20px' }}
+          style={{ maxWidth: '400px' }}
           placeholder='Search for builds and raids...'
         />
       </HomeHeader>
