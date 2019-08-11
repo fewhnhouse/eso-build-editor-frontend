@@ -3,10 +3,11 @@ import { Route, Switch, RouteProps, Redirect } from 'react-router'
 import Home from '../pages/home/Home'
 import Build from '../pages/build/Build'
 import Setup from '../pages/setup/Setup'
-import Details from '../pages/details/Details'
 import Raid from '../pages/raid/Raid'
 import Verify from './Verify'
 import { Spin } from 'antd'
+import RaidReview from '../pages/raidreview/RaidReview';
+import BuildReview from '../pages/buildreview/BuildReview';
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean
@@ -40,11 +41,8 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         path='/raid/:id'
         component={Raid}
       />
-<<<<<<< HEAD
-      <Route exact path="/details/:id" component={Details} />
-=======
-      <Route exact path='/details/:name' component={Details} />
->>>>>>> kaisa
+      <Route exact path="/buildreview/:id" component={BuildReview} />
+      <Route exact path="/raidreview/:id" component={RaidReview} />
     </Switch>
   )
 }

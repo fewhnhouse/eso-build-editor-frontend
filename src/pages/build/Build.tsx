@@ -19,7 +19,7 @@ import Consumables from './consumables/Consumables';
 import Sets from './Sets/Sets';
 import Skills from './Skills/Skills';
 import RaceClass from './RaceAndClass/RaceClass';
-import Details from '../details/Details';
+import BuildReview from '../buildreview/BuildReview';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import Flex from '../../components/Flex';
@@ -438,7 +438,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         ) : id === '3' ? (
           <Consumables />
         ) : id === '4' ? (
-          <Details local={true} />
+          <BuildReview local={true} />
         ) : (
           <Redirect to="/build/0" />
         )}

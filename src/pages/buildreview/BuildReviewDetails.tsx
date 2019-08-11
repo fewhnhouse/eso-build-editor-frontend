@@ -4,7 +4,7 @@ import Flex from "../../components/Flex";
 import { Typography, Layout, Divider } from "antd";
 import { chooseClass } from "../../util/utils";
 import GearView from "../../components/GearView";
-import SkillView, { ISKillViewProps } from "../../components/SkillView";
+import SkillView from "../../components/SkillView";
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../build/Skills/AbilityBar";
 import { IBuildState } from "../build/BuildStateContext";
 
@@ -50,7 +50,7 @@ interface IDetailViewProps {
     loadedData: IBuildState
 }
 
-const DetailView = ({loadedData}: IDetailViewProps) => {
+const BuildReviewDetails = ({loadedData}: IDetailViewProps) => {
 
     const {
         name,
@@ -168,4 +168,4 @@ const DetailView = ({loadedData}: IDetailViewProps) => {
     )
 }
 
-export default DetailView;
+export default BuildReviewDetails;

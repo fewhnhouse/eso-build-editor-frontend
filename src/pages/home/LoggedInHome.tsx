@@ -88,12 +88,20 @@ const ME = gql`
         race
         applicationArea
       }
+      raids {
+        id
+        name
+        applicationArea
+        roles {
+          id
+        }
+      }
     }
   }
 `
 
 export default () => {
-  const { loading, error, data } = useQuery(ME)
+  const { loading, error, data } = useQuery<any,any>(ME)
   const [redirect, setRedirect] = useState('')
 
   const handleCreateClick = (path: string) => () => {
@@ -102,6 +110,7 @@ export default () => {
   if (redirect !== '') {
     return <Redirect to={redirect} push />
   }
+
   return (
     <OuterWrapper
       direction='row'
@@ -133,7 +142,7 @@ export default () => {
                 <StyledSearch placeholder='Search for builds' />
               </StyledTitle>
               {data && data.me ? (
-                <UserHomeCard userBuilds={data.me.builds} />
+                <UserHomeCard userBuildData={data.me.builds} />
               ) : (
                 'You have no saved builds yet.'
               )}
@@ -151,9 +160,9 @@ export default () => {
                 <StyledSearch placeholder='Search for raids' />
               </StyledTitle>
               {data && data.me ? (
-                <UserHomeCard userBuilds={data.me.builds} />
+                <UserHomeCard userRaidData={data.me.raids} />
               ) : (
-                'You have no saved builds yet.'
+                'You have no saved raids yet.'
               )}
             </ListCard>
           </Center>

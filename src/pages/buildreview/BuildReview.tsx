@@ -5,9 +5,9 @@ import { ITheme } from '../../components/globalStyles';
 import { IBuildState, defaultBuildState } from '../build/BuildStateContext';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import DetailView from './DetailView';
+import BuildReviewDetails from './BuildReviewDetails';
 
-interface IDetails extends ThemeProps<ITheme>, RouteComponentProps<any> {
+interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
   local?: boolean
 }
 
@@ -253,7 +253,7 @@ const buildByID = gql`
   }
 `
 
-const Details = ({ match, theme, local }: IDetails) => {
+const BuildReview = ({ match, theme, local }: IBuildReview) => {
 
   const { id } = match.params;
   const buildState = localStorage.getItem('buildState');
@@ -264,16 +264,16 @@ const Details = ({ match, theme, local }: IDetails) => {
 
   if (!local) {
     if ( data && data.builds ) {
-      return <DetailView loadedData={data.builds[0]} />
+      return <BuildReviewDetails loadedData={data.builds[0]} />
     } else {
       return <>{console.log("Data loading...")}</>
     }
   } else {
-    return <DetailView loadedData={parsedBuildState} />
+    return <BuildReviewDetails loadedData={parsedBuildState} />
   }
 }
 
-export default withTheme(withRouter(Details));
+export default withTheme(withRouter(BuildReview));
 
 /*
 const StatsView = styled.div`

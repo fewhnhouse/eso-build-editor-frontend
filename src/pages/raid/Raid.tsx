@@ -5,10 +5,10 @@ import { RouteComponentProps, Redirect } from 'react-router';
 import RaidGeneral from './general/RaidGeneral';
 import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
 import Builds from './builds/Builds';
-import Review from './review/Review';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import Flex from '../../components/Flex';
+import RaidReview from '../raidreview/RaidReview';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -184,7 +184,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         ) : id === '1' ? (
           <Builds />
         ) : id === '2' ? (
-          <Review />
+          <RaidReview local={true} />
         ) : (
           <Redirect to="/raid/0" />
         )}
