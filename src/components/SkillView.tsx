@@ -4,7 +4,7 @@ import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
 import NewSkillSlot, { ISkill, DisplaySlot } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 
-interface ISKillViewProps {
+export interface ISKillViewProps {
   skillSlots: { index: number; skill?: ISkill }[]
   droppable?: boolean
   id: string
@@ -39,7 +39,7 @@ export default ({
   return (
     <SkillView>
       {trail.map(({ opacity }: any, index: number) => (
-        <animated.div style={{ opacity }}>
+        <animated.div key={index} style={{ opacity }}>
           {disabled ? (
             <DisplaySlot skill={skillSlots[index].skill} />
           ) : (

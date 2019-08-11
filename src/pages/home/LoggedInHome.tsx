@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Typography, Button, Divider, Input } from 'antd'
 import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import UserHomeCard from './UserHomeCard'
+import { Redirect } from 'react-router'
 
 const { Search } = Input
 const { Title } = Typography
@@ -87,12 +88,28 @@ const ME = gql`
         race
         applicationArea
       }
+      raids {
+        id
+        name
+        applicationArea
+        roles {
+          id
+        }
+      }
     }
   }
 `
 
 export default () => {
-  const { loading, error, data } = useQuery(ME)
+  const { loading, error, data } = useQuery<any,any>(ME)
+  const [redirect, setRedirect] = useState('')
+
+  const handleCreateClick = (path: string) => () => {
+    setRedirect(path)
+  }
+  if (redirect !== '') {
+    return <Redirect to={redirect} push />
+  }
 
   return (
     <OuterWrapper
@@ -110,7 +127,11 @@ export default () => {
         fluid
       >
         <InputContainer direction='row' align='center' justify='center'>
+<<<<<<< HEAD
+          <Input placeholder='Search for raids' style={{ width: 400 }} />
+=======
           <Search placeholder="Search for raids" style={{ width: 400 }} />
+>>>>>>> master
         </InputContainer>
         <Wrapper direction={'row'} justify='center' align='center' wrap fluid>
           <LeftSide direction={'column'} justify={'center'} align='center'>
@@ -118,14 +139,14 @@ export default () => {
               <StyledTitle direction={'column'} justify='center' align='center'>
                 <CardTitle level={3}>
                   MY BUILDS
-                  <Button type='primary' ghost={true}>
+                  <Button type='primary' ghost={true} onClick={handleCreateClick("/build/0")}>
                     Create
                   </Button>
                 </CardTitle>
                 <StyledSearch placeholder='Search for builds' />
               </StyledTitle>
               {data && data.me ? (
-                <UserHomeCard userBuilds={data.me.builds} />
+                <UserHomeCard userBuildData={data.me.builds} />
               ) : (
                 'You have no saved builds yet.'
               )}
@@ -136,16 +157,16 @@ export default () => {
               <StyledTitle direction={'column'} justify={''} align={''}>
                 <CardTitle level={3}>
                   MY RAIDS
-                  <Button type='primary' ghost={true}>
+                  <Button type='primary' ghost={true} onClick={handleCreateClick("/raid/0")}>
                     Create
                   </Button>
                 </CardTitle>
                 <StyledSearch placeholder='Search for raids' />
               </StyledTitle>
               {data && data.me ? (
-                <UserHomeCard userBuilds={data.me.builds} />
+                <UserHomeCard userRaidData={data.me.raids} />
               ) : (
-                'You have no saved builds yet.'
+                'You have no saved raids yet.'
               )}
             </ListCard>
           </Center>

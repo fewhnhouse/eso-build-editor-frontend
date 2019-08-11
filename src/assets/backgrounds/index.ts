@@ -1,3 +1,3 @@
-import leather from "./dark_leather.png";
+import header from "./headerimg.png";
 
-export { leather };
+export { header };

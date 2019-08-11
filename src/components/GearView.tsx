@@ -59,7 +59,7 @@ export default ({
           >
             {setup.data.map((slot: ISetSelection, index: number) => {
               return disabled ? (
-                <DisplaySlot size={size} slot={slot} />
+                <DisplaySlot key={index} size={size} slot={slot} />
               ) : (
                 <GearSlot
                   size={size}

@@ -161,6 +161,7 @@ export default ({
       isOver: !!monitor.isOver(),
     }),
   });
+
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
       <GearFrame

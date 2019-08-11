@@ -5,15 +5,24 @@ import {
   defaultBuildState,
 } from './BuildStateContext';
 import { RouteComponentProps, Redirect } from 'react-router';
-import { Layout, Button, Steps, Icon, message, Tooltip } from 'antd';
+import {
+  Layout,
+  Button,
+  Steps,
+  Icon,
+  message,
+  Tooltip,
+  notification,
+} from 'antd';
 import styled from 'styled-components';
 import Consumables from './consumables/Consumables';
 import Sets from './Sets/Sets';
 import Skills from './Skills/Skills';
 import RaceClass from './RaceAndClass/RaceClass';
-import Details from '../details/Details';
+import BuildReview from '../buildreview/BuildReview';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import Flex from '../../components/Flex';
 
 const { Footer, Content } = Layout;
 
@@ -143,6 +152,7 @@ const CREATE_SKILL_SELECTIONS = gql`
   }
 `;
 const { Step } = Steps;
+
 export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const savedBuildState = localStorage.getItem('buildState');
 
@@ -157,6 +167,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
     buildReducer,
     savedBuildState ? JSON.parse(savedBuildState) : defaultBuildState
   );
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10) || 0);
 
@@ -173,198 +185,211 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [createBuild] = useMutation<any, any>(CREATE_BUILD);
   const { mundus, buff, ultimateOne, ultimateTwo } = state!;
 
-  const selectedUltimateOne: any = useQuery(GET_SKILL, {
-    variables: { id: ultimateOne ? ultimateOne.id : 0 },
-  });
-  const selectedUltimateTwo: any = useQuery(GET_SKILL, {
-    variables: { id: ultimateTwo ? ultimateTwo.id : 0 },
-  });
-
   const handleSave = async () => {
-    const {
-      race,
-      esoClass,
-      frontbarSelection,
-      backbarSelection,
-      bigPieceSelection,
-      smallPieceSelection,
-      jewelrySelection,
-      newBarOne,
-      newBarTwo,
-      applicationArea,
-      role,
-      name,
-      mainResource,
-      description,
-    } = state!;
-    const frontbarSkillSelections: any = await createSkillSelections({
-      variables: {
-        indices: newBarOne.map(sel => sel.index),
-        skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.id : 0)),
-      },
-    });
-    const backbarSkillSelections: any = await createSkillSelections({
-      variables: {
-        indices: newBarTwo.map(sel => sel.index),
-        skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.id : 0)),
-      },
-    });
-    const bigPieceSetSelections: any = await createSetSelections({
-      variables: {
-        slots: bigPieceSelection.map(piece => piece.slot),
-        types: bigPieceSelection.map(piece => piece.type),
-        setIds: bigPieceSelection.map(piece =>
-          piece.selectedSet ? piece.selectedSet.id : 0
-        ),
-        glyphDescriptions: bigPieceSelection.map(piece =>
-          piece.glyph ? piece.glyph.description : ''
-        ),
-        traitDescriptions: bigPieceSelection.map(piece =>
-          piece.trait ? piece.trait.description : ''
-        ),
-      },
-    });
-    const smallPieceSetSelections: any = await createSetSelections({
-      variables: {
-        slots: smallPieceSelection.map(piece => piece.slot),
-        types: smallPieceSelection.map(piece => piece.type),
-        setIds: smallPieceSelection.map(piece =>
-          piece.selectedSet ? piece.selectedSet.id : 0
-        ),
-        glyphDescriptions: smallPieceSelection.map(piece =>
-          piece.glyph ? piece.glyph.description : ''
-        ),
-        traitDescriptions: smallPieceSelection.map(piece =>
-          piece.trait ? piece.trait.description : ''
-        ),
-      },
-    });
-    const jewelrySetSelections: any = await createSetSelections({
-      variables: {
-        slots: jewelrySelection.map(piece => piece.slot),
-        types: jewelrySelection.map(piece => piece.type),
-        setIds: jewelrySelection.map(piece =>
-          piece.selectedSet ? piece.selectedSet.id : 0
-        ),
-        glyphDescriptions: jewelrySelection.map(piece =>
-          piece.glyph ? piece.glyph.description : ''
-        ),
-        traitDescriptions: jewelrySelection.map(piece =>
-          piece.trait ? piece.trait.description : ''
-        ),
-      },
-    });
-    const frontbarSetSelections: any = await createSetSelections({
-      variables: {
-        slots: frontbarSelection.map(piece => piece.slot),
-        types: frontbarSelection.map(piece => piece.type),
-        setIds: frontbarSelection.map(piece =>
-          piece.selectedSet ? piece.selectedSet.id : 0
-        ),
-        glyphDescriptions: frontbarSelection.map(piece =>
-          piece.glyph ? piece.glyph.description : ''
-        ),
-        traitDescriptions: frontbarSelection.map(piece =>
-          piece.trait ? piece.trait.description : ''
-        ),
-      },
-    });
-    const backbarSetSelections: any = await createSetSelections({
-      variables: {
-        slots: backbarSelection.map(piece => piece.slot),
-        types: backbarSelection.map(piece => piece.type),
-        setIds: backbarSelection.map(piece =>
-          piece.selectedSet ? piece.selectedSet.id : 0
-        ),
-        glyphDescriptions: backbarSelection.map(piece =>
-          piece.glyph ? piece.glyph.description : ''
-        ),
-        traitDescriptions: backbarSelection.map(piece =>
-          piece.trait ? piece.trait.description : ''
-        ),
-      },
-    });
+    setLoading(true);
+    try {
+      const {
+        race,
+        esoClass,
+        frontbarSelection,
+        backbarSelection,
+        bigPieceSelection,
+        smallPieceSelection,
+        jewelrySelection,
+        newBarOne,
+        newBarTwo,
+        applicationArea,
+        role,
+        name,
+        mainResource,
+        description,
+      } = state!;
+      const frontbarSkillSelections: any = await createSkillSelections({
+        variables: {
+          indices: newBarOne.map(sel => sel.index),
+          skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.id : 0)),
+        },
+      });
+      const backbarSkillSelections: any = await createSkillSelections({
+        variables: {
+          indices: newBarTwo.map(sel => sel.index),
+          skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.id : 0)),
+        },
+      });
+      const bigPieceSetSelections: any = await createSetSelections({
+        variables: {
+          slots: bigPieceSelection.map(piece => piece.slot),
+          types: bigPieceSelection.map(piece => piece.type),
+          setIds: bigPieceSelection.map(piece =>
+            piece.selectedSet ? piece.selectedSet.id : 0
+          ),
+          glyphDescriptions: bigPieceSelection.map(piece =>
+            piece.glyph ? piece.glyph.description : ''
+          ),
+          traitDescriptions: bigPieceSelection.map(piece =>
+            piece.trait ? piece.trait.description : ''
+          ),
+        },
+      });
+      const smallPieceSetSelections: any = await createSetSelections({
+        variables: {
+          slots: smallPieceSelection.map(piece => piece.slot),
+          types: smallPieceSelection.map(piece => piece.type),
+          setIds: smallPieceSelection.map(piece =>
+            piece.selectedSet ? piece.selectedSet.id : 0
+          ),
+          glyphDescriptions: smallPieceSelection.map(piece =>
+            piece.glyph ? piece.glyph.description : ''
+          ),
+          traitDescriptions: smallPieceSelection.map(piece =>
+            piece.trait ? piece.trait.description : ''
+          ),
+        },
+      });
+      const jewelrySetSelections: any = await createSetSelections({
+        variables: {
+          slots: jewelrySelection.map(piece => piece.slot),
+          types: jewelrySelection.map(piece => piece.type),
+          setIds: jewelrySelection.map(piece =>
+            piece.selectedSet ? piece.selectedSet.id : 0
+          ),
+          glyphDescriptions: jewelrySelection.map(piece =>
+            piece.glyph ? piece.glyph.description : ''
+          ),
+          traitDescriptions: jewelrySelection.map(piece =>
+            piece.trait ? piece.trait.description : ''
+          ),
+        },
+      });
+      const frontbarSetSelections: any = await createSetSelections({
+        variables: {
+          slots: frontbarSelection.map(piece => piece.slot),
+          types: frontbarSelection.map(piece => piece.type),
+          setIds: frontbarSelection.map(piece =>
+            piece.selectedSet ? piece.selectedSet.id : 0
+          ),
+          glyphDescriptions: frontbarSelection.map(piece =>
+            piece.glyph ? piece.glyph.description : ''
+          ),
+          traitDescriptions: frontbarSelection.map(piece =>
+            piece.trait ? piece.trait.description : ''
+          ),
+        },
+      });
+      const backbarSetSelections: any = await createSetSelections({
+        variables: {
+          slots: backbarSelection.map(piece => piece.slot),
+          types: backbarSelection.map(piece => piece.type),
+          setIds: backbarSelection.map(piece =>
+            piece.selectedSet ? piece.selectedSet.id : 0
+          ),
+          glyphDescriptions: backbarSelection.map(piece =>
+            piece.glyph ? piece.glyph.description : ''
+          ),
+          traitDescriptions: backbarSelection.map(piece =>
+            piece.trait ? piece.trait.description : ''
+          ),
+        },
+      });
 
-    console.log(
-      bigPieceSetSelections,
-      smallPieceSetSelections,
-      jewelrySetSelections,
-      frontbarSetSelections,
-      backbarSetSelections,
-      frontbarSkillSelections,
-      backbarSkillSelections
-    );
-
-    const build: any = await createBuild({
-      variables: {
-        data: {
-          name,
-          race,
-          esoClass,
-          applicationArea,
-          role,
-          mundusStone: { connect: { name: mundus.name } },
-          buff: { connect: { name: buff.name } },
-          bigPieceSelection: {
-            connect: bigPieceSetSelections.data.createSetSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          frontbarSelection: {
-            connect: frontbarSetSelections.data.createSetSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          backbarSelection: {
-            connect: backbarSetSelections.data.createSetSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          smallPieceSelection: {
-            connect: smallPieceSetSelections.data.createSetSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          jewelrySelection: {
-            connect: jewelrySetSelections.data.createSetSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          ultimateOne: {
-            connect: { skillId: ultimateOne ? ultimateOne.id : 0 },
-          },
-          ultimateTwo: {
-            connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 },
-          },
-          newBarOne: {
-            connect: frontbarSkillSelections.data.createSkillSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
-          },
-          newBarTwo: {
-            connect: backbarSkillSelections.data.createSkillSelections.map(
-              (selection: any) => ({
-                id: selection.id,
-              })
-            ),
+      const build: any = await createBuild({
+        variables: {
+          data: {
+            name,
+            race,
+            esoClass,
+            applicationArea,
+            role,
+            mundusStone: { connect: { name: mundus.name } },
+            buff: { connect: { name: buff.name } },
+            bigPieceSelection: {
+              connect: bigPieceSetSelections.data.createSetSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            frontbarSelection: {
+              connect: frontbarSetSelections.data.createSetSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            backbarSelection: {
+              connect: backbarSetSelections.data.createSetSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            smallPieceSelection: {
+              connect: smallPieceSetSelections.data.createSetSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            jewelrySelection: {
+              connect: jewelrySetSelections.data.createSetSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            ultimateOne: {
+              connect: { skillId: ultimateOne ? ultimateOne.id : 0 },
+            },
+            ultimateTwo: {
+              connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 },
+            },
+            newBarOne: {
+              connect: frontbarSkillSelections.data.createSkillSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
+            newBarTwo: {
+              connect: backbarSkillSelections.data.createSkillSelections.map(
+                (selection: any) => ({
+                  id: selection.id,
+                })
+              ),
+            },
           },
         },
-      },
-    });
+      });
 
-    console.log(build);
+      localStorage.removeItem('buildState');
+      notification.success({
+        message: 'Build creation successful',
+        description: (
+          <Flex direction="column" align="center" justify="center">
+            <div>
+              Your build was successfully saved. You can now view it and share
+              it with others!
+            </div>
+            <Flex
+              style={{ width: '100%', marginTop: 10 }}
+              direction="row"
+              align="center"
+              justify="space-between"
+            >
+              <Button icon="share-alt">Share link</Button>
+              <Button>Go to Build</Button>
+            </Flex>
+          </Flex>
+        ),
+      });
+    } catch (e) {
+      notification.error({
+        message: 'Build creation failed',
+        description: 'Your build could not be saved. Try again later.',
+      });
+    }
+    setLoading(false);
+    setSaved(true);
   };
 
   const handleNextClick = () => {
@@ -413,7 +438,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         ) : id === '3' ? (
           <Consumables />
         ) : id === '4' ? (
-          <Details />
+          <BuildReview local={true} />
         ) : (
           <Redirect to="/build/0" />
         )}
@@ -461,13 +486,15 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         </Steps>
         <Tooltip title={setTooltipTitle()}>
           <TabButton
+            // style={{minWidth: 120}}
+            loading={loading}
             onClick={handleNextClick}
-            disabled={isDisabled}
+            disabled={isDisabled || saved}
             size="large"
             type="primary"
           >
-            <Icon type={tab === 4 ? 'save' : 'right'} />
             {tab === 4 ? 'Save' : 'Next'}
+            <Icon type={tab === 4 ? (loading ? '' : 'save') : 'right'} />
           </TabButton>
         </Tooltip>
         <Redirect to={`/build/${tab}`} push />
