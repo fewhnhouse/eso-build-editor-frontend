@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 export interface FlexProps {
-  direction: string;
-  justify: string;
-  align: string;
+  direction?: string;
+  justify?: string;
+  align?: string;
   fluid?: boolean;
   style?: object;
   wrap?: boolean;

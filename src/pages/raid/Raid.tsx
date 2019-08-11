@@ -129,7 +129,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         description: (
           <Flex direction="column" align="center" justify="center">
             <div>
-              Your build was successfully saved. You can now view it and share
+              Your raid was successfully saved. You can now view it and share
               it with others!
             </div>
             <Flex
@@ -229,6 +229,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
             disabled={false || saved}
             size="large"
             type="primary"
+            loading={loading}
           >
             <Icon type={tab === 2 ? 'save' : 'right'} />
             {tab === 2 ? 'Save' : 'Next'}

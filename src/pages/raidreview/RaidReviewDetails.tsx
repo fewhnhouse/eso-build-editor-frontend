@@ -9,6 +9,7 @@ const { Title, Text } = Typography;
 
 const Wrapper = styled(Flex)`
   width: 100%;
+  padding: 20px;
 `
 const RaidHeader = styled(Flex)`
   flex: 1;
@@ -76,12 +77,12 @@ const RaidReviewDetails = ({loadedData}: IRaidReviewDetailsProps) => {
     )
   } else {
     return (
-      <Wrapper direction={"column"} justify={""} align={""}>
-        <RaidHeader direction={"row"} justify={""} align={""}>
+      <Wrapper direction="column">
+        <RaidHeader direction="row">
           <Title level={1}>Raid review</Title>
         </RaidHeader>
-        <RaidContent direction={"row"} justify={""} align={"flex-start"}>
-          <LeftSide direction={""} justify={""} align={"left"}>
+        <RaidContent direction="row" align="flex-start">
+          <LeftSide align="left">
             <Title level={2} style={{textAlign: "center"}}>{name}</Title>
             <Title level={3}>Group size:</Title>
             <Text>{groupSize}</Text>
@@ -90,13 +91,13 @@ const RaidReviewDetails = ({loadedData}: IRaidReviewDetailsProps) => {
             <Title level={3}>Description:</Title>
             <Text>{description}</Text>
           </LeftSide>
-            <RightSide direction={"row"} justify={"center"} align={""}>
+            <RightSide direction="row" justify="center">
               <Title level={2}>Builds</Title>
               {roles.map(role => {
                 return (
                 <>
                   <Divider>{role.roleName}</Divider>
-                  <CardList direction={"row"} justify={""} align={""}>
+                  <CardList direction="row">
                     {role.builds.map(build => {
                       return (
                         <StyledCard hoverable title={build.name} onClick={() => handleClick(`/buildreview/${build.id}`)}>

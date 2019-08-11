@@ -127,7 +127,11 @@ export default () => {
         fluid
       >
         <InputContainer direction='row' align='center' justify='center'>
+<<<<<<< HEAD
           <Input placeholder='Search for raids' style={{ width: 400 }} />
+=======
+          <Search placeholder="Search for raids" style={{ width: 400 }} />
+>>>>>>> master
         </InputContainer>
         <Wrapper direction={'row'} justify='center' align='center' wrap fluid>
           <LeftSide direction={'column'} justify={'center'} align='center'>
