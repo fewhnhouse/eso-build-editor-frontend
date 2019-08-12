@@ -1,37 +1,37 @@
-import React, { useContext, useEffect } from 'react';
-import styled, { CSSProperties } from 'styled-components';
-import { Popover } from 'antd';
-import { abilityFrame } from '../assets/misc';
-import { SkillCardContent } from '../pages/build/Skills/SkillCard';
-import { BuildContext } from '../pages/build/BuildStateContext';
-import { useDrag, useDrop } from 'react-dnd';
+import React, { useContext, useEffect } from 'react'
+import styled, { CSSProperties } from 'styled-components'
+import { Popover } from 'antd'
+import { abilityFrame } from '../assets/misc'
+import { SkillCardContent } from '../pages/build/Skills/SkillCard'
+import { BuildContext } from '../pages/build/BuildStateContext'
+import { useDrag, useDrop } from 'react-dnd'
 
 interface ISkillSlotProps {
-  droppable?: boolean;
-  skillIndex: number;
-  style?: React.CSSProperties;
-  abilityBar?: number;
-  size?: 'small' | 'normal';
-  skill?: ISkill;
-  tooltipPos?: 'top' | 'bottom' | undefined;
+  droppable?: boolean
+  skillIndex: number
+  style?: React.CSSProperties
+  abilityBar?: number
+  size?: 'small' | 'normal'
+  skill?: ISkill
+  tooltipPos?: 'top' | 'bottom' | undefined
 }
 
 export interface ISkill {
-  cast_time: string;
-  cost: string;
-  effect_1: string;
-  effect_2: string | null;
-  icon: string;
-  id: number;
-  name: string;
-  parent: number | null;
-  pts: number;
-  range: string | null;
-  skillline: number;
-  slug: string;
-  target: string | null;
-  type: number;
-  unlocks_at: number | null;
+  cast_time: string
+  cost: string
+  effect_1: string
+  effect_2: string | null
+  icon: string
+  id: number
+  name: string
+  parent: number | null
+  pts: number
+  range: string | null
+  skillline: number
+  slug: string
+  target: string | null
+  type: number
+  unlocks_at: number | null
 }
 
 const SkillFrame = styled.div`
@@ -45,14 +45,14 @@ const SkillFrame = styled.div`
   margin: 0;
   background-image: url(${abilityFrame});
   background-repeat: no-repeat;
-`;
+`
 
 const SkillImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '59px' : '43px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '59px' : '43px'};
-`;
+`
 
 export default ({
   droppable,
@@ -63,7 +63,7 @@ export default ({
   style,
   size = 'normal',
 }: ISkillSlotProps) => {
-  const [, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext)
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: {
       type: skillIndex === 5 ? 'ultimate' : 'skill',
@@ -75,7 +75,7 @@ export default ({
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
-  });
+  })
 
   useEffect(() => {
     dispatch!({
@@ -83,8 +83,8 @@ export default ({
       payload: {
         hasTrash: isDragging,
       },
-    });
-  }, [isDragging]);
+    })
+  }, [isDragging])
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: skillIndex === 5 ? 'ultimate' : 'skill',
     drop: (item: any, monitor) => {
@@ -96,7 +96,7 @@ export default ({
               barIndex: abilityBar,
               skill: item.skill,
             },
-          });
+          })
         } else {
           dispatch!({
             type: 'SWAP_ULTIMATE',
@@ -105,7 +105,7 @@ export default ({
               destinationSkill: skill,
               sourceSkill: item.skill,
             },
-          });
+          })
         }
       } else {
         if (item.abilityBar === abilityBar) {
@@ -118,7 +118,7 @@ export default ({
               sourceIndex: skillIndex,
               sourceSkill: skill,
             },
-          });
+          })
         } else if (item.abilityBar !== -1 && item.abilityBar !== abilityBar) {
           dispatch!({
             type: 'SWAP_ABILITY_DIFFERENT',
@@ -130,7 +130,7 @@ export default ({
               sourceIndex: item.index,
               sourceSkill: item.skill,
             },
-          });
+          })
         } else {
           dispatch!({
             type: 'DROP_ABILITY',
@@ -139,7 +139,7 @@ export default ({
               destinationIndex: skillIndex,
               skill: item.skill,
             },
-          });
+          })
         }
       }
     },
@@ -147,7 +147,7 @@ export default ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),
-  });
+  })
   return (
     <SkillFrame size={size} ref={droppable ? drop : undefined} style={style}>
       {skill !== undefined && !isDragging ? (
@@ -175,19 +175,19 @@ export default ({
         <div />
       )}
     </SkillFrame>
-  );
-};
+  )
+}
 
 export const DisplaySlot = ({
   skill,
   style,
   size = 'small',
 }: {
-  skill?: ISkill;
-  style?: CSSProperties;
-  size?: 'small' | 'normal';
+  skill?: ISkill
+  style?: CSSProperties
+  size?: 'small' | 'normal'
 }) => {
-  return skill !== undefined ? (
+  return skill !== undefined && skill !== null ? (
     <SkillFrame size={size} style={style}>
       <Popover placement={'top'} content={<SkillCardContent skill={skill} />}>
         <SkillImg
@@ -200,5 +200,5 @@ export const DisplaySlot = ({
     </SkillFrame>
   ) : (
     <SkillFrame size={size} style={style} />
-  );
-};
+  )
+}

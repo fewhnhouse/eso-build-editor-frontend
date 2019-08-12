@@ -123,12 +123,12 @@ const BuildReviewDetails = ({loadedData}: IDetailViewProps) => {
               <StyledTitle level={4}>Skills</StyledTitle>
               <SkillView
                 id={ABILITY_BAR_ONE}
-                disabled={true}
+                disabled
                 skillSlots={newBarOne}
               />
               <SkillView
                 id={ABILITY_BAR_TWO}
-                disabled={true}
+                disabled
                 skillSlots={newBarTwo}
               />
             </SkillsView>
@@ -138,7 +138,7 @@ const BuildReviewDetails = ({loadedData}: IDetailViewProps) => {
                 {mundus ? 
                 <>
                     <Flex direction="row" justify="center" align="center">
-                    <ClassImg src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundus.icon}`} />
+                    <ClassImg src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones${mundus.icon}`} />
                     <Text strong>{mundus.name}</Text>
                     <br />
                     </Flex>

@@ -1,13 +1,13 @@
 import React from 'react'
-import { IRaidState, defaultRaidState } from '../raid/RaidStateContext';
-import RaidReviewDetails from './RaidReviewDetails';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { IRaidState, defaultRaidState } from '../raid/RaidStateContext'
+import RaidReviewDetails from './RaidReviewDetails'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import { RouteComponentProps, withRouter } from 'react-router'
 
-const raidByID = gql`
+const RAID = gql`
   query Raids($id: ID!) {
-    raids (where: {id: $id}) {
+    raid(id: $id) {
       name
       owner {
         name
@@ -23,34 +23,35 @@ const raidByID = gql`
           esoClass
         }
       }
-    } 
-}
+    }
+  }
 `
 
 interface IRaidOverviewProps extends RouteComponentProps<any> {
   local?: boolean
 }
 
-const RaidOverview = ({match, local}: IRaidOverviewProps) => {
-
-  const { id } = match.params;
-  const raidState = localStorage.getItem('raidState');
+const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
+  const { id } = match.params
+  const raidState = localStorage.getItem('raidState')
   const parsedRaidState: IRaidState = raidState
     ? JSON.parse(raidState)
-    : defaultRaidState;
+    : defaultRaidState
 
-  const { loading, error, data } = useQuery(raidByID, {variables: {id}});
-  
+  const { loading, error, data } = useQuery(RAID, { variables: { id } })
+
   if (!local) {
-    if ( data && data.raids ) {
-      return <RaidReviewDetails loadedData={data.raids[0]} />
+    if (loading) {
+      return <div>Loading...</div>
+    }
+    if (data && data.raid) {
+      return <RaidReviewDetails loadedData={data.raid} />
     } else {
-      return <>{console.log("Data loading...")}</>
+      return null
     }
   } else {
     return <RaidReviewDetails loadedData={parsedRaidState} />
   }
-
 }
 
-export default withRouter(RaidOverview);
+export default withRouter(RaidOverview)
