@@ -64,6 +64,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   //goggle.de?search=finland
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10));
+  const [redirect, setRedirect] = useState(false);
 
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
@@ -72,7 +73,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const createRoleMutation = useMutation<any, any>(CREATE_ROLE);
   const [createRole] = createRoleMutation;
   const createRaidMutation = useMutation<any, any>(CREATE_RAID);
-  const [createRaid] = createRaidMutation;
+  const [createRaid, {data}] = createRaidMutation;
 
   const handleSave = async () => {
     setLoading(true);
@@ -123,37 +124,16 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
           },
         },
       });
-
-      notification.success({
-        message: 'Raid creation successful',
-        description: (
-          <Flex direction="column" align="center" justify="center">
-            <div>
-              Your raid was successfully saved. You can now view it and share
-              it with others!
-            </div>
-            <Flex
-              style={{ width: '100%', marginTop: 10 }}
-              direction="row"
-              align="center"
-              justify="space-between"
-            >
-              <Button icon="share-alt">Share link</Button>
-              <Button>Go to Raid</Button>
-            </Flex>
-          </Flex>
-        ),
-      });
+      setRedirect(true);
+      localStorage.removeItem('raidState');
     } catch(e) {
       notification.error({
         message: 'Raid creation failed',
         description: 'Your raid could not be saved. Try again later.',
       });
     }
-
     setLoading(false);
     setSaved(true);
-
   };
 
   const handleNextClick = () => {
@@ -188,6 +168,9 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         ) : (
           <Redirect to="/raid/0" />
         )}
+      {redirect && data.createRaid.id ? 
+        <Redirect to={`/raidreview/${data.createRaid.id}`} push />
+      : "" }
       </Container>
       <Footer
         style={{

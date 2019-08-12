@@ -41,6 +41,7 @@ const TabButton = styled(Button)`
 `;
 
 interface IBuildCreateData {}
+
 const CREATE_BUILD = gql`
   mutation createBuild($data: BuildCreateInput!) {
     createBuild(data: $data) {
@@ -171,6 +172,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [saved, setSaved] = useState(false);
   const { id } = match.params;
   const [tab, setTab] = useState(parseInt(id, 10) || 0);
+  const [redirect, setRedirect] = useState(false);
 
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
@@ -182,7 +184,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const [createSetSelections] = useMutation<any, ISetSelectionData>(
     CREATE_SET_SELECTIONS
   );
-  const [createBuild] = useMutation<any, any>(CREATE_BUILD);
+  const [createBuild, {data}] = useMutation<any, any>(CREATE_BUILD);
+
   const { mundus, buff, ultimateOne, ultimateTwo } = state!;
 
   const handleSave = async () => {
@@ -360,28 +363,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
           },
         },
       });
-
+      setRedirect(true);
       localStorage.removeItem('buildState');
-      notification.success({
-        message: 'Build creation successful',
-        description: (
-          <Flex direction="column" align="center" justify="center">
-            <div>
-              Your build was successfully saved. You can now view it and share
-              it with others!
-            </div>
-            <Flex
-              style={{ width: '100%', marginTop: 10 }}
-              direction="row"
-              align="center"
-              justify="space-between"
-            >
-              <Button icon="share-alt">Share link</Button>
-              <Button>Go to Build</Button>
-            </Flex>
-          </Flex>
-        ),
-      });
     } catch (e) {
       notification.error({
         message: 'Build creation failed',
@@ -442,6 +425,9 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         ) : (
           <Redirect to="/build/0" />
         )}
+        {redirect && data.createBuild.id ? 
+          <Redirect to={`/buildreview/${data.createBuild.id}`} push />
+        : "" }
       </Container>
 
       <Footer
