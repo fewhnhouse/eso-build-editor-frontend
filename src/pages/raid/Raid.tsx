@@ -16,7 +16,7 @@ import Builds from './builds/Builds'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import Flex from '../../components/Flex'
-import RaidReview from '../RaidReview/RaidReview'
+import RaidReview from '../raidReview/RaidReview'
 
 const { Footer, Content } = Layout
 const { Step } = Steps

@@ -6,8 +6,8 @@ import Setup from '../pages/setup/Setup'
 import Raid from '../pages/raid/Raid'
 import Verify from './Verify'
 import { Spin } from 'antd'
-import RaidReview from '../pages/RaidReview/RaidReview'
-import BuildReview from '../pages/BuildReview/BuildReview'
+import RaidReview from '../pages/raidReview/RaidReview'
+import BuildReview from '../pages/buildReview/BuildReview'
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean

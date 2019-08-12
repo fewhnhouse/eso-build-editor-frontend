@@ -12,6 +12,56 @@ interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
 }
 
 const BUILD = gql`
+  fragment SetSelection on SetSelection {
+    icon
+    slot
+    type
+    selectedSet {
+      name
+      location
+      type
+      bonus_item_1
+      bonus_item_2
+      bonus_item_3
+      bonus_item_4
+      bonus_item_5
+      has_jewels
+      has_weapons
+      has_heavy_armor
+      has_light_armor
+      has_medium_armor
+    }
+    trait {
+      type
+      description
+      icon
+    }
+    glyph {
+      type
+      description
+      icon
+    }
+  }
+
+  fragment Skill on Skill {
+    name
+    skillId
+    icon
+    range
+    type
+    cost
+    effect_1
+    effect_2
+    target
+  }
+
+  fragment SkillSelection on SkillSelection {
+    index
+    skill {
+      ...Skill
+    }
+  }
+
   query Build($id: ID!) {
     build(id: $id) {
       owner {
@@ -23,219 +73,31 @@ const BUILD = gql`
       race
       esoClass
       bigPieceSelection {
-        icon
-        slot
-        type
-        selectedSet {
-          name
-          type
-          bonus_item_1
-          bonus_item_2
-          bonus_item_3
-          bonus_item_4
-          bonus_item_5
-          has_jewels
-          has_weapons
-          has_heavy_armor
-          has_light_armor
-          has_medium_armor
-        }
-        trait {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
-        glyph {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
+        ...SetSelection
       }
       smallPieceSelection {
-        icon
-        slot
-        type
-        selectedSet {
-          name
-          type
-          bonus_item_1
-          bonus_item_2
-          bonus_item_3
-          bonus_item_4
-          bonus_item_5
-          has_jewels
-          has_weapons
-          has_heavy_armor
-          has_light_armor
-          has_medium_armor
-        }
-        trait {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
-        glyph {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
+        ...SetSelection
       }
       jewelrySelection {
-        icon
-        slot
-        type
-        selectedSet {
-          name
-          type
-          bonus_item_1
-          bonus_item_2
-          bonus_item_3
-          bonus_item_4
-          bonus_item_5
-          has_jewels
-          has_weapons
-          has_heavy_armor
-          has_light_armor
-          has_medium_armor
-        }
-        trait {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
-        glyph {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
+        ...SetSelection
       }
       frontbarSelection {
-        icon
-        slot
-        type
-        selectedSet {
-          name
-          type
-          bonus_item_1
-          bonus_item_2
-          bonus_item_3
-          bonus_item_4
-          bonus_item_5
-          has_jewels
-          has_weapons
-          has_heavy_armor
-          has_light_armor
-          has_medium_armor
-        }
-        trait {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
-        glyph {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
+        ...SetSelection
       }
       backbarSelection {
-        icon
-        slot
-        type
-        selectedSet {
-          name
-          type
-          bonus_item_1
-          bonus_item_2
-          bonus_item_3
-          bonus_item_4
-          bonus_item_5
-          has_jewels
-          has_weapons
-          has_heavy_armor
-          has_light_armor
-          has_medium_armor
-        }
-        trait {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
-        glyph {
-          type
-          itemType
-          description
-          icon
-          modificationType
-        }
+        ...SetSelection
       }
       newBarOne {
-        index
-        skill {
-          skillId
-          target
-          cast_time
-          cost
-          effect_1
-          effect_2
-          icon
-          name
-          type
-        }
+        ...SkillSelection
       }
       newBarTwo {
-        index
-        skill {
-          skillId
-          target
-          cast_time
-          cost
-          effect_1
-          effect_2
-          icon
-          name
-          type
-        }
+        ...SkillSelection
       }
       ultimateOne {
-        skillId
-        target
-        cast_time
-        cost
-        effect_1
-        effect_2
-        icon
-        name
-        type
+        ...Skill
       }
       ultimateTwo {
-        skillId
-        target
-        cast_time
-        cost
-        effect_1
-        effect_2
-        icon
-        name
-        type
+        ...Skill
       }
       mundusStone {
         name
