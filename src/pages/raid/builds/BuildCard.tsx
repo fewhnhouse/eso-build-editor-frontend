@@ -1,22 +1,24 @@
-import React from 'react';
-import { useDrag } from 'react-dnd';
-import styled, { CSSProp, CSSProperties } from 'styled-components';
-import SkillView from '../../../components/SkillView';
-import {
-  ABILITY_BAR_TWO,
-  ABILITY_BAR_ONE,
-} from '../../build/Skills/AbilityBar';
-import { DisplaySlot } from '../../../components/SkillSlot';
-import { Card, Divider, Collapse, Icon } from 'antd';
-import GearView from '../../../components/GearView';
-const { Panel } = Collapse;
+import React from 'react'
+import { useDrag } from 'react-dnd'
+import styled, { CSSProp, CSSProperties } from 'styled-components'
+import SkillView from '../../../components/SkillView'
+import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
+import { DisplaySlot } from '../../../components/SkillSlot'
+import { Card, Divider, Collapse, Icon } from 'antd'
+import GearView from '../../../components/GearView'
+import { Tabs } from 'antd'
+import Flex from '../../../components/Flex'
+
+const { Panel } = Collapse
+
+const { TabPane } = Tabs
 
 const MyAvatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 3px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-`;
+`
 
 const Description = styled.div`
   font-size: 14px;
@@ -24,7 +26,7 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
-`;
+`
 
 const Title = styled.div`
   font-size: 16px;
@@ -35,7 +37,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`;
+`
 
 const AbilityBar = styled.div`
   height: 60px;
@@ -43,8 +45,8 @@ const AbilityBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 200px;
-`;
+  width: 80%;
+`
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active: boolean }) =>
@@ -53,23 +55,7 @@ const StyledCard = styled(Card)`
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   margin: 10px;
-`;
-
-const StyledPanel = styled(Panel)`
-  background: #f7f7f7;
-  margin-bottom: 24px;
-  border: 0px;
-  border-radius: 4px;
-  overflow: hidden;
-`;
-
-const customPanelStyle = {
-  background: '#f7f7f7',
-  borderRadius: 4,
-  marginBottom: 24,
-  border: 0,
-  overflow: 'hidden',
-};
+`
 
 export default ({ item, style }: { item: any; style?: CSSProperties }) => {
   const [{ isDragging, didDrop }, drag] = useDrag({
@@ -81,47 +67,47 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
-  });
+  })
   return (
     <div style={style} ref={drag}>
       <StyledCard hoverable active={item.name === 'asd'}>
         <div>
           <Title>{item.name}</Title>
           <Divider style={{ margin: '5px 0px' }} />
-          <Collapse
-            bordered={false}
-            defaultActiveKey={[]}
-            expandIcon={({ isActive }) => (
-              <Icon type="caret-right" rotate={isActive ? 90 : 0} />
-            )}
-          >
-            <Panel header="Skills" key="1" style={customPanelStyle}>
-              <AbilityBar>
-                <SkillView
-                  id={ABILITY_BAR_ONE}
-                  disabled
-                  skillSlots={item.newBarOne}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateOne || undefined}
-                />
-              </AbilityBar>
-              <AbilityBar>
-                <SkillView
-                  id={ABILITY_BAR_TWO}
-                  disabled
-                  skillSlots={item.newBarTwo}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateTwo || undefined}
-                />
-              </AbilityBar>
-            </Panel>
-            <Panel header="Weapons" key="2" style={customPanelStyle}>
+          <Description>
+            {item.esoClass} | {item.race}
+          </Description>
+          <Divider style={{ margin: '5px 0px' }} />
+          <Tabs defaultActiveKey='skills'>
+            <TabPane tab='Skills' key='skills'>
+              <Flex style={{width: "100%"}}>
+                <AbilityBar>
+                  <SkillView
+                    id={ABILITY_BAR_ONE}
+                    disabled
+                    skillSlots={item.newBarOne}
+                  />
+                  <DisplaySlot
+                    style={{ marginLeft: 10 }}
+                    skill={item.ultimateOne || undefined}
+                  />
+                </AbilityBar>
+                <AbilityBar>
+                  <SkillView
+                    id={ABILITY_BAR_TWO}
+                    disabled
+                    skillSlots={item.newBarTwo}
+                  />
+                  <DisplaySlot
+                    style={{ marginLeft: 10 }}
+                    skill={item.ultimateTwo || undefined}
+                  />
+                </AbilityBar>
+              </Flex>
+            </TabPane>
+            <TabPane tab='Weapons' key='weapons'>
               <GearView
-                size="small"
+                size='small'
                 setups={[
                   {
                     id: 'frontbar',
@@ -135,10 +121,11 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
                   },
                 ]}
               />
-            </Panel>
-            <Panel header="Armor" key="3" style={customPanelStyle}>
+            </TabPane>
+            <TabPane tab='Armor' key='armor'>
+              {' '}
               <GearView
-                size="small"
+                size='small'
                 setups={[
                   {
                     id: 'bigpieces',
@@ -152,11 +139,10 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
                   },
                 ]}
               />
-            </Panel>
-
-            <Panel header="Jewelry" key="4" style={customPanelStyle}>
+            </TabPane>
+            <TabPane tab='Jewelry' key='jewelry'>
               <GearView
-                size="small"
+                size='small'
                 setups={[
                   {
                     id: 'jewelry',
@@ -165,21 +151,10 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
                   },
                 ]}
               />
-            </Panel>
-          </Collapse>
-          <div
-            style={{
-              width: 140,
-              display: 'flex',
-              margin: '10px 0px',
-            }}
-          >
-            {/*tags*/}
-          </div>
-          <Description>{item.esoClass}</Description>
-          <Description>{item.race}</Description>
+            </TabPane>
+          </Tabs>
         </div>
       </StyledCard>
     </div>
-  );
-};
+  )
+}
