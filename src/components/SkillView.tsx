@@ -35,6 +35,7 @@ export default ({
     opacity: 1,
     from: { opacity: 0 },
   })
+  console.log(skillSlots)
 
   return (
     <SkillView>
@@ -45,7 +46,6 @@ export default ({
           ) : (
             <NewSkillSlot
               abilityBar={abilityBar}
-              key={index + skillSlots[index].index}
               droppable={droppable}
               skillIndex={skillSlots[index].index}
               tooltipPos={pos(id)}

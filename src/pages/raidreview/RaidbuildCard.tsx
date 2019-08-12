@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Card } from "antd";
-import styled, { withTheme, ThemeProps } from "styled-components";
-import { Redirect } from "react-router";
-import { chooseRace, chooseClass } from "../../util/utils";
-import { ITheme } from "../../components/globalStyles";
+import React, { useState } from 'react'
+import { Card } from 'antd'
+import styled, { withTheme, ThemeProps } from 'styled-components'
+import { Redirect } from 'react-router'
+import { chooseRace, chooseClass } from '../../util/utils'
+import { ITheme } from '../../components/globalStyles'
 
 interface IStyledCardProps {
   colors: {
-    backgroundColor: string;
-    borderColor: string;
-  };
+    backgroundColor: string
+    borderColor: string
+  }
 }
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
@@ -18,22 +18,22 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ""};
+  border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ''};
   background-color: ${(props: IStyledCardProps) =>
-    props.colors.backgroundColor || ""};
-`;
+    props.colors.backgroundColor || ''};
+`
 
-const { Meta } = Card;
+const { Meta } = Card
 
 const Image = styled.img`
   width: 20px;
   height: 20px;
-`;
+`
 
 const MyAvatar = styled.img`
   width: 26px;
   height: 26px;
-`;
+`
 
 const RaceContainer = styled.div`
   display: flex;
@@ -42,56 +42,56 @@ const RaceContainer = styled.div`
   padding: 0px 10px;
   justify-content: space-between;
   align-items: center;
-`;
+`
 
 export interface IClass {
-  class: string;
-  description: string;
-  race: string;
+  class: string
+  description: string
+  race: string
 }
 interface ICardProps extends ThemeProps<ITheme> {
   role: {
-    role: string;
-    esoClass: IClass;
-  };
+    role: string
+    esoClass: IClass
+  }
 }
 
 const setColor = (role: string, theme: ITheme) => {
   switch (role) {
-    case "Stamina DD": // ${props => props.theme.stamGreen};
+    case 'Stamina DD': // ${props => props.theme.stamGreen};
       return {
         borderColor: `${theme.roleCardColors.StamDD}`,
-        backgroundColor: ``
-      };
-    case "Stamina Support":
+        backgroundColor: ``,
+      }
+    case 'Stamina Support':
       return {
         borderColor: `${theme.roleCardColors.StamSupp}`,
-        backgroundColor: ``
-      };
-    case "Magicka DD":
+        backgroundColor: ``,
+      }
+    case 'Magicka DD':
       return {
         borderColor: `${theme.roleCardColors.MagDD}`,
-        backgroundColor: ``
-      };
-    case "Magicka Support":
+        backgroundColor: ``,
+      }
+    case 'Magicka Support':
       return {
         borderColor: `${theme.roleCardColors.MagSupp}`,
-        backgroundColor: ``
-      };
+        backgroundColor: ``,
+      }
     default:
       return {
-        borderColor: "",
-        backgroundColor: ""
-      };
+        borderColor: '',
+        backgroundColor: '',
+      }
   }
-};
+}
 
 const HomeCard = ({ role, theme }: ICardProps) => {
-  const { esoClass } = role;
-  const [redirect, setRedirect] = useState(false);
+  const { esoClass } = role
+  const [redirect, setRedirect] = useState(false)
   const handleClick = () => {
-    setRedirect(true);
-  };
+    setRedirect(true)
+  }
   return redirect ? (
     <Redirect push to={`/details/${esoClass.class}`} />
   ) : (
@@ -107,19 +107,19 @@ const HomeCard = ({ role, theme }: ICardProps) => {
         <RaceContainer>
           {esoClass.race}
           <Image title={esoClass.race} src={chooseRace(esoClass.race)} />
-        </RaceContainer>
+        </RaceContainer>,
       ]}
     >
       <Meta
         avatar={
           <MyAvatar title={esoClass.class} src={chooseClass(esoClass.class)} />
         }
-        style={{ textAlign: "left"}}
+        style={{ textAlign: 'left' }}
         title={esoClass.class}
         description={esoClass.description}
       />
     </StyledCard>
-  );
-};
+  )
+}
 
-export default withTheme(HomeCard);
+export default withTheme(HomeCard)

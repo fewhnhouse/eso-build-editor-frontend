@@ -123,12 +123,12 @@ const BuildReviewDetails = ({loadedData}: IDetailViewProps) => {
               <StyledTitle level={4}>Skills</StyledTitle>
               <SkillView
                 id={ABILITY_BAR_ONE}
-                disabled={true}
+                disabled
                 skillSlots={newBarOne}
               />
               <SkillView
                 id={ABILITY_BAR_TWO}
-                disabled={true}
+                disabled
                 skillSlots={newBarTwo}
               />
             </SkillsView>

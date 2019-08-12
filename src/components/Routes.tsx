@@ -6,15 +6,15 @@ import Setup from '../pages/setup/Setup'
 import Raid from '../pages/raid/Raid'
 import Verify from './Verify'
 import { Spin } from 'antd'
-import RaidReview from '../pages/raidreview/RaidReview';
-import BuildReview from '../pages/buildreview/BuildReview';
+import RaidReview from '../pages/RaidReview/RaidReview'
+import BuildReview from '../pages/BuildReview/BuildReview'
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean
 }
 const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
-  if(loggedIn === undefined) {
-    return null;
+  if (loggedIn === undefined) {
+    return null
   }
   return loggedIn ? <Route {...props} /> : <Redirect to='/' />
 }
@@ -41,8 +41,8 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         path='/raid/:id'
         component={Raid}
       />
-      <Route exact path="/buildreview/:id" component={BuildReview} />
-      <Route exact path="/raidreview/:id" component={RaidReview} />
+      <Route exact path='/buildreview/:id' component={BuildReview} />
+      <Route exact path='/raidreview/:id' component={RaidReview} />
     </Switch>
   )
 }

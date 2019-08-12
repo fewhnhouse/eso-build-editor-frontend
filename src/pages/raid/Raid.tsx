@@ -16,7 +16,7 @@ import Builds from './builds/Builds'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import Flex from '../../components/Flex'
-import RaidReview from '../raidreview/RaidReview'
+import RaidReview from '../RaidReview/RaidReview'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -137,6 +137,25 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
             },
           },
         },
+      })
+      notification.success({
+        message: 'Raid creation successful',
+        description: (
+          <Flex direction='column' align='center' justify='center'>
+            <div>
+              Your raid was successfully saved. You can now view it and share it
+              with others!
+            </div>
+            <Flex
+              style={{ width: '100%', marginTop: 10 }}
+              direction='row'
+              align='center'
+              justify='space-between'
+            >
+              <Button icon='share-alt'>Share link</Button>
+            </Flex>
+          </Flex>
+        ),
       })
       localStorage.removeItem('raidState')
     } catch (e) {

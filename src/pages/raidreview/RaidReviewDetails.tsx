@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import styled from "styled-components";
-import Flex from "../../components/Flex";
-import { Card, Typography, Divider } from "antd";
-import { IRaidState } from "../raid/RaidStateContext";
-import { Redirect } from "react-router";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import Flex from '../../components/Flex'
+import { Card, Typography, Divider } from 'antd'
+import { IRaidState } from '../raid/RaidStateContext'
+import { Redirect } from 'react-router'
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -50,41 +50,33 @@ const CardList = styled(Flex)`
 const StyledCard = styled(Card)`
   width: 200px;
   margin: 10px;
-  `
+`
 
 interface IRaidReviewDetailsProps {
-    loadedData: IRaidState
+  loadedData: IRaidState
 }
 
-const RaidReviewDetails = ({loadedData}: IRaidReviewDetailsProps) => {
+const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
+  const { name, applicationArea, groupSize, description, roles } = loadedData
 
-  const {
-      name,
-      applicationArea,
-      groupSize,
-      description,
-      roles
-  } = loadedData;
-  console.log(loadedData)
-
-  const [path, setRedirect] = useState("");
-  const handleClick = ( path: string) => {
-      setRedirect(path);
+  const [path, setRedirect] = useState('')
+  const handleClick = (path: string) => {
+    setRedirect(path)
   }
 
-  if (path !== "") {
-    return (
-        <Redirect push to={`${path}`} />
-    )
+  if (path !== '') {
+    return <Redirect push to={`${path}`} />
   } else {
     return (
-      <Wrapper direction="column">
-        <RaidHeader direction="row">
+      <Wrapper direction='column'>
+        <RaidHeader direction='row'>
           <Title level={1}>Raid review</Title>
         </RaidHeader>
-        <RaidContent direction="row" align="flex-start">
-          <LeftSide align="left">
-            <Title level={2} style={{textAlign: "center"}}>{name}</Title>
+        <RaidContent direction='row' align='flex-start'>
+          <LeftSide align='left'>
+            <Title level={2} style={{ textAlign: 'center' }}>
+              {name}
+            </Title>
             <Title level={3}>Group size:</Title>
             <Text>{groupSize}</Text>
             <Title level={3}>Application area:</Title>
@@ -92,30 +84,38 @@ const RaidReviewDetails = ({loadedData}: IRaidReviewDetailsProps) => {
             <Title level={3}>Description:</Title>
             <Text>{description}</Text>
           </LeftSide>
-            <RightSide direction="row" justify="center">
-              <Title level={2}>Builds</Title>
-              {roles.map(role => {
-                return (
+          <RightSide direction='row' justify='center'>
+            <Title level={2}>Builds</Title>
+            {roles.map(role => {
+              return (
                 <>
                   <Divider>{role.roleName}</Divider>
-                  <CardList direction="row">
+                  <CardList direction='row'>
                     {role.builds.map(build => {
                       return (
-                        <StyledCard hoverable title={build.name} onClick={() => handleClick(`/buildreview/${build.id}`)}>
-                          {build.name}<br />
-                          {build.role}<br />
+                        <StyledCard
+                          hoverable
+                          title={build.name}
+                          onClick={() =>
+                            handleClick(`/buildreview/${build.id}`)
+                          }
+                        >
+                          {build.name}
+                          <br />
+                          {build.role}
+                          <br />
                           {build.description}
                         </StyledCard>
                       )
                     })}
                   </CardList>
                 </>
-                )
-              })}
-            </RightSide>
+              )
+            })}
+          </RightSide>
         </RaidContent>
       </Wrapper>
     )
   }
 }
-export default RaidReviewDetails;
+export default RaidReviewDetails
