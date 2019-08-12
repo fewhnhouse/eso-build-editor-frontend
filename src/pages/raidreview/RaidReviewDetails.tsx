@@ -65,6 +65,7 @@ const RaidReviewDetails = ({loadedData}: IRaidReviewDetailsProps) => {
       description,
       roles
   } = loadedData;
+  console.log(loadedData)
 
   const [path, setRedirect] = useState("");
   const handleClick = ( path: string) => {
