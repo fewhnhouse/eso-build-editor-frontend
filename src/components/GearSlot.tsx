@@ -1,40 +1,27 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Popover } from 'antd';
-import {
-  head,
-  chest,
-  legs,
-  hands,
-  belt,
-  feet,
-  shoulders,
-  mainHand,
-  offHand,
-  quickslot,
-  ring,
-  neck,
-} from '../assets/gear';
-import { useDrag, useDrop } from 'react-dnd';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { Popover } from 'antd'
+
+import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
   Slot,
   ISetSelection,
-} from '../pages/build/BuildStateContext';
-import { GearCardContent } from '../pages/build/Sets/GearCard';
+} from '../pages/build/BuildStateContext'
+import { GearCardContent } from '../pages/build/Sets/GearCard'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
-`;
+`
 
 interface IGearFrameProps {
-  hasIcon: boolean;
-  canDrop?: boolean;
-  backgroundSource: string;
-  size: 'normal' | 'small';
+  hasIcon: boolean
+  canDrop?: boolean
+  backgroundSource: string
+  size: 'normal' | 'small'
 }
 
 const GearFrame = styled.div`
@@ -52,73 +39,103 @@ const GearFrame = styled.div`
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
-`;
+`
 
 export interface ISet {
-  id: number;
-  name: string;
-  location: string;
-  type: string;
-  slug: string;
-  bonus_item_1: string | null;
-  bonus_item_2: string | null;
-  bonus_item_3: string | null;
-  bonus_item_4: string | null;
-  bonus_item_5: string | null;
-  has_jewels: number;
-  has_weapons: number;
-  has_heavy_armor: number;
-  has_light_armor: number;
-  has_medium_armor: number;
-  traits_needed: number | null;
-  pts: number;
-  eso_id: null | number;
-  [key: string]: string | null | number;
+  id: number
+  name: string
+  location: string
+  type: string
+  slug: string
+  bonus_item_1: string | null
+  bonus_item_2: string | null
+  bonus_item_3: string | null
+  bonus_item_4: string | null
+  bonus_item_5: string | null
+  has_jewels: number
+  has_weapons: number
+  has_heavy_armor: number
+  has_light_armor: number
+  has_medium_armor: number
+  traits_needed: number | null
+  pts: number
+  eso_id: null | number
+  [key: string]: string | null | number
 }
 
-const getImageSource = (slot: string) => {
+const getImageSource = (slot: Slot) => {
   switch (slot) {
-    case 'legs':
-      return legs;
-    case 'head':
-      return head;
-    case 'shoulders':
-      return shoulders;
-    case 'waist':
-      return belt;
-    case 'hands':
-      return hands;
-    case 'feet':
-      return feet;
-    case 'chest':
-      return chest;
-    case 'ring1':
-      return ring;
-    case 'ring2':
-      return ring;
-    case 'neck':
-      return neck;
-    case 'mainHand':
-      return mainHand;
-    case 'offHand':
-      return offHand;
-    case 'quickslot':
-      return quickslot;
+    case Slot.legs:
+      return 'legs.png'
+    case Slot.head:
+      return 'head.png'
+    case Slot.shoulders:
+      return 'shoulders.png'
+    case Slot.waist:
+      return 'waist.png'
+    case Slot.hands:
+      return 'hands.png'
+    case Slot.feet:
+      return 'feet.png'
+    case Slot.chest:
+      return 'chest.png'
+    case Slot.ring:
+      return 'ring.png'
+    case Slot.ring1:
+      return 'ring.png'
+    case Slot.ring2:
+      return 'ring.png'
+
+    case Slot.neck:
+      return 'neck.png'
     default:
-      return '';
+      return ''
   }
-};
+}
+
+const getGearSlot = (slot: ISetSelection) => {
+  if (!slot.type) {
+    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/jewelry/${getImageSource(
+      slot.slot
+    )}`
+  }
+  if (slot.type === 'onehanded') {
+    return `${
+      process.env.REACT_APP_IMAGE_SERVICE
+    }/gear/onehanded/${getImageSource(slot.slot)}`
+  } else if (slot.type === 'twohanded') {
+    return `${
+      process.env.REACT_APP_IMAGE_SERVICE
+    }/gear/twohanded/${getImageSource(slot.slot)}`
+  } else if (slot.type === 'lightarmor') {
+    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/light/${getImageSource(
+      slot.slot
+    )}`
+  } else if (slot.type === 'mediumarmor') {
+    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/medium/${getImageSource(
+      slot.slot
+    )}`
+  } else if (slot.type === 'heavyarmor') {
+    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
+      slot.slot
+    )}`
+  } else {
+    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
+      slot.slot
+    )}`
+  }
+}
 
 export interface IGearSlotProps {
-  slot: ISetSelection;
-  droppable?: boolean;
-  group: string;
-  size?: 'normal' | 'small';
+  slot: ISetSelection
+  droppable?: boolean
+  group: string
+  size?: 'normal' | 'small'
 }
 
 export interface IDragProps {
-  slot: ISetSelection;
-  group: string;
+  slot: ISetSelection
+  group: string
 }
 
 export default ({
@@ -127,7 +144,7 @@ export default ({
   group,
   size = 'normal',
 }: IGearSlotProps) => {
-  const [, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext)
 
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: { type: slot.slot, set: slot.selectedSet, icon: slot.icon },
@@ -135,7 +152,7 @@ export default ({
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
-  });
+  })
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: [
@@ -154,13 +171,13 @@ export default ({
           type: item.type,
           group,
         },
-      });
+      })
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),
-  });
+  })
 
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
@@ -169,28 +186,30 @@ export default ({
         canDrop={droppable && canDrop}
         hasIcon={slot.icon !== undefined}
         ref={droppable ? drop : undefined}
-        backgroundSource={getImageSource(slot.slot)}
+        backgroundSource={`${
+          process.env.REACT_APP_IMAGE_SERVICE
+        }/slots/${getImageSource(slot.slot)}`}
       >
         {slot.icon !== undefined && isDragging ? (
-          <GearImg size={size} ref={drag} src={slot.icon} />
+          <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
         ) : slot.icon !== undefined ? (
           <Popover placement={'top'} content={<GearCardContent gear={slot} />}>
-            <GearImg size={size} ref={drag} src={slot.icon} />
+            <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
           </Popover>
         ) : (
           <div />
         )}
       </GearFrame>
     </div>
-  );
-};
+  )
+}
 
 export const DisplaySlot = ({
   slot,
   size,
 }: {
-  slot: ISetSelection;
-  size: 'normal' | 'small';
+  slot: ISetSelection
+  size: 'normal' | 'small'
 }) => {
   return (
     <GearFrame
@@ -199,10 +218,10 @@ export const DisplaySlot = ({
       backgroundSource={getImageSource(slot.slot)}
     >
       {slot.icon !== undefined ? (
-        <Popover placement="left" content={<GearCardContent gear={slot} />}>
-          <GearImg size={size} src={slot.icon} />
+        <Popover placement='left' content={<GearCardContent gear={slot} />}>
+          <GearImg size={size} src={getGearSlot(slot)} />
         </Popover>
       ) : null}
     </GearFrame>
-  );
-};
+  )
+}

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Card } from 'antd'
 import styled, { withTheme, ThemeProps } from 'styled-components'
 import { Redirect } from 'react-router'
-import { chooseRace, chooseClass } from '../../util/utils'
 import { ITheme } from '../../components/globalStyles'
 
 interface IStyledCardProps {
@@ -44,16 +43,11 @@ const RaceContainer = styled.div`
   align-items: center;
 `
 
-export interface IClass {
-  class: string
+interface ICardProps extends ThemeProps<ITheme> {
   description: string
   race: string
-}
-interface ICardProps extends ThemeProps<ITheme> {
-  role: {
-    role: string
-    esoClass: IClass
-  }
+  role: string
+  esoClass: string
 }
 
 const setColor = (role: string, theme: ITheme) => {
@@ -86,37 +80,43 @@ const setColor = (role: string, theme: ITheme) => {
   }
 }
 
-const HomeCard = ({ role, theme }: ICardProps) => {
-  const { esoClass } = role
+const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
   const [redirect, setRedirect] = useState(false)
   const handleClick = () => {
     setRedirect(true)
   }
   return redirect ? (
-    <Redirect push to={`/details/${esoClass.class}`} />
+    <Redirect push to={`/details/${esoClass}`} />
   ) : (
     <StyledCard
       onClick={handleClick}
-      colors={setColor(role.role, theme)}
+      colors={setColor(role, theme)}
       hoverable
       actions={[
         <RaceContainer>
-          {esoClass.race}
-          <Image title={esoClass.race} src={chooseRace(esoClass.race)} />
+          <Image
+            title={esoClass}
+            src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
+          />
         </RaceContainer>,
         <RaceContainer>
-          {esoClass.race}
-          <Image title={esoClass.race} src={chooseRace(esoClass.race)} />
+          <Image
+            title={race}
+            src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}`}
+          />
         </RaceContainer>,
       ]}
     >
       <Meta
         avatar={
-          <MyAvatar title={esoClass.class} src={chooseClass(esoClass.class)} />
+          <MyAvatar
+            title={esoClass}
+            src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
+          />
         }
         style={{ textAlign: 'left' }}
-        title={esoClass.class}
-        description={esoClass.description}
+        title={esoClass}
+        description={description}
       />
     </StyledCard>
   )
