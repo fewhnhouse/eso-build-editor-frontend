@@ -8,6 +8,7 @@ import { Card, Divider, Collapse, Icon } from 'antd'
 import GearView from '../../../components/GearView'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
+import { AnySoaRecord } from 'dns'
 
 const { Panel } = Collapse
 
@@ -45,7 +46,8 @@ const AbilityBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  width: 100%;
+  max-width: 300px;
 `
 
 const StyledCard = styled(Card)`
@@ -56,8 +58,22 @@ const StyledCard = styled(Card)`
   border-width: 2px;
   margin: 10px;
 `
+interface IBuildCardProps {
+  item: any
+  style?: CSSProperties
+  draggable?: boolean
+}
+export default ({ item, style, draggable = true }: IBuildCardProps) => {
+  return draggable ? (
+    <WithDnD item={item} style={style} />
+  ) : (
+    <div style={style}>
+      <BuildCard item={item} />
+    </div>
+  )
+}
 
-export default ({ item, style }: { item: any; style?: CSSProperties }) => {
+const WithDnD = ({ item, style }: IBuildCardProps) => {
   const [{ isDragging, didDrop }, drag] = useDrag({
     item: {
       type: 'build',
@@ -70,91 +86,97 @@ export default ({ item, style }: { item: any; style?: CSSProperties }) => {
   })
   return (
     <div style={style} ref={drag}>
-      <StyledCard hoverable active={item.name === 'asd'}>
-        <div>
-          <Title>{item.name}</Title>
-          <Divider style={{ margin: '5px 0px' }} />
-          <Description>
-            {item.esoClass} | {item.race}
-          </Description>
-          <Divider style={{ margin: '5px 0px' }} />
-          <Tabs defaultActiveKey='skills'>
-            <TabPane tab='Skills' key='skills'>
-              <Flex style={{width: "100%"}}>
-                <AbilityBar>
-                  <SkillView
-                    id={ABILITY_BAR_ONE}
-                    disabled
-                    skillSlots={item.newBarOne}
-                  />
-                  <DisplaySlot
-                    style={{ marginLeft: 10 }}
-                    skill={item.ultimateOne || undefined}
-                  />
-                </AbilityBar>
-                <AbilityBar>
-                  <SkillView
-                    id={ABILITY_BAR_TWO}
-                    disabled
-                    skillSlots={item.newBarTwo}
-                  />
-                  <DisplaySlot
-                    style={{ marginLeft: 10 }}
-                    skill={item.ultimateTwo || undefined}
-                  />
-                </AbilityBar>
-              </Flex>
-            </TabPane>
-            <TabPane tab='Weapons' key='weapons'>
-              <GearView
-                size='small'
-                setups={[
-                  {
-                    id: 'frontbar',
-                    label: 'Frontbar',
-                    data: item.frontbarSelection,
-                  },
-                  {
-                    id: 'backbar',
-                    label: 'Backbar',
-                    data: item.backbarSelection,
-                  },
-                ]}
-              />
-            </TabPane>
-            <TabPane tab='Armor' key='armor'>
-              {' '}
-              <GearView
-                size='small'
-                setups={[
-                  {
-                    id: 'bigpieces',
-                    label: 'Big Pieces',
-                    data: item.bigPieceSelection,
-                  },
-                  {
-                    id: 'smallpieces',
-                    label: 'Small Pieces',
-                    data: item.smallPieceSelection,
-                  },
-                ]}
-              />
-            </TabPane>
-            <TabPane tab='Jewelry' key='jewelry'>
-              <GearView
-                size='small'
-                setups={[
-                  {
-                    id: 'jewelry',
-                    label: 'Jewelry',
-                    data: item.jewelrySelection,
-                  },
-                ]}
-              />
-            </TabPane>
-          </Tabs>
-        </div>
-      </StyledCard>
+      <BuildCard item={item} />
     </div>
+  )
+}
+
+const BuildCard = ({ item }: { item: any }) => {
+  return (
+    <StyledCard hoverable active={false}>
+      <div>
+        <Title>{item.name}</Title>
+        <Divider style={{ margin: '5px 0px' }} />
+        <Description>
+          {item.esoClass} | {item.race}
+        </Description>
+        <Divider style={{ margin: '5px 0px' }} />
+        <Tabs defaultActiveKey='skills'>
+          <TabPane tab='Skills' key='skills'>
+            <Flex style={{ width: '100%' }}>
+              <AbilityBar>
+                <SkillView
+                  id={ABILITY_BAR_ONE}
+                  disabled
+                  skillSlots={item.newBarOne}
+                />
+                <DisplaySlot
+                  style={{ marginLeft: 10 }}
+                  skill={item.ultimateOne || undefined}
+                />
+              </AbilityBar>
+              <AbilityBar>
+                <SkillView
+                  id={ABILITY_BAR_TWO}
+                  disabled
+                  skillSlots={item.newBarTwo}
+                />
+                <DisplaySlot
+                  style={{ marginLeft: 10 }}
+                  skill={item.ultimateTwo || undefined}
+                />
+              </AbilityBar>
+            </Flex>
+          </TabPane>
+          <TabPane tab='Weapons' key='weapons'>
+            <GearView
+              size='small'
+              setups={[
+                {
+                  id: 'frontbar',
+                  label: 'Frontbar',
+                  data: item.frontbarSelection,
+                },
+                {
+                  id: 'backbar',
+                  label: 'Backbar',
+                  data: item.backbarSelection,
+                },
+              ]}
+            />
+          </TabPane>
+          <TabPane tab='Armor' key='armor'>
+            {' '}
+            <GearView
+              size='small'
+              setups={[
+                {
+                  id: 'bigpieces',
+                  label: 'Big Pieces',
+                  data: item.bigPieceSelection,
+                },
+                {
+                  id: 'smallpieces',
+                  label: 'Small Pieces',
+                  data: item.smallPieceSelection,
+                },
+              ]}
+            />
+          </TabPane>
+          <TabPane tab='Jewelry' key='jewelry'>
+            <GearView
+              size='small'
+              setups={[
+                {
+                  id: 'jewelry',
+                  label: 'Jewelry',
+                  data: item.jewelrySelection,
+                },
+              ]}
+            />
+          </TabPane>
+        </Tabs>
+      </div>
+    </StyledCard>
   )
 }

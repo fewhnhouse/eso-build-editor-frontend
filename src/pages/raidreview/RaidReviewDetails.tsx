@@ -4,6 +4,7 @@ import Flex from '../../components/Flex'
 import { Card, Typography, Divider } from 'antd'
 import { IRaidState } from '../raid/RaidStateContext'
 import { Redirect } from 'react-router'
+import BuildCard from '../raid/builds/BuildCard'
 
 const { Title, Text } = Typography
 
@@ -91,21 +92,9 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
                 <>
                   <Divider>{role.roleName}</Divider>
                   <CardList direction='row'>
-                    {role.builds.map(build => {
+                    {role.builds.map((build, index) => {
                       return (
-                        <StyledCard
-                          hoverable
-                          title={build.name}
-                          onClick={() =>
-                            handleClick(`/buildreview/${build.id}`)
-                          }
-                        >
-                          {build.name}
-                          <br />
-                          {build.role}
-                          <br />
-                          {build.description}
-                        </StyledCard>
+                        <BuildCard item={build} draggable={false} key={index} />
                       )
                     })}
                   </CardList>

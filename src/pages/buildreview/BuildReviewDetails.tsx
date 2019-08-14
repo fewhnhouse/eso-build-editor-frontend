@@ -91,8 +91,6 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
 
-  console.log(frontbarSelection, backbarSelection)
-
   return (
     <Container>
       <Title level={1}>

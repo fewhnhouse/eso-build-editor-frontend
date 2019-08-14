@@ -197,7 +197,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         ) : id === '1' ? (
           <Builds />
         ) : id === '2' ? (
-          <RaidReview local={true} />
+          <RaidReview local />
         ) : (
           <Redirect to='/raid/0' />
         )}
