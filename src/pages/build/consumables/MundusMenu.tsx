@@ -112,7 +112,7 @@ const MundusList = ({ data }: { data: { mundusStones: IMundusData[] } }) => {
             style={{ width: '100%' }}
           >
             <Input
-              placeholder='Search for Sets'
+              placeholder='Search for Mundus Stones'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
