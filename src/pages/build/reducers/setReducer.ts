@@ -24,10 +24,10 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
         buff
       };
     case "SET_MUNDUS":
-      const { mundus } = action.payload;
+      const { mundusStone } = action.payload;
       return {
         ...state,
-        mundus
+        mundusStone
       };
     case "SET_ITEMSET":
       const { selectedSet }: { selectedSet: ISet } = action.payload;

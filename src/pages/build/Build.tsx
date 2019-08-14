@@ -5,6 +5,8 @@ import {
   defaultBuildState,
   IBuildState,
   SlotType,
+  TwohandedWeapon,
+  OnehandedWeapon,
 } from './BuildStateContext'
 import { RouteComponentProps, Redirect } from 'react-router'
 import {
@@ -57,6 +59,7 @@ interface ISetSelectionData {
   traitDescriptions: string[]
   setIds: number[]
   types: (SlotType | '' | undefined)[]
+  weaponTypes: (OnehandedWeapon | TwohandedWeapon | '' | undefined)[]
 }
 
 const CREATE_SET_SELECTIONS = gql`
@@ -127,7 +130,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   )
   const [createBuild, { data }] = useMutation<any, any>(CREATE_BUILD)
 
-  const { mundus, buff, ultimateOne, ultimateTwo } = state!
+  const { mundusStone, buff, ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
     if (data && data.createBuild) {
@@ -154,15 +157,6 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         mainResource,
         description,
       }: IBuildState = state!
-      console.log(
-        bigPieceSelection,
-        smallPieceSelection,
-        jewelrySelection,
-        frontbarSelection,
-        backbarSelection
-      )
-      console.log(jewelrySelection.map(piece => piece.type || ''))
-      console.log(bigPieceSelection.map(piece => piece.type || ''))
       const frontbarSkillSelections: any = await createSkillSelections({
         variables: {
           indices: newBarOne.map(sel => sel.index),
@@ -179,6 +173,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         variables: {
           slots: bigPieceSelection.map(piece => piece.slot),
           types: bigPieceSelection.map(piece => piece.type || ''),
+          weaponTypes: bigPieceSelection.map(piece => piece.weaponType || ''),
           setIds: bigPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -194,6 +189,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         variables: {
           slots: smallPieceSelection.map(piece => piece.slot),
           types: smallPieceSelection.map(piece => piece.type || ''),
+          weaponTypes: smallPieceSelection.map(piece => piece.weaponType || ''),
           setIds: smallPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -209,6 +205,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         variables: {
           slots: jewelrySelection.map(piece => piece.slot),
           types: jewelrySelection.map(piece => piece.type || ''),
+          weaponTypes: jewelrySelection.map(piece => piece.weaponType || ''),
           setIds: jewelrySelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -224,6 +221,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         variables: {
           slots: frontbarSelection.map(piece => piece.slot),
           types: frontbarSelection.map(piece => piece.type || ''),
+          weaponTypes: frontbarSelection.map(piece => piece.weaponType || ''),
           setIds: frontbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -239,6 +237,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         variables: {
           slots: backbarSelection.map(piece => piece.slot),
           types: backbarSelection.map(piece => piece.type || ''),
+          weaponTypes: backbarSelection.map(piece => piece.weaponType || ''),
           setIds: backbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -251,15 +250,16 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         },
       })
 
-      const build: any = await createBuild({
+      await createBuild({
         variables: {
           data: {
             name,
             race,
             esoClass,
+            description,
             applicationArea,
             role,
-            mundusStone: { connect: { name: mundus.name } },
+            mundusStone: { connect: { name: mundusStone.name } },
             buff: { connect: { name: buff.name } },
             bigPieceSelection: {
               connect: bigPieceSetSelections.data.createSetSelections.map(

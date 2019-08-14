@@ -57,7 +57,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     frontbarSelection,
     backbarSelection,
     jewelrySelection,
-    mundus,
+    mundusStone,
     buff,
     esoClass,
     race,
@@ -68,6 +68,8 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     newBarOne,
     newBarTwo,
   } = loadedData
+
+  console.log(loadedData)
 
   const selectedSetup = [
     {
@@ -128,19 +130,19 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
           <Divider />
           <MiscView>
             <StyledTitle level={4}>Mundus</StyledTitle>
-            {mundus ? (
+            {mundusStone ? (
               <>
                 <Flex direction='row' justify='center' align='center'>
                   <ClassImg
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones${
-                      mundus.icon
-                    }`}
+                    src={`${
+                      process.env.REACT_APP_IMAGE_SERVICE
+                    }/mundusStones/${mundusStone.icon}`}
                   />
-                  <Text strong>{mundus.name}</Text>
+                  <Text strong>{mundusStone.name}</Text>
                   <br />
                 </Flex>
                 <Text>
-                  {mundus.effect} by {mundus.value}.
+                  {mundusStone.effect} by {mundusStone.value}.
                 </Text>
                 <Divider />
                 <StyledTitle level={4}>Consumables</StyledTitle>
@@ -152,7 +154,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
             {buff ? (
               <>
                 <ClassImg
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/${buff.type}s/${
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
                     buff.icon
                   }`}
                 />

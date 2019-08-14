@@ -7,9 +7,14 @@ import { setReducer } from './reducers/setReducer'
 import { SelectValue } from 'antd/lib/select'
 import { raceNameReducer } from './reducers/raceNameReducer'
 import { setBarReducer } from './reducers/setBarReducer'
-import { IMundus } from '../../assets/mundus'
 import { ISpecialBuff } from '../../assets/specialbuff/drinks'
 
+export interface IMundus {
+  name: string
+  effect: string
+  value: string
+  icon: string
+}
 export interface ISlot {
   id: number
   index: number
@@ -46,7 +51,7 @@ export interface IBuildState {
   ultimateOne?: ISkill
   ultimateTwo?: ISkill
   newBarTwo: ISkillSelection[]
-  mundus: IMundus
+  mundusStone: IMundus
   buff: ISpecialBuff
 }
 
