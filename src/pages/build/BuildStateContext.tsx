@@ -7,7 +7,7 @@ import { setReducer } from './reducers/setReducer'
 import { SelectValue } from 'antd/lib/select'
 import { raceNameReducer } from './reducers/raceNameReducer'
 import { setBarReducer } from './reducers/setBarReducer'
-import { ISpecialBuff } from './consumables/BuffMenu';
+import { ISpecialBuff } from './consumables/BuffMenu'
 
 export interface IMundus {
   name: string
@@ -34,7 +34,7 @@ export interface IBuildState {
   weaponType: WeaponType
   armorType: ArmorType
   weapons: SelectValue[]
-  setTabKey: 'armor' | 'jewelry' | 'frontbar' | 'backbar'
+  setTabKey: SetTab
   race: string
   esoClass: string
   name: string
@@ -96,6 +96,13 @@ export enum TwohandedWeapon {
   bow = 'BOW',
 }
 
+export enum SetTab {
+  armor = 'ARMOR_TAB',
+  frontbar = 'FRONTBAR_TAB',
+  backbar = 'BACKBAR_TAB',
+  jewelry = 'JEWELRY_TAB',
+}
+
 export type SlotType = ArmorType | WeaponType | 'jewelry'
 
 export enum ArmorType {
@@ -129,7 +136,7 @@ export const defaultBuildState = {
   skills: [],
   sets: [],
   skillLine: 0,
-  mundus: undefined,
+  mundusStone: undefined,
   buff: undefined,
   hasTrash: false,
   applicationArea: '',
@@ -275,12 +282,12 @@ export const defaultBuildState = {
   ultimateTwo: undefined,
   selectedSkillLines: [],
   selectedSet: undefined,
-  weaponType: 'onehanded',
-  armorType: 'mediumarmor',
+  weaponType: WeaponType.onehanded,
+  armorType: ArmorType.mediumArmor,
   weapons: ['', ''],
   race: '',
   class: '',
-  setTabKey: 'armor',
+  setTabKey: SetTab.armor,
 }
 
 export interface IBuildAction {

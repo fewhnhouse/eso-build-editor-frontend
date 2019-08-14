@@ -98,24 +98,16 @@ const CREATE_SKILL_SELECTIONS = gql`
 `
 const { Step } = Steps
 
-export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
-  const savedBuildState = localStorage.getItem('buildState')
+interface IBuildProps {
+  build: any
+  pageIndex: number
+}
 
-  useEffect(() => {
-    const savedBuildState = localStorage.getItem('buildState')
-    if (savedBuildState) {
-      console.log(JSON.parse(savedBuildState))
-      message.info('Your settings have been restored.')
-    }
-  }, [])
-  const [state, dispatch] = useReducer(
-    buildReducer,
-    savedBuildState ? JSON.parse(savedBuildState) : defaultBuildState
-  )
+export default ({ build, pageIndex }: IBuildProps) => {
+  const [state, dispatch] = useReducer(buildReducer, build)
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
-  const { id } = match.params
-  const [tab, setTab] = useState(parseInt(id, 10) || 0)
+  const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
 
   const handlePrevClick = () => {
@@ -393,15 +385,15 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
   return (
     <BuildContext.Provider value={[state, dispatch]}>
       <Container>
-        {id === '0' ? (
+        {pageIndex === 0 ? (
           <RaceClass />
-        ) : id === '1' ? (
+        ) : pageIndex === 1 ? (
           <Skills />
-        ) : id === '2' ? (
+        ) : pageIndex === 2 ? (
           <Sets />
-        ) : id === '3' ? (
+        ) : pageIndex === 3 ? (
           <Consumables />
-        ) : id === '4' ? (
+        ) : pageIndex === 4 ? (
           <BuildReview local={true} />
         ) : (
           <Redirect to='/build/0' />

@@ -1,4 +1,4 @@
-import { Slot, ISetSelection, IModification, ArmorType } from "./../BuildStateContext";
+import { Slot, ISetSelection, IModification, ArmorType, SetTab } from "./../BuildStateContext";
 import { IBuildAction, IBuildState } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
@@ -52,7 +52,7 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
               ? ArmorType.heavyArmor
               : ArmorType.lightArmor
           : state.armorType,
-        setTabKey: hasWeapons ? "weapons" : hasArmor ? "armor" : "jewelry"
+        setTabKey: hasWeapons ? SetTab.frontbar : hasArmor ? SetTab.armor : SetTab.jewelry
       };
     case "SET_WEAPON_TYPE":
       const { weaponType } = action.payload;

@@ -8,6 +8,7 @@ import Verify from './Verify'
 import { Spin } from 'antd'
 import RaidReview from '../pages/raidReview/RaidReview'
 import BuildReview from '../pages/buildReview/BuildReview'
+import BuildWrapper from '../pages/build/BuildWrapper'
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean
@@ -32,7 +33,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         loggedIn={isLoggedIn}
         exact
         path='/build/:id'
-        component={Build}
+        render={props => <BuildWrapper {...props} />}
       />
       <ProtectedRoute
         loggedIn={isLoggedIn}
