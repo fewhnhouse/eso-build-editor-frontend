@@ -65,12 +65,16 @@ const CREATE_SET_SELECTIONS = gql`
     $glyphDescriptions: [String!]!
     $traitDescriptions: [String!]!
     $setIds: [Int!]!
+    $types: [String!]!
+    $weaponTypes: [String!]!
   ) {
     createSetSelections(
       slots: $slots
       glyphDescriptions: $glyphDescriptions
       traitDescriptions: $traitDescriptions
       setIds: $setIds
+      types: $types
+      weaponTypes: $weaponTypes
     ) {
       id
     }
