@@ -3,6 +3,8 @@ import {
   BuildContext,
   buildReducer,
   defaultBuildState,
+  IBuildState,
+  SlotType,
 } from './BuildStateContext'
 import { RouteComponentProps, Redirect } from 'react-router'
 import {
@@ -54,13 +56,7 @@ interface ISetSelectionData {
   glyphDescriptions: string[]
   traitDescriptions: string[]
   setIds: number[]
-  types: (
-    | 'onehanded'
-    | 'mediumarmor'
-    | 'twohanded'
-    | 'lightarmor'
-    | 'heavyarmor'
-    | undefined)[]
+  types: (SlotType | '' | undefined)[]
 }
 
 const CREATE_SET_SELECTIONS = gql`
@@ -153,7 +149,16 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         name,
         mainResource,
         description,
-      } = state!
+      }: IBuildState = state!
+      console.log(
+        bigPieceSelection,
+        smallPieceSelection,
+        jewelrySelection,
+        frontbarSelection,
+        backbarSelection
+      )
+      console.log(jewelrySelection.map(piece => piece.type || ""))
+      console.log(bigPieceSelection.map(piece => piece.type || ""))
       const frontbarSkillSelections: any = await createSkillSelections({
         variables: {
           indices: newBarOne.map(sel => sel.index),
@@ -169,7 +174,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const bigPieceSetSelections: any = await createSetSelections({
         variables: {
           slots: bigPieceSelection.map(piece => piece.slot),
-          types: bigPieceSelection.map(piece => piece.type),
+          types: bigPieceSelection.map(piece => piece.type || ""),
           setIds: bigPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -184,7 +189,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const smallPieceSetSelections: any = await createSetSelections({
         variables: {
           slots: smallPieceSelection.map(piece => piece.slot),
-          types: smallPieceSelection.map(piece => piece.type),
+          types: smallPieceSelection.map(piece => piece.type || ""),
           setIds: smallPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -199,7 +204,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const jewelrySetSelections: any = await createSetSelections({
         variables: {
           slots: jewelrySelection.map(piece => piece.slot),
-          types: jewelrySelection.map(piece => piece.type),
+          types: jewelrySelection.map(piece => piece.type || ""),
           setIds: jewelrySelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -214,7 +219,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const frontbarSetSelections: any = await createSetSelections({
         variables: {
           slots: frontbarSelection.map(piece => piece.slot),
-          types: frontbarSelection.map(piece => piece.type),
+          types: frontbarSelection.map(piece => piece.type || ""),
           setIds: frontbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -229,7 +234,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const backbarSetSelections: any = await createSetSelections({
         variables: {
           slots: backbarSelection.map(piece => piece.slot),
-          types: backbarSelection.map(piece => piece.type),
+          types: backbarSelection.map(piece => piece.type || ""),
           setIds: backbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),

@@ -1,4 +1,4 @@
-import { Slot } from "./../../pages/build/BuildStateContext";
+import { Slot, ArmorType } from "./../../pages/build/BuildStateContext";
 import belt from "./gearslot_belt.png";
 import chest from "./gearslot_chest.png";
 import feet from "./gearslot_feet.png";
@@ -166,8 +166,8 @@ export const selectJewelry = (item: Slot) => {
   }
 };
 
-export const selectArmor = (type: string, item: Slot) => {
-  if (type === "light") {
+export const selectArmor = (type: ArmorType, item: Slot) => {
+  if (type === ArmorType.heavyArmor) {
     switch (item) {
       case Slot.chest:
         return heavyChest;
@@ -184,7 +184,7 @@ export const selectArmor = (type: string, item: Slot) => {
       case Slot.shoulders:
         return heavyShoulders;
     }
-  } else if (type === "medium") {
+  } else if (type === ArmorType.mediumArmor) {
     switch (item) {
       case Slot.chest:
         return mediumChest;

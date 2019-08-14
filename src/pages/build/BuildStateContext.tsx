@@ -1,58 +1,58 @@
-import React from 'react'; // { useReducer }
-import { ISkill } from '../../components/SkillSlot';
-import { skillReducer } from './reducers/skillReducer';
-import { skillBarReducer } from './reducers/skillBarReducer';
-import { ISet } from '../../components/GearSlot';
-import { setReducer } from './reducers/setReducer';
-import { SelectValue } from 'antd/lib/select';
-import { raceNameReducer } from './reducers/raceNameReducer';
-import { setBarReducer } from './reducers/setBarReducer';
-import { IMundus } from '../../assets/mundus';
-import { ISpecialBuff } from '../../assets/specialbuff/drinks';
+import React from 'react' // { useReducer }
+import { ISkill } from '../../components/SkillSlot'
+import { skillReducer } from './reducers/skillReducer'
+import { skillBarReducer } from './reducers/skillBarReducer'
+import { ISet } from '../../components/GearSlot'
+import { setReducer } from './reducers/setReducer'
+import { SelectValue } from 'antd/lib/select'
+import { raceNameReducer } from './reducers/raceNameReducer'
+import { setBarReducer } from './reducers/setBarReducer'
+import { IMundus } from '../../assets/mundus'
+import { ISpecialBuff } from '../../assets/specialbuff/drinks'
 
 export interface ISlot {
-  id: number;
-  index: number;
+  id: number
+  index: number
 }
 export interface IBuildState {
-  skills: ISkill[];
-  hasTrash: boolean;
-  sets: ISet[];
-  skillLine: number;
+  skills: ISkill[]
+  hasTrash: boolean
+  sets: ISet[]
+  skillLine: number
   selectedSkillLines: {
-    id: number;
-    selectedSkills: ISkillSelection[];
-    selectedUltimate?: ISkill;
-  }[];
-  newActiveBar: ISkillSelection[];
-  selectedSet?: ISet;
-  weaponType: 'onehanded' | 'twohanded';
-  armorType: 'lightarmor' | 'mediumarmor' | 'heavyarmor';
-  weapons: SelectValue[];
-  setTabKey: 'armor' | 'jewelry' | 'frontbar' | 'backbar';
-  race: string;
-  esoClass: string;
-  name: string;
-  applicationArea: string;
-  role: string;
-  description: string;
-  mainResource: string;
-  bigPieceSelection: ISetSelection[];
-  smallPieceSelection: ISetSelection[];
-  jewelrySelection: ISetSelection[];
-  frontbarSelection: ISetSelection[];
-  backbarSelection: ISetSelection[];
-  newBarOne: ISkillSelection[];
-  ultimateOne?: ISkill;
-  ultimateTwo?: ISkill;
-  newBarTwo: ISkillSelection[];
-  mundus: IMundus;
-  buff: ISpecialBuff;
+    id: number
+    selectedSkills: ISkillSelection[]
+    selectedUltimate?: ISkill
+  }[]
+  newActiveBar: ISkillSelection[]
+  selectedSet?: ISet
+  weaponType: WeaponType
+  armorType: ArmorType
+  weapons: SelectValue[]
+  setTabKey: 'armor' | 'jewelry' | 'frontbar' | 'backbar'
+  race: string
+  esoClass: string
+  name: string
+  applicationArea: string
+  role: string
+  description: string
+  mainResource: string
+  bigPieceSelection: ISetSelection[]
+  smallPieceSelection: ISetSelection[]
+  jewelrySelection: ISetSelection[]
+  frontbarSelection: ISetSelection[]
+  backbarSelection: ISetSelection[]
+  newBarOne: ISkillSelection[]
+  ultimateOne?: ISkill
+  ultimateTwo?: ISkill
+  newBarTwo: ISkillSelection[]
+  mundus: IMundus
+  buff: ISpecialBuff
 }
 
 export interface ISkillSelection {
-  index: number;
-  skill?: ISkill;
+  index: number
+  skill?: ISkill
 }
 
 export enum Slot {
@@ -72,26 +72,53 @@ export enum Slot {
   ring2 = 'RING2',
 }
 
+export enum OnehandedWeapon {
+  dagger = 'DAGGER',
+  axe = '1H_AXE',
+  mace = '1H_MACE',
+  sword = '1H_SWORD',
+  shield = 'SHIELD',
+}
+
+export enum TwohandedWeapon {
+  axe = '2H_AXE',
+  mace = '2H_MACE',
+  sword = '2H_SWORD',
+  restorationStaff = 'RESTORATION_STAFF',
+  fireStaff = 'FIRE_STAFF',
+  lightningStaff = 'LIGHTNING_STAFF',
+  iceStaff = 'ICE_STAFF',
+  bow = 'BOW',
+}
+
+export type SlotType = ArmorType | WeaponType | 'jewelry'
+
+export enum ArmorType {
+  lightArmor = 'LIGHT_ARMOR',
+  mediumArmor = 'MEDIUM_ARMOR',
+  heavyArmor = 'HEAVY_ARMOR',
+}
+
+export enum WeaponType {
+  onehanded = 'ONE_HANDED',
+  twohanded = 'TWO_HANDED',
+}
 export interface ISetSelection {
-  icon?: string;
-  slot: Slot;
-  selectedSet?: ISet;
-  type?:
-    | 'lightarmor'
-    | 'mediumarmor'
-    | 'heavyarmor'
-    | 'onehanded'
-    | 'twohanded';
-  trait?: IModification;
-  glyph?: IModification;
+  icon?: string
+  slot: Slot
+  selectedSet?: ISet
+  type?: SlotType
+  weaponType?: OnehandedWeapon | TwohandedWeapon
+  trait?: IModification
+  glyph?: IModification
 }
 
 export interface IModification {
-  type: string;
-  modificationType: 'glyph' | 'trait';
-  itemType: 'armor' | 'weapon' | 'jewelry';
-  description: string;
-  icon: string;
+  type: string
+  modificationType: 'glyph' | 'trait'
+  itemType: 'armor' | 'weapon' | 'jewelry'
+  description: string
+  icon: string
 }
 export const defaultBuildState = {
   skills: [],
@@ -188,6 +215,7 @@ export const defaultBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
+      type: 'jewelry',
     },
     {
       slot: Slot.ring1,
@@ -195,6 +223,7 @@ export const defaultBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
+      type: 'jewelry',
     },
     {
       slot: Slot.ring2,
@@ -202,6 +231,7 @@ export const defaultBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
+      type: 'jewelry',
     },
   ],
   frontbarSelection: [
@@ -246,11 +276,11 @@ export const defaultBuildState = {
   race: '',
   class: '',
   setTabKey: 'armor',
-};
+}
 
 export interface IBuildAction {
-  payload: any;
-  type: string;
+  payload: any
+  type: string
 }
 
 const combineReducers = (
@@ -263,11 +293,11 @@ const combineReducers = (
       prev: IBuildState,
       curr: (state: IBuildState, action: IBuildAction) => IBuildState
     ) => {
-      return curr(prev, action);
+      return curr(prev, action)
     },
     state
-  );
-};
+  )
+}
 
 export const buildReducer = (state: IBuildState, action: IBuildAction) => {
   return combineReducers(state, action, [
@@ -276,9 +306,9 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     setReducer,
     setBarReducer,
     raceNameReducer,
-  ]);
-};
+  ])
+}
 
 export const BuildContext = React.createContext<
   Partial<[IBuildState, React.Dispatch<IBuildAction>]>
->([]);
+>([])

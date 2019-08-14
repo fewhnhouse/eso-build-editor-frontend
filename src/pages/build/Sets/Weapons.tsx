@@ -5,7 +5,7 @@ import Flex from '../../../components/Flex';
 import styled from 'styled-components';
 import { SelectValue } from 'antd/lib/select';
 import { SelectWithTitle } from './CustomSelect';
-import { BuildContext, Slot, IModification } from '../BuildStateContext';
+import { BuildContext, Slot, IModification, WeaponType } from '../BuildStateContext';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -168,12 +168,12 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
       <StyledFlex direction="column" justify="center" align="center">
         <Radio.Group
           onChange={onChange}
-          defaultValue={weaponType || 'onehanded'}
+          defaultValue={weaponType || WeaponType.onehanded}
         >
-          <Radio.Button value="onehanded">One Handed</Radio.Button>
-          <Radio.Button value="twohanded">Two Handed</Radio.Button>
+          <Radio.Button value={WeaponType.onehanded}>One Handed</Radio.Button>
+          <Radio.Button value={WeaponType.twohanded}>Two Handed</Radio.Button>
         </Radio.Group>
-        {weaponType !== 'twohanded' && (
+        {weaponType === WeaponType.onehanded && (
           <Checkbox
             style={{ margin: '20px 0px 10px 0px' }}
             onChange={onChangeCheckbox(setShield, 'selectedGlyphs', bar)}
@@ -184,7 +184,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
         )}
         <Divider>Enchants</Divider>
 
-        {weaponType === 'twohanded' ? (
+        {weaponType === WeaponType.twohanded ? (
           <StyledSelectWithTitle
             value={mainHand && mainHand.glyph ? mainHand.glyph.type : ''}
             onChange={onChangeSelect(
@@ -229,7 +229,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
         )}
 
         <Divider>Traits</Divider>
-        {weaponType === 'twohanded' ? (
+        {weaponType === WeaponType.twohanded ? (
           <StyledSelectWithTitle
             value={mainHand && mainHand.trait ? mainHand.trait.type : ''}
             onChange={onChangeSelect(

@@ -4,7 +4,7 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 import Flex from '../../../components/Flex';
 import styled from 'styled-components';
 import { SelectWithTitle } from './CustomSelect';
-import { BuildContext, Slot, ISetSelection, IModification } from '../BuildStateContext';
+import { BuildContext, Slot, ISetSelection, IModification, ArmorType } from '../BuildStateContext';
 import { SelectValue } from 'antd/lib/select';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import gql from 'graphql-tag';
@@ -149,23 +149,23 @@ export default () => {
         <Radio.Group
           value={armorType}
           onChange={onChange}
-          defaultValue={armorType}
+          defaultValue={armorType || ArmorType.mediumArmor}
         >
           <Radio.Button
             disabled={selectedSet!.has_light_armor === 0}
-            value="lightarmor"
+            value={ArmorType.lightArmor}
           >
             Light Armor
           </Radio.Button>
           <Radio.Button
             disabled={selectedSet!.has_medium_armor === 0}
-            value="mediumarmor"
+            value={ArmorType.mediumArmor}
           >
             Medium Armor
           </Radio.Button>
           <Radio.Button
             disabled={selectedSet!.has_heavy_armor === 0}
-            value="heavyarmor"
+            value={ArmorType.heavyArmor}
           >
             Heavy Armor
           </Radio.Button>

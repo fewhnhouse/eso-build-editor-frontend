@@ -1,4 +1,4 @@
-import { Slot, ISetSelection, IModification } from "./../BuildStateContext";
+import { Slot, ISetSelection, IModification, ArmorType } from "./../BuildStateContext";
 import { IBuildAction, IBuildState } from "../BuildStateContext";
 import { ISet } from "../../../components/GearSlot";
 
@@ -33,9 +33,9 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       const { selectedSet }: { selectedSet: ISet } = action.payload;
       const { armorType } = state;
       const swapArmor =
-        (armorType === "lightarmor" && selectedSet.has_light_armor === 0) ||
-        (armorType === "mediumarmor" && selectedSet.has_medium_armor === 0) ||
-        (armorType === "heavyarmor" && selectedSet.has_heavy_armor === 0);
+        (armorType === ArmorType.lightArmor && selectedSet.has_light_armor === 0) ||
+        (armorType === ArmorType.mediumArmor && selectedSet.has_medium_armor === 0) ||
+        (armorType === ArmorType.heavyArmor && selectedSet.has_heavy_armor === 0);
       const hasWeapons = selectedSet.has_weapons;
       const hasArmor =
         selectedSet.has_heavy_armor ||
@@ -47,10 +47,10 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
         selectedSet: selectedSet,
         armorType: swapArmor
           ? selectedSet.has_medium_armor === 1
-            ? "mediumarmor"
+            ? ArmorType.mediumArmor
             : selectedSet.has_heavy_armor === 1
-            ? "heavyarmor"
-            : "lightarmor"
+              ? ArmorType.heavyArmor
+              : ArmorType.lightArmor
           : state.armorType,
         setTabKey: hasWeapons ? "weapons" : hasArmor ? "armor" : "jewelry"
       };
@@ -161,10 +161,10 @@ const updateStats = (
   return stateStats.map(stat =>
     slots.includes(stat.slot)
       ? {
-          ...stat,
-          glyph: type === "selectedGlyphs" ? value : stat.glyph,
-          trait: type === "selectedTraits" ? value : stat.trait
-        }
+        ...stat,
+        glyph: type === "selectedGlyphs" ? value : stat.glyph,
+        trait: type === "selectedTraits" ? value : stat.trait
+      }
       : stat
   );
 };

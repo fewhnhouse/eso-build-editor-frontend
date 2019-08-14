@@ -20,7 +20,6 @@ const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
 }
 
 export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
-  console.log(isLoggedIn)
   if (isLoggedIn === undefined) {
     return <Spin />
   }

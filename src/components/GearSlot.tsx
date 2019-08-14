@@ -7,6 +7,10 @@ import {
   BuildContext,
   Slot,
   ISetSelection,
+  ArmorType,
+  WeaponType,
+  OnehandedWeapon,
+  TwohandedWeapon,
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from '../pages/build/Sets/GearCard'
 
@@ -63,7 +67,9 @@ export interface ISet {
   [key: string]: string | null | number
 }
 
-const getImageSource = (slot: Slot) => {
+const getImageSource = (
+  slot: Slot | OnehandedWeapon | TwohandedWeapon | undefined
+) => {
   switch (slot) {
     case Slot.legs:
       return 'legs.png'
@@ -85,9 +91,34 @@ const getImageSource = (slot: Slot) => {
       return 'ring.png'
     case Slot.ring2:
       return 'ring.png'
-
     case Slot.neck:
       return 'neck.png'
+    case OnehandedWeapon.dagger:
+      return 'dagger.png'
+    case OnehandedWeapon.shield:
+      return 'shield.png'
+    case OnehandedWeapon.axe:
+      return 'axe.png'
+    case OnehandedWeapon.mace:
+      return 'hammer.png'
+    case OnehandedWeapon.sword:
+      return 'sword.png'
+    case TwohandedWeapon.axe:
+      return 'axe.png'
+    case TwohandedWeapon.bow:
+      return 'bow.png'
+    case TwohandedWeapon.fireStaff:
+      return 'staff.png'
+    case TwohandedWeapon.iceStaff:
+      return 'staff.png'
+    case TwohandedWeapon.lightningStaff:
+      return 'staff.png'
+    case TwohandedWeapon.mace:
+      return 'hammer.png'
+    case TwohandedWeapon.restorationStaff:
+      return 'staff.png'
+    case TwohandedWeapon.sword:
+      return 'sword.png'
     default:
       return ''
   }
@@ -95,27 +126,28 @@ const getImageSource = (slot: Slot) => {
 
 const getGearSlot = (slot: ISetSelection) => {
   if (!slot.type) {
-    return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/jewelry/${getImageSource(
-      slot.slot
-    )}`
+    return `${
+      process.env.REACT_APP_IMAGE_SERVICE
+    }/gear/jewelry/${getImageSource(slot.slot)}`
   }
-  if (slot.type === 'onehanded') {
+  if (slot.type === WeaponType.onehanded) {
+    console.log(slot)
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/onehanded/${getImageSource(slot.slot)}`
-  } else if (slot.type === 'twohanded') {
+    }/gear/onehanded/${getImageSource(slot.weaponType)}`
+  } else if (slot.type === WeaponType.twohanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/twohanded/${getImageSource(slot.slot)}`
-  } else if (slot.type === 'lightarmor') {
+    }/gear/twohanded/${getImageSource(slot.weaponType)}`
+  } else if (slot.type === ArmorType.lightArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/light/${getImageSource(
       slot.slot
     )}`
-  } else if (slot.type === 'mediumarmor') {
+  } else if (slot.type === ArmorType.mediumArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/medium/${getImageSource(
       slot.slot
     )}`
-  } else if (slot.type === 'heavyarmor') {
+  } else if (slot.type === ArmorType.heavyArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
       slot.slot
     )}`
@@ -147,7 +179,7 @@ export default ({
   const [, dispatch] = useContext(BuildContext)
 
   const [{ isDragging, didDrop }, drag] = useDrag({
-    item: { type: slot.slot, set: slot.selectedSet, icon: slot.icon },
+    item: { type: slot.slot, set: slot.selectedSet, icon: slot.icon, weaponType: slot.weaponType },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
@@ -162,6 +194,7 @@ export default ({
         : []),
     ],
     drop: (item: any, monitor) => {
+      console.log(item)
       dispatch!({
         type: 'DROP_SET_ITEM',
         payload: {
@@ -169,6 +202,7 @@ export default ({
           icon: item.icon,
           slot: slot.slot,
           type: item.type,
+          weaponType: item.weaponType,
           group,
         },
       })
@@ -184,15 +218,15 @@ export default ({
       <GearFrame
         size={size}
         canDrop={droppable && canDrop}
-        hasIcon={slot.icon !== undefined}
+        hasIcon={slot.selectedSet !== undefined}
         ref={droppable ? drop : undefined}
         backgroundSource={`${
           process.env.REACT_APP_IMAGE_SERVICE
         }/slots/${getImageSource(slot.slot)}`}
       >
-        {slot.icon !== undefined && isDragging ? (
+        {slot.selectedSet !== undefined && isDragging ? (
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
-        ) : slot.icon !== undefined ? (
+        ) : slot.selectedSet !== undefined ? (
           <Popover placement={'top'} content={<GearCardContent gear={slot} />}>
             <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
           </Popover>
