@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { List, Tag, Divider, Card, Input } from 'antd';
 import styled from 'styled-components';
-import { ISpecialBuff } from '../../../assets/specialbuff/drinks';
 import { useTrail, animated } from 'react-spring';
 import { RaidContext } from '../RaidStateContext';
 import Flex from '../../../components/Flex';

@@ -3,13 +3,21 @@ import { List, Tag, Divider, Card, Input, Spin } from 'antd'
 import styled from 'styled-components'
 import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
-import { specialDrinks, ISpecialBuff } from '../../../assets/specialbuff/drinks'
-import { specialFood } from '../../../assets/specialbuff/food'
-import { drinks } from '../../../assets/drinks'
-import { food } from '../../../assets/food'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+
+export interface ISpecialBuff {
+  name: string;
+  buffDescription: string;
+  description: string;
+  duration: number;
+  notes: string;
+  icon: string;
+  type?: string;
+  buffType: string;
+  quality: 1 | 2 | 3 | 4;
+}
 
 const { CheckableTag } = Tag
 
@@ -243,7 +251,12 @@ const BuffMenuList = ({ data }: { data: { buffs: ISpecialBuff[] } }) => {
                 >
                   <div style={{ display: 'flex', maxWidth: 400 }}>
                     <AvatarContainer>
-                      <MyAvatar title={item.name} src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.icon}`} />
+                      <MyAvatar
+                        title={item.name}
+                        src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
+                          item.icon
+                        }`}
+                      />
                     </AvatarContainer>
                     <div>
                       <Title>{item.name}</Title>
@@ -263,24 +276,16 @@ const BuffMenuList = ({ data }: { data: { buffs: ISpecialBuff[] } }) => {
                         />
                         <BuffTypeTag
                           isSpecialDrink={
-                            specialDrinks.find(
-                              drink =>
-                                drink.buffDescription === item.buffDescription
-                            ) !== undefined
+                            item.buffType === 'drink' && item.type === null
                           }
                           isSpecialFood={
-                            specialFood.find(
-                              food =>
-                                food.buffDescription === item.buffDescription
-                            ) !== undefined
+                            item.buffType === 'food' && item.type === null
                           }
                           isFood={
-                            food.find(food => food.icon === item.icon) !==
-                            undefined
+                            item.buffType === 'food' && item.type !== null
                           }
                           isDrink={
-                            drinks.find(drink => drink.icon === item.icon) !==
-                            undefined
+                            item.buffType === 'drink' && item.type !== null
                           }
                         />
                         <QualityTag quality={item.quality} />
