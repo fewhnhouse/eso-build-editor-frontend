@@ -16,6 +16,7 @@ const BUILD = gql`
     icon
     slot
     type
+    weaponType
     selectedSet {
       name
       location
@@ -122,7 +123,6 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
     ? JSON.parse(buildState)
     : defaultBuildState
   const { loading, error, data } = useQuery(BUILD, { variables: { id } })
-  console.log(data)
   if (!local) {
     if (loading) {
       return <div>Loading...</div>

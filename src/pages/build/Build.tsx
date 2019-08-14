@@ -157,8 +157,8 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
         frontbarSelection,
         backbarSelection
       )
-      console.log(jewelrySelection.map(piece => piece.type || ""))
-      console.log(bigPieceSelection.map(piece => piece.type || ""))
+      console.log(jewelrySelection.map(piece => piece.type || ''))
+      console.log(bigPieceSelection.map(piece => piece.type || ''))
       const frontbarSkillSelections: any = await createSkillSelections({
         variables: {
           indices: newBarOne.map(sel => sel.index),
@@ -174,7 +174,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const bigPieceSetSelections: any = await createSetSelections({
         variables: {
           slots: bigPieceSelection.map(piece => piece.slot),
-          types: bigPieceSelection.map(piece => piece.type || ""),
+          types: bigPieceSelection.map(piece => piece.type || ''),
           setIds: bigPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -189,7 +189,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const smallPieceSetSelections: any = await createSetSelections({
         variables: {
           slots: smallPieceSelection.map(piece => piece.slot),
-          types: smallPieceSelection.map(piece => piece.type || ""),
+          types: smallPieceSelection.map(piece => piece.type || ''),
           setIds: smallPieceSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -204,7 +204,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const jewelrySetSelections: any = await createSetSelections({
         variables: {
           slots: jewelrySelection.map(piece => piece.slot),
-          types: jewelrySelection.map(piece => piece.type || ""),
+          types: jewelrySelection.map(piece => piece.type || ''),
           setIds: jewelrySelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -219,7 +219,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const frontbarSetSelections: any = await createSetSelections({
         variables: {
           slots: frontbarSelection.map(piece => piece.slot),
-          types: frontbarSelection.map(piece => piece.type || ""),
+          types: frontbarSelection.map(piece => piece.type || ''),
           setIds: frontbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -234,7 +234,7 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
       const backbarSetSelections: any = await createSetSelections({
         variables: {
           slots: backbarSelection.map(piece => piece.slot),
-          types: backbarSelection.map(piece => piece.type || ""),
+          types: backbarSelection.map(piece => piece.type || ''),
           setIds: backbarSelection.map(piece =>
             piece.selectedSet ? piece.selectedSet.id : 0
           ),
@@ -292,12 +292,18 @@ export default ({ match, location }: RouteComponentProps<{ id: string }>) => {
                 })
               ),
             },
-            ultimateOne: {
-              connect: { skillId: ultimateOne ? ultimateOne.id : 0 },
-            },
-            ultimateTwo: {
-              connect: { skillId: ultimateTwo ? ultimateTwo.id : 0 },
-            },
+            ultimateOne:
+              ultimateOne && ultimateOne.id !== 0
+                ? {
+                    connect: { skillId: ultimateOne.id },
+                  }
+                : undefined,
+            ultimateTwo:
+              ultimateTwo && ultimateTwo.id !== 0
+                ? {
+                    connect: { skillId: ultimateTwo.id },
+                  }
+                : undefined,
             newBarOne: {
               connect: frontbarSkillSelections.data.createSkillSelections.map(
                 (selection: any) => ({
