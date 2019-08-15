@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { withTheme, ThemeProps } from 'styled-components';
+import React, { useContext, useEffect, useState } from 'react';
+import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import styled, { withTheme, ThemeProps } from 'styled-components';
 import { ITheme } from '../../../components/globalStyles';
-import {
-  IBuildState,
-  defaultBuildState,
-  BuildContext,
-} from '../BuildStateContext';
-import { useQuery } from '@apollo/react-hooks';
+import { BuildContext } from '../BuildStateContext';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import BuildReviewDetails from './BuildReviewDetails';
+import {
+  Layout,
+  Typography,
+  Button,
+  Spin,
+  Popover,
+  Popconfirm,
+  notification,
+} from 'antd';
+const { Content, Footer } = Layout;
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
   local?: boolean;
@@ -71,6 +77,7 @@ const BUILD = gql`
     build(id: $id) {
       owner {
         name
+        id
       }
       name
       applicationArea
@@ -120,17 +127,124 @@ const BUILD = gql`
   }
 `;
 
+const ME = gql`
+  query {
+    me {
+      id
+    }
+  }
+`;
+
+const DELETE_BUILD = gql`
+  mutation deleteBuild($id: ID!) {
+    deleteBuild(id: $id) {
+      id
+    }
+  }
+`;
+
+const ActionButton = styled(Button)`
+  width: 100px;
+  margin: 10px;
+`;
+
+const Container = styled(Content)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 144px);
+  color: rgb(155, 155, 155);
+`;
+
 const BuildReview = ({ match, theme, local }: IBuildReview) => {
   const { id } = match.params;
 
   const [state] = useContext(BuildContext);
-  const { loading, error, data } = useQuery(BUILD, { variables: { id } });
-  if (!local) {
-    if (loading) {
-      return <div>Loading...</div>;
+  const buildQuery = useQuery(BUILD, { variables: { id } });
+  const meQuery = useQuery(ME);
+  const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
+    variables: { id },
+  });
+  const [redirect, setRedirect] = useState(false);
+  useEffect(() => {
+    if (data) {
+      notification.success({
+        message: 'Build Deletion',
+        description: 'Build successfully deleted.',
+      });
+    } else if (error) {
+      notification.error({
+        message: 'Build Deletion',
+        description: 'Error while deleting build. Try again later.',
+      });
     }
-    if (data && data.build) {
-      return <BuildReviewDetails loadedData={data.build} />;
+  }, [data, error]);
+  if (!local) {
+    if (buildQuery.loading || meQuery.loading) {
+      return <Spin />;
+    }
+    if (
+      buildQuery.data &&
+      buildQuery.data.build &&
+      meQuery.data &&
+      meQuery.data.me
+    ) {
+      const handleDeleteConfirm = () => {
+        deleteMutation({ variables: { id } });
+      };
+
+      const handleEditClick = () => {
+        setRedirect(true);
+      };
+      if (redirect) {
+        return <Redirect to={`/editBuild/${id}/0`} push />;
+      }
+      return (
+        <>
+          <Container>
+            <BuildReviewDetails loadedData={buildQuery.data.build} />
+          </Container>
+          <Footer
+            style={{
+              height: 80,
+              display: 'flex',
+              justifyContent: 'space-between',
+              zIndex: 100,
+              alignItems: 'center',
+              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <Typography.Title level={3}>
+              Owner: {buildQuery.data.build.owner.name}
+            </Typography.Title>
+            {buildQuery.data.build.owner.id === meQuery.data.me.id && (
+              <div>
+                <ActionButton
+                  onClick={handleEditClick}
+                  icon="edit"
+                  size="large"
+                  type="primary"
+                >
+                  Edit
+                </ActionButton>
+                <Popconfirm
+                  title="Are you sure you want to delete this build?"
+                  onConfirm={handleDeleteConfirm}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <ActionButton icon="delete" size="large" type="danger">
+                    Delete
+                  </ActionButton>
+                </Popconfirm>
+              </div>
+            )}
+          </Footer>
+        </>
+      );
     } else {
       return null;
     }

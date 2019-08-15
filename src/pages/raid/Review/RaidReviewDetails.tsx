@@ -11,6 +11,7 @@ const { Title, Text } = Typography;
 
 const Wrapper = styled(Flex)`
   width: 100%;
+  height: 100%;
   padding: 20px;
 `;
 

@@ -14,6 +14,7 @@ export interface ISKillViewProps {
 
 const SkillView = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
 `

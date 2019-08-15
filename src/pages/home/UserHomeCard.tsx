@@ -97,6 +97,7 @@ const UserHomeCard = ({userBuildData, userRaidData}: IUserDataProps) => {
                         const find = userBuildData[index];
                         return (
                             <List.Item style={{justifyContent: "center"}}>
+<<<<<<< HEAD
                                 <StyledCard key={find.id} hoverable onClick={() => handleClick(`/editBuild/${find.id}/0`)}>
                                     <Title>{find.name? find.name : "Unnamed build"} <Text style={{fontWeight: "normal"}}>{find.applicationArea}</Text></Title>
                                     <Description>
@@ -105,6 +106,10 @@ const UserHomeCard = ({userBuildData, userRaidData}: IUserDataProps) => {
                                         <br />
                                         Created by {find.owner.name}
                                     </Description>
+=======
+                                <StyledCard key={find.id} title={find.name} hoverable onClick={() => handleClick(`/buildReview/${find.id}`)}>
+                                    Build id: {find.id}<br />{find.applicationArea} {find.race} {find.esoClass}
+>>>>>>> master
                                 </StyledCard>
                             </List.Item>
                         );
