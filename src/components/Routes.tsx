@@ -31,10 +31,16 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
       <Route exact path='/setup' component={Setup} />
       <ProtectedRoute
         loggedIn={isLoggedIn}
+        path='/editBuild/:buildId/:id'
+        render={props => <BuildWrapper edit {...props} />}
+      />
+      <ProtectedRoute
+        loggedIn={isLoggedIn}
         exact
         path='/build/:id'
         render={props => <BuildWrapper {...props} />}
       />
+
       <ProtectedRoute
         loggedIn={isLoggedIn}
         exact

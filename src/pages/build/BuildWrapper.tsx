@@ -117,8 +117,8 @@ interface IBuildWrapperProps
 }
 export default ({ edit, match }: IBuildWrapperProps) => {
   const { id, buildId } = match.params
-
-  const pageIndex = parseInt(id, 10)
+  console.log(id, buildId)
+  const pageIndex = parseInt(id || '0', 10)
   const { loading, error, data } = useQuery(GET_BUILD, {
     variables: { id: buildId },
   })
@@ -130,28 +130,38 @@ export default ({ edit, match }: IBuildWrapperProps) => {
       return <div>Error.</div>
     }
     if (data) {
-      return <Build build={data.build} pageIndex={pageIndex} />
+      return (
+        <Build
+          noMatchPath={`/editBuild/${buildId}/0`}
+          build={data.build}
+          pageIndex={pageIndex}
+        />
+      )
     }
     return null
   } else {
     const savedBuildState = localStorage.getItem('buildState')
 
-    useEffect(() => {
-      const savedBuildState = localStorage.getItem('buildState')
-      if (savedBuildState) {
-        message.info('Your settings have been restored.')
-      }
-    }, [])
     try {
       const parsedBuildState = JSON.parse(savedBuildState || '')
+      if (parsedBuildState) {
+        message.info('Your settings have been restored.')
+      }
       return (
         <Build
+          noMatchPath='/build/0'
           build={parsedBuildState || defaultBuildState}
           pageIndex={pageIndex}
         />
       )
     } catch (e) {
-      return <Build build={defaultBuildState} pageIndex={pageIndex} />
+      return (
+        <Build
+          noMatchPath='/build/0'
+          build={defaultBuildState}
+          pageIndex={pageIndex}
+        />
+      )
     }
   }
 }

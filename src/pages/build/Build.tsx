@@ -101,9 +101,10 @@ const { Step } = Steps
 interface IBuildProps {
   build: any
   pageIndex: number
+  noMatchPath: string
 }
 
-export default ({ build, pageIndex }: IBuildProps) => {
+export default ({ build, pageIndex, noMatchPath }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -396,7 +397,7 @@ export default ({ build, pageIndex }: IBuildProps) => {
         ) : pageIndex === 4 ? (
           <BuildReview local={true} />
         ) : (
-          <Redirect to='/build/0' />
+          <Redirect to={noMatchPath} />
         )}
         {redirect !== '' && <Redirect to={`/buildreview/${redirect}`} push />}
       </Container>
