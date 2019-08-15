@@ -7,6 +7,7 @@ import Flex from '../../../components/Flex';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import BuildCard from './BuildCard';
+import { IBuild } from '../../build/BuildStateContext';
 
 const { CheckableTag } = Tag;
 
@@ -130,7 +131,9 @@ const GET_BUILDS = gql`
 `;
 export default () => {
   const [, dispatch] = useContext(RaidContext);
-  const { loading, error, data } = useQuery(GET_BUILDS);
+  const { loading, error, data } = useQuery<{ builds: IBuild[] }, {}>(
+    GET_BUILDS
+  );
 
   const [searchText, setSearchText] = useState('');
   const filteredBuilds =

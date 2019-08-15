@@ -19,8 +19,30 @@ export interface ISlot {
   id: number;
   index: number;
 }
-export interface IBuildState {
+
+export interface IBuild {
   id?: string
+  race: string;
+  esoClass: string;
+  name: string;
+  applicationArea: string;
+  role: string;
+  description: string;
+  mainResource: string;
+  bigPieceSelection: ISetSelection[];
+  smallPieceSelection: ISetSelection[];
+  jewelrySelection: ISetSelection[];
+  frontbarSelection: ISetSelection[];
+  backbarSelection: ISetSelection[];
+  newBarOne: ISkillSelection[];
+  newBarTwo: ISkillSelection[];
+  ultimateOne?: ISkill;
+  ultimateTwo?: ISkill;
+  mundusStone: IMundus;
+  buff: ISpecialBuff;
+
+}
+export interface IBuildState extends IBuild {
   skills: ISkill[];
   hasTrash: boolean;
   sets: ISet[];
@@ -36,24 +58,7 @@ export interface IBuildState {
   armorType: ArmorType;
   weapons: SelectValue[];
   setTabKey: SetTab;
-  race: string;
-  esoClass: string;
-  name: string;
-  applicationArea: string;
-  role: string;
-  description: string;
-  mainResource: string;
-  bigPieceSelection: ISetSelection[];
-  smallPieceSelection: ISetSelection[];
-  jewelrySelection: ISetSelection[];
-  frontbarSelection: ISetSelection[];
-  backbarSelection: ISetSelection[];
-  newBarOne: ISkillSelection[];
-  ultimateOne?: ISkill;
-  ultimateTwo?: ISkill;
-  newBarTwo: ISkillSelection[];
-  mundusStone: IMundus;
-  buff: ISpecialBuff;
+
 }
 
 export interface ISkillSelection {

@@ -1,25 +1,30 @@
-import React from 'react'
-import { useDrag } from 'react-dnd'
-import styled, { CSSProp, CSSProperties } from 'styled-components'
-import SkillView from '../../../components/SkillView'
-import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
-import { DisplaySlot } from '../../../components/SkillSlot'
-import { Card, Divider, Collapse, Icon } from 'antd'
-import GearView from '../../../components/GearView'
-import { Tabs } from 'antd'
-import Flex from '../../../components/Flex'
-import { AnySoaRecord } from 'dns'
+import React, { useContext } from 'react';
+import { useDrag } from 'react-dnd';
+import styled, { CSSProp, CSSProperties } from 'styled-components';
+import SkillView from '../../../components/SkillView';
+import {
+  ABILITY_BAR_TWO,
+  ABILITY_BAR_ONE,
+} from '../../build/Skills/AbilityBar';
+import { DisplaySlot } from '../../../components/SkillSlot';
+import { Card, Divider, Collapse, Icon, Button } from 'antd';
+import GearView from '../../../components/GearView';
+import { Tabs } from 'antd';
+import Flex from '../../../components/Flex';
+import { AnySoaRecord } from 'dns';
+import { IBuild } from '../../build/BuildStateContext';
+import { IRole, RaidContext } from '../RaidStateContext';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 
 const MyAvatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 3px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-`
+`;
 
 const Description = styled.div`
   font-size: 14px;
@@ -27,7 +32,7 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
-`
+`;
 
 const Title = styled.div`
   font-size: 16px;
@@ -38,7 +43,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`
+`;
 
 const AbilityBar = styled.div`
   height: 60px;
@@ -48,7 +53,7 @@ const AbilityBar = styled.div`
   align-items: center;
   width: 100%;
   max-width: 300px;
-`
+`;
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active: boolean }) =>
@@ -57,21 +62,22 @@ const StyledCard = styled(Card)`
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   margin: 10px;
-`
+`;
 interface IBuildCardProps {
-  item: any
-  style?: CSSProperties
-  draggable?: boolean
+  item: IBuild;
+  style?: CSSProperties;
+  draggable?: boolean;
+  role?: IRole;
 }
-export default ({ item, style, draggable = true }: IBuildCardProps) => {
+export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
   return draggable ? (
     <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard item={item} />
+      <BuildCard item={item} role={role} />
     </div>
-  )
-}
+  );
+};
 
 const WithDnD = ({ item, style }: IBuildCardProps) => {
   const [{ isDragging, didDrop }, drag] = useDrag({
@@ -83,26 +89,43 @@ const WithDnD = ({ item, style }: IBuildCardProps) => {
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
-  })
+  });
   return (
     <div style={style} ref={drag}>
       <BuildCard item={item} />
     </div>
-  )
-}
+  );
+};
 
-const BuildCard = ({ item }: { item: any }) => {
+const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+  const [, dispatch] = useContext(RaidContext);
+  const handleDeleteClick = () => {
+    dispatch!({
+      type: 'REMOVE_BUILD',
+      payload: { buildId: item.id, roleName: role ? role.roleName : '' },
+    });
+  };
   return (
     <StyledCard hoverable active={false}>
       <div>
-        <Title>{item.name}</Title>
+        <Flex direction="row" justify="space-between">
+          <Title>{item.name}</Title>
+          {role && (
+            <Button
+              type="danger"
+              ghost
+              icon="delete"
+              onClick={handleDeleteClick}
+            />
+          )}
+        </Flex>
         <Divider style={{ margin: '5px 0px' }} />
         <Description>
           {item.esoClass} | {item.race}
         </Description>
         <Divider style={{ margin: '5px 0px' }} />
-        <Tabs defaultActiveKey='skills'>
-          <TabPane tab='Skills' key='skills'>
+        <Tabs defaultActiveKey="skills">
+          <TabPane tab="Skills" key="skills">
             <Flex style={{ width: '100%' }}>
               <AbilityBar>
                 <SkillView
@@ -128,9 +151,9 @@ const BuildCard = ({ item }: { item: any }) => {
               </AbilityBar>
             </Flex>
           </TabPane>
-          <TabPane tab='Weapons' key='weapons'>
+          <TabPane tab="Weapons" key="weapons">
             <GearView
-              size='small'
+              size="small"
               setups={[
                 {
                   id: 'frontbar',
@@ -145,10 +168,10 @@ const BuildCard = ({ item }: { item: any }) => {
               ]}
             />
           </TabPane>
-          <TabPane tab='Armor' key='armor'>
+          <TabPane tab="Armor" key="armor">
             {' '}
             <GearView
-              size='small'
+              size="small"
               setups={[
                 {
                   id: 'bigpieces',
@@ -163,9 +186,9 @@ const BuildCard = ({ item }: { item: any }) => {
               ]}
             />
           </TabPane>
-          <TabPane tab='Jewelry' key='jewelry'>
+          <TabPane tab="Jewelry" key="jewelry">
             <GearView
-              size='small'
+              size="small"
               setups={[
                 {
                   id: 'jewelry',
@@ -178,5 +201,5 @@ const BuildCard = ({ item }: { item: any }) => {
         </Tabs>
       </div>
     </StyledCard>
-  )
-}
+  );
+};
