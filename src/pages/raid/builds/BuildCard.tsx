@@ -7,7 +7,15 @@ import {
   ABILITY_BAR_ONE,
 } from '../../build/Skills/AbilityBar';
 import { DisplaySlot } from '../../../components/SkillSlot';
-import { Card, Divider, Collapse, Icon, Button } from 'antd';
+import {
+  Card,
+  Divider,
+  Collapse,
+  Icon,
+  Button,
+  Avatar,
+  Typography,
+} from 'antd';
 import GearView from '../../../components/GearView';
 import { Tabs } from 'antd';
 import Flex from '../../../components/Flex';
@@ -20,29 +28,19 @@ const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  border: 2px solid rgba(0, 0, 0, 0.45);
+  width: 28px;
+  height: 28px;
+  margin-right: 5px;
 `;
 
-const Description = styled.div`
+const RaceClassContainer = styled.div`
+  margin-right: 10px;
+`;
+
+const Description = styled(Flex)`
   font-size: 14px;
   line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
-`;
-
-const Title = styled.div`
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: left;
+  color: 'rgba(0, 0, 0, 0.45)';
 `;
 
 const AbilityBar = styled.div`
@@ -109,7 +107,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
     <StyledCard hoverable active={false}>
       <div>
         <Flex direction="row" justify="space-between">
-          <Title>{item.name}</Title>
+          <Typography.Title level={3}>{item.name}</Typography.Title>
           {role && (
             <Button
               type="danger"
@@ -119,9 +117,23 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             />
           )}
         </Flex>
-        <Divider style={{ margin: '5px 0px' }} />
-        <Description>
-          {item.esoClass} | {item.race}
+        <Description direction="row" justify="flex-start">
+          <RaceClassContainer>
+            <MyAvatar
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
+                item.race
+              }.png`}
+            />
+            {item.race}
+          </RaceClassContainer>
+          <RaceClassContainer>
+            <MyAvatar
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
+                item.esoClass
+              }.png`}
+            />
+            {item.esoClass}
+          </RaceClassContainer>
         </Description>
         <Divider style={{ margin: '5px 0px' }} />
         <Tabs defaultActiveKey="skills">
