@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { withTheme, ThemeProps } from 'styled-components';
+import styled, { withTheme, ThemeProps } from 'styled-components';
 import { ITheme } from '../../../components/globalStyles';
-import {
-  IBuildState,
-  defaultBuildState,
-  BuildContext,
-} from '../BuildStateContext';
+import { BuildContext } from '../BuildStateContext';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import BuildReviewDetails from './BuildReviewDetails';
-
+import { Layout } from 'antd';
+const { Content } = Layout;
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
   local?: boolean;
 }
@@ -120,6 +117,17 @@ const BUILD = gql`
   }
 `;
 
+const Container = styled(Content)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 64px);
+  color: rgb(155, 155, 155);
+`;
+
 const BuildReview = ({ match, theme, local }: IBuildReview) => {
   const { id } = match.params;
 
@@ -130,7 +138,11 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
       return <div>Loading...</div>;
     }
     if (data && data.build) {
-      return <BuildReviewDetails loadedData={data.build} />;
+      return (
+        <Container>
+          <BuildReviewDetails loadedData={data.build} />{' '}
+        </Container>
+      );
     } else {
       return null;
     }
