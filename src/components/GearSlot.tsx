@@ -214,7 +214,6 @@ export default ({
       canDrop: !!monitor.canDrop(),
     }),
   })
-  console.log(slot.selectedSet)
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
       <GearFrame
@@ -224,7 +223,7 @@ export default ({
         ref={droppable ? drop : undefined}
         backgroundSource={`${
           process.env.REACT_APP_IMAGE_SERVICE
-        }/slots/${getImageSource(slot.slot)}`}
+        }/gear/slots/${getImageSource(slot.slot)}`}
       >
         {slot.selectedSet && isDragging ? (
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
