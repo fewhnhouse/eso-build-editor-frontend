@@ -224,9 +224,7 @@ export default ({
         canDrop={droppable && canDrop}
         hasIcon={slot.selectedSet !== null && slot.selectedSet !== undefined}
         ref={droppable ? drop : undefined}
-        backgroundSource={`${
-          process.env.REACT_APP_IMAGE_SERVICE
-        }/slots/${getImageSource(slot.slot)}`}
+        backgroundSource={`${getGearSlot(slot)}`}
       >
         {slot.selectedSet && isDragging ? (
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
