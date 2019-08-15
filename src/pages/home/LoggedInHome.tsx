@@ -56,6 +56,8 @@ const ListCard = styled.div`
 
 const RightSide = styled(Flex)`
   height: 100%;
+  z-index: 30;
+  box-shadow: -2px 0px 5px 0px rgba(0, 0, 0, 0.35);
   flex: 1;
 `
 
@@ -149,7 +151,11 @@ export default () => {
         fluid
       >
         <InputContainer direction='row' align='center' justify='center'>
-          <StyledSearch size="large" placeholder='Search for raids' style={{ width: 400 }} />
+          <StyledSearch
+            size='large'
+            placeholder='Search for raids'
+            style={{ width: 400 }}
+          />
         </InputContainer>
         <Wrapper direction={'row'} justify='center' align='center' wrap>
           <LeftSide direction={'column'} justify={'center'} align='center'>
