@@ -15,6 +15,8 @@ import {
 import { ISpecialBuff } from './consumables/BuffMenu';
 import { ISkill } from '../../components/SkillSlot';
 export const handleEditSave = async (
+  initialSkillBarOne: ISkillSelection[],
+  initialSkillBarTwo: ISkillSelection[],
   updateSkillSelection: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
@@ -28,7 +30,7 @@ export const handleEditSave = async (
   mundusStone: IMundus,
   buff: ISpecialBuff,
   ultimateOne?: ISkill,
-  ultimateTwo?: ISkill
+  ultimateTwo?: ISkill,
 ) => {
   const {
     id,
@@ -53,18 +55,18 @@ export const handleEditSave = async (
     data: {
       slot: setSelection.slot,
       selectedSet:
-        setSelection.selectedSet && setSelection.selectedSet.setId !== 0
-          ? { connect: { setId: setSelection.selectedSet.setId } }
+        setSelection.selectedSet
+          ? { connect: { id: setSelection.selectedSet.id } }
           : undefined,
       trait: setSelection.trait
         ? {
-            connect: { description: setSelection.trait.description },
-          }
+          connect: { description: setSelection.trait.description },
+        }
         : undefined,
       glyph: setSelection.glyph
         ? {
-            connect: { description: setSelection.glyph.description },
-          }
+          connect: { description: setSelection.glyph.description },
+        }
         : undefined,
       type: setSelection.type,
       weaponType: setSelection.weaponType,
@@ -105,31 +107,32 @@ export const handleEditSave = async (
       },
     });
   });
-
-  const createSkillVariables = (skillSelection: ISkillSelection) => ({
-    where: { id: skillSelection.id },
-    data: {
-      index: skillSelection.index,
-      skill:
-        skillSelection.skill && skillSelection.skill.skillId !== 0
-          ? { connect: { skillId: skillSelection.skill.skillId } }
-          : undefined,
-    },
-  });
-  await newBarOne.map(async skillSelection => {
-    return updateSkillSelection({
-      variables: {
-        ...createSkillVariables(skillSelection),
+  
+    const createSkillVariables = (skillSelection: ISkillSelection) => ({
+      where: { id: skillSelection.id },
+      data: {
+        index: skillSelection.index,
+        skill:
+          skillSelection.skill
+            ? { connect: { id: skillSelection.skill.id } }
+            : undefined,
       },
     });
-  });
-  await newBarTwo.map(async skillSelection => {
-    return updateSkillSelection({
-      variables: {
-        ...createSkillVariables(skillSelection),
-      },
+    await newBarOne.map(async skillSelection => {
+      return updateSkillSelection({
+        variables: {
+          ...createSkillVariables(skillSelection),
+        },
+      });
     });
-  });
+    await newBarTwo.map(async skillSelection => {
+      return updateSkillSelection({
+        variables: {
+          ...createSkillVariables(skillSelection),
+        },
+      });
+    });
+    
   return await updateBuild({
     variables: {
       where: {
@@ -141,20 +144,29 @@ export const handleEditSave = async (
         esoClass,
         description,
         applicationArea,
+        /*
+        newBarOne: {
+          delete: initialSkillBarOne.map(skillSelection => ({ id: skillSelection.id })),
+          create: newBarOne.map(skillSelection => ({ index: skillSelection.index, skill: { connect: skillSelection.skill ? { id: skillSelection.skill.id } : undefined } }))
+        },
+        newBarTwo: {
+          delete: initialSkillBarTwo.map(skillSelection => ({ id: skillSelection.id })),
+          create: newBarOne.map(skillSelection => ({ index: skillSelection.index, skill: { connect: skillSelection.skill ? { id: skillSelection.skill.id } : undefined } }))
+        },*/
         role,
         mundusStone: { connect: { name: mundusStone.name } },
         buff: { connect: { name: buff.name } },
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-                connect: { skillId: ultimateOne.skillId },
-              }
+              connect: { skillId: ultimateOne.skillId },
+            }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-                connect: { skillId: ultimateTwo.skillId },
-              }
+              connect: { skillId: ultimateTwo.skillId },
+            }
             : undefined,
       },
     },
@@ -352,14 +364,14 @@ export const handleCreateSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-                connect: { skillId: ultimateOne.skillId },
-              }
+              connect: { skillId: ultimateOne.skillId },
+            }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-                connect: { skillId: ultimateTwo.skillId },
-              }
+              connect: { skillId: ultimateTwo.skillId },
+            }
             : undefined,
         newBarOne: {
           connect: frontbarSkillSelections.data.createSkillSelections.map(

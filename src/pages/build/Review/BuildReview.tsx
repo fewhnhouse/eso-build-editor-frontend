@@ -70,6 +70,7 @@ const BUILD = gql`
   }
 
   fragment SkillSelection on SkillSelection {
+    id
     index
     skill {
       ...Skill
