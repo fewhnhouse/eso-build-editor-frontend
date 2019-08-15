@@ -157,7 +157,7 @@ export default ({ edit, match }: IRaidWrapperProps) => {
     }
     return null;
   } else {
-    const savedRaidState = localStorage.getItem('buildState');
+    const savedRaidState = localStorage.getItem('raidState');
 
     return <NewRaid savedRaidState={savedRaidState} pageIndex={pageIndex} />;
   }

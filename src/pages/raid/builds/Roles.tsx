@@ -198,7 +198,7 @@ export default () => {
             <Button
               disabled={
                 role === '' ||
-                roles.find(
+                roles && roles.find(
                   existingRole => existingRole && existingRole.name === role
                 ) !== undefined
               }

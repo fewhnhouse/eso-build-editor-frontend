@@ -51,14 +51,6 @@ const CREATE_RAID = gql`
   }
 `;
 
-const CREATE_ROLE = gql`
-  mutation createRole($name: String!, $buildIds: [ID!]!) {
-    createRole(name: $name, buildIds: $buildIds) {
-      id
-    }
-  }
-`;
-
 const UPDATE_RAID = gql`
   mutation updateRaid($where: RaidWhereUniqueInput!, $data: RaidUpdateInput!) {
     updateRaid(where: $where, data: $data) {
@@ -67,13 +59,6 @@ const UPDATE_RAID = gql`
   }
 `;
 
-const UPDATE_ROLE = gql`
-  mutation updateRole($where: RoleWhereUniqueInput!, $data: RoleUpdateInput!) {
-    updateRole(where: $where, data: $data) {
-      id
-    }
-  }
-`;
 interface IRaidProps {
   raid: any;
   pageIndex: number;
@@ -100,10 +85,7 @@ export default ({
     setTab(tabIndex => tabIndex - 1);
   };
   const [updateRaid] = useMutation<any, any>(UPDATE_RAID);
-  const [updateRole] = useMutation<any, any>(UPDATE_ROLE);
 
-  const createRoleMutation = useMutation<any, any>(CREATE_ROLE);
-  const [createRole] = createRoleMutation;
   const createRaidMutation = useMutation<any, any>(CREATE_RAID);
   const [createRaid, { data }] = createRaidMutation;
 
@@ -117,13 +99,7 @@ export default ({
     setLoading(true);
     if (edit) {
       try {
-        await handleEditSave(
-          state,
-          updateRole,
-          createRole,
-          updateRaid,
-          initialRoles
-        );
+        await handleEditSave(state, updateRaid, initialRoles);
         notification.success({
           message: 'Raid update successful',
           description: (
@@ -152,7 +128,7 @@ export default ({
       }
     } else {
       try {
-        handleCreateSave(state, createRole, createRaid);
+        handleCreateSave(state, createRaid);
         notification.success({
           message: 'Raid creation successful',
           description: (
