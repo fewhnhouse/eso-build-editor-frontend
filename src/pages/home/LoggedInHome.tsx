@@ -8,7 +8,6 @@ import UserHomeCard from './UserHomeCard'
 import { Redirect } from 'react-router'
 import { wcdt } from '../../assets/backgrounds/index'
 
-
 const { Search } = Input
 const { Title } = Typography
 
@@ -18,6 +17,11 @@ const OuterWrapper = styled(Flex)`
 const Wrapper = styled(Flex)`
   padding: 40px;
   flex-wrap: wrap;
+  width: 100%;
+  margin-top: 600px;
+  z-index: 20;
+  background: white;
+  box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.35);
 `
 
 const LeftSide = styled(Flex)`
@@ -33,9 +37,11 @@ const Center = styled(Flex)`
 `
 const InputContainer = styled(Flex)`
   width: 100%;
+  z-index: 1;
+  position: fixed;
+  top: 100px;
   min-height: 150px;
   padding: 20px;
-  background-image: url(${wcdt});
   background-position: center;
 `
 
@@ -76,9 +82,14 @@ const CardTitle = styled(Title)`
 
 const InnerContainer = styled(Flex)`
   width: 100%;
+  padding-top: 50px;
+  height: 100%;
   overflow: auto;
+  background-image: url(${wcdt});
 `
-const StyledSearch = styled(Search)``
+const StyledSearch = styled(Search)`
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
+`
 
 const ME = gql`
   query {
@@ -112,7 +123,7 @@ const ME = gql`
 `
 
 export default () => {
-  const { loading, error, data } = useQuery<any,any>(ME)
+  const { loading, error, data } = useQuery<any, any>(ME)
   const [redirect, setRedirect] = useState('')
 
   const handleCreateClick = (path: string) => () => {
@@ -138,19 +149,23 @@ export default () => {
         fluid
       >
         <InputContainer direction='row' align='center' justify='center'>
-          <Search placeholder="Search for raids" style={{ width: 400 }} />
+          <StyledSearch size="large" placeholder='Search for raids' style={{ width: 400 }} />
         </InputContainer>
-        <Wrapper direction={'row'} justify='center' align='center' wrap fluid>
+        <Wrapper direction={'row'} justify='center' align='center' wrap>
           <LeftSide direction={'column'} justify={'center'} align='center'>
             <ListCard>
               <StyledTitle direction={'column'} justify='center' align='center'>
                 <CardTitle level={3}>
                   My builds
-                  <Button type='primary' ghost={true} onClick={handleCreateClick("/build/0")}>
+                  <Button
+                    type='primary'
+                    ghost={true}
+                    onClick={handleCreateClick('/build/0')}
+                  >
                     Create
                   </Button>
                 </CardTitle>
-                <StyledSearch placeholder='Search for builds' />
+                <Search placeholder='Search for builds' />
               </StyledTitle>
               {data && data.me ? (
                 <UserHomeCard userBuildData={data.me.builds} />
@@ -164,11 +179,15 @@ export default () => {
               <StyledTitle direction={'column'} justify={''} align={''}>
                 <CardTitle level={3}>
                   My raids
-                  <Button type='primary' ghost={true} onClick={handleCreateClick("/raid/0")}>
+                  <Button
+                    type='primary'
+                    ghost={true}
+                    onClick={handleCreateClick('/raid/0')}
+                  >
                     Create
                   </Button>
                 </CardTitle>
-                <StyledSearch placeholder='Search for raids' />
+                <Search placeholder='Search for raids' />
               </StyledTitle>
               {data && data.me ? (
                 <UserHomeCard userRaidData={data.me.raids} />
