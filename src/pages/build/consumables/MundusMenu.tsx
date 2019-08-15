@@ -56,7 +56,11 @@ export default () => {
   >(GET_MUNDUS_STONES)
 
   if (loading) {
-    return <Spin />
+    return (
+      <ListContainer>
+        <Spin style={{ marginTop: 5 }} />
+      </ListContainer>
+    )
   }
   if (error) {
     return <div>Error.</div>

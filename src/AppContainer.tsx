@@ -3,7 +3,7 @@ import './App.css'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'
-import { Layout, Menu, Button, Popover, Avatar, Spin } from 'antd'
+import { Layout, Menu, Button, Popover, Avatar, Spin, Dropdown, Icon } from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -45,6 +45,7 @@ const ME = gql`
   query {
     me {
       email
+      name
     }
   }
 `
@@ -63,7 +64,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
     }
   }, [data])
   useEffect(() => {
-    if(error  !== undefined) {
+    if (error !== undefined) {
       setLoggedIn(false)
     }
   }, [error])
@@ -74,6 +75,15 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
       </LoadingContainer>
     )
   }
+
+  const logoutMenu = (
+    <Menu>
+      <Menu.Item onClick={handleLogout}>
+        <Icon type='logout' />
+        Log out
+      </Menu.Item>
+    </Menu>
+  )
   return (
     <Layout>
       <StyledHeader>
@@ -112,16 +122,17 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
         {loggedIn ? (
           <div>
             <Avatar />
-            <span style={{ color: 'white', margin: '0px 10px' }}>Welcome</span>
-            <Button
-              onClick={handleLogout}
-              icon='logout'
-              type='primary'
-              ghost
-              size='default'
-            >
-              Log out
-            </Button>
+            <Dropdown overlay={logoutMenu}>
+              <span
+                style={{
+                  color: 'white',
+                  margin: '0px 10px',
+                  cursor: 'pointer',
+                }}
+              >
+                Hello, {data.me.name} <Icon type='down' />
+              </span>
+            </Dropdown>
           </div>
         ) : (
           <Popover
