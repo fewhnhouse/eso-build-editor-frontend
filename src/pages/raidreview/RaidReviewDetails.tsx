@@ -1,80 +1,70 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
-import { Card, Typography, Divider } from 'antd'
-import { IRaidState } from '../raid/RaidStateContext'
-import { Redirect } from 'react-router'
-import BuildCard from '../raid/builds/BuildCard'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Flex from '../../components/Flex';
+import { Card, Typography, Divider } from 'antd';
+import { IRaidState } from '../raid/RaidStateContext';
+import { Redirect } from 'react-router';
+import BuildCard from '../raid/builds/BuildCard';
 
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 const Wrapper = styled(Flex)`
   width: 100%;
   padding: 20px;
-`
+`;
 const RaidHeader = styled(Flex)`
   flex: 1;
   width: 100%;
   margin-top: 20px;
   margin-bottom: 10px;
-`
+`;
 const RaidContent = styled(Flex)`
   width: 100%;
+  height: 100%;
   flex-wrap: wrap;
   max-height: 600px;
-`
-const LeftSide = styled(Flex)`
+`;
+const GeneralCard = styled(Card)`
   flex: 1;
   margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
-  background-color: white;
   min-width: 300px;
-`
-const RightSide = styled(Flex)`
+`;
+const BuildsCard = styled(Card)`
   flex: 2;
   flex-wrap: wrap;
   margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
-  background-color: white;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-width: 300px;
-`
+`;
 const CardList = styled(Flex)`
   flex-wrap: wrap;
-`
+`;
 const StyledCard = styled(Card)`
   width: 200px;
   margin: 10px;
-`
+`;
 
 interface IRaidReviewDetailsProps {
-  loadedData: IRaidState
+  loadedData: IRaidState;
 }
 
 const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
-  const { name, applicationArea, groupSize, description, roles } = loadedData
+  const { name, applicationArea, groupSize, description, roles } = loadedData;
 
-  const [path, setRedirect] = useState('')
+  const [path, setRedirect] = useState('');
   const handleClick = (path: string) => {
-    setRedirect(path)
-  }
+    setRedirect(path);
+  };
 
   if (path !== '') {
-    return <Redirect push to={`${path}`} />
+    return <Redirect push to={`${path}`} />;
   } else {
     return (
-      <Wrapper direction='column'>
-        <RaidHeader direction='row'>
-          <Title level={1}>Raid review</Title>
-        </RaidHeader>
-        <RaidContent direction='row' align='flex-start'>
-          <LeftSide align='left'>
+      <Wrapper direction="column">
+        <RaidContent direction="row" align="flex-start">
+          <GeneralCard title={<Title level={2}>General Information</Title>}>
             <Title level={2} style={{ textAlign: 'center' }}>
               {name}
             </Title>
@@ -84,27 +74,28 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
             <Text>{applicationArea}</Text>
             <Title level={3}>Description:</Title>
             <Text>{description}</Text>
-          </LeftSide>
-          <RightSide direction='row' justify='center'>
-            <Title level={2}>Builds</Title>
+          </GeneralCard>
+          <BuildsCard title={<Title level={2}>Builds</Title>}>
             {roles.map(role => {
               return (
                 <>
-                  <Divider>{role.roleName}</Divider>
-                  <CardList direction='row'>
+                  <Divider>
+                    <Title level={3}>{role.roleName}</Title>
+                  </Divider>
+                  <CardList direction="row">
                     {role.builds.map((build, index) => {
                       return (
                         <BuildCard item={build} draggable={false} key={index} />
-                      )
+                      );
                     })}
                   </CardList>
                 </>
-              )
+              );
             })}
-          </RightSide>
+          </BuildsCard>
         </RaidContent>
       </Wrapper>
-    )
+    );
   }
-}
-export default RaidReviewDetails
+};
+export default RaidReviewDetails;
