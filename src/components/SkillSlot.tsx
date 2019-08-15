@@ -7,6 +7,7 @@ import { BuildContext } from '../pages/build/BuildStateContext'
 import { useDrag, useDrop } from 'react-dnd'
 
 interface ISkillSlotProps {
+  id?: string
   droppable?: boolean
   skillIndex: number
   style?: React.CSSProperties
@@ -57,6 +58,7 @@ const SkillImg = styled.img`
 
 export default ({
   droppable,
+  id,
   skillIndex,
   skill,
   tooltipPos,
@@ -65,7 +67,7 @@ export default ({
   size = 'normal',
 }: ISkillSlotProps) => {
   const [, dispatch] = useContext(BuildContext)
-  const [{ isDragging, didDrop }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     item: {
       type: skillIndex === 5 ? 'ultimate' : 'skill',
       skill,
@@ -74,7 +76,6 @@ export default ({
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop(),
     }),
   })
 

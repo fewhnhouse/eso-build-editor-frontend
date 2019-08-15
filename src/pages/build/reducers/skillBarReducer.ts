@@ -5,7 +5,6 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
     case "DROP_ULTIMATE": {
       const { skill, barIndex } = action.payload;
-      console.log(skill, barIndex);
       if (barIndex === 0) {
         return {
           ...state,
@@ -62,7 +61,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           newBarOne: [...state.newBarOne].map(slot =>
             slot.skill && slot.skill.skillId === skill.skillId
-              ? { skill: undefined, index: slot.index }
+              ? { skill: undefined, id: undefined, index: slot.index }
               : slot
           )
         };
@@ -71,14 +70,14 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           newBarTwo: [...state.newBarTwo].map(slot =>
             slot.skill && slot.skill.skillId === skill.skillId
-              ? { skill: undefined, index: slot.index }
+              ? { skill: undefined, id: undefined, index: slot.index }
               : slot
           )
         };
       }
     }
     case "DROP_ABILITY": {
-      const { barIndex, destinationIndex, skill } = action.payload;
+      const { barIndex, destinationIndex, skill, } = action.payload;
       if (
         (barIndex === 0 &&
           state.newBarOne.find(
@@ -96,7 +95,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           newBarOne: state.newBarOne.map(slot =>
             slot.index === destinationIndex
-              ? { index: slot.index, skill }
+              ? { index: slot.index, id: slot.id, skill }
               : slot
           )
         };
@@ -105,7 +104,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           ...state,
           newBarTwo: state.newBarTwo.map(slot =>
             slot.index === destinationIndex
-              ? { index: slot.index, skill }
+              ? { index: slot.index, id: slot.id, skill }
               : slot
           )
         };
@@ -118,29 +117,29 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         sourceIndex,
         destinationIndex,
         sourceSkill,
-        destinationSkill
+        destinationSkill,
       } = action.payload;
       return barIndex === 0
         ? {
-            ...state,
-            newBarOne: state.newBarOne.map(slot =>
-              slot.index === sourceIndex
-                ? { index: slot.index, skill: destinationSkill }
-                : slot.index === destinationIndex
-                ? { index: slot.index, skill: sourceSkill }
+          ...state,
+          newBarOne: state.newBarOne.map(slot =>
+            slot.index === sourceIndex
+              ? { index: slot.index, id: slot.id, skill: destinationSkill }
+              : slot.index === destinationIndex
+                ? { index: slot.index, id: slot.id, skill: sourceSkill }
                 : slot
-            )
-          }
+          )
+        }
         : {
-            ...state,
-            newBarTwo: state.newBarTwo.map(slot =>
-              slot.index === sourceIndex
-                ? { index: slot.index, skill: destinationSkill }
-                : slot.index === destinationIndex
-                ? { index: slot.index, skill: sourceSkill }
+          ...state,
+          newBarTwo: state.newBarTwo.map(slot =>
+            slot.index === sourceIndex
+              ? { index: slot.index, id: slot.id, skill: destinationSkill }
+              : slot.index === destinationIndex
+                ? { index: slot.index, id: slot.id, skill: sourceSkill }
                 : slot
-            )
-          };
+          )
+        };
     }
 
     case "SWAP_ABILITY_DIFFERENT": {
@@ -149,7 +148,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         sourceBarIndex,
         sourceSkill,
         destinationIndex,
-        destinationSkill
+        destinationSkill,
       } = action.payload;
       const hasDestinationSkill =
         state.newBarOne.find(
@@ -172,22 +171,22 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         newBarOne: state.newBarOne.map(slot => {
           if (sourceBarIndex === 0) {
             return slot.index === sourceIndex
-              ? { index: slot.index, skill: destinationSkill }
+              ? { index: slot.index, id: slot.id, skill: destinationSkill }
               : slot;
           } else {
             return slot.index === destinationIndex
-              ? { index: slot.index, skill: sourceSkill }
+              ? { index: slot.index, id: slot.id, skill: sourceSkill }
               : slot;
           }
         }),
         newBarTwo: state.newBarTwo.map(slot => {
           if (sourceBarIndex === 1) {
             return slot.index === sourceIndex
-              ? { index: slot.index, skill: destinationSkill }
+              ? { index: slot.index, id: slot.id, skill: destinationSkill }
               : slot;
           } else {
             return slot.index === destinationIndex
-              ? { index: slot.index, skill: sourceSkill }
+              ? { index: slot.index, id: slot.id, skill: sourceSkill }
               : slot;
           }
         })

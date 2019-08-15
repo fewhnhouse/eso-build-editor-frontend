@@ -68,7 +68,6 @@ export default () => {
   const [{ isOver }, drop] = useDrop({
     accept: ["ultimate", "skill"],
     drop: (item: any, monitor) => {
-      console.log(item);
       if (item.type === "ultimate") {
         dispatch!({
           type: "REMOVE_ULTIMATE",

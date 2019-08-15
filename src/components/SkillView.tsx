@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
 import NewSkillSlot, { ISkill, DisplaySlot } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
+import { ISkillSelection } from '../pages/build/BuildStateContext'
 
 export interface ISKillViewProps {
-  skillSlots: { index: number; skill?: ISkill }[]
+  skillSlots: ISkillSelection[]
   droppable?: boolean
   id: string
   abilityBar?: number
@@ -45,6 +46,7 @@ export default ({
             <DisplaySlot skill={skillSlots[index].skill} />
           ) : (
             <NewSkillSlot
+              id={skillSlots[index].id}
               abilityBar={abilityBar}
               droppable={droppable}
               skillIndex={skillSlots[index].index}

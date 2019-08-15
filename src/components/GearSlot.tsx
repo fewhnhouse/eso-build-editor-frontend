@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Popover } from 'antd';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { Popover } from 'antd'
 
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
   Slot,
@@ -11,21 +11,21 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
-} from '../pages/build/BuildStateContext';
-import { GearCardContent } from '../pages/build/Sets/GearCard';
+} from '../pages/build/BuildStateContext'
+import { GearCardContent } from '../pages/build/Sets/GearCard'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
-`;
+`
 
 interface IGearFrameProps {
-  hasIcon: boolean;
-  canDrop?: boolean;
-  backgroundSource: string;
-  size: 'normal' | 'small';
+  hasIcon: boolean
+  canDrop?: boolean
+  backgroundSource: string
+  size: 'normal' | 'small'
 }
 
 const GearFrame = styled.div`
@@ -43,29 +43,29 @@ const GearFrame = styled.div`
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
-`;
+`
 
 export interface ISet {
-  id: string;
-  setId: number;
-  name: string;
-  location: string;
-  type: string;
-  slug: string;
-  bonus_item_1: string | null;
-  bonus_item_2: string | null;
-  bonus_item_3: string | null;
-  bonus_item_4: string | null;
-  bonus_item_5: string | null;
-  has_jewels: number;
-  has_weapons: number;
-  has_heavy_armor: number;
-  has_light_armor: number;
-  has_medium_armor: number;
-  traits_needed: number | null;
-  pts: number;
-  eso_id: null | number;
-  [key: string]: string | null | number;
+  id: string
+  setId: number
+  name: string
+  location: string
+  type: string
+  slug: string
+  bonus_item_1: string | null
+  bonus_item_2: string | null
+  bonus_item_3: string | null
+  bonus_item_4: string | null
+  bonus_item_5: string | null
+  has_jewels: number
+  has_weapons: number
+  has_heavy_armor: number
+  has_light_armor: number
+  has_medium_armor: number
+  traits_needed: number | null
+  pts: number
+  eso_id: null | number
+  [key: string]: string | null | number
 }
 
 const getImageSource = (
@@ -73,101 +73,101 @@ const getImageSource = (
 ) => {
   switch (slot) {
     case Slot.legs:
-      return 'legs.png';
+      return 'legs.png'
     case Slot.head:
-      return 'head.png';
+      return 'head.png'
     case Slot.shoulders:
-      return 'shoulders.png';
+      return 'shoulders.png'
     case Slot.waist:
-      return 'waist.png';
+      return 'waist.png'
     case Slot.hands:
-      return 'hands.png';
+      return 'hands.png'
     case Slot.feet:
-      return 'feet.png';
+      return 'feet.png'
     case Slot.chest:
-      return 'chest.png';
+      return 'chest.png'
     case Slot.ring:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.ring1:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.ring2:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.neck:
-      return 'neck.png';
+      return 'neck.png'
     case OnehandedWeapon.dagger:
-      return 'dagger.png';
+      return 'dagger.png'
     case OnehandedWeapon.shield:
-      return 'shield.png';
+      return 'shield.png'
     case OnehandedWeapon.axe:
-      return 'axe.png';
+      return 'axe.png'
     case OnehandedWeapon.mace:
-      return 'hammer.png';
+      return 'hammer.png'
     case OnehandedWeapon.sword:
-      return 'sword.png';
+      return 'sword.png'
     case TwohandedWeapon.axe:
-      return 'axe.png';
+      return 'axe.png'
     case TwohandedWeapon.bow:
-      return 'bow.png';
+      return 'bow.png'
     case TwohandedWeapon.fireStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.iceStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.lightningStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.mace:
-      return 'hammer.png';
+      return 'hammer.png'
     case TwohandedWeapon.restorationStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.sword:
-      return 'sword.png';
+      return 'sword.png'
     default:
-      return '';
+      return ''
   }
-};
+}
 
 const getGearSlot = (slot: ISetSelection) => {
   if (!slot.type) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/jewelry/${getImageSource(slot.slot)}`;
+    }/gear/jewelry/${getImageSource(slot.slot)}`
   }
   if (slot.type === WeaponType.onehanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/onehanded/${getImageSource(slot.weaponType)}`;
+    }/gear/onehanded/${getImageSource(slot.weaponType)}`
   } else if (slot.type === WeaponType.twohanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/twohanded/${getImageSource(slot.weaponType)}`;
+    }/gear/twohanded/${getImageSource(slot.weaponType)}`
   } else if (slot.type === ArmorType.lightArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/light/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else if (slot.type === ArmorType.mediumArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/medium/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else if (slot.type === ArmorType.heavyArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   }
-};
+}
 
 export interface IGearSlotProps {
-  slot: ISetSelection;
-  droppable?: boolean;
-  group: string;
-  size?: 'normal' | 'small';
+  slot: ISetSelection
+  droppable?: boolean
+  group: string
+  size?: 'normal' | 'small'
 }
 
 export interface IDragProps {
-  slot: ISetSelection;
-  group: string;
+  slot: ISetSelection
+  group: string
 }
 
 export default ({
@@ -176,9 +176,9 @@ export default ({
   group,
   size = 'normal',
 }: IGearSlotProps) => {
-  const [, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext)
 
-  const [{ isDragging, didDrop }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     item: {
       type: slot.slot,
       set: slot.selectedSet,
@@ -187,11 +187,10 @@ export default ({
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop(),
     }),
-  });
+  })
 
-  const [{ canDrop, isOver }, drop] = useDrop({
+  const [{ canDrop }, drop] = useDrop({
     accept: [
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
@@ -209,14 +208,12 @@ export default ({
           weaponType: item.weaponType,
           group,
         },
-      });
+      })
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver(),
     }),
-  });
-  console.log(slot.selectedSet);
+  })
   return (
     <div style={{ margin: '5px 10px 5px 10px' }}>
       <GearFrame
@@ -224,7 +221,9 @@ export default ({
         canDrop={droppable && canDrop}
         hasIcon={slot.selectedSet !== null && slot.selectedSet !== undefined}
         ref={droppable ? drop : undefined}
-        backgroundSource={`${getGearSlot(slot)}`}
+        backgroundSource={`${
+          process.env.REACT_APP_IMAGE_SERVICE
+        }/gear/slots/${getImageSource(slot.slot)}`}
       >
         {slot.selectedSet && isDragging ? (
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
@@ -237,15 +236,15 @@ export default ({
         )}
       </GearFrame>
     </div>
-  );
-};
+  )
+}
 
 export const DisplaySlot = ({
   slot,
   size,
 }: {
-  slot: ISetSelection;
-  size: 'normal' | 'small';
+  slot: ISetSelection
+  size: 'normal' | 'small'
 }) => {
   return (
     <GearFrame
@@ -253,11 +252,11 @@ export const DisplaySlot = ({
       hasIcon={slot.icon !== undefined}
       backgroundSource={getImageSource(slot.slot)}
     >
-      {slot.icon !== undefined ? (
-        <Popover placement="left" content={<GearCardContent gear={slot} />}>
+      {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
+        <Popover placement='left' content={<GearCardContent gear={slot} />}>
           <GearImg size={size} src={getGearSlot(slot)} />
         </Popover>
       ) : null}
     </GearFrame>
-  );
-};
+  )
+}
