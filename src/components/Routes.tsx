@@ -1,13 +1,12 @@
 import React from 'react'
 import { Route, Switch, RouteProps, Redirect } from 'react-router'
 import Home from '../pages/home/Home'
-import Build from '../pages/build/Build'
 import Setup from '../pages/setup/Setup'
 import Raid from '../pages/raid/Raid'
 import Verify from './Verify'
 import { Spin } from 'antd'
-import RaidReview from '../pages/raidReview/RaidReview'
-import BuildReview from '../pages/buildReview/BuildReview'
+import RaidReview from '../pages/raid/Review/RaidReview'
+import BuildReview from '../pages/build/Review/BuildReview'
 import BuildWrapper from '../pages/build/BuildWrapper'
 
 interface IProtectedRouteProps extends RouteProps {

@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import Flex from '../../components/Flex'
+import Flex from '../../../components/Flex'
 import { Typography, Layout, Divider } from 'antd'
-import GearView from '../../components/GearView'
-import SkillView from '../../components/SkillView'
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../build/Skills/AbilityBar'
-import { IBuildState } from '../build/BuildStateContext'
+import GearView from '../../../components/GearView'
+import SkillView from '../../../components/SkillView'
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
+import { IBuildState } from '../BuildStateContext'
 
 const { Content } = Layout
 const { Title, Text } = Typography

@@ -2,14 +2,12 @@ import React, { useState, useReducer, useEffect } from 'react';
 import {
   BuildContext,
   buildReducer,
-  defaultBuildState,
-  IBuildState,
   SlotType,
   TwohandedWeapon,
   OnehandedWeapon,
   WeaponType,
 } from './BuildStateContext';
-import { RouteComponentProps, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import {
   Layout,
   Button,
@@ -24,9 +22,9 @@ import Consumables from './consumables/Consumables';
 import Sets from './Sets/Sets';
 import Skills from './Skills/Skills';
 import RaceClass from './RaceAndClass/RaceClass';
-import BuildReview from '../buildReview/BuildReview';
+import BuildReview from './Review/BuildReview';
 import gql from 'graphql-tag';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import Flex from '../../components/Flex';
 import { handleCreateSave, handleEditSave } from './util';
 

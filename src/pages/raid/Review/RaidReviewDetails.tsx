@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Flex from '../../components/Flex';
+import Flex from '../../../components/Flex';
 import { Card, Typography, Divider, Descriptions, Icon } from 'antd';
-import { IRaidState } from '../raid/RaidStateContext';
+import { IRaidState } from '../RaidStateContext';
 import { Redirect } from 'react-router';
-import BuildCard from '../raid/builds/BuildCard';
+import BuildCard from '../builds/BuildCard';
+import GearCard from '../../build/Sets/GearCard';
 
 const { Title, Text } = Typography;
 
@@ -20,22 +21,29 @@ const RaidHeader = styled(Flex)`
 `;
 const RaidContent = styled(Flex)`
   width: 100%;
-  height: 100%;
   flex-wrap: wrap;
   max-height: 600px;
 `;
-const GeneralCard = styled(Card)`
+const LeftSide = styled(Flex)`
   flex: 1;
   margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
+  background-color: white;
   min-width: 300px;
 `;
-const BuildsCard = styled(Card)`
+const RightSide = styled(Flex)`
   flex: 2;
   flex-wrap: wrap;
   margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
-  overflow-y: auto;
+  background-color: white;
+  overflow-y: scroll;
   min-width: 300px;
 `;
 const CardList = styled(Flex)`
@@ -64,29 +72,23 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
     return (
       <Wrapper direction="column">
         <RaidContent direction="row" align="flex-start">
-          <GeneralCard title={<Title level={2}>General Information</Title>}>
-            <Descriptions title={name} layout="vertical">
-              <Descriptions.Item label="Description">
-                {description}
-              </Descriptions.Item>
-              <Descriptions.Item label="Application Area">
-                {applicationArea}
-              </Descriptions.Item>
-              <Descriptions.Item label="Group Size">
-                <div>
-                  <Icon type="people" />
-                  {groupSize}
-                </div>
-              </Descriptions.Item>
-            </Descriptions>
-          </GeneralCard>
-          <BuildsCard title={<Title level={2}>Builds</Title>}>
+          <Card>
+            <Title level={2} style={{ textAlign: 'center' }}>
+              {name}
+            </Title>
+            <Title level={3}>Group size:</Title>
+            <Text>{groupSize}</Text>
+            <Title level={3}>Application area:</Title>
+            <Text>{applicationArea}</Text>
+            <Title level={3}>Description:</Title>
+            <Text>{description}</Text>
+          </Card>
+          <Card>
+            <Title level={2}>Builds</Title>
             {roles.map(role => {
               return (
                 <>
-                  <Divider>
-                    <Title level={3}>{role.roleName}</Title>
-                  </Divider>
+                  <Divider>{role.roleName}</Divider>
                   <CardList direction="row">
                     {role.builds.map((build, index) => {
                       return (
@@ -97,7 +99,7 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
                 </>
               );
             })}
-          </BuildsCard>
+          </Card>
         </RaidContent>
       </Wrapper>
     );

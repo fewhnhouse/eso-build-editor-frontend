@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { withTheme, ThemeProps } from 'styled-components';
-import { ITheme } from '../../components/globalStyles';
+import { ITheme } from '../../../components/globalStyles';
 import {
   IBuildState,
   defaultBuildState,
   BuildContext,
-} from '../build/BuildStateContext';
+} from '../BuildStateContext';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import BuildReviewDetails from './BuildReviewDetails';
