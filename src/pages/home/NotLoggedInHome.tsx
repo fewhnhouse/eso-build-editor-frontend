@@ -9,9 +9,9 @@ const { Search } = Input
 const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`
+  display: flex;
   padding-top: 20px;
   flex-wrap: wrap;
-  max-width: 800px;
 `
 
 const LeftSide = styled(Flex)`
@@ -25,6 +25,7 @@ const LeftSide = styled(Flex)`
   margin-right: 20px;
   height: 300px;
   background-color: white;
+  max-width: 400px;
 `
 
 const Center = styled(Flex)`
@@ -38,6 +39,7 @@ const Center = styled(Flex)`
   margin-right: 20px;
   height: 300px;
   background-color: white;
+  max-width: 400px;
 `
 const StyledTitle = styled.h1`
   margin-top: 20px;
@@ -55,6 +57,7 @@ const RightSide = styled(Flex)`
   margin-right: 20px;
   background-color: white;
   height: 300px;
+  max-width: 400px;
 `
 
 const HomeHeader = styled.div`
