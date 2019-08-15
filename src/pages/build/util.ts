@@ -5,10 +5,7 @@ import {
   ISkillSelection,
   WeaponType,
 } from './BuildStateContext';
-import { message, notification } from 'antd';
-import React from 'react';
 import {
-  MutationFunction,
   MutationFunctionOptions,
   ExecutionResult,
 } from '@apollo/react-common';
@@ -46,7 +43,7 @@ export const handleEditSave = async (
     applicationArea,
     role,
     name,
-    mainResource,
+   // mainResource,
     description,
   }: IBuildState = state!;
 
@@ -202,7 +199,7 @@ export const handleCreateSave = async (
     applicationArea,
     role,
     name,
-    mainResource,
+   // mainResource,
     description,
   }: IBuildState = state!;
 

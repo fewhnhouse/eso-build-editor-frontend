@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Icon, Button, Input } from 'antd'
+import { Typography, Divider, Input } from 'antd'
 import Flex from '../../components/Flex'
 import { header } from '../../assets/backgrounds/index'
 
 const { Search } = Input
-
 const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`

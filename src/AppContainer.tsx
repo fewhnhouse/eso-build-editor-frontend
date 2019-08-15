@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react' // { useState, useEffect }
+import React, { useState, useEffect } from 'react'
 import './App.css'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom' // Redirect
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'
-import {
-  Layout,
-  Menu,
-  Button,
-  Popover,
-  Avatar,
-  Spin,
-  Dropdown,
-  Icon,
-} from 'antd' // Icon
+import { Layout, Menu, Button, Popover, Avatar, Spin, Dropdown, Icon } from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -59,8 +50,8 @@ const ME = gql`
   }
 `
 
-const AppContainer = ({ location, match }: RouteComponentProps<any>) => {
-  const { loading, error, data, client } = useQuery(ME)
+const AppContainer = ({ location }: RouteComponentProps<any>) => {
+  const { loading, error, data } = useQuery(ME)
   const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined)
   const handleLogout = () => {
     setLoggedIn(false)

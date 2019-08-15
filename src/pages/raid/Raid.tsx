@@ -6,15 +6,13 @@ import {
   Button,
   Steps,
   Tooltip,
-  message,
   notification,
 } from 'antd';
-import { RouteComponentProps, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import RaidGeneral from './general/RaidGeneral';
 import {
   RaidContext,
   raidReducer,
-  defaultRaidState,
   IRole,
 } from './RaidStateContext';
 import Builds from './builds/Builds';

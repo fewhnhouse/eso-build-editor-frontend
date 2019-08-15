@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, Card, Divider, Typography } from 'antd';
+import { List, Card, Typography } from 'antd';
 import styled from 'styled-components';
 import { Redirect } from 'react-router';
 

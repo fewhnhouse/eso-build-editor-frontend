@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, RouteProps, Redirect } from 'react-router';
 import Home from '../pages/home/Home';
 import Setup from '../pages/setup/Setup';
-import Raid from '../pages/raid/Raid';
 import Verify from './Verify';
 import { Spin } from 'antd';
 import RaidReview from '../pages/raid/Review/RaidReview';

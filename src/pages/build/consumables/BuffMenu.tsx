@@ -89,7 +89,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   text-align: left;
 `
-const getDrinkBuffDescription = (
+/*const getDrinkBuffDescription = (
   healthRec: number,
   magickaRec: number,
   staminaRec: number
@@ -131,7 +131,7 @@ const getFoodBuffDescription = (
   } else {
     return `Increase Stamina Recovery by ${maxStamina}.`
   }
-}
+}*/
 
 export default () => {
   const { data, error, loading } = useQuery<{ buffs: ISpecialBuff[] }, {}>(

@@ -17,8 +17,8 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         slot,
         group,
         icon,
-        type,
-        id,
+        // type,
+        // id,
         weaponType,
       }: {
         id: string;

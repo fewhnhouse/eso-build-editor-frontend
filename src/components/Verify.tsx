@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { RouteComponentProps } from 'react-router';
 import { message, Typography } from 'antd';
@@ -25,7 +25,7 @@ const Container = styled.div`
 `;
 export default ({ match }: RouteComponentProps<{ token: string }>) => {
   const { token } = match.params;
-  const [mutate, { error, loading, data }] = useMutation(VERIFY, {
+  const [mutate, { error, data }] = useMutation(VERIFY, {
     variables: { token },
   });
   if (!token) {

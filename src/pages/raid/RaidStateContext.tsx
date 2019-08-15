@@ -1,12 +1,7 @@
-import React from 'react'; // { useReducer }
+import React from 'react';
 import { generalReducer } from './reducers/generalReducer';
 import { buildsReducer } from './reducers/buildsReducer';
-import {
-  ISkillSelection,
-  ISetSelection,
-  IBuild,
-} from '../build/BuildStateContext';
-import { ISkill } from '../../components/SkillSlot';
+import { IBuild } from '../build/BuildStateContext';
 
 export interface ISlot {
   id: number;

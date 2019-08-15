@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Flex from '../../../components/Flex';
-import { Typography, Layout, Divider, Card } from 'antd';
+import { Typography, Divider, Card } from 'antd';
 import GearView from '../../../components/GearView';
 import SkillView from '../../../components/SkillView';
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar';
 import { IBuildState } from '../BuildStateContext';
 import { classes, races } from '../RaceAndClass/data';
 
-const { Content } = Layout;
 const { Title, Text } = Typography;
 
 const MyAvatar = styled.img`
@@ -74,10 +73,10 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     buff,
     esoClass,
     race,
-    mainResource,
-    applicationArea,
-    role,
-    description,
+    // mainResource,
+    // applicationArea,
+    // role,
+    // description,
     newBarOne,
     newBarTwo,
   } = loadedData;
