@@ -7,6 +7,7 @@ import {
   SlotType,
   TwohandedWeapon,
   OnehandedWeapon,
+  WeaponType,
 } from './BuildStateContext';
 import { RouteComponentProps, Redirect } from 'react-router';
 import {
@@ -262,16 +263,74 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     }
   };
 
+  const {
+    frontbarSelection,
+    backbarSelection,
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    newBarOne,
+    newBarTwo,
+  } = state!;
+
+  const hasValidFrontbar = frontbarSelection[0].selectedSet
+    ? frontbarSelection[0].type === WeaponType.onehanded
+      ? frontbarSelection[1].selectedSet
+        ? true
+        : false
+      : true
+    : false;
+  const hasValidBackbar = backbarSelection[0].selectedSet
+    ? backbarSelection[0].type === WeaponType.onehanded
+      ? backbarSelection[1].selectedSet
+        ? true
+        : false
+      : true
+    : false;
+
+  const hasValidBigPieces = bigPieceSelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+  const hasValidSmallPieces = smallPieceSelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+  const hasValidJewelry = jewelrySelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+
+  const hasValidSkillBarOne = newBarOne.reduce(
+    (prev, curr) =>
+      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
+    true
+  );
+  const hasValidSkillBarTwo = newBarTwo.reduce(
+    (prev, curr) =>
+      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
+    true
+  );
+  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0;
+  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0;
+
   const isDisabled =
-    tab === 0 &&
-    (state.race === '' ||
-      state.esoClass ===
-        ''); /* ||
+    (tab === 0 && (state.race === '' || state.esoClass === '')) ||
     (tab === 1 &&
-      (state.abilityBarOne.find(skill => skill.id === 0) !== undefined ||
-        state.abilityBarTwo.find(skill => skill.id === 0) !== undefined ||
-        state.ultimateOne.id === 0 ||
-        state.ultimateTwo.id === 0))*/
+      !(
+        hasValidSkillBarOne &&
+        hasValidSkillBarTwo &&
+        hasValidUltimateOne &&
+        hasValidUltimateTwo
+      )) ||
+    (tab === 2 &&
+      !(
+        hasValidJewelry &&
+        hasValidBigPieces &&
+        hasValidSmallPieces &&
+        hasValidFrontbar &&
+        hasValidBackbar
+      ));
 
   const setTooltipTitle = () => {
     if (!isDisabled) {
@@ -281,9 +340,9 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
       case 0:
         return 'Select a Race and a Class to progress.';
       case 1:
-        return 'Fill your bars with Skills to progress.';
+        return 'Slot Skills and Ultimates to progress.';
       case 2:
-        return 'Slot sets to progress.';
+        return 'Slot Armor, Weapons and Jewelry to progress.';
     }
   };
 

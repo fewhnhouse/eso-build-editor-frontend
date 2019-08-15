@@ -3,6 +3,7 @@ import {
   IMundus,
   ISetSelection,
   ISkillSelection,
+  WeaponType,
 } from './BuildStateContext';
 import { message, notification } from 'antd';
 import React from 'react';
@@ -27,7 +28,7 @@ export const handleEditSave = async (
   mundusStone: IMundus,
   buff: ISpecialBuff,
   ultimateOne?: ISkill,
-  ultimateTwo?: ISkill,
+  ultimateTwo?: ISkill
 ) => {
   const {
     id,
@@ -69,36 +70,35 @@ export const handleEditSave = async (
       weaponType: setSelection.weaponType,
     },
   });
-  console.log(frontbarSelection, backbarSelection, bigPieceSelection, smallPieceSelection, jewelrySelection, newBarOne, newBarTwo)
-  const frontbar = await frontbarSelection.map(async setSelection => {
+  await frontbarSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     });
   });
-  const backbar = await backbarSelection.map(async setSelection => {
+  await backbarSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     });
   });
-  const bigPieces = await bigPieceSelection.map(async setSelection => {
+  await bigPieceSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     });
   });
-  const smallPieces = await smallPieceSelection.map(async setSelection => {
+  await smallPieceSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     });
   });
-  const jewelry = await jewelrySelection.map(async setSelection => {
+  await jewelrySelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
@@ -116,14 +116,14 @@ export const handleEditSave = async (
           : undefined,
     },
   });
-  newBarOne.map(async skillSelection => {
+  await newBarOne.map(async skillSelection => {
     return updateSkillSelection({
       variables: {
         ...createSkillVariables(skillSelection),
       },
     });
   });
-  newBarTwo.map(async skillSelection => {
+  await newBarTwo.map(async skillSelection => {
     return updateSkillSelection({
       variables: {
         ...createSkillVariables(skillSelection),
@@ -193,6 +193,61 @@ export const handleCreateSave = async (
     mainResource,
     description,
   }: IBuildState = state!;
+
+  const hasValidFrontbar = frontbarSelection[0].selectedSet
+    ? frontbarSelection[0].type === WeaponType.onehanded
+      ? frontbarSelection[1].selectedSet
+        ? true
+        : false
+      : true
+    : false;
+  const hasValidBackbar = backbarSelection[0].selectedSet
+    ? backbarSelection[0].type === WeaponType.onehanded
+      ? backbarSelection[1].selectedSet
+        ? true
+        : false
+      : true
+    : false;
+
+  const hasValidBigPieces = bigPieceSelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+  const hasValidSmallPieces = smallPieceSelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+  const hasValidJewelry = jewelrySelection.reduce(
+    (prev, curr) => (prev && curr.selectedSet ? true : false),
+    true
+  );
+
+  const hasValidSkillBarOne = newBarOne.reduce(
+    (prev, curr) =>
+      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
+    true
+  );
+  const hasValidSkillBarTwo = newBarTwo.reduce(
+    (prev, curr) =>
+      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
+    true
+  );
+  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0;
+  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0;
+
+  if (
+    !hasValidBackbar ||
+    !hasValidFrontbar ||
+    !hasValidBigPieces ||
+    !hasValidSmallPieces ||
+    !hasValidJewelry ||
+    !hasValidSkillBarOne ||
+    !hasValidSkillBarTwo ||
+    !hasValidUltimateOne ||
+    !hasValidUltimateTwo
+  ) {
+    throw Error('Invalid build state.');
+  }
 
   const createSetVariables = (setSelections: ISetSelection[]) => ({
     slots: setSelections.map(setSelection => setSelection.slot),
