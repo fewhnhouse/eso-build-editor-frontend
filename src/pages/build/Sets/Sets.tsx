@@ -42,7 +42,6 @@ export default ({ edit }: { edit: boolean }) => {
   }, [state!.selectedSet])
 
   const { setTabKey } = state!
-  console.log(collapsed)
   const handleTabChange = (key: string) => {
     dispatch!({ type: 'SET_SET_TAB_KEY', payload: { setTabKey: key } })
   }

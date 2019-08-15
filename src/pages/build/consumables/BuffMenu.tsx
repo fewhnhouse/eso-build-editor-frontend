@@ -8,15 +8,15 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
 export interface ISpecialBuff {
-  name: string;
-  buffDescription: string;
-  description: string;
-  duration: number;
-  notes: string;
-  icon: string;
-  type?: string;
-  buffType: string;
-  quality: 1 | 2 | 3 | 4;
+  name: string
+  buffDescription: string
+  description: string
+  duration: number
+  notes: string
+  icon: string
+  type?: string
+  buffType: string
+  quality: 1 | 2 | 3 | 4
 }
 
 const { CheckableTag } = Tag
@@ -138,7 +138,11 @@ export default () => {
     GET_BUFFS
   )
   if (loading) {
-    return <Spin />
+    return (
+      <ListContainer>
+        <Spin style={{ marginTop: 5 }} />
+      </ListContainer>
+    )
   }
   if (error) {
     return <div>Error.</div>

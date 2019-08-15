@@ -81,17 +81,23 @@ interface IMenuProps {
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default ({ collapsed, setCollapsed }: IMenuProps) => {
-  const setQuery = useQuery(GET_SETS)
-
-  if (setQuery.error) {
+  const { error, loading, data } = useQuery(GET_SETS)
+  if (loading) {
+    return (
+      <ListContainer collapsed={false}>
+        <Spin style={{ marginTop: 5 }} />
+      </ListContainer>
+    )
+  }
+  if (error) {
     return <div>Error.</div>
-  } else if (setQuery.data && setQuery.data.sets) {
+  } else if (data && data.sets) {
     return (
       <SetList
         collapsed={collapsed}
         setCollapsed={setCollapsed}
-        sets={setQuery.data.sets}
-        loading={setQuery.loading}
+        sets={data.sets}
+        loading={loading}
       />
     )
   } else {
@@ -131,6 +137,7 @@ interface ISetListProps extends IMenuProps {
   sets: any[]
   loading: boolean
 }
+
 const SetList = ({ sets, loading, collapsed, setCollapsed }: ISetListProps) => {
   const [state, dispatch] = useContext(BuildContext)
   const [searchText, setSearchText] = useState('')

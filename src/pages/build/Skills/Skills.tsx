@@ -218,7 +218,11 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
 export default ({ edit }: { edit: boolean }) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
-    return <Spin />
+    return (
+      <div style={{ height: '100%', width: '100%' }}>
+        <Spin style={{ marginTop: 10 }} />
+      </div>
+    )
   }
   if (error) {
     return <div>Error.</div>
