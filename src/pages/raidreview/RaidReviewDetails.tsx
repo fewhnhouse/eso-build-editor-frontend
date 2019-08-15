@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Flex from '../../components/Flex';
-import { Card, Typography, Divider } from 'antd';
+import { Card, Typography, Divider, Descriptions, Icon } from 'antd';
 import { IRaidState } from '../raid/RaidStateContext';
 import { Redirect } from 'react-router';
 import BuildCard from '../raid/builds/BuildCard';
@@ -65,15 +65,20 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
       <Wrapper direction="column">
         <RaidContent direction="row" align="flex-start">
           <GeneralCard title={<Title level={2}>General Information</Title>}>
-            <Title level={2} style={{ textAlign: 'center' }}>
-              {name}
-            </Title>
-            <Title level={3}>Group size:</Title>
-            <Text>{groupSize}</Text>
-            <Title level={3}>Application area:</Title>
-            <Text>{applicationArea}</Text>
-            <Title level={3}>Description:</Title>
-            <Text>{description}</Text>
+            <Descriptions title={name} layout="vertical">
+              <Descriptions.Item label="Description">
+                {description}
+              </Descriptions.Item>
+              <Descriptions.Item label="Application Area">
+                {applicationArea}
+              </Descriptions.Item>
+              <Descriptions.Item label="Group Size">
+                <div>
+                  <Icon type="people" />
+                  {groupSize}
+                </div>
+              </Descriptions.Item>
+            </Descriptions>
           </GeneralCard>
           <BuildsCard title={<Title level={2}>Builds</Title>}>
             {roles.map(role => {
