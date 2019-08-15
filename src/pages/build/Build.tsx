@@ -148,7 +148,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
   };
-  const [updateBuild] = useMutation<any, any>(UPDATE_BUILD);
+  const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD);
 
   const [updateSetSelection] = useMutation<any, any>(UPDATE_SET_SELECTION);
   const [updateSkillSelection] = useMutation<any, any>(UPDATE_SKILL_SELECTION);
@@ -159,15 +159,22 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [createSetSelections] = useMutation<any, ISetSelectionData>(
     CREATE_SET_SELECTIONS
   );
-  const [createBuild, { data }] = useMutation<any, any>(CREATE_BUILD);
+  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD);
 
   const { mundusStone, buff, ultimateOne, ultimateTwo } = state!;
 
   useEffect(() => {
-    if (data && data.createBuild) {
-      setRedirect(data.createBuild.id);
+    if (
+      (createBuildResult.data && createBuildResult.data.createRaid) ||
+      (updateBuildResult.data && updateBuildResult.data.updateRaid)
+    ) {
+      setRedirect(
+        createBuildResult.data
+          ? createBuildResult.data.createRaid.id
+          : updateBuildResult.data.updateRaid.id
+      );
     }
-  }, [data]);
+  }, [createBuildResult.data, updateBuildResult.data]);
 
   const handleSave = async () => {
     setLoading(true);

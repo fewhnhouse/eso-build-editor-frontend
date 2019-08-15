@@ -84,16 +84,23 @@ export default ({
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
   };
-  const [updateRaid] = useMutation<any, any>(UPDATE_RAID);
+  const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID);
 
   const createRaidMutation = useMutation<any, any>(CREATE_RAID);
-  const [createRaid, { data }] = createRaidMutation;
+  const [createRaid, createRaidResult] = createRaidMutation;
 
   useEffect(() => {
-    if (data && data.createRaid) {
-      setRedirect(data.createRaid.id);
+    if (
+      (createRaidResult.data && createRaidResult.data.createRaid) ||
+      (updateRaidResult.data && updateRaidResult.data.updateRaid)
+    ) {
+      setRedirect(
+        createRaidResult.data
+          ? createRaidResult.data.createRaid.id
+          : updateRaidResult.data.updateRaid.id
+      );
     }
-  }, [data]);
+  }, [createRaidResult.data, updateRaidResult.data]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -195,7 +202,7 @@ export default ({
           <Redirect to={`${path}/0`} />
         )}
         {redirect !== '' ? (
-          <Redirect to={`/raidreview/${data.createRaid.id}`} push />
+          <Redirect to={`/raidreview/${redirect}`} push />
         ) : (
           ''
         )}

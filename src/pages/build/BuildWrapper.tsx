@@ -14,6 +14,7 @@ const GET_BUILD = gql`
     type
     weaponType
     selectedSet {
+      id
       name
       location
       type

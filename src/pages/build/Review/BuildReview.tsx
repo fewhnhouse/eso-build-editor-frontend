@@ -23,11 +23,13 @@ interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
 
 const BUILD = gql`
   fragment SetSelection on SetSelection {
+    id
     icon
     slot
     type
     weaponType
     selectedSet {
+      id
       name
       location
       type
@@ -55,6 +57,7 @@ const BUILD = gql`
   }
 
   fragment Skill on Skill {
+    id
     name
     skillId
     icon

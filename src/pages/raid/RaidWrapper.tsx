@@ -8,6 +8,7 @@ import { defaultRaidState } from './RaidStateContext';
 
 const GET_RAID = gql`
   fragment SetSelection on SetSelection {
+    id
     icon
     slot
     type
