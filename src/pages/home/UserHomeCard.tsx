@@ -96,7 +96,7 @@ const UserHomeCard = ({ userBuildData, userRaidData }: IUserDataProps) => {
                 <StyledCard
                   key={find.id}
                   hoverable
-                  onClick={() => handleClick(`/editBuild/${find.id}/0`)}
+                  onClick={() => handleClick(`/buildReview/${find.id}`)}
                 >
                   <Title>
                     {find.name ? find.name : 'Unnamed build'}{' '}
