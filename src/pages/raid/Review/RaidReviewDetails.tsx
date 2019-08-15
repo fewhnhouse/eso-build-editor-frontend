@@ -13,45 +13,29 @@ const Wrapper = styled(Flex)`
   width: 100%;
   padding: 20px;
 `;
-const RaidHeader = styled(Flex)`
-  flex: 1;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 10px;
-`;
+
 const RaidContent = styled(Flex)`
   width: 100%;
   flex-wrap: wrap;
   max-height: 600px;
 `;
-const LeftSide = styled(Flex)`
+const GeneralInformation = styled(Card)`
   flex: 1;
   margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
-  background-color: white;
+  height: 100%;
   min-width: 300px;
 `;
-const RightSide = styled(Flex)`
+const BuildInformation = styled(Card)`
   flex: 2;
   flex-wrap: wrap;
   margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
-  background-color: white;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-width: 300px;
 `;
 const CardList = styled(Flex)`
   flex-wrap: wrap;
-`;
-const StyledCard = styled(Card)`
-  width: 200px;
-  margin: 10px;
 `;
 
 interface IRaidReviewDetailsProps {
@@ -72,23 +56,23 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
     return (
       <Wrapper direction="column">
         <RaidContent direction="row" align="flex-start">
-          <Card>
-            <Title level={2} style={{ textAlign: 'center' }}>
-              {name}
-            </Title>
-            <Title level={3}>Group size:</Title>
+          <GeneralInformation title={<Title level={2}>{name}</Title>}>
+            <Title level={4}>Group size:</Title>
             <Text>{groupSize}</Text>
-            <Title level={3}>Application area:</Title>
+            <Divider />
+            <Title level={4}>Application area:</Title>
             <Text>{applicationArea}</Text>
-            <Title level={3}>Description:</Title>
+            <Divider />
+            <Title level={4}>Description:</Title>
             <Text>{description}</Text>
-          </Card>
-          <Card>
-            <Title level={2}>Builds</Title>
+          </GeneralInformation>
+          <BuildInformation title={<Title level={2}>Builds</Title>}>
             {roles.map(role => {
               return (
                 <>
-                  <Divider>{role.roleName}</Divider>
+                  <Divider>
+                    <Title level={3}>{role.roleName}</Title>
+                  </Divider>
                   <CardList direction="row">
                     {role.builds.map((build, index) => {
                       return (
@@ -99,7 +83,7 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
                 </>
               );
             })}
-          </Card>
+          </BuildInformation>
         </RaidContent>
       </Wrapper>
     );
