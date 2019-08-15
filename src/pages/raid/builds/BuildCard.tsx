@@ -100,7 +100,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
   const handleDeleteClick = () => {
     dispatch!({
       type: 'REMOVE_BUILD',
-      payload: { buildId: item.id, roleName: role ? role.roleName : '' },
+      payload: { buildId: item.id, name: role ? role.name : '' },
     });
   };
   return (

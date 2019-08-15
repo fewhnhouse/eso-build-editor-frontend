@@ -51,6 +51,8 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
     setRedirect(path);
   };
 
+  console.log(loadedData)
+
   if (path !== '') {
     return <Redirect push to={`${path}`} />;
   } else {
@@ -72,7 +74,7 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
               return (
                 <>
                   <Divider>
-                    <Title level={3}>{role.roleName}</Title>
+                    <Title level={3}>{role.name}</Title>
                   </Divider>
                   <CardList direction="row">
                     {role.builds.map((build, index) => {

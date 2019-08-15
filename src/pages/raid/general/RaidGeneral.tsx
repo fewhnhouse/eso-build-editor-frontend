@@ -21,18 +21,18 @@ const marks = {
   24: '24',
 };
 
-const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
+interface IRaidGeneralProps {
+  edit: boolean;
+}
+const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const [state, dispatch] = useContext(RaidContext);
 
-  const {
-    name,
-    description,
-    applicationArea,
-    groupSize,
-  } = state!;
+  const { name, description, applicationArea, groupSize } = state!;
 
   useEffect(() => {
-    localStorage.setItem('raidState', JSON.stringify(state));
+    if (!edit) {
+      localStorage.setItem('raidState', JSON.stringify(state));
+    }
   }, [state]);
 
   const handleRaidNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,4 +153,4 @@ const RaidGeneral = ({ match }: RouteComponentProps<{ id: string }>) => {
   );
 };
 
-export default withRouter(RaidGeneral);
+export default RaidGeneral;

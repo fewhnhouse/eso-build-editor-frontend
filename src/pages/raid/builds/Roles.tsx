@@ -37,7 +37,7 @@ const RoleDropper = ({ role }: { role: IRole }) => {
       console.log(item);
       dispatch!({
         type: 'ADD_BUILD',
-        payload: { roleName: role.roleName, build: item.build },
+        payload: { name: role.name, build: item.build },
       });
     },
     collect: monitor => ({
@@ -65,7 +65,7 @@ export default () => {
   const [editRole, setEditRole] = useState('');
 
   const handleBtnClick = () => {
-    dispatch!({ type: 'ADD_ROLE', payload: { role } });
+    dispatch!({ type: 'ADD_ROLE', payload: { name: role } });
     setRole('');
   };
 
@@ -77,7 +77,7 @@ export default () => {
   const handleDeleteClick = (roleName: string) => () => {
     dispatch!({
       type: 'REMOVE_ROLE',
-      payload: { roleName },
+      payload: { name: roleName },
     });
   };
 
@@ -126,7 +126,7 @@ export default () => {
                     onChange={handleEditRoleChange}
                   />
                 ) : (
-                  <Typography.Title level={2}>{role.roleName}</Typography.Title>
+                  <Typography.Title level={2}>{role.name}</Typography.Title>
                 )}
                 <Flex direction="row">
                   {edit ? (
@@ -138,7 +138,7 @@ export default () => {
                         icon="save"
                         ghost
                         type="primary"
-                        onClick={handleSaveClick(role.roleName)}
+                        onClick={handleSaveClick(role.name)}
                       >
                         Save
                       </StyledButton>
@@ -149,7 +149,7 @@ export default () => {
                         icon="delete"
                         ghost
                         type="danger"
-                        onClick={handleDeleteClick(role.roleName)}
+                        onClick={handleDeleteClick(role.name)}
                       >
                         Delete
                       </StyledButton>
@@ -157,7 +157,7 @@ export default () => {
                         icon="edit"
                         ghost
                         type="primary"
-                        onClick={handleEditClick(role.roleName)}
+                        onClick={handleEditClick(role.name)}
                       >
                         Edit
                       </StyledButton>
@@ -199,7 +199,7 @@ export default () => {
               disabled={
                 role === '' ||
                 roles.find(
-                  existingRole => existingRole && existingRole.roleName === role
+                  existingRole => existingRole && existingRole.name === role
                 ) !== undefined
               }
               type="primary"

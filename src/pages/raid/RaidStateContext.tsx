@@ -1,7 +1,11 @@
 import React from 'react'; // { useReducer }
 import { generalReducer } from './reducers/generalReducer';
 import { buildsReducer } from './reducers/buildsReducer';
-import { ISkillSelection, ISetSelection, IBuild } from '../build/BuildStateContext';
+import {
+  ISkillSelection,
+  ISetSelection,
+  IBuild,
+} from '../build/BuildStateContext';
 import { ISkill } from '../../components/SkillSlot';
 
 export interface ISlot {
@@ -9,6 +13,7 @@ export interface ISlot {
   index: number;
 }
 export interface IRaidState {
+  id?: string;
   name: string;
   applicationArea: string;
   description: string;
@@ -16,7 +21,6 @@ export interface IRaidState {
   groupSize: number;
   canEdit: string[];
   canView: string[];
-  builds: IBuild[];
   roles: IRole[];
 }
 
@@ -27,7 +31,8 @@ export interface IUser {
 }
 
 export interface IRole {
-  roleName: string;
+  id?: string;
+  name: string;
   builds: IBuild[];
 }
 
@@ -39,7 +44,6 @@ export const defaultRaidState: IRaidState = {
   description: '',
   canEdit: [],
   canView: [],
-  builds: [],
   roles: [],
 };
 

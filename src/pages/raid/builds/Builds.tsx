@@ -5,11 +5,13 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { RaidContext } from '../RaidStateContext';
 
-export default () => {
+export default ({ edit }: { edit: boolean }) => {
   const [state] = useContext(RaidContext);
 
   useEffect(() => {
-    localStorage.setItem('raidState', JSON.stringify(state));
+    if (!edit) {
+      localStorage.setItem('raidState', JSON.stringify(state));
+    }
   }, [state]);
   return (
     <DndProvider backend={HTML5Backend}>

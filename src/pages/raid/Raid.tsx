@@ -17,6 +17,7 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import Flex from '../../components/Flex';
 import RaidReview from './Review/RaidReview';
+import { handleCreateSave, handleEditSave } from './util';
 
 const { Footer, Content } = Layout;
 const { Step } = Steps;
@@ -53,30 +54,41 @@ const CREATE_ROLE = gql`
   }
 `;
 
-export default ({ match }: RouteComponentProps<{ id: string }>) => {
-  const savedRaidState = localStorage.getItem('raidState');
+const UPDATE_RAID = gql`
+  mutation updateRaid($where: RaidWhereUniqueInput!, $data: RaidUpdateInput!) {
+    updateRaid(where: $where, data: $data) {
+      id
+    }
+  }
+`;
+
+const UPDATE_ROLE = gql`
+  mutation updateRole($where: RoleWhereUniqueInput!, $data: RoleUpdateInput!) {
+    updateRole(where: $where, data: $data) {
+      id
+    }
+  }
+`;
+interface IRaidProps {
+  raid: any;
+  pageIndex: number;
+  path: string;
+  edit?: boolean;
+}
+
+export default ({ raid, pageIndex, path, edit = false }: IRaidProps) => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => {
-    const savedRaidState = localStorage.getItem('raidState');
-    if (savedRaidState) {
-      console.log(JSON.parse(savedRaidState));
-      message.info('Your settings have been restored.');
-    }
-  }, []);
-  const [state, dispatch] = useReducer(
-    raidReducer,
-    savedRaidState ? JSON.parse(savedRaidState) : defaultRaidState
-  );
-  //goggle.de?search=finland
-  const { id } = match.params;
-  const [tab, setTab] = useState(parseInt(id, 10));
+  const [state, dispatch] = useReducer(raidReducer, raid);
+  const [tab, setTab] = useState(pageIndex || 0);
   const [redirect, setRedirect] = useState('');
 
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1);
   };
+  const [updateRaid] = useMutation<any, any>(UPDATE_RAID);
+  const [updateRole] = useMutation<any, any>(UPDATE_ROLE);
 
   const createRoleMutation = useMutation<any, any>(CREATE_ROLE);
   const [createRole] = createRoleMutation;
@@ -91,80 +103,67 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
 
   const handleSave = async () => {
     setLoading(true);
-    try {
-      const {
-        name,
-        roles,
-        applicationArea,
-        canEdit,
-        canView,
-        published,
-        builds,
-      } = state!;
-      console.log(roles);
-      const createdRoles = await Promise.all(
-        roles.map(
-          async role =>
-            await createRole({
-              variables: {
-                name: role.roleName,
-                buildIds: role.builds.map(build => build.id),
-              },
-            })
-        )
-      );
-
-      //make sure everyone who can edit can also view
-      const enhancedCanView: string[] = [
-        ...canView,
-        ...canEdit.filter(editId => !canView.includes(editId)),
-      ];
-
-      console.log(createdRoles);
-
-      await createRaid({
-        variables: {
-          data: {
-            name,
-            applicationArea,
-            canEdit: { connect: canEdit.map(id => ({ id })) },
-            canView: { connect: enhancedCanView.map(id => ({ id })) },
-            published,
-            roles: {
-              connect: createdRoles.map((createdRole: any) => ({
-                id: createdRole.data.createRole.id,
-              })),
-            },
-          },
-        },
-      });
-      notification.success({
-        message: 'Raid creation successful',
-        description: (
-          <Flex direction="column" align="center" justify="center">
-            <div>
-              Your raid was successfully saved. You can now view it and share it
-              with others!
-            </div>
-            <Flex
-              style={{ width: '100%', marginTop: 10 }}
-              direction="row"
-              align="center"
-              justify="space-between"
-            >
-              <Button icon="share-alt">Share link</Button>
+    if (edit) {
+      try {
+        await handleEditSave(state, updateRole, createRole, updateRaid);
+        notification.success({
+          message: 'Raid update successful',
+          description: (
+            <Flex direction="column" align="center" justify="center">
+              <div>
+                Your raid was successfully edited. You can now view it and share
+                it with others!
+              </div>
+              <Flex
+                style={{ width: '100%', marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
+              >
+                <Button icon="share-alt">Share link</Button>
+              </Flex>
             </Flex>
-          </Flex>
-        ),
-      });
-      localStorage.removeItem('raidState');
-    } catch (e) {
-      console.error(e);
-      notification.error({
-        message: 'Raid creation failed',
-        description: 'Your raid could not be saved. Try again later.',
-      });
+          ),
+        });
+      } catch (e) {
+        console.error(e);
+        notification.error({
+          message: 'Raid Update failed',
+          description: 'Your raid could not be updated. Try again later.',
+        });
+      }
+    } else {
+      try {
+        handleCreateSave(state, createRole, createRaid);
+        notification.success({
+          message: 'Raid creation successful',
+          description: (
+            <Flex direction="column" align="center" justify="center">
+              <div>
+                Your raid was successfully saved. You can now view it and share
+                it with others!
+              </div>
+              <Flex
+                style={{ width: '100%', marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
+              >
+                <Button icon="share-alt">Share link</Button>
+              </Flex>
+            </Flex>
+          ),
+        });
+        localStorage.removeItem('raidState');
+      } catch (e) {
+        console.error(e);
+        notification.error({
+          message: 'Raid creation failed',
+          description: 'Your raid could not be saved. Try again later.',
+        });
+      }
     }
+
     setLoading(false);
     setSaved(true);
   };
@@ -192,14 +191,14 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   return (
     <RaidContext.Provider value={[state, dispatch]}>
       <Container>
-        {id === '0' ? (
-          <RaidGeneral />
-        ) : id === '1' ? (
-          <Builds />
-        ) : id === '2' ? (
+        {pageIndex === 0 ? (
+          <RaidGeneral edit={edit} />
+        ) : pageIndex === 1 ? (
+          <Builds edit={edit} />
+        ) : pageIndex === 2 ? (
           <RaidReview local />
         ) : (
-          <Redirect to="/raid/0" />
+          <Redirect to={`${path}/0`} />
         )}
         {redirect !== '' ? (
           <Redirect to={`/raidreview/${data.createRaid.id}`} push />
@@ -253,7 +252,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
             {tab === 2 ? 'Save' : 'Next'}
           </TabButton>
         </Tooltip>
-        <Redirect to={`/raid/${tab}`} push />
+        <Redirect to={`${path}/${tab}`} push />
       </Footer>
     </RaidContext.Provider>
   );
