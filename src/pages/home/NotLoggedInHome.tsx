@@ -9,33 +9,37 @@ const { Search } = Input
 const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`
+  display: flex;
   padding-top: 20px;
-  width: 100%;
   flex-wrap: wrap;
 `
 
 const LeftSide = styled(Flex)`
   flex: 1;
-  background-color: white;
-  border: 1px lightgrey solid;
+  border-color: rgb(232, 232, 232);
+  background: 'white';
+  border-width: 2px;
   border-radius: 10px;
   padding: 20px;
   margin-left: 20px;
   margin-right: 20px;
   height: 300px;
-  background-color: #d1d1d1;
+  background-color: white;
+  max-width: 400px;
 `
 
 const Center = styled(Flex)`
   flex: 1;
-  background-color: white;
-  border: 1px lightgrey solid;
+  border-color: rgb(232, 232, 232);
+  background: 'white';
+  border-width: 2px;
   border-radius: 10px;
   padding: 20px;
   margin-left: 20px;
   margin-right: 20px;
   height: 300px;
-  background-color: #d1d1d1;
+  background-color: white;
+  max-width: 400px;
 `
 const StyledTitle = styled.h1`
   margin-top: 20px;
@@ -44,14 +48,16 @@ const StyledTitle = styled.h1`
 
 const RightSide = styled(Flex)`
   flex: 1;
-  background-color: white;
-  border: 1px lightgrey solid;
+  border-color: rgb(232, 232, 232);
+  background: 'white';
+  border-width: 2px;
   border-radius: 10px;
   padding: 20px;
   margin-left: 20px;
   margin-right: 20px;
-  background-color: #d1d1d1;
+  background-color: white;
   height: 300px;
+  max-width: 400px;
 `
 
 const HomeHeader = styled.div`
@@ -70,6 +76,7 @@ const HomeHeader = styled.div`
 
 const Content = styled.div`
   padding: 40px;
+  width: 100%;
 `
 
 export default () => {
@@ -85,29 +92,23 @@ export default () => {
       <Content>
         <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
         <Text style={{ maxWidth: '400px' }}>
-          Build Editor allows you to create and save builds and combine them to
+          Build Editor allows you to create and save builds and combine them to<br />
           complete raid setups - to be shared with friends, guilds and
-          communities, or saved privately as you choose.
+          communities,<br /> or saved privately as you choose.
         </Text>
         <Divider />
 
-        <Wrapper direction={'row'} justify={''} align={'flex-start'}>
-          <LeftSide direction={'column'} justify={'space-between'} align={''}>
+        <Wrapper direction={'row'} align={'flex-start'}>
+          <LeftSide direction={'column'} justify={'space-between'}>
             <Title level={3}>Builds</Title>
             <Text>Create, share, save and edit builds</Text>
-            <Button type='primary' ghost={true}>
-              Create
-            </Button>
           </LeftSide>
-          <Center direction={'column'} justify={'space-between'} align={''}>
+          <Center direction={'column'} justify={'space-between'}>
             <Title level={3}>Overview</Title>
           </Center>
-          <RightSide direction={'column'} justify={'space-between'} align={''}>
+          <RightSide direction={'column'} justify={'space-between'}>
             <Title level={3}>Raids</Title>
             <Text>Create, share, save and edit raids</Text>
-            <Button type='primary' ghost={true}>
-              Create
-            </Button>
           </RightSide>
         </Wrapper>
       </Content>
