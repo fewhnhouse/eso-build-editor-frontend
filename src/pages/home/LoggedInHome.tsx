@@ -6,6 +6,8 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import UserHomeCard from './UserHomeCard'
 import { Redirect } from 'react-router'
+import { wcdt } from '../../assets/backgrounds/index'
+
 
 const { Search } = Input
 const { Title } = Typography
@@ -33,7 +35,8 @@ const InputContainer = styled(Flex)`
   width: 100%;
   min-height: 150px;
   padding: 20px;
-  background: blue;
+  background-image: url(${wcdt});
+  background-position: center;
 `
 
 const ListCard = styled.div`
@@ -82,6 +85,9 @@ const ME = gql`
     me {
       name
       builds {
+        owner {
+          name
+        }
         id
         name
         esoClass
@@ -89,11 +95,16 @@ const ME = gql`
         applicationArea
       }
       raids {
+        owner {
+          name
+        }
         id
         name
         applicationArea
         roles {
-          id
+          builds {
+            role
+          }
         }
       }
     }
@@ -134,7 +145,7 @@ export default () => {
             <ListCard>
               <StyledTitle direction={'column'} justify='center' align='center'>
                 <CardTitle level={3}>
-                  MY BUILDS
+                  My builds
                   <Button type='primary' ghost={true} onClick={handleCreateClick("/build/0")}>
                     Create
                   </Button>
@@ -152,7 +163,7 @@ export default () => {
             <ListCard>
               <StyledTitle direction={'column'} justify={''} align={''}>
                 <CardTitle level={3}>
-                  MY RAIDS
+                  My raids
                   <Button type='primary' ghost={true} onClick={handleCreateClick("/raid/0")}>
                     Create
                   </Button>
