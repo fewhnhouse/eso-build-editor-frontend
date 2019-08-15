@@ -1,4 +1,4 @@
-import { IRaidState } from './RaidStateContext';
+import { IRaidState, IRole } from './RaidStateContext';
 import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common';
 
 export const handleEditSave = async (
@@ -11,7 +11,8 @@ export const handleEditSave = async (
   ) => Promise<void | ExecutionResult<any>>,
   updateRaid: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>
+  ) => Promise<void | ExecutionResult<any>>,
+  initialRoles: IRole[]
 ) => {
   const {
     name,
@@ -37,7 +38,7 @@ export const handleEditSave = async (
   );
   console.log(existingRoles, newRoles);
   const createdRoles = await Promise.all(
-    newRoles.map(
+    roles.map(
       async role =>
         await createRole({
           variables: {
@@ -70,14 +71,12 @@ export const handleEditSave = async (
         canView: { connect: enhancedCanView.map(id => ({ id })) },
         published,
         roles: {
-          connect: [
-            ...createdRoles.map((createdRole: any) => ({
-              id: createdRole.data.createRole.id,
-            })),
-            ...updatedRoles.map((updatedRole: any) => ({
-              id: updatedRole.data.updateRole.id,
-            })),
-          ],
+          delete: initialRoles.map((initialRole: IRole) => ({
+            id: initialRole.id,
+          })),
+          connect: createdRoles.map((createdRole: any) => ({
+            id: createdRole.data.createRole.id,
+          })),
         },
       },
       where: {

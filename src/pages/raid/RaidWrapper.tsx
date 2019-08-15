@@ -148,6 +148,7 @@ export default ({ edit, match }: IRaidWrapperProps) => {
       return (
         <Raid
           edit
+          initialRoles={data.raid.roles}
           path={`/editRaid/${raidId}`}
           raid={{ ...defaultRaidState, ...data.raid }}
           pageIndex={pageIndex}

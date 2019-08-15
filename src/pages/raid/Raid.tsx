@@ -11,7 +11,12 @@ import {
 } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router';
 import RaidGeneral from './general/RaidGeneral';
-import { RaidContext, raidReducer, defaultRaidState } from './RaidStateContext';
+import {
+  RaidContext,
+  raidReducer,
+  defaultRaidState,
+  IRole,
+} from './RaidStateContext';
 import Builds from './builds/Builds';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
@@ -73,10 +78,17 @@ interface IRaidProps {
   raid: any;
   pageIndex: number;
   path: string;
+  initialRoles?: IRole[];
   edit?: boolean;
 }
 
-export default ({ raid, pageIndex, path, edit = false }: IRaidProps) => {
+export default ({
+  raid,
+  pageIndex,
+  path,
+  edit = false,
+  initialRoles = [],
+}: IRaidProps) => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -105,7 +117,13 @@ export default ({ raid, pageIndex, path, edit = false }: IRaidProps) => {
     setLoading(true);
     if (edit) {
       try {
-        await handleEditSave(state, updateRole, createRole, updateRaid);
+        await handleEditSave(
+          state,
+          updateRole,
+          createRole,
+          updateRaid,
+          initialRoles
+        );
         notification.success({
           message: 'Raid update successful',
           description: (
