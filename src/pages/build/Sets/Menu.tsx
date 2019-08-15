@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { List, Tag, Divider, Button, Input, Spin } from 'antd';
-import styled from 'styled-components';
-import { ISet } from '../../../components/GearSlot';
-import { BuildContext } from '../BuildStateContext';
-import Flex from '../../../components/Flex';
-import { animated, useTrail } from 'react-spring';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useContext, useEffect, useState } from 'react'
+import { List, Tag, Divider, Button, Input, Spin } from 'antd'
+import styled from 'styled-components'
+import { ISet } from '../../../components/GearSlot'
+import { BuildContext } from '../BuildStateContext'
+import Flex from '../../../components/Flex'
+import { animated, useTrail } from 'react-spring'
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 
-const { Item } = List;
-const { CheckableTag } = Tag;
+const { Item } = List
+const { CheckableTag } = Tag
 
 const ListContainer = styled.div`
   width: ${(props: { collapsed: boolean }) => (props.collapsed ? '60px' : '')};
@@ -20,7 +20,7 @@ const ListContainer = styled.div`
   max-width: 450px;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
-`;
+`
 
 const StyledListItem = styled(Item)`
   cursor: pointer;
@@ -37,20 +37,20 @@ const StyledListItem = styled(Item)`
   &:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
   }
-`;
+`
 
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
 
 const StyledIconBtn = styled(Button)`
   margin: 10px;
   height: 40px;
   width: 40px;
-`;
+`
 
 const GET_SETS = gql`
   query sets($where: SetWhereInput) {
@@ -74,25 +74,36 @@ const GET_SETS = gql`
       traits_needed
     }
   }
-`;
+`
 
-export default () => {
-  const setQuery = useQuery(GET_SETS);
+interface IMenuProps {
+  collapsed: boolean
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+}
+export default ({ collapsed, setCollapsed }: IMenuProps) => {
+  const setQuery = useQuery(GET_SETS)
 
   if (setQuery.error) {
-    return <div>Error.</div>;
+    return <div>Error.</div>
   } else if (setQuery.data && setQuery.data.sets) {
-    return <SetList sets={setQuery.data.sets} loading={setQuery.loading} />;
+    return (
+      <SetList
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        sets={setQuery.data.sets}
+        loading={setQuery.loading}
+      />
+    )
   } else {
-    return null;
+    return null
   }
-};
+}
 
 interface ISetTagProps {
-  hasHeavyArmor: boolean;
-  hasMediumArmor: boolean;
-  hasLightArmor: boolean;
-  traitsNeeded: boolean;
+  hasHeavyArmor: boolean
+  hasMediumArmor: boolean
+  hasLightArmor: boolean
+  traitsNeeded: boolean
 }
 
 const ArmorTypeTag = ({
@@ -102,47 +113,50 @@ const ArmorTypeTag = ({
   traitsNeeded,
 }: ISetTagProps) => {
   if (traitsNeeded) {
-    return null;
+    return null
   } else {
     if (hasHeavyArmor && hasMediumArmor && hasLightArmor) {
-      return <StyledTag color="purple">All</StyledTag>;
+      return <StyledTag color='purple'>All</StyledTag>
     } else if (hasHeavyArmor) {
-      return <StyledTag color="red">Heavy</StyledTag>;
+      return <StyledTag color='red'>Heavy</StyledTag>
     } else if (hasMediumArmor) {
-      return <StyledTag color="green">Medium</StyledTag>;
+      return <StyledTag color='green'>Medium</StyledTag>
     } else {
-      return <StyledTag color="blue">Light</StyledTag>;
+      return <StyledTag color='blue'>Light</StyledTag>
     }
   }
-};
+}
 
-const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
-  const [state, dispatch] = useContext(BuildContext);
-  const [searchText, setSearchText] = useState('');
-  const [collapsed, setCollapsed] = useState(false);
+interface ISetListProps extends IMenuProps {
+  sets: any[]
+  loading: boolean
+}
+const SetList = ({ sets, loading, collapsed, setCollapsed }: ISetListProps) => {
+  const [state, dispatch] = useContext(BuildContext)
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     if (state!.selectedSet) {
-      setSearchText('');
+      setSearchText('')
     }
-  }, [state!.selectedSet]);
+  }, [state!.selectedSet])
   const filteredSets: ISet[] = sets.filter((set: ISet) =>
     set.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  )
 
   const handleIconClick = (collapse: boolean) => () => {
-    setCollapsed(collapse);
-  };
+    setCollapsed(collapse)
+  }
   const handleClick = (set: ISet) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setCollapsed(true);
-    dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } });
-  };
+    setCollapsed(true)
+    dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
+  }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+    setSearchText(e.target.value)
+  }
   const trail = useTrail(filteredSets.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
@@ -151,23 +165,23 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
       transform: 'translate(0px, -40px)',
     },
     config: { mass: 1, tension: 3000, friction: 100 },
-  });
+  })
   return (
     <ListContainer collapsed={collapsed}>
       {collapsed && (
         <StyledIconBtn
-          type="primary"
+          type='primary'
           ghost
           style={{ marginTop: 10 }}
           onClick={handleIconClick(false)}
-          icon="double-right"
+          icon='double-right'
         />
       )}
       <>
         <Flex
-          direction="column"
-          justify="center"
-          align="center"
+          direction='column'
+          justify='center'
+          align='center'
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
             padding: '5px',
@@ -177,32 +191,32 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
           }}
         >
           <Flex
-            direction="row"
-            justify="center"
-            align="flex-start"
+            direction='row'
+            justify='center'
+            align='flex-start'
             style={{ width: '100%' }}
           >
             <Input
-              placeholder="Search for Sets"
+              placeholder='Search for Sets'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
-              size="large"
-              type="text"
+              size='large'
+              type='text'
               style={{ margin: '10px', width: '100%' }}
             />
             <StyledIconBtn
-              type="primary"
+              type='primary'
               ghost
               style={{ marginTop: 10, marginRight: 10 }}
               onClick={handleIconClick(true)}
-              icon="double-left"
+              icon='double-left'
             />
           </Flex>
           <Flex
-            direction="row"
-            justify="center"
-            align="center"
+            direction='row'
+            justify='center'
+            align='center'
             style={{ margin: '0px 10px' }}
           >
             <CheckableTag checked={true}>Arena</CheckableTag>
@@ -218,9 +232,9 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
             }}
           />
           <Flex
-            direction="row"
-            justify="center"
-            align="center"
+            direction='row'
+            justify='center'
+            align='center'
             style={{ margin: '0px 10px' }}
           >
             <CheckableTag checked={true}>Light</CheckableTag>
@@ -241,7 +255,7 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
           }}
           dataSource={trail}
           renderItem={(style: any, index) => {
-            const item = filteredSets[index];
+            const item = filteredSets[index]
             return (
               <animated.div style={style}>
                 <StyledListItem onClick={handleClick(item)}>
@@ -252,7 +266,7 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
                       hasLightArmor={item.has_light_armor === 1}
                       traitsNeeded={item.traits_needed !== null}
                     />
-                    <StyledTag color="geekblue">{item.type}</StyledTag>
+                    <StyledTag color='geekblue'>{item.type}</StyledTag>
                   </div>
                   <div
                     style={{
@@ -269,10 +283,10 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
                   </div>
                 </StyledListItem>
               </animated.div>
-            );
+            )
           }}
         />
       </>
     </ListContainer>
-  );
-};
+  )
+}
