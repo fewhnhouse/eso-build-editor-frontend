@@ -69,7 +69,6 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     newBarTwo,
   } = loadedData
 
-  console.log(loadedData)
 
   const selectedSetup = [
     {

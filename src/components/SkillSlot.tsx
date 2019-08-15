@@ -22,7 +22,8 @@ export interface ISkill {
   effect_1: string
   effect_2: string | null
   icon: string
-  id: number
+  id?: string
+  skillId: number
   name: string
   parent: number | null
   pts: number

@@ -10,7 +10,7 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
     case "SELECT_MORPH": {
       const { baseSkill, morph } = action.payload;
       const morphMap = (slot: ISkillSelection) =>
-        slot.skill && slot.skill.id === baseSkill.id
+        slot.skill && slot.skill.skillId === baseSkill.skillId
           ? { skill: morph, index: slot.index }
           : slot;
       return {
@@ -24,7 +24,7 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
               selectedSkills: skillLine.selectedSkills.map(morphMap),
               selectedUltimate:
                 skillLine.selectedUltimate &&
-                skillLine.selectedUltimate.id === baseSkill.id
+                skillLine.selectedUltimate.skillId === baseSkill.skillId
                   ? morph
                   : skillLine.selectedUltimate
             };
@@ -33,11 +33,11 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
           }
         }),
         ultimateOne:
-          state.ultimateOne && state.ultimateOne.id === baseSkill.id
+          state.ultimateOne && state.ultimateOne.skillId === baseSkill.skillId
             ? morph
             : state.ultimateOne,
         ultimateTwo:
-          state.ultimateTwo && state.ultimateTwo.id === baseSkill.id
+          state.ultimateTwo && state.ultimateTwo.skillId === baseSkill.skillId
             ? morph
             : state.ultimateTwo
       };
@@ -45,7 +45,7 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
     case "UNSELECT_MORPH": {
       const { baseSkill, morph } = action.payload;
       const morphMap = (slot: ISkillSelection) =>
-        slot.skill && slot.skill.id === morph.id
+        slot.skill && slot.skill.skillId === morph.skillId
           ? { skill: baseSkill, index: slot.index }
           : slot;
 
@@ -60,18 +60,18 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
                 selectedSkills: skillLine.selectedSkills.map(morphMap),
                 selectedUltimate:
                   skillLine.selectedUltimate &&
-                  skillLine.selectedUltimate.id === morph.id
+                  skillLine.selectedUltimate.skillId === morph.skillId
                     ? baseSkill
                     : skillLine.selectedUltimate
               }
             : skillLine
         ),
         ultimateOne:
-          state.ultimateOne && state.ultimateOne.id === morph.id
+          state.ultimateOne && state.ultimateOne.skillId === morph.skillId
             ? baseSkill
             : state.ultimateOne,
         ultimateTwo:
-          state.ultimateTwo && state.ultimateTwo.id === morph.id
+          state.ultimateTwo && state.ultimateTwo.skillId === morph.skillId
             ? baseSkill
             : state.ultimateTwo
       };
@@ -79,7 +79,7 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
     case "SWAP_MORPH": {
       const { oldMorph, newMorph } = action.payload;
       const morphMap = (slot: ISkillSelection) =>
-        slot.skill && slot.skill.id === oldMorph.id
+        slot.skill && slot.skill.skillId === oldMorph.skillId
           ? { skill: newMorph, index: slot.index }
           : slot;
 
@@ -94,18 +94,18 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
                 selectedSkills: skillLine.selectedSkills.map(morphMap),
                 selectedUltimate:
                   skillLine.selectedUltimate &&
-                  skillLine.selectedUltimate.id === oldMorph.id
+                  skillLine.selectedUltimate.skillId === oldMorph.skillId
                     ? newMorph
                     : skillLine.selectedUltimate
               }
             : skillLine
         ),
         ultimateOne:
-          state.ultimateOne && state.ultimateOne.id === oldMorph.id
+          state.ultimateOne && state.ultimateOne.skillId === oldMorph.skillId
             ? newMorph
             : state.ultimateOne,
         ultimateTwo:
-          state.ultimateTwo && state.ultimateTwo.id === oldMorph.id
+          state.ultimateTwo && state.ultimateTwo.skillId === oldMorph.skillId
             ? newMorph
             : state.ultimateTwo
       };

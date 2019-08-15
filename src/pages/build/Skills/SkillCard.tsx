@@ -104,12 +104,12 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   }
   const { selectedSkills, selectedUltimate } = selectedSkillLine
   const firstActive = ultimate
-    ? selectedUltimate && selectedUltimate.id === morph1.id
-    : selectedSkills.find(slot => slot.skill && slot.skill.id === morph1.id) !==
+    ? selectedUltimate && selectedUltimate.skillId === morph1.skillId
+    : selectedSkills.find(slot => slot.skill && slot.skill.skillId === morph1.skillId) !==
       undefined
   const secondActive = ultimate
-    ? selectedUltimate && selectedUltimate.id === morph2.id
-    : selectedSkills.find(slot => slot.skill && slot.skill.id === morph2.id) !==
+    ? selectedUltimate && selectedUltimate.skillId === morph2.skillId
+    : selectedSkills.find(slot => slot.skill && slot.skill.skillId === morph2.skillId) !==
       undefined
   const handleFirstClick = () => {
     if (firstActive) {

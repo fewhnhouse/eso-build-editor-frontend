@@ -1,14 +1,18 @@
-import React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from '../../components/globalStyles'
-import { IBuildState, defaultBuildState } from '../build/BuildStateContext'
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
-import BuildReviewDetails from './BuildReviewDetails'
+import React, { useContext } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { withTheme, ThemeProps } from 'styled-components';
+import { ITheme } from '../../components/globalStyles';
+import {
+  IBuildState,
+  defaultBuildState,
+  BuildContext,
+} from '../build/BuildStateContext';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import BuildReviewDetails from './BuildReviewDetails';
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
-  local?: boolean
+  local?: boolean;
 }
 
 const BUILD = gql`
@@ -114,27 +118,25 @@ const BUILD = gql`
       }
     }
   }
-`
+`;
 
 const BuildReview = ({ match, theme, local }: IBuildReview) => {
-  const { id } = match.params
-  const buildState = localStorage.getItem('buildState')
-  const parsedBuildState: IBuildState = buildState
-    ? JSON.parse(buildState)
-    : defaultBuildState
-  const { loading, error, data } = useQuery(BUILD, { variables: { id } })
+  const { id } = match.params;
+
+  const [state] = useContext(BuildContext);
+  const { loading, error, data } = useQuery(BUILD, { variables: { id } });
   if (!local) {
     if (loading) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
     if (data && data.build) {
-      return <BuildReviewDetails loadedData={data.build} />
+      return <BuildReviewDetails loadedData={data.build} />;
     } else {
-      return null
+      return null;
     }
   } else {
-    return <BuildReviewDetails loadedData={parsedBuildState} />
+    return <BuildReviewDetails loadedData={state!} />;
   }
-}
+};
 
-export default withTheme(withRouter(BuildReview))
+export default withTheme(withRouter(BuildReview));

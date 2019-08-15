@@ -61,7 +61,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         return {
           ...state,
           newBarOne: [...state.newBarOne].map(slot =>
-            slot.skill && slot.skill.id === skill.id
+            slot.skill && slot.skill.skillId === skill.skillId
               ? { skill: undefined, index: slot.index }
               : slot
           )
@@ -70,7 +70,7 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
         return {
           ...state,
           newBarTwo: [...state.newBarTwo].map(slot =>
-            slot.skill && slot.skill.id === skill.id
+            slot.skill && slot.skill.skillId === skill.skillId
               ? { skill: undefined, index: slot.index }
               : slot
           )
@@ -82,11 +82,11 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
       if (
         (barIndex === 0 &&
           state.newBarOne.find(
-            slot => slot.skill && slot.skill.id === skill.id
+            slot => slot.skill && slot.skill.skillId === skill.skillId
           )) ||
         (barIndex === 1 &&
           state.newBarTwo.find(
-            slot => slot.skill && slot.skill.id === skill.id
+            slot => slot.skill && slot.skill.skillId === skill.skillId
           ))
       ) {
         return { ...state };
@@ -156,15 +156,15 @@ export const skillBarReducer = (state: IBuildState, action: IBuildAction) => {
           slot =>
             slot.skill &&
             (sourceBarIndex === 1
-              ? slot.skill.id === sourceSkill.id
-              : slot.skill.id === destinationSkill && destinationSkill.id)
+              ? slot.skill.skillId === sourceSkill.skillId
+              : slot.skill.skillId === destinationSkill && destinationSkill.skillId)
         ) ||
         state.newBarTwo.find(
           slot =>
             slot.skill &&
             (sourceBarIndex === 1
-              ? slot.skill.id === destinationSkill && destinationSkill.id
-              : slot.skill.id === sourceSkill.id)
+              ? slot.skill.skillId === destinationSkill && destinationSkill.skillId
+              : slot.skill.skillId === sourceSkill.skillId)
         );
       if (hasDestinationSkill) return { ...state };
       return {

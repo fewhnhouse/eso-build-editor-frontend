@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
-import { RouteComponentProps } from 'react-router'
-import { useQuery } from '@apollo/react-hooks'
-import Build from './Build'
-import { Spin, message } from 'antd'
-import { defaultBuildState } from './BuildStateContext'
-import gql from 'graphql-tag'
+import React, { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
+import { useQuery } from '@apollo/react-hooks';
+import Build from './Build';
+import { Spin, message } from 'antd';
+import { defaultBuildState } from './BuildStateContext';
+import gql from 'graphql-tag';
 
 const GET_BUILD = gql`
   fragment SetSelection on SetSelection {
+    id
     icon
     slot
     type
@@ -40,6 +41,7 @@ const GET_BUILD = gql`
   }
 
   fragment Skill on Skill {
+    id
     name
     skillId
     icon
@@ -52,6 +54,7 @@ const GET_BUILD = gql`
   }
 
   fragment SkillSelection on SkillSelection {
+    id
     index
     skill {
       ...Skill
@@ -60,6 +63,7 @@ const GET_BUILD = gql`
 
   query Build($id: ID!) {
     build(id: $id) {
+      id
       owner {
         name
       }
@@ -109,59 +113,70 @@ const GET_BUILD = gql`
       }
     }
   }
-`
+`;
 
 interface IBuildWrapperProps
   extends RouteComponentProps<{ id: string; buildId: string }> {
-  edit?: boolean
+  edit?: boolean;
 }
 export default ({ edit, match }: IBuildWrapperProps) => {
-  const { id, buildId } = match.params
-  console.log(id, buildId)
-  const pageIndex = parseInt(id || '0', 10)
+  const { id, buildId } = match.params;
+  const pageIndex = parseInt(id || '0', 10);
   const { loading, error, data } = useQuery(GET_BUILD, {
     variables: { id: buildId },
-  })
+  });
   if (edit) {
     if (loading) {
-      return <Spin />
+      return <Spin />;
     }
     if (error) {
-      return <div>Error.</div>
+      return <div>Error.</div>;
     }
     if (data) {
       return (
         <Build
-          noMatchPath={`/editBuild/${buildId}/0`}
-          build={data.build}
+          edit
+          path={`/editBuild/${buildId}`}
+          build={{ ...defaultBuildState, ...data.build }}
           pageIndex={pageIndex}
         />
-      )
+      );
     }
-    return null
+    return null;
   } else {
-    const savedBuildState = localStorage.getItem('buildState')
+    const savedBuildState = localStorage.getItem('buildState');
 
-    try {
-      const parsedBuildState = JSON.parse(savedBuildState || '')
-      if (parsedBuildState) {
-        message.info('Your settings have been restored.')
-      }
-      return (
-        <Build
-          noMatchPath='/build/0'
-          build={parsedBuildState || defaultBuildState}
-          pageIndex={pageIndex}
-        />
-      )
-    } catch (e) {
-      return (
-        <Build
-          noMatchPath='/build/0'
-          build={defaultBuildState}
-          pageIndex={pageIndex}
-        />
-      )
-    }
+    return <NewBuild savedBuildState={savedBuildState} pageIndex={pageIndex} />;
   }
-}
+};
+
+const NewBuild = ({
+  savedBuildState,
+  pageIndex,
+}: {
+  savedBuildState: string | null;
+  pageIndex: number;
+}) => {
+  useEffect(() => {
+    try {
+      const parsedBuildState = savedBuildState
+        ? JSON.parse(savedBuildState)
+        : false;
+      if (parsedBuildState) {
+        message.info('Your settings have been restored.');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+  try {
+    const parsedBuildState = JSON.parse(savedBuildState || '');
+    return (
+      <Build path="/build" build={parsedBuildState} pageIndex={pageIndex} />
+    );
+  } catch (e) {
+    return (
+      <Build path="/build" build={defaultBuildState} pageIndex={pageIndex} />
+    );
+  }
+};

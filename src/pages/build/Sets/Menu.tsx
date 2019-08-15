@@ -126,11 +126,9 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
       setSearchText('');
     }
   }, [state!.selectedSet]);
-  const filteredSets: ISet[] = sets
-    .map((set: any) => ({ ...set, id: set.setId }))
-    .filter((set: ISet) =>
-      set.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+  const filteredSets: ISet[] = sets.filter((set: ISet) =>
+    set.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const handleIconClick = (collapse: boolean) => () => {
     setCollapsed(collapse);
@@ -261,7 +259,8 @@ const SetList = ({ sets, loading }: { sets: any[]; loading: boolean }) => {
                       textAlign: 'left',
                       flex: 2,
                       fontWeight:
-                        state!.selectedSet && item.id === state!.selectedSet.id
+                        state!.selectedSet &&
+                        item.setId === state!.selectedSet.setId
                           ? 500
                           : 400,
                     }}

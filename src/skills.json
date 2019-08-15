@@ -1,6 +1,6 @@
 [
     {
-        "id": 448,
+        "skillId": 448,
         "name": "Absorb",
         "skillline": 21,
         "parent": null,
@@ -17,7 +17,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 415,
+        "skillId": 415,
         "name": "Absorb Magic",
         "skillline": 17,
         "parent": 413,
@@ -34,7 +34,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 18,
+        "skillId": 18,
         "name": "Absorption Field",
         "skillline": 7,
         "parent": 13,
@@ -51,7 +51,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 611,
+        "skillId": 611,
         "name": "Accelerate",
         "skillline": 34,
         "parent": null,
@@ -68,7 +68,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 279,
+        "skillId": 279,
         "name": "Accelerated Growth",
         "skillline": 14,
         "parent": null,
@@ -85,7 +85,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 540,
+        "skillId": 540,
         "name": "Accelerating Drain",
         "skillline": 26,
         "parent": 538,
@@ -102,7 +102,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 354,
+        "skillId": 354,
         "name": "Accuracy",
         "skillline": 19,
         "parent": null,
@@ -119,7 +119,7 @@
         "unlocks_at": 25
     },
     {
-        "id": 828,
+        "skillId": 828,
         "name": "Accursed Charge",
         "skillline": 57,
         "parent": null,
@@ -136,7 +136,7 @@
         "unlocks_at": null
     },
     {
-        "id": 349,
+        "skillId": 349,
         "name": "Acid Spray",
         "skillline": 19,
         "parent": 347,
@@ -153,7 +153,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 715,
+        "skillId": 715,
         "name": "Acrobat",
         "skillline": 51,
         "parent": null,
@@ -170,7 +170,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 714,
+        "skillId": 714,
         "name": "Adrenaline Rush",
         "skillline": 45,
         "parent": null,
@@ -187,7 +187,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 254,
+        "skillId": 254,
         "name": "Advanced Species",
         "skillline": 13,
         "parent": null,
@@ -204,7 +204,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 643,
+        "skillId": 643,
         "name": "Aggressive Horn",
         "skillline": 35,
         "parent": 642,
@@ -221,7 +221,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 487,
+        "skillId": 487,
         "name": "Agility",
         "skillline": 23,
         "parent": null,
@@ -238,7 +238,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 809,
+        "skillId": 809,
         "name": "Agony Totem",
         "skillline": 55,
         "parent": 775,
@@ -255,7 +255,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 101,
+        "skillId": 101,
         "name": "Ambush",
         "skillline": 10,
         "parent": 99,
@@ -272,7 +272,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 678,
+        "skillId": 678,
         "name": "Amphibian",
         "skillline": 49,
         "parent": null,
@@ -289,7 +289,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 179,
+        "skillId": 179,
         "name": "Amplitude",
         "skillline": 9,
         "parent": null,
@@ -306,7 +306,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 379,
+        "skillId": 379,
         "name": "Ancient Knowledge",
         "skillline": 20,
         "parent": null,
@@ -323,7 +323,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 813,
+        "skillId": 813,
         "name": "Animate Blastbones",
         "skillline": 56,
         "parent": 769,
@@ -340,7 +340,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 473,
+        "skillId": 473,
         "name": "Annulment",
         "skillline": 22,
         "parent": null,
@@ -357,7 +357,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 652,
+        "skillId": 652,
         "name": "Anti-Cavalry Caltrops",
         "skillline": 35,
         "parent": 651,
@@ -374,7 +374,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 311,
+        "skillId": 311,
         "name": "Arctic Blast",
         "skillline": 15,
         "parent": 308,
@@ -391,7 +391,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 308,
+        "skillId": 308,
         "name": "Arctic Wind",
         "skillline": 15,
         "parent": null,
@@ -408,7 +408,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 680,
+        "skillId": 680,
         "name": "Argonian Resistance",
         "skillline": 49,
         "parent": null,
@@ -425,7 +425,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 343,
+        "skillId": 343,
         "name": "Arrow Barrage",
         "skillline": 19,
         "parent": 341,
@@ -442,7 +442,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 347,
+        "skillId": 347,
         "name": "Arrow Spray",
         "skillline": 19,
         "parent": null,
@@ -459,7 +459,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 86,
+        "skillId": 86,
         "name": "Ash Cloud",
         "skillline": 3,
         "parent": null,
@@ -476,7 +476,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 686,
+        "skillId": 686,
         "name": "Ashlander",
         "skillline": 48,
         "parent": null,
@@ -493,7 +493,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 737,
+        "skillId": 737,
         "name": "Aspect Improvement",
         "skillline": 40,
         "parent": null,
@@ -510,7 +510,7 @@
         "unlocks_at": 31
     },
     {
-        "id": 127,
+        "skillId": 127,
         "name": "Aspect of Terror",
         "skillline": 11,
         "parent": null,
@@ -527,7 +527,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 96,
+        "skillId": 96,
         "name": "Assassin's Blade",
         "skillline": 10,
         "parent": null,
@@ -544,7 +544,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 488,
+        "skillId": 488,
         "name": "Athletics",
         "skillline": 23,
         "parent": null,
@@ -561,7 +561,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 210,
+        "skillId": 210,
         "name": "Aurora Javelin",
         "skillline": 4,
         "parent": 209,
@@ -578,7 +578,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 797,
+        "skillId": 797,
         "name": "Avid Boneyard",
         "skillline": 54,
         "parent": 786,
@@ -595,7 +595,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 259,
+        "skillId": 259,
         "name": "Backlash",
         "skillline": 5,
         "parent": null,
@@ -612,7 +612,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 596,
+        "skillId": 596,
         "name": "Balance",
         "skillline": 30,
         "parent": 594,
@@ -629,7 +629,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 470,
+        "skillId": 470,
         "name": "Balanced Blade",
         "skillline": 16,
         "parent": null,
@@ -646,7 +646,7 @@
         "unlocks_at": 28
     },
     {
-        "id": 224,
+        "skillId": 224,
         "name": "Balanced Warrior",
         "skillline": 4,
         "parent": null,
@@ -663,7 +663,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 543,
+        "skillId": 543,
         "name": "Baleful Mist",
         "skillline": 26,
         "parent": 541,
@@ -680,7 +680,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 176,
+        "skillId": 176,
         "name": "Ball of Lightning",
         "skillline": 9,
         "parent": 174,
@@ -697,7 +697,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 337,
+        "skillId": 337,
         "name": "Ballista",
         "skillline": 19,
         "parent": 335,
@@ -714,7 +714,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 579,
+        "skillId": 579,
         "name": "Banish the Wicked",
         "skillline": 29,
         "parent": null,
@@ -731,7 +731,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 660,
+        "skillId": 660,
         "name": "Barrier",
         "skillline": 36,
         "parent": null,
@@ -748,7 +748,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 535,
+        "skillId": 535,
         "name": "Bat Swarm",
         "skillline": 26,
         "parent": null,
@@ -765,7 +765,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 677,
+        "skillId": 677,
         "name": "Battle Resurrection",
         "skillline": 36,
         "parent": null,
@@ -782,7 +782,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 90,
+        "skillId": 90,
         "name": "Battle Roar",
         "skillline": 3,
         "parent": null,
@@ -799,7 +799,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 472,
+        "skillId": 472,
         "name": "Battle Rush",
         "skillline": 16,
         "parent": null,
@@ -816,7 +816,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 426,
+        "skillId": 426,
         "name": "Battlefield Mobility",
         "skillline": 17,
         "parent": null,
@@ -833,7 +833,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 804,
+        "skillId": 804,
         "name": "Beckoning Armor",
         "skillline": 55,
         "parent": 777,
@@ -850,7 +850,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 452,
+        "skillId": 452,
         "name": "Berserker Rage",
         "skillline": 16,
         "parent": 450,
@@ -867,7 +867,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 450,
+        "skillId": 450,
         "name": "Berserker Strike",
         "skillline": 16,
         "parent": null,
@@ -884,7 +884,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 240,
+        "skillId": 240,
         "name": "Betty Netch",
         "skillline": 13,
         "parent": null,
@@ -901,7 +901,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 211,
+        "skillId": 211,
         "name": "Binding Javelin",
         "skillline": 4,
         "parent": 209,
@@ -918,7 +918,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 247,
+        "skillId": 247,
         "name": "Bird of Prey",
         "skillline": 13,
         "parent": 244,
@@ -935,7 +935,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 207,
+        "skillId": 207,
         "name": "Biting Jabs",
         "skillline": 4,
         "parent": 206,
@@ -952,7 +952,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 776,
+        "skillId": 776,
         "name": "Bitter Harvest",
         "skillline": 55,
         "parent": null,
@@ -969,7 +969,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 393,
+        "skillId": 393,
         "name": "Blade Cloak",
         "skillline": 18,
         "parent": null,
@@ -986,7 +986,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 550,
+        "skillId": 550,
         "name": "Blade of Woe",
         "skillline": 33,
         "parent": null,
@@ -1003,7 +1003,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 787,
+        "skillId": 787,
         "name": "Blastbones",
         "skillline": 54,
         "parent": null,
@@ -1020,7 +1020,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 220,
+        "skillId": 220,
         "name": "Blazing Shield",
         "skillline": 4,
         "parent": 218,
@@ -1037,7 +1037,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 217,
+        "skillId": 217,
         "name": "Blazing Spear",
         "skillline": 4,
         "parent": 215,
@@ -1054,7 +1054,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 436,
+        "skillId": 436,
         "name": "Blessing of Protection",
         "skillline": 21,
         "parent": null,
@@ -1071,7 +1071,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 437,
+        "skillId": 437,
         "name": "Blessing Of Restoration",
         "skillline": 21,
         "parent": 436,
@@ -1088,7 +1088,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 794,
+        "skillId": 794,
         "name": "Blighted Blastbones",
         "skillline": 54,
         "parent": 787,
@@ -1105,7 +1105,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 625,
+        "skillId": 625,
         "name": "Blood Altar",
         "skillline": 31,
         "parent": null,
@@ -1122,7 +1122,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 389,
+        "skillId": 389,
         "name": "Blood Craze",
         "skillline": 18,
         "parent": 387,
@@ -1139,7 +1139,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 71,
+        "skillId": 71,
         "name": "Blood Magic",
         "skillline": 7,
         "parent": null,
@@ -1156,7 +1156,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 531,
+        "skillId": 531,
         "name": "Blood Rage",
         "skillline": 27,
         "parent": null,
@@ -1173,7 +1173,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 546,
+        "skillId": 546,
         "name": "Blood Ritual",
         "skillline": 26,
         "parent": null,
@@ -1190,7 +1190,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 815,
+        "skillId": 815,
         "name": "Blood Sacrifice",
         "skillline": 56,
         "parent": 768,
@@ -1207,7 +1207,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 532,
+        "skillId": 532,
         "name": "Bloodmoon",
         "skillline": 27,
         "parent": null,
@@ -1224,7 +1224,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 386,
+        "skillId": 386,
         "name": "Bloodthirst",
         "skillline": 18,
         "parent": 384,
@@ -1241,7 +1241,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 242,
+        "skillId": 242,
         "name": "Blue Betty",
         "skillline": 13,
         "parent": 240,
@@ -1258,7 +1258,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 102,
+        "skillId": 102,
         "name": "Blur",
         "skillline": 10,
         "parent": null,
@@ -1275,7 +1275,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 116,
+        "skillId": 116,
         "name": "Bolstering Darkness",
         "skillline": 11,
         "parent": 115,
@@ -1292,7 +1292,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 174,
+        "skillId": 174,
         "name": "Bolt Escape",
         "skillline": 9,
         "parent": null,
@@ -1309,7 +1309,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 348,
+        "skillId": 348,
         "name": "Bombard",
         "skillline": 19,
         "parent": 347,
@@ -1326,7 +1326,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 249,
+        "skillId": 249,
         "name": "Bond With Nature",
         "skillline": 13,
         "parent": null,
@@ -1343,7 +1343,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 777,
+        "skillId": 777,
         "name": "Bone Armor",
         "skillline": 55,
         "parent": null,
@@ -1360,7 +1360,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 779,
+        "skillId": 779,
         "name": "Bone Goliath Transformation",
         "skillline": 55,
         "parent": null,
@@ -1377,7 +1377,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 634,
+        "skillId": 634,
         "name": "Bone Shield",
         "skillline": 31,
         "parent": null,
@@ -1394,7 +1394,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 636,
+        "skillId": 636,
         "name": "Bone Surge",
         "skillline": 31,
         "parent": 634,
@@ -1411,7 +1411,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 775,
+        "skillId": 775,
         "name": "Bone Totem",
         "skillline": 55,
         "parent": null,
@@ -1428,7 +1428,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 786,
+        "skillId": 786,
         "name": "Boneyard",
         "skillline": 54,
         "parent": null,
@@ -1445,7 +1445,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 606,
+        "skillId": 606,
         "name": "Borrowed Time",
         "skillline": 34,
         "parent": 605,
@@ -1462,7 +1462,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 154,
+        "skillId": 154,
         "name": "Bound Aegis",
         "skillline": 8,
         "parent": 152,
@@ -1479,7 +1479,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 153,
+        "skillId": 153,
         "name": "Bound Armaments",
         "skillline": 8,
         "parent": 152,
@@ -1496,7 +1496,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 152,
+        "skillId": 152,
         "name": "Bound Armor",
         "skillline": 8,
         "parent": null,
@@ -1513,7 +1513,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 167,
+        "skillId": 167,
         "name": "Boundless Storm",
         "skillline": 9,
         "parent": 165,
@@ -1530,7 +1530,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 581,
+        "skillId": 581,
         "name": "Bounty Hunter",
         "skillline": 29,
         "parent": null,
@@ -1547,7 +1547,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 822,
+        "skillId": 822,
         "name": "Braided Tether",
         "skillline": 56,
         "parent": 764,
@@ -1564,7 +1564,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 461,
+        "skillId": 461,
         "name": "Brawler",
         "skillline": 16,
         "parent": 459,
@@ -1581,7 +1581,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 708,
+        "skillId": 708,
         "name": "Brawny",
         "skillline": 46,
         "parent": null,
@@ -1598,7 +1598,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 303,
+        "skillId": 303,
         "name": "Breath of Life",
         "skillline": 6,
         "parent": 300,
@@ -1615,7 +1615,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 752,
+        "skillId": 752,
         "name": "Brewer",
         "skillline": 42,
         "parent": null,
@@ -1632,7 +1632,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 515,
+        "skillId": 515,
         "name": "Brutal Pounce",
         "skillline": 27,
         "parent": 514,
@@ -1649,7 +1649,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 267,
+        "skillId": 267,
         "name": "Budding Seeds",
         "skillline": 14,
         "parent": 265,
@@ -1666,7 +1666,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 243,
+        "skillId": 243,
         "name": "Bull Netch",
         "skillline": 13,
         "parent": 240,
@@ -1683,7 +1683,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 15,
+        "skillId": 15,
         "name": "Burning Embers",
         "skillline": 1,
         "parent": 12,
@@ -1700,7 +1700,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 62,
+        "skillId": 62,
         "name": "Burning Heart",
         "skillline": 2,
         "parent": null,
@@ -1717,7 +1717,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 223,
+        "skillId": 223,
         "name": "Burning Light",
         "skillline": 4,
         "parent": null,
@@ -1734,7 +1734,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 46,
+        "skillId": 46,
         "name": "Burning Talons",
         "skillline": 2,
         "parent": 44,
@@ -1751,7 +1751,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 276,
+        "skillId": 276,
         "name": "Bursting Vines",
         "skillline": 14,
         "parent": 275,
@@ -1768,7 +1768,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 534,
+        "skillId": 534,
         "name": "Call of the Pack",
         "skillline": 27,
         "parent": null,
@@ -1785,7 +1785,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 651,
+        "skillId": 651,
         "name": "Caltrops",
         "skillline": 35,
         "parent": null,
@@ -1802,7 +1802,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 573,
+        "skillId": 573,
         "name": "Camouflaged Hunter",
         "skillline": 29,
         "parent": 571,
@@ -1819,7 +1819,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 177,
+        "skillId": 177,
         "name": "Capacitor",
         "skillline": 9,
         "parent": null,
@@ -1836,7 +1836,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 758,
+        "skillId": 758,
         "name": "Carpentry",
         "skillline": 43,
         "parent": null,
@@ -1853,7 +1853,7 @@
         "unlocks_at": 45
     },
     {
-        "id": 460,
+        "skillId": 460,
         "name": "Carve",
         "skillline": 16,
         "parent": 459,
@@ -1870,7 +1870,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 199,
+        "skillId": 199,
         "name": "Catalyst",
         "skillline": 12,
         "parent": null,
@@ -1887,7 +1887,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 26,
+        "skillId": 26,
         "name": "Cauterize",
         "skillline": 1,
         "parent": 24,
@@ -1904,7 +1904,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 612,
+        "skillId": 612,
         "name": "Channeled Acceleration",
         "skillline": 34,
         "parent": 611,
@@ -1921,7 +1921,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 328,
+        "skillId": 328,
         "name": "Channeled Focus",
         "skillline": 6,
         "parent": 325,
@@ -1938,7 +1938,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 647,
+        "skillId": 647,
         "name": "Charging Maneuver",
         "skillline": 35,
         "parent": 645,
@@ -1955,7 +1955,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 751,
+        "skillId": 751,
         "name": "Chef",
         "skillline": 42,
         "parent": null,
@@ -1972,7 +1972,7 @@
         "unlocks_at": 33
     },
     {
-        "id": 722,
+        "skillId": 722,
         "name": "Chemistry",
         "skillline": 37,
         "parent": null,
@@ -1989,7 +1989,7 @@
         "unlocks_at": 47
     },
     {
-        "id": 48,
+        "skillId": 48,
         "name": "Choking Talons",
         "skillline": 2,
         "parent": 44,
@@ -2006,7 +2006,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 87,
+        "skillId": 87,
         "name": "Cinder Storm",
         "skillline": 3,
         "parent": 86,
@@ -2023,7 +2023,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 568,
+        "skillId": 568,
         "name": "Circle of Protection",
         "skillline": 29,
         "parent": null,
@@ -2040,7 +2040,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 621,
+        "skillId": 621,
         "name": "Clairvoyance",
         "skillline": 34,
         "parent": null,
@@ -2057,7 +2057,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 527,
+        "skillId": 527,
         "name": "Claws of Anguish",
         "skillline": 27,
         "parent": 526,
@@ -2074,7 +2074,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 528,
+        "skillId": 528,
         "name": "Claws of Life",
         "skillline": 27,
         "parent": 526,
@@ -2091,7 +2091,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 668,
+        "skillId": 668,
         "name": "Cleanse",
         "skillline": 36,
         "parent": 666,
@@ -2108,7 +2108,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 319,
+        "skillId": 319,
         "name": "Cleansing Ritual",
         "skillline": 6,
         "parent": null,
@@ -2125,7 +2125,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 459,
+        "skillId": 459,
         "name": "Cleave",
         "skillline": 16,
         "parent": null,
@@ -2142,7 +2142,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 559,
+        "skillId": 559,
         "name": "Clemency",
         "skillline": 32,
         "parent": null,
@@ -2159,7 +2159,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 536,
+        "skillId": 536,
         "name": "Clouding Swarm",
         "skillline": 26,
         "parent": 535,
@@ -2176,7 +2176,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 54,
+        "skillId": 54,
         "name": "Coagulating Blood",
         "skillline": 2,
         "parent": 51,
@@ -2193,7 +2193,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 659,
+        "skillId": 659,
         "name": "Combat Frenzy",
         "skillline": 35,
         "parent": null,
@@ -2210,7 +2210,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 676,
+        "skillId": 676,
         "name": "Combat Medic",
         "skillline": 36,
         "parent": null,
@@ -2227,7 +2227,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 438,
+        "skillId": 438,
         "name": "Combat Prayer",
         "skillline": 21,
         "parent": 436,
@@ -2244,7 +2244,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 7,
+        "skillId": 7,
         "name": "Combustion",
         "skillline": 1,
         "parent": null,
@@ -2261,7 +2261,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 120,
+        "skillId": 120,
         "name": "Concealed Weapon",
         "skillline": 11,
         "parent": 118,
@@ -2278,7 +2278,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 623,
+        "skillId": 623,
         "name": "Concentrated Barrier",
         "skillline": 34,
         "parent": null,
@@ -2295,7 +2295,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 480,
+        "skillId": 480,
         "name": "Concentration",
         "skillline": 22,
         "parent": null,
@@ -2312,7 +2312,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 713,
+        "skillId": 713,
         "name": "Conditioning",
         "skillline": 45,
         "parent": null,
@@ -2329,7 +2329,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 149,
+        "skillId": 149,
         "name": "Conjured Ward",
         "skillline": 8,
         "parent": null,
@@ -2346,7 +2346,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 750,
+        "skillId": 750,
         "name": "Connoisseur",
         "skillline": 42,
         "parent": null,
@@ -2363,7 +2363,7 @@
         "unlocks_at": 47
     },
     {
-        "id": 493,
+        "skillId": 493,
         "name": "Constitution",
         "skillline": 24,
         "parent": null,
@@ -2380,7 +2380,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 115,
+        "skillId": 115,
         "name": "Consuming Darkness",
         "skillline": 11,
         "parent": null,
@@ -2397,7 +2397,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 507,
+        "skillId": 507,
         "name": "Consuming Trap",
         "skillline": 25,
         "parent": 505,
@@ -2414,7 +2414,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 657,
+        "skillId": 657,
         "name": "Continuous Attack",
         "skillline": 35,
         "parent": null,
@@ -2431,7 +2431,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 401,
+        "skillId": 401,
         "name": "Controlled Fury",
         "skillline": 18,
         "parent": null,
@@ -2448,7 +2448,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 761,
+        "skillId": 761,
         "name": "Corpse Consumption",
         "skillline": 56,
         "parent": null,
@@ -2465,7 +2465,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 69,
+        "skillId": 69,
         "name": "Corrosive Armor",
         "skillline": 3,
         "parent": 65,
@@ -2482,7 +2482,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 268,
+        "skillId": 268,
         "name": "Corrupting Pollen",
         "skillline": 14,
         "parent": 265,
@@ -2499,7 +2499,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 707,
+        "skillId": 707,
         "name": "Craftsman",
         "skillline": 46,
         "parent": null,
@@ -2516,7 +2516,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 205,
+        "skillId": 205,
         "name": "Crescent Sweep",
         "skillline": 4,
         "parent": 203,
@@ -2533,7 +2533,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 190,
+        "skillId": 190,
         "name": "Cripple",
         "skillline": 12,
         "parent": null,
@@ -2550,7 +2550,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 192,
+        "skillId": 192,
         "name": "Crippling Grasp",
         "skillline": 12,
         "parent": 190,
@@ -2567,7 +2567,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 456,
+        "skillId": 456,
         "name": "Critical Charge",
         "skillline": 16,
         "parent": null,
@@ -2584,7 +2584,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 458,
+        "skillId": 458,
         "name": "Critical Rush",
         "skillline": 16,
         "parent": 456,
@@ -2601,7 +2601,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 173,
+        "skillId": 173,
         "name": "Critical Surge",
         "skillline": 9,
         "parent": 171,
@@ -2618,7 +2618,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 362,
+        "skillId": 362,
         "name": "Crushing Shock",
         "skillline": 20,
         "parent": 361,
@@ -2635,7 +2635,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 610,
+        "skillId": 610,
         "name": "Crushing Weapon",
         "skillline": 34,
         "parent": 608,
@@ -2652,7 +2652,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 29,
+        "skillId": 29,
         "name": "Crystal Blast",
         "skillline": 7,
         "parent": 27,
@@ -2669,7 +2669,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 31,
+        "skillId": 31,
         "name": "Crystal Fragments",
         "skillline": 7,
         "parent": 27,
@@ -2686,7 +2686,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 27,
+        "skillId": 27,
         "name": "Crystal Shard",
         "skillline": 7,
         "parent": null,
@@ -2703,7 +2703,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 312,
+        "skillId": 312,
         "name": "Crystallized Shield",
         "skillline": 15,
         "parent": null,
@@ -2720,7 +2720,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 314,
+        "skillId": 314,
         "name": "Crystallized Slab",
         "skillline": 15,
         "parent": 312,
@@ -2737,7 +2737,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 763,
+        "skillId": 763,
         "name": "Curative Curse",
         "skillline": 56,
         "parent": null,
@@ -2754,7 +2754,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 699,
+        "skillId": 699,
         "name": "Cutpurse",
         "skillline": 52,
         "parent": null,
@@ -2771,7 +2771,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 229,
+        "skillId": 229,
         "name": "Cutting Dive",
         "skillline": 13,
         "parent": 228,
@@ -2788,7 +2788,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 447,
+        "skillId": 447,
         "name": "Cycle of Life",
         "skillline": 21,
         "parent": null,
@@ -2805,7 +2805,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 143,
+        "skillId": 143,
         "name": "Daedric Curse",
         "skillline": 8,
         "parent": null,
@@ -2822,7 +2822,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 68,
+        "skillId": 68,
         "name": "Daedric Minefield",
         "skillline": 7,
         "parent": 52,
@@ -2839,7 +2839,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 52,
+        "skillId": 52,
         "name": "Daedric Mines",
         "skillline": 7,
         "parent": null,
@@ -2856,7 +2856,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 144,
+        "skillId": 144,
         "name": "Daedric Prey",
         "skillline": 8,
         "parent": 143,
@@ -2873,7 +2873,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 157,
+        "skillId": 157,
         "name": "Daedric Protection",
         "skillline": 8,
         "parent": null,
@@ -2890,7 +2890,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 66,
+        "skillId": 66,
         "name": "Daedric Tomb",
         "skillline": 7,
         "parent": 52,
@@ -2907,7 +2907,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 474,
+        "skillId": 474,
         "name": "Dampen Magic",
         "skillline": 22,
         "parent": 473,
@@ -2924,7 +2924,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 123,
+        "skillId": 123,
         "name": "Dark Cloak",
         "skillline": 11,
         "parent": 121,
@@ -2941,7 +2941,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 50,
+        "skillId": 50,
         "name": "Dark Conversion",
         "skillline": 7,
         "parent": 47,
@@ -2958,7 +2958,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 49,
+        "skillId": 49,
         "name": "Dark Deal",
         "skillline": 7,
         "parent": 47,
@@ -2975,7 +2975,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 47,
+        "skillId": 47,
         "name": "Dark Exchange",
         "skillline": 7,
         "parent": null,
@@ -2992,7 +2992,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 251,
+        "skillId": 251,
         "name": "Dark Flare",
         "skillline": 5,
         "parent": 250,
@@ -3009,7 +3009,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 131,
+        "skillId": 131,
         "name": "Dark Shade",
         "skillline": 11,
         "parent": 130,
@@ -3026,7 +3026,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 549,
+        "skillId": 549,
         "name": "Dark Stalker",
         "skillline": 26,
         "parent": null,
@@ -3043,7 +3043,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 44,
+        "skillId": 44,
         "name": "Dark Talons",
         "skillline": 2,
         "parent": null,
@@ -3060,7 +3060,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 136,
+        "skillId": 136,
         "name": "Dark Veil",
         "skillline": 11,
         "parent": null,
@@ -3077,7 +3077,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 135,
+        "skillId": 135,
         "name": "Dark Vigor",
         "skillline": 11,
         "parent": null,
@@ -3094,7 +3094,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 562,
+        "skillId": 562,
         "name": "Dawnbreaker",
         "skillline": 29,
         "parent": null,
@@ -3111,7 +3111,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 564,
+        "skillId": 564,
         "name": "Dawnbreaker of Smiting",
         "skillline": 29,
         "parent": 562,
@@ -3128,7 +3128,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 806,
+        "skillId": 806,
         "name": "Deaden Pain",
         "skillline": 55,
         "parent": 776,
@@ -3145,7 +3145,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 424,
+        "skillId": 424,
         "name": "Deadly Bash",
         "skillline": 17,
         "parent": null,
@@ -3162,7 +3162,7 @@
         "unlocks_at": 28
     },
     {
-        "id": 395,
+        "skillId": 395,
         "name": "Deadly Cloak",
         "skillline": 18,
         "parent": 393,
@@ -3179,7 +3179,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 522,
+        "skillId": 522,
         "name": "Deafening Roar",
         "skillline": 27,
         "parent": 520,
@@ -3196,7 +3196,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 773,
+        "skillId": 773,
         "name": "Death Gleaning",
         "skillline": 55,
         "parent": null,
@@ -3213,7 +3213,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 782,
+        "skillId": 782,
         "name": "Death Knell",
         "skillline": 54,
         "parent": null,
@@ -3230,7 +3230,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 778,
+        "skillId": 778,
         "name": "Death Scythe",
         "skillline": 55,
         "parent": null,
@@ -3247,7 +3247,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 93,
+        "skillId": 93,
         "name": "Death Stroke",
         "skillline": 10,
         "parent": null,
@@ -3264,7 +3264,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 191,
+        "skillId": 191,
         "name": "Debilitate",
         "skillline": 12,
         "parent": 190,
@@ -3281,7 +3281,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 246,
+        "skillId": 246,
         "name": "Deceptive Predator",
         "skillline": 13,
         "parent": 244,
@@ -3298,7 +3298,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 59,
+        "skillId": 59,
         "name": "Deep Breath",
         "skillline": 2,
         "parent": 58,
@@ -3315,7 +3315,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 235,
+        "skillId": 235,
         "name": "Deep Fissure",
         "skillline": 13,
         "parent": 231,
@@ -3332,7 +3332,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 411,
+        "skillId": 411,
         "name": "Deep Slash",
         "skillline": 17,
         "parent": 410,
@@ -3349,7 +3349,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 618,
+        "skillId": 618,
         "name": "Deep Thoughts",
         "skillline": 34,
         "parent": 617,
@@ -3366,7 +3366,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 413,
+        "skillId": 413,
         "name": "Defensive Posture",
         "skillline": 17,
         "parent": null,
@@ -3383,7 +3383,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 45,
+        "skillId": 45,
         "name": "Defensive Rune",
         "skillline": 7,
         "parent": 40,
@@ -3400,7 +3400,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 414,
+        "skillId": 414,
         "name": "Defensive Stance",
         "skillline": 17,
         "parent": 413,
@@ -3417,7 +3417,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 425,
+        "skillId": 425,
         "name": "Deflect Bolts",
         "skillline": 17,
         "parent": null,
@@ -3434,7 +3434,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 589,
+        "skillId": 589,
         "name": "Degeneration",
         "skillline": 30,
         "parent": 588,
@@ -3451,7 +3451,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 624,
+        "skillId": 624,
         "name": "Deliberation",
         "skillline": 34,
         "parent": null,
@@ -3468,7 +3468,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 380,
+        "skillId": 380,
         "name": "Destruction Expert",
         "skillline": 20,
         "parent": null,
@@ -3485,7 +3485,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 368,
+        "skillId": 368,
         "name": "Destructive Clench",
         "skillline": 20,
         "parent": 367,
@@ -3502,7 +3502,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 369,
+        "skillId": 369,
         "name": "Destructive Reach",
         "skillline": 20,
         "parent": 367,
@@ -3519,7 +3519,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 367,
+        "skillId": 367,
         "name": "Destructive Touch",
         "skillline": 20,
         "parent": null,
@@ -3536,7 +3536,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 825,
+        "skillId": 825,
         "name": "Detonating Siphon",
         "skillline": 54,
         "parent": 784,
@@ -3553,7 +3553,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 530,
+        "skillId": 530,
         "name": "Devour",
         "skillline": 27,
         "parent": null,
@@ -3570,7 +3570,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 537,
+        "skillId": 537,
         "name": "Devouring Swarm",
         "skillline": 26,
         "parent": 535,
@@ -3587,7 +3587,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 484,
+        "skillId": 484,
         "name": "Dexterity",
         "skillline": 23,
         "parent": null,
@@ -3604,7 +3604,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 695,
+        "skillId": 695,
         "name": "Diplomat",
         "skillline": 53,
         "parent": null,
@@ -3621,7 +3621,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 772,
+        "skillId": 772,
         "name": "Disdain Harm",
         "skillline": 55,
         "parent": null,
@@ -3638,7 +3638,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 781,
+        "skillId": 781,
         "name": "Dismember",
         "skillline": 54,
         "parent": null,
@@ -3655,7 +3655,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 228,
+        "skillId": 228,
         "name": "Dive",
         "skillline": 13,
         "parent": null,
@@ -3672,7 +3672,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 454,
+        "skillId": 454,
         "name": "Dizzying Swing",
         "skillline": 16,
         "parent": 453,
@@ -3689,7 +3689,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 51,
+        "skillId": 51,
         "name": "Dragon Blood",
         "skillline": 2,
         "parent": null,
@@ -3706,7 +3706,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 57,
+        "skillId": 57,
         "name": "Dragon Fire Scale",
         "skillline": 2,
         "parent": 55,
@@ -3723,7 +3723,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 35,
+        "skillId": 35,
         "name": "Dragon Leap",
         "skillline": 2,
         "parent": null,
@@ -3740,7 +3740,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 8,
+        "skillId": 8,
         "name": "Dragonknight Standard",
         "skillline": 1,
         "parent": null,
@@ -3757,7 +3757,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 538,
+        "skillId": 538,
         "name": "Drain Essence",
         "skillline": 26,
         "parent": null,
@@ -3774,7 +3774,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 196,
+        "skillId": 196,
         "name": "Drain Power",
         "skillline": 12,
         "parent": null,
@@ -3791,7 +3791,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 346,
+        "skillId": 346,
         "name": "Draining Shot",
         "skillline": 19,
         "parent": 344,
@@ -3808,7 +3808,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 60,
+        "skillId": 60,
         "name": "Draw Essence",
         "skillline": 2,
         "parent": 58,
@@ -3825,7 +3825,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 400,
+        "skillId": 400,
         "name": "Dual Wield Expert",
         "skillline": 18,
         "parent": null,
@@ -3842,7 +3842,7 @@
         "unlocks_at": 17
     },
     {
-        "id": 689,
+        "skillId": 689,
         "name": "Dynamic",
         "skillline": 48,
         "parent": null,
@@ -3859,7 +3859,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 649,
+        "skillId": 649,
         "name": "Echoing Vigor",
         "skillline": 35,
         "parent": 648,
@@ -3876,7 +3876,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 266,
+        "skillId": 266,
         "name": "Eclipse",
         "skillline": 5,
         "parent": null,
@@ -3893,7 +3893,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 667,
+        "skillId": 667,
         "name": "Efficient Purge",
         "skillline": 36,
         "parent": 666,
@@ -3910,7 +3910,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 63,
+        "skillId": 63,
         "name": "Elder Dragon",
         "skillline": 2,
         "parent": null,
@@ -3927,7 +3927,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 366,
+        "skillId": 366,
         "name": "Elemental Blockade",
         "skillline": 20,
         "parent": 364,
@@ -3944,7 +3944,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 372,
+        "skillId": 372,
         "name": "Elemental Drain",
         "skillline": 20,
         "parent": 370,
@@ -3961,7 +3961,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 378,
+        "skillId": 378,
         "name": "Elemental Force",
         "skillline": 20,
         "parent": null,
@@ -3978,7 +3978,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 359,
+        "skillId": 359,
         "name": "Elemental Rage",
         "skillline": 20,
         "parent": 358,
@@ -3995,7 +3995,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 374,
+        "skillId": 374,
         "name": "Elemental Ring",
         "skillline": 20,
         "parent": 373,
@@ -4012,7 +4012,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 358,
+        "skillId": 358,
         "name": "Elemental Storm",
         "skillline": 20,
         "parent": null,
@@ -4029,7 +4029,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 371,
+        "skillId": 371,
         "name": "Elemental Susceptibility",
         "skillline": 20,
         "parent": 370,
@@ -4046,7 +4046,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 694,
+        "skillId": 694,
         "name": "Elemental Talent",
         "skillline": 50,
         "parent": null,
@@ -4063,7 +4063,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 609,
+        "skillId": 609,
         "name": "Elemental Weapon",
         "skillline": 34,
         "parent": 608,
@@ -4080,7 +4080,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 483,
+        "skillId": 483,
         "name": "Elude",
         "skillline": 23,
         "parent": 481,
@@ -4097,7 +4097,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 542,
+        "skillId": 542,
         "name": "Elusive Mist",
         "skillline": 26,
         "parent": 541,
@@ -4114,7 +4114,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 282,
+        "skillId": 282,
         "name": "Emerald Moss",
         "skillline": 14,
         "parent": null,
@@ -4131,7 +4131,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 151,
+        "skillId": 151,
         "name": "Empowered Ward",
         "skillline": 8,
         "parent": 149,
@@ -4148,7 +4148,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 22,
+        "skillId": 22,
         "name": "Empowering Chains",
         "skillline": 1,
         "parent": 21,
@@ -4165,7 +4165,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 811,
+        "skillId": 811,
         "name": "Empowering Grasp",
         "skillline": 55,
         "parent": 774,
@@ -4182,7 +4182,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 204,
+        "skillId": 204,
         "name": "Empowering Sweep",
         "skillline": 4,
         "parent": 203,
@@ -4199,7 +4199,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 33,
+        "skillId": 33,
         "name": "Encase",
         "skillline": 7,
         "parent": null,
@@ -4216,7 +4216,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 257,
+        "skillId": 257,
         "name": "Enchanted Forest",
         "skillline": 14,
         "parent": 255,
@@ -4233,7 +4233,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 262,
+        "skillId": 262,
         "name": "Enchanted Growth",
         "skillline": 14,
         "parent": 261,
@@ -4250,7 +4250,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 164,
+        "skillId": 164,
         "name": "Endless Fury",
         "skillline": 9,
         "parent": 162,
@@ -4267,7 +4267,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 342,
+        "skillId": 342,
         "name": "Endless Hail",
         "skillline": 19,
         "parent": 341,
@@ -4284,7 +4284,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 287,
+        "skillId": 287,
         "name": "Enduring Rays",
         "skillline": 5,
         "parent": null,
@@ -4301,7 +4301,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 819,
+        "skillId": 819,
         "name": "Enduring Undeath",
         "skillline": 56,
         "parent": 766,
@@ -4318,7 +4318,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 178,
+        "skillId": 178,
         "name": "Energized",
         "skillline": 9,
         "parent": null,
@@ -4335,7 +4335,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 639,
+        "skillId": 639,
         "name": "Energy Orb",
         "skillline": 31,
         "parent": 637,
@@ -4352,7 +4352,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 161,
+        "skillId": 161,
         "name": "Energy Overload",
         "skillline": 9,
         "parent": 159,
@@ -4369,7 +4369,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 742,
+        "skillId": 742,
         "name": "Engraver",
         "skillline": 41,
         "parent": null,
@@ -4386,7 +4386,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 20,
+        "skillId": 20,
         "name": "Engulfing Flames",
         "skillline": 1,
         "parent": 17,
@@ -4403,7 +4403,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 588,
+        "skillId": 588,
         "name": "Entropy",
         "skillline": 30,
         "parent": null,
@@ -4420,7 +4420,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 594,
+        "skillId": 594,
         "name": "Equilibrium",
         "skillline": 30,
         "parent": null,
@@ -4437,7 +4437,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 88,
+        "skillId": 88,
         "name": "Eruption",
         "skillline": 3,
         "parent": 86,
@@ -4454,7 +4454,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 445,
+        "skillId": 445,
         "name": "Essence Drain",
         "skillline": 21,
         "parent": null,
@@ -4471,7 +4471,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 226,
+        "skillId": 226,
         "name": "Eternal Guardian",
         "skillline": 13,
         "parent": 225,
@@ -4488,7 +4488,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 89,
+        "skillId": 89,
         "name": "Eternal Mountain",
         "skillline": 3,
         "parent": null,
@@ -4505,7 +4505,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 481,
+        "skillId": 481,
         "name": "Evasion",
         "skillline": 23,
         "parent": null,
@@ -4522,7 +4522,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 599,
+        "skillId": 599,
         "name": "Everlasting Magic",
         "skillline": 30,
         "parent": null,
@@ -4539,7 +4539,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 572,
+        "skillId": 572,
         "name": "Evil Hunter",
         "skillline": 29,
         "parent": 571,
@@ -4556,7 +4556,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 476,
+        "skillId": 476,
         "name": "Evocation",
         "skillline": 22,
         "parent": null,
@@ -4573,7 +4573,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 112,
+        "skillId": 112,
         "name": "Executioner",
         "skillline": 10,
         "parent": null,
@@ -4590,7 +4590,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 464,
+        "skillId": 464,
         "name": "Executioner",
         "skillline": 16,
         "parent": 462,
@@ -4607,7 +4607,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 298,
+        "skillId": 298,
         "name": "Expansive Frost Cloak",
         "skillline": 15,
         "parent": 296,
@@ -4624,7 +4624,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 571,
+        "skillId": 571,
         "name": "Expert Hunter",
         "skillline": 29,
         "parent": null,
@@ -4641,7 +4641,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 180,
+        "skillId": 180,
         "name": "Expert Mage",
         "skillline": 9,
         "parent": null,
@@ -4658,7 +4658,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 158,
+        "skillId": 158,
         "name": "Expert Summoner",
         "skillline": 8,
         "parent": null,
@@ -4675,7 +4675,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 73,
+        "skillId": 73,
         "name": "Exploitation",
         "skillline": 7,
         "parent": null,
@@ -4692,7 +4692,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 213,
+        "skillId": 213,
         "name": "Explosive Charge",
         "skillline": 4,
         "parent": 212,
@@ -4709,7 +4709,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 767,
+        "skillId": 767,
         "name": "Expunge",
         "skillline": 56,
         "parent": null,
@@ -4726,7 +4726,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 817,
+        "skillId": 817,
         "name": "Expunge and Modify",
         "skillline": 56,
         "parent": 767,
@@ -4743,7 +4743,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 322,
+        "skillId": 322,
         "name": "Extended Ritual",
         "skillline": 6,
         "parent": 319,
@@ -4760,7 +4760,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 360,
+        "skillId": 360,
         "name": "Eye of the Storm",
         "skillline": 20,
         "parent": 358,
@@ -4777,7 +4777,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 244,
+        "skillId": 244,
         "name": "Falcon's Swiftness",
         "skillline": 13,
         "parent": null,
@@ -4794,7 +4794,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 701,
+        "skillId": 701,
         "name": "Feline Ambush",
         "skillline": 52,
         "parent": null,
@@ -4811,7 +4811,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 225,
+        "skillId": 225,
         "name": "Feral Guardian",
         "skillline": 13,
         "parent": null,
@@ -4828,7 +4828,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 516,
+        "skillId": 516,
         "name": "Feral Pounce",
         "skillline": 27,
         "parent": 514,
@@ -4845,7 +4845,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 38,
+        "skillId": 38,
         "name": "Ferocious Leap",
         "skillline": 2,
         "parent": 35,
@@ -4862,7 +4862,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 521,
+        "skillId": 521,
         "name": "Ferocious Roar",
         "skillline": 27,
         "parent": 520,
@@ -4879,7 +4879,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 238,
+        "skillId": 238,
         "name": "Fetcher Infection",
         "skillline": 13,
         "parent": 237,
@@ -4896,7 +4896,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 17,
+        "skillId": 17,
         "name": "Fiery Breath",
         "skillline": 1,
         "parent": null,
@@ -4913,7 +4913,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 21,
+        "skillId": 21,
         "name": "Fiery Grip",
         "skillline": 1,
         "parent": null,
@@ -4930,7 +4930,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 556,
+        "skillId": 556,
         "name": "Finders Keepers",
         "skillline": 32,
         "parent": null,
@@ -4947,7 +4947,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 591,
+        "skillId": 591,
         "name": "Fire Rune",
         "skillline": 30,
         "parent": null,
@@ -4964,7 +4964,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 6,
+        "skillId": 6,
         "name": "Flame Lash",
         "skillline": 1,
         "parent": 4,
@@ -4981,7 +4981,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 788,
+        "skillId": 788,
         "name": "Flame Skull",
         "skillline": 54,
         "parent": null,
@@ -4998,7 +4998,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 25,
+        "skillId": 25,
         "name": "Flames of Oblivion",
         "skillline": 1,
         "parent": 24,
@@ -5015,7 +5015,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 563,
+        "skillId": 563,
         "name": "Flawless Dawnbreaker",
         "skillline": 29,
         "parent": 562,
@@ -5032,7 +5032,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 253,
+        "skillId": 253,
         "name": "Flourish",
         "skillline": 13,
         "parent": null,
@@ -5049,7 +5049,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 384,
+        "skillId": 384,
         "name": "Flurry",
         "skillline": 18,
         "parent": null,
@@ -5066,7 +5066,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 398,
+        "skillId": 398,
         "name": "Flying Blade",
         "skillline": 18,
         "parent": 396,
@@ -5083,7 +5083,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 340,
+        "skillId": 340,
         "name": "Focused Aim",
         "skillline": 19,
         "parent": 338,
@@ -5100,7 +5100,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 212,
+        "skillId": 212,
         "name": "Focused Charge",
         "skillline": 4,
         "parent": null,
@@ -5117,7 +5117,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 471,
+        "skillId": 471,
         "name": "Follow Up",
         "skillline": 16,
         "parent": null,
@@ -5134,7 +5134,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 363,
+        "skillId": 363,
         "name": "Force Pulse",
         "skillline": 20,
         "parent": 361,
@@ -5151,7 +5151,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 361,
+        "skillId": 361,
         "name": "Force Shock",
         "skillline": 20,
         "parent": null,
@@ -5168,7 +5168,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 442,
+        "skillId": 442,
         "name": "Force Siphon",
         "skillline": 21,
         "parent": null,
@@ -5185,7 +5185,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 468,
+        "skillId": 468,
         "name": "Forceful",
         "skillline": 16,
         "parent": null,
@@ -5202,7 +5202,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 422,
+        "skillId": 422,
         "name": "Fortress",
         "skillline": 17,
         "parent": null,
@@ -5219,7 +5219,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 466,
+        "skillId": 466,
         "name": "Forward Momentum",
         "skillline": 16,
         "parent": 465,
@@ -5236,7 +5236,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 84,
+        "skillId": 84,
         "name": "Fossilize",
         "skillline": 3,
         "parent": 83,
@@ -5253,7 +5253,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 82,
+        "skillId": 82,
         "name": "Fragmented Shield",
         "skillline": 3,
         "parent": 80,
@@ -5270,7 +5270,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 296,
+        "skillId": 296,
         "name": "Frost Cloak",
         "skillline": 15,
         "parent": null,
@@ -5287,7 +5287,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 326,
+        "skillId": 326,
         "name": "Frozen Armor",
         "skillline": 15,
         "parent": null,
@@ -5304,7 +5304,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 789,
+        "skillId": 789,
         "name": "Frozen Colossus",
         "skillline": 54,
         "parent": null,
@@ -5321,7 +5321,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 321,
+        "skillId": 321,
         "name": "Frozen Device",
         "skillline": 15,
         "parent": 318,
@@ -5338,7 +5338,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 318,
+        "skillId": 318,
         "name": "Frozen Gate",
         "skillline": 15,
         "parent": null,
@@ -5355,7 +5355,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 323,
+        "skillId": 323,
         "name": "Frozen Retreat",
         "skillline": 15,
         "parent": 318,
@@ -5372,7 +5372,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 261,
+        "skillId": 261,
         "name": "Fungal Growth",
         "skillline": 14,
         "parent": null,
@@ -5389,7 +5389,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 185,
+        "skillId": 185,
         "name": "Funnel Health",
         "skillline": 12,
         "parent": 184,
@@ -5406,7 +5406,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 810,
+        "skillId": 810,
         "name": "Ghostly Embrace",
         "skillline": 55,
         "parent": 774,
@@ -5423,7 +5423,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 693,
+        "skillId": 693,
         "name": "Gift of Magnus",
         "skillline": 44,
         "parent": null,
@@ -5440,7 +5440,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 791,
+        "skillId": 791,
         "name": "Glacial Colossus",
         "skillline": 54,
         "parent": 789,
@@ -5457,7 +5457,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 324,
+        "skillId": 324,
         "name": "Glacial Presence",
         "skillline": 15,
         "parent": null,
@@ -5474,7 +5474,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 749,
+        "skillId": 749,
         "name": "Gourmand",
         "skillline": 42,
         "parent": null,
@@ -5491,7 +5491,7 @@
         "unlocks_at": 43
     },
     {
-        "id": 477,
+        "skillId": 477,
         "name": "Grace",
         "skillline": 22,
         "parent": null,
@@ -5508,7 +5508,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 430,
+        "skillId": 430,
         "name": "Grand Healing",
         "skillline": 21,
         "parent": null,
@@ -5525,7 +5525,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 774,
+        "skillId": 774,
         "name": "Grave Grasp",
         "skillline": 55,
         "parent": null,
@@ -5542,7 +5542,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 138,
+        "skillId": 138,
         "name": "Greater Storm Atronach",
         "skillline": 8,
         "parent": 137,
@@ -5559,7 +5559,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 53,
+        "skillId": 53,
         "name": "Green Dragon Blood",
         "skillline": 2,
         "parent": 51,
@@ -5576,7 +5576,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 273,
+        "skillId": 273,
         "name": "Green Lotus",
         "skillline": 14,
         "parent": 272,
@@ -5593,7 +5593,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 108,
+        "skillId": 108,
         "name": "Grim Focus",
         "skillline": 10,
         "parent": null,
@@ -5610,7 +5610,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 304,
+        "skillId": 304,
         "name": "Gripping Shards",
         "skillline": 15,
         "parent": 302,
@@ -5627,7 +5627,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 239,
+        "skillId": 239,
         "name": "Growing Swarm",
         "skillline": 13,
         "parent": 237,
@@ -5644,7 +5644,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 669,
+        "skillId": 669,
         "name": "Guard",
         "skillline": 36,
         "parent": null,
@@ -5661,7 +5661,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 558,
+        "skillId": 558,
         "name": "Haggling",
         "skillline": 32,
         "parent": null,
@@ -5678,7 +5678,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 41,
+        "skillId": 41,
         "name": "Hardened Armor",
         "skillline": 2,
         "parent": 39,
@@ -5695,7 +5695,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 150,
+        "skillId": 150,
         "name": "Hardened Ward",
         "skillline": 8,
         "parent": 149,
@@ -5712,7 +5712,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 475,
+        "skillId": 475,
         "name": "Harness Magicka",
         "skillline": 22,
         "parent": 473,
@@ -5729,7 +5729,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 310,
+        "skillId": 310,
         "name": "Hasty Prayer",
         "skillline": 6,
         "parent": 306,
@@ -5746,7 +5746,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 357,
+        "skillId": 357,
         "name": "Hasty Retreat",
         "skillline": 19,
         "parent": null,
@@ -5763,7 +5763,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 145,
+        "skillId": 145,
         "name": "Haunting Curse",
         "skillline": 8,
         "parent": 143,
@@ -5780,7 +5780,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 356,
+        "skillId": 356,
         "name": "Hawk Eye",
         "skillline": 19,
         "parent": null,
@@ -5797,7 +5797,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 306,
+        "skillId": 306,
         "name": "Healing Ritual",
         "skillline": 6,
         "parent": null,
@@ -5814,7 +5814,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 265,
+        "skillId": 265,
         "name": "Healing Seed",
         "skillline": 14,
         "parent": null,
@@ -5831,7 +5831,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 432,
+        "skillId": 432,
         "name": "Healing Springs",
         "skillline": 21,
         "parent": 430,
@@ -5848,7 +5848,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 258,
+        "skillId": 258,
         "name": "Healing Thicket",
         "skillline": 14,
         "parent": 255,
@@ -5865,7 +5865,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 441,
+        "skillId": 441,
         "name": "Healing Ward",
         "skillline": 21,
         "parent": 439,
@@ -5882,7 +5882,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 771,
+        "skillId": 771,
         "name": "Health Avarice",
         "skillline": 55,
         "parent": null,
@@ -5899,7 +5899,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 188,
+        "skillId": 188,
         "name": "Healthy Offering",
         "skillline": 12,
         "parent": 187,
@@ -5916,7 +5916,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 469,
+        "skillId": 469,
         "name": "Heavy Weapons",
         "skillline": 16,
         "parent": null,
@@ -5933,7 +5933,7 @@
         "unlocks_at": 25
     },
     {
-        "id": 92,
+        "skillId": 92,
         "name": "Helping Hands",
         "skillline": 3,
         "parent": null,
@@ -5950,7 +5950,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 114,
+        "skillId": 114,
         "name": "Hemorrhage",
         "skillline": 10,
         "parent": null,
@@ -5967,7 +5967,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 412,
+        "skillId": 412,
         "name": "Heroic Slash",
         "skillline": 17,
         "parent": 410,
@@ -5984,7 +5984,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 816,
+        "skillId": 816,
         "name": "Hexproof",
         "skillline": 56,
         "parent": 767,
@@ -6001,7 +6001,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 396,
+        "skillId": 396,
         "name": "Hidden Blade",
         "skillline": 18,
         "parent": null,
@@ -6018,7 +6018,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 690,
+        "skillId": 690,
         "name": "Highborn",
         "skillline": 50,
         "parent": null,
@@ -6035,7 +6035,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 517,
+        "skillId": 517,
         "name": "Hircine's Bounty",
         "skillline": 27,
         "parent": null,
@@ -6052,7 +6052,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 519,
+        "skillId": 519,
         "name": "Hircine's Fortitude",
         "skillline": 27,
         "parent": 517,
@@ -6069,7 +6069,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 518,
+        "skillId": 518,
         "name": "Hircine's Rage",
         "skillline": 27,
         "parent": 517,
@@ -6086,7 +6086,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 740,
+        "skillId": 740,
         "name": "Hireling",
         "skillline": 40,
         "parent": null,
@@ -6103,7 +6103,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 753,
+        "skillId": 753,
         "name": "Hireling",
         "skillline": 42,
         "parent": null,
@@ -6120,7 +6120,7 @@
         "unlocks_at": 48
     },
     {
-        "id": 301,
+        "skillId": 301,
         "name": "Honor The Dead",
         "skillline": 6,
         "parent": 300,
@@ -6137,7 +6137,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 525,
+        "skillId": 525,
         "name": "Howl of Agony",
         "skillline": 27,
         "parent": 523,
@@ -6154,7 +6154,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 524,
+        "skillId": 524,
         "name": "Howl of Despair",
         "skillline": 27,
         "parent": 523,
@@ -6171,7 +6171,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 803,
+        "skillId": 803,
         "name": "Hungry Scythe",
         "skillline": 55,
         "parent": 778,
@@ -6188,7 +6188,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 718,
+        "skillId": 718,
         "name": "Hunter's Eye",
         "skillline": 51,
         "parent": null,
@@ -6205,7 +6205,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 166,
+        "skillId": 166,
         "name": "Hurricane",
         "skillline": 9,
         "parent": 165,
@@ -6222,7 +6222,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 583,
+        "skillId": 583,
         "name": "Ice Comet",
         "skillline": 30,
         "parent": 582,
@@ -6239,7 +6239,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 299,
+        "skillId": 299,
         "name": "Ice Fortress",
         "skillline": 15,
         "parent": 296,
@@ -6256,7 +6256,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 327,
+        "skillId": 327,
         "name": "Icy Aura",
         "skillline": 15,
         "parent": null,
@@ -6273,7 +6273,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 81,
+        "skillId": 81,
         "name": "Igneous Shield",
         "skillline": 3,
         "parent": 80,
@@ -6290,7 +6290,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 78,
+        "skillId": 78,
         "name": "Igneous Weapons",
         "skillline": 3,
         "parent": 77,
@@ -6307,7 +6307,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 289,
+        "skillId": 289,
         "name": "Illuminate",
         "skillline": 5,
         "parent": null,
@@ -6324,7 +6324,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 431,
+        "skillId": 431,
         "name": "Illustrious Healing",
         "skillline": 21,
         "parent": 430,
@@ -6341,7 +6341,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 608,
+        "skillId": 608,
         "name": "Imbue Weapon",
         "skillline": 34,
         "parent": null,
@@ -6358,7 +6358,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 489,
+        "skillId": 489,
         "name": "Immovable",
         "skillline": 24,
         "parent": null,
@@ -6375,7 +6375,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 490,
+        "skillId": 490,
         "name": "Immovable Brute",
         "skillline": 24,
         "parent": 489,
@@ -6392,7 +6392,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 98,
+        "skillId": 98,
         "name": "Impale",
         "skillline": 10,
         "parent": 96,
@@ -6409,7 +6409,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 302,
+        "skillId": 302,
         "name": "Impaling Shards",
         "skillline": 15,
         "parent": null,
@@ -6426,7 +6426,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 697,
+        "skillId": 697,
         "name": "Imperial Mettle",
         "skillline": 53,
         "parent": null,
@@ -6443,7 +6443,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 497,
+        "skillId": 497,
         "name": "Improved Hiding",
         "skillline": 28,
         "parent": null,
@@ -6460,7 +6460,7 @@
         "unlocks_at": 16
     },
     {
-        "id": 486,
+        "skillId": 486,
         "name": "Improved Sneak",
         "skillline": 23,
         "parent": null,
@@ -6477,7 +6477,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 373,
+        "skillId": 373,
         "name": "Impulse",
         "skillline": 20,
         "parent": null,
@@ -6494,7 +6494,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 94,
+        "skillId": 94,
         "name": "Incapacitating Strike",
         "skillline": 10,
         "parent": 93,
@@ -6511,7 +6511,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 655,
+        "skillId": 655,
         "name": "Inevitable Detonation",
         "skillline": 35,
         "parent": 654,
@@ -6528,7 +6528,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 526,
+        "skillId": 526,
         "name": "Infectious Claws",
         "skillline": 27,
         "parent": null,
@@ -6545,7 +6545,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 24,
+        "skillId": 24,
         "name": "Inferno",
         "skillline": 1,
         "parent": null,
@@ -6562,7 +6562,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 58,
+        "skillId": 58,
         "name": "Inhale",
         "skillline": 2,
         "parent": null,
@@ -6579,7 +6579,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 633,
+        "skillId": 633,
         "name": "Inner Beast",
         "skillline": 31,
         "parent": 631,
@@ -6596,7 +6596,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 631,
+        "skillId": 631,
         "name": "Inner Fire",
         "skillline": 31,
         "parent": null,
@@ -6613,7 +6613,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 586,
+        "skillId": 586,
         "name": "Inner Light",
         "skillline": 30,
         "parent": 585,
@@ -6630,7 +6630,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 632,
+        "skillId": 632,
         "name": "Inner Rage",
         "skillline": 31,
         "parent": 631,
@@ -6647,7 +6647,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 821,
+        "skillId": 821,
         "name": "Intensive Mender",
         "skillline": 56,
         "parent": 765,
@@ -6664,7 +6664,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 577,
+        "skillId": 577,
         "name": "Intimidating Presence",
         "skillline": 29,
         "parent": null,
@@ -6681,7 +6681,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 619,
+        "skillId": 619,
         "name": "Introspection",
         "skillline": 34,
         "parent": 617,
@@ -6698,7 +6698,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 418,
+        "skillId": 418,
         "name": "Invasion",
         "skillline": 17,
         "parent": 416,
@@ -6715,7 +6715,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 539,
+        "skillId": 539,
         "name": "Invigorating Drain",
         "skillline": 26,
         "parent": 538,
@@ -6732,7 +6732,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 61,
+        "skillId": 61,
         "name": "Iron Skin",
         "skillline": 2,
         "parent": null,
@@ -6749,7 +6749,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 744,
+        "skillId": 744,
         "name": "Jewelry Extraction",
         "skillline": 41,
         "parent": null,
@@ -6766,7 +6766,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 494,
+        "skillId": 494,
         "name": "Juggernaut",
         "skillline": 24,
         "parent": null,
@@ -6783,7 +6783,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 732,
+        "skillId": 732,
         "name": "Keen Eye: Cloth",
         "skillline": 39,
         "parent": null,
@@ -6800,7 +6800,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 743,
+        "skillId": 743,
         "name": "Keen Eye: Jewelry",
         "skillline": 41,
         "parent": null,
@@ -6817,7 +6817,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 726,
+        "skillId": 726,
         "name": "Keen Eye: Ore",
         "skillline": 38,
         "parent": null,
@@ -6834,7 +6834,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 720,
+        "skillId": 720,
         "name": "Keen Eye: Reagents",
         "skillline": 37,
         "parent": null,
@@ -6851,7 +6851,7 @@
         "unlocks_at": 17
     },
     {
-        "id": 739,
+        "skillId": 739,
         "name": "Keen Eye: Rune Stones",
         "skillline": 40,
         "parent": null,
@@ -6868,7 +6868,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 755,
+        "skillId": 755,
         "name": "Keen Eye: Wood",
         "skillline": 43,
         "parent": null,
@@ -6885,7 +6885,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 501,
+        "skillId": 501,
         "name": "Kickback",
         "skillline": 28,
         "parent": null,
@@ -6902,7 +6902,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 97,
+        "skillId": 97,
         "name": "Killer's Blade",
         "skillline": 10,
         "parent": 96,
@@ -6919,7 +6919,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 723,
+        "skillId": 723,
         "name": "Laboratory Use",
         "skillline": 37,
         "parent": null,
@@ -6936,7 +6936,7 @@
         "unlocks_at": 15
     },
     {
-        "id": 381,
+        "skillId": 381,
         "name": "Lacerate",
         "skillline": 18,
         "parent": null,
@@ -6953,7 +6953,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 745,
+        "skillId": 745,
         "name": "Lapidary Research",
         "skillline": 41,
         "parent": null,
@@ -6970,7 +6970,7 @@
         "unlocks_at": 45
     },
     {
-        "id": 770,
+        "skillId": 770,
         "name": "Last Gasp",
         "skillline": 55,
         "parent": null,
@@ -6987,7 +6987,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 4,
+        "skillId": 4,
         "name": "Lava Whip",
         "skillline": 1,
         "parent": null,
@@ -7004,7 +7004,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 194,
+        "skillId": 194,
         "name": "Leeching Strikes",
         "skillline": 12,
         "parent": 193,
@@ -7021,7 +7021,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 270,
+        "skillId": 270,
         "name": "Leeching Vines",
         "skillline": 14,
         "parent": 269,
@@ -7038,7 +7038,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 339,
+        "skillId": 339,
         "name": "Lethal Arrow",
         "skillline": 19,
         "parent": 338,
@@ -7055,7 +7055,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 766,
+        "skillId": 766,
         "name": "Life amid Death",
         "skillline": 56,
         "parent": null,
@@ -7072,7 +7072,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 428,
+        "skillId": 428,
         "name": "Life Giver",
         "skillline": 21,
         "parent": 427,
@@ -7089,7 +7089,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 681,
+        "skillId": 681,
         "name": "Life Mender",
         "skillline": 49,
         "parent": null,
@@ -7106,7 +7106,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 498,
+        "skillId": 498,
         "name": "Light Fingers",
         "skillline": 28,
         "parent": null,
@@ -7123,7 +7123,7 @@
         "unlocks_at": 17
     },
     {
-        "id": 332,
+        "skillId": 332,
         "name": "Light Weaver",
         "skillline": 6,
         "parent": null,
@@ -7140,7 +7140,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 429,
+        "skillId": 429,
         "name": "Light's Champion",
         "skillline": 21,
         "parent": 427,
@@ -7157,7 +7157,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 170,
+        "skillId": 170,
         "name": "Lightning Flood",
         "skillline": 9,
         "parent": 168,
@@ -7174,7 +7174,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 165,
+        "skillId": 165,
         "name": "Lightning Form",
         "skillline": 9,
         "parent": null,
@@ -7191,7 +7191,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 168,
+        "skillId": 168,
         "name": "Lightning Splash",
         "skillline": 9,
         "parent": null,
@@ -7208,7 +7208,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 576,
+        "skillId": 576,
         "name": "Lightweight Beast Trap",
         "skillline": 29,
         "parent": 574,
@@ -7225,7 +7225,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 673,
+        "skillId": 673,
         "name": "Lingering Flare",
         "skillline": 36,
         "parent": 672,
@@ -7242,7 +7242,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 169,
+        "skillId": 169,
         "name": "Liquid Lightning",
         "skillline": 9,
         "parent": 168,
@@ -7259,7 +7259,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 271,
+        "skillId": 271,
         "name": "Living Trellis",
         "skillline": 14,
         "parent": 269,
@@ -7276,7 +7276,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 269,
+        "skillId": 269,
         "name": "Living Vines",
         "skillline": 14,
         "parent": null,
@@ -7293,7 +7293,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 500,
+        "skillId": 500,
         "name": "Locksmith",
         "skillline": 28,
         "parent": null,
@@ -7310,7 +7310,7 @@
         "unlocks_at": 19
     },
     {
-        "id": 353,
+        "skillId": 353,
         "name": "Long Shots",
         "skillline": 19,
         "parent": null,
@@ -7327,7 +7327,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 274,
+        "skillId": 274,
         "name": "Lotus Blossom",
         "skillline": 14,
         "parent": 272,
@@ -7344,7 +7344,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 100,
+        "skillId": 100,
         "name": "Lotus Fan",
         "skillline": 10,
         "parent": 99,
@@ -7361,7 +7361,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 272,
+        "skillId": 272,
         "name": "Lotus Flower",
         "skillline": 14,
         "parent": null,
@@ -7378,7 +7378,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 410,
+        "skillId": 410,
         "name": "Low Slash",
         "skillline": 17,
         "parent": null,
@@ -7395,7 +7395,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 756,
+        "skillId": 756,
         "name": "Lumberjack Hireling",
         "skillline": 43,
         "parent": null,
@@ -7412,7 +7412,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 216,
+        "skillId": 216,
         "name": "Luminous Shards",
         "skillline": 4,
         "parent": 215,
@@ -7429,7 +7429,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 700,
+        "skillId": 700,
         "name": "Lunar Blessings",
         "skillline": 52,
         "parent": null,
@@ -7446,7 +7446,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 598,
+        "skillId": 598,
         "name": "Mage Adept",
         "skillline": 30,
         "parent": null,
@@ -7463,7 +7463,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 585,
+        "skillId": 585,
         "name": "Magelight",
         "skillline": 30,
         "parent": null,
@@ -7480,7 +7480,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 162,
+        "skillId": 162,
         "name": "Mages' Fury",
         "skillline": 9,
         "parent": null,
@@ -7497,7 +7497,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 163,
+        "skillId": 163,
         "name": "Mages' Wrath",
         "skillline": 9,
         "parent": 162,
@@ -7514,7 +7514,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 675,
+        "skillId": 675,
         "name": "Magicka Aid",
         "skillline": 36,
         "parent": null,
@@ -7531,7 +7531,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 600,
+        "skillId": 600,
         "name": "Magicka Controller",
         "skillline": 30,
         "parent": null,
@@ -7548,7 +7548,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 654,
+        "skillId": 654,
         "name": "Magicka Detonation",
         "skillline": 35,
         "parent": null,
@@ -7565,7 +7565,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 200,
+        "skillId": 200,
         "name": "Magicka Flood",
         "skillline": 12,
         "parent": null,
@@ -7582,7 +7582,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 685,
+        "skillId": 685,
         "name": "Magicka Mastery",
         "skillline": 44,
         "parent": null,
@@ -7599,7 +7599,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 65,
+        "skillId": 65,
         "name": "Magma Armor",
         "skillline": 3,
         "parent": null,
@@ -7616,7 +7616,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 67,
+        "skillId": 67,
         "name": "Magma Shell",
         "skillline": 3,
         "parent": 65,
@@ -7633,7 +7633,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 345,
+        "skillId": 345,
         "name": "Magnum Shot",
         "skillline": 19,
         "parent": 344,
@@ -7650,7 +7650,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 827,
+        "skillId": 827,
         "name": "Malacath's Vengeance",
         "skillline": 57,
         "parent": null,
@@ -7667,7 +7667,7 @@
         "unlocks_at": null
     },
     {
-        "id": 187,
+        "skillId": 187,
         "name": "Malevolent Offering",
         "skillline": 12,
         "parent": null,
@@ -7684,7 +7684,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 129,
+        "skillId": 129,
         "name": "Manifestation of Terror",
         "skillline": 11,
         "parent": 127,
@@ -7701,7 +7701,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 105,
+        "skillId": 105,
         "name": "Mark Target",
         "skillline": 10,
         "parent": null,
@@ -7718,7 +7718,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 712,
+        "skillId": 712,
         "name": "Martial Training",
         "skillline": 45,
         "parent": null,
@@ -7735,7 +7735,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 128,
+        "skillId": 128,
         "name": "Mass Hysteria",
         "skillline": 11,
         "parent": 127,
@@ -7752,7 +7752,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 111,
+        "skillId": 111,
         "name": "Master Assassin",
         "skillline": 10,
         "parent": null,
@@ -7769,7 +7769,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 334,
+        "skillId": 334,
         "name": "Master Ritualist",
         "skillline": 6,
         "parent": null,
@@ -7786,7 +7786,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 283,
+        "skillId": 283,
         "name": "Maturation",
         "skillline": 14,
         "parent": null,
@@ -7803,7 +7803,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 721,
+        "skillId": 721,
         "name": "Medicinal Use",
         "skillline": 37,
         "parent": null,
@@ -7820,7 +7820,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 617,
+        "skillId": 617,
         "name": "Meditate",
         "skillline": 34,
         "parent": null,
@@ -7837,7 +7837,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 615,
+        "skillId": 615,
         "name": "Mend Spirit",
         "skillline": 34,
         "parent": 614,
@@ -7854,7 +7854,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 614,
+        "skillId": 614,
         "name": "Mend Wounds",
         "skillline": 34,
         "parent": null,
@@ -7871,7 +7871,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 331,
+        "skillId": 331,
         "name": "Mending",
         "skillline": 6,
         "parent": null,
@@ -7888,7 +7888,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 110,
+        "skillId": 110,
         "name": "Merciless Resolve",
         "skillline": 10,
         "parent": 108,
@@ -7905,7 +7905,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 728,
+        "skillId": 728,
         "name": "Metal Extraction",
         "skillline": 38,
         "parent": null,
@@ -7922,7 +7922,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 729,
+        "skillId": 729,
         "name": "Metallurgy",
         "skillline": 38,
         "parent": null,
@@ -7939,7 +7939,7 @@
         "unlocks_at": 45
     },
     {
-        "id": 725,
+        "skillId": 725,
         "name": "Metalworking",
         "skillline": 38,
         "parent": null,
@@ -7956,7 +7956,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 582,
+        "skillId": 582,
         "name": "Meteor",
         "skillline": 30,
         "parent": null,
@@ -7973,7 +7973,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 601,
+        "skillId": 601,
         "name": "Might of the Guild",
         "skillline": 30,
         "parent": null,
@@ -7990,7 +7990,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 727,
+        "skillId": 727,
         "name": "Miner Hireling",
         "skillline": 38,
         "parent": null,
@@ -8007,7 +8007,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 103,
+        "skillId": 103,
         "name": "Mirage",
         "skillline": 10,
         "parent": 102,
@@ -8024,7 +8024,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 541,
+        "skillId": 541,
         "name": "Mist Form",
         "skillline": 26,
         "parent": null,
@@ -8041,7 +8041,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 79,
+        "skillId": 79,
         "name": "Molten Armaments",
         "skillline": 3,
         "parent": 77,
@@ -8058,7 +8058,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 77,
+        "skillId": 77,
         "name": "Molten Weapons",
         "skillline": 3,
         "parent": null,
@@ -8075,7 +8075,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 5,
+        "skillId": 5,
         "name": "Molten Whip",
         "skillline": 1,
         "parent": 4,
@@ -8092,7 +8092,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 465,
+        "skillId": 465,
         "name": "Momentum",
         "skillline": 16,
         "parent": null,
@@ -8109,7 +8109,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 823,
+        "skillId": 823,
         "name": "Mortal Coil",
         "skillline": 56,
         "parent": 764,
@@ -8126,7 +8126,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 91,
+        "skillId": 91,
         "name": "Mountain's Blessing",
         "skillline": 3,
         "parent": null,
@@ -8143,7 +8143,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 435,
+        "skillId": 435,
         "name": "Mutagen",
         "skillline": 21,
         "parent": 433,
@@ -8160,7 +8160,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 670,
+        "skillId": 670,
         "name": "Mystic Guard",
         "skillline": 36,
         "parent": 669,
@@ -8177,7 +8177,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 638,
+        "skillId": 638,
         "name": "Mystic Orb",
         "skillline": 31,
         "parent": 637,
@@ -8194,7 +8194,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 824,
+        "skillId": 824,
         "name": "Mystic Siphon",
         "skillline": 54,
         "parent": 784,
@@ -8211,7 +8211,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 277,
+        "skillId": 277,
         "name": "Nature's Embrace",
         "skillline": 14,
         "parent": 275,
@@ -8228,7 +8228,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 281,
+        "skillId": 281,
         "name": "Nature's Gift",
         "skillline": 14,
         "parent": null,
@@ -8245,7 +8245,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 275,
+        "skillId": 275,
         "name": "Nature's Grasp",
         "skillline": 14,
         "parent": null,
@@ -8262,7 +8262,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 762,
+        "skillId": 762,
         "name": "Near-Death Experience",
         "skillline": 56,
         "parent": null,
@@ -8279,7 +8279,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 637,
+        "skillId": 637,
         "name": "Necrotic Orb",
         "skillline": 31,
         "parent": null,
@@ -8296,7 +8296,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 807,
+        "skillId": 807,
         "name": "Necrotic Potency",
         "skillline": 55,
         "parent": 776,
@@ -8313,7 +8313,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 13,
+        "skillId": 13,
         "name": "Negate Magic",
         "skillline": 7,
         "parent": null,
@@ -8330,7 +8330,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 293,
+        "skillId": 293,
         "name": "Northern Storm",
         "skillline": 15,
         "parent": 292,
@@ -8347,7 +8347,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 232,
+        "skillId": 232,
         "name": "Nova",
         "skillline": 5,
         "parent": null,
@@ -8364,7 +8364,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 19,
+        "skillId": 19,
         "name": "Noxious Breath",
         "skillline": 1,
         "parent": 17,
@@ -8381,7 +8381,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 75,
+        "skillId": 75,
         "name": "Obsidian Shard",
         "skillline": 3,
         "parent": 74,
@@ -8398,7 +8398,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 80,
+        "skillId": 80,
         "name": "Obsidian Shield",
         "skillline": 3,
         "parent": null,
@@ -8415,7 +8415,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 451,
+        "skillId": 451,
         "name": "Onslaught",
         "skillline": 16,
         "parent": 450,
@@ -8432,7 +8432,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 682,
+        "skillId": 682,
         "name": "Opportunist",
         "skillline": 44,
         "parent": null,
@@ -8449,7 +8449,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 733,
+        "skillId": 733,
         "name": "Outfitter Hireling",
         "skillline": 39,
         "parent": null,
@@ -8466,7 +8466,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 627,
+        "skillId": 627,
         "name": "Overflowing Altar",
         "skillline": 31,
         "parent": 625,
@@ -8483,7 +8483,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 159,
+        "skillId": 159,
         "name": "Overload",
         "skillline": 9,
         "parent": null,
@@ -8500,7 +8500,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 512,
+        "skillId": 512,
         "name": "Pack Leader",
         "skillline": 27,
         "parent": 511,
@@ -8517,7 +8517,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 552,
+        "skillId": 552,
         "name": "Padomaic Sprint",
         "skillline": 33,
         "parent": null,
@@ -8534,7 +8534,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 427,
+        "skillId": 427,
         "name": "Panacea",
         "skillline": 21,
         "parent": null,
@@ -8551,7 +8551,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 829,
+        "skillId": 829,
         "name": "Pariah's Resolve",
         "skillline": 57,
         "parent": null,
@@ -8568,7 +8568,7 @@
         "unlocks_at": null
     },
     {
-        "id": 124,
+        "skillId": 124,
         "name": "Path of Darkness",
         "skillline": 11,
         "parent": null,
@@ -8585,7 +8585,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 377,
+        "skillId": 377,
         "name": "Penetrating Magic",
         "skillline": 20,
         "parent": null,
@@ -8602,7 +8602,7 @@
         "unlocks_at": 17
     },
     {
-        "id": 295,
+        "skillId": 295,
         "name": "Permafrost",
         "skillline": 15,
         "parent": 292,
@@ -8619,7 +8619,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 72,
+        "skillId": 72,
         "name": "Persistence",
         "skillline": 7,
         "parent": null,
@@ -8636,7 +8636,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 597,
+        "skillId": 597,
         "name": "Persuasive Will",
         "skillline": 30,
         "parent": null,
@@ -8653,7 +8653,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 790,
+        "skillId": 790,
         "name": "Pestilent Colossus",
         "skillline": 54,
         "parent": 789,
@@ -8670,7 +8670,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 83,
+        "skillId": 83,
         "name": "Petrify",
         "skillline": 3,
         "parent": null,
@@ -8687,7 +8687,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 104,
+        "skillId": 104,
         "name": "Phantasmal Escape",
         "skillline": 10,
         "parent": 102,
@@ -8704,7 +8704,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 409,
+        "skillId": 409,
         "name": "Pierce Armor",
         "skillline": 17,
         "parent": 407,
@@ -8721,7 +8721,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 329,
+        "skillId": 329,
         "name": "Piercing Cold",
         "skillline": 15,
         "parent": null,
@@ -8738,7 +8738,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 523,
+        "skillId": 523,
         "name": "Piercing Howl",
         "skillline": 27,
         "parent": null,
@@ -8755,7 +8755,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 209,
+        "skillId": 209,
         "name": "Piercing Javelin",
         "skillline": 4,
         "parent": null,
@@ -8772,7 +8772,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 106,
+        "skillId": 106,
         "name": "Piercing Mark",
         "skillline": 10,
         "parent": 105,
@@ -8789,7 +8789,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 221,
+        "skillId": 221,
         "name": "Piercing Spear",
         "skillline": 4,
         "parent": null,
@@ -8806,7 +8806,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 746,
+        "skillId": 746,
         "name": "Platings Expertise",
         "skillline": 41,
         "parent": null,
@@ -8823,7 +8823,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 350,
+        "skillId": 350,
         "name": "Poison Arrow",
         "skillline": 19,
         "parent": null,
@@ -8840,7 +8840,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 352,
+        "skillId": 352,
         "name": "Poison Injection",
         "skillline": 19,
         "parent": 350,
@@ -8857,7 +8857,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 309,
+        "skillId": 309,
         "name": "Polar Wind",
         "skillline": 15,
         "parent": 308,
@@ -8874,7 +8874,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 738,
+        "skillId": 738,
         "name": "Potency Improvement",
         "skillline": 40,
         "parent": null,
@@ -8891,7 +8891,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 514,
+        "skillId": 514,
         "name": "Pounce",
         "skillline": 27,
         "parent": null,
@@ -8908,7 +8908,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 419,
+        "skillId": 419,
         "name": "Power Bash",
         "skillline": 17,
         "parent": null,
@@ -8925,7 +8925,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 197,
+        "skillId": 197,
         "name": "Power Extraction",
         "skillline": 12,
         "parent": 196,
@@ -8942,7 +8942,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 263,
+        "skillId": 263,
         "name": "Power of the Light",
         "skillline": 5,
         "parent": 259,
@@ -8959,7 +8959,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 160,
+        "skillId": 160,
         "name": "Power Overload",
         "skillline": 9,
         "parent": 159,
@@ -8976,7 +8976,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 421,
+        "skillId": 421,
         "name": "Power Slam",
         "skillline": 17,
         "parent": 419,
@@ -8993,7 +8993,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 156,
+        "skillId": 156,
         "name": "Power Stone",
         "skillline": 8,
         "parent": null,
@@ -9010,7 +9010,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 172,
+        "skillId": 172,
         "name": "Power Surge",
         "skillline": 9,
         "parent": 171,
@@ -9027,7 +9027,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 297,
+        "skillId": 297,
         "name": "Practiced Incantation",
         "skillline": 6,
         "parent": 291,
@@ -9044,7 +9044,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 603,
+        "skillId": 603,
         "name": "Precognition",
         "skillline": 34,
         "parent": 602,
@@ -9061,7 +9061,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 113,
+        "skillId": 113,
         "name": "Pressure Points",
         "skillline": 10,
         "parent": null,
@@ -9078,7 +9078,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 288,
+        "skillId": 288,
         "name": "Prism",
         "skillline": 5,
         "parent": null,
@@ -9095,7 +9095,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 479,
+        "skillId": 479,
         "name": "Prodigy",
         "skillline": 22,
         "parent": null,
@@ -9112,7 +9112,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 665,
+        "skillId": 665,
         "name": "Propelling Shield",
         "skillline": 36,
         "parent": 663,
@@ -9129,7 +9129,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 56,
+        "skillId": 56,
         "name": "Protective Plate",
         "skillline": 2,
         "parent": 55,
@@ -9146,7 +9146,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 55,
+        "skillId": 55,
         "name": "Protective Scale",
         "skillline": 2,
         "parent": null,
@@ -9163,7 +9163,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 656,
+        "skillId": 656,
         "name": "Proximity Detonation",
         "skillline": 35,
         "parent": 654,
@@ -9180,7 +9180,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 375,
+        "skillId": 375,
         "name": "Pulsar",
         "skillline": 20,
         "parent": 373,
@@ -9197,7 +9197,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 800,
+        "skillId": 800,
         "name": "Pummeling Goliath",
         "skillline": 55,
         "parent": 779,
@@ -9214,7 +9214,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 407,
+        "skillId": 407,
         "name": "Puncture",
         "skillline": 17,
         "parent": null,
@@ -9231,7 +9231,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 206,
+        "skillId": 206,
         "name": "Puncturing Strikes",
         "skillline": 4,
         "parent": null,
@@ -9248,7 +9248,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 208,
+        "skillId": 208,
         "name": "Puncturing Sweep",
         "skillline": 4,
         "parent": 206,
@@ -9265,7 +9265,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 666,
+        "skillId": 666,
         "name": "Purge",
         "skillline": 36,
         "parent": null,
@@ -9282,7 +9282,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 260,
+        "skillId": 260,
         "name": "Purifying Light",
         "skillline": 5,
         "parent": 259,
@@ -9299,7 +9299,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 529,
+        "skillId": 529,
         "name": "Pursuit",
         "skillline": 27,
         "parent": null,
@@ -9316,7 +9316,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 394,
+        "skillId": 394,
         "name": "Quick Cloak",
         "skillline": 18,
         "parent": 393,
@@ -9333,7 +9333,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 444,
+        "skillId": 444,
         "name": "Quick Siphon",
         "skillline": 21,
         "parent": 442,
@@ -9350,7 +9350,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 613,
+        "skillId": 613,
         "name": "Race Against Time",
         "skillline": 34,
         "parent": 611,
@@ -9367,7 +9367,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 203,
+        "skillId": 203,
         "name": "Radial Sweep",
         "skillline": 4,
         "parent": null,
@@ -9384,7 +9384,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 316,
+        "skillId": 316,
         "name": "Radiant Aura",
         "skillline": 6,
         "parent": 313,
@@ -9401,7 +9401,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 284,
+        "skillId": 284,
         "name": "Radiant Destruction",
         "skillline": 5,
         "parent": null,
@@ -9418,7 +9418,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 285,
+        "skillId": 285,
         "name": "Radiant Glory",
         "skillline": 5,
         "parent": 284,
@@ -9435,7 +9435,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 587,
+        "skillId": 587,
         "name": "Radiant Magelight",
         "skillline": 30,
         "parent": 585,
@@ -9452,7 +9452,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 286,
+        "skillId": 286,
         "name": "Radiant Oppression",
         "skillline": 5,
         "parent": 284,
@@ -9469,7 +9469,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 219,
+        "skillId": 219,
         "name": "Radiant Ward",
         "skillline": 4,
         "parent": 218,
@@ -9486,7 +9486,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 467,
+        "skillId": 467,
         "name": "Rally",
         "skillline": 16,
         "parent": 465,
@@ -9503,7 +9503,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 355,
+        "skillId": 355,
         "name": "Ranger",
         "skillline": 19,
         "parent": null,
@@ -9520,7 +9520,7 @@
         "unlocks_at": 28
     },
     {
-        "id": 408,
+        "skillId": 408,
         "name": "Ransack",
         "skillline": 17,
         "parent": 407,
@@ -9537,7 +9537,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 335,
+        "skillId": 335,
         "name": "Rapid Fire",
         "skillline": 19,
         "parent": null,
@@ -9554,7 +9554,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 645,
+        "skillId": 645,
         "name": "Rapid Maneuver",
         "skillline": 35,
         "parent": null,
@@ -9571,7 +9571,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 496,
+        "skillId": 496,
         "name": "Rapid Mending",
         "skillline": 24,
         "parent": null,
@@ -9588,7 +9588,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 434,
+        "skillId": 434,
         "name": "Rapid Regeneration",
         "skillline": 21,
         "parent": 433,
@@ -9605,7 +9605,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 780,
+        "skillId": 780,
         "name": "Rapid Rot",
         "skillline": 54,
         "parent": null,
@@ -9622,7 +9622,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 385,
+        "skillId": 385,
         "name": "Rapid Strikes",
         "skillline": 18,
         "parent": 384,
@@ -9639,7 +9639,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 801,
+        "skillId": 801,
         "name": "Ravenous Goliath",
         "skillline": 55,
         "parent": 779,
@@ -9656,7 +9656,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 653,
+        "skillId": 653,
         "name": "Razor Caltrops",
         "skillline": 35,
         "parent": 651,
@@ -9673,7 +9673,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 658,
+        "skillId": 658,
         "name": "Reach",
         "skillline": 35,
         "parent": null,
@@ -9690,7 +9690,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 769,
+        "skillId": 769,
         "name": "Reanimate",
         "skillline": 56,
         "parent": null,
@@ -9707,7 +9707,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 107,
+        "skillId": 107,
         "name": "Reaper's Mark",
         "skillline": 10,
         "parent": 105,
@@ -9724,7 +9724,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 575,
+        "skillId": 575,
         "name": "Rearming Trap",
         "skillline": 29,
         "parent": 574,
@@ -9741,7 +9741,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 155,
+        "skillId": 155,
         "name": "Rebate",
         "skillline": 8,
         "parent": null,
@@ -9758,7 +9758,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 748,
+        "skillId": 748,
         "name": "Recipe Improvement",
         "skillline": 42,
         "parent": null,
@@ -9775,7 +9775,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 747,
+        "skillId": 747,
         "name": "Recipe Quality",
         "skillline": 42,
         "parent": null,
@@ -9792,7 +9792,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 698,
+        "skillId": 698,
         "name": "Red Diamond",
         "skillline": 53,
         "parent": null,
@@ -9809,7 +9809,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 248,
+        "skillId": 248,
         "name": "Reflective Light",
         "skillline": 5,
         "parent": 241,
@@ -9826,7 +9826,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 126,
+        "skillId": 126,
         "name": "Refreshing Path",
         "skillline": 11,
         "parent": 124,
@@ -9843,7 +9843,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 133,
+        "skillId": 133,
         "name": "Refreshing Shadows",
         "skillline": 11,
         "parent": null,
@@ -9860,7 +9860,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 433,
+        "skillId": 433,
         "name": "Regeneration",
         "skillline": 21,
         "parent": null,
@@ -9877,7 +9877,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 109,
+        "skillId": 109,
         "name": "Relentless Focus",
         "skillline": 10,
         "parent": 108,
@@ -9894,7 +9894,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 294,
+        "skillId": 294,
         "name": "Remembrance",
         "skillline": 6,
         "parent": 291,
@@ -9911,7 +9911,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 808,
+        "skillId": 808,
         "name": "Remote Totem",
         "skillline": 55,
         "parent": 775,
@@ -9928,7 +9928,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 382,
+        "skillId": 382,
         "name": "Rend",
         "skillline": 18,
         "parent": 381,
@@ -9945,7 +9945,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 768,
+        "skillId": 768,
         "name": "Render Flesh",
         "skillline": 56,
         "parent": null,
@@ -9962,7 +9962,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 388,
+        "skillId": 388,
         "name": "Rending Slashes",
         "skillline": 18,
         "parent": 387,
@@ -9979,7 +9979,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 812,
+        "skillId": 812,
         "name": "Renewing Animation",
         "skillline": 56,
         "parent": 769,
@@ -9996,7 +9996,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 818,
+        "skillId": 818,
         "name": "Renewing Undeath",
         "skillline": 56,
         "parent": 766,
@@ -10013,7 +10013,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 317,
+        "skillId": 317,
         "name": "Repentance",
         "skillline": 6,
         "parent": 313,
@@ -10030,7 +10030,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 661,
+        "skillId": 661,
         "name": "Replenishing Barrier",
         "skillline": 36,
         "parent": 660,
@@ -10047,7 +10047,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 759,
+        "skillId": 759,
         "name": "Resin Expertise",
         "skillline": 43,
         "parent": null,
@@ -10064,7 +10064,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 717,
+        "skillId": 717,
         "name": "Resist Affliction",
         "skillline": 51,
         "parent": null,
@@ -10081,7 +10081,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 687,
+        "skillId": 687,
         "name": "Resist Flame",
         "skillline": 48,
         "parent": null,
@@ -10098,7 +10098,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 705,
+        "skillId": 705,
         "name": "Resist Frost",
         "skillline": 47,
         "parent": null,
@@ -10115,7 +10115,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 814,
+        "skillId": 814,
         "name": "Resistant Flesh",
         "skillline": 56,
         "parent": 768,
@@ -10132,7 +10132,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 492,
+        "skillId": 492,
         "name": "Resolve",
         "skillline": 24,
         "parent": null,
@@ -10149,7 +10149,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 650,
+        "skillId": 650,
         "name": "Resolving Vigor",
         "skillline": 35,
         "parent": 648,
@@ -10166,7 +10166,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 679,
+        "skillId": 679,
         "name": "Resourceful",
         "skillline": 49,
         "parent": null,
@@ -10183,7 +10183,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 446,
+        "skillId": 446,
         "name": "Restoration Expert",
         "skillline": 21,
         "parent": null,
@@ -10200,7 +10200,7 @@
         "unlocks_at": 17
     },
     {
-        "id": 449,
+        "skillId": 449,
         "name": "Restoration Master",
         "skillline": 21,
         "parent": null,
@@ -10217,7 +10217,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 313,
+        "skillId": 313,
         "name": "Restoring Aura",
         "skillline": 6,
         "parent": null,
@@ -10234,7 +10234,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 330,
+        "skillId": 330,
         "name": "Restoring Focus",
         "skillline": 6,
         "parent": 325,
@@ -10251,7 +10251,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 290,
+        "skillId": 290,
         "name": "Restoring Spirit",
         "skillline": 5,
         "parent": null,
@@ -10268,7 +10268,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 764,
+        "skillId": 764,
         "name": "Restoring Tether",
         "skillline": 56,
         "parent": null,
@@ -10285,7 +10285,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 37,
+        "skillId": 37,
         "name": "Restraining Prison",
         "skillline": 7,
         "parent": 33,
@@ -10302,7 +10302,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 646,
+        "skillId": 646,
         "name": "Retreating Maneuver",
         "skillline": 35,
         "parent": 645,
@@ -10319,7 +10319,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 783,
+        "skillId": 783,
         "name": "Reusable Parts",
         "skillline": 54,
         "parent": null,
@@ -10336,7 +10336,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 672,
+        "skillId": 672,
         "name": "Revealing Flare",
         "skillline": 36,
         "parent": null,
@@ -10353,7 +10353,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 703,
+        "skillId": 703,
         "name": "Reveler",
         "skillline": 47,
         "parent": null,
@@ -10370,7 +10370,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 420,
+        "skillId": 420,
         "name": "Reverberating Bash",
         "skillline": 17,
         "parent": 419,
@@ -10387,7 +10387,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 462,
+        "skillId": 462,
         "name": "Reverse Slash",
         "skillline": 16,
         "parent": null,
@@ -10404,7 +10404,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 463,
+        "skillId": 463,
         "name": "Reverse Slice",
         "skillline": 16,
         "parent": 462,
@@ -10421,7 +10421,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 495,
+        "skillId": 495,
         "name": "Revitalize",
         "skillline": 24,
         "parent": null,
@@ -10438,7 +10438,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 662,
+        "skillId": 662,
         "name": "Reviving Barrier",
         "skillline": 36,
         "parent": 660,
@@ -10455,7 +10455,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 793,
+        "skillId": 793,
         "name": "Ricochet Skull",
         "skillline": 54,
         "parent": 788,
@@ -10472,7 +10472,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 570,
+        "skillId": 570,
         "name": "Ring of Preservation",
         "skillline": 29,
         "parent": 568,
@@ -10489,7 +10489,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 291,
+        "skillId": 291,
         "name": "Rite of Passage",
         "skillline": 6,
         "parent": null,
@@ -10506,7 +10506,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 307,
+        "skillId": 307,
         "name": "Ritual of Rebirth",
         "skillline": 6,
         "parent": 306,
@@ -10523,7 +10523,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 320,
+        "skillId": 320,
         "name": "Ritual of Retribution",
         "skillline": 6,
         "parent": 319,
@@ -10540,7 +10540,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 520,
+        "skillId": 520,
         "name": "Roar",
         "skillline": 27,
         "parent": null,
@@ -10557,7 +10557,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 702,
+        "skillId": 702,
         "name": "Robustness",
         "skillline": 52,
         "parent": null,
@@ -10574,7 +10574,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 826,
+        "skillId": 826,
         "name": "Rourken's Rebuke",
         "skillline": 57,
         "parent": null,
@@ -10591,7 +10591,7 @@
         "unlocks_at": null
     },
     {
-        "id": 402,
+        "skillId": 402,
         "name": "Ruffian",
         "skillline": 18,
         "parent": null,
@@ -10608,7 +10608,7 @@
         "unlocks_at": 46
     },
     {
-        "id": 706,
+        "skillId": 706,
         "name": "Rugged",
         "skillline": 47,
         "parent": null,
@@ -10625,7 +10625,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 688,
+        "skillId": 688,
         "name": "Ruination",
         "skillline": 48,
         "parent": null,
@@ -10642,7 +10642,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 831,
+        "skillId": 831,
         "name": "Ruinous Cyclone",
         "skillline": 57,
         "parent": null,
@@ -10659,7 +10659,7 @@
         "unlocks_at": null
     },
     {
-        "id": 802,
+        "skillId": 802,
         "name": "Ruinous Scythe",
         "skillline": 55,
         "parent": 778,
@@ -10676,7 +10676,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 43,
+        "skillId": 43,
         "name": "Rune Cage",
         "skillline": 7,
         "parent": 40,
@@ -10693,7 +10693,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 325,
+        "skillId": 325,
         "name": "Rune Focus",
         "skillline": 6,
         "parent": null,
@@ -10710,7 +10710,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 40,
+        "skillId": 40,
         "name": "Rune Prison",
         "skillline": 7,
         "parent": null,
@@ -10727,7 +10727,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 741,
+        "skillId": 741,
         "name": "Runestone Extraction",
         "skillline": 40,
         "parent": null,
@@ -10744,7 +10744,7 @@
         "unlocks_at": 29
     },
     {
-        "id": 300,
+        "skillId": 300,
         "name": "Rushed Ceremony",
         "skillline": 6,
         "parent": null,
@@ -10761,7 +10761,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 333,
+        "skillId": 333,
         "name": "Sacred Ground",
         "skillline": 6,
         "parent": null,
@@ -10778,7 +10778,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 626,
+        "skillId": 626,
         "name": "Sanguine Altar",
         "skillline": 31,
         "parent": 625,
@@ -10795,7 +10795,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 198,
+        "skillId": 198,
         "name": "Sap Essence",
         "skillline": 12,
         "parent": 196,
@@ -10812,7 +10812,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 252,
+        "skillId": 252,
         "name": "Savage Beast",
         "skillline": 13,
         "parent": null,
@@ -10829,7 +10829,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 544,
+        "skillId": 544,
         "name": "Savage Feeding",
         "skillline": 26,
         "parent": null,
@@ -10846,7 +10846,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 533,
+        "skillId": 533,
         "name": "Savage Strength",
         "skillline": 27,
         "parent": null,
@@ -10863,7 +10863,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 593,
+        "skillId": 593,
         "name": "Scalding Rune",
         "skillline": 30,
         "parent": 591,
@@ -10880,7 +10880,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 64,
+        "skillId": 64,
         "name": "Scaled Armor",
         "skillline": 2,
         "parent": null,
@@ -10897,7 +10897,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 551,
+        "skillId": 551,
         "name": "Scales of Pitiless Justice",
         "skillline": 33,
         "parent": null,
@@ -10914,7 +10914,7 @@
         "unlocks_at": 11
     },
     {
-        "id": 344,
+        "skillId": 344,
         "name": "Scatter Shot",
         "skillline": 19,
         "parent": null,
@@ -10931,7 +10931,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 231,
+        "skillId": 231,
         "name": "Scorch",
         "skillline": 13,
         "parent": null,
@@ -10948,7 +10948,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 674,
+        "skillId": 674,
         "name": "Scorching Flare",
         "skillline": 36,
         "parent": 672,
@@ -10965,7 +10965,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 230,
+        "skillId": 230,
         "name": "Screaming Cliff Racer",
         "skillline": 13,
         "parent": 228,
@@ -10982,7 +10982,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 30,
+        "skillId": 30,
         "name": "Searing Heat",
         "skillline": 1,
         "parent": null,
@@ -10999,7 +10999,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 12,
+        "skillId": 12,
         "name": "Searing Strike",
         "skillline": 1,
         "parent": null,
@@ -11016,7 +11016,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 255,
+        "skillId": 255,
         "name": "Secluded Grove",
         "skillline": 14,
         "parent": null,
@@ -11033,7 +11033,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 620,
+        "skillId": 620,
         "name": "See the Unseen",
         "skillline": 34,
         "parent": null,
@@ -11050,7 +11050,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 134,
+        "skillId": 134,
         "name": "Shadow Barrier",
         "skillline": 11,
         "parent": null,
@@ -11067,7 +11067,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 121,
+        "skillId": 121,
         "name": "Shadow Cloak",
         "skillline": 11,
         "parent": null,
@@ -11084,7 +11084,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 132,
+        "skillId": 132,
         "name": "Shadow Image",
         "skillline": 11,
         "parent": 130,
@@ -11101,7 +11101,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 554,
+        "skillId": 554,
         "name": "Shadow Rider",
         "skillline": 33,
         "parent": null,
@@ -11118,7 +11118,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 629,
+        "skillId": 629,
         "name": "Shadow Silk",
         "skillline": 31,
         "parent": 628,
@@ -11135,7 +11135,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 122,
+        "skillId": 122,
         "name": "Shadowy Disguise",
         "skillline": 11,
         "parent": 121,
@@ -11152,7 +11152,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 553,
+        "skillId": 553,
         "name": "Shadowy Supplier",
         "skillline": 33,
         "parent": null,
@@ -11169,7 +11169,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 504,
+        "skillId": 504,
         "name": "Shatter Soul",
         "skillline": 25,
         "parent": 502,
@@ -11186,7 +11186,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 34,
+        "skillId": 34,
         "name": "Shattering Prison",
         "skillline": 7,
         "parent": 33,
@@ -11203,7 +11203,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 85,
+        "skillId": 85,
         "name": "Shattering Rocks",
         "skillline": 3,
         "parent": 83,
@@ -11220,7 +11220,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 416,
+        "skillId": 416,
         "name": "Shield Charge",
         "skillline": 17,
         "parent": null,
@@ -11237,7 +11237,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 406,
+        "skillId": 406,
         "name": "Shield Discipline",
         "skillline": 17,
         "parent": 404,
@@ -11254,7 +11254,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 404,
+        "skillId": 404,
         "name": "Shield Wall",
         "skillline": 17,
         "parent": null,
@@ -11271,7 +11271,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 417,
+        "skillId": 417,
         "name": "Shielded Assault",
         "skillline": 17,
         "parent": 416,
@@ -11288,7 +11288,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 9,
+        "skillId": 9,
         "name": "Shifting Standard",
         "skillline": 1,
         "parent": 8,
@@ -11305,7 +11305,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 315,
+        "skillId": 315,
         "name": "Shimmering Shield",
         "skillline": 15,
         "parent": 312,
@@ -11322,7 +11322,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 784,
+        "skillId": 784,
         "name": "Shocking Siphon",
         "skillline": 54,
         "parent": null,
@@ -11339,7 +11339,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 584,
+        "skillId": 584,
         "name": "Shooting Star",
         "skillline": 30,
         "parent": 582,
@@ -11356,7 +11356,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 189,
+        "skillId": 189,
         "name": "Shrewd Offering",
         "skillline": 12,
         "parent": 187,
@@ -11373,7 +11373,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 397,
+        "skillId": 397,
         "name": "Shrouded Daggers",
         "skillline": 18,
         "parent": 396,
@@ -11390,7 +11390,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 482,
+        "skillId": 482,
         "name": "Shuffle",
         "skillline": 23,
         "parent": 481,
@@ -11407,7 +11407,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 663,
+        "skillId": 663,
         "name": "Siege Shield",
         "skillline": 36,
         "parent": null,
@@ -11424,7 +11424,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 664,
+        "skillId": 664,
         "name": "Siege Weapon Shield",
         "skillline": 36,
         "parent": 663,
@@ -11441,7 +11441,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 565,
+        "skillId": 565,
         "name": "Silver Bolts",
         "skillline": 29,
         "parent": null,
@@ -11458,7 +11458,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 567,
+        "skillId": 567,
         "name": "Silver Leash",
         "skillline": 29,
         "parent": 565,
@@ -11475,7 +11475,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 566,
+        "skillId": 566,
         "name": "Silver Shards",
         "skillline": 29,
         "parent": 565,
@@ -11492,7 +11492,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 443,
+        "skillId": 443,
         "name": "Siphon Spirit",
         "skillline": 21,
         "parent": 442,
@@ -11509,7 +11509,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 195,
+        "skillId": 195,
         "name": "Siphoning Attacks",
         "skillline": 12,
         "parent": 193,
@@ -11526,7 +11526,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 193,
+        "skillId": 193,
         "name": "Siphoning Strikes",
         "skillline": 12,
         "parent": null,
@@ -11543,7 +11543,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 799,
+        "skillId": 799,
         "name": "Skeletal Arcanist",
         "skillline": 54,
         "parent": 785,
@@ -11560,7 +11560,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 798,
+        "skillId": 798,
         "name": "Skeletal Archer",
         "skillline": 54,
         "parent": 785,
@@ -11577,7 +11577,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 785,
+        "skillId": 785,
         "name": "Skeletal Mage",
         "skillline": 54,
         "parent": null,
@@ -11594,7 +11594,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 580,
+        "skillId": 580,
         "name": "Skilled Tracker",
         "skillline": 29,
         "parent": null,
@@ -11611,7 +11611,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 399,
+        "skillId": 399,
         "name": "Slaughter",
         "skillline": 18,
         "parent": null,
@@ -11628,7 +11628,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 578,
+        "skillId": 578,
         "name": "Slayer",
         "skillline": 29,
         "parent": null,
@@ -11645,7 +11645,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 292,
+        "skillId": 292,
         "name": "Sleet Storm",
         "skillline": 15,
         "parent": null,
@@ -11662,7 +11662,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 724,
+        "skillId": 724,
         "name": "Snakeblood",
         "skillline": 37,
         "parent": null,
@@ -11679,7 +11679,7 @@
         "unlocks_at": 43
     },
     {
-        "id": 338,
+        "skillId": 338,
         "name": "Snipe",
         "skillline": 19,
         "parent": null,
@@ -11696,7 +11696,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 256,
+        "skillId": 256,
         "name": "Solar Barrage",
         "skillline": 5,
         "parent": 250,
@@ -11713,7 +11713,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 236,
+        "skillId": 236,
         "name": "Solar Disturbance",
         "skillline": 5,
         "parent": 232,
@@ -11730,7 +11730,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 250,
+        "skillId": 250,
         "name": "Solar Flare",
         "skillline": 5,
         "parent": null,
@@ -11747,7 +11747,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 233,
+        "skillId": 233,
         "name": "Solar Prison",
         "skillline": 5,
         "parent": 232,
@@ -11764,7 +11764,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 719,
+        "skillId": 719,
         "name": "Solvent Proficiency",
         "skillline": 37,
         "parent": null,
@@ -11781,7 +11781,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 264,
+        "skillId": 264,
         "name": "Soothing Spores",
         "skillline": 14,
         "parent": 261,
@@ -11798,7 +11798,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 503,
+        "skillId": 503,
         "name": "Soul Assault",
         "skillline": 25,
         "parent": 502,
@@ -11815,7 +11815,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 95,
+        "skillId": 95,
         "name": "Soul Harvest",
         "skillline": 10,
         "parent": 93,
@@ -11832,7 +11832,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 510,
+        "skillId": 510,
         "name": "Soul Lock",
         "skillline": 25,
         "parent": null,
@@ -11849,7 +11849,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 508,
+        "skillId": 508,
         "name": "Soul Shatter",
         "skillline": 25,
         "parent": null,
@@ -11866,7 +11866,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 181,
+        "skillId": 181,
         "name": "Soul Shred",
         "skillline": 12,
         "parent": null,
@@ -11883,7 +11883,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 182,
+        "skillId": 182,
         "name": "Soul Siphon",
         "skillline": 12,
         "parent": 181,
@@ -11900,7 +11900,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 201,
+        "skillId": 201,
         "name": "Soul Siphoner",
         "skillline": 12,
         "parent": null,
@@ -11917,7 +11917,7 @@
         "unlocks_at": 36
     },
     {
-        "id": 506,
+        "skillId": 506,
         "name": "Soul Splitting Trap",
         "skillline": 25,
         "parent": 505,
@@ -11934,7 +11934,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 502,
+        "skillId": 502,
         "name": "Soul Strike",
         "skillline": 25,
         "parent": null,
@@ -11951,7 +11951,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 509,
+        "skillId": 509,
         "name": "Soul Summons",
         "skillline": 25,
         "parent": null,
@@ -11968,7 +11968,7 @@
         "unlocks_at": 3
     },
     {
-        "id": 183,
+        "skillId": 183,
         "name": "Soul Tether",
         "skillline": 12,
         "parent": 181,
@@ -11985,7 +11985,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 505,
+        "skillId": 505,
         "name": "Soul Trap",
         "skillline": 25,
         "parent": null,
@@ -12002,7 +12002,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 215,
+        "skillId": 215,
         "name": "Spear Shards",
         "skillline": 4,
         "parent": null,
@@ -12019,7 +12019,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 222,
+        "skillId": 222,
         "name": "Spear Wall",
         "skillline": 4,
         "parent": null,
@@ -12036,7 +12036,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 555,
+        "skillId": 555,
         "name": "Spectral Assassin",
         "skillline": 33,
         "parent": null,
@@ -12053,7 +12053,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 684,
+        "skillId": 684,
         "name": "Spell Attunement",
         "skillline": 44,
         "parent": null,
@@ -12070,7 +12070,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 622,
+        "skillId": 622,
         "name": "Spell Orb",
         "skillline": 34,
         "parent": null,
@@ -12087,7 +12087,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 691,
+        "skillId": 691,
         "name": "Spell Recharge",
         "skillline": 50,
         "parent": null,
@@ -12104,7 +12104,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 595,
+        "skillId": 595,
         "name": "Spell Symmetry",
         "skillline": 30,
         "parent": 594,
@@ -12121,7 +12121,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 405,
+        "skillId": 405,
         "name": "Spell Wall",
         "skillline": 17,
         "parent": 404,
@@ -12138,7 +12138,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 478,
+        "skillId": 478,
         "name": "Spell Warding",
         "skillline": 22,
         "parent": null,
@@ -12155,7 +12155,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 39,
+        "skillId": 39,
         "name": "Spiked Armor",
         "skillline": 2,
         "parent": null,
@@ -12172,7 +12172,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 635,
+        "skillId": 635,
         "name": "Spiked Bone Shield",
         "skillline": 31,
         "parent": 634,
@@ -12189,7 +12189,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 820,
+        "skillId": 820,
         "name": "Spirit Guardian",
         "skillline": 56,
         "parent": 765,
@@ -12206,7 +12206,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 765,
+        "skillId": 765,
         "name": "Spirit Mender",
         "skillline": 56,
         "parent": null,
@@ -12223,7 +12223,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 795,
+        "skillId": 795,
         "name": "Stalking Blastbones",
         "skillline": 54,
         "parent": 787,
@@ -12240,7 +12240,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 704,
+        "skillId": 704,
         "name": "Stalwart",
         "skillline": 47,
         "parent": null,
@@ -12257,7 +12257,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 671,
+        "skillId": 671,
         "name": "Stalwart Guard",
         "skillline": 36,
         "parent": 669,
@@ -12274,7 +12274,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 457,
+        "skillId": 457,
         "name": "Stampede",
         "skillline": 16,
         "parent": 456,
@@ -12291,7 +12291,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 11,
+        "skillId": 11,
         "name": "Standard of Might",
         "skillline": 1,
         "parent": 8,
@@ -12308,7 +12308,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 439,
+        "skillId": 439,
         "name": "Steadfast Ward",
         "skillline": 21,
         "parent": null,
@@ -12325,7 +12325,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 392,
+        "skillId": 392,
         "name": "Steel Tornado",
         "skillline": 18,
         "parent": 390,
@@ -12342,7 +12342,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 735,
+        "skillId": 735,
         "name": "Stitching",
         "skillline": 39,
         "parent": null,
@@ -12359,7 +12359,7 @@
         "unlocks_at": 45
     },
     {
-        "id": 76,
+        "skillId": 76,
         "name": "Stone Giant",
         "skillline": 3,
         "parent": 74,
@@ -12376,7 +12376,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 74,
+        "skillId": 74,
         "name": "Stonefist",
         "skillline": 3,
         "parent": null,
@@ -12393,7 +12393,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 175,
+        "skillId": 175,
         "name": "Streak",
         "skillline": 9,
         "parent": 174,
@@ -12410,7 +12410,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 184,
+        "skillId": 184,
         "name": "Strife",
         "skillline": 12,
         "parent": null,
@@ -12427,7 +12427,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 590,
+        "skillId": 590,
         "name": "Structured Entropy",
         "skillline": 30,
         "parent": 588,
@@ -12444,7 +12444,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 644,
+        "skillId": 644,
         "name": "Sturdy Horn",
         "skillline": 35,
         "parent": 642,
@@ -12461,7 +12461,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 234,
+        "skillId": 234,
         "name": "Subterranean Assault",
         "skillline": 13,
         "parent": 231,
@@ -12478,7 +12478,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 139,
+        "skillId": 139,
         "name": "Summon Charged Atronach",
         "skillline": 8,
         "parent": 137,
@@ -12495,7 +12495,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 130,
+        "skillId": 130,
         "name": "Summon Shade",
         "skillline": 11,
         "parent": null,
@@ -12512,7 +12512,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 137,
+        "skillId": 137,
         "name": "Summon Storm Atronach",
         "skillline": 8,
         "parent": null,
@@ -12529,7 +12529,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 148,
+        "skillId": 148,
         "name": "Summon Twilight Matriarch",
         "skillline": 8,
         "parent": 146,
@@ -12546,7 +12546,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 147,
+        "skillId": 147,
         "name": "Summon Twilight Tormentor",
         "skillline": 8,
         "parent": 146,
@@ -12563,7 +12563,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 141,
+        "skillId": 141,
         "name": "Summon Unstable Clannfear",
         "skillline": 8,
         "parent": 140,
@@ -12580,7 +12580,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 140,
+        "skillId": 140,
         "name": "Summon Unstable Familiar",
         "skillline": 8,
         "parent": null,
@@ -12597,7 +12597,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 142,
+        "skillId": 142,
         "name": "Summon Volatile Familiar",
         "skillline": 8,
         "parent": 140,
@@ -12614,7 +12614,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 146,
+        "skillId": 146,
         "name": "Summon Winged Twilight",
         "skillline": 8,
         "parent": null,
@@ -12631,7 +12631,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 805,
+        "skillId": 805,
         "name": "Summoner's Armor",
         "skillline": 55,
         "parent": 777,
@@ -12648,7 +12648,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 241,
+        "skillId": 241,
         "name": "Sun Fire",
         "skillline": 5,
         "parent": null,
@@ -12665,7 +12665,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 218,
+        "skillId": 218,
         "name": "Sun Shield",
         "skillline": 4,
         "parent": null,
@@ -12682,7 +12682,7 @@
         "unlocks_at": 42
     },
     {
-        "id": 830,
+        "skillId": 830,
         "name": "Sundering Swing",
         "skillline": 57,
         "parent": null,
@@ -12699,7 +12699,7 @@
         "unlocks_at": null
     },
     {
-        "id": 545,
+        "skillId": 545,
         "name": "Supernatural Recovery",
         "skillline": 26,
         "parent": null,
@@ -12716,7 +12716,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 16,
+        "skillId": 16,
         "name": "Suppression Field",
         "skillline": 7,
         "parent": 13,
@@ -12733,7 +12733,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 171,
+        "skillId": 171,
         "name": "Surge",
         "skillline": 9,
         "parent": null,
@@ -12750,7 +12750,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 119,
+        "skillId": 119,
         "name": "Surprise Attack",
         "skillline": 11,
         "parent": 118,
@@ -12767,7 +12767,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 186,
+        "skillId": 186,
         "name": "Swallow Soul",
         "skillline": 12,
         "parent": 184,
@@ -12784,7 +12784,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 237,
+        "skillId": 237,
         "name": "Swarm",
         "skillline": 13,
         "parent": null,
@@ -12801,7 +12801,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 710,
+        "skillId": 710,
         "name": "Swift Warrior",
         "skillline": 46,
         "parent": null,
@@ -12818,7 +12818,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 557,
+        "skillId": 557,
         "name": "Swiftly Forgotten",
         "skillline": 32,
         "parent": null,
@@ -12835,7 +12835,7 @@
         "unlocks_at": 11
     },
     {
-        "id": 423,
+        "skillId": 423,
         "name": "Sword and Board",
         "skillline": 17,
         "parent": null,
@@ -12852,7 +12852,7 @@
         "unlocks_at": 25
     },
     {
-        "id": 616,
+        "skillId": 616,
         "name": "Symbiosis",
         "skillline": 34,
         "parent": 614,
@@ -12869,7 +12869,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 683,
+        "skillId": 683,
         "name": "Syrabane's Boon",
         "skillline": 50,
         "parent": null,
@@ -12886,7 +12886,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 731,
+        "skillId": 731,
         "name": "Tailoring",
         "skillline": 39,
         "parent": null,
@@ -12903,7 +12903,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 36,
+        "skillId": 36,
         "name": "Take Flight",
         "skillline": 2,
         "parent": 35,
@@ -12920,7 +12920,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 630,
+        "skillId": 630,
         "name": "Tangling Webs",
         "skillline": 31,
         "parent": 628,
@@ -12937,7 +12937,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 736,
+        "skillId": 736,
         "name": "Tannin Expertise",
         "skillline": 39,
         "parent": null,
@@ -12954,7 +12954,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 99,
+        "skillId": 99,
         "name": "Teleport Strike",
         "skillline": 10,
         "parent": null,
@@ -12971,7 +12971,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 730,
+        "skillId": 730,
         "name": "Temper Expertise",
         "skillline": 38,
         "parent": null,
@@ -12988,7 +12988,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 604,
+        "skillId": 604,
         "name": "Temporal Guard",
         "skillline": 34,
         "parent": 602,
@@ -13005,7 +13005,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 383,
+        "skillId": 383,
         "name": "Thrive in Chaos",
         "skillline": 18,
         "parent": 381,
@@ -13022,7 +13022,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 607,
+        "skillId": 607,
         "name": "Time Freeze",
         "skillline": 34,
         "parent": 605,
@@ -13039,7 +13039,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 605,
+        "skillId": 605,
         "name": "Time Stop",
         "skillline": 34,
         "parent": null,
@@ -13056,7 +13056,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 560,
+        "skillId": 560,
         "name": "Timely Escape",
         "skillline": 32,
         "parent": null,
@@ -13073,7 +13073,7 @@
         "unlocks_at": 7
     },
     {
-        "id": 214,
+        "skillId": 214,
         "name": "Toppling Charge",
         "skillline": 4,
         "parent": 212,
@@ -13090,7 +13090,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 278,
+        "skillId": 278,
         "name": "Total Dark",
         "skillline": 5,
         "parent": 266,
@@ -13107,7 +13107,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 696,
+        "skillId": 696,
         "name": "Tough",
         "skillline": 53,
         "parent": null,
@@ -13124,7 +13124,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 336,
+        "skillId": 336,
         "name": "Toxic Barrage",
         "skillline": 19,
         "parent": 335,
@@ -13141,7 +13141,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 499,
+        "skillId": 499,
         "name": "Trafficker",
         "skillline": 28,
         "parent": null,
@@ -13158,7 +13158,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 202,
+        "skillId": 202,
         "name": "Transfer",
         "skillline": 12,
         "parent": null,
@@ -13175,7 +13175,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 574,
+        "skillId": 574,
         "name": "Trap Beast",
         "skillline": 29,
         "parent": null,
@@ -13192,7 +13192,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 628,
+        "skillId": 628,
         "name": "Trapping Webs",
         "skillline": 31,
         "parent": null,
@@ -13209,7 +13209,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 376,
+        "skillId": 376,
         "name": "Tri Focus",
         "skillline": 20,
         "parent": null,
@@ -13226,7 +13226,7 @@
         "unlocks_at": 34
     },
     {
-        "id": 569,
+        "skillId": 569,
         "name": "Turn Undead",
         "skillline": 29,
         "parent": 568,
@@ -13243,7 +13243,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 403,
+        "skillId": 403,
         "name": "Twin Blade and Blunt",
         "skillline": 18,
         "parent": null,
@@ -13260,7 +13260,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 387,
+        "skillId": 387,
         "name": "Twin Slashes",
         "skillline": 18,
         "parent": null,
@@ -13277,7 +13277,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 125,
+        "skillId": 125,
         "name": "Twisting Path",
         "skillline": 11,
         "parent": 124,
@@ -13294,7 +13294,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 640,
+        "skillId": 640,
         "name": "Undaunted Command",
         "skillline": 31,
         "parent": null,
@@ -13311,7 +13311,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 641,
+        "skillId": 641,
         "name": "Undaunted Mettle",
         "skillline": 31,
         "parent": null,
@@ -13328,7 +13328,7 @@
         "unlocks_at": 9
     },
     {
-        "id": 760,
+        "skillId": 760,
         "name": "Undead Confederate",
         "skillline": 56,
         "parent": null,
@@ -13345,7 +13345,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 547,
+        "skillId": 547,
         "name": "Undeath",
         "skillline": 26,
         "parent": null,
@@ -13362,7 +13362,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 602,
+        "skillId": 602,
         "name": "Undo",
         "skillline": 34,
         "parent": null,
@@ -13379,7 +13379,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 709,
+        "skillId": 709,
         "name": "Unflinching Rage",
         "skillline": 46,
         "parent": null,
@@ -13396,7 +13396,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 70,
+        "skillId": 70,
         "name": "Unholy Knowledge",
         "skillline": 7,
         "parent": null,
@@ -13413,7 +13413,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 548,
+        "skillId": 548,
         "name": "Unnatural Resistance",
         "skillline": 26,
         "parent": null,
@@ -13430,7 +13430,7 @@
         "unlocks_at": 8
     },
     {
-        "id": 796,
+        "skillId": 796,
         "name": "Unnerving Boneyard",
         "skillline": 54,
         "parent": 786,
@@ -13447,7 +13447,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 734,
+        "skillId": 734,
         "name": "Unraveling",
         "skillline": 39,
         "parent": null,
@@ -13464,7 +13464,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 23,
+        "skillId": 23,
         "name": "Unrelenting Grip",
         "skillline": 1,
         "parent": 21,
@@ -13481,7 +13481,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 280,
+        "skillId": 280,
         "name": "Unstable Core",
         "skillline": 5,
         "parent": 266,
@@ -13498,7 +13498,7 @@
         "unlocks_at": 30
     },
     {
-        "id": 365,
+        "skillId": 365,
         "name": "Unstable Wall of Elements",
         "skillline": 20,
         "parent": 364,
@@ -13515,7 +13515,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 491,
+        "skillId": 491,
         "name": "Unstoppable",
         "skillline": 24,
         "parent": 489,
@@ -13532,7 +13532,7 @@
         "unlocks_at": 22
     },
     {
-        "id": 453,
+        "skillId": 453,
         "name": "Uppercut",
         "skillline": 16,
         "parent": null,
@@ -13549,7 +13549,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 245,
+        "skillId": 245,
         "name": "Vampire's Bane",
         "skillline": 5,
         "parent": 241,
@@ -13566,7 +13566,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 117,
+        "skillId": 117,
         "name": "Veil of Blades",
         "skillline": 11,
         "parent": 115,
@@ -13583,7 +13583,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 561,
+        "skillId": 561,
         "name": "Veil of Shadows",
         "skillline": 32,
         "parent": null,
@@ -13600,7 +13600,7 @@
         "unlocks_at": 10
     },
     {
-        "id": 118,
+        "skillId": 118,
         "name": "Veiled Strike",
         "skillline": 11,
         "parent": null,
@@ -13617,7 +13617,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 351,
+        "skillId": 351,
         "name": "Venom Arrow",
         "skillline": 19,
         "parent": 350,
@@ -13634,7 +13634,7 @@
         "unlocks_at": 38
     },
     {
-        "id": 792,
+        "skillId": 792,
         "name": "Venom Skull",
         "skillline": 54,
         "parent": 788,
@@ -13651,7 +13651,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 14,
+        "skillId": 14,
         "name": "Venomous Claw",
         "skillline": 1,
         "parent": 12,
@@ -13668,7 +13668,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 648,
+        "skillId": 648,
         "name": "Vigor",
         "skillline": 35,
         "parent": null,
@@ -13685,7 +13685,7 @@
         "unlocks_at": 5
     },
     {
-        "id": 42,
+        "skillId": 42,
         "name": "Volatile Armor",
         "skillline": 2,
         "parent": 39,
@@ -13702,7 +13702,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 592,
+        "skillId": 592,
         "name": "Volcanic Rune",
         "skillline": 30,
         "parent": 591,
@@ -13719,7 +13719,7 @@
         "unlocks_at": 6
     },
     {
-        "id": 341,
+        "skillId": 341,
         "name": "Volley",
         "skillline": 19,
         "parent": null,
@@ -13736,7 +13736,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 364,
+        "skillId": 364,
         "name": "Wall of Elements",
         "skillline": 20,
         "parent": null,
@@ -13753,7 +13753,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 642,
+        "skillId": 642,
         "name": "War Horn",
         "skillline": 35,
         "parent": null,
@@ -13770,7 +13770,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 440,
+        "skillId": 440,
         "name": "Ward Ally",
         "skillline": 21,
         "parent": 439,
@@ -13787,7 +13787,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 28,
+        "skillId": 28,
         "name": "Warmth",
         "skillline": 1,
         "parent": null,
@@ -13804,7 +13804,7 @@
         "unlocks_at": 27
     },
     {
-        "id": 711,
+        "skillId": 711,
         "name": "Wayfarer",
         "skillline": 45,
         "parent": null,
@@ -13821,7 +13821,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 370,
+        "skillId": 370,
         "name": "Weakness to Elements",
         "skillline": 20,
         "parent": null,
@@ -13838,7 +13838,7 @@
         "unlocks_at": 20
     },
     {
-        "id": 513,
+        "skillId": 513,
         "name": "Werewolf Berserker",
         "skillline": 27,
         "parent": 511,
@@ -13855,7 +13855,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 511,
+        "skillId": 511,
         "name": "Werewolf Transformation",
         "skillline": 27,
         "parent": null,
@@ -13872,7 +13872,7 @@
         "unlocks_at": 1
     },
     {
-        "id": 391,
+        "skillId": 391,
         "name": "Whirling Blades",
         "skillline": 18,
         "parent": 390,
@@ -13889,7 +13889,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 390,
+        "skillId": 390,
         "name": "Whirlwind",
         "skillline": 18,
         "parent": null,
@@ -13906,7 +13906,7 @@
         "unlocks_at": 14
     },
     {
-        "id": 227,
+        "skillId": 227,
         "name": "Wild Guardian",
         "skillline": 13,
         "parent": 225,
@@ -13923,7 +13923,7 @@
         "unlocks_at": 12
     },
     {
-        "id": 485,
+        "skillId": 485,
         "name": "Wind Walker",
         "skillline": 23,
         "parent": null,
@@ -13940,7 +13940,7 @@
         "unlocks_at": 18
     },
     {
-        "id": 305,
+        "skillId": 305,
         "name": "Winter's Revenge",
         "skillline": 15,
         "parent": 302,
@@ -13957,7 +13957,7 @@
         "unlocks_at": 4
     },
     {
-        "id": 757,
+        "skillId": 757,
         "name": "Wood Extraction",
         "skillline": 43,
         "parent": null,
@@ -13974,7 +13974,7 @@
         "unlocks_at": 32
     },
     {
-        "id": 754,
+        "skillId": 754,
         "name": "Woodworking",
         "skillline": 43,
         "parent": null,
@@ -13991,7 +13991,7 @@
         "unlocks_at": 40
     },
     {
-        "id": 32,
+        "skillId": 32,
         "name": "World in Ruin",
         "skillline": 1,
         "parent": null,
@@ -14008,7 +14008,7 @@
         "unlocks_at": 50
     },
     {
-        "id": 455,
+        "skillId": 455,
         "name": "Wrecking Blow",
         "skillline": 16,
         "parent": 453,
@@ -14025,7 +14025,7 @@
         "unlocks_at": 2
     },
     {
-        "id": 716,
+        "skillId": 716,
         "name": "Y'ffre's Endurance",
         "skillline": 51,
         "parent": null,

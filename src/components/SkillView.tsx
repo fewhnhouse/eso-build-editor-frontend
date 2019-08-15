@@ -35,7 +35,6 @@ export default ({
     opacity: 1,
     from: { opacity: 0 },
   })
-  console.log(skillSlots)
 
   return (
     <SkillView>

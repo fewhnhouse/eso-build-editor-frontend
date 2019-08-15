@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import { Divider } from 'antd'
-import GearView from '../../../components/GearView'
-import { ISet } from '../../../components/GearSlot'
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { Divider } from 'antd';
+import GearView from '../../../components/GearView';
+import { ISet } from '../../../components/GearSlot';
 import {
   BuildContext,
   Slot,
@@ -11,9 +11,10 @@ import {
   ArmorType,
   TwohandedWeapon,
   OnehandedWeapon,
-} from '../BuildStateContext'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+  SetTab,
+} from '../BuildStateContext';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -23,12 +24,12 @@ const OuterContainer = styled.div`
   max-width: 400px;
 
   background: white;
-`
+`;
 
 interface ISetup {
-  id: string
-  label: string
-  data: ISetSelection[]
+  id: string;
+  label: string;
+  data: ISetSelection[];
 }
 const getSetups = ({
   armorType,
@@ -37,13 +38,13 @@ const getSetups = ({
   smallPieceSelection,
   jewelrySelection,
 }: {
-  armorType: ArmorType
-  selectedSet?: ISet
-  bigPieceSelection: ISetSelection[]
-  smallPieceSelection: ISetSelection[]
-  jewelrySelection: ISetSelection[]
-  frontbarSelection: ISetSelection[]
-  backbarSelection: ISetSelection[]
+  armorType: ArmorType;
+  selectedSet?: ISet;
+  bigPieceSelection: ISetSelection[];
+  smallPieceSelection: ISetSelection[];
+  jewelrySelection: ISetSelection[];
+  frontbarSelection: ISetSelection[];
+  backbarSelection: ISetSelection[];
 }): ISetup[] => {
   return [
     {
@@ -86,31 +87,31 @@ const getSetups = ({
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.dagger
+          weaponType: OnehandedWeapon.dagger,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.axe
+          weaponType: OnehandedWeapon.axe,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.mace
+          weaponType: OnehandedWeapon.mace,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.sword
+          weaponType: OnehandedWeapon.sword,
         },
         {
           slot: Slot.offHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.shield
+          weaponType: OnehandedWeapon.shield,
         },
       ],
     },
@@ -150,11 +151,11 @@ const getSetups = ({
         },
       ],
     },
-  ]
-}
+  ];
+};
 
 export default () => {
-  const [state] = useContext(BuildContext)
+  const [state] = useContext(BuildContext);
 
   const {
     setTabKey,
@@ -166,7 +167,7 @@ export default () => {
     backbarSelection,
     jewelrySelection,
     selectedSet,
-  } = state!
+  } = state!;
 
   const mySetups = getSetups({
     armorType,
@@ -176,28 +177,28 @@ export default () => {
     frontbarSelection,
     backbarSelection,
     jewelrySelection,
-  })
+  });
   const showGear = (key: string) => {
-    if (key === 'frontbar') {
+    if (key === SetTab.frontbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter(setup => setup.id === 'onehanded');
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter(setup => setup.id === 'twohanded');
       }
-    } else if (key === 'backbar') {
+    } else if (key === SetTab.backbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter(setup => setup.id === 'onehanded');
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter(setup => setup.id === 'twohanded');
       }
-    } else if (key === 'armor') {
+    } else if (key === SetTab.armor) {
       return mySetups.filter(
         setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
-      )
+      );
     } else {
-      return mySetups.filter(setup => setup.id === 'jewelry')
+      return mySetups.filter(setup => setup.id === 'jewelry');
     }
-  }
+  };
 
   const selectedSetup = [
     {
@@ -217,21 +218,21 @@ export default () => {
       data: frontbarSelection || [],
     },
     { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
-  ]
+  ];
 
   const showSetup = (key: string) => {
-    if (key === 'frontbar') {
-      return selectedSetup.filter(setup => setup.id === 'frontbar')
-    } else if (key === 'backbar') {
-      return selectedSetup.filter(setup => setup.id === 'backbar')
-    } else if (key === 'armor') {
+    if (key === SetTab.frontbar) {
+      return selectedSetup.filter(setup => setup.id === 'frontbar');
+    } else if (key === SetTab.backbar) {
+      return selectedSetup.filter(setup => setup.id === 'backbar');
+    } else if (key === SetTab.armor) {
       return selectedSetup.filter(
         setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
-      )
+      );
     } else {
-      return selectedSetup.filter(setup => setup.id === 'jewelry')
+      return selectedSetup.filter(setup => setup.id === 'jewelry');
     }
-  }
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -243,5 +244,5 @@ export default () => {
         <GearView droppable setups={showSetup(setTabKey)} />
       </OuterContainer>
     </DndProvider>
-  )
-}
+  );
+};
