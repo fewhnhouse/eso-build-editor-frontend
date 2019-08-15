@@ -56,7 +56,7 @@ const UserHomeCard = ({userBuildData, userRaidData}: IUserDataProps) => {
                         const find = userBuildData[index];
                         return (
                             <List.Item style={{justifyContent: "center"}}>
-                                <StyledCard key={find.id} title={find.name} hoverable onClick={() => handleClick(`/editBuild/${find.id}/0`)}>
+                                <StyledCard key={find.id} title={find.name} hoverable onClick={() => handleClick(`/buildReview/${find.id}`)}>
                                     Build id: {find.id}<br />{find.applicationArea} {find.race} {find.esoClass}
                                 </StyledCard>
                             </List.Item>
