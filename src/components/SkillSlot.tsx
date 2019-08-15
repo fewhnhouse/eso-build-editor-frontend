@@ -87,9 +87,9 @@ export default ({
       },
     })
   }, [isDragging])
-  const [{ canDrop, isOver }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: skillIndex === 5 ? 'ultimate' : 'skill',
-    drop: (item: any, monitor) => {
+    drop: (item: any) => {
       if (item.type === 'ultimate') {
         if (item.abilityBar === -1) {
           dispatch!({

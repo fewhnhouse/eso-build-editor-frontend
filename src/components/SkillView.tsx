@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
-import NewSkillSlot, { ISkill, DisplaySlot } from './SkillSlot'
+import NewSkillSlot, { DisplaySlot } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 import { ISkillSelection } from '../pages/build/BuildStateContext'
 

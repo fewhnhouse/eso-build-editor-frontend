@@ -112,7 +112,7 @@ const ME = gql`
 `
 
 export default () => {
-  const { loading, error, data } = useQuery<any,any>(ME)
+  const { data } = useQuery<any,any>(ME)
   const [redirect, setRedirect] = useState('')
 
   const handleCreateClick = (path: string) => () => {

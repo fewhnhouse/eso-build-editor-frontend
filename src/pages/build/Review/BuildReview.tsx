@@ -11,7 +11,6 @@ import {
   Typography,
   Button,
   Spin,
-  Popover,
   Popconfirm,
   notification,
 } from 'antd';

@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { List, Tag, Divider, Card, Input } from 'antd';
+import React, { useState } from 'react';
+import { List, Tag, Divider, Input } from 'antd';
 import styled from 'styled-components';
 import { useTrail, animated } from 'react-spring';
-import { RaidContext } from '../RaidStateContext';
 import Flex from '../../../components/Flex';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -18,13 +17,6 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
-`;
-
-const StyledTag = styled(Tag)`
-  min-width: 100px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 const GET_BUILDS = gql`
@@ -130,8 +122,8 @@ const GET_BUILDS = gql`
   }
 `;
 export default () => {
-  const [, dispatch] = useContext(RaidContext);
-  const { loading, error, data } = useQuery<{ builds: IBuild[] }, {}>(
+  // const [, dispatch] = useContext(RaidContext);
+  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(
     GET_BUILDS
   );
 
@@ -241,7 +233,7 @@ interface IAttributeTagProps {
   hasHealth: boolean;
 }
 
-const AttributeTag = ({
+/* const AttributeTag = ({
   hasMagicka,
   hasStamina,
   hasHealth,
@@ -290,4 +282,4 @@ const QualityTag = ({ quality }: { quality: number }) => {
   } else {
     return <StyledTag color="yellow">Legendary</StyledTag>;
   }
-};
+};*/

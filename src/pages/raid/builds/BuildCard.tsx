@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useDrag } from 'react-dnd';
-import styled, { CSSProp, CSSProperties } from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import SkillView from '../../../components/SkillView';
 import {
   ABILITY_BAR_TWO,
@@ -10,20 +10,14 @@ import { DisplaySlot } from '../../../components/SkillSlot';
 import {
   Card,
   Divider,
-  Collapse,
-  Icon,
   Button,
-  Avatar,
   Typography,
 } from 'antd';
 import GearView from '../../../components/GearView';
 import { Tabs } from 'antd';
 import Flex from '../../../components/Flex';
-import { AnySoaRecord } from 'dns';
 import { IBuild } from '../../build/BuildStateContext';
 import { IRole, RaidContext } from '../RaidStateContext';
-
-const { Panel } = Collapse;
 
 const { TabPane } = Tabs;
 
@@ -78,7 +72,7 @@ export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
 };
 
 const WithDnD = ({ item, style }: IBuildCardProps) => {
-  const [{ isDragging, didDrop }, drag] = useDrag({
+  const [, drag] = useDrag({
     item: {
       type: 'build',
       build: item,

@@ -30,8 +30,8 @@ const StyledButton = styled(Button)`
 `;
 
 const RoleDropper = ({ role }: { role: IRole }) => {
-  const [state, dispatch] = useContext(RaidContext);
-  const [{ canDrop, isOver }, drop] = useDrop({
+  const [, dispatch] = useContext(RaidContext);
+  const [, drop] = useDrop({
     accept: 'build',
     drop: (item: any, monitor) => {
       console.log(item);

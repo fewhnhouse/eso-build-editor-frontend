@@ -32,6 +32,13 @@ const Title = styled.div`
   text-align: left;
 `;
 
+const SmallTitle = styled.div`
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 400;
+  font-size: 14px;
+  display: inline;
+`
+
 const StyledTag = styled(Tag)`
   min-width: 60px;
   white-space: nowrap;
@@ -145,21 +152,21 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
   return (
     <Container>
       <Title>
-        {gear.selectedSet ? gear.selectedSet.name : 'Set name'} <br />
+        {gear.selectedSet ? gear.selectedSet.name : 'Set name'} {gear.weaponType ? <SmallTitle>{gear.weaponType}</SmallTitle> : ""}
       </Title>
       {gear.type ? gearTypeTag(gear.type) : ""}
-      <StyledTag color={"#108ee9"}>{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
+      <StyledTag color="#108ee9">{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
       <Divider style={{ margin: "5px 0px" }} />
       <Description>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {gear.selectedSet ? 
-          totalBonus(gear.selectedSet).map(i => (
-            <span key={i}>
-              {i} pcs: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
-            </span>
-          ))
-        : <span></span>
-        }
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {gear.selectedSet ? 
+            totalBonus(gear.selectedSet).map(i => (
+              <span key={i}>
+                {i} pcs: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
+              </span>
+            ))
+          : <span></span>
+          }
         </div>
       </Description>
       <Divider style={{ margin: '5px 0px' }} />

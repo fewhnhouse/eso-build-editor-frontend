@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { IRaidState, defaultRaidState, RaidContext } from '../RaidStateContext';
+import { RaidContext } from '../RaidStateContext';
 import RaidReviewDetails from './RaidReviewDetails';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';

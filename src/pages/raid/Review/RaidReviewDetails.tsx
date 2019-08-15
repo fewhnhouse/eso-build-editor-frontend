@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Flex from '../../../components/Flex';
-import { Card, Typography, Divider, Descriptions, Icon } from 'antd';
+import { Card, Typography, Divider } from 'antd';
 import { IRaidState } from '../RaidStateContext';
 import { Redirect } from 'react-router';
 import BuildCard from '../builds/BuildCard';
-import GearCard from '../../build/Sets/GearCard';
 
 const { Title, Text } = Typography;
 
@@ -44,14 +43,9 @@ interface IRaidReviewDetailsProps {
 }
 
 const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
+
   const { name, applicationArea, groupSize, description, roles } = loadedData;
-
-  const [path, setRedirect] = useState('');
-  const handleClick = (path: string) => {
-    setRedirect(path);
-  };
-
-  console.log(loadedData)
+  const [path] = useState('');
 
   if (path !== '') {
     return <Redirect push to={`${path}`} />;

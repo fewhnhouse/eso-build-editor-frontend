@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography, Input, Divider, Select, Slider } from 'antd';
-import { RouteComponentProps, withRouter } from 'react-router';
 import Flex from '../../../components/Flex';
 import { RaidContext } from '../RaidStateContext';
 import AccessRights from './AccessRights';

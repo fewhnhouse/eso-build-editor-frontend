@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Layout, Typography, Divider, Input } from 'antd'
+import { Layout } from 'antd'
 import NotLoggedInHome from './NotLoggedInHome'
 import LoggedInHome from './LoggedInHome'
 

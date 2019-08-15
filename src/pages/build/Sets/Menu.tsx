@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { List, Tag, Divider, Button, Input, Spin } from 'antd';
+import { List, Tag, Divider, Button, Input } from 'antd';
 import styled from 'styled-components';
 import { ISet } from '../../../components/GearSlot';
 import { BuildContext } from '../BuildStateContext';

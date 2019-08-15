@@ -7,7 +7,6 @@ import { SelectValue } from 'antd/lib/select';
 import { BuildContext, Slot, ISetSelection, IModification } from '../BuildStateContext';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { RadioChangeEvent } from 'antd/lib/radio';
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
