@@ -252,7 +252,7 @@ export const DisplaySlot = ({
       hasIcon={slot.icon !== undefined}
       backgroundSource={getImageSource(slot.slot)}
     >
-      {slot.icon !== undefined ? (
+      {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
         <Popover placement='left' content={<GearCardContent gear={slot} />}>
           <GearImg size={size} src={getGearSlot(slot)} />
         </Popover>
