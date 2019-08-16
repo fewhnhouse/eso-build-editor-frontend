@@ -149,6 +149,24 @@ const getSetups = ({
           weaponType: TwohandedWeapon.fireStaff,
           type: WeaponType.twohanded,
         },
+        {
+          slot: Slot.mainHand,
+          selectedSet,
+          weaponType: TwohandedWeapon.lightningStaff,
+          type: WeaponType.twohanded,
+        },
+        {
+          slot: Slot.mainHand,
+          selectedSet,
+          weaponType: TwohandedWeapon.iceStaff,
+          type: WeaponType.twohanded,
+        },
+        {
+          slot: Slot.mainHand,
+          selectedSet,
+          weaponType: TwohandedWeapon.restorationStaff,
+          type: WeaponType.twohanded,
+        },
       ],
     },
   ];

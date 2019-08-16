@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, Divider, Tag } from 'antd';
 import styled from 'styled-components';
-import { ISet } from '../../../components/GearSlot';
-import { ISetSelection } from '../BuildStateContext';
-import Flex from '../../../components/Flex';
+import { ISet } from './GearSlot';
+import { ISetSelection } from '../pages/build/BuildStateContext';
+import Flex from './Flex';
 
 const StyledCard = styled(Card)`
   display: 'flex';
