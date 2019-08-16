@@ -32,6 +32,7 @@ const BUILD = gql`
       name
       location
       type
+      slug
       bonus_item_1
       bonus_item_2
       bonus_item_3

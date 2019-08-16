@@ -131,6 +131,11 @@ const getGearSlot = (slot: ISetSelection) => {
       process.env.REACT_APP_IMAGE_SERVICE
     }/gear/jewelry/${getImageSource(slot.slot)}`
   }
+  if (slot.selectedSet) {
+    if (slot.selectedSet.type === ArmorType.undaunted) {
+      return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/undaunted/${slot.selectedSet.slug}_${getImageSource(slot.slot)}`
+    }
+  }
   if (slot.type === WeaponType.onehanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE

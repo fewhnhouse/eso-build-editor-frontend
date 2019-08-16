@@ -116,6 +116,8 @@ export enum ArmorType {
   lightArmor = 'LIGHT_ARMOR',
   mediumArmor = 'MEDIUM_ARMOR',
   heavyArmor = 'HEAVY_ARMOR',
+  undaunted = 'Monster Set',
+  arena = 'Arena'
 }
 
 export enum WeaponType {
