@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Divider, Empty, Spin } from 'antd'
 import styled from 'styled-components'
-import SkillCard from './SkillCard'
+import SkillCard from '../../../components/SkillCard'
 import Menu from './Menu'
 import { BuildContext } from '../BuildStateContext'
 import AbilityBar from './AbilityBar'

@@ -12,7 +12,7 @@ import {
   OnehandedWeapon,
   TwohandedWeapon,
 } from '../pages/build/BuildStateContext';
-import { GearCardContent } from '../pages/build/Sets/GearCard';
+import { GearCardContent } from './GearCard';
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
@@ -232,7 +232,11 @@ export default ({
         {slot.selectedSet && isDragging ? (
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
         ) : slot.selectedSet ? (
-          <Popover placement={'top'} content={<GearCardContent gear={slot} />}>
+          <Popover
+            placement={'top'}
+            mouseEnterDelay={0.5}
+            content={<GearCardContent gear={slot} />}
+          >
             <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
           </Popover>
         ) : (
@@ -257,7 +261,11 @@ export const DisplaySlot = ({
       backgroundSource={getImageSource(slot.slot)}
     >
       {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
-        <Popover placement="left" content={<GearCardContent gear={slot} />}>
+        <Popover
+          mouseEnterDelay={0.5}
+          placement="left"
+          content={<GearCardContent gear={slot} />}
+        >
           <GearImg size={size} src={getGearSlot(slot)} />
         </Popover>
       ) : null}

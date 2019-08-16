@@ -8,7 +8,7 @@ import Jewelry from './Jewelry';
 import SetBar from './SetBar';
 import { BuildContext, SetTab } from '../BuildStateContext';
 import { ISet } from '../../../components/GearSlot';
-import GearCard from './GearCard';
+import GearCard from '../../../components/GearCard';
 
 const { TabPane } = Tabs;
 

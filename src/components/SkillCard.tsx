@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { Card, Divider, Popover } from 'antd'
 import styled from 'styled-components'
-import { BuildContext } from '../BuildStateContext'
-import { ISkill } from '../../../components/SkillSlot'
+import { BuildContext } from '../pages/build/BuildStateContext'
+import { ISkill } from './SkillSlot'
 
 const StyledCard = styled(Card)`
   margin: 5px 10px 0 10px;
