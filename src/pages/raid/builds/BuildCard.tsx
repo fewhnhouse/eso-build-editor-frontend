@@ -7,12 +7,7 @@ import {
   ABILITY_BAR_ONE,
 } from '../../build/Skills/AbilityBar';
 import { DisplaySlot } from '../../../components/SkillSlot';
-import {
-  Card,
-  Divider,
-  Button,
-  Typography,
-} from 'antd';
+import { Card, Divider, Button, Typography } from 'antd';
 import GearView from '../../../components/GearView';
 import { Tabs } from 'antd';
 import Flex from '../../../components/Flex';
@@ -159,6 +154,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </TabPane>
           <TabPane tab="Weapons" key="weapons">
             <GearView
+              disabled
               size="small"
               setups={[
                 {
@@ -175,8 +171,8 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             />
           </TabPane>
           <TabPane tab="Armor" key="armor">
-            {' '}
             <GearView
+              disabled
               size="small"
               setups={[
                 {
@@ -194,6 +190,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </TabPane>
           <TabPane tab="Jewelry" key="jewelry">
             <GearView
+              disabled
               size="small"
               setups={[
                 {
