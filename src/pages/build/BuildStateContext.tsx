@@ -123,7 +123,7 @@ export enum SetType {
   arena = 'Arena',
   pvp = 'PvP',
   overland = 'Overland',
-  trial = 'trial',
+  trial = 'Trial',
   dungeon = 'Dungeon'
 }
 
