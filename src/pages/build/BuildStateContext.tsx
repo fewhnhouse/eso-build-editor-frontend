@@ -115,9 +115,16 @@ export type SlotType = ArmorType | WeaponType | 'jewelry';
 export enum ArmorType {
   lightArmor = 'LIGHT_ARMOR',
   mediumArmor = 'MEDIUM_ARMOR',
-  heavyArmor = 'HEAVY_ARMOR',
+  heavyArmor = 'HEAVY_ARMOR'
+}
+
+export enum SetType {
   undaunted = 'Monster Set',
-  arena = 'Arena'
+  arena = 'Arena',
+  pvp = 'PvP',
+  overland = 'Overland',
+  trial = 'trial',
+  dungeon = 'Dungeon'
 }
 
 export enum WeaponType {

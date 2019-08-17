@@ -11,6 +11,7 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
+  SetType,
 } from '../pages/build/BuildStateContext';
 import { GearCardContent } from './GearCard';
 
@@ -136,7 +137,7 @@ const getGearSlot = (slot: ISetSelection) => {
     }/gear/jewelry/${getImageSource(slot.slot)}`;
   }
   if (slot.selectedSet) {
-    if (slot.selectedSet.type === ArmorType.undaunted) {
+    if (slot.selectedSet.type === SetType.undaunted) {
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/undaunted/${slot.selectedSet.slug}_${getImageSource(slot.slot)}`
     }
   }
