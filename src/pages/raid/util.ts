@@ -90,6 +90,6 @@ export const handleCreateSave = async (
         },
       },
     },
-    refetchQueries: [{ query: [ME] }],
+    refetchQueries: [{ query: ME }],
   })
 }

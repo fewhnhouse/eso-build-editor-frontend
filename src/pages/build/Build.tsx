@@ -452,7 +452,7 @@ export default ({
               type='primary'
             >
               {tab === 4 ? 'Save' : 'Next'}
-              <Icon type={tab === 4 ? (loading ? '' : 'save') : 'right'} />
+              {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
             </TabButton>
           </ButtonGroup>
         </Tooltip>

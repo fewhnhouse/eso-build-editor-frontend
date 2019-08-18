@@ -10,7 +10,7 @@ import { useMutation } from '@apollo/react-hooks'
 import Flex from '../../components/Flex'
 import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
-import { raid } from '../../util/fragments';
+import { raid } from '../../util/fragments'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -75,13 +75,13 @@ export default ({
   }
   const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID)
 
-  const createRaidMutation = useMutation<any, any>(CREATE_RAID)
-  const [createRaid, createRaidResult] = createRaidMutation
+  const [createRaid, createRaidResult] = useMutation<any, any>(CREATE_RAID)
 
   useEffect(() => {
     if (saved) {
+      console.log(createRaidResult)
       if (createRaidResult.data && createRaidResult.data.createRaid) {
-        localStorage.removeItem('raidState')
+        //localStorage.removeItem('raidState')
         setRedirect(createRaidResult.data.createRaid.id)
       } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
         setRedirect(updateRaidResult.data.updateRaid.id)
@@ -122,7 +122,7 @@ export default ({
       }
     } else {
       try {
-        handleCreateSave(state, createRaid)
+        await handleCreateSave(state, createRaid)
         notification.success({
           message: 'Raid creation successful',
           description: (
@@ -142,7 +142,6 @@ export default ({
             </Flex>
           ),
         })
-        localStorage.removeItem('raidState')
       } catch (e) {
         console.error(e)
         notification.error({
@@ -158,7 +157,6 @@ export default ({
 
   const handleNextClick = () => {
     if (tab === 2) {
-      console.log('save')
       handleSave()
     } else {
       setTab(tabIndex => tabIndex + 1)
@@ -236,8 +234,8 @@ export default ({
             type='primary'
             loading={loading}
           >
-            <Icon type={tab === 2 ? 'save' : 'right'} />
             {tab === 2 ? 'Save' : 'Next'}
+            {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
           </TabButton>
         </Tooltip>
         <Redirect to={`${path}/${tab}`} push />
