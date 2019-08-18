@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { List, Card, Typography, Divider } from 'antd'
 import styled from 'styled-components'
 import { Redirect } from 'react-router'
+import { applicationAreas } from '../build/RaceAndClass/RaceClass'
 
 const { Text } = Typography
 
@@ -74,12 +75,14 @@ const BuildCard = ({ data, filterText }: IUserDataProps) => {
     return <Redirect push to={`${path}`} />
   }
   const filteredData = data.filter(build => build.name.includes(filterText))
-
   return (
     <StyledList
       dataSource={filteredData}
       renderItem={(item, index: number) => {
         const build = filteredData[index]
+        const applicationArea = applicationAreas.find(
+          area => area.key === build.applicationArea
+        )
         return (
           <List.Item style={{ justifyContent: 'center' }}>
             <StyledCard
@@ -109,7 +112,7 @@ const BuildCard = ({ data, filterText }: IUserDataProps) => {
                 />
                 {build.race}
                 <Divider style={{ margin: '5px 0px' }} />
-                Created by {build.owner.name}
+                {applicationArea ? applicationArea.label : ''}
               </Description>
             </StyledCard>
           </List.Item>

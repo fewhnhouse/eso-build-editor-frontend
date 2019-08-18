@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { List, Card, Typography, Divider } from 'antd'
+import { List, Card, Typography, Divider, Icon } from 'antd'
 import styled from 'styled-components'
 import { Redirect } from 'react-router'
+import { applicationAreas } from '../raid/general/RaidGeneral'
+import Flex from '../../components/Flex'
 
 const { Text } = Typography
 
@@ -87,6 +89,12 @@ const RaidCard = ({ data, filterText }: IUserDataProps) => {
       dataSource={filteredData}
       renderItem={(item, index) => {
         const raid = filteredData[index]
+        const applicationArea = applicationAreas.find(
+          area => area.key === raid.applicationArea
+        )
+        const size = raid.roles.reduce((prev, curr) => {
+          return prev + curr.builds.length
+        }, 0)
         return (
           <List.Item style={{ justifyContent: 'center' }}>
             <StyledCard
@@ -95,19 +103,17 @@ const RaidCard = ({ data, filterText }: IUserDataProps) => {
               onClick={() => handleClick(`/raidReview/${raid.id}`)}
             >
               <Title>
-                {raid.name ? raid.name : 'Unnamed raid'}{' '}
-                <Text style={{ fontWeight: 'normal' }}>
-                  {raid.applicationArea}
-                </Text>
+                <Flex direction='row' justify='space-between'>
+                  {raid.name ? raid.name : 'Unnamed raid'}
+                  <div>
+                    <Icon type='team' />
+                    {size}
+                  </div>
+                </Flex>
               </Title>
+              <Divider style={{ margin: '5px 0px' }} />
               <Description>
-                Group size:{' '}
-                {raid.roles.reduce(
-                  (prev, curr) => prev + curr.builds.length,
-                  0
-                )}
-                <br />
-                Created by {raid.owner.name}
+                {applicationArea ? applicationArea.label : ''}
               </Description>
             </StyledCard>
           </List.Item>
