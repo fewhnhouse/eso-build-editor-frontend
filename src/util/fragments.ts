@@ -85,6 +85,8 @@ export const build = gql`
     id
     name
     race
+    description
+    applicationArea
     mundusStone {
       id
       name
