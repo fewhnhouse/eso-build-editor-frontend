@@ -38,26 +38,28 @@ const StyledTitle = styled(Flex)`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `
-const ME = gql`
+export const ME = gql`
   query {
     me {
       id
       name
       builds {
+        id
         owner {
+          id
           name
         }
-        id
         name
         esoClass
         race
         applicationArea
       }
       raids {
+        id
         owner {
+          id
           name
         }
-        id
         name
         applicationArea
         roles {
@@ -83,6 +85,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
     return <Redirect to={redirect} push />
   }
   if (error) {
+    console.error(error)
     return <div>Error.</div>
   }
 

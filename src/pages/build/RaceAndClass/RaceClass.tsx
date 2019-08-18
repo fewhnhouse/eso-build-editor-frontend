@@ -144,8 +144,8 @@ export default ({ edit }: { edit: boolean }) => {
               size='large'
               placeholder='Select application area...'
             >
-              {applicationAreas.map(area => (
-                <Select.Option value={area.key}>{area.label}</Select.Option>
+              {applicationAreas.map((area, index) => (
+                <Select.Option key={`appArea-${index}`} value={area.key}>{area.label}</Select.Option>
               ))}
             </Select>
           </Flex>
@@ -178,7 +178,9 @@ export default ({ edit }: { edit: boolean }) => {
           justify='flex-start'
           align='center'
         >
-          <Typography.Text style={{marginBottom: 5}} strong>Main Resource</Typography.Text>
+          <Typography.Text style={{ marginBottom: 5 }} strong>
+            Main Resource
+          </Typography.Text>
           <Radio.Group
             value={mainResource}
             onChange={handleResourceChange}
@@ -194,8 +196,9 @@ export default ({ edit }: { edit: boolean }) => {
 
       <Divider>Race</Divider>
       <CardContainer>
-        {races.map(race => (
+        {races.map((race, index) => (
           <RaceCard
+            key={`race-${index}`}
             title={race.title}
             imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
               race.title
@@ -206,8 +209,9 @@ export default ({ edit }: { edit: boolean }) => {
       </CardContainer>
       <Divider>Class</Divider>
       <CardContainer>
-        {classes.map(esoClass => (
+        {classes.map((esoClass, index) => (
           <EsoClassCard
+            key={`esoclass-${index}`}
             description={esoClass.description}
             title={esoClass.title}
             imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${

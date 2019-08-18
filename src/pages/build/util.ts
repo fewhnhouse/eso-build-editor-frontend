@@ -8,6 +8,7 @@ import {
 import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common'
 import { ISpecialBuff } from './consumables/BuffMenu'
 import { ISkill } from '../../components/SkillSlot'
+import { ME } from '../home/UserHomeCard'
 export const handleEditSave = async (
   initialSkillBarOne: ISkillSelection[],
   initialSkillBarTwo: ISkillSelection[],
@@ -387,5 +388,6 @@ export const handleCreateSave = async (
         },
       },
     },
+    refetchQueries: [{ query: ME }],
   })
 }
