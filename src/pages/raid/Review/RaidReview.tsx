@@ -7,6 +7,7 @@ import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { notification, Layout, Button, Popconfirm, Typography } from 'antd'
 import styled from 'styled-components'
 import { raid } from '../../../util/fragments'
+import { ME } from '../../home/UserHomeCard'
 const { Content, Footer } = Layout
 
 const RAID = gql`
@@ -18,7 +19,7 @@ const RAID = gql`
   ${raid}
 `
 
-const ME = gql`
+const MY_ID = gql`
   query {
     me {
       id
@@ -59,7 +60,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const [state] = useContext(RaidContext)
 
   const raidQuery = useQuery(RAID, { variables: { id } })
-  const meQuery = useQuery(ME)
+  const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_RAID, {
     variables: { id },
   })
@@ -90,7 +91,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
       meQuery.data.me
     ) {
       const handleDeleteConfirm = () => {
-        deleteMutation({ variables: { id } })
+        deleteMutation({ variables: { id }, refetchQueries: [{ query: ME }] })
       }
 
       const handleEditClick = () => {

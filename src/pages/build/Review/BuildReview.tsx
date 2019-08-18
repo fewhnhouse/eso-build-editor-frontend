@@ -15,6 +15,7 @@ import {
   notification,
 } from 'antd'
 import { build } from '../../../util/fragments'
+import { ME } from '../../home/UserHomeCard'
 const { Content, Footer } = Layout
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
@@ -30,7 +31,7 @@ const BUILD = gql`
   ${build}
 `
 
-const ME = gql`
+const MY_ID = gql`
   query {
     me {
       id
@@ -67,9 +68,10 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
 
   const [state] = useContext(BuildContext)
   const buildQuery = useQuery(BUILD, { variables: { id } })
-  const meQuery = useQuery(ME)
+  const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
     variables: { id },
+    refetchQueries: [{ query: ME }],
   })
   const [redirect, setRedirect] = useState(false)
   useEffect(() => {
