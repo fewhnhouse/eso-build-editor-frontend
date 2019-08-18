@@ -78,7 +78,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [state])
+  }, [edit, state])
 
   const { skillLine } = state!
 
@@ -123,7 +123,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
         ultimate: baseUltimate || undefined,
       },
     })
-  }, [skillLine, dispatch])
+  }, [skillLine, dispatch, skills, state])
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.skillId ? baseUltimate.skillId : 0
   )
@@ -137,7 +137,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     setTimeout(() => {
       set({ opacity: 1, transform: 'translate(0px, 0px)' })
     }, 300)
-  }, [baseActives])
+  }, [baseActives, set])
 
   return (
     <DndProvider backend={HTML5Backend}>

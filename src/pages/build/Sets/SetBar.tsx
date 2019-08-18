@@ -201,16 +201,6 @@ export default () => {
     selectedSet,
   } = state!
 
-  useEffect(() => {
-    console.log(
-      bigPieceSelection.filter(bigPiece =>
-        bigPiece.selectedSet && bigPiece.selectedSet.type === SetType.undaunted
-          ? bigPiece.slot === Slot.head || bigPiece.slot === Slot.shoulders
-          : true
-      )
-    )
-  }, [bigPieceSelection, selectedSet])
-
   const mySetups = getSetups({
     armorType,
     selectedSet,

@@ -159,6 +159,7 @@ export default ({
     setTab(tabIndex => tabIndex - 1)
   }
   const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD)
+  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
 
   const [updateSetSelection] = useMutation<any, any>(UPDATE_SET_SELECTION)
   const [updateSkillSelection] = useMutation<any, any>(UPDATE_SKILL_SELECTION)
@@ -169,22 +170,19 @@ export default ({
   const [createSetSelections] = useMutation<any, ISetSelectionData>(
     CREATE_SET_SELECTIONS
   )
-  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
 
   const { mundusStone, buff, ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
-    if (
-      (createBuildResult.data && createBuildResult.data.createRaid) ||
-      (updateBuildResult.data && updateBuildResult.data.updateRaid)
-    ) {
-      setRedirect(
-        createBuildResult.data
-          ? createBuildResult.data.createRaid.id
-          : updateBuildResult.data.updateRaid.id
-      )
+    if(saved) {
+
+      if (createBuildResult.data && createBuildResult.data.createBuild) {
+        setRedirect(createBuildResult.data.creatBuild.id)
+      } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
+        setRedirect(updateBuildResult.data.updateBuild.id)
+      }
     }
-  }, [createBuildResult.data, updateBuildResult.data])
+  }, [createBuildResult.data, saved, updateBuildResult.data])
 
   const handleSave = async () => {
     setLoading(true)
