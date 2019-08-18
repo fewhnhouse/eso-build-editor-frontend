@@ -54,8 +54,8 @@ const CREATE_BUILD = gql`
     createBuild(data: $data) {
       ...Build
     }
-    ${build}
   }
+  ${build}
 `
 
 interface ISetSelectionData {
@@ -265,7 +265,6 @@ export default ({
             </Flex>
           ),
         })
-
       } catch (e) {
         console.error(e)
         notification.error({
