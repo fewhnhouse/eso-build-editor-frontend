@@ -103,7 +103,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
-  const applicationAreaLabel = applicationAreas.find(area => area.key === applicationArea)!.label
+  const area = applicationAreas.find(area => area.key === applicationArea)
   return (
     <Wrapper
       direction='row'
@@ -118,7 +118,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
         <Text>{description || ''}</Text>
         <br />
         <Text strong>Application Area: </Text>
-        <Text>{applicationAreaLabel || ''}</Text>
+        <Text>{area ? area.label : ''}</Text>
         <Divider>Race</Divider>
         <MiscView direction='row' justify='flex-start'>
           <MyAvatar

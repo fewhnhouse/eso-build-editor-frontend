@@ -96,6 +96,7 @@ const StyledSearch = styled(Search)`
 const ME = gql`
   query {
     me {
+      id
       name
       builds {
         owner {
