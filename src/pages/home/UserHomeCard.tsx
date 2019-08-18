@@ -1,169 +1,136 @@
 import React, { useState } from 'react'
-import { List, Card, Typography, Divider } from 'antd'
 import styled from 'styled-components'
+import Flex from '../../components/Flex'
+import { Typography, Button, Spin, Input, Icon } from 'antd'
 import { Redirect } from 'react-router'
+import RaidCard from './RaidCard'
+import BuildCard from './BuildCard'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+const { Search } = Input
+const { Title } = Typography
 
-const { Text } = Typography
-
-const Description = styled.div`
-  font-size: 14px;
-  line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
+const CardContainer = styled(Flex)`
+  justify-content: center;
+  flex: 1;
+  min-height: 300px;
 `
 
-const Title = styled.div`
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: left;
+const ListCard = styled.div`
+  width: 60%;
+  min-width: 300px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  min-height: 300px;
+`
+const CardTitle = styled(Title)`
+  display: flex;
+  margin-bottom: 0;
+  width: 100%;
+  justify-content: space-between;
 `
 
-const StyledCard = styled(Card)`
-  border-color: rgb(232, 232, 232);
-  background: 'white';
-  border-width: 2px;
-  margin: 10px;
-  width: 90%;
-  max-width: 400px;
+const StyledTitle = styled(Flex)`
+  background-color: #e8e8e8;
+  margin-bottom: 0;
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `
-
-const StyledList = styled(List)`
-  overflow-y: scroll;
-  height: 300px;
-  background: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`
-
-const StyledImg = styled.img`
-  width: 25px;
-  height: 25px;
-`
-
-interface IOwnerProps {
-  name: string
-}
-
-interface IBuildProps {
-  id: number
-  name: string
-  esoClass: string
-  race: string
-  applicationArea: string
-  owner: IOwnerProps
-}
-
-interface IRaidRoleProps {
-  builds: IBuildProps[]
-}
-
-interface IRaidProps {
-  id: number
-  name: string
-  applicationArea: string
-  owner: IOwnerProps
-  roles: IRaidRoleProps[]
-}
-
-interface IUserDataProps {
-  userBuildData?: IBuildProps[]
-  userRaidData?: IRaidProps[]
-}
-
-const UserHomeCard = ({ userBuildData, userRaidData }: IUserDataProps) => {
-  const [path, setRedirect] = useState('')
-  const handleClick = (path: string) => {
-    setRedirect(path)
-  }
-
-  if (path !== '') {
-    return <Redirect push to={`${path}`} />
-  } else {
-    if (userBuildData) {
-      return (
-        <StyledList
-          dataSource={userBuildData}
-          renderItem={(item, index) => {
-            const find = userBuildData[index]
-            return (
-              <List.Item style={{ justifyContent: 'center' }}>
-                <StyledCard
-                  key={find.id}
-                  hoverable
-                  onClick={() => handleClick(`/buildReview/${find.id}`)}
-                >
-                  <Title>
-                    {find.name ? find.name : 'Unnamed build'}
-                    <Text style={{ fontWeight: 'normal' }} />
-                  </Title>
-                  <Divider style={{ margin: '5px 0px' }} />
-
-                  <Description>
-                    <StyledImg style={{marginRight: "5px"}}
-                      src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
-                        find.esoClass
-                      }.png`}
-                    />
-                    {find.esoClass}
-                    <StyledImg
-                      style={{ marginLeft: '10px', marginRight: "5px" }}
-                      src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
-                        find.race
-                      }.png`}
-                    />
-                    {find.race}
-                    <Divider style={{ margin: '5px 0px' }} />
-                    Created by {find.owner.name}
-                  </Description>
-                </StyledCard>
-              </List.Item>
-            )
-          }}
-        />
-      )
-    } else if (userRaidData) {
-      return (
-        <StyledList
-          dataSource={userRaidData}
-          renderItem={(item, index) => {
-            const find = userRaidData[index]
-            return (
-              <List.Item style={{ justifyContent: 'center' }}>
-                <StyledCard
-                  key={find.id}
-                  hoverable
-                  onClick={() => handleClick(`/raidReview/${find.id}`)}
-                >
-                  <Title>
-                    {find.name ? find.name : 'Unnamed raid'}{' '}
-                    <Text style={{ fontWeight: 'normal' }}>
-                      {find.applicationArea}
-                    </Text>
-                  </Title>
-                  <Description>
-                    Group size:{' '}
-                    {find.roles.reduce(
-                      (prev, curr) => prev + curr.builds.length,
-                      0
-                    )}
-                    <br />
-                    Created by {find.owner.name}
-                  </Description>
-                </StyledCard>
-              </List.Item>
-            )
-          }}
-        />
-      )
+const ME = gql`
+  query {
+    me {
+      id
+      name
+      builds {
+        owner {
+          name
+        }
+        id
+        name
+        esoClass
+        race
+        applicationArea
+      }
+      raids {
+        owner {
+          name
+        }
+        id
+        name
+        applicationArea
+        roles {
+          id
+          builds {
+            id
+            role
+          }
+        }
+      }
     }
   }
-  return null
-}
+`
 
-export default UserHomeCard
+export default ({ isBuild }: { isBuild: boolean }) => {
+  const [redirect, setRedirect] = useState('')
+  const { data, error, loading } = useQuery<any, any>(ME)
+  const [search, setSearch] = useState('')
+  const handleCreateClick = (path: string) => () => {
+    setRedirect(path)
+  }
+  if (redirect !== '') {
+    return <Redirect to={redirect} push />
+  }
+  if (error) {
+    return <div>Error.</div>
+  }
+
+  if (loading) {
+    return (
+      <CardContainer>
+        <Spin style={{ marginTop: 5 }} />
+      </CardContainer>
+    )
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+  return (
+    <CardContainer direction={'column'} justify={'center'} align='center'>
+      <ListCard>
+        <StyledTitle direction={'column'} justify='center' align='center'>
+          <CardTitle level={3}>
+            {isBuild ? 'My builds' : 'My raids'}
+            <Button
+              type='primary'
+              ghost={true}
+              onClick={handleCreateClick(isBuild ? '/build/0' : '/raid/0')}
+            >
+              Create
+            </Button>
+          </CardTitle>
+          <Input
+            placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
+            value={search}
+            onChange={handleSearchChange}
+            addonAfter={<Icon type='search' />}
+            defaultValue='mysite'
+          />
+        </StyledTitle>
+        {data && data.me ? (
+          isBuild ? (
+            <BuildCard filterText={search} data={data.me.builds} />
+          ) : (
+            <RaidCard filterText={search} data={data.me.raids} />
+          )
+        ) : isBuild ? (
+          'You have no saved builds yet.'
+        ) : (
+          'You have no saved raids yet.'
+        )}
+      </ListCard>
+    </CardContainer>
+  )
+}
