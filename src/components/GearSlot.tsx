@@ -139,6 +139,15 @@ const getGearSlot = (slot: ISetSelection) => {
   if (slot.selectedSet) {
     if (slot.selectedSet.type === SetType.undaunted) {
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/undaunted/${slot.selectedSet.slug}_${getImageSource(slot.slot)}`
+    } else if (
+      slot.selectedSet.type === SetType.arena ||
+      slot.selectedSet.type ===SetType.trial ) {
+        if (
+          slot.type === WeaponType.onehanded || 
+          slot.type === WeaponType.twohanded 
+        ) {
+          return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${slot.selectedSet.slug}_${getImageSource(slot.weaponType)}`
+        }
     }
   }
   if (slot.type === WeaponType.onehanded) {
