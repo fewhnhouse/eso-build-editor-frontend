@@ -78,15 +78,11 @@ export default ({
 
   useEffect(() => {
     if (saved) {
-      if (
-        (createRaidResult.data && createRaidResult.data.createRaid) ||
-        (updateRaidResult.data && updateRaidResult.data.updateRaid)
-      ) {
-        setRedirect(
-          createRaidResult.data
-            ? createRaidResult.data.createRaid.id
-            : updateRaidResult.data.updateRaid.id
-        )
+      if (createRaidResult.data && createRaidResult.data.createRaid) {
+        localStorage.removeItem('raidState')
+        setRedirect(createRaidResult.data.createRaid.id)
+      } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
+        setRedirect(updateRaidResult.data.updateRaid.id)
       }
     }
   }, [createRaidResult.data, saved, updateRaidResult.data])

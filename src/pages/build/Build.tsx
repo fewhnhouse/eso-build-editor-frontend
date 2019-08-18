@@ -177,6 +177,7 @@ export default ({
     if(saved) {
 
       if (createBuildResult.data && createBuildResult.data.createBuild) {
+        localStorage.removeItem("buildState")
         setRedirect(createBuildResult.data.creatBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
         setRedirect(updateBuildResult.data.updateBuild.id)

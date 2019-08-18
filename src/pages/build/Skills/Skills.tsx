@@ -78,7 +78,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [edit, state])
+  }, [state])
 
   const { skillLine } = state!
 
@@ -123,7 +123,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
         ultimate: baseUltimate || undefined,
       },
     })
-  }, [skillLine, dispatch, skills, state])
+  }, [skillLine, dispatch])
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.skillId ? baseUltimate.skillId : 0
   )
