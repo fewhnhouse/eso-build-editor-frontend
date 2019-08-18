@@ -5,7 +5,6 @@ import { BuildContext, ISkillSelection } from '../BuildStateContext'
 import SkillView from '../../../components/SkillView'
 import { ISkill } from '../../../components/SkillSlot'
 import { useDrop } from 'react-dnd'
-import SkillSlot from '../../../components/SkillSlot'
 import Flex from '../../../components/Flex'
 
 export const ABILITY_BAR_ONE = 'abilityBar1'
