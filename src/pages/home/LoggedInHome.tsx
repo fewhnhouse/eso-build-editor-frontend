@@ -15,8 +15,8 @@ const Wrapper = styled(Flex)`
   padding: 40px;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 600px;
   z-index: 20;
+  min-height: 100%;
   background: white;
   box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.35);
 `
@@ -71,13 +71,6 @@ export default () => {
         wrap
         fluid
       >
-        <InputContainer direction='row' align='center' justify='center'>
-          <StyledSearch
-            size='large'
-            placeholder='Search for raids'
-            style={{ width: 400 }}
-          />
-        </InputContainer>
         <Wrapper direction={'row'} justify='center' align='center' wrap>
           <UserHomeCard isBuild />
           <UserHomeCard isBuild={false} />
