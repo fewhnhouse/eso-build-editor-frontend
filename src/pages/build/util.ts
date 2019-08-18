@@ -4,13 +4,10 @@ import {
   ISetSelection,
   ISkillSelection,
   WeaponType,
-} from './BuildStateContext';
-import {
-  MutationFunctionOptions,
-  ExecutionResult,
-} from '@apollo/react-common';
-import { ISpecialBuff } from './consumables/BuffMenu';
-import { ISkill } from '../../components/SkillSlot';
+} from './BuildStateContext'
+import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common'
+import { ISpecialBuff } from './consumables/BuffMenu'
+import { ISkill } from '../../components/SkillSlot'
 export const handleEditSave = async (
   initialSkillBarOne: ISkillSelection[],
   initialSkillBarTwo: ISkillSelection[],
@@ -27,7 +24,7 @@ export const handleEditSave = async (
   mundusStone: IMundus,
   buff: ISpecialBuff,
   ultimateOne?: ISkill,
-  ultimateTwo?: ISkill,
+  ultimateTwo?: ISkill
 ) => {
   const {
     id,
@@ -43,95 +40,94 @@ export const handleEditSave = async (
     applicationArea,
     role,
     name,
-   // mainResource,
+    // mainResource,
     description,
-  }: IBuildState = state!;
+    published,
+  }: IBuildState = state!
 
   const createSetVariables = (setSelection: ISetSelection) => ({
     where: { id: setSelection.id },
     data: {
       slot: setSelection.slot,
-      selectedSet:
-        setSelection.selectedSet
-          ? { connect: { id: setSelection.selectedSet.id } }
-          : undefined,
+      selectedSet: setSelection.selectedSet
+        ? { connect: { id: setSelection.selectedSet.id } }
+        : undefined,
       trait: setSelection.trait
         ? {
-          connect: { description: setSelection.trait.description },
-        }
+            connect: { description: setSelection.trait.description },
+          }
         : undefined,
       glyph: setSelection.glyph
         ? {
-          connect: { description: setSelection.glyph.description },
-        }
+            connect: { description: setSelection.glyph.description },
+          }
         : undefined,
       type: setSelection.type,
       weaponType: setSelection.weaponType,
     },
-  });
+  })
   await frontbarSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
-    });
-  });
+    })
+  })
   await backbarSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
-    });
-  });
+    })
+  })
   await bigPieceSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
-    });
-  });
+    })
+  })
   await smallPieceSelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
-    });
-  });
+    })
+  })
   await jewelrySelection.map(async setSelection => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
-    });
-  });
-  
-    const createSkillVariables = (skillSelection: ISkillSelection) => ({
-      where: { id: skillSelection.id },
-      data: {
-        index: skillSelection.index,
-        skill:
-          skillSelection.skill
-            ? { connect: { id: skillSelection.skill.id } }
-            : undefined,
-      },
-    });
-    await newBarOne.map(async skillSelection => {
-      return updateSkillSelection({
-        variables: {
-          ...createSkillVariables(skillSelection),
-        },
-      });
-    });
-    await newBarTwo.map(async skillSelection => {
-      return updateSkillSelection({
-        variables: {
-          ...createSkillVariables(skillSelection),
-        },
-      });
-    });
+    })
+  })
 
-    console.log("done with prior")
-    
+  const createSkillVariables = (skillSelection: ISkillSelection) => ({
+    where: { id: skillSelection.id },
+    data: {
+      index: skillSelection.index,
+      skill: skillSelection.skill
+        ? { connect: { id: skillSelection.skill.id } }
+        : undefined,
+    },
+  })
+  await newBarOne.map(async skillSelection => {
+    return updateSkillSelection({
+      variables: {
+        ...createSkillVariables(skillSelection),
+      },
+    })
+  })
+  await newBarTwo.map(async skillSelection => {
+    return updateSkillSelection({
+      variables: {
+        ...createSkillVariables(skillSelection),
+      },
+    })
+  })
+
+  console.log('done with prior')
+
   return await updateBuild({
     variables: {
       where: {
@@ -143,6 +139,7 @@ export const handleEditSave = async (
         esoClass,
         description,
         applicationArea,
+        published,
         /*
         newBarOne: {
           delete: initialSkillBarOne.map(skillSelection => ({ id: skillSelection.id })),
@@ -158,19 +155,19 @@ export const handleEditSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-              connect: { skillId: ultimateOne.skillId },
-            }
+                connect: { skillId: ultimateOne.skillId },
+              }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-              connect: { skillId: ultimateTwo.skillId },
-            }
+                connect: { skillId: ultimateTwo.skillId },
+              }
             : undefined,
       },
     },
-  });
-};
+  })
+}
 
 export const handleCreateSave = async (
   createSkillSelections: (
@@ -201,9 +198,10 @@ export const handleCreateSave = async (
     applicationArea,
     role,
     name,
-   // mainResource,
+    published,
+    // mainResource,
     description,
-  }: IBuildState = state!;
+  }: IBuildState = state!
 
   const hasValidFrontbar = frontbarSelection[0].selectedSet
     ? frontbarSelection[0].type === WeaponType.onehanded
@@ -211,40 +209,40 @@ export const handleCreateSave = async (
         ? true
         : false
       : true
-    : false;
+    : false
   const hasValidBackbar = backbarSelection[0].selectedSet
     ? backbarSelection[0].type === WeaponType.onehanded
       ? backbarSelection[1].selectedSet
         ? true
         : false
       : true
-    : false;
+    : false
 
   const hasValidBigPieces = bigPieceSelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
   const hasValidSmallPieces = smallPieceSelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
   const hasValidJewelry = jewelrySelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
 
   const hasValidSkillBarOne = newBarOne.reduce(
     (prev, curr) =>
       prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
     true
-  );
+  )
   const hasValidSkillBarTwo = newBarTwo.reduce(
     (prev, curr) =>
       prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
     true
-  );
-  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0;
-  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0;
+  )
+  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0
+  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0
 
   if (
     !hasValidBackbar ||
@@ -257,7 +255,7 @@ export const handleCreateSave = async (
     !hasValidUltimateOne ||
     !hasValidUltimateTwo
   ) {
-    throw Error('Invalid build state.');
+    throw Error('Invalid build state.')
   }
 
   const createSetVariables = (setSelections: ISetSelection[]) => ({
@@ -275,50 +273,51 @@ export const handleCreateSave = async (
     traitDescriptions: setSelections.map(setSelection =>
       setSelection.trait ? setSelection.trait.description : ''
     ),
-  });
+  })
   const frontbarSkillSelections: any = await createSkillSelections({
     variables: {
       indices: newBarOne.map(sel => sel.index),
       skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.skillId : 0)),
     },
-  });
+  })
   const backbarSkillSelections: any = await createSkillSelections({
     variables: {
       indices: newBarTwo.map(sel => sel.index),
       skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.skillId : 0)),
     },
-  });
+  })
   const bigPieceSetSelections: any = await createSetSelections({
     variables: {
       ...createSetVariables(bigPieceSelection),
     },
-  });
+  })
   const smallPieceSetSelections: any = await createSetSelections({
     variables: {
       ...createSetVariables(smallPieceSelection),
     },
-  });
+  })
   const jewelrySetSelections: any = await createSetSelections({
     variables: {
       ...createSetVariables(jewelrySelection),
     },
-  });
+  })
   const frontbarSetSelections: any = await createSetSelections({
     variables: {
       ...createSetVariables(frontbarSelection),
     },
-  });
+  })
   const backbarSetSelections: any = await createSetSelections({
     variables: {
       ...createSetVariables(backbarSelection),
     },
-  });
+  })
 
   return await createBuild({
     variables: {
       data: {
         name,
         race,
+        published,
         esoClass,
         description,
         applicationArea,
@@ -363,14 +362,14 @@ export const handleCreateSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-              connect: { skillId: ultimateOne.skillId },
-            }
+                connect: { skillId: ultimateOne.skillId },
+              }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-              connect: { skillId: ultimateTwo.skillId },
-            }
+                connect: { skillId: ultimateTwo.skillId },
+              }
             : undefined,
         newBarOne: {
           connect: frontbarSkillSelections.data.createSkillSelections.map(
@@ -388,5 +387,5 @@ export const handleCreateSave = async (
         },
       },
     },
-  });
-};
+  })
+}

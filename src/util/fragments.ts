@@ -84,6 +84,7 @@ export const build = gql`
   fragment Build on Build {
     id
     name
+    published
     race
     description
     applicationArea
@@ -139,6 +140,7 @@ export const raid = gql`
   fragment Raid on Raid {
     id
     name
+    published
     owner {
       name
       id

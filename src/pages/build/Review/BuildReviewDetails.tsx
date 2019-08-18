@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Typography, Divider, Card } from 'antd'
+import { Typography, Divider, Card, Icon } from 'antd'
 import GearView from '../../../components/GearView'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
 import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
-import { applicationAreas } from '../RaceAndClass/RaceClass';
+import { applicationAreas } from '../RaceAndClass/RaceClass'
 
 const { Title, Text } = Typography
 
@@ -74,6 +74,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     buff,
     esoClass,
     race,
+    published,
     // mainResource,
     applicationArea,
     role,
@@ -112,7 +113,24 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
       wrap
       fluid
     >
-      <GeneralInformation title={<Title level={2}>General Information</Title>}>
+      <GeneralInformation
+        title={
+          <>
+            <Title level={2}>General Information</Title>
+            <Flex
+              direction='row'
+              justify='center'
+              style={{ position: 'absolute', top: '10px', right: '10px' }}
+            >
+              <Icon
+                style={{ marginRight: 5 }}
+                type={published ? 'unlock' : 'lock'}
+              />{' '}
+              {published ? 'Public' : 'Private'}
+            </Flex>
+          </>
+        }
+      >
         <Title level={3}>{name}</Title>
         <Text strong>Description: </Text>
         <Text>{description || ''}</Text>

@@ -17,6 +17,7 @@ import {
   // message,
   Tooltip,
   notification,
+  Typography,
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -31,6 +32,8 @@ import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
 
 const { Footer, Content } = Layout
+const { Text } = Typography
+const ButtonGroup = Button.Group
 
 const Container = styled(Content)`
   display: flex;
@@ -157,6 +160,9 @@ export default ({
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
 
+  const handlePrivateChange = () => {
+    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
+  }
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
@@ -424,17 +430,32 @@ export default ({
           <Step title='Review' description='Review and save.' />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
-          <TabButton
-            // style={{minWidth: 120}}
-            loading={loading}
-            onClick={handleNextClick}
-            disabled={isDisabled || saved}
-            size='large'
-            type='primary'
-          >
-            {tab === 4 ? 'Save' : 'Next'}
-            <Icon type={tab === 4 ? (loading ? '' : 'save') : 'right'} />
-          </TabButton>
+          <ButtonGroup style={{ display: 'flex' }} size='large'>
+            {tab === 4 && (
+              <Tooltip
+                title={
+                  state!.published
+                    ? 'Your build is set to public. It will be visible for anyone. Click to change.'
+                    : 'Your build is set to private. It will only be visible for you. Click to change.'
+                }
+              >
+                <Button
+                  onClick={handlePrivateChange}
+                  icon={state!.published ? 'unlock' : 'lock'}
+                />
+              </Tooltip>
+            )}
+            <TabButton
+              // style={{minWidth: 120}}
+              loading={loading}
+              onClick={handleNextClick}
+              disabled={isDisabled || saved}
+              type='primary'
+            >
+              {tab === 4 ? 'Save' : 'Next'}
+              <Icon type={tab === 4 ? (loading ? '' : 'save') : 'right'} />
+            </TabButton>
+          </ButtonGroup>
         </Tooltip>
         <Redirect to={`${path}/${tab}`} push />
       </Footer>
