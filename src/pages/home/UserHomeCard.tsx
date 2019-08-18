@@ -89,14 +89,6 @@ export default ({ isBuild }: { isBuild: boolean }) => {
     return <div>Error.</div>
   }
 
-  if (loading) {
-    return (
-      <CardContainer>
-        <Spin style={{ marginTop: 5 }} />
-      </CardContainer>
-    )
-  }
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
@@ -122,7 +114,11 @@ export default ({ isBuild }: { isBuild: boolean }) => {
             defaultValue='mysite'
           />
         </StyledTitle>
-        {data && data.me ? (
+        {loading ? (
+          <CardContainer>
+            <Spin style={{ marginTop: 5 }} />
+          </CardContainer>
+        ) : data && data.me ? (
           isBuild ? (
             <BuildCard filterText={search} data={data.me.builds} />
           ) : (
