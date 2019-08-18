@@ -1,5 +1,6 @@
-import { IRaidState, IRole } from './RaidStateContext';
-import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common';
+import { IRaidState, IRole } from './RaidStateContext'
+import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common'
+import { ME } from '../home/UserHomeCard'
 
 export const handleEditSave = async (
   state: IRaidState,
@@ -17,13 +18,13 @@ export const handleEditSave = async (
     canView,
     published,
     id,
-  } = state!;
+  } = state!
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ];
+  ]
 
   await updateRaid({
     variables: {
@@ -48,8 +49,8 @@ export const handleEditSave = async (
         id,
       },
     },
-  });
-};
+  })
+}
 export const handleCreateSave = async (
   state: IRaidState,
   createRaid: (
@@ -64,13 +65,13 @@ export const handleCreateSave = async (
     canView,
     published,
     description,
-  } = state!;
+  } = state!
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ];
+  ]
 
   return await createRaid({
     variables: {
@@ -89,5 +90,6 @@ export const handleCreateSave = async (
         },
       },
     },
-  });
-};
+    refetchQueries: [{ query: [ME] }],
+  })
+}
