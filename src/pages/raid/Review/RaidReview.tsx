@@ -62,6 +62,7 @@ const RAID = gql`
 
   query Raids($id: ID!) {
     raid(id: $id) {
+      id
       name
       owner {
         name

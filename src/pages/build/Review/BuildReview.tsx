@@ -79,6 +79,7 @@ const BUILD = gql`
 
   query Build($id: ID!) {
     build(id: $id) {
+      id
       owner {
         name
         id
