@@ -82,11 +82,7 @@ export default () => {
   return (
     <>
       <HomeHeader>
-        <Search
-          size='large'
-          style={{ maxWidth: '400px' }}
-          placeholder='Search for builds and raids...'
-        />
+
       </HomeHeader>
       <Content>
         <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
