@@ -82,26 +82,26 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     newBarOne,
     newBarTwo,
     ultimateOne,
-    ultimateTwo
+    ultimateTwo,
   } = loadedData
   const selectedSetup = [
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || []
+      data: bigPieceSelection || [],
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || []
+      data: smallPieceSelection || [],
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || []
+      data: frontbarSelection || [],
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
@@ -176,12 +176,14 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
         <SkillsView>
           <StyledTitle level={4}>Skills</StyledTitle>
           <SkillView
+            size='small'
             id={ABILITY_BAR_ONE}
             disabled
             skillSlots={newBarOne}
             ultimate={ultimateOne}
           />
           <SkillView
+            size='small'
             id={ABILITY_BAR_TWO}
             disabled
             skillSlots={newBarTwo}
