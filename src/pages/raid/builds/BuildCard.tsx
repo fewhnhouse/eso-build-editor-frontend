@@ -4,12 +4,13 @@ import styled, { CSSProperties } from 'styled-components'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
 import { DisplaySlot } from '../../../components/SkillSlot'
-import { Card, Divider, Button, Typography } from 'antd'
+import { Card, Divider, Button, Typography, Icon, Tooltip } from 'antd'
 import GearView from '../../../components/GearView'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
 import { IBuild } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
+import { Link } from 'react-router-dom'
 
 const { TabPane } = Tabs
 
@@ -40,9 +41,9 @@ const AbilityBar = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active: boolean }) =>
+  border-color: ${(props: { active?: boolean }) =>
     props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
-  background: ${(props: { active: boolean }) =>
+  background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   margin: 10px;
@@ -90,17 +91,23 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
     })
   }
   return (
-    <StyledCard hoverable active={false}>
+    <StyledCard hoverable>
       <div>
         <Flex direction='row' justify='space-between'>
           <Typography.Title level={3}>{item.name}</Typography.Title>
-          {role && (
+          {role ? (
             <Button
               type='danger'
               ghost
               icon='delete'
               onClick={handleDeleteClick}
             />
+          ) : (
+            <Tooltip title='Go to build'>
+              <Link to={`/buildreview/${item.id}`}>
+                <Button ghost icon='select' type='primary' />
+              </Link>
+            </Tooltip>
           )}
         </Flex>
         <Description direction='row' justify='flex-start'>
