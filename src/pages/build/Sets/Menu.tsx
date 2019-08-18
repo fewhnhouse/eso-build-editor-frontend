@@ -146,7 +146,7 @@ const SetList = ({ sets, loading, collapsed, setCollapsed }: ISetListProps) => {
     if (state!.selectedSet) {
       setSearchText('')
     }
-  }, [state!.selectedSet])
+  }, [state])
   const filteredSets: ISet[] = sets.filter((set: ISet) =>
     set.name.toLowerCase().includes(searchText.toLowerCase())
   )

@@ -3,7 +3,16 @@ import './App.css'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'
-import { Layout, Menu, Button, Popover, Avatar, Spin, Dropdown, Icon } from 'antd'
+import {
+  Layout,
+  Menu,
+  Button,
+  Popover,
+  Avatar,
+  Spin,
+  Dropdown,
+  Icon,
+} from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -130,14 +139,15 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
                   cursor: 'pointer',
                 }}
               >
-                Hello, {data.me.name} <Icon type='down' />
+                Hello, {data && data.me ? data.me.name : ''}
+                <Icon type='down' />
               </span>
             </Dropdown>
           </div>
         ) : (
           <Popover
             placement='bottomRight'
-            title={'Login'}
+            title='Login'
             content={<WrappedNormalLoginForm setLoggedIn={setLoggedIn} />}
             trigger='click'
           >
