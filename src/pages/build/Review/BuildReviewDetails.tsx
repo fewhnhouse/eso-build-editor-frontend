@@ -8,6 +8,7 @@ import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
 import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
+import { DisplaySlot } from '../../../components/SkillSlot'
 
 const { Title, Text } = Typography
 

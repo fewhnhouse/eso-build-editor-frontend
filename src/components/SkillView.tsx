@@ -58,20 +58,11 @@ export default ({
         </animated.div>
       ))}
       {ultimate ? (
-        <animated.div>
-          {disabled ? (
-            <DisplaySlot skill={ultimate} />
-          ) : (
-            <NewSkillSlot
-              id={ultimate.id}
-              abilityBar={abilityBar}
-              droppable={droppable}
-              skillIndex={skillSlots[6].index}
-              tooltipPos={pos(id)}
-              skill={ultimate}
-            />
-          )}
-        </animated.div>
+        <DisplaySlot
+          skill={ultimate}
+          style={{ marginLeft: '10px' }}
+          size='small'
+        />
       ) : (
         ''
       )}
