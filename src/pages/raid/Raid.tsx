@@ -1,29 +1,18 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import styled from 'styled-components';
-import {
-  Layout,
-  Icon,
-  Button,
-  Steps,
-  Tooltip,
-  notification,
-} from 'antd';
-import { Redirect } from 'react-router';
-import RaidGeneral from './general/RaidGeneral';
-import {
-  RaidContext,
-  raidReducer,
-  IRole,
-} from './RaidStateContext';
-import Builds from './builds/Builds';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
-import Flex from '../../components/Flex';
-import RaidReview from './Review/RaidReview';
-import { handleCreateSave, handleEditSave } from './util';
+import React, { useState, useReducer, useEffect } from 'react'
+import styled from 'styled-components'
+import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
+import { Redirect } from 'react-router'
+import RaidGeneral from './general/RaidGeneral'
+import { RaidContext, raidReducer, IRole } from './RaidStateContext'
+import Builds from './builds/Builds'
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks'
+import Flex from '../../components/Flex'
+import RaidReview from './Review/RaidReview'
+import { handleCreateSave, handleEditSave } from './util'
 
-const { Footer, Content } = Layout;
-const { Step } = Steps;
+const { Footer, Content } = Layout
+const { Step } = Steps
 
 const Container = styled(Content)`
   display: flex;
@@ -34,11 +23,11 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: ${props => props.theme.mainBg};
-`;
+`
 
 const TabButton = styled(Button)`
   margin: 0px 10px;
-`;
+`
 
 const CREATE_RAID = gql`
   mutation createRaid($data: RaidCreateInput!) {
@@ -47,7 +36,7 @@ const CREATE_RAID = gql`
       name
     }
   }
-`;
+`
 
 const UPDATE_RAID = gql`
   mutation updateRaid($where: RaidWhereUniqueInput!, $data: RaidUpdateInput!) {
@@ -55,14 +44,14 @@ const UPDATE_RAID = gql`
       id
     }
   }
-`;
+`
 
 interface IRaidProps {
-  raid: any;
-  pageIndex: number;
-  path: string;
-  initialRoles?: IRole[];
-  edit?: boolean;
+  raid: any
+  pageIndex: number
+  path: string
+  initialRoles?: IRole[]
+  edit?: boolean
 }
 
 export default ({
@@ -72,120 +61,122 @@ export default ({
   edit = false,
   initialRoles = [],
 }: IRaidProps) => {
-  const [loading, setLoading] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [saved, setSaved] = useState(false)
 
-  const [state, dispatch] = useReducer(raidReducer, raid);
-  const [tab, setTab] = useState(pageIndex || 0);
-  const [redirect, setRedirect] = useState('');
+  const [state, dispatch] = useReducer(raidReducer, raid)
+  const [tab, setTab] = useState(pageIndex || 0)
+  const [redirect, setRedirect] = useState('')
 
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1);
-  };
-  const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID);
+    setTab(tabIndex => tabIndex - 1)
+  }
+  const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID)
 
-  const createRaidMutation = useMutation<any, any>(CREATE_RAID);
-  const [createRaid, createRaidResult] = createRaidMutation;
+  const createRaidMutation = useMutation<any, any>(CREATE_RAID)
+  const [createRaid, createRaidResult] = createRaidMutation
 
   useEffect(() => {
-    if (
-      (createRaidResult.data && createRaidResult.data.createRaid) ||
-      (updateRaidResult.data && updateRaidResult.data.updateRaid)
-    ) {
-      setRedirect(
-        createRaidResult.data
-          ? createRaidResult.data.createRaid.id
-          : updateRaidResult.data.updateRaid.id
-      );
+    if (saved) {
+      if (
+        (createRaidResult.data && createRaidResult.data.createRaid) ||
+        (updateRaidResult.data && updateRaidResult.data.updateRaid)
+      ) {
+        setRedirect(
+          createRaidResult.data
+            ? createRaidResult.data.createRaid.id
+            : updateRaidResult.data.updateRaid.id
+        )
+      }
     }
-  }, [createRaidResult.data, updateRaidResult.data]);
+  }, [createRaidResult.data, saved, updateRaidResult.data])
 
   const handleSave = async () => {
-    setLoading(true);
+    setLoading(true)
     if (edit) {
       try {
-        await handleEditSave(state, updateRaid, initialRoles);
+        await handleEditSave(state, updateRaid, initialRoles)
         notification.success({
           message: 'Raid update successful',
           description: (
-            <Flex direction="column" align="center" justify="center">
+            <Flex direction='column' align='center' justify='center'>
               <div>
                 Your raid was successfully edited. You can now view it and share
                 it with others!
               </div>
               <Flex
                 style={{ width: '100%', marginTop: 10 }}
-                direction="row"
-                align="center"
-                justify="space-between"
+                direction='row'
+                align='center'
+                justify='space-between'
               >
-                <Button icon="share-alt">Share link</Button>
+                <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
           ),
-        });
+        })
       } catch (e) {
-        console.error(e);
+        console.error(e)
         notification.error({
           message: 'Raid Update failed',
           description: 'Your raid could not be updated. Try again later.',
-        });
+        })
       }
     } else {
       try {
-        handleCreateSave(state, createRaid);
+        handleCreateSave(state, createRaid)
         notification.success({
           message: 'Raid creation successful',
           description: (
-            <Flex direction="column" align="center" justify="center">
+            <Flex direction='column' align='center' justify='center'>
               <div>
                 Your raid was successfully saved. You can now view it and share
                 it with others!
               </div>
               <Flex
                 style={{ width: '100%', marginTop: 10 }}
-                direction="row"
-                align="center"
-                justify="space-between"
+                direction='row'
+                align='center'
+                justify='space-between'
               >
-                <Button icon="share-alt">Share link</Button>
+                <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
           ),
-        });
-        localStorage.removeItem('raidState');
+        })
+        localStorage.removeItem('raidState')
       } catch (e) {
-        console.error(e);
+        console.error(e)
         notification.error({
           message: 'Raid creation failed',
           description: 'Your raid could not be saved. Try again later.',
-        });
+        })
       }
     }
 
-    setLoading(false);
-    setSaved(true);
-  };
+    setLoading(false)
+    setSaved(true)
+  }
 
   const handleNextClick = () => {
     if (tab === 2) {
-      console.log('save');
-      handleSave();
+      console.log('save')
+      handleSave()
     } else {
-      setTab(tabIndex => tabIndex + 1);
+      setTab(tabIndex => tabIndex + 1)
     }
-  };
+  }
 
   const setTooltipTitle = () => {
     switch (tab) {
       case 0:
-        return 'Select some general Information.';
+        return 'Select some general Information.'
       case 1:
-        return 'Select the builds of your Setup.';
+        return 'Select the builds of your Setup.'
       case 2:
-        return 'Confirm and Save.';
+        return 'Confirm and Save.'
     }
-  };
+  }
 
   return (
     <RaidContext.Provider value={[state, dispatch]}>
@@ -216,35 +207,35 @@ export default ({
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
-          size="large"
-          type="primary"
+          size='large'
+          type='primary'
         >
-          <Icon type="left" />
+          <Icon type='left' />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title="General Information"
-            description="Add general Raid info."
+            title='General Information'
+            description='Add general Raid info.'
           />
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title="Builds"
-            description="Add builds to your setup."
+            title='Builds'
+            description='Add builds to your setup.'
           />
           <Step
-            title="Review"
+            title='Review'
             style={{ whiteSpace: 'nowrap' }}
-            description="Review and save."
+            description='Review and save.'
           />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
           <TabButton
             onClick={handleNextClick}
             disabled={false || saved}
-            size="large"
-            type="primary"
+            size='large'
+            type='primary'
             loading={loading}
           >
             <Icon type={tab === 2 ? 'save' : 'right'} />
@@ -254,5 +245,5 @@ export default ({
         <Redirect to={`${path}/${tab}`} push />
       </Footer>
     </RaidContext.Provider>
-  );
-};
+  )
+}
