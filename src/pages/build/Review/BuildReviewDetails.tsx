@@ -81,8 +81,9 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     description,
     newBarOne,
     newBarTwo,
+    ultimateOne,
+    ultimateTwo,
   } = loadedData
-
   const selectedSetup = [
     {
       id: 'bigpieces',
@@ -191,8 +192,20 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
       <BuildInformation title={<Title level={2}>Build Information</Title>}>
         <SkillsView>
           <StyledTitle level={4}>Skills</StyledTitle>
-          <SkillView id={ABILITY_BAR_ONE} disabled skillSlots={newBarOne} />
-          <SkillView id={ABILITY_BAR_TWO} disabled skillSlots={newBarTwo} />
+          <SkillView
+            size='small'
+            id={ABILITY_BAR_ONE}
+            disabled
+            skillSlots={newBarOne}
+            ultimate={ultimateOne}
+          />
+          <SkillView
+            size='small'
+            id={ABILITY_BAR_TWO}
+            disabled
+            skillSlots={newBarTwo}
+            ultimate={ultimateTwo}
+          />
         </SkillsView>
         <Divider />
         <GearView disabled setups={selectedSetup} />

@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
-import NewSkillSlot, { DisplaySlot } from './SkillSlot'
+import { ABILITY_BAR_ONE, ACTIVE_BAR } from '../pages/build/Skills/AbilityBar'
+import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 import { ISkillSelection } from '../pages/build/BuildStateContext'
 
 export interface ISKillViewProps {
   skillSlots: ISkillSelection[]
+  ultimate?: ISkill
   droppable?: boolean
+  size?: 'small' | 'normal'
   id: string
   abilityBar?: number
   disabled?: boolean
@@ -22,9 +24,11 @@ const SkillView = styled.div`
 
 export default ({
   skillSlots,
+  ultimate,
   droppable,
   id,
   abilityBar,
+  size = 'normal',
   disabled,
 }: ISKillViewProps) => {
   const pos = (id: string) => {
@@ -42,9 +46,10 @@ export default ({
       {trail.map(({ opacity }: any, index: number) => (
         <animated.div key={index} style={{ opacity }}>
           {disabled ? (
-            <DisplaySlot skill={skillSlots[index].skill} />
+            <DisplaySlot size={size} skill={skillSlots[index].skill} />
           ) : (
-            <NewSkillSlot
+            <SkillSlot
+              size={size}
               id={skillSlots[index].id}
               abilityBar={abilityBar}
               droppable={droppable}
@@ -55,6 +60,18 @@ export default ({
           )}
         </animated.div>
       ))}
+      {disabled ? (
+        <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
+      ) : (
+        <SkillSlot
+          size={size}
+          style={{ marginLeft: 10 }}
+          abilityBar={id === ACTIVE_BAR ? -1 : id === ABILITY_BAR_ONE ? 0 : 1}
+          droppable={droppable}
+          skill={ultimate}
+          skillIndex={5}
+        />
+      )}
     </SkillView>
   )
 }

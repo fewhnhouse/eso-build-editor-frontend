@@ -1,36 +1,33 @@
-import React, { useContext } from 'react';
-import { useDrag } from 'react-dnd';
-import styled, { CSSProperties } from 'styled-components';
-import SkillView from '../../../components/SkillView';
-import {
-  ABILITY_BAR_TWO,
-  ABILITY_BAR_ONE,
-} from '../../build/Skills/AbilityBar';
-import { DisplaySlot } from '../../../components/SkillSlot';
-import { Card, Divider, Button, Typography } from 'antd';
-import GearView from '../../../components/GearView';
-import { Tabs } from 'antd';
-import Flex from '../../../components/Flex';
-import { IBuild } from '../../build/BuildStateContext';
-import { IRole, RaidContext } from '../RaidStateContext';
+import React, { useContext } from 'react'
+import { useDrag } from 'react-dnd'
+import styled, { CSSProperties } from 'styled-components'
+import SkillView from '../../../components/SkillView'
+import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
+import { DisplaySlot } from '../../../components/SkillSlot'
+import { Card, Divider, Button, Typography } from 'antd'
+import GearView from '../../../components/GearView'
+import { Tabs } from 'antd'
+import Flex from '../../../components/Flex'
+import { IBuild } from '../../build/BuildStateContext'
+import { IRole, RaidContext } from '../RaidStateContext'
 
-const { TabPane } = Tabs;
+const { TabPane } = Tabs
 
 const MyAvatar = styled.img`
   width: 28px;
   height: 28px;
   margin-right: 5px;
-`;
+`
 
 const RaceClassContainer = styled.div`
   margin-right: 10px;
-`;
+`
 
 const Description = styled(Flex)`
   font-size: 14px;
   line-height: 1.5;
   color: 'rgba(0, 0, 0, 0.45)';
-`;
+`
 
 const AbilityBar = styled.div`
   height: 60px;
@@ -40,7 +37,7 @@ const AbilityBar = styled.div`
   align-items: center;
   width: 100%;
   max-width: 300px;
-`;
+`
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active: boolean }) =>
@@ -49,12 +46,12 @@ const StyledCard = styled(Card)`
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   margin: 10px;
-`;
+`
 interface IBuildCardProps {
-  item: IBuild;
-  style?: CSSProperties;
-  draggable?: boolean;
-  role?: IRole;
+  item: IBuild
+  style?: CSSProperties
+  draggable?: boolean
+  role?: IRole
 }
 export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
   return draggable ? (
@@ -63,8 +60,8 @@ export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
     <div style={style}>
       <BuildCard item={item} role={role} />
     </div>
-  );
-};
+  )
+}
 
 const WithDnD = ({ item, style }: IBuildCardProps) => {
   const [, drag] = useDrag({
@@ -76,37 +73,37 @@ const WithDnD = ({ item, style }: IBuildCardProps) => {
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
-  });
+  })
   return (
     <div style={style} ref={drag}>
       <BuildCard item={item} />
     </div>
-  );
-};
+  )
+}
 
 const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
-  const [, dispatch] = useContext(RaidContext);
+  const [, dispatch] = useContext(RaidContext)
   const handleDeleteClick = () => {
     dispatch!({
       type: 'REMOVE_BUILD',
       payload: { buildId: item.id, name: role ? role.name : '' },
-    });
-  };
+    })
+  }
   return (
     <StyledCard hoverable active={false}>
       <div>
-        <Flex direction="row" justify="space-between">
+        <Flex direction='row' justify='space-between'>
           <Typography.Title level={3}>{item.name}</Typography.Title>
           {role && (
             <Button
-              type="danger"
+              type='danger'
               ghost
-              icon="delete"
+              icon='delete'
               onClick={handleDeleteClick}
             />
           )}
         </Flex>
-        <Description direction="row" justify="flex-start">
+        <Description direction='row' justify='flex-start'>
           <RaceClassContainer>
             <MyAvatar
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
@@ -125,37 +122,33 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </RaceClassContainer>
         </Description>
         <Divider style={{ margin: '5px 0px' }} />
-        <Tabs defaultActiveKey="skills">
-          <TabPane tab="Skills" key="skills">
+        <Tabs defaultActiveKey='skills'>
+          <TabPane tab='Skills' key='skills'>
             <Flex style={{ width: '100%' }}>
               <AbilityBar>
                 <SkillView
                   id={ABILITY_BAR_ONE}
                   disabled
+                  size='small'
+                  ultimate={item.ultimateOne}
                   skillSlots={item.newBarOne}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateOne || undefined}
                 />
               </AbilityBar>
               <AbilityBar>
                 <SkillView
+                  size='small'
                   id={ABILITY_BAR_TWO}
                   disabled
                   skillSlots={item.newBarTwo}
-                />
-                <DisplaySlot
-                  style={{ marginLeft: 10 }}
-                  skill={item.ultimateTwo || undefined}
+                  ultimate={item.ultimateTwo}
                 />
               </AbilityBar>
             </Flex>
           </TabPane>
-          <TabPane tab="Weapons" key="weapons">
+          <TabPane tab='Weapons' key='weapons'>
             <GearView
               disabled
-              size="small"
+              size='small'
               setups={[
                 {
                   id: 'frontbar',
@@ -170,10 +163,10 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
               ]}
             />
           </TabPane>
-          <TabPane tab="Armor" key="armor">
+          <TabPane tab='Armor' key='armor'>
             <GearView
               disabled
-              size="small"
+              size='small'
               setups={[
                 {
                   id: 'bigpieces',
@@ -188,10 +181,10 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
               ]}
             />
           </TabPane>
-          <TabPane tab="Jewelry" key="jewelry">
+          <TabPane tab='Jewelry' key='jewelry'>
             <GearView
               disabled
-              size="small"
+              size='small'
               setups={[
                 {
                   id: 'jewelry',
@@ -204,5 +197,5 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
         </Tabs>
       </div>
     </StyledCard>
-  );
-};
+  )
+}
