@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import Flex from '../../../components/Flex';
-import { Typography, Divider, Card } from 'antd';
-import GearView from '../../../components/GearView';
-import SkillView from '../../../components/SkillView';
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar';
-import { IBuildState } from '../BuildStateContext';
-import { classes, races } from '../RaceAndClass/data';
+import React from 'react'
+import styled from 'styled-components'
+import Flex from '../../../components/Flex'
+import { Typography, Divider, Card } from 'antd'
+import GearView from '../../../components/GearView'
+import SkillView from '../../../components/SkillView'
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
+import { IBuildState } from '../BuildStateContext'
+import { classes, races } from '../RaceAndClass/data'
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 const MyAvatar = styled.img`
   width: 40px;
@@ -18,21 +18,21 @@ const MyAvatar = styled.img`
   border-radius: 4px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.05);
-`;
+`
 const ClassImg = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 10px;
   border-radius: 4px;
-`;
+`
 
 const StyledTitle = styled(Title)`
   margin-bottom: 5px !important;
-`;
+`
 const Wrapper = styled(Flex)`
   height: 100%;
   padding: 20px;
-`;
+`
 const BuildInformation = styled(Card)`
   margin: 20px;
   height: calc(100% - 40px);
@@ -40,7 +40,7 @@ const BuildInformation = styled(Card)`
   flex: 1;
   max-width: 700px;
   overflow-y: auto;
-`;
+`
 const GeneralInformation = styled(Card)`
   margin: 20px;
   height: calc(100% - 40px);
@@ -48,17 +48,17 @@ const GeneralInformation = styled(Card)`
   flex: 1;
   max-width: 700px;
   overflow-y: auto;
-`;
+`
 const SkillsView = styled.div`
   margin-bottom: 10px;
   width: 100%;
-`;
+`
 const MiscView = styled(Flex)`
   margin-bottom: 10px;
-`;
+`
 
 interface IDetailViewProps {
-  loadedData: IBuildState;
+  loadedData: IBuildState
 }
 
 const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
@@ -79,41 +79,42 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     // description,
     newBarOne,
     newBarTwo,
-  } = loadedData;
-
+    ultimateOne,
+    ultimateTwo
+  } = loadedData
   const selectedSetup = [
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || [],
+      data: bigPieceSelection || []
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || [],
+      data: smallPieceSelection || []
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || [],
+      data: frontbarSelection || []
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
-  ];
-  const raceData = races.find(rc => rc.title === race);
-  const classData = classes.find(esoC => esoC.title === esoClass);
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
+  ]
+  const raceData = races.find(rc => rc.title === race)
+  const classData = classes.find(esoC => esoC.title === esoClass)
   return (
     <Wrapper
-      direction="row"
-      align="flex-start"
-      justify="space-evenly"
+      direction='row'
+      align='flex-start'
+      justify='space-evenly'
       wrap
       fluid
     >
       <GeneralInformation title={<Title level={2}>General Information</Title>}>
         <Title level={3}>{name}</Title>
         <Divider>Race</Divider>
-        <MiscView direction="row" justify="flex-start">
+        <MiscView direction='row' justify='flex-start'>
           <MyAvatar
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
           />
@@ -121,7 +122,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
         </MiscView>
         <Text>{raceData ? raceData.description : ''}</Text>
         <Divider>Class</Divider>
-        <MiscView direction="row" justify="flex-start">
+        <MiscView direction='row' justify='flex-start'>
           <MyAvatar
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
@@ -133,7 +134,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
         {mundusStone && (
           <>
             <Divider>Mundus Stone</Divider>
-            <MiscView direction="row" justify="flex-start" align="center">
+            <MiscView direction='row' justify='flex-start' align='center'>
               <ClassImg
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${
                   mundusStone.icon
@@ -149,7 +150,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
         {buff && (
           <>
             <Divider>Buff</Divider>
-            <MiscView direction="row" justify="flex-start" align="center">
+            <MiscView direction='row' justify='flex-start' align='center'>
               <MyAvatar
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
                   buff.icon
@@ -166,14 +167,24 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
       <BuildInformation title={<Title level={2}>Build Information</Title>}>
         <SkillsView>
           <StyledTitle level={4}>Skills</StyledTitle>
-          <SkillView id={ABILITY_BAR_ONE} disabled skillSlots={newBarOne} />
-          <SkillView id={ABILITY_BAR_TWO} disabled skillSlots={newBarTwo} />
+          <SkillView
+            id={ABILITY_BAR_ONE}
+            disabled
+            skillSlots={newBarOne}
+            ultimate={ultimateOne}
+          />
+          <SkillView
+            id={ABILITY_BAR_TWO}
+            disabled
+            skillSlots={newBarTwo}
+            ultimate={ultimateTwo}
+          />
         </SkillsView>
         <Divider />
         <GearView disabled setups={selectedSetup} />
       </BuildInformation>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default BuildReviewDetails;
+export default BuildReviewDetails
