@@ -140,6 +140,7 @@ export const raid = gql`
   fragment Raid on Raid {
     id
     name
+    description
     published
     owner {
       name

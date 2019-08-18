@@ -105,10 +105,10 @@ const RaidCard = ({ data, filterText }: IUserDataProps) => {
               <Title>
                 <Flex direction='row' justify='space-between'>
                   {raid.name ? raid.name : 'Unnamed raid'}
-                  <div>
+                  <Text>
                     <Icon type='team' />
                     {size}
-                  </div>
+                  </Text>
                 </Flex>
               </Title>
               <Divider style={{ margin: '5px 0px' }} />

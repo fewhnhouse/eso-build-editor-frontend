@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Input } from 'antd'
+import { Typography, Divider, Input, Card, Spin } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
+import gql from 'graphql-tag'
+import { build, raid } from '../../util/fragments'
+import { useQuery } from '@apollo/react-hooks'
+import { IBuild } from '../build/BuildStateContext'
 
 const { Search } = Input
 const { Title } = Typography
@@ -54,8 +58,40 @@ const InnerContainer = styled(Flex)`
 const StyledSearch = styled(Search)`
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
 `
+const ACTIVITY_BUILDS = gql`
+  query builds($today: DateTime!) {
+    builds(
+      where: { OR: [{ createdAt_gt: $today }, { updatedAt_gt: $today }] }
+    ) {
+      ...Build
+    }
+  }
+  ${build}
+`
 
+const ACTIVITY_RAIDS = gql`
+  query raids($today: DateTime!) {
+    raids(where: { OR: [{ createdAt_gt: $today }, { updatedAt_gt: $today }] }) {
+      ...Raid
+    }
+  }
+  ${raid}
+`
 export default () => {
+  const now = new Date()
+  now.setDate(now.getDate() - 1)
+  const buildQuery = useQuery(ACTIVITY_BUILDS, {
+    variables: {
+      today: now.toISOString(),
+    },
+  })
+  const raidQuery = useQuery(ACTIVITY_RAIDS, {
+    variables: {
+      today: now.toISOString(),
+    },
+  })
+  console.log(buildQuery, raidQuery)
+
   return (
     <OuterWrapper
       direction='row'
@@ -78,14 +114,35 @@ export default () => {
       </InnerContainer>
       <RightSide direction={'column'} justify={'flex-start'} align={'flex-end'}>
         <RightWrapper>
-          <div style={{ height: '30%' }}>
+          <div style={{ height: '40%', padding: 5 }}>
             <Title level={4} style={{ paddingTop: '20px' }}>
               DISCOVERY
             </Title>
+            <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
+              <Card title='Build Editor 1.0'>
+                Welcome to Build Editor Version 1.0! This version includes a
+                build and raid editor to create fully fledged ESO builds and
+                raids and to view and share them with your community.
+              </Card>
+            </div>
           </div>
           <Divider />
-          <div>
+          <div style={{ height: '60%', padding: 5 }}>
             <Title level={4}>ACTIVITY</Title>
+            {buildQuery.loading || raidQuery.loading ? <Spin /> : null}
+            {buildQuery.data &&
+              buildQuery.data.builds &&
+              raidQuery.data &&
+              raidQuery.data.builds && (
+                <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
+                  {buildQuery.data.builds.map((build: IBuild) => (
+                    <Card title='You created a build'>Name: {build.name}</Card>
+                  ))}
+                  {raidQuery.data.raids.map((raid: any) => (
+                    <Card title='You created a raid'>Name: {raid.name}</Card>
+                  ))}
+                </div>
+              )}
           </div>
         </RightWrapper>
       </RightSide>
