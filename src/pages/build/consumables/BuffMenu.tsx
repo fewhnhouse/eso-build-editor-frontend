@@ -6,6 +6,7 @@ import Flex from '../../../components/Flex'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+import { buff } from '../../../util/fragments';
 
 export interface ISpecialBuff {
   name: string
@@ -24,17 +25,10 @@ const { CheckableTag } = Tag
 const GET_BUFFS = gql`
   query {
     buffs {
-      icon
-      name
-      buffDescription
-      description
-      duration
-      notes
-      type
-      quality
-      buffType
+      ...Buff
     }
   }
+  ${buff}
 `
 const ListContainer = styled.div`
   flex: 1;

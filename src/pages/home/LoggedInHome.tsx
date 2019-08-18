@@ -115,7 +115,9 @@ const ME = gql`
         name
         applicationArea
         roles {
+          id
           builds {
+            id
             role
           }
         }

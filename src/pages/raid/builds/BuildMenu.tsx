@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { List, Tag, Divider, Input } from 'antd';
-import styled from 'styled-components';
-import { useTrail, animated } from 'react-spring';
-import Flex from '../../../components/Flex';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import BuildCard from './BuildCard';
-import { IBuild } from '../../build/BuildStateContext';
+import React, { useState } from 'react'
+import { List, Tag, Divider, Input } from 'antd'
+import styled from 'styled-components'
+import { useTrail, animated } from 'react-spring'
+import Flex from '../../../components/Flex'
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
+import BuildCard from './BuildCard'
+import { IBuild } from '../../build/BuildStateContext'
+import { build } from '../../../util/fragments'
 
-const { CheckableTag } = Tag;
+const { CheckableTag } = Tag
 
 const ListContainer = styled.div`
   width: 500px;
@@ -17,58 +18,9 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
-`;
+`
 
 const GET_BUILDS = gql`
-  fragment SetSelection on SetSelection {
-    icon
-    slot
-    type
-    selectedSet {
-      name
-      location
-      type
-      bonus_item_1
-      bonus_item_2
-      bonus_item_3
-      bonus_item_4
-      bonus_item_5
-      has_jewels
-      has_weapons
-      has_heavy_armor
-      has_light_armor
-      has_medium_armor
-    }
-    trait {
-      type
-      description
-      icon
-    }
-    glyph {
-      type
-      description
-      icon
-    }
-  }
-
-  fragment Skill on Skill {
-    name
-    skillId
-    icon
-    range
-    type
-    cost
-    effect_1
-    effect_2
-    target
-  }
-
-  fragment SkillSelection on SkillSelection {
-    index
-    skill {
-      ...Skill
-    }
-  }
   query builds(
     $where: BuildWhereInput
     $orderBy: BuildOrderByInput
@@ -87,53 +39,22 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
-      id
-      name
-      race
-      esoClass
-      frontbarSelection {
-        ...SetSelection
-      }
-      backbarSelection {
-        ...SetSelection
-      }
-      newBarOne {
-        ...SkillSelection
-      }
-      newBarTwo {
-        ...SkillSelection
-      }
-      ultimateOne {
-        ...Skill
-      }
-      ultimateTwo {
-        ...Skill
-      }
-      bigPieceSelection {
-        ...SetSelection
-      }
-      smallPieceSelection {
-        ...SetSelection
-      }
-      jewelrySelection {
-        ...SetSelection
-      }
+      ...Build
     }
   }
-`;
+  ${build}
+`
 export default () => {
   // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(
-    GET_BUILDS
-  );
+  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(GET_BUILDS)
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('')
   const filteredBuilds =
     data && data.builds
       ? data.builds.filter((build: any) =>
           build.name.toLowerCase().includes(searchText.toLowerCase())
         )
-      : [];
+      : []
   const trail = useTrail(filteredBuilds.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
@@ -142,17 +63,17 @@ export default () => {
       transform: 'translate(0px, -40px)',
     },
     config: { mass: 1, tension: 2000, friction: 300 },
-  });
+  })
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+    setSearchText(e.target.value)
+  }
   return (
     <ListContainer>
       <>
         <Flex
-          direction="column"
-          justify="center"
-          align="center"
+          direction='column'
+          justify='center'
+          align='center'
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
             padding: '5px',
@@ -160,25 +81,25 @@ export default () => {
           }}
         >
           <Flex
-            direction="row"
-            justify="center"
-            align="flex-start"
+            direction='row'
+            justify='center'
+            align='flex-start'
             style={{ width: '100%' }}
           >
             <Input
-              placeholder="Search for Builds"
+              placeholder='Search for Builds'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
-              size="large"
-              type="text"
+              size='large'
+              type='text'
               style={{ margin: '10px', width: '100%' }}
             />
           </Flex>
           <Flex
-            direction="row"
-            justify="center"
-            align="center"
+            direction='row'
+            justify='center'
+            align='center'
             style={{ margin: '0px 10px', overflow: 'auto' }}
           >
             <CheckableTag checked={true}>Dragonknight</CheckableTag>
@@ -194,9 +115,9 @@ export default () => {
             }}
           />
           <Flex
-            direction="row"
-            justify="center"
-            align="center"
+            direction='row'
+            justify='center'
+            align='center'
             style={{ margin: '0px 10px' }}
           >
             <CheckableTag checked={true}>Damage Dealer</CheckableTag>
@@ -214,23 +135,23 @@ export default () => {
           }}
           dataSource={trail}
           renderItem={(style: any, index) => {
-            const item = filteredBuilds[index];
+            const item = filteredBuilds[index]
             return (
               <animated.div style={style}>
                 <BuildCard item={item} />
               </animated.div>
-            );
+            )
           }}
         />
       </>
     </ListContainer>
-  );
-};
+  )
+}
 
 interface IAttributeTagProps {
-  hasMagicka: boolean;
-  hasStamina: boolean;
-  hasHealth: boolean;
+  hasMagicka: boolean
+  hasStamina: boolean
+  hasHealth: boolean
 }
 
 /* const AttributeTag = ({

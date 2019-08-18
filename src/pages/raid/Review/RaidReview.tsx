@@ -1,131 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { RaidContext } from '../RaidStateContext';
-import RaidReviewDetails from './RaidReviewDetails';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import { RouteComponentProps, withRouter, Redirect } from 'react-router';
-import { notification, Layout, Button, Popconfirm, Typography } from 'antd';
-import styled from 'styled-components';
-const { Content, Footer } = Layout;
+import React, { useEffect, useState, useContext } from 'react'
+import { RaidContext } from '../RaidStateContext'
+import RaidReviewDetails from './RaidReviewDetails'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import { RouteComponentProps, withRouter, Redirect } from 'react-router'
+import { notification, Layout, Button, Popconfirm, Typography } from 'antd'
+import styled from 'styled-components'
+import { raid } from '../../../util/fragments'
+const { Content, Footer } = Layout
 
 const RAID = gql`
-  fragment SetSelection on SetSelection {
-    icon
-    slot
-    type
-    weaponType
-    selectedSet {
-      name
-      location
-      type
-      bonus_item_1
-      bonus_item_2
-      bonus_item_3
-      bonus_item_4
-      bonus_item_5
-      has_jewels
-      has_weapons
-      has_heavy_armor
-      has_light_armor
-      has_medium_armor
-    }
-    trait {
-      type
-      description
-      icon
-    }
-    glyph {
-      type
-      description
-      icon
-    }
-  }
-
-  fragment Skill on Skill {
-    name
-    skillId
-    icon
-    range
-    type
-    cost
-    effect_1
-    effect_2
-    target
-  }
-
-  fragment SkillSelection on SkillSelection {
-    index
-    skill {
-      ...Skill
-    }
-  }
-
   query Raids($id: ID!) {
     raid(id: $id) {
-      id
-      name
-      owner {
-        name
-        id
-      }
-
-      applicationArea
-      roles {
-        name
-        builds {
-          owner {
-            name
-            id
-          }
-          name
-          applicationArea
-          role
-          race
-          esoClass
-          bigPieceSelection {
-            ...SetSelection
-          }
-          smallPieceSelection {
-            ...SetSelection
-          }
-          jewelrySelection {
-            ...SetSelection
-          }
-          frontbarSelection {
-            ...SetSelection
-          }
-          backbarSelection {
-            ...SetSelection
-          }
-          newBarOne {
-            ...SkillSelection
-          }
-          newBarTwo {
-            ...SkillSelection
-          }
-          ultimateOne {
-            ...Skill
-          }
-          ultimateTwo {
-            ...Skill
-          }
-          mundusStone {
-            name
-            effect
-            value
-            icon
-          }
-          buff {
-            name
-            buffDescription
-            icon
-            buffType
-          }
-        }
-      }
+      ...Raid
     }
   }
-`;
+  ${raid}
+`
 
 const ME = gql`
   query {
@@ -133,7 +24,7 @@ const ME = gql`
       id
     }
   }
-`;
+`
 
 const DELETE_RAID = gql`
   mutation deleteRaid($id: ID!) {
@@ -141,12 +32,12 @@ const DELETE_RAID = gql`
       id
     }
   }
-`;
+`
 
 const ActionButton = styled(Button)`
   width: 100px;
   margin: 10px;
-`;
+`
 
 const Container = styled(Content)`
   display: flex;
@@ -157,40 +48,40 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 144px);
   color: rgb(155, 155, 155);
-`;
+`
 
 interface IRaidOverviewProps extends RouteComponentProps<any> {
-  local?: boolean;
+  local?: boolean
 }
 
 const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
-  const { id } = match.params;
-  const [state] = useContext(RaidContext);
+  const { id } = match.params
+  const [state] = useContext(RaidContext)
 
-  const raidQuery = useQuery(RAID, { variables: { id } });
-  const meQuery = useQuery(ME);
+  const raidQuery = useQuery(RAID, { variables: { id } })
+  const meQuery = useQuery(ME)
   const [deleteMutation, { data, error }] = useMutation(DELETE_RAID, {
     variables: { id },
-  });
-  const [redirect, setRedirect] = useState(false);
+  })
+  const [redirect, setRedirect] = useState(false)
 
   useEffect(() => {
     if (data) {
       notification.success({
         message: 'Raid Deletion',
         description: 'Raid successfully deleted.',
-      });
+      })
     } else if (error) {
       notification.error({
         message: 'Raid Deletion',
         description: 'Error while deleting Raid. Try again later.',
-      });
+      })
     }
-  }, [data, error]);
+  }, [data, error])
 
   if (!local) {
     if (raidQuery.loading || meQuery.loading) {
-      return <div>Loading...</div>;
+      return <div>Loading...</div>
     }
     if (
       raidQuery.data &&
@@ -199,14 +90,14 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
       meQuery.data.me
     ) {
       const handleDeleteConfirm = () => {
-        deleteMutation({ variables: { id } });
-      };
+        deleteMutation({ variables: { id } })
+      }
 
       const handleEditClick = () => {
-        setRedirect(true);
-      };
+        setRedirect(true)
+      }
       if (redirect) {
-        return <Redirect to={`/editRaid/${id}/0`} push />;
+        return <Redirect to={`/editRaid/${id}/0`} push />
       }
 
       return (
@@ -231,19 +122,19 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
               <div>
                 <ActionButton
                   onClick={handleEditClick}
-                  icon="edit"
-                  size="large"
-                  type="primary"
+                  icon='edit'
+                  size='large'
+                  type='primary'
                 >
                   Edit
                 </ActionButton>
                 <Popconfirm
-                  title="Are you sure you want to delete this raid?"
+                  title='Are you sure you want to delete this raid?'
                   onConfirm={handleDeleteConfirm}
-                  okText="Yes"
-                  cancelText="No"
+                  okText='Yes'
+                  cancelText='No'
                 >
-                  <ActionButton icon="delete" size="large" type="danger">
+                  <ActionButton icon='delete' size='large' type='danger'>
                     Delete
                   </ActionButton>
                 </Popconfirm>
@@ -251,13 +142,13 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
             )}
           </Footer>
         </>
-      );
+      )
     } else {
-      return null;
+      return null
     }
   } else {
-    return <RaidReviewDetails loadedData={state!} />;
+    return <RaidReviewDetails loadedData={state!} />
   }
-};
+}
 
-export default withRouter(RaidOverview);
+export default withRouter(RaidOverview)
