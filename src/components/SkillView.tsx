@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
-import NewSkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
+import { ABILITY_BAR_ONE, ACTIVE_BAR } from '../pages/build/Skills/AbilityBar'
+import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 import { ISkillSelection } from '../pages/build/BuildStateContext'
 
@@ -9,6 +9,7 @@ export interface ISKillViewProps {
   skillSlots: ISkillSelection[]
   ultimate?: ISkill
   droppable?: boolean
+  size?: 'small' | 'normal'
   id: string
   abilityBar?: number
   disabled?: boolean
@@ -27,7 +28,8 @@ export default ({
   droppable,
   id,
   abilityBar,
-  disabled
+  size = 'normal',
+  disabled,
 }: ISKillViewProps) => {
   const pos = (id: string) => {
     if (id === ABILITY_BAR_ONE) {
@@ -37,16 +39,17 @@ export default ({
   const trail = useTrail(skillSlots.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: 1,
-    from: { opacity: 0 }
+    from: { opacity: 0 },
   })
   return (
     <SkillView>
       {trail.map(({ opacity }: any, index: number) => (
         <animated.div key={index} style={{ opacity }}>
           {disabled ? (
-            <DisplaySlot skill={skillSlots[index].skill} />
+            <DisplaySlot size={size} skill={skillSlots[index].skill} />
           ) : (
-            <NewSkillSlot
+            <SkillSlot
+              size={size}
               id={skillSlots[index].id}
               abilityBar={abilityBar}
               droppable={droppable}
@@ -57,14 +60,17 @@ export default ({
           )}
         </animated.div>
       ))}
-      {ultimate ? (
-        <DisplaySlot
-          skill={ultimate}
-          style={{ marginLeft: '10px' }}
-          size='small'
-        />
+      {disabled ? (
+        <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
       ) : (
-        ''
+        <SkillSlot
+          size={size}
+          style={{ marginLeft: 10 }}
+          abilityBar={id === ACTIVE_BAR ? -1 : id === ABILITY_BAR_ONE ? 0 : 1}
+          droppable={droppable}
+          skill={ultimate}
+          skillIndex={5}
+        />
       )}
     </SkillView>
   )
