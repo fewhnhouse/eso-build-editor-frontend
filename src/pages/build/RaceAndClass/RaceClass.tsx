@@ -178,7 +178,7 @@ export default ({ edit }: { edit: boolean }) => {
           justify='flex-start'
           align='center'
         >
-          <Typography.Text strong>Main Resource</Typography.Text>
+          <Typography.Text style={{marginBottom: 5}} strong>Main Resource</Typography.Text>
           <Radio.Group
             value={mainResource}
             onChange={handleResourceChange}

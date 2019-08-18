@@ -5,127 +5,15 @@ import { RouteComponentProps } from 'react-router'
 import Raid from './Raid'
 import { Spin, message } from 'antd'
 import { defaultRaidState } from './RaidStateContext'
+import { raid } from '../../util/fragments';
 
 const GET_RAID = gql`
-  fragment SetSelection on SetSelection {
-    id
-    icon
-    slot
-    type
-    weaponType
-    selectedSet {
-      name
-      location
-      type
-      bonus_item_1
-      bonus_item_2
-      bonus_item_3
-      bonus_item_4
-      bonus_item_5
-      has_jewels
-      has_weapons
-      has_heavy_armor
-      has_light_armor
-      has_medium_armor
-    }
-    trait {
-      type
-      description
-      icon
-    }
-    glyph {
-      type
-      description
-      icon
-    }
-  }
-
-  fragment Skill on Skill {
-    name
-    skillId
-    icon
-    range
-    type
-    cost
-    effect_1
-    effect_2
-    target
-  }
-
-  fragment SkillSelection on SkillSelection {
-    index
-    skill {
-      ...Skill
-    }
-  }
-
   query raid($id: ID!) {
     raid(id: $id) {
-      id
-      name
-      owner {
-        id
-        name
-      }
-
-      applicationArea
-      roles {
-        id
-        name
-        builds {
-          id
-          owner {
-            name
-            id
-          }
-          name
-          applicationArea
-          role
-          race
-          esoClass
-          bigPieceSelection {
-            ...SetSelection
-          }
-          smallPieceSelection {
-            ...SetSelection
-          }
-          jewelrySelection {
-            ...SetSelection
-          }
-          frontbarSelection {
-            ...SetSelection
-          }
-          backbarSelection {
-            ...SetSelection
-          }
-          newBarOne {
-            ...SkillSelection
-          }
-          newBarTwo {
-            ...SkillSelection
-          }
-          ultimateOne {
-            ...Skill
-          }
-          ultimateTwo {
-            ...Skill
-          }
-          mundusStone {
-            name
-            effect
-            value
-            icon
-          }
-          buff {
-            name
-            buffDescription
-            icon
-            buffType
-          }
-        }
-      }
+      ...Raid
     }
   }
+  ${raid}
 `
 interface IRaidWrapperProps
   extends RouteComponentProps<{ id: string; raidId: string }> {
@@ -141,7 +29,7 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   if (edit) {
     if (loading) {
       return (
-        <div style={{width: "100%", height: "100%"}}>
+        <div style={{ width: '100%', height: '100%' }}>
           <Spin style={{ marginTop: 10 }} />
         </div>
       )

@@ -43,6 +43,7 @@ export interface IBuild {
 
 }
 export interface IBuildState extends IBuild {
+  published: boolean;
   skills: ISkill[];
   hasTrash: boolean;
   sets: ISet[];
@@ -150,6 +151,7 @@ export interface IModification {
   icon: string;
 }
 export const defaultBuildState = {
+  published: false,
   skills: [],
   sets: [],
   skillLine: 0,
