@@ -184,7 +184,7 @@ export default ({
   useEffect(() => {
     if (saved) {
       if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem('buildState')
+        //localStorage.removeItem('buildState')
         setRedirect(createBuildResult.data.createBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
         setRedirect(updateBuildResult.data.updateBuild.id)
@@ -266,8 +266,8 @@ export default ({
           ),
         })
 
-        localStorage.removeItem('buildState')
       } catch (e) {
+        console.error(e)
         notification.error({
           message: 'Build creation failed',
           description: 'Your build could not be saved. Try again later.',

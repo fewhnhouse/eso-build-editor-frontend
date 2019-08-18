@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ABILITY_BAR_ONE, ACTIVE_BAR } from '../pages/build/Skills/AbilityBar'
+import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
 import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 import { ISkillSelection } from '../pages/build/BuildStateContext'
@@ -66,7 +66,7 @@ export default ({
         <SkillSlot
           size={size}
           style={{ marginLeft: 10 }}
-          abilityBar={id === ACTIVE_BAR ? -1 : id === ABILITY_BAR_ONE ? 0 : 1}
+          abilityBar={abilityBar}
           droppable={droppable}
           skill={ultimate}
           skillIndex={5}

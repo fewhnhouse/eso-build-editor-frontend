@@ -49,7 +49,7 @@ const InnerContainer = styled(Flex)`
   height: 100%;
   overflow: auto;
   background-image: url(${wcdt});
-  background-size: contain;
+  background-size: cover;
 `
 const StyledSearch = styled(Search)`
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
