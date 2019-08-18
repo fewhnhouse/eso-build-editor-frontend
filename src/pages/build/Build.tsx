@@ -28,6 +28,7 @@ import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import Flex from '../../components/Flex'
 import { handleCreateSave, handleEditSave } from './util'
+import { build } from '../../util/fragments'
 
 const { Footer, Content } = Layout
 
@@ -48,9 +49,9 @@ const TabButton = styled(Button)`
 const CREATE_BUILD = gql`
   mutation createBuild($data: BuildCreateInput!) {
     createBuild(data: $data) {
-      id
-      name
+      ...Build
     }
+    ${build}
   }
 `
 
@@ -126,9 +127,10 @@ const UPDATE_BUILD = gql`
     $data: BuildUpdateInput!
   ) {
     updateBuild(where: $where, data: $data) {
-      id
+      ...Build
     }
   }
+  ${build}
 `
 const { Step } = Steps
 
@@ -174,10 +176,9 @@ export default ({
   const { mundusStone, buff, ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
-    if(saved) {
-
+    if (saved) {
       if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem("buildState")
+        localStorage.removeItem('buildState')
         setRedirect(createBuildResult.data.createBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
         setRedirect(updateBuildResult.data.updateBuild.id)
@@ -221,6 +222,7 @@ export default ({
           ),
         })
       } catch (e) {
+        console.error(e)
         notification.error({
           message: 'Build update failed',
           description: 'Your build could not be saved. Try again later.',

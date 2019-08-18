@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/react-hooks'
 import Flex from '../../components/Flex'
 import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
+import { raid } from '../../util/fragments';
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -32,18 +33,19 @@ const TabButton = styled(Button)`
 const CREATE_RAID = gql`
   mutation createRaid($data: RaidCreateInput!) {
     createRaid(data: $data) {
-      id
-      name
+      ...Raid
     }
   }
+  ${raid}
 `
 
 const UPDATE_RAID = gql`
   mutation updateRaid($where: RaidWhereUniqueInput!, $data: RaidUpdateInput!) {
     updateRaid(where: $where, data: $data) {
-      id
+      ...Raid
     }
   }
+  ${raid}
 `
 
 interface IRaidProps {

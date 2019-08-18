@@ -7,6 +7,7 @@ import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
 import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
+import { applicationAreas } from '../RaceAndClass/RaceClass'
 
 const { Title, Text } = Typography
 
@@ -74,9 +75,9 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     esoClass,
     race,
     // mainResource,
-    // applicationArea,
-    // role,
-    // description,
+    applicationArea,
+    role,
+    description,
     newBarOne,
     newBarTwo,
     ultimateOne,
@@ -103,6 +104,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
+  const area = applicationAreas.find(area => area.key === applicationArea)
   return (
     <Wrapper
       direction='row'
@@ -113,6 +115,11 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     >
       <GeneralInformation title={<Title level={2}>General Information</Title>}>
         <Title level={3}>{name}</Title>
+        <Text strong>Description: </Text>
+        <Text>{description || ''}</Text>
+        <br />
+        <Text strong>Application Area: </Text>
+        <Text>{area ? area.label : ''}</Text>
         <Divider>Race</Divider>
         <MiscView direction='row' justify='flex-start'>
           <MyAvatar

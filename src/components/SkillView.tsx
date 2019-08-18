@@ -39,7 +39,6 @@ export default ({
     opacity: 1,
     from: { opacity: 0 }
   })
-
   return (
     <SkillView>
       {trail.map(({ opacity }: any, index: number) => (

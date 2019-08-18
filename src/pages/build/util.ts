@@ -129,6 +129,8 @@ export const handleEditSave = async (
         },
       });
     });
+
+    console.log("done with prior")
     
   return await updateBuild({
     variables: {

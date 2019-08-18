@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { List, Card, Typography } from 'antd';
-import styled from 'styled-components';
-import { Redirect } from 'react-router';
+import React, { useState } from 'react'
+import { List, Card, Typography, Divider } from 'antd'
+import styled from 'styled-components'
+import { Redirect } from 'react-router'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 const Description = styled.div`
   font-size: 14px;
@@ -11,7 +11,7 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
-`;
+`
 
 const Title = styled.div`
   font-size: 16px;
@@ -22,7 +22,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`;
+`
 
 const StyledCard = styled(Card)`
   border-color: rgb(232, 232, 232);
@@ -31,7 +31,7 @@ const StyledCard = styled(Card)`
   margin: 10px;
   width: 90%;
   max-width: 400px;
-`;
+`
 
 const StyledList = styled(List)`
   overflow-y: scroll;
@@ -39,58 +39,58 @@ const StyledList = styled(List)`
   background: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-`;
+`
 
 const StyledImg = styled.img`
   width: 25px;
   height: 25px;
-`;
+`
 
 interface IOwnerProps {
-  name: string;
+  name: string
 }
 
 interface IBuildProps {
-  id: number;
-  name: string;
-  esoClass: string;
-  race: string;
-  applicationArea: string;
-  owner: IOwnerProps;
+  id: number
+  name: string
+  esoClass: string
+  race: string
+  applicationArea: string
+  owner: IOwnerProps
 }
 
 interface IRaidRoleProps {
-  builds: IBuildProps[];
+  builds: IBuildProps[]
 }
 
 interface IRaidProps {
-  id: number;
-  name: string;
-  applicationArea: string;
-  owner: IOwnerProps;
-  roles: IRaidRoleProps[];
+  id: number
+  name: string
+  applicationArea: string
+  owner: IOwnerProps
+  roles: IRaidRoleProps[]
 }
 
 interface IUserDataProps {
-  userBuildData?: IBuildProps[];
-  userRaidData?: IRaidProps[];
+  userBuildData?: IBuildProps[]
+  userRaidData?: IRaidProps[]
 }
 
 const UserHomeCard = ({ userBuildData, userRaidData }: IUserDataProps) => {
-  const [path, setRedirect] = useState('');
+  const [path, setRedirect] = useState('')
   const handleClick = (path: string) => {
-    setRedirect(path);
-  };
+    setRedirect(path)
+  }
 
   if (path !== '') {
-    return <Redirect push to={`${path}`} />;
+    return <Redirect push to={`${path}`} />
   } else {
     if (userBuildData) {
       return (
         <StyledList
           dataSource={userBuildData}
           renderItem={(item, index) => {
-            const find = userBuildData[index];
+            const find = userBuildData[index]
             return (
               <List.Item style={{ justifyContent: 'center' }}>
                 <StyledCard
@@ -99,38 +99,40 @@ const UserHomeCard = ({ userBuildData, userRaidData }: IUserDataProps) => {
                   onClick={() => handleClick(`/buildReview/${find.id}`)}
                 >
                   <Title>
-                    {find.name ? find.name : 'Unnamed build'}{' '}
+                    {find.name ? find.name : 'Unnamed build'}
                     <Text style={{ fontWeight: 'normal' }} />
                   </Title>
+                  <Divider style={{ margin: '5px 0px' }} />
+
                   <Description>
-                    <StyledImg
+                    <StyledImg style={{marginRight: "5px"}}
                       src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
                         find.esoClass
                       }.png`}
-                    />{' '}
+                    />
                     {find.esoClass}
                     <StyledImg
-                      style={{ marginLeft: '10px' }}
+                      style={{ marginLeft: '10px', marginRight: "5px" }}
                       src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
                         find.race
                       }.png`}
-                    />{' '}
+                    />
                     {find.race}
-                    <br />
+                    <Divider style={{ margin: '5px 0px' }} />
                     Created by {find.owner.name}
                   </Description>
                 </StyledCard>
               </List.Item>
-            );
+            )
           }}
         />
-      );
+      )
     } else if (userRaidData) {
       return (
         <StyledList
           dataSource={userRaidData}
           renderItem={(item, index) => {
-            const find = userRaidData[index];
+            const find = userRaidData[index]
             return (
               <List.Item style={{ justifyContent: 'center' }}>
                 <StyledCard
@@ -155,13 +157,13 @@ const UserHomeCard = ({ userBuildData, userRaidData }: IUserDataProps) => {
                   </Description>
                 </StyledCard>
               </List.Item>
-            );
+            )
           }}
         />
-      );
+      )
     }
   }
-  return null;
-};
+  return null
+}
 
-export default UserHomeCard;
+export default UserHomeCard
