@@ -10,7 +10,7 @@ import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 
 const AbilityContainer = styled.div`
   flex: 2;

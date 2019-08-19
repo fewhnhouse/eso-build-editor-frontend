@@ -10,7 +10,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 import { FormComponentProps } from 'antd/lib/form';
 
 const LOGIN = gql`

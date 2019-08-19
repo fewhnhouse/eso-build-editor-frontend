@@ -6,7 +6,7 @@ import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
 import gql from 'graphql-tag'
 import { build, raid } from '../../util/fragments'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import { IBuild } from '../build/BuildStateContext'
 
 const { Search } = Input
@@ -59,10 +59,8 @@ const StyledSearch = styled(Search)`
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
 `
 const ACTIVITY_BUILDS = gql`
-  query builds($today: DateTime!) {
-    builds(
-      where: { OR: [{ createdAt_gt: $today }, { updatedAt_gt: $today }] }
-    ) {
+  query builds($where: BuildWhereInput!) {
+    builds(where: $where) {
       ...Build
     }
   }
@@ -70,8 +68,8 @@ const ACTIVITY_BUILDS = gql`
 `
 
 const ACTIVITY_RAIDS = gql`
-  query raids($today: DateTime!) {
-    raids(where: { OR: [{ createdAt_gt: $today }, { updatedAt_gt: $today }] }) {
+  query raids($where: RaidWhereInput!) {
+    raids(where: $where) {
       ...Raid
     }
   }
@@ -82,12 +80,22 @@ export default () => {
   now.setDate(now.getDate() - 1)
   const buildQuery = useQuery(ACTIVITY_BUILDS, {
     variables: {
-      today: now.toISOString(),
+      where: {
+        OR: [
+          { createdAt_gt: now.toISOString() },
+          { updatedAt_gt: now.toISOString() },
+        ],
+      },
     },
   })
   const raidQuery = useQuery(ACTIVITY_RAIDS, {
     variables: {
-      today: now.toISOString(),
+      where: {
+        OR: [
+          { createdAt_gt: now.toISOString() },
+          { updatedAt_gt: now.toISOString() },
+        ],
+      },
     },
   })
   console.log(buildQuery, raidQuery)

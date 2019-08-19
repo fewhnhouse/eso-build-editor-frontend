@@ -6,7 +6,7 @@ import Flex from '../../../components/Flex'
 import Meta from 'antd/lib/card/Meta'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 
 const ListContainer = styled.div`
   flex: 1;

@@ -5,7 +5,7 @@ import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import { buff } from '../../../util/fragments';
 
 export interface ISpecialBuff {

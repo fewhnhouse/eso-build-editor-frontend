@@ -14,7 +14,7 @@ import {
   Icon,
 } from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const { Header } = Layout

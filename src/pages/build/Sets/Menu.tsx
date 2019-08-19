@@ -6,7 +6,7 @@ import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 
 const { Item } = List
 const { CheckableTag } = Tag

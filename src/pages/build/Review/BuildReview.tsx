@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import styled, { withTheme, ThemeProps } from 'styled-components'
 import { ITheme } from '../../../components/globalStyles'
 import { BuildContext } from '../BuildStateContext'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import BuildReviewDetails from './BuildReviewDetails'
 import {

@@ -5,7 +5,7 @@ import { Typography, Button, Spin, Input, Icon } from 'antd'
 import { Redirect } from 'react-router'
 import RaidCard from './RaidCard'
 import BuildCard from './BuildCard'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
 const { Search } = Input
 const { Title } = Typography

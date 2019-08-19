@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { RaidContext } from '../RaidStateContext'
 import RaidReviewDetails from './RaidReviewDetails'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { notification, Layout, Button, Popconfirm, Typography } from 'antd'

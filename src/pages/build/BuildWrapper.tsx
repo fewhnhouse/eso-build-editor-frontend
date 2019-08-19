@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import Build from './Build'
 import { Spin, message } from 'antd'
 import { defaultBuildState } from './BuildStateContext'

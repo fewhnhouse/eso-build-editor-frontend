@@ -8,7 +8,7 @@ import { BuildContext, Slot, ISetSelection, IModification, ArmorType } from '../
 import { SelectValue } from 'antd/lib/select';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo';
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;

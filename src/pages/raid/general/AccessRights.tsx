@@ -3,7 +3,7 @@ import { Select, Typography } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 
 const GET_USERS = gql`
   query {

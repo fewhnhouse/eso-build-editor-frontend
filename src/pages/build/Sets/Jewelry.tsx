@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { SelectWithTitle } from './CustomSelect';
 import { SelectValue } from 'antd/lib/select';
 import { BuildContext, Slot, ISetSelection, IModification } from '../BuildStateContext';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const StyledFlex = styled(Flex)`

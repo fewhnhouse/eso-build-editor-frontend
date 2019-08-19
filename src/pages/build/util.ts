@@ -5,7 +5,7 @@ import {
   ISkillSelection,
   WeaponType,
 } from './BuildStateContext'
-import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common'
+import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ISpecialBuff } from './consumables/BuffMenu'
 import { ISkill } from '../../components/SkillSlot'
 import { ME } from '../home/UserHomeCard'

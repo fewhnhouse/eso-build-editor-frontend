@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { RouteComponentProps } from 'react-router';
 import { message, Typography } from 'antd';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
 import Raid from './Raid'
 import { Spin, message } from 'antd'
