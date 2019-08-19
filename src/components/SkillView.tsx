@@ -29,7 +29,7 @@ export default ({
   id,
   abilityBar,
   size = 'normal',
-  disabled,
+  disabled
 }: ISKillViewProps) => {
   const pos = (id: string) => {
     if (id === ABILITY_BAR_ONE) {
@@ -39,7 +39,7 @@ export default ({
   const trail = useTrail(skillSlots.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: 1,
-    from: { opacity: 0 },
+    from: { opacity: 0 }
   })
   return (
     <SkillView>
@@ -60,17 +60,25 @@ export default ({
           )}
         </animated.div>
       ))}
-      {disabled ? (
-        <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
+      {ultimate ? (
+        disabled ? (
+          <DisplaySlot
+            size={size}
+            skill={ultimate}
+            style={{ marginLeft: 10 }}
+          />
+        ) : (
+          <SkillSlot
+            size={size}
+            style={{ marginLeft: 10 }}
+            abilityBar={abilityBar}
+            droppable={droppable}
+            skill={ultimate}
+            skillIndex={5}
+          />
+        )
       ) : (
-        <SkillSlot
-          size={size}
-          style={{ marginLeft: 10 }}
-          abilityBar={abilityBar}
-          droppable={droppable}
-          skill={ultimate}
-          skillIndex={5}
-        />
+        <div />
       )}
     </SkillView>
   )
