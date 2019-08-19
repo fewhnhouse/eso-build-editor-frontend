@@ -5,9 +5,10 @@ import { Typography, Divider, Card, Icon } from 'antd'
 import GearView from '../../../components/GearView'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
-import { IBuildState } from '../BuildStateContext'
+import { IBuildState, ISetSelection } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
+import { ISet } from '../../../components/GearSlot'
 
 const { Title, Text } = Typography
 
@@ -82,30 +83,31 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     newBarOne,
     newBarTwo,
     ultimateOne,
-    ultimateTwo,
+    ultimateTwo
   } = loadedData
   const selectedSetup = [
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || [],
+      data: bigPieceSelection || []
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || [],
+      data: smallPieceSelection || []
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || [],
+      data: frontbarSelection || []
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
   const area = applicationAreas.find(area => area.key === applicationArea)
+
   return (
     <Wrapper
       direction='row'

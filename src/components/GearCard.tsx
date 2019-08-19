@@ -1,25 +1,25 @@
-import React from 'react';
-import { Card, Divider, Tag } from 'antd';
-import styled from 'styled-components';
-import { ISet } from './GearSlot';
-import { ISetSelection } from '../pages/build/BuildStateContext';
-import Flex from './Flex';
+import React from 'react'
+import { Card, Divider, Tag } from 'antd'
+import styled from 'styled-components'
+import { ISet } from './GearSlot'
+import { ISetSelection } from '../pages/build/BuildStateContext'
+import Flex from './Flex'
 
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
   width: 450px;
   position: relative;
-`;
+`
 
 const Container = styled.div`
   width: 350px;
-`;
+`
 
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
-`;
+`
 
 const Title = styled.div`
   font-size: 16px;
@@ -30,7 +30,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
-`;
+`
 
 const SmallTitle = styled.div`
   color: rgba(0, 0, 0, 0.55);
@@ -45,69 +45,74 @@ const StyledTag = styled(Tag)`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-`;
+`
 
 const IconImg = styled.img`
   width: 30px;
   height: 30px;
   margin-right: 5px;
-`;
+`
 
 const GlyphIconImg = styled.img`
   width: 25px;
   height: 25px;
   margin-right: 5px;
-`;
+`
 
 interface IGearCard {
-  set: ISet;
+  set: ISet
+  bonuses?: Map<any, any>
 }
 
 interface ISetTagProps {
-  hasHeavyArmor: boolean;
-  hasMediumArmor: boolean;
-  hasLightArmor: boolean;
-  traitsNeeded: boolean;
+  hasHeavyArmor: boolean
+  hasMediumArmor: boolean
+  hasLightArmor: boolean
+  traitsNeeded: boolean
 }
 
 const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded,
+  traitsNeeded
 }: ISetTagProps) => {
   if (traitsNeeded) {
-    return null;
+    return null
   } else {
     if (hasHeavyArmor && hasMediumArmor && hasLightArmor) {
-      return <StyledTag color="purple">All</StyledTag>;
+      return <StyledTag color='purple'>All</StyledTag>
     } else if (hasHeavyArmor) {
-      return <StyledTag color="red">Heavy</StyledTag>;
+      return <StyledTag color='red'>Heavy</StyledTag>
     } else if (hasMediumArmor) {
-      return <StyledTag color="green">Medium</StyledTag>;
+      return <StyledTag color='green'>Medium</StyledTag>
     } else {
-      return <StyledTag color="blue">Light</StyledTag>;
+      return <StyledTag color='blue'>Light</StyledTag>
     }
   }
-};
-
-const totalBonus = (set: ISet) => {
-  if(set.bonus_item_5 !== null || set.bonus_item_4 !== null) {
-    return [2, 3, 4, 5];
-  } else if (set.bonus_item_4 !== null ) {
-    return [2, 3, 4];
-  } else if (set.bonus_item_3 !== null ) {
-    return [2, 3];
-  } else if (set.bonus_item_2 !== null) {
-    return [2];
-  } else return [1];
 }
 
-export default ({ set }: IGearCard) => {
-  
+const totalBonus = (set: ISet) => {
+  if (set.bonus_item_5 !== null || set.bonus_item_4 !== null) {
+    return [2, 3, 4, 5]
+  } else if (set.bonus_item_4 !== null) {
+    return [2, 3, 4]
+  } else if (set.bonus_item_3 !== null) {
+    return [2, 3]
+  } else if (set.bonus_item_2 !== null) {
+    return [2]
+  } else return [1]
+}
+
+export default ({ set, bonuses }: IGearCard) => {
+  const hasSet = bonuses ? bonuses.has(set.name) : ''
+  let setBoni: number
+  if (hasSet && bonuses) {
+    setBoni = bonuses.get(set.name)
+  }
   return (
     <StyledCard hoverable title={set.name}>
-      <StyledTag color="#1890ff">{set.type}</StyledTag>
+      <StyledTag color='#1890ff'>{set.type}</StyledTag>
       <ArmorTypeTag
         hasHeavyArmor={set.has_heavy_armor === 1}
         hasMediumArmor={set.has_medium_armor === 1}
@@ -115,76 +120,93 @@ export default ({ set }: IGearCard) => {
         traitsNeeded={set.traits_needed !== null}
       />
       <Description>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {totalBonus(set).map(i => (
-            <span key={i}>
-              {i} pcs: {set && set[`bonus_item_${i}`]}
-            </span>
-          ))}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {totalBonus(set).map(i => {
+            if (setBoni >= i) {
+              return (
+                <span key={i}>
+                  <b>
+                    {i} pcs: {set && set[`bonus_item_${i}`]}
+                  </b>
+                </span>
+              )
+            } else {
+              return (
+                <span key={i}>
+                  {i} pcs: {set && set[`bonus_item_${i}`]}
+                </span>
+              )
+            }
+          })}
         </div>
       </Description>
     </StyledCard>
-  );
-};
+  )
+}
 
 interface ISelectedSet {
-  gear: ISetSelection;
+  gear: ISetSelection
 }
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
   const gearTypeTag = (gearType: string) => {
     switch (gearType) {
       case 'lightarmor':
-        return <StyledTag color="blue">Light</StyledTag>;
+        return <StyledTag color='blue'>Light</StyledTag>
       case 'mediumarmor':
-        return <StyledTag color="green">Medium</StyledTag>;
+        return <StyledTag color='green'>Medium</StyledTag>
       case 'heavyarmor':
-        return <StyledTag color="red">Heavy</StyledTag>;
-      case ("onehanded"):
-        return <StyledTag color="#108ee9">Onehanded</StyledTag>;
-      case ("twohanded"):
-        return <StyledTag color="#108ee9">Twohanded</StyledTag>;
+        return <StyledTag color='red'>Heavy</StyledTag>
+      case 'onehanded':
+        return <StyledTag color='#108ee9'>Onehanded</StyledTag>
+      case 'twohanded':
+        return <StyledTag color='#108ee9'>Twohanded</StyledTag>
       default:
-        return "";
+        return ''
     }
-  };
+  }
 
   return (
     <Container>
       <Title>
-        {gear.selectedSet ? gear.selectedSet.name : 'Set name'} {gear.weaponType ? <SmallTitle>{gear.weaponType}</SmallTitle> : ""}
+        {gear.selectedSet ? gear.selectedSet.name : 'Set name'}{' '}
+        {gear.weaponType ? <SmallTitle>{gear.weaponType}</SmallTitle> : ''}
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : ""}
-      <StyledTag color="#108ee9">{gear.selectedSet ? gear.selectedSet.type : "No type"}</StyledTag>
-      <Divider style={{ margin: "5px 0px" }} />
+      {gear.type ? gearTypeTag(gear.type) : ''}
+      <StyledTag color='#108ee9'>
+        {gear.selectedSet ? gear.selectedSet.type : 'No type'}
+      </StyledTag>
+      <Divider style={{ margin: '5px 0px' }} />
       <Description>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {gear.selectedSet ? 
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {gear.selectedSet ? (
             totalBonus(gear.selectedSet).map(i => (
               <span key={i}>
-                {i} pcs: {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
+                {i} pcs:{' '}
+                {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
               </span>
             ))
-          : <span></span>
-          }
+          ) : (
+            <span />
+          )}
         </div>
       </Description>
       <Divider style={{ margin: '5px 0px' }} />
-      <Flex direction="column" justify="space-around" align="flex-start">
+      <Flex direction='column' justify='space-around' align='flex-start'>
         <Description
           style={{
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px',
+            margin: '5px 0px'
           }}
         >
-          <Flex direction="row" justify="flex-start" align="center">
+          <Flex direction='row' justify='flex-start' align='center'>
             {gear.trait ? (
               <IconImg
-                src={`${
-                  process.env.REACT_APP_IMAGE_SERVICE
-                }/traits/${encodeURI(gear.trait.icon)}`}
+                src={`${process.env.REACT_APP_IMAGE_SERVICE}/traits/${encodeURI(
+                  gear.trait.icon
+                )}`}
               />
             ) : (
               'Trait not selected.'
@@ -201,15 +223,15 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px',
+            margin: '5px 0px'
           }}
         >
-          <Flex direction="row" justify="flex-start" align="center">
+          <Flex direction='row' justify='flex-start' align='center'>
             {gear.glyph ? (
               <GlyphIconImg
-                src={`${
-                  process.env.REACT_APP_IMAGE_SERVICE
-                }/glyphs/${encodeURI(gear.glyph.icon)}`}
+                src={`${process.env.REACT_APP_IMAGE_SERVICE}/glyphs/${encodeURI(
+                  gear.glyph.icon
+                )}`}
                 style={{ marginRight: 5 }}
               />
             ) : (
@@ -223,5 +245,5 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
         </Description>
       </Flex>
     </Container>
-  );
-};
+  )
+}

@@ -6,7 +6,7 @@ import {
   TwohandedWeapon,
   OnehandedWeapon,
   WeaponType,
-  ISkillSelection,
+  ISkillSelection
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
 import {
@@ -17,7 +17,7 @@ import {
   // message,
   Tooltip,
   notification,
-  Typography,
+  Typography
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -152,7 +152,7 @@ export default ({
   path,
   initialSkillBarOne = [],
   initialSkillBarTwo = [],
-  edit = false,
+  edit = false
 }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [loading, setLoading] = useState(false)
@@ -225,13 +225,13 @@ export default ({
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          ),
+          )
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build update failed',
-          description: 'Your build could not be saved. Try again later.',
+          description: 'Your build could not be saved. Try again later.'
         })
       }
     } else {
@@ -263,13 +263,13 @@ export default ({
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          ),
+          )
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build creation failed',
-          description: 'Your build could not be saved. Try again later.',
+          description: 'Your build could not be saved. Try again later.'
         })
       }
     }
@@ -293,7 +293,7 @@ export default ({
     smallPieceSelection,
     jewelrySelection,
     newBarOne,
-    newBarTwo,
+    newBarTwo
   } = state!
 
   const hasValidFrontbar = frontbarSelection[0].selectedSet
@@ -393,7 +393,7 @@ export default ({
           display: 'flex',
           zIndex: 100,
           alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)'
         }}
       >
         <TabButton
