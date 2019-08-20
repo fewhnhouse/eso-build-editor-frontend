@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card, Divider, Tag } from 'antd'
 import styled from 'styled-components'
 import { ISet } from './GearSlot'
-import { ISetSelection } from '../pages/build/BuildStateContext'
+import {
+  ISetSelection,
+  BuildContext,
+  IBuildState
+} from '../pages/build/BuildStateContext'
 import Flex from './Flex'
 
 const StyledCard = styled(Card)`
@@ -61,7 +65,6 @@ const GlyphIconImg = styled.img`
 
 interface IGearCard {
   set: ISet
-  bonuses?: Map<string, number>
 }
 
 interface ISetTagProps {
@@ -104,9 +107,35 @@ const totalBonus = (set: ISet) => {
   } else return [1]
 }
 
-export default ({ set, bonuses }: IGearCard) => {
-  const hasSet = bonuses ? bonuses.has(set.name) : ''
-  const setBonusCount = hasSet && bonuses ? bonuses.get(set.name) : -1
+const boniSetup = (state: IBuildState | undefined, set: ISet) => {
+  const {
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
+  } = state!
+
+  const setup = bigPieceSelection
+    .concat(
+      smallPieceSelection,
+      jewelrySelection,
+      frontbarSelection,
+      backbarSelection
+    )
+    .map(item => {
+      return item.selectedSet ? item.selectedSet.name : ''
+    })
+    .reduce((acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)), new Map())
+
+  const hasSet = setup ? setup.has(set.name) : ''
+  const setBonusCount = hasSet && setup ? setup.get(set.name) : -1
+  return setBonusCount
+}
+
+export default ({ set }: IGearCard) => {
+  const [state, dispatch] = useContext(BuildContext)
+  const getSetBonusCount = boniSetup(state, set)
   return (
     <StyledCard hoverable title={set.name}>
       <StyledTag color='#1890ff'>{set.type}</StyledTag>
@@ -119,7 +148,7 @@ export default ({ set, bonuses }: IGearCard) => {
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {totalBonus(set).map(count => {
-            if (setBonusCount && setBonusCount >= count) {
+            if (getSetBonusCount && getSetBonusCount >= count) {
               return (
                 <span key={count}>
                   <b>
@@ -146,30 +175,30 @@ interface ISelectedSet {
 }
 
 export const GearCardContent = ({ gear }: ISelectedSet) => {
-  const gearTypeTag = (gearType: string) => {
-    switch (gearType) {
-      case 'lightarmor':
-        return <StyledTag color='blue'>Light</StyledTag>
-      case 'mediumarmor':
-        return <StyledTag color='green'>Medium</StyledTag>
-      case 'heavyarmor':
-        return <StyledTag color='red'>Heavy</StyledTag>
-      case 'onehanded':
-        return <StyledTag color='#108ee9'>Onehanded</StyledTag>
-      case 'twohanded':
-        return <StyledTag color='#108ee9'>Twohanded</StyledTag>
-      default:
-        return ''
-    }
-  }
-
+  const [state, dispatch] = useContext(BuildContext)
+  const getSetBonusCount = gear.selectedSet
+    ? boniSetup(state, gear.selectedSet)
+    : ''
   return (
     <Container>
       <Title>
         {gear.selectedSet ? gear.selectedSet.name : 'Set name'}
         {gear.weaponType ? <SmallTitle>{gear.weaponType}</SmallTitle> : ''}
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : ''}
+      <ArmorTypeTag
+        hasHeavyArmor={
+          gear.selectedSet ? gear.selectedSet.has_heavy_armor === 1 : false
+        }
+        hasMediumArmor={
+          gear.selectedSet ? gear.selectedSet.has_medium_armor === 1 : false
+        }
+        hasLightArmor={
+          gear.selectedSet ? gear.selectedSet.has_light_armor === 1 : false
+        }
+        traitsNeeded={
+          gear.selectedSet ? gear.selectedSet.traits_needed !== null : false
+        }
+      />
       <StyledTag color='#108ee9'>
         {gear.selectedSet ? gear.selectedSet.type : 'No type'}
       </StyledTag>
@@ -177,13 +206,27 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {gear.selectedSet ? (
-            totalBonus(gear.selectedSet).map(setBonusCount => (
-              <span key={setBonusCount}>
-                {setBonusCount} pcs:{' '}
-                {gear.selectedSet &&
-                  gear.selectedSet[`bonus_item_${setBonusCount}`]}
-              </span>
-            ))
+            totalBonus(gear.selectedSet).map(count => {
+              if (getSetBonusCount && getSetBonusCount >= count) {
+                return (
+                  <span key={count}>
+                    <b>
+                      {count} pcs:{' '}
+                      {gear.selectedSet &&
+                        gear.selectedSet[`bonus_item_${count}`]}
+                    </b>
+                  </span>
+                )
+              } else {
+                return (
+                  <span key={count}>
+                    {count} pcs:{' '}
+                    {gear.selectedSet &&
+                      gear.selectedSet[`bonus_item_${count}`]}
+                  </span>
+                )
+              }
+            })
           ) : (
             <span />
           )}

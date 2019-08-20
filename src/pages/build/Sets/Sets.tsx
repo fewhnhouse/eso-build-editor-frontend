@@ -46,26 +46,6 @@ export default ({ edit }: { edit: boolean }) => {
     dispatch!({ type: 'SET_SET_TAB_KEY', payload: { setTabKey: key } })
   }
 
-  const {
-    bigPieceSelection,
-    smallPieceSelection,
-    jewelrySelection,
-    frontbarSelection,
-    backbarSelection
-  } = state!
-
-  const boniSetup = bigPieceSelection
-    .concat(
-      smallPieceSelection,
-      jewelrySelection,
-      frontbarSelection,
-      backbarSelection
-    )
-    .map(item => {
-      return item.selectedSet ? item.selectedSet.name : ''
-    })
-    .reduce((acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)), new Map())
-
   return (
     <div
       style={{
@@ -81,7 +61,7 @@ export default ({ edit }: { edit: boolean }) => {
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <GearCard set={selectedSet} bonuses={boniSetup} />
+              <GearCard set={selectedSet} />
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
