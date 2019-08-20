@@ -8,6 +8,7 @@ import {
   IBuildState
 } from '../pages/build/BuildStateContext'
 import Flex from './Flex'
+import { IGearSetup } from './GearView'
 
 const StyledCard = styled(Card)`
   display: 'flex';
@@ -107,7 +108,7 @@ const totalBonus = (set: ISet) => {
   } else return [1]
 }
 
-const boniSetup = (state: IBuildState | undefined, set: ISet) => {
+const boniSetup = (state: IBuildState, set: ISet) => {
   const {
     bigPieceSelection,
     smallPieceSelection,
@@ -135,7 +136,7 @@ const boniSetup = (state: IBuildState | undefined, set: ISet) => {
 
 export default ({ set }: IGearCard) => {
   const [state, dispatch] = useContext(BuildContext)
-  const getSetBonusCount = boniSetup(state, set)
+  const getSetBonusCount = state ? boniSetup(state, set) : ''
   return (
     <StyledCard hoverable title={set.name}>
       <StyledTag color='#1890ff'>{set.type}</StyledTag>
@@ -172,13 +173,29 @@ export default ({ set }: IGearCard) => {
 
 interface ISelectedSet {
   gear: ISetSelection
+  fullSetup?: IGearSetup
 }
 
-export const GearCardContent = ({ gear }: ISelectedSet) => {
-  const [state, dispatch] = useContext(BuildContext)
+const boniCountFromSetup = (state: ISetSelection[], set: ISet) => {
+  const setup = state
+    .map(item => {
+      return item.selectedSet ? item.selectedSet.name : ''
+    })
+    .reduce((acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)), new Map())
+
+  const hasSet = setup ? setup.has(set.name) : ''
+  const setBonusCount = hasSet && setup ? setup.get(set.name) : -1
+  return setBonusCount
+}
+
+export const GearCardContent = ({ gear, fullSetup }: ISelectedSet) => {
+  const state = fullSetup ? fullSetup.data : ''
   const getSetBonusCount = gear.selectedSet
-    ? boniSetup(state, gear.selectedSet)
+    ? state
+      ? boniCountFromSetup(state, gear.selectedSet)
+      : ''
     : ''
+
   return (
     <Container>
       <Title>
