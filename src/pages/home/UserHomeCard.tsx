@@ -7,22 +7,22 @@ import RaidCard from './RaidCard'
 import BuildCard from './BuildCard'
 import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
-const { Search } = Input
 const { Title } = Typography
 
 const CardContainer = styled(Flex)`
   justify-content: center;
   flex: 1;
-  min-height: 300px;
+  height: 100%;
 `
 
 const ListCard = styled.div`
-  width: 60%;
+  width: 80%;
+  height: 80%;
   min-width: 300px;
+  max-width: 450px;
   margin: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-  min-height: 300px;
 `
 const CardTitle = styled(Title)`
   display: flex;
@@ -93,9 +93,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
     setSearch(e.target.value)
   }
   return (
-    <CardContainer direction={'column'} justify={'center'} align='center'>
+    <CardContainer direction='column' justify='center' align='center'>
       <ListCard>
-        <StyledTitle direction={'column'} justify='center' align='center'>
+        <StyledTitle direction='column' justify='center' align='center'>
           <CardTitle level={3}>
             {isBuild ? 'My builds' : 'My raids'}
             <Button

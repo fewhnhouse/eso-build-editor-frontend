@@ -78,7 +78,7 @@ const ACTIVITY_RAIDS = gql`
 export default () => {
   const now = new Date()
   now.setDate(now.getDate() - 1)
-  const buildQuery = useQuery(ACTIVITY_BUILDS, {
+  /*const buildQuery = useQuery(ACTIVITY_BUILDS, {
     variables: {
       where: {
         OR: [
@@ -97,8 +97,7 @@ export default () => {
         ],
       },
     },
-  })
-  console.log(buildQuery, raidQuery)
+  })*/
 
   return (
     <OuterWrapper
@@ -137,7 +136,7 @@ export default () => {
           <Divider />
           <div style={{ height: '60%', padding: 5 }}>
             <Title level={4}>ACTIVITY</Title>
-            {buildQuery.loading || raidQuery.loading ? <Spin /> : null}
+            {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
             {buildQuery.data &&
               buildQuery.data.builds &&
               raidQuery.data &&
@@ -150,7 +149,7 @@ export default () => {
                     <Card title='You created a raid'>Name: {raid.name}</Card>
                   ))}
                 </div>
-              )}
+                  )*/}
           </div>
         </RightWrapper>
       </RightSide>
