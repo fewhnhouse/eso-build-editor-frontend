@@ -60,17 +60,25 @@ export default ({
           )}
         </animated.div>
       ))}
-      {disabled ? (
-        <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
+      {ultimate ? (
+        disabled ? (
+          <DisplaySlot
+            size={size}
+            skill={ultimate}
+            style={{ marginLeft: 10 }}
+          />
+        ) : (
+          <SkillSlot
+            size={size}
+            style={{ marginLeft: 10 }}
+            abilityBar={abilityBar}
+            droppable={droppable}
+            skill={ultimate}
+            skillIndex={5}
+          />
+        )
       ) : (
-        <SkillSlot
-          size={size}
-          style={{ marginLeft: 10 }}
-          abilityBar={abilityBar}
-          droppable={droppable}
-          skill={ultimate}
-          skillIndex={5}
-        />
+        <div />
       )}
     </SkillView>
   )
