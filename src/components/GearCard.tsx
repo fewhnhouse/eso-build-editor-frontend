@@ -106,10 +106,7 @@ const totalBonus = (set: ISet) => {
 
 export default ({ set, bonuses }: IGearCard) => {
   const hasSet = bonuses ? bonuses.has(set.name) : ''
-  let setBoni: number | undefined
-  if (hasSet && bonuses) {
-    setBoni = bonuses.get(set.name)
-  }
+  const setBonusCount = hasSet && bonuses ? bonuses.get(set.name) : -1
   return (
     <StyledCard hoverable title={set.name}>
       <StyledTag color='#1890ff'>{set.type}</StyledTag>
@@ -122,7 +119,7 @@ export default ({ set, bonuses }: IGearCard) => {
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {totalBonus(set).map(count => {
-            if (setBoni && setBoni >= count) {
+            if (setBonusCount && setBonusCount >= count) {
               return (
                 <span key={count}>
                   <b>
