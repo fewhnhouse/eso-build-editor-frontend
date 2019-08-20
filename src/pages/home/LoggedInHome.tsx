@@ -14,6 +14,7 @@ const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
   width: 100%;
+  height: 100%;
 `
 const Wrapper = styled(Flex)`
   padding: 40px;
@@ -49,11 +50,11 @@ const RightWrapper = styled.div`
 
 const InnerContainer = styled(Flex)`
   width: 100%;
-  padding-top: 50px;
+  padding-top: 15%;
   height: 100%;
   overflow: auto;
   background-image: url(${wcdt});
-  background-size: cover;
+  background-size: contain;
 `
 const StyledSearch = styled(Search)`
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);

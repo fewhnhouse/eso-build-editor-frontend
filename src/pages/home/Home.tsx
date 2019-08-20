@@ -12,7 +12,7 @@ const Container = styled(Content)`
   align-items: center;
   text-align: center;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
   height: calc(100vh - 64px);
   color: ${props => props.theme.mainBg};
 `
