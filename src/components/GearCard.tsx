@@ -61,7 +61,7 @@ const GlyphIconImg = styled.img`
 
 interface IGearCard {
   set: ISet
-  bonuses?: Map<any, any>
+  bonuses?: Map<string, number>
 }
 
 interface ISetTagProps {
@@ -106,7 +106,7 @@ const totalBonus = (set: ISet) => {
 
 export default ({ set, bonuses }: IGearCard) => {
   const hasSet = bonuses ? bonuses.has(set.name) : ''
-  let setBoni: number
+  let setBoni: number | undefined
   if (hasSet && bonuses) {
     setBoni = bonuses.get(set.name)
   }
@@ -121,19 +121,19 @@ export default ({ set, bonuses }: IGearCard) => {
       />
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {totalBonus(set).map(i => {
-            if (setBoni >= i) {
+          {totalBonus(set).map(count => {
+            if (setBoni && setBoni >= count) {
               return (
-                <span key={i}>
+                <span key={count}>
                   <b>
-                    {i} pcs: {set && set[`bonus_item_${i}`]}
+                    {count} pcs: {set && set[`bonus_item_${count}`]}
                   </b>
                 </span>
               )
             } else {
               return (
-                <span key={i}>
-                  {i} pcs: {set && set[`bonus_item_${i}`]}
+                <span key={count}>
+                  {count} pcs: {set && set[`bonus_item_${count}`]}
                 </span>
               )
             }
@@ -169,7 +169,7 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
   return (
     <Container>
       <Title>
-        {gear.selectedSet ? gear.selectedSet.name : 'Set name'}{' '}
+        {gear.selectedSet ? gear.selectedSet.name : 'Set name'}
         {gear.weaponType ? <SmallTitle>{gear.weaponType}</SmallTitle> : ''}
       </Title>
       {gear.type ? gearTypeTag(gear.type) : ''}

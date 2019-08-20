@@ -45,28 +45,26 @@ export default ({ edit }: { edit: boolean }) => {
   const handleTabChange = (key: string) => {
     dispatch!({ type: 'SET_SET_TAB_KEY', payload: { setTabKey: key } })
   }
-  let stp
-  if (state) {
-    const {
-      bigPieceSelection,
+
+  const {
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
+  } = state!
+
+  const boniSetup = bigPieceSelection
+    .concat(
       smallPieceSelection,
       jewelrySelection,
       frontbarSelection,
       backbarSelection
-    } = state
-
-    stp = bigPieceSelection
-      .concat(
-        smallPieceSelection,
-        jewelrySelection,
-        frontbarSelection,
-        backbarSelection
-      )
-      .map(item => {
-        return item.selectedSet ? item.selectedSet.name : ''
-      })
-      .reduce((acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)), new Map())
-  }
+    )
+    .map(item => {
+      return item.selectedSet ? item.selectedSet.name : ''
+    })
+    .reduce((acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)), new Map())
 
   return (
     <div
@@ -83,7 +81,7 @@ export default ({ edit }: { edit: boolean }) => {
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
-              <GearCard set={selectedSet} bonuses={stp} />
+              <GearCard set={selectedSet} bonuses={boniSetup} />
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
