@@ -184,7 +184,7 @@ export default ({
   useEffect(() => {
     if (saved) {
       if (createBuildResult.data && createBuildResult.data.createBuild) {
-        //localStorage.removeItem('buildState')
+        localStorage.removeItem('buildState')
         setRedirect(createBuildResult.data.createBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
         setRedirect(updateBuildResult.data.updateBuild.id)
