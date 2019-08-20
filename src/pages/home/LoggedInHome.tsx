@@ -14,6 +14,7 @@ const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
   width: 100%;
+  height: 100%;
 `
 const Wrapper = styled(Flex)`
   padding: 40px;
@@ -49,11 +50,11 @@ const RightWrapper = styled.div`
 
 const InnerContainer = styled(Flex)`
   width: 100%;
-  padding-top: 50px;
+  padding-top: 15%;
   height: 100%;
   overflow: auto;
   background-image: url(${wcdt});
-  background-size: cover;
+  background-size: contain;
 `
 const StyledSearch = styled(Search)`
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
@@ -78,7 +79,7 @@ const ACTIVITY_RAIDS = gql`
 export default () => {
   const now = new Date()
   now.setDate(now.getDate() - 1)
-  const buildQuery = useQuery(ACTIVITY_BUILDS, {
+  /*const buildQuery = useQuery(ACTIVITY_BUILDS, {
     variables: {
       where: {
         OR: [
@@ -97,8 +98,7 @@ export default () => {
         ],
       },
     },
-  })
-  console.log(buildQuery, raidQuery)
+  })*/
 
   return (
     <OuterWrapper
@@ -137,7 +137,7 @@ export default () => {
           <Divider />
           <div style={{ height: '60%', padding: 5 }}>
             <Title level={4}>ACTIVITY</Title>
-            {buildQuery.loading || raidQuery.loading ? <Spin /> : null}
+            {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
             {buildQuery.data &&
               buildQuery.data.builds &&
               raidQuery.data &&
@@ -150,7 +150,7 @@ export default () => {
                     <Card title='You created a raid'>Name: {raid.name}</Card>
                   ))}
                 </div>
-              )}
+                  )*/}
           </div>
         </RightWrapper>
       </RightSide>
