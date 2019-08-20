@@ -266,14 +266,33 @@ export default () => {
     }
   }
 
+  const concat = frontbarSelection.concat(
+    backbarSelection,
+    smallPieceSelection,
+    bigPieceSelection,
+    jewelrySelection
+  )
+  const setsCount = concat
+    .map(setSelection =>
+      setSelection.selectedSet ? setSelection.selectedSet.name : ''
+    )
+    .reduce<Map<string, number>>(
+      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
+      new Map()
+    )
+
   return (
     <DndProvider backend={HTML5Backend}>
       <OuterContainer>
         <Divider>Active Selection</Divider>
-        <GearView setups={showGear(setTabKey)} />
+        <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
 
         <Divider>Setup</Divider>
-        <GearView droppable setups={showSetup(setTabKey)} />
+        <GearView
+          droppable
+          setups={showSetup(setTabKey)}
+          setsCount={setsCount}
+        />
       </OuterContainer>
     </DndProvider>
   )

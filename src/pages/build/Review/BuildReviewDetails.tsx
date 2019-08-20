@@ -106,6 +106,20 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
   const area = applicationAreas.find(area => area.key === applicationArea)
+
+  const setsCount = selectedSetup
+    .map(setup => {
+      return setup.data
+    })
+    .flat()
+    .map(setSelection =>
+      setSelection.selectedSet ? setSelection.selectedSet.name : ''
+    )
+    .reduce<Map<string, number>>(
+      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
+      new Map()
+    )
+
   return (
     <Wrapper
       direction='row'
@@ -208,7 +222,7 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
           />
         </SkillsView>
         <Divider />
-        <GearView disabled setups={selectedSetup} />
+        <GearView disabled setups={selectedSetup} setsCount={setsCount} />
       </BuildInformation>
     </Wrapper>
   )
