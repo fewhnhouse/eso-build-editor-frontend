@@ -177,10 +177,11 @@ export const GearCardContent = ({ gear }: ISelectedSet) => {
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {gear.selectedSet ? (
-            totalBonus(gear.selectedSet).map(i => (
-              <span key={i}>
-                {i} pcs:{' '}
-                {gear.selectedSet && gear.selectedSet[`bonus_item_${i}`]}
+            totalBonus(gear.selectedSet).map(setBonusCount => (
+              <span key={setBonusCount}>
+                {setBonusCount} pcs:{' '}
+                {gear.selectedSet &&
+                  gear.selectedSet[`bonus_item_${setBonusCount}`]}
               </span>
             ))
           ) : (
