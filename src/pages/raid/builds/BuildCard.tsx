@@ -90,6 +90,28 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
       payload: { buildId: item.id, name: role ? role.name : '' },
     })
   }
+  const {
+    frontbarSelection,
+    backbarSelection,
+    smallPieceSelection,
+    bigPieceSelection,
+    jewelrySelection,
+  } = item
+  const concat = frontbarSelection.concat(
+    backbarSelection,
+    smallPieceSelection,
+    bigPieceSelection,
+    jewelrySelection
+  )
+  const setsCount = concat
+    .map(setSelection =>
+      setSelection.selectedSet ? setSelection.selectedSet.name : ''
+    )
+    .reduce<Map<string, number>>(
+      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
+      new Map()
+    )
+
   return (
     <StyledCard hoverable>
       <div>
@@ -154,6 +176,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </TabPane>
           <TabPane tab='Weapons' key='weapons'>
             <GearView
+              setsCount={setsCount}
               disabled
               size='small'
               setups={[
@@ -172,6 +195,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </TabPane>
           <TabPane tab='Armor' key='armor'>
             <GearView
+              setsCount={setsCount}
               disabled
               size='small'
               setups={[
@@ -190,6 +214,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           </TabPane>
           <TabPane tab='Jewelry' key='jewelry'>
             <GearView
+              setsCount={setsCount}
               disabled
               size='small'
               setups={[

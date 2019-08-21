@@ -1,0 +1,21 @@
+version: '2'
+services:
+
+  web:
+    restart: always
+    image: build-editor-frontend
+    networks:
+      - reverse-proxy
+      - back
+    environment:
+      - VIRTUAL_PORT=80
+      - VIRTUAL_HOST=eso-build-editor.fewhnhouse.de
+      - LETSENCRYPT_HOST=eso-build-editor.fewhnhouse.de
+      - LETSENCRYPT_EMAIL=felix.wohnhaas@outlook.com
+
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+  back:
+    driver: bridge
