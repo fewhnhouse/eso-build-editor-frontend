@@ -79,9 +79,8 @@ export default ({
 
   useEffect(() => {
     if (saved) {
-      console.log(createRaidResult)
       if (createRaidResult.data && createRaidResult.data.createRaid) {
-        //localStorage.removeItem('raidState')
+        localStorage.removeItem('raidState')
         setRedirect(createRaidResult.data.createRaid.id)
       } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
         setRedirect(updateRaidResult.data.updateRaid.id)
