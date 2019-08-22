@@ -1,6 +1,7 @@
-import { IRaidState, IRole } from './RaidStateContext'
-import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
-import { ME } from '../home/UserHomeCard'
+import { IRaidState, IRole } from './RaidStateContext';
+import { MutationFunctionOptions, ExecutionResult } from 'react-apollo';
+import { ME } from '../home/UserHomeCard';
+import { build } from '../../util/fragments';
 
 export const handleEditSave = async (
   state: IRaidState,
@@ -18,14 +19,14 @@ export const handleEditSave = async (
     canView,
     published,
     id,
-  } = state!
+  } = state!;
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ]
-
+  ];
+  console.log(roles, initialRoles);
   await updateRaid({
     variables: {
       data: {
@@ -39,18 +40,28 @@ export const handleEditSave = async (
           delete: initialRoles.map((initialRole: IRole) => ({
             id: initialRole.id,
           })),
-          create: roles.map(role => ({
-            name: role.name,
-            builds: { connect: role.builds.map(build => ({ id: build.id })) },
-          })),
+          create: roles.map(role => {
+            const prevRole = initialRoles.find(
+              (initialRole: IRole) => initialRole.id === role.id
+            );
+            const initialSortedBuilds = prevRole ? prevRole.builds : [];
+
+            return {
+              name: role.name,
+              builds: {
+                delete: initialSortedBuilds.map(build => ({ id: build.id })),
+                create: role.builds.map((build, index) => ({ index, build })),
+              },
+            };
+          }),
         },
       },
       where: {
         id,
       },
     },
-  })
-}
+  });
+};
 export const handleCreateSave = async (
   state: IRaidState,
   createRaid: (
@@ -65,13 +76,13 @@ export const handleCreateSave = async (
     canView,
     published,
     description,
-  } = state!
+  } = state!;
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ]
+  ];
 
   return await createRaid({
     variables: {
@@ -85,11 +96,13 @@ export const handleCreateSave = async (
         roles: {
           create: roles.map(role => ({
             name: role.name,
-            builds: { connect: role.builds.map(build => ({ id: build.id })) },
+            builds: {
+              create: role.builds.map((build, index) => ({ build: { connect: { id: build.build.id } }, index })),
+            },
           })),
         },
       },
     },
     refetchQueries: [{ query: ME }],
-  })
-}
+  });
+};

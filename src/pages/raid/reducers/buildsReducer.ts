@@ -36,7 +36,12 @@ export const buildsReducer = (state: IRaidState, action: IRaidAction) => {
       return {
         ...state,
         roles: state.roles.map(role =>
-          role.name === name ? { name, builds: [...role.builds, build] } : role
+          role.name === name
+            ? {
+                name,
+                builds: [...role.builds, { index: role.builds.length, build }],
+              }
+            : role
         ),
       };
     }
@@ -47,7 +52,7 @@ export const buildsReducer = (state: IRaidState, action: IRaidAction) => {
         role => role.name === name
       );
       const buildIndex = role
-        ? role.builds.findIndex(roleBuild => roleBuild.id === buildId)
+        ? role.builds.findIndex(roleBuild => roleBuild.build.id === buildId)
         : -1;
       return {
         ...state,

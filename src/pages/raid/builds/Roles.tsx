@@ -179,7 +179,7 @@ export default () => {
                   role={role}
                   style={{ width: 400 }}
                   key={`buildCard-${index}-${buildIndex}`}
-                  item={build}
+                  item={build.build}
                 />
               ))}
             </Flex>

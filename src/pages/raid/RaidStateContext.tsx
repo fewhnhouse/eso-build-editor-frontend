@@ -25,10 +25,16 @@ export interface IUser {
   email: string;
 }
 
+export interface ISortedBuild {
+  id?: string;
+  index: number;
+  build: IBuild;
+}
+
 export interface IRole {
   id?: string;
   name: string;
-  builds: IBuild[];
+  builds: ISortedBuild[];
 }
 
 export const defaultRaidState: IRaidState = {

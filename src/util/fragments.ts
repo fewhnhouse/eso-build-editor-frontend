@@ -151,7 +151,11 @@ export const raid = gql`
       id
       name
       builds {
-        ...Build
+        id
+        index
+        build {
+          ...Build
+        }
       }
     }
   }
