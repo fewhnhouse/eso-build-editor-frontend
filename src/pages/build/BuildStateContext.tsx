@@ -40,6 +40,7 @@ export interface IBuild {
   ultimateTwo?: ISkill;
   mundusStone: IMundus;
   buff: ISpecialBuff;
+  published: boolean;
 
 }
 export interface IBuildState extends IBuild {
