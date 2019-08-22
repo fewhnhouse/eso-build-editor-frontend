@@ -189,16 +189,22 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
             </Typography.Title>
             {buildQuery.data.build.owner.id === meQuery.data.me.id && (
               <div>
-                <ActionButton
-                  loading={loading}
-                  disabled={saved}
-                  onClick={handleCopyClick}
-                  icon="edit"
-                  size="large"
-                  type="default"
+                <Popconfirm
+                  title="Are you sure you want to copy this build?"
+                  onConfirm={handleCopyClick}
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  Copy
-                </ActionButton>
+                  <ActionButton
+                    loading={loading}
+                    disabled={saved}
+                    icon="copy"
+                    size="large"
+                    type="default"
+                  >
+                    Copy
+                  </ActionButton>
+                </Popconfirm>
 
                 <ActionButton
                   onClick={handleEditClick}
