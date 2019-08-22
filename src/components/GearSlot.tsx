@@ -305,7 +305,13 @@ export default ({
             </Typography.Text>
           </>
         ) : (
-          <Button style={{marginTop: 5}} onClick={handleSlotClick} size="small" ghost type="primary">
+          <Button
+            style={{ marginTop: 5 }}
+            onClick={handleSlotClick}
+            size="small"
+            ghost
+            type="primary"
+          >
             Slot
           </Button>
         )}
@@ -365,6 +371,76 @@ const InnerDisplay = styled.div`
   margin-left: 10px;
 `;
 
+export const getItemType = (
+  type: ArmorType | WeaponType | 'jewelry' | undefined
+) => {
+  switch (type) {
+    case ArmorType.heavyArmor:
+      return 'Heavy';
+    case ArmorType.mediumArmor:
+      return 'Medium';
+    case ArmorType.lightArmor:
+      return 'Light';
+    case WeaponType.onehanded:
+      return '1H';
+    case WeaponType.twohanded:
+      return '2H';
+    default:
+      return '';
+  }
+};
+
+const InnerSpan = styled.span`
+  color: ${(props: { color: string }) => props.color};
+`;
+
+export const getWeaponType = (
+  weaponType: OnehandedWeapon | TwohandedWeapon | undefined
+) => {
+  switch (weaponType) {
+    case OnehandedWeapon.axe:
+      return 'Axe';
+    case TwohandedWeapon.axe:
+      return 'Axe';
+    case OnehandedWeapon.mace:
+      return 'Mace';
+    case TwohandedWeapon.mace:
+      return 'Mace';
+    case OnehandedWeapon.sword:
+      return 'Sword';
+    case TwohandedWeapon.sword:
+      return 'Sword';
+    case OnehandedWeapon.dagger:
+      return 'Dagger';
+    case OnehandedWeapon.shield:
+      return 'Shield';
+    case TwohandedWeapon.bow:
+      return 'Bow';
+    case TwohandedWeapon.fireStaff:
+      return 'Fire Staff';
+    case TwohandedWeapon.iceStaff:
+      return 'Ice Staff';
+    case TwohandedWeapon.lightningStaff:
+      return 'Lightning Staff';
+    case TwohandedWeapon.restorationStaff:
+      return 'Restoration Staff';
+
+    default:
+      return '';
+  }
+};
+
+const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
+  if (type === ArmorType.lightArmor) {
+    return '#2980b9';
+  } else if (type === ArmorType.mediumArmor) {
+    return '#27ae60';
+  } else if (type === ArmorType.heavyArmor) {
+    return '#c0392b';
+  } else {
+    return 'rgba(0, 0, 0, 0.65)';
+  }
+};
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
@@ -402,6 +478,17 @@ export const DisplaySlot = ({
         >
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
         </Typography.Text>
+        <Typography.Text
+          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+          ellipsis
+          strong
+        >
+          <InnerSpan color={getTypeColor(slot.type)}>
+            {getItemType(slot.type)}
+          </InnerSpan>{' '}
+          {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
+        </Typography.Text>
+
         <Typography.Text
           style={{ fontSize: 12, width: 150, textAlign: 'left' }}
           ellipsis
