@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import {
+  Link,
+  RouteComponentProps,
+  withRouter,
+  Redirect,
+} from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'
 import {
@@ -84,6 +89,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
       </LoadingContainer>
     )
   }
+
 
   const logoutMenu = (
     <Menu>
