@@ -63,7 +63,7 @@ export default ({
       {disabled ? (
         <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
       ) : abilityBar === -1 ? (
-        ultimate ? (
+        ultimate && (
           <SkillSlot
             size={size}
             style={{ marginLeft: 10 }}
@@ -72,8 +72,6 @@ export default ({
             skill={ultimate}
             skillIndex={5}
           />
-        ) : (
-          <div />
         )
       ) : (
         <SkillSlot
