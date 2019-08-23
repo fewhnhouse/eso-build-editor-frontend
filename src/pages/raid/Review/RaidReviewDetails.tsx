@@ -17,7 +17,7 @@ const Wrapper = styled(Flex)`
 const RaidContent = styled(Flex)`
   width: 100%;
   flex-wrap: wrap;
-  max-height: 600px;
+  max-height: 90%;
 `
 const GeneralInformation = styled(Card)`
   flex: 1;

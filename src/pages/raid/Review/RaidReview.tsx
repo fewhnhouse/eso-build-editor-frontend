@@ -4,7 +4,14 @@ import RaidReviewDetails from './RaidReviewDetails'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { notification, Layout, Button, Popconfirm, Typography } from 'antd'
+import {
+  notification,
+  Layout,
+  Button,
+  Popconfirm,
+  Typography,
+  Spin,
+} from 'antd'
 import styled from 'styled-components'
 import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
@@ -82,7 +89,11 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
 
   if (!local) {
     if (raidQuery.loading || meQuery.loading) {
-      return <div>Loading...</div>
+      return (
+        <Container>
+          <Spin style={{ marginTop: 5 }} />
+        </Container>
+      )
     }
     if (
       raidQuery.data &&
