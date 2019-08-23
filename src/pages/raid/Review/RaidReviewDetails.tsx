@@ -72,7 +72,7 @@ const RaidReviewDetails = ({ loadedData }: IRaidReviewDetailsProps) => {
                   <CardList direction='row'>
                     {role.builds.map((build, index) => {
                       return (
-                        <BuildCard item={build} draggable={false} key={index} />
+                        <BuildCard item={build.build} draggable={false} key={index} />
                       )
                     })}
                   </CardList>

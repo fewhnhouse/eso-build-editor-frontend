@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import AppContainer from './AppContainer';
 import globalStyles from './components/globalStyles';
-import axios from 'axios';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -73,10 +72,6 @@ const client = new ApolloClient({
 
 client.onResetStore(async () => cache.writeData({ data }));
 //Avoid cors for now
-axios.defaults.baseURL =
-  'https://cors-anywhere.herokuapp.com/' + process.env.REACT_APP_API_URL;
-const CONVERTED_API_TOKEN = btoa(process.env.REACT_APP_API_TOKEN || '');
-axios.defaults.headers.common['Authorization'] = `Basic ${CONVERTED_API_TOKEN}`;
 
 const theme = globalStyles;
 

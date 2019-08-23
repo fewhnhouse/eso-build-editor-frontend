@@ -4,14 +4,13 @@ import {
   ISetSelection,
   ISkillSelection,
   WeaponType,
+  IBuild,
 } from './BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ISpecialBuff } from './consumables/BuffMenu'
 import { ISkill } from '../../components/SkillSlot'
 import { ME } from '../home/UserHomeCard'
 export const handleEditSave = async (
-  initialSkillBarOne: ISkillSelection[],
-  initialSkillBarTwo: ISkillSelection[],
   updateSkillSelection: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
@@ -22,10 +21,6 @@ export const handleEditSave = async (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
   state: IBuildState,
-  mundusStone: IMundus,
-  buff: ISpecialBuff,
-  ultimateOne?: ISkill,
-  ultimateTwo?: ISkill
 ) => {
   const {
     id,
@@ -40,6 +35,10 @@ export const handleEditSave = async (
     newBarTwo,
     applicationArea,
     role,
+    mundusStone,
+    buff,
+    ultimateOne,
+    ultimateTwo,
     name,
     // mainResource,
     description,
@@ -55,13 +54,13 @@ export const handleEditSave = async (
         : undefined,
       trait: setSelection.trait
         ? {
-            connect: { description: setSelection.trait.description },
-          }
+          connect: { description: setSelection.trait.description },
+        }
         : undefined,
       glyph: setSelection.glyph
         ? {
-            connect: { description: setSelection.glyph.description },
-          }
+          connect: { description: setSelection.glyph.description },
+        }
         : undefined,
       type: setSelection.type,
       weaponType: setSelection.weaponType,
@@ -156,14 +155,14 @@ export const handleEditSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-                connect: { skillId: ultimateOne.skillId },
-              }
+              connect: { skillId: ultimateOne.skillId },
+            }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-                connect: { skillId: ultimateTwo.skillId },
-              }
+              connect: { skillId: ultimateTwo.skillId },
+            }
             : undefined,
       },
     },
@@ -181,14 +180,15 @@ export const handleCreateSave = async (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
   state: IBuildState,
-  mundusStone: IMundus,
-  buff: ISpecialBuff,
-  ultimateOne?: ISkill,
-  ultimateTwo?: ISkill
+
 ) => {
   const {
     race,
     esoClass,
+    mundusStone,
+    buff,
+    ultimateOne,
+    ultimateTwo,
     frontbarSelection,
     backbarSelection,
     bigPieceSelection,
@@ -363,14 +363,14 @@ export const handleCreateSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-                connect: { skillId: ultimateOne.skillId },
-              }
+              connect: { skillId: ultimateOne.skillId },
+            }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-                connect: { skillId: ultimateTwo.skillId },
-              }
+              connect: { skillId: ultimateTwo.skillId },
+            }
             : undefined,
         newBarOne: {
           connect: frontbarSkillSelections.data.createSkillSelections.map(
@@ -381,6 +381,110 @@ export const handleCreateSave = async (
         },
         newBarTwo: {
           connect: backbarSkillSelections.data.createSkillSelections.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+      },
+    },
+    refetchQueries: [{ query: ME }],
+  })
+}
+
+export const handleCopy = async (createBuild: (
+  options?: MutationFunctionOptions<any, any> | undefined
+) => Promise<void | ExecutionResult<any>>,
+  build: IBuild,
+) => {
+  const {
+    race,
+    published,
+    name,
+    description,
+    esoClass,
+    applicationArea,
+    role,
+    mundusStone,
+    buff,
+    frontbarSelection,
+    backbarSelection,
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    newBarOne,
+    newBarTwo,
+    ultimateOne,
+    ultimateTwo
+  } = build;
+  return await createBuild({
+    variables: {
+      data: {
+        name,
+        race,
+        published,
+        esoClass,
+        description,
+        applicationArea,
+        role,
+        mundusStone: { connect: { name: mundusStone.name } },
+        buff: { connect: { name: buff.name } },
+        bigPieceSelection: {
+          connect: bigPieceSelection.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        frontbarSelection: {
+          connect: frontbarSelection.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        backbarSelection: {
+          connect: backbarSelection.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        smallPieceSelection: {
+          connect: smallPieceSelection.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        jewelrySelection: {
+          connect: jewelrySelection.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        ultimateOne:
+          ultimateOne && ultimateOne.skillId !== 0
+            ? {
+              connect: { skillId: ultimateOne.skillId },
+            }
+            : undefined,
+        ultimateTwo:
+          ultimateTwo && ultimateTwo.skillId !== 0
+            ? {
+              connect: { skillId: ultimateTwo.skillId },
+            }
+            : undefined,
+        newBarOne: {
+          connect: newBarOne.map(
+            (selection: any) => ({
+              id: selection.id,
+            })
+          ),
+        },
+        newBarTwo: {
+          connect: newBarTwo.map(
             (selection: any) => ({
               id: selection.id,
             })

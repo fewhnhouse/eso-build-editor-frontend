@@ -16,7 +16,6 @@ interface ISelectPayload {
 }
 
 export const setReducer = (state: IBuildState, action: IBuildAction) => {
-  console.log(action)
   switch (action.type) {
     case 'SET_SETS':
       const { sets } = action.payload
@@ -58,25 +57,23 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
           ? selectedSet.has_medium_armor === 1
             ? ArmorType.mediumArmor
             : selectedSet.has_heavy_armor === 1
-            ? ArmorType.heavyArmor
-            : ArmorType.lightArmor
+              ? ArmorType.heavyArmor
+              : ArmorType.lightArmor
           : state.armorType,
         setTabKey: hasWeapons
           ? SetTab.frontbar
           : hasArmor
-          ? SetTab.armor
-          : SetTab.jewelry,
+            ? SetTab.armor
+            : SetTab.jewelry,
       }
     case 'SET_WEAPON_TYPE':
       const { weaponType } = action.payload
+      const { setTabKey, frontbarSelection, backbarSelection } = state!;
       return {
         ...state,
         weaponType,
-        weapons: ['', ''],
-        weaponStats: {
-          selectedGlyphs: ['', ''],
-          selectedTraits: ['', ''],
-        },
+        frontbarSelection: setTabKey === SetTab.frontbar ? [{ slot: Slot.mainHand }, { slot: Slot.offHand }] : frontbarSelection,
+        backbarSelection: setTabKey === SetTab.backbar ? [{ slot: Slot.mainHand }, { slot: Slot.offHand }] : backbarSelection
       }
     case 'SET_ARMOR_TYPE': {
       const { armorType } = action.payload
@@ -174,10 +171,10 @@ const updateStats = (
   return stateStats.map(stat =>
     slots.includes(stat.slot)
       ? {
-          ...stat,
-          glyph: type === 'selectedGlyphs' ? value : stat.glyph,
-          trait: type === 'selectedTraits' ? value : stat.trait,
-        }
+        ...stat,
+        glyph: type === 'selectedGlyphs' ? value : stat.glyph,
+        trait: type === 'selectedTraits' ? value : stat.trait,
+      }
       : stat
   )
 }

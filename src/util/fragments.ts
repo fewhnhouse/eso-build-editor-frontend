@@ -6,6 +6,7 @@ export const set = gql`
     name
     location
     type
+    slug
     bonus_item_1
     bonus_item_2
     bonus_item_3
@@ -151,7 +152,11 @@ export const raid = gql`
       id
       name
       builds {
-        ...Build
+        id
+        index
+        build {
+          ...Build
+        }
       }
     }
   }

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import styled, { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from '../../../components/globalStyles'
-import { BuildContext } from '../BuildStateContext'
-import { useQuery, useMutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import BuildReviewDetails from './BuildReviewDetails'
+import React, { useContext, useEffect, useState } from 'react';
+import { RouteComponentProps, withRouter, Redirect } from 'react-router';
+import styled, { withTheme, ThemeProps } from 'styled-components';
+import { ITheme } from '../../../components/globalStyles';
+import { BuildContext } from '../BuildStateContext';
+import { useQuery, useMutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import BuildReviewDetails from './BuildReviewDetails';
 import {
   Layout,
   Typography,
@@ -13,13 +13,22 @@ import {
   Spin,
   Popconfirm,
   notification,
-} from 'antd'
-import { build } from '../../../util/fragments'
-import { ME } from '../../home/UserHomeCard'
-const { Content, Footer } = Layout
+} from 'antd';
+import { build } from '../../../util/fragments';
+import { ME } from '../../home/UserHomeCard';
+import {
+  CREATE_BUILD,
+  CREATE_SKILL_SELECTIONS,
+  ISkillSelectionData,
+  ISetSelectionData,
+  CREATE_SET_SELECTIONS,
+} from '../Build';
+import { handleCreateSave, handleCopy } from '../util';
+import Flex from '../../../components/Flex';
+const { Content, Footer } = Layout;
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
-  local?: boolean
+  local?: boolean;
 }
 
 const BUILD = gql`
@@ -29,7 +38,7 @@ const BUILD = gql`
     }
   }
   ${build}
-`
+`;
 
 const MY_ID = gql`
   query {
@@ -37,7 +46,7 @@ const MY_ID = gql`
       id
     }
   }
-`
+`;
 
 const DELETE_BUILD = gql`
   mutation deleteBuild($id: ID!) {
@@ -45,12 +54,12 @@ const DELETE_BUILD = gql`
       id
     }
   }
-`
+`;
 
 const ActionButton = styled(Button)`
   width: 100px;
   margin: 10px;
-`
+`;
 
 const Container = styled(Content)`
   display: flex;
@@ -61,35 +70,53 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 144px);
   color: rgb(155, 155, 155);
-`
+`;
 
 const BuildReview = ({ match, theme, local }: IBuildReview) => {
-  const { id } = match.params
+  const { id } = match.params;
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [state] = useContext(BuildContext);
+  const buildQuery = useQuery(BUILD, { variables: { id } });
+  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD);
 
-  const [state] = useContext(BuildContext)
-  const buildQuery = useQuery(BUILD, { variables: { id } })
-  const meQuery = useQuery(MY_ID)
+  const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
+    CREATE_SKILL_SELECTIONS
+  );
+  const [createSetSelections] = useMutation<any, ISetSelectionData>(
+    CREATE_SET_SELECTIONS
+  );
+
+  const meQuery = useQuery(MY_ID);
   const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
     variables: { id },
     refetchQueries: [{ query: ME }],
-  })
-  const [redirect, setRedirect] = useState(false)
+  });
+  const [redirect, setRedirect] = useState('');
   useEffect(() => {
     if (data) {
       notification.success({
         message: 'Build Deletion',
         description: 'Build successfully deleted.',
-      })
+      });
     } else if (error) {
       notification.error({
         message: 'Build Deletion',
         description: 'Error while deleting build. Try again later.',
-      })
+      });
     }
-  }, [data, error])
+  }, [data, error]);
+
+  useEffect(() => {
+    if (saved && createBuildResult.data && createBuildResult.data.createBuild) {
+      localStorage.removeItem('buildState');
+      setRedirect(`/buildreview/${createBuildResult.data.createBuild.id}`);
+    }
+  }, [createBuildResult.data, saved]);
+
   if (!local) {
     if (buildQuery.loading || meQuery.loading) {
-      return <Spin />
+      return <Spin />;
     }
     if (
       buildQuery.data &&
@@ -98,14 +125,49 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
       meQuery.data.me
     ) {
       const handleDeleteConfirm = () => {
-        deleteMutation({ variables: { id } })
-      }
+        deleteMutation({ variables: { id } });
+      };
+
+      const handleCopyClick = async () => {
+        setLoading(true);
+        try {
+          await handleCopy(createBuild, buildQuery.data.build);
+          notification.success({
+            message: 'Build copy successful',
+            description: (
+              <Flex direction="column" align="center" justify="center">
+                <div>
+                  Your build was successfully copied. You can now view it and
+                  share it with others!
+                </div>
+                <Flex
+                  style={{ width: '100%', marginTop: 10 }}
+                  direction="row"
+                  align="center"
+                  justify="space-between"
+                >
+                  <Button icon="share-alt">Share link</Button>
+                </Flex>
+              </Flex>
+            ),
+          });
+          setSaved(true);
+        } catch (e) {
+          console.error(e);
+          notification.error({
+            message: 'Build creation failed',
+            description: 'Your build could not be copied. Try again later.',
+          });
+        }
+
+        setLoading(false);
+      };
 
       const handleEditClick = () => {
-        setRedirect(true)
-      }
+        setRedirect(`/editBuild/${id}/0`);
+      };
       if (redirect) {
-        return <Redirect to={`/editBuild/${id}/0`} push />
+        return <Redirect to={redirect} push />;
       }
       return (
         <>
@@ -127,21 +189,38 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
             </Typography.Title>
             {buildQuery.data.build.owner.id === meQuery.data.me.id && (
               <div>
+                <Popconfirm
+                  title="Are you sure you want to copy this build?"
+                  onConfirm={handleCopyClick}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <ActionButton
+                    loading={loading}
+                    disabled={saved}
+                    icon="copy"
+                    size="large"
+                    type="default"
+                  >
+                    Copy
+                  </ActionButton>
+                </Popconfirm>
+
                 <ActionButton
                   onClick={handleEditClick}
-                  icon='edit'
-                  size='large'
-                  type='primary'
+                  icon="edit"
+                  size="large"
+                  type="primary"
                 >
                   Edit
                 </ActionButton>
                 <Popconfirm
-                  title='Are you sure you want to delete this build?'
+                  title="Are you sure you want to delete this build?"
                   onConfirm={handleDeleteConfirm}
-                  okText='Yes'
-                  cancelText='No'
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  <ActionButton icon='delete' size='large' type='danger'>
+                  <ActionButton icon="delete" size="large" type="danger">
                     Delete
                   </ActionButton>
                 </Popconfirm>
@@ -149,13 +228,13 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
             )}
           </Footer>
         </>
-      )
+      );
     } else {
-      return null
+      return null;
     }
   } else {
-    return <BuildReviewDetails loadedData={state!} />
+    return <BuildReviewDetails loadedData={state!} />;
   }
-}
+};
 
-export default withTheme(withRouter(BuildReview))
+export default withTheme(withRouter(BuildReview));

@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
-import { Typography, Button, Spin, Input, Icon } from 'antd'
-import { Redirect } from 'react-router'
-import RaidCard from './RaidCard'
-import BuildCard from './BuildCard'
-import { useQuery } from 'react-apollo'
-import gql from 'graphql-tag'
-const { Title } = Typography
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Flex from '../../components/Flex';
+import { Typography, Button, Spin, Input, Icon } from 'antd';
+import { Redirect } from 'react-router';
+import RaidCard from './RaidCard';
+import BuildCard from './BuildCard';
+import { useQuery } from 'react-apollo';
+import gql from 'graphql-tag';
+import { build } from '../../util/fragments';
+const { Title } = Typography;
 
 const CardContainer = styled(Flex)`
   justify-content: center;
   flex: 1;
   height: 100%;
-`
+`;
 
 const ListCard = styled.div`
   width: 80%;
@@ -23,13 +24,13 @@ const ListCard = styled.div`
   margin: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-`
+`;
 const CardTitle = styled(Title)`
   display: flex;
   margin-bottom: 0;
   width: 100%;
   justify-content: space-between;
-`
+`;
 
 const StyledTitle = styled(Flex)`
   background-color: #e8e8e8;
@@ -37,7 +38,7 @@ const StyledTitle = styled(Flex)`
   padding: 20px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-`
+`;
 export const ME = gql`
   query {
     me {
@@ -66,40 +67,43 @@ export const ME = gql`
           id
           builds {
             id
-            role
+            build {
+              ...Build
+            }
           }
         }
       }
     }
   }
-`
+  ${build}
+`;
 
 export default ({ isBuild }: { isBuild: boolean }) => {
-  const [redirect, setRedirect] = useState('')
-  const { data, error, loading } = useQuery<any, any>(ME)
-  const [search, setSearch] = useState('')
+  const [redirect, setRedirect] = useState('');
+  const { data, error, loading } = useQuery<any, any>(ME);
+  const [search, setSearch] = useState('');
   const handleCreateClick = (path: string) => () => {
-    setRedirect(path)
-  }
+    setRedirect(path);
+  };
   if (redirect !== '') {
-    return <Redirect to={redirect} push />
+    return <Redirect to={redirect} push />;
   }
   if (error) {
-    console.error(error)
-    return <div>Error.</div>
+    console.error(error);
+    return <div>Error.</div>;
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-  }
+    setSearch(e.target.value);
+  };
   return (
-    <CardContainer direction='column' justify='center' align='center'>
+    <CardContainer direction="column" justify="center" align="center">
       <ListCard>
-        <StyledTitle direction='column' justify='center' align='center'>
+        <StyledTitle direction="column" justify="center" align="center">
           <CardTitle level={3}>
             {isBuild ? 'My builds' : 'My raids'}
             <Button
-              type='primary'
+              type="primary"
               ghost={true}
               onClick={handleCreateClick(isBuild ? '/build/0' : '/raid/0')}
             >
@@ -110,8 +114,8 @@ export default ({ isBuild }: { isBuild: boolean }) => {
             placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
             value={search}
             onChange={handleSearchChange}
-            addonAfter={<Icon type='search' />}
-            defaultValue='mysite'
+            addonAfter={<Icon type="search" />}
+            defaultValue="mysite"
           />
         </StyledTitle>
         {loading ? (
@@ -131,5 +135,5 @@ export default ({ isBuild }: { isBuild: boolean }) => {
         )}
       </ListCard>
     </CardContainer>
-  )
-}
+  );
+};
