@@ -38,8 +38,7 @@ const BuildInformation = styled(Card)`
   margin: 20px;
   height: calc(100% - 40px);
   min-width: 400px;
-  flex: 1;
-  max-width: 700px;
+  flex: 2;
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
