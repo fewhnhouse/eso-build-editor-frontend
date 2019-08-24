@@ -100,7 +100,7 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
   useEffect(() => {
     if (saved && createBuildResult.data && createBuildResult.data.createBuild) {
       localStorage.removeItem('buildState');
-      setRedirect(`/buildreview/${createBuildResult.data.createBuild.id}`);
+      setRedirect(`/builds/${createBuildResult.data.createBuild.id}`);
     }
   }, [createBuildResult.data, saved]);
 

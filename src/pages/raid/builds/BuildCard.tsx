@@ -133,7 +133,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             />
           ) : (
             <Tooltip title='Go to build'>
-              <Link to={`/buildreview/${item.id}`}>
+              <Link to={`/builds/${item.id}`}>
                 <Button ghost icon='select' type='primary' />
               </Link>
             </Tooltip>
