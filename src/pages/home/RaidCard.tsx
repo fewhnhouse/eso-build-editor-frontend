@@ -76,7 +76,7 @@ interface IUserDataProps {
 const RaidCard = ({ data, filterText }: IUserDataProps) => {
   const [path, setRedirect] = useState('')
 
-  const handleClick = (path: string) => {
+  const handleClick = (path: string) => () => {
     setRedirect(path)
   }
 
@@ -100,7 +100,7 @@ const RaidCard = ({ data, filterText }: IUserDataProps) => {
             <StyledCard
               key={raid.id}
               hoverable
-              onClick={() => handleClick(`/raidReview/${raid.id}`)}
+              onClick={handleClick(`/raids/${raid.id}`)}
             >
               <Title>
                 <Flex direction='row' justify='space-between'>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Divider, Tabs, Empty } from 'antd'
 import styled from 'styled-components'
-import Menu from './Menu'
 import Weapons from './Weapons'
 import Armor from './Armor'
 import Jewelry from './Jewelry'
@@ -9,6 +8,7 @@ import SetBar from './SetBar'
 import { BuildContext, SetTab } from '../BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
+import SetMenu from './SetMenu'
 
 const { TabPane } = Tabs
 
@@ -76,7 +76,12 @@ export default ({ edit }: { edit: boolean }) => {
         flexDirection: 'row',
       }}
     >
-      <Menu collapsed={collapsed} setCollapsed={setCollapsed} />
+      <SetMenu
+        collapsable
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        context={BuildContext}
+      />
       <Content>
         {selectedSet ? (
           <>

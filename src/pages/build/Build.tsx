@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react'
 import {
   BuildContext,
   buildReducer,
@@ -7,8 +7,8 @@ import {
   OnehandedWeapon,
   WeaponType,
   ISkillSelection,
-} from './BuildStateContext';
-import { Redirect } from 'react-router';
+} from './BuildStateContext'
+import { Redirect } from 'react-router'
 import {
   Layout,
   Button,
@@ -18,22 +18,22 @@ import {
   Tooltip,
   notification,
   Typography,
-} from 'antd';
-import styled from 'styled-components';
-import Consumables from './consumables/Consumables';
-import Sets from './Sets/Sets';
-import Skills from './Skills/Skills';
-import RaceClass from './RaceAndClass/RaceClass';
-import BuildReview from './Review/BuildReview';
-import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo';
-import Flex from '../../components/Flex';
-import { handleCreateSave, handleEditSave } from './util';
-import { build } from '../../util/fragments';
+} from 'antd'
+import styled from 'styled-components'
+import Consumables from './consumables/Consumables'
+import Sets from './Sets/Sets'
+import Skills from './Skills/Skills'
+import RaceClass from './RaceAndClass/RaceClass'
+import BuildReview from './Review/BuildReview'
+import gql from 'graphql-tag'
+import { useMutation } from 'react-apollo'
+import Flex from '../../components/Flex'
+import { handleCreateSave, handleEditSave } from './util'
+import { build } from '../../util/fragments'
 
-const { Footer, Content } = Layout;
-const { Text } = Typography;
-const ButtonGroup = Button.Group;
+const { Footer, Content } = Layout
+const { Text } = Typography
+const ButtonGroup = Button.Group
 
 const Container = styled(Content)`
   display: flex;
@@ -44,10 +44,10 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 178px);
   color: rgb(155, 155, 155);
-`;
+`
 const TabButton = styled(Button)`
   margin: 0px 10px;
-`;
+`
 
 export const CREATE_BUILD = gql`
   mutation createBuild($data: BuildCreateInput!) {
@@ -56,15 +56,15 @@ export const CREATE_BUILD = gql`
     }
   }
   ${build}
-`;
+`
 
 export interface ISetSelectionData {
-  slots: string[];
-  glyphDescriptions: string[];
-  traitDescriptions: string[];
-  setIds: number[];
-  types: (SlotType | '' | undefined)[];
-  weaponTypes: (OnehandedWeapon | TwohandedWeapon | '' | undefined)[];
+  slots: string[]
+  glyphDescriptions: string[]
+  traitDescriptions: string[]
+  setIds: number[]
+  types: (SlotType | '' | undefined)[]
+  weaponTypes: (OnehandedWeapon | TwohandedWeapon | '' | undefined)[]
 }
 
 export const CREATE_SET_SELECTIONS = gql`
@@ -87,11 +87,11 @@ export const CREATE_SET_SELECTIONS = gql`
       id
     }
   }
-`;
+`
 
 export interface ISkillSelectionData {
-  skillIds: number[];
-  indices: number[];
+  skillIds: number[]
+  indices: number[]
 }
 
 export const CREATE_SKILL_SELECTIONS = gql`
@@ -100,7 +100,7 @@ export const CREATE_SKILL_SELECTIONS = gql`
       id
     }
   }
-`;
+`
 
 const UPDATE_SKILL_SELECTION = gql`
   mutation updateSkillSelection(
@@ -111,7 +111,7 @@ const UPDATE_SKILL_SELECTION = gql`
       id
     }
   }
-`;
+`
 
 const UPDATE_SET_SELECTION = gql`
   mutation updateSetSelection(
@@ -122,7 +122,7 @@ const UPDATE_SET_SELECTION = gql`
       id
     }
   }
-`;
+`
 
 const UPDATE_BUILD = gql`
   mutation updateBuild(
@@ -134,66 +134,57 @@ const UPDATE_BUILD = gql`
     }
   }
   ${build}
-`;
-const { Step } = Steps;
+`
+const { Step } = Steps
 
 interface IBuildProps {
-  build: any;
-  pageIndex: number;
-  path: string;
-  edit?: boolean;
-  initialSkillBarOne?: ISkillSelection[];
-  initialSkillBarTwo?: ISkillSelection[];
+  build: any
+  pageIndex: number
+  path: string
+  edit?: boolean
 }
 
-export default ({
-  build,
-  pageIndex,
-  path,
-  initialSkillBarOne = [],
-  initialSkillBarTwo = [],
-  edit = false,
-}: IBuildProps) => {
-  const [state, dispatch] = useReducer(buildReducer, build);
-  const [loading, setLoading] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [tab, setTab] = useState(pageIndex || 0);
-  const [redirect, setRedirect] = useState('');
+export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
+  const [state, dispatch] = useReducer(buildReducer, build)
+  const [loading, setLoading] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [tab, setTab] = useState(pageIndex || 0)
+  const [redirect, setRedirect] = useState('')
 
   const handlePrivateChange = () => {
-    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} });
-  };
+    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
+  }
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1);
-  };
-  const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD);
-  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD);
+    setTab(tabIndex => tabIndex - 1)
+  }
+  const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD)
+  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
 
-  const [updateSetSelection] = useMutation<any, any>(UPDATE_SET_SELECTION);
-  const [updateSkillSelection] = useMutation<any, any>(UPDATE_SKILL_SELECTION);
+  const [updateSetSelection] = useMutation<any, any>(UPDATE_SET_SELECTION)
+  const [updateSkillSelection] = useMutation<any, any>(UPDATE_SKILL_SELECTION)
 
   const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
     CREATE_SKILL_SELECTIONS
-  );
+  )
   const [createSetSelections] = useMutation<any, ISetSelectionData>(
     CREATE_SET_SELECTIONS
-  );
+  )
 
-  const { ultimateOne, ultimateTwo } = state!;
+  const { ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
     if (saved) {
       if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem('buildState');
-        setRedirect(createBuildResult.data.createBuild.id);
+        localStorage.removeItem('buildState')
+        setRedirect(createBuildResult.data.createBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
-        setRedirect(updateBuildResult.data.updateBuild.id);
+        setRedirect(updateBuildResult.data.updateBuild.id)
       }
     }
-  }, [createBuildResult.data, saved, updateBuildResult.data]);
+  }, [createBuildResult.data, saved, updateBuildResult.data])
 
   const handleSave = async () => {
-    setLoading(true);
+    setLoading(true)
     if (edit) {
       try {
         await handleEditSave(
@@ -201,32 +192,32 @@ export default ({
           updateSetSelection,
           updateBuild,
           state
-        );
+        )
         notification.success({
           message: 'Build update successful',
           description: (
-            <Flex direction="column" align="center" justify="center">
+            <Flex direction='column' align='center' justify='center'>
               <div>
                 Your build was successfully edited. You can now view it and
                 share it with others!
               </div>
               <Flex
                 style={{ width: '100%', marginTop: 10 }}
-                direction="row"
-                align="center"
-                justify="space-between"
+                direction='row'
+                align='center'
+                justify='space-between'
               >
-                <Button icon="share-alt">Share link</Button>
+                <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
           ),
-        });
+        })
       } catch (e) {
-        console.error(e);
+        console.error(e)
         notification.error({
           message: 'Build update failed',
           description: 'Your build could not be saved. Try again later.',
-        });
+        })
       }
     } else {
       try {
@@ -235,46 +226,46 @@ export default ({
           createSetSelections,
           createBuild,
           state!
-        );
+        )
         notification.success({
           message: 'Build creation successful',
           description: (
-            <Flex direction="column" align="center" justify="center">
+            <Flex direction='column' align='center' justify='center'>
               <div>
                 Your build was successfully saved. You can now view it and share
                 it with others!
               </div>
               <Flex
                 style={{ width: '100%', marginTop: 10 }}
-                direction="row"
-                align="center"
-                justify="space-between"
+                direction='row'
+                align='center'
+                justify='space-between'
               >
-                <Button icon="share-alt">Share link</Button>
+                <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
           ),
-        });
+        })
       } catch (e) {
-        console.error(e);
+        console.error(e)
         notification.error({
           message: 'Build creation failed',
           description: 'Your build could not be saved. Try again later.',
-        });
+        })
       }
     }
-    setLoading(false);
-    setSaved(true);
-  };
+    setLoading(false)
+    setSaved(true)
+  }
 
   const handleNextClick = () => {
     if (tab === 4) {
-      console.log('save');
-      handleSave();
+      console.log('save')
+      handleSave()
     } else {
-      setTab(tabIndex => tabIndex + 1);
+      setTab(tabIndex => tabIndex + 1)
     }
-  };
+  }
 
   const {
     frontbarSelection,
@@ -284,7 +275,7 @@ export default ({
     jewelrySelection,
     newBarOne,
     newBarTwo,
-  } = state!;
+  } = state!
 
   const hasValidFrontbar = frontbarSelection[0].selectedSet
     ? frontbarSelection[0].type === WeaponType.onehanded
@@ -292,40 +283,40 @@ export default ({
         ? true
         : false
       : true
-    : false;
+    : false
   const hasValidBackbar = backbarSelection[0].selectedSet
     ? backbarSelection[0].type === WeaponType.onehanded
       ? backbarSelection[1].selectedSet
         ? true
         : false
       : true
-    : false;
+    : false
 
   const hasValidBigPieces = bigPieceSelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
   const hasValidSmallPieces = smallPieceSelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
   const hasValidJewelry = jewelrySelection.reduce(
     (prev, curr) => (prev && curr.selectedSet ? true : false),
     true
-  );
+  )
 
   const hasValidSkillBarOne = newBarOne.reduce(
     (prev, curr) =>
       prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
     true
-  );
+  )
   const hasValidSkillBarTwo = newBarTwo.reduce(
     (prev, curr) =>
       prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
     true
-  );
-  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0;
-  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0;
+  )
+  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0
+  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0
 
   const isDisabled =
     (tab === 0 && (state.race === '' || state.esoClass === '')) ||
@@ -343,21 +334,21 @@ export default ({
         hasValidSmallPieces &&
         hasValidFrontbar &&
         hasValidBackbar
-      ));
+      ))
 
   const setTooltipTitle = () => {
     if (!isDisabled) {
-      return '';
+      return ''
     }
     switch (tab) {
       case 0:
-        return 'Select a Race and a Class to progress.';
+        return 'Select a Race and a Class to progress.'
       case 1:
-        return 'Slot Skills and Ultimates to progress.';
+        return 'Slot Skills and Ultimates to progress.'
       case 2:
-        return 'Slot Armor, Weapons and Jewelry to progress.';
+        return 'Slot Armor, Weapons and Jewelry to progress.'
     }
-  };
+  }
 
   return (
     <BuildContext.Provider value={[state, dispatch]}>
@@ -375,7 +366,7 @@ export default ({
         ) : (
           <Redirect to={`${path}/0`} />
         )}
-        {redirect && <Redirect to={`/buildreview/${redirect}`} push />}
+        {redirect && <Redirect to={`/builds/${redirect}`} push />}
       </Container>
 
       <Footer
@@ -389,37 +380,37 @@ export default ({
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
-          size="large"
-          type="primary"
+          size='large'
+          type='primary'
         >
-          <Icon type="left" />
+          <Icon type='left' />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title="Race & Class"
-            description="Select race and class."
+            title='Race & Class'
+            description='Select race and class.'
           />
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title="Skills"
-            description="Select skills."
+            title='Skills'
+            description='Select skills.'
           />
           <Step
             style={{ whiteSpace: 'nowrap' }}
-            title="Sets"
-            description="Select sets."
+            title='Sets'
+            description='Select sets.'
           />
           <Step
-            title="Consumables"
+            title='Consumables'
             style={{ whiteSpace: 'nowrap' }}
-            description="Select mundus, potions, food."
+            description='Select mundus, potions, food.'
           />
-          <Step title="Review" description="Review and save." />
+          <Step title='Review' description='Review and save.' />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
-          <ButtonGroup style={{ display: 'flex' }} size="large">
+          <ButtonGroup style={{ display: 'flex' }} size='large'>
             {tab === 4 && (
               <Tooltip
                 title={
@@ -439,7 +430,7 @@ export default ({
               loading={loading}
               onClick={handleNextClick}
               disabled={isDisabled || saved}
-              type="primary"
+              type='primary'
             >
               {tab === 4 ? 'Save' : 'Next'}
               {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
@@ -449,5 +440,5 @@ export default ({
         <Redirect to={`${path}/${tab}`} push />
       </Footer>
     </BuildContext.Provider>
-  );
-};
+  )
+}

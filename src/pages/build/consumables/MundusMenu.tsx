@@ -49,7 +49,7 @@ const GET_MUNDUS_STONES = gql`
     }
   }
 `
-export default () => {
+export default ({ context }: { context: React.Context<any> }) => {
   const { data, error, loading } = useQuery<
     { mundusStones: IMundusData[] },
     {}
@@ -66,13 +66,19 @@ export default () => {
     return <div>Error.</div>
   }
   if (data) {
-    return <MundusList data={data} />
+    return <MundusList context={context} data={data} />
   }
   return null
 }
 
-const MundusList = ({ data }: { data: { mundusStones: IMundusData[] } }) => {
-  const [state, dispatch] = useContext(BuildContext)
+const MundusList = ({
+  data,
+  context,
+}: {
+  data: { mundusStones: IMundusData[] }
+  context: React.Context<any>
+}) => {
+  const [state, dispatch] = useContext(context)
   const { mundusStone } = state!
 
   const [searchText, setSearchText] = useState('')
@@ -147,9 +153,7 @@ const MundusList = ({ data }: { data: { mundusStones: IMundusData[] } }) => {
                   <Meta
                     avatar={
                       <MyAvatar
-                        src={`${
-                          process.env.REACT_APP_IMAGE_SERVICE
-                        }/mundusStones/${item.icon}`}
+                        src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
                       />
                     }
                     title={item.name}

@@ -1,15 +1,16 @@
-import React from 'react'
-import styled from 'styled-components'
-import Flex from '../../../components/Flex'
-import { Typography, Divider, Card, Icon } from 'antd'
-import GearView from '../../../components/GearView'
-import SkillView from '../../../components/SkillView'
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
-import { IBuildState } from '../BuildStateContext'
-import { classes, races } from '../RaceAndClass/data'
-import { applicationAreas } from '../RaceAndClass/RaceClass'
+import React from 'react';
+import styled from 'styled-components';
+import Flex from '../../../components/Flex';
+import { Typography, Divider, Card, Icon } from 'antd';
+import GearView from '../../../components/GearView';
+import SkillView from '../../../components/SkillView';
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar';
+import { IBuildState } from '../BuildStateContext';
+import { classes, races } from '../RaceAndClass/data';
+import InformationCard from '../../../components/InformationCard';
+import { applicationAreas } from '../RaceAndClass/RaceClass';
 
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 const MyAvatar = styled.img`
   width: 40px;
@@ -19,29 +20,28 @@ const MyAvatar = styled.img`
   border-radius: 4px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.05);
-`
+`;
 const ClassImg = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 10px;
   border-radius: 4px;
-`
+`;
 
 const StyledTitle = styled(Title)`
   margin-bottom: 5px !important;
-`
+`;
 const Wrapper = styled(Flex)`
   height: 100%;
   padding: 20px;
-`
+`;
 const BuildInformation = styled(Card)`
   margin: 20px;
   height: calc(100% - 40px);
   min-width: 400px;
-  flex: 1;
-  max-width: 700px;
+  flex: 2;
   overflow-y: auto;
-`
+`;
 const GeneralInformation = styled(Card)`
   margin: 20px;
   height: calc(100% - 40px);
@@ -49,20 +49,21 @@ const GeneralInformation = styled(Card)`
   flex: 1;
   max-width: 700px;
   overflow-y: auto;
-`
+`;
 const SkillsView = styled.div`
   margin-bottom: 10px;
   width: 100%;
-`
+`;
 const MiscView = styled(Flex)`
   margin-bottom: 10px;
-`
+`;
 
 interface IDetailViewProps {
-  loadedData: IBuildState
+  loadedData: IBuildState;
+  local?: boolean;
 }
 
-const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
+const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const {
     name,
     bigPieceSelection,
@@ -74,16 +75,14 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     buff,
     esoClass,
     race,
-    published,
-    // mainResource,
-    applicationArea,
-    role,
-    description,
     newBarOne,
+    published,
     newBarTwo,
     ultimateOne,
     ultimateTwo,
-  } = loadedData
+    description,
+    applicationArea,
+  } = loadedData;
   const selectedSetup = [
     {
       id: 'bigpieces',
@@ -102,14 +101,13 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
       data: frontbarSelection || [],
     },
     { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
-  ]
-  const raceData = races.find(rc => rc.title === race)
-  const classData = classes.find(esoC => esoC.title === esoClass)
-  const area = applicationAreas.find(area => area.key === applicationArea)
+  ];
+  const raceData = races.find(rc => rc.title === race);
+  const classData = classes.find(esoC => esoC.title === esoClass);
 
   const setsCount = selectedSetup
     .map(setup => {
-      return setup.data
+      return setup.data;
     })
     .flat()
     .map(setSelection =>
@@ -118,114 +116,120 @@ const BuildReviewDetails = ({ loadedData }: IDetailViewProps) => {
     .reduce<Map<string, number>>(
       (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
       new Map()
-    )
+    );
+  const area = applicationAreas.find(area => area.key === applicationArea);
 
   return (
-    <Wrapper
-      direction='row'
-      align='flex-start'
-      justify='space-evenly'
-      wrap
-      fluid
-    >
-      <GeneralInformation
-        title={
-          <>
-            <Title level={2}>General Information</Title>
-            <Flex
-              direction='row'
-              justify='center'
-              style={{ position: 'absolute', top: '10px', right: '10px' }}
-            >
-              <Icon
-                style={{ marginRight: 5 }}
-                type={published ? 'unlock' : 'lock'}
-              />{' '}
-              {published ? 'Public' : 'Private'}
-            </Flex>
-          </>
-        }
+    <Flex style={{ padding: 20 }} fluid>
+      <Flex>
+        <Typography.Title>{name}</Typography.Title>
+        {local && (
+          <Flex direction="row">
+            <InformationCard
+              icon="edit"
+              title="Description"
+              description={description}
+            />
+            <Divider
+              type="vertical"
+              style={{ height: 50, margin: '0px 20px' }}
+            />
+            <InformationCard
+              icon="environment"
+              title="Application Area"
+              description={area ? area.label : ''}
+            />
+            <Divider
+              type="vertical"
+              style={{ height: 50, margin: '0px 20px' }}
+            />
+            <InformationCard
+              icon={published ? 'unlock' : 'lock'}
+              title="Access Rights"
+              description={published ? 'Public' : 'Private'}
+            />
+          </Flex>
+        )}
+      </Flex>
+      <Wrapper
+        direction="row"
+        align="flex-start"
+        justify="space-evenly"
+        wrap
+        fluid
       >
-        <Title level={3}>{name}</Title>
-        <Text strong>Description: </Text>
-        <Text>{description || ''}</Text>
-        <br />
-        <Text strong>Application Area: </Text>
-        <Text>{area ? area.label : ''}</Text>
-        <Divider>Race</Divider>
-        <MiscView direction='row' justify='flex-start'>
-          <MyAvatar
-            src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
-          />
-          <Text strong>{race}</Text>
-        </MiscView>
-        <Text>{raceData ? raceData.description : ''}</Text>
-        <Divider>Class</Divider>
-        <MiscView direction='row' justify='flex-start'>
-          <MyAvatar
-            src={`${
-              process.env.REACT_APP_IMAGE_SERVICE
-            }/classes/${esoClass}.png`}
-          />
-          <Text strong>{esoClass}</Text>
-        </MiscView>
-        <Text>{classData ? classData.description : ''}</Text>
-        {mundusStone && (
-          <>
-            <Divider>Mundus Stone</Divider>
-            <MiscView direction='row' justify='flex-start' align='center'>
-              <ClassImg
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${
-                  mundusStone.icon
-                }`}
-              />
-              <Text strong>{mundusStone.name}</Text>
-            </MiscView>
-            <Text>
-              {mundusStone.effect} by {mundusStone.value}.
-            </Text>
-          </>
-        )}
-        {buff && (
-          <>
-            <Divider>Buff</Divider>
-            <MiscView direction='row' justify='flex-start' align='center'>
-              <MyAvatar
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
-                  buff.icon
-                }`}
-              />
-              <Text strong>
-                {buff.name} {buff.type}
+        <GeneralInformation
+          title={<Title level={2}>General Information</Title>}
+        >
+          <Divider>Race</Divider>
+          <MiscView direction="row" justify="flex-start">
+            <MyAvatar
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
+            />
+            <Text strong>{race}</Text>
+          </MiscView>
+          <Text>{raceData ? raceData.description : ''}</Text>
+          <Divider>Class</Divider>
+          <MiscView direction="row" justify="flex-start">
+            <MyAvatar
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}.png`}
+            />
+            <Text strong>{esoClass}</Text>
+          </MiscView>
+          <Text>{classData ? classData.description : ''}</Text>
+          {mundusStone && (
+            <>
+              <Divider>Mundus Stone</Divider>
+              <MiscView direction="row" justify="flex-start" align="center">
+                <ClassImg
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
+                />
+                <Text strong>{mundusStone.name}</Text>
+              </MiscView>
+              <Text>
+                {mundusStone.effect} by {mundusStone.value}.
               </Text>
-            </MiscView>
-            <Text>{buff.buffDescription}</Text>
-          </>
-        )}
-      </GeneralInformation>
-      <BuildInformation title={<Title level={2}>Build Information</Title>}>
-        <SkillsView>
-          <StyledTitle level={4}>Skills</StyledTitle>
-          <SkillView
-            size='small'
-            id={ABILITY_BAR_ONE}
-            disabled
-            skillSlots={newBarOne}
-            ultimate={ultimateOne}
-          />
-          <SkillView
-            size='small'
-            id={ABILITY_BAR_TWO}
-            disabled
-            skillSlots={newBarTwo}
-            ultimate={ultimateTwo}
-          />
-        </SkillsView>
-        <Divider />
-        <GearView disabled setups={selectedSetup} setsCount={setsCount} />
-      </BuildInformation>
-    </Wrapper>
-  )
-}
+            </>
+          )}
+          {buff && (
+            <>
+              <Divider>Buff</Divider>
+              <MiscView direction="row" justify="flex-start" align="center">
+                <MyAvatar
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`}
+                />
+                <Text strong>
+                  {buff.name} {buff.type}
+                </Text>
+              </MiscView>
+              <Text>{buff.buffDescription}</Text>
+            </>
+          )}
+        </GeneralInformation>
+        <BuildInformation title={<Title level={2}>Build Information</Title>}>
+          <SkillsView>
+            <StyledTitle level={4}>Skills</StyledTitle>
+            <SkillView
+              size="small"
+              id={ABILITY_BAR_ONE}
+              disabled
+              skillSlots={newBarOne}
+              ultimate={ultimateOne}
+            />
+            <SkillView
+              size="small"
+              id={ABILITY_BAR_TWO}
+              disabled
+              skillSlots={newBarTwo}
+              ultimate={ultimateTwo}
+            />
+          </SkillsView>
+          <Divider />
+          <GearView disabled setups={selectedSetup} setsCount={setsCount} />
+        </BuildInformation>
+      </Wrapper>
+    </Flex>
+  );
+};
 
-export default BuildReviewDetails
+export default BuildReviewDetails;

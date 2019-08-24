@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from 'react';
-import BuffMenu from './BuffMenu';
-import MundusMenu from './MundusMenu';
-import { BuildContext } from '../BuildStateContext';
+import React, { useContext, useEffect } from 'react'
+import BuffMenu from './BuffMenu'
+import MundusMenu from './MundusMenu'
+import { BuildContext } from '../BuildStateContext'
 
 export default ({ edit }: { edit: boolean }) => {
-  const [state] = useContext(BuildContext);
+  const [state] = useContext(BuildContext)
 
   useEffect(() => {
     if (!edit) {
-      localStorage.setItem('buildState', JSON.stringify(state));
+      localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [state]);
+  }, [state])
   return (
     <div
       style={{
@@ -20,8 +20,8 @@ export default ({ edit }: { edit: boolean }) => {
         flexDirection: 'row',
       }}
     >
-      <BuffMenu />
-      <MundusMenu />
+      <BuffMenu context={BuildContext} />
+      <MundusMenu context={BuildContext} />
     </div>
-  );
-};
+  )
+}

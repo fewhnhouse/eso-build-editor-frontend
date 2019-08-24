@@ -185,11 +185,7 @@ export default ({
         ) : (
           <Redirect to={`${path}/0`} />
         )}
-        {redirect !== '' ? (
-          <Redirect to={`/raidreview/${redirect}`} push />
-        ) : (
-          ''
-        )}
+        {redirect !== '' ? <Redirect to={`/raids/${redirect}`} push /> : ''}
       </Container>
       <Footer
         style={{
