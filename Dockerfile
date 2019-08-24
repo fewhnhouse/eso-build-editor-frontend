@@ -5,6 +5,7 @@ COPY package*.json ./
 RUN npm i
 COPY . ./
 RUN npm run build
+RUN npx precompress ./build/static
 
 # Stage 2 - the production environment
 FROM nginx:1.12-alpine
