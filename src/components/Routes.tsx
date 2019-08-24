@@ -8,6 +8,7 @@ import RaidReview from '../pages/raid/Review/RaidReview'
 import BuildReview from '../pages/build/Review/BuildReview'
 import BuildWrapper from '../pages/build/BuildWrapper'
 import RaidWrapper from '../pages/raid/RaidWrapper'
+import Overview from '../pages/overview/Overview'
 
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean
@@ -54,7 +55,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
       />
       <Route exact path='/builds' render={() => <div>Test</div>} />
       <Route exact path='/raids' render={() => <div>Test</div>} />
-      <Route exact path='/overview' render={() => <div>Test</div>} />
+      <Route exact path='/overview' component={Overview} />
 
       <Route exact path='/builds/:id' component={BuildReview} />
       <Route

@@ -84,6 +84,8 @@ const GET_SETS = gql`
 
 interface IMenuProps {
   collapsed: boolean
+  collapsable?: boolean
+  context: React.Context<any>
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -99,7 +101,12 @@ const setTypes = [
 ]
 const setWeight = ['Light', 'Medium', 'Heavy', 'Jewelry', 'Weapons']
 
-export default ({ collapsed, setCollapsed }: IMenuProps) => {
+export default ({
+  collapsed,
+  setCollapsed,
+  context,
+  collapsable,
+}: IMenuProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedWeights, setSelectedWeights] = useState<string[]>([])
   const [searchText, setSearchText] = useState('')
@@ -215,13 +222,15 @@ export default ({ collapsed, setCollapsed }: IMenuProps) => {
               icon={expanded ? 'shrink' : 'arrows-alt'}
               onClick={handleExpandChange}
             />
-            <StyledIconBtn
-              type='primary'
-              ghost
-              style={{ marginRight: 10 }}
-              onClick={handleIconClick(true)}
-              icon='double-left'
-            />
+            {collapsable && (
+              <StyledIconBtn
+                type='primary'
+                ghost
+                style={{ marginRight: 10 }}
+                onClick={handleIconClick(true)}
+                icon='double-left'
+              />
+            )}
           </Flex>
           {expanded && (
             <>
@@ -274,6 +283,7 @@ export default ({ collapsed, setCollapsed }: IMenuProps) => {
         </Flex>
         {data && data.sets && (
           <SetList
+            context={context}
             searchText={searchText}
             setSearchText={setSearchText}
             collapsed={collapsed}
@@ -326,11 +336,12 @@ const SetList = ({
   sets,
   loading,
   collapsed,
+  context,
   searchText,
   setSearchText,
   setCollapsed,
 }: ISetListProps) => {
-  const [state, dispatch] = useContext(BuildContext)
+  const [state, dispatch] = useContext(context)
 
   useEffect(() => {
     if (state!.selectedSet) {

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { List, Tag, Divider, Card, Input, Spin, Button, Select } from 'antd'
 import styled from 'styled-components'
-import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
@@ -95,7 +94,7 @@ const buffTypes = [
 
 const buffQualities = ['Standard', 'Difficult', 'Complex', 'Legendary']
 
-export default () => {
+export default ({ context }: { context: React.Context<any> }) => {
   const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
@@ -140,93 +139,92 @@ export default () => {
 
   return (
     <ListContainer>
-      <>
+      <Flex
+        direction='column'
+        justify='center'
+        align='center'
+        style={{
+          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
+          padding: '5px',
+          transition: 'opacity 0.2s ease-in-out',
+        }}
+      >
         <Flex
-          direction='column'
+          direction='row'
           justify='center'
           align='center'
-          style={{
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-            padding: '5px',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
+          style={{ width: '100%' }}
         >
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ width: '100%' }}
-          >
-            <Input
-              placeholder='Search for Food'
-              allowClear
-              value={searchText}
-              onChange={handleSearchChange}
-              size='large'
-              type='text'
-              style={{ margin: '10px', width: '100%' }}
-            />
-            <Button
-              size='large'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
-              onClick={handleExpandChange}
-            />
-          </Flex>
-          {expanded && (
-            <>
-              <Divider
-                style={{
-                  margin: '10px 0px',
-                }}
-              />
-              <Flex
-                direction='row'
-                justify='center'
-                align='center'
-                style={{
-                  margin: '0px 10px',
-                  overflow: 'auto',
-                  width: '100%',
-                }}
-              >
-                <Select
-                  mode='multiple'
-                  style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by type...'
-                  onChange={handleTypeSelectChange}
-                >
-                  {buffTypes.map((type, index) => (
-                    <Option key={type}>{type}</Option>
-                  ))}
-                </Select>
-              </Flex>
-
-              <Flex
-                direction='row'
-                justify='center'
-                align='center'
-                style={{ margin: '0px 10px', width: '100%' }}
-              >
-                <Select
-                  mode='multiple'
-                  style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by quality...'
-                  onChange={handleQualitySelectChange}
-                >
-                  {buffQualities.map((quality, index) => (
-                    <Option key={quality}>{quality}</Option>
-                  ))}
-                </Select>
-              </Flex>
-            </>
-          )}
+          <Input
+            placeholder='Search for Food'
+            allowClear
+            value={searchText}
+            onChange={handleSearchChange}
+            size='large'
+            type='text'
+            style={{ margin: '10px', width: '100%' }}
+          />
+          <Button
+            size='large'
+            icon={expanded ? 'shrink' : 'arrows-alt'}
+            onClick={handleExpandChange}
+          />
         </Flex>
-        <BuffMenuList
-          buffs={(data && data.buffs) || []}
-          searchText={searchText}
-          loading={loading}
-        />
-      </>
+        {expanded && (
+          <>
+            <Divider
+              style={{
+                margin: '10px 0px',
+              }}
+            />
+            <Flex
+              direction='row'
+              justify='center'
+              align='center'
+              style={{
+                margin: '0px 10px',
+                overflow: 'auto',
+                width: '100%',
+              }}
+            >
+              <Select
+                mode='multiple'
+                style={{ width: '100%', margin: '5px 10px' }}
+                placeholder='Filter by type...'
+                onChange={handleTypeSelectChange}
+              >
+                {buffTypes.map((type, index) => (
+                  <Option key={type}>{type}</Option>
+                ))}
+              </Select>
+            </Flex>
+
+            <Flex
+              direction='row'
+              justify='center'
+              align='center'
+              style={{ margin: '0px 10px', width: '100%' }}
+            >
+              <Select
+                mode='multiple'
+                style={{ width: '100%', margin: '5px 10px' }}
+                placeholder='Filter by quality...'
+                onChange={handleQualitySelectChange}
+              >
+                {buffQualities.map((quality, index) => (
+                  <Option key={quality}>{quality}</Option>
+                ))}
+              </Select>
+            </Flex>
+          </>
+        )}
+      </Flex>
+      <BuffMenuList
+        context={context}
+        buffs={(data && data.buffs) || []}
+        searchText={searchText}
+        loading={loading}
+      />
     </ListContainer>
   )
 }
@@ -235,9 +233,15 @@ interface IBuffMenuProps {
   loading: boolean
   buffs: ISpecialBuff[]
   searchText: string
+  context: React.Context<any>
 }
-const BuffMenuList = ({ buffs, loading, searchText }: IBuffMenuProps) => {
-  const [state, dispatch] = useContext(BuildContext)
+const BuffMenuList = ({
+  buffs,
+  loading,
+  searchText,
+  context,
+}: IBuffMenuProps) => {
+  const [state, dispatch] = useContext(context)
   const { buff } = state!
   const handleClick = (buff: ISpecialBuff) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -277,9 +281,7 @@ const BuffMenuList = ({ buffs, loading, searchText }: IBuffMenuProps) => {
                 <AvatarContainer>
                   <MyAvatar
                     title={item.name}
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
-                      item.icon
-                    }`}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.icon}`}
                   />
                 </AvatarContainer>
                 <div>
