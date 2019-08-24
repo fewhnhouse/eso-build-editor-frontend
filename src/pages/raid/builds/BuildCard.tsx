@@ -20,6 +20,11 @@ const MyAvatar = styled.img`
   margin-right: 5px;
 `
 
+const ScrollContainer = styled.div`
+  overflow-y: auto;
+  height: 250px;
+`
+
 const RaceClassContainer = styled.div`
   margin-right: 10px;
 `
@@ -46,6 +51,8 @@ const StyledCard = styled(Card)`
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
+  max-width: 400px;
+  min-height: 300px;
   margin: 10px;
 `
 interface IBuildCardProps {
@@ -175,56 +182,62 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             </Flex>
           </TabPane>
           <TabPane tab='Weapons' key='weapons'>
-            <GearView
-              setsCount={setsCount}
-              disabled
-              size='small'
-              setups={[
-                {
-                  id: 'frontbar',
-                  label: 'Frontbar',
-                  data: item.frontbarSelection,
-                },
-                {
-                  id: 'backbar',
-                  label: 'Backbar',
-                  data: item.backbarSelection,
-                },
-              ]}
-            />
+            <ScrollContainer>
+              <GearView
+                setsCount={setsCount}
+                disabled
+                size='small'
+                setups={[
+                  {
+                    id: 'frontbar',
+                    label: 'Frontbar',
+                    data: item.frontbarSelection,
+                  },
+                  {
+                    id: 'backbar',
+                    label: 'Backbar',
+                    data: item.backbarSelection,
+                  },
+                ]}
+              />
+            </ScrollContainer>
           </TabPane>
           <TabPane tab='Armor' key='armor'>
-            <GearView
-              setsCount={setsCount}
-              disabled
-              size='small'
-              setups={[
-                {
-                  id: 'bigpieces',
-                  label: 'Big Pieces',
-                  data: item.bigPieceSelection,
-                },
-                {
-                  id: 'smallpieces',
-                  label: 'Small Pieces',
-                  data: item.smallPieceSelection,
-                },
-              ]}
-            />
+            <ScrollContainer>
+              <GearView
+                setsCount={setsCount}
+                disabled
+                size='small'
+                setups={[
+                  {
+                    id: 'bigpieces',
+                    label: 'Big Pieces',
+                    data: item.bigPieceSelection,
+                  },
+                  {
+                    id: 'smallpieces',
+                    label: 'Small Pieces',
+                    data: item.smallPieceSelection,
+                  },
+                ]}
+              />
+            </ScrollContainer>
           </TabPane>
           <TabPane tab='Jewelry' key='jewelry'>
-            <GearView
-              setsCount={setsCount}
-              disabled
-              size='small'
-              setups={[
-                {
-                  id: 'jewelry',
-                  label: 'Jewelry',
-                  data: item.jewelrySelection,
-                },
-              ]}
-            />
+            <ScrollContainer>
+              <GearView
+                setsCount={setsCount}
+                disabled
+                size='small'
+                setups={[
+                  {
+                    id: 'jewelry',
+                    label: 'Jewelry',
+                    data: item.jewelrySelection,
+                  },
+                ]}
+              />
+            </ScrollContainer>
           </TabPane>
         </Tabs>
       </div>

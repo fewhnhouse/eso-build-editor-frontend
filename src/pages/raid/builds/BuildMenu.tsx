@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { List, Tag, Divider, Input } from 'antd'
+import { List, Tag, Divider, Input, Select, Button } from 'antd'
 import styled from 'styled-components'
 import { useTrail, animated } from 'react-spring'
 import Flex from '../../../components/Flex'
@@ -8,8 +8,9 @@ import { useQuery } from 'react-apollo'
 import BuildCard from './BuildCard'
 import { IBuild } from '../../build/BuildStateContext'
 import { build } from '../../../util/fragments'
+import { races, classes } from '../../build/RaceAndClass/data'
+const { Option } = Select
 
-const { CheckableTag } = Tag
 
 const ListContainer = styled.div`
   width: 500px;
@@ -44,11 +45,43 @@ const GET_BUILDS = gql`
   }
   ${build}
 `
-export default () => {
-  // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(GET_BUILDS)
 
+export default () => {
+  const [selectedRaces, setSelectedRaces] = useState<string[]>([])
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([])
+  const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
+
+  // const [, dispatch] = useContext(RaidContext);
+  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(GET_BUILDS, {
+    variables: {
+      where: {
+        AND: [
+          {
+            race_in: selectedRaces.length
+              ? selectedRaces
+              : races.map(race => race.title),
+          },
+          {
+            esoClass_in: selectedClasses.length
+              ? selectedClasses
+              : classes.map(esoClass => esoClass.title),
+          },
+        ],
+      },
+    },
+  })
+
+  const handleClassSelectChange = (classes: string[]) => {
+    setSelectedClasses(classes)
+  }
+  const handleRaceSelectChange = (races: string[]) => {
+    setSelectedRaces(races)
+  }
+
+  const handleExpandChange = () => {
+    setExpanded(expanded => !expanded)
+  }
   const filteredBuilds =
     data && data.builds
       ? data.builds.filter((build: any) =>
@@ -83,7 +116,7 @@ export default () => {
           <Flex
             direction='row'
             justify='center'
-            align='flex-start'
+            align='center'
             style={{ width: '100%' }}
           >
             <Input
@@ -95,36 +128,57 @@ export default () => {
               type='text'
               style={{ margin: '10px', width: '100%' }}
             />
+            <Button
+              size='large'
+              icon={expanded ? 'shrink' : 'arrows-alt'}
+              onClick={handleExpandChange}
+            />
+            
           </Flex>
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ margin: '0px 10px', overflow: 'auto' }}
-          >
-            <CheckableTag checked={true}>Dragonknight</CheckableTag>
-            <CheckableTag checked={true}>Warden</CheckableTag>
-            <CheckableTag checked={true}>Necromancer</CheckableTag>
-            <CheckableTag checked={true}>Templar</CheckableTag>
-            <CheckableTag checked={true}>Sorcerer</CheckableTag>
-            <CheckableTag checked={true}>Nightblade</CheckableTag>
-          </Flex>
-          <Divider
-            style={{
-              margin: '10px 0px',
-            }}
-          />
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ margin: '0px 10px' }}
-          >
-            <CheckableTag checked={true}>Damage Dealer</CheckableTag>
-            <CheckableTag checked={true}>Healer</CheckableTag>
-            <CheckableTag checked={true}>Tank</CheckableTag>
-            <CheckableTag checked={true}>Support</CheckableTag>
-          </Flex>
+          {expanded && (
+            <>
+              <Divider
+                style={{
+                  margin: '10px 0px',
+                }}
+              />
+              <Flex
+                direction='row'
+                justify='center'
+                align='center'
+                style={{ margin: '0px 10px', overflow: 'auto', width: '100%' }}
+              >
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%', margin: '5px 10px' }}
+                  placeholder='Filter by class...'
+                  onChange={handleClassSelectChange}
+                >
+                  {classes.map((esoClass, index) => (
+                    <Option key={esoClass.title}>{esoClass.title}</Option>
+                  ))}
+                </Select>
+              </Flex>
+
+              <Flex
+                direction='row'
+                justify='center'
+                align='center'
+                style={{ margin: '0px 10px', width: '100%' }}
+              >
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%', margin: '5px 10px' }}
+                  placeholder='Filter by race...'
+                  onChange={handleRaceSelectChange}
+                >
+                  {races.map((race, index) => (
+                    <Option key={race.title}>{race.title}</Option>
+                  ))}
+                </Select>
+              </Flex>
+            </>
+          )}
         </Flex>
 
         <List
