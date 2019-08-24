@@ -15,7 +15,7 @@ const { TabPane } = Tabs
 const ContentCard = styled.div`
   height: 800px;
   margin: 20px;
-  max-height: 80%;
+  max-height: 85%;
   min-width: 300px;
 `
 export default () => {

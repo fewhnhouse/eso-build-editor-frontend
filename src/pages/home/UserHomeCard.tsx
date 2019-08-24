@@ -105,7 +105,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
             <Button
               type="primary"
               ghost={true}
-              onClick={handleCreateClick(isBuild ? '/build/0' : '/raid/0')}
+              onClick={handleCreateClick(isBuild ? '/buildEditor/0' : '/raidEditor/0')}
             >
               Create
             </Button>
