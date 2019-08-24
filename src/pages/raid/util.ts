@@ -26,8 +26,7 @@ export const handleEditSave = async (
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
   ];
-  console.log(roles, initialRoles);
-  await updateRaid({
+  return await updateRaid({
     variables: {
       data: {
         name,
@@ -44,13 +43,10 @@ export const handleEditSave = async (
             const prevRole = initialRoles.find(
               (initialRole: IRole) => initialRole.id === role.id
             );
-            const initialSortedBuilds = prevRole ? prevRole.builds : [];
-
             return {
               name: role.name,
               builds: {
-                delete: initialSortedBuilds.map(build => ({ id: build.id })),
-                create: role.builds.map((build, index) => ({ index, build })),
+                create: role.builds.map((build, index) => ({ build: { connect: { id: build.build.id } }, index })),
               },
             };
           }),

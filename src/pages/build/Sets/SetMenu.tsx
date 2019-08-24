@@ -116,6 +116,7 @@ export default ({
     variables: {
       where: {
         AND: [
+          { name_contains: searchText },
           {
             has_medium_armor:
               selectedWeights.length && selectedWeights.includes('Medium')
@@ -337,20 +338,9 @@ const SetList = ({
   loading,
   collapsed,
   context,
-  searchText,
-  setSearchText,
   setCollapsed,
 }: ISetListProps) => {
   const [state, dispatch] = useContext(context)
-
-  useEffect(() => {
-    if (state!.selectedSet) {
-      setSearchText('')
-    }
-  }, [setSearchText, state])
-  const filteredSets: ISet[] = sets.filter((set: ISet) =>
-    set.name.toLowerCase().includes(searchText.toLowerCase())
-  )
 
   const handleClick = (set: ISet) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -359,7 +349,7 @@ const SetList = ({
     dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
   }
 
-  const trail = useTrail(filteredSets.length, {
+  const trail = useTrail(sets.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
     from: {
@@ -380,7 +370,7 @@ const SetList = ({
       }}
       dataSource={trail}
       renderItem={(style: any, index) => {
-        const item = filteredSets[index]
+        const item = sets[index]
         return (
           <animated.div style={style}>
             <StyledListItem onClick={handleClick(item)}>
