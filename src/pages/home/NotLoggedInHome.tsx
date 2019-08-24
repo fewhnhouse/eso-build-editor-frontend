@@ -119,7 +119,7 @@ export default () => {
             </OverviewTab>
           </Flex>
           <Divider />
-          <Link to='/explore'>
+          <Link to='/overview'>
             <Button size='large' type='primary' style={{ minWidth: 300 }}>
               Explore
             </Button>
