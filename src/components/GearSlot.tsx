@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Popover, Card, Typography, Button } from 'antd';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { Popover, Card, Typography, Button } from 'antd'
 
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
   Slot,
@@ -11,22 +11,22 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
-  SetType,
-} from '../pages/build/BuildStateContext';
-import { GearCardContent } from './GearCard';
+  SetType
+} from '../pages/build/BuildStateContext'
+import { GearCardContent } from './GearCard'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
     props.size === 'normal' ? '64px' : '48px'};
-`;
+`
 
 interface IGearFrameProps {
-  hasIcon: boolean;
-  canDrop?: boolean;
-  backgroundSource: string;
-  size: 'normal' | 'small';
+  hasIcon: boolean
+  canDrop?: boolean
+  backgroundSource: string
+  size: 'normal' | 'small'
 }
 
 const GearFrame = styled.div`
@@ -44,29 +44,29 @@ const GearFrame = styled.div`
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
-`;
+`
 
 export interface ISet {
-  id: string;
-  setId: number;
-  name: string;
-  location: string;
-  type: string;
-  slug: string;
-  bonus_item_1: string | null;
-  bonus_item_2: string | null;
-  bonus_item_3: string | null;
-  bonus_item_4: string | null;
-  bonus_item_5: string | null;
-  has_jewels: number;
-  has_weapons: number;
-  has_heavy_armor: number;
-  has_light_armor: number;
-  has_medium_armor: number;
-  traits_needed: number | null;
-  pts: number;
-  eso_id: null | number;
-  [key: string]: string | null | number;
+  id: string
+  setId: number
+  name: string
+  location: string
+  type: string
+  slug: string
+  bonus_item_1: string | null
+  bonus_item_2: string | null
+  bonus_item_3: string | null
+  bonus_item_4: string | null
+  bonus_item_5: string | null
+  has_jewels: number
+  has_weapons: number
+  has_heavy_armor: number
+  has_light_armor: number
+  has_medium_armor: number
+  traits_needed: number | null
+  pts: number
+  eso_id: null | number
+  [key: string]: string | null | number
 }
 
 const getImageSource = (
@@ -74,73 +74,73 @@ const getImageSource = (
 ) => {
   switch (slot) {
     case Slot.mainHand:
-      return 'mainhand.png';
+      return 'mainhand.png'
     case Slot.offHand:
-      return 'offhand.png';
+      return 'offhand.png'
     case Slot.legs:
-      return 'legs.png';
+      return 'legs.png'
     case Slot.head:
-      return 'head.png';
+      return 'head.png'
     case Slot.shoulders:
-      return 'shoulders.png';
+      return 'shoulders.png'
     case Slot.waist:
-      return 'waist.png';
+      return 'waist.png'
     case Slot.hands:
-      return 'hands.png';
+      return 'hands.png'
     case Slot.feet:
-      return 'feet.png';
+      return 'feet.png'
     case Slot.chest:
-      return 'chest.png';
+      return 'chest.png'
     case Slot.ring:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.ring1:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.ring2:
-      return 'ring.png';
+      return 'ring.png'
     case Slot.neck:
-      return 'neck.png';
+      return 'neck.png'
     case OnehandedWeapon.dagger:
-      return 'dagger.png';
+      return 'dagger.png'
     case OnehandedWeapon.shield:
-      return 'shield.png';
+      return 'shield.png'
     case OnehandedWeapon.axe:
-      return 'axe.png';
+      return 'axe.png'
     case OnehandedWeapon.mace:
-      return 'hammer.png';
+      return 'hammer.png'
     case OnehandedWeapon.sword:
-      return 'sword.png';
+      return 'sword.png'
     case TwohandedWeapon.axe:
-      return 'axe.png';
+      return 'axe.png'
     case TwohandedWeapon.bow:
-      return 'bow.png';
+      return 'bow.png'
     case TwohandedWeapon.fireStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.iceStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.lightningStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.mace:
-      return 'hammer.png';
+      return 'hammer.png'
     case TwohandedWeapon.restorationStaff:
-      return 'staff.png';
+      return 'staff.png'
     case TwohandedWeapon.sword:
-      return 'sword.png';
+      return 'sword.png'
     default:
-      return '';
+      return ''
   }
-};
+}
 
 const getGearSlot = (slot: ISetSelection) => {
   if (!slot.type) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/jewelry/${getImageSource(slot.slot)}`;
+    }/gear/jewelry/${getImageSource(slot.slot)}`
   }
   if (slot.selectedSet) {
     if (slot.selectedSet.type === SetType.undaunted) {
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/undaunted/${
         slot.selectedSet.slug
-      }_${getImageSource(slot.slot)}`;
+      }_${getImageSource(slot.slot)}`
     } else if (
       slot.selectedSet.type === SetType.arena ||
       slot.selectedSet.type === SetType.trial
@@ -151,44 +151,44 @@ const getGearSlot = (slot: ISetSelection) => {
       ) {
         return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
           slot.selectedSet.slug
-        }_${getImageSource(slot.weaponType)}`;
+        }_${getImageSource(slot.weaponType)}`
       }
     }
   }
   if (slot.type === WeaponType.onehanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/onehanded/${getImageSource(slot.weaponType)}`;
+    }/gear/onehanded/${getImageSource(slot.weaponType)}`
   } else if (slot.type === WeaponType.twohanded) {
     return `${
       process.env.REACT_APP_IMAGE_SERVICE
-    }/gear/twohanded/${getImageSource(slot.weaponType)}`;
+    }/gear/twohanded/${getImageSource(slot.weaponType)}`
   } else if (slot.type === ArmorType.lightArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/light/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else if (slot.type === ArmorType.mediumArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/medium/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else if (slot.type === ArmorType.heavyArmor) {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   } else {
     return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/heavy/${getImageSource(
       slot.slot
-    )}`;
+    )}`
   }
-};
+}
 
 export interface IGearSlotProps {
-  slot: ISetSelection;
-  droppable?: boolean;
-  group: string;
-  extended?: boolean;
-  setSelectionCount: number;
-  size?: 'normal' | 'small';
+  slot: ISetSelection
+  droppable?: boolean
+  group: string
+  extended?: boolean
+  setSelectionCount: number
+  size?: 'normal' | 'small'
 }
 
 export default ({
@@ -197,28 +197,28 @@ export default ({
   group,
   size = 'normal',
   extended,
-  setSelectionCount,
+  setSelectionCount
 }: IGearSlotProps) => {
-  const [, dispatch] = useContext(BuildContext);
+  const [, dispatch] = useContext(BuildContext)
 
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: slot.slot,
       set: slot.selectedSet,
       icon: slot.icon,
-      weaponType: slot.weaponType,
+      weaponType: slot.weaponType
     },
     collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
+      isDragging: !!monitor.isDragging()
+    })
+  })
 
   const [{ canDrop }, drop] = useDrop({
     accept: [
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
         ? [Slot.eitherHand]
-        : []),
+        : [])
     ],
     drop: (item: any, monitor) => {
       dispatch!({
@@ -228,14 +228,14 @@ export default ({
           icon: item.icon,
           slot: slot.slot,
           weaponType: item.weaponType,
-          group,
-        },
-      });
+          group
+        }
+      })
     },
     collect: monitor => ({
-      canDrop: !!monitor.canDrop(),
-    }),
-  });
+      canDrop: !!monitor.canDrop()
+    })
+  })
 
   const handleSlotClick = () => {
     dispatch!({
@@ -245,10 +245,10 @@ export default ({
         icon: slot.icon,
         slot: slot.slot,
         weaponType: slot.weaponType,
-        group,
-      },
-    });
-  };
+        group
+      }
+    })
+  }
   return extended ? (
     <DisplayCard>
       <GearFrame
@@ -292,14 +292,14 @@ export default ({
             <Typography.Text
               style={{ fontSize: 12, width: 150, textAlign: 'left' }}
               ellipsis
-              type="secondary"
+              type='secondary'
             >
               {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
             </Typography.Text>
             <Typography.Text
               style={{ fontSize: 12, width: 150, textAlign: 'left' }}
               ellipsis
-              type="secondary"
+              type='secondary'
             >
               {slot.trait ? slot.trait.type : 'Trait not selected.'}
             </Typography.Text>
@@ -308,9 +308,9 @@ export default ({
           <Button
             style={{ marginTop: 5 }}
             onClick={handleSlotClick}
-            size="small"
+            size='small'
             ghost
-            type="primary"
+            type='primary'
           >
             Slot
           </Button>
@@ -348,8 +348,8 @@ export default ({
         )}
       </GearFrame>
     </div>
-  );
-};
+  )
+}
 
 const DisplayCard = styled.div`
   padding: 5px;
@@ -360,7 +360,7 @@ const DisplayCard = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin: 10px;
-`;
+`
 
 const InnerDisplay = styled.div`
   display: flex;
@@ -369,92 +369,92 @@ const InnerDisplay = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-left: 10px;
-`;
+`
 
 export const getItemType = (
   type: ArmorType | WeaponType | 'jewelry' | undefined
 ) => {
   switch (type) {
     case ArmorType.heavyArmor:
-      return 'Heavy';
+      return 'Heavy'
     case ArmorType.mediumArmor:
-      return 'Medium';
+      return 'Medium'
     case ArmorType.lightArmor:
-      return 'Light';
+      return 'Light'
     case WeaponType.onehanded:
-      return '1H';
+      return '1H'
     case WeaponType.twohanded:
-      return '2H';
+      return '2H'
     default:
-      return '';
+      return ''
   }
-};
+}
 
 const InnerSpan = styled.span`
   color: ${(props: { color: string }) => props.color};
-`;
+`
 
 export const getWeaponType = (
   weaponType: OnehandedWeapon | TwohandedWeapon | undefined
 ) => {
   switch (weaponType) {
     case OnehandedWeapon.axe:
-      return 'Axe';
+      return 'Axe'
     case TwohandedWeapon.axe:
-      return 'Axe';
+      return 'Axe'
     case OnehandedWeapon.mace:
-      return 'Mace';
+      return 'Mace'
     case TwohandedWeapon.mace:
-      return 'Mace';
+      return 'Mace'
     case OnehandedWeapon.sword:
-      return 'Sword';
+      return 'Sword'
     case TwohandedWeapon.sword:
-      return 'Sword';
+      return 'Sword'
     case OnehandedWeapon.dagger:
-      return 'Dagger';
+      return 'Dagger'
     case OnehandedWeapon.shield:
-      return 'Shield';
+      return 'Shield'
     case TwohandedWeapon.bow:
-      return 'Bow';
+      return 'Bow'
     case TwohandedWeapon.fireStaff:
-      return 'Fire Staff';
+      return 'Fire Staff'
     case TwohandedWeapon.iceStaff:
-      return 'Ice Staff';
+      return 'Ice Staff'
     case TwohandedWeapon.lightningStaff:
-      return 'Lightning Staff';
+      return 'Lightning Staff'
     case TwohandedWeapon.restorationStaff:
-      return 'Restoration Staff';
+      return 'Restoration Staff'
 
     default:
-      return '';
+      return ''
   }
-};
+}
 
 const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
   if (type === ArmorType.lightArmor) {
-    return '#2980b9';
+    return '#2980b9'
   } else if (type === ArmorType.mediumArmor) {
-    return '#27ae60';
+    return '#27ae60'
   } else if (type === ArmorType.heavyArmor) {
-    return '#c0392b';
+    return '#c0392b'
   } else {
-    return 'rgba(0, 0, 0, 0.65)';
+    return 'rgba(0, 0, 0, 0.65)'
   }
-};
+}
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
-  size,
+  size
 }: {
-  slot: ISetSelection;
-  setSelectionCount: number;
-  size: 'normal' | 'small';
+  slot: ISetSelection
+  setSelectionCount: number
+  size: 'normal' | 'small'
 }) => {
   return (
     <DisplayCard>
       <Popover
         mouseEnterDelay={0.5}
-        placement="left"
+        placement='left'
         content={
           <GearCardContent setSelectionCount={setSelectionCount} gear={slot} />
         }
@@ -492,18 +492,18 @@ export const DisplaySlot = ({
         <Typography.Text
           style={{ fontSize: 12, width: 150, textAlign: 'left' }}
           ellipsis
-          type="secondary"
+          type='secondary'
         >
           {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
         </Typography.Text>
         <Typography.Text
           style={{ fontSize: 12, width: 150, textAlign: 'left' }}
           ellipsis
-          type="secondary"
+          type='secondary'
         >
           {slot.trait ? slot.trait.type : 'Trait not selected.'}
         </Typography.Text>
       </InnerDisplay>
     </DisplayCard>
-  );
-};
+  )
+}
