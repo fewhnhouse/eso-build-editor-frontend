@@ -13,6 +13,7 @@ import Flex from '../../../components/Flex'
 import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import { titleCase } from '../../raid/builds/BuildMenu';
 
 const { Option } = Select
 const { Item } = List
@@ -116,7 +117,15 @@ export default ({
     variables: {
       where: {
         AND: [
-          { name_contains: searchText },
+          {
+            OR: [
+              { name_contains: searchText },
+              { name_contains: searchText.toLowerCase() },
+              { name_contains: searchText.toUpperCase() },
+              { name_contains: titleCase(searchText) },
+            ],
+          },
+          ,
           {
             has_medium_armor:
               selectedWeights.length && selectedWeights.includes('Medium')

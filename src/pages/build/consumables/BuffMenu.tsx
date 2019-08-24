@@ -6,6 +6,7 @@ import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { buff } from '../../../util/fragments'
+import { titleCase } from '../../raid/builds/BuildMenu';
 
 const { Option } = Select
 
@@ -121,6 +122,14 @@ export default ({ context }: { context: React.Context<any> }) => {
         where: {
           AND: [
             {
+              OR: [
+                { name_contains: searchText },
+                { name_contains: searchText.toLowerCase() },
+                { name_contains: searchText.toUpperCase() },
+                { name_contains: titleCase(searchText) },
+              ],
+            },
+            {
               quality_in: selectedQualities.length
                 ? selectedQualities.map(
                     (v, index) => buffQualities.findIndex(q => q === v) + 1
@@ -235,12 +244,7 @@ interface IBuffMenuProps {
   searchText: string
   context: React.Context<any>
 }
-const BuffMenuList = ({
-  buffs,
-  loading,
-  searchText,
-  context,
-}: IBuffMenuProps) => {
+const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
   const [state, dispatch] = useContext(context)
   const { buff } = state!
   const handleClick = (buff: ISpecialBuff) => (
@@ -248,10 +252,8 @@ const BuffMenuList = ({
   ) => {
     dispatch!({ type: 'SET_BUFF', payload: { buff } })
   }
-  const filteredBuffs = buffs.filter(buff =>
-    buff.name.toLowerCase().includes(searchText.toLowerCase())
-  )
-  const trail = useTrail(filteredBuffs.length, {
+
+  const trail = useTrail(buffs.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
     from: {
@@ -269,7 +271,7 @@ const BuffMenuList = ({
       }}
       dataSource={trail}
       renderItem={(style: any, index) => {
-        const item = filteredBuffs[index]
+        const item = buffs[index]
         return (
           <animated.div style={style}>
             <StyledCard

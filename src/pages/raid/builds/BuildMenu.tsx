@@ -11,7 +11,6 @@ import { build } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 const { Option } = Select
 
-
 const ListContainer = styled.div`
   width: 500px;
   border: 1px solid rgb(217, 217, 217);
@@ -20,6 +19,14 @@ const ListContainer = styled.div`
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `
+
+export function titleCase(str: string): string {
+  let string = str.toLowerCase().split(' ')
+  for (var i = 0; i < string.length; i++) {
+    string[i] = string[i].charAt(0).toUpperCase() + string[i].slice(1)
+  }
+  return string.join(' ')
+}
 
 const GET_BUILDS = gql`
   query builds(
@@ -58,6 +65,14 @@ export default () => {
       where: {
         AND: [
           {
+            OR: [
+              { name_contains: searchText },
+              { name_contains: searchText.toLowerCase() },
+              { name_contains: searchText.toUpperCase() },
+              { name_contains: titleCase(searchText) },
+            ],
+          },
+          {
             race_in: selectedRaces.length
               ? selectedRaces
               : races.map(race => race.title),
@@ -82,21 +97,7 @@ export default () => {
   const handleExpandChange = () => {
     setExpanded(expanded => !expanded)
   }
-  const filteredBuilds =
-    data && data.builds
-      ? data.builds.filter((build: any) =>
-          build.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-      : []
-  const trail = useTrail(filteredBuilds.length, {
-    opacity: 1,
-    transform: 'translate(0px, 0px)',
-    from: {
-      opacity: 0,
-      transform: 'translate(0px, -40px)',
-    },
-    config: { mass: 1, tension: 2000, friction: 300 },
-  })
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
@@ -133,7 +134,6 @@ export default () => {
               icon={expanded ? 'shrink' : 'arrows-alt'}
               onClick={handleExpandChange}
             />
-            
           </Flex>
           {expanded && (
             <>
@@ -180,25 +180,44 @@ export default () => {
             </>
           )}
         </Flex>
-
-        <List
-          loading={loading}
-          style={{
-            height: '100%',
-            overflow: 'auto',
-          }}
-          dataSource={trail}
-          renderItem={(style: any, index) => {
-            const item = filteredBuilds[index]
-            return (
-              <animated.div style={style}>
-                <BuildCard item={item} />
-              </animated.div>
-            )
-          }}
-        />
+        <BuildsList loading={loading} builds={(data && data.builds) || []} />
       </>
     </ListContainer>
+  )
+}
+
+interface IBuildsListProps {
+  builds: IBuild[]
+  loading: boolean
+}
+const BuildsList = ({ builds, loading }: IBuildsListProps) => {
+  const trail = useTrail(builds.length, {
+    opacity: 1,
+    transform: 'translate(0px, 0px)',
+    from: {
+      opacity: 0,
+      transform: 'translate(0px, -40px)',
+    },
+    config: { mass: 1, tension: 2000, friction: 300 },
+  })
+
+  return (
+    <List
+      loading={loading}
+      style={{
+        height: '100%',
+        overflow: 'auto',
+      }}
+      dataSource={trail}
+      renderItem={(style: any, index) => {
+        const item = builds[index]
+        return (
+          <animated.div style={style}>
+            <BuildCard item={item} />
+          </animated.div>
+        )
+      }}
+    />
   )
 }
 
