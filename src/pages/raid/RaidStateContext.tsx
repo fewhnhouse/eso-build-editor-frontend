@@ -7,6 +7,8 @@ export interface ISlot {
   id: number;
   index: number;
 }
+
+export interface IRaid {}
 export interface IRaidState {
   id?: string;
   name: string;
