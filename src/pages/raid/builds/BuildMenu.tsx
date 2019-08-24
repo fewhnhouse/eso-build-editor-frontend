@@ -11,7 +11,6 @@ import { build } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 const { Option } = Select
 
-const { CheckableTag } = Tag
 
 const ListContainer = styled.div`
   width: 500px;
@@ -74,11 +73,9 @@ export default () => {
   })
 
   const handleClassSelectChange = (classes: string[]) => {
-    console.log(classes)
     setSelectedClasses(classes)
   }
   const handleRaceSelectChange = (races: string[]) => {
-    console.log(races)
     setSelectedRaces(races)
   }
 
@@ -136,6 +133,7 @@ export default () => {
               icon={expanded ? 'shrink' : 'arrows-alt'}
               onClick={handleExpandChange}
             />
+            
           </Flex>
           {expanded && (
             <>
