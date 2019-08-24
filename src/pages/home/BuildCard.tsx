@@ -67,7 +67,7 @@ interface IUserDataProps {
 
 const BuildCard = ({ data, filterText }: IUserDataProps) => {
   const [path, setRedirect] = useState('')
-  const handleClick = (path: string) => {
+  const handleClick = (path: string) => () => {
     setRedirect(path)
   }
 
@@ -88,7 +88,7 @@ const BuildCard = ({ data, filterText }: IUserDataProps) => {
             <StyledCard
               key={build.id}
               hoverable
-              onClick={() => handleClick(`/buildReview/${build.id}`)}
+              onClick={handleClick(`/builds/${build.id}`)}
             >
               <Title>
                 {build.name ? build.name : 'Unnamed build'}
@@ -99,16 +99,12 @@ const BuildCard = ({ data, filterText }: IUserDataProps) => {
               <Description>
                 <StyledImg
                   style={{ marginRight: '5px' }}
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
-                    build.esoClass
-                  }.png`}
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
                 />
                 {build.esoClass}
                 <StyledImg
                   style={{ marginLeft: '10px', marginRight: '5px' }}
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
-                    build.race
-                  }.png`}
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
                 />
                 {build.race}
                 <Divider style={{ margin: '5px 0px' }} />

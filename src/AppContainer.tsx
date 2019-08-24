@@ -90,7 +90,6 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
     )
   }
 
-
   const logoutMenu = (
     <Menu>
       <Menu.Item onClick={handleLogout}>
@@ -115,10 +114,19 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
                 <Link to='/'>Home</Link>
               </Menu.Item>
               <Menu.Item key='2' disabled={error !== undefined}>
-                <Link to='/build/0'>Build Editor</Link>
+                <Link to='/buildEditor/0'>Build Editor</Link>
               </Menu.Item>
               <Menu.Item key='3' disabled={error !== undefined}>
-                <Link to='/raid/0'>Raid Editor</Link>
+                <Link to='/raidEditor/0'>Raid Editor</Link>
+              </Menu.Item>
+              <Menu.Item key='4' disabled={error !== undefined}>
+                <Link to='/builds'>Builds</Link>
+              </Menu.Item>
+              <Menu.Item key='5' disabled={error !== undefined}>
+                <Link to='/raids'>Raids</Link>
+              </Menu.Item>
+              <Menu.Item key='6' disabled={error !== undefined}>
+                <Link to='/overview'>Overview</Link>
               </Menu.Item>
             </Menu>
           ) : (
@@ -130,6 +138,15 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
             >
               <Menu.Item key='1'>
                 <Link to='/'>Home</Link>
+              </Menu.Item>
+              <Menu.Item key='2' disabled={error !== undefined}>
+                <Link to='/builds'>Builds</Link>
+              </Menu.Item>
+              <Menu.Item key='3' disabled={error !== undefined}>
+                <Link to='/raids'>Raids</Link>
+              </Menu.Item>
+              <Menu.Item key='4' disabled={error !== undefined}>
+                <Link to='/overview'>Overview</Link>
               </Menu.Item>
             </Menu>
           )}

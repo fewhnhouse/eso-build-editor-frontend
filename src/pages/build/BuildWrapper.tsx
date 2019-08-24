@@ -73,11 +73,19 @@ const NewBuild = ({
   try {
     const parsedBuildState = JSON.parse(savedBuildState || '')
     return (
-      <Build path='/build' build={parsedBuildState} pageIndex={pageIndex} />
+      <Build
+        path='/buildEditor'
+        build={parsedBuildState}
+        pageIndex={pageIndex}
+      />
     )
   } catch (e) {
     return (
-      <Build path='/build' build={defaultBuildState} pageIndex={pageIndex} />
+      <Build
+        path='/buildEditor'
+        build={defaultBuildState}
+        pageIndex={pageIndex}
+      />
     )
   }
 }

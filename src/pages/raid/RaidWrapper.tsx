@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router'
 import Raid from './Raid'
 import { Spin, message } from 'antd'
 import { defaultRaidState } from './RaidStateContext'
-import { raid } from '../../util/fragments';
+import { raid } from '../../util/fragments'
 
 const GET_RAID = gql`
   query raid($id: ID!) {
@@ -76,8 +76,12 @@ const NewRaid = ({
   }, [])
   try {
     const parsedRaidState = JSON.parse(savedRaidState || '')
-    return <Raid path='/raid' raid={parsedRaidState} pageIndex={pageIndex} />
+    return (
+      <Raid path='/raidEditor' raid={parsedRaidState} pageIndex={pageIndex} />
+    )
   } catch (e) {
-    return <Raid path='/raid' raid={defaultRaidState} pageIndex={pageIndex} />
+    return (
+      <Raid path='/raidEditor' raid={defaultRaidState} pageIndex={pageIndex} />
+    )
   }
 }

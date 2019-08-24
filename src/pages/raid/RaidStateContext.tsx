@@ -1,42 +1,42 @@
-import React from 'react';
-import { generalReducer } from './reducers/generalReducer';
-import { buildsReducer } from './reducers/buildsReducer';
-import { IBuild } from '../build/BuildStateContext';
+import React from 'react'
+import { generalReducer } from './reducers/generalReducer'
+import { buildsReducer } from './reducers/buildsReducer'
+import { IBuild } from '../build/BuildStateContext'
 
 export interface ISlot {
-  id: number;
-  index: number;
+  id: number
+  index: number
 }
 
 export interface IRaid {}
 export interface IRaidState {
-  id?: string;
-  name: string;
-  applicationArea: string;
-  description: string;
-  published: boolean;
-  groupSize: number;
-  canEdit: string[];
-  canView: string[];
-  roles: IRole[];
+  id?: string
+  name: string
+  applicationArea: string
+  description: string
+  published: boolean
+  groupSize: number
+  canEdit: string[]
+  canView: string[]
+  roles: IRole[]
 }
 
 export interface IUser {
-  id: string;
-  name: string;
-  email: string;
+  id: string
+  name: string
+  email: string
 }
 
 export interface ISortedBuild {
-  id?: string;
-  index: number;
-  build: IBuild;
+  id?: string
+  index: number
+  build: IBuild
 }
 
 export interface IRole {
-  id?: string;
-  name: string;
-  builds: ISortedBuild[];
+  id?: string
+  name: string
+  builds: ISortedBuild[]
 }
 
 export const defaultRaidState: IRaidState = {
@@ -48,11 +48,11 @@ export const defaultRaidState: IRaidState = {
   canEdit: [],
   canView: [],
   roles: [],
-};
+}
 
 export interface IRaidAction {
-  payload: any;
-  type: string;
+  payload: any
+  type: string
 }
 
 const combineReducers = (
@@ -65,16 +65,16 @@ const combineReducers = (
       prev: IRaidState,
       curr: (state: IRaidState, action: IRaidAction) => IRaidState
     ) => {
-      return curr(prev, action);
+      return curr(prev, action)
     },
     state
-  );
-};
+  )
+}
 
 export const raidReducer = (state: IRaidState, action: IRaidAction) => {
-  return combineReducers(state, action, [generalReducer, buildsReducer]);
-};
+  return combineReducers(state, action, [generalReducer, buildsReducer])
+}
 
 export const RaidContext = React.createContext<
   Partial<[IRaidState, React.Dispatch<IRaidAction>]>
->([]);
+>([])

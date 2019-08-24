@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Input } from 'antd'
+import { Typography, Divider, Input, Button, Icon } from 'antd'
 import Flex from '../../components/Flex'
-import { header } from '../../assets/backgrounds/index'
+import { Link } from 'react-router-dom'
 
-const { Search } = Input
 const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`
@@ -13,99 +12,119 @@ const Wrapper = styled(Flex)`
   flex-wrap: wrap;
 `
 
-const LeftSide = styled(Flex)`
+const CardContainer = styled(Flex)`
   flex: 1;
   border-color: rgb(232, 232, 232);
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
   padding: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 20px;
   height: 300px;
   background-color: white;
   max-width: 400px;
 `
 
-const Center = styled(Flex)`
+const OverviewContainer = styled(Flex)`
   flex: 1;
   border-color: rgb(232, 232, 232);
+  margin: auto;
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
   padding: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  height: 300px;
   background-color: white;
-  max-width: 400px;
+  max-width: 1200px;
+`
+
+const OverviewTab = styled(Flex)`
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  min-height: 100px;
+  margin: 0px 10px;
 `
 const StyledTitle = styled.h1`
   margin-top: 20px;
   font-size: 50px;
 `
 
-const RightSide = styled(Flex)`
-  flex: 1;
-  border-color: rgb(232, 232, 232);
-  background: 'white';
-  border-width: 2px;
-  border-radius: 10px;
-  padding: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  background-color: white;
-  height: 300px;
-  max-width: 400px;
-`
-
-const HomeHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 250px;
-  min-height: 150px;
-  margin: 0;
-  padding: 0;
-  background-image: url(${header});
-  background-position: center;
-`
-
 const Content = styled.div`
   padding: 40px;
+  overflow: auto;
   width: 100%;
 `
 
 export default () => {
   return (
     <>
-      <HomeHeader>
-
-      </HomeHeader>
       <Content>
         <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
         <Text style={{ maxWidth: '400px' }}>
-          Build Editor allows you to create and save builds and combine them to<br />
+          Build Editor allows you to create and save builds and combine them to
+          <br />
           complete raid setups - to be shared with friends, guilds and
-          communities,<br /> or saved privately as you choose.
+          communities,
+          <br /> or saved privately as you choose.
         </Text>
         <Divider />
 
         <Wrapper direction={'row'} align={'flex-start'}>
-          <LeftSide direction={'column'} justify={'space-between'}>
+          <CardContainer direction={'column'} justify={'space-between'}>
             <Title level={3}>Builds</Title>
             <Text>Create, share, save and edit builds</Text>
-          </LeftSide>
-          <Center direction={'column'} justify={'space-between'}>
-            <Title level={3}>Overview</Title>
-          </Center>
-          <RightSide direction={'column'} justify={'space-between'}>
+            <Link style={{ width: '100%' }} to='/builds'>
+              <Button style={{ width: '100%' }} size='large' type='primary'>
+                Explore Builds
+              </Button>
+            </Link>
+          </CardContainer>
+          <CardContainer direction={'column'} justify={'space-between'}>
             <Title level={3}>Raids</Title>
             <Text>Create, share, save and edit raids</Text>
-          </RightSide>
+            <Link style={{ width: '100%' }} to='/raids'>
+              <Button style={{ width: '100%' }} size='large' type='primary'>
+                Explore Raids
+              </Button>
+            </Link>
+          </CardContainer>
         </Wrapper>
+        <Divider />
+        <OverviewContainer justify='space-between'>
+          <Title level={3}>Overview</Title>
+          <Typography.Text>
+            Build Editor offers a simple Web Interface to explore Sets, Skills,
+            Mundus Stones and Consumables of The Elder Scrolls: Online.
+            <br /> Just click on one of the Tabs to open detailled information
+            about these topics.
+          </Typography.Text>
+          <Divider />
+
+          <Flex direction='row' style={{ width: '100%', flexWrap: 'wrap' }}>
+            <OverviewTab>
+              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Title level={4}>Sets</Title>
+            </OverviewTab>
+            <OverviewTab>
+              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Title level={4}>Skills</Title>
+            </OverviewTab>
+            <OverviewTab>
+              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Title level={4}>Consumables</Title>
+            </OverviewTab>
+            <OverviewTab>
+              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Title level={4}>Mundus Stones</Title>
+            </OverviewTab>
+          </Flex>
+          <Divider />
+          <Link to='/explore'>
+            <Button size='large' type='primary' style={{ minWidth: 300 }}>
+              Explore
+            </Button>
+          </Link>
+        </OverviewContainer>
       </Content>
     </>
   )

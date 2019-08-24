@@ -42,26 +42,25 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
       <ProtectedRoute
         loggedIn={isLoggedIn}
         exact
-        path='/build/:id'
+        path='/buildEditor/:id'
         render={props => <BuildWrapper {...props} />}
       />
 
       <ProtectedRoute
         loggedIn={isLoggedIn}
         exact
-        path='/raid/:id'
+        path='/raidEditor/:id'
         render={props => <RaidWrapper {...props} />}
       />
-      <ProtectedRoute
+      <Route exact path='/builds' render={() => <div>Test</div>} />
+      <Route exact path='/raids' render={() => <div>Test</div>} />
+      <Route exact path='/overview' render={() => <div>Test</div>} />
+
+      <Route exact path='/builds/:id' component={BuildReview} />
+      <Route
         loggedIn={isLoggedIn}
         exact
-        path='/buildreview/:id'
-        component={BuildReview}
-      />
-      <ProtectedRoute
-        loggedIn={isLoggedIn}
-        exact
-        path='/raidreview/:id'
+        path='/raids/:id'
         component={RaidReview}
       />
     </Switch>

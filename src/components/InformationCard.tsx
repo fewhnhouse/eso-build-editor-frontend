@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import Flex from './Flex';
-import { Avatar, Typography } from 'antd';
+import React from 'react'
+import styled from 'styled-components'
+import Flex from './Flex'
+import { Avatar, Typography } from 'antd'
 
 interface IInformationCardProps {
-  icon: string;
-  title: string;
-  description: string | number;
+  icon: string
+  title: string
+  description: string | number
 }
 
 const FlexCard = styled(Flex)`
@@ -14,13 +14,13 @@ const FlexCard = styled(Flex)`
   border: 1px solid rgb(232, 232, 232);
   border-radius: 2px;
   background: white;
-`;
+`
 
 export default ({ icon, title, description }: IInformationCardProps) => {
   return (
-    <FlexCard direction="row">
-      <Avatar icon={icon} shape="square" />
-      <Flex align="flex-start" style={{ marginLeft: 10 }}>
+    <FlexCard direction='row'>
+      <Avatar icon={icon} shape='square' />
+      <Flex align='flex-start' style={{ marginLeft: 10 }}>
         <Typography.Text
           style={{
             whiteSpace: 'nowrap',
@@ -42,5 +42,5 @@ export default ({ icon, title, description }: IInformationCardProps) => {
         </Typography.Text>
       </Flex>
     </FlexCard>
-  );
-};
+  )
+}
