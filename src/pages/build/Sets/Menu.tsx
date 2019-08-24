@@ -243,7 +243,7 @@ export default ({ collapsed, setCollapsed }: IMenuProps) => {
                 <Select
                   mode='multiple'
                   style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by class...'
+                  placeholder='Filter by type...'
                   onChange={handleTypeSelectChange}
                 >
                   {setTypes.map((type, index) => (
@@ -261,7 +261,7 @@ export default ({ collapsed, setCollapsed }: IMenuProps) => {
                 <Select
                   mode='multiple'
                   style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by race...'
+                  placeholder='Filter by weight...'
                   onChange={handleWeightSelectChange}
                 >
                   {setWeight.map((weight, index) => (

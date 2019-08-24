@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { List, Tag, Divider, Card, Input, Spin } from 'antd'
+import { List, Tag, Divider, Card, Input, Spin, Button, Select } from 'antd'
 import styled from 'styled-components'
 import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import { buff } from '../../../util/fragments';
+import { buff } from '../../../util/fragments'
+
+const { Option } = Select
 
 export interface ISpecialBuff {
   name: string
@@ -20,11 +22,9 @@ export interface ISpecialBuff {
   quality: 1 | 2 | 3 | 4
 }
 
-const { CheckableTag } = Tag
-
 const GET_BUFFS = gql`
-  query {
-    buffs {
+  query buffs($where: BuffWhereInput!) {
+    buffs(where: $where) {
       ...Buff
     }
   }
@@ -83,95 +83,61 @@ const Title = styled.div`
   text-overflow: ellipsis;
   text-align: left;
 `
-/*const getDrinkBuffDescription = (
-  healthRec: number,
-  magickaRec: number,
-  staminaRec: number
-) => {
-  if (healthRec > 0 && magickaRec > 0 && staminaRec > 0) {
-    return `Increase Health Recovery by ${healthRec}, Magicka Recovery by ${magickaRec} and Stamina Recovery by ${staminaRec}.`
-  } else if (healthRec > 0 && magickaRec > 0) {
-    return `Increase Health Recovery by ${healthRec} and Magicka Recovery by ${magickaRec}.`
-  } else if (healthRec > 0 && staminaRec > 0) {
-    return `Increase Health Recovery by ${healthRec} and Stamina Recovery by ${staminaRec}.`
-  } else if (healthRec > 0) {
-    return `Increase Health Recovery by ${healthRec}.`
-  } else if (magickaRec > 0 && staminaRec > 0) {
-    return `Increase Magicka Recovery by ${magickaRec} and Stamina Recovery by ${staminaRec}.`
-  } else if (magickaRec > 0) {
-    return `Increase Magicka Recovery by ${magickaRec}.`
-  } else {
-    return `Increase Stamina Recovery by ${staminaRec}.`
-  }
-}
 
-const getFoodBuffDescription = (
-  maxHealth: number,
-  maxMagicka: number,
-  maxStamina: number
-) => {
-  if (maxHealth > 0 && maxMagicka > 0 && maxStamina > 0) {
-    return `Increase Health Recovery by ${maxHealth}, Magicka Recovery by ${maxMagicka} and Stamina Recovery by ${maxStamina}.`
-  } else if (maxHealth > 0 && maxMagicka > 0) {
-    return `Increase Health Recovery by ${maxHealth} and Magicka Recovery by ${maxMagicka}.`
-  } else if (maxHealth > 0 && maxStamina > 0) {
-    return `Increase Health Recovery by ${maxHealth} and Stamina Recovery by ${maxStamina}.`
-  } else if (maxHealth > 0) {
-    return `Increase Health Recovery by ${maxHealth}.`
-  } else if (maxMagicka > 0 && maxStamina > 0) {
-    return `Increase Magicka Recovery by ${maxMagicka} and Stamina Recovery by ${maxStamina}.`
-  } else if (maxMagicka > 0) {
-    return `Increase Magicka Recovery by ${maxMagicka}.`
-  } else {
-    return `Increase Stamina Recovery by ${maxStamina}.`
-  }
-}*/
+const buffTypes = [
+  'Health Recovery',
+  'Stamina Recovery',
+  'Magicka Recovery',
+  'Max Health',
+  'Max Stamina',
+  'Max Magicka',
+]
+
+const buffQualities = ['Standard', 'Difficult', 'Complex', 'Legendary']
 
 export default () => {
-  const { data, error, loading } = useQuery<{ buffs: ISpecialBuff[] }, {}>(
-    GET_BUFFS
-  )
-  if (loading) {
-    return (
-      <ListContainer>
-        <Spin style={{ marginTop: 5 }} />
-      </ListContainer>
-    )
-  }
-  if (error) {
-    return <div>Error.</div>
-  }
-  if (data) {
-    return <BuffMenuList data={data} />
-  }
-  return null
-}
-const BuffMenuList = ({ data }: { data: { buffs: ISpecialBuff[] } }) => {
-  const allBuffs = data.buffs
-
-  const [state, dispatch] = useContext(BuildContext)
-  const { buff } = state!
-  const handleClick = (buff: ISpecialBuff) => (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    dispatch!({ type: 'SET_BUFF', payload: { buff } })
-  }
+  const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
-  const filteredBuffs = allBuffs.filter(buff =>
-    buff.name.toLowerCase().includes(searchText.toLowerCase())
-  )
-  const trail = useTrail(filteredBuffs.length, {
-    opacity: 1,
-    transform: 'translate(0px, 0px)',
-    from: {
-      opacity: 0,
-      transform: 'translate(0px, -40px)',
-    },
-    config: { mass: 1, tension: 2000, friction: 300 },
-  })
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+  const [selectedQualities, setSelectedQualities] = useState<string[]>([])
+
+  const handleExpandChange = () => {
+    setExpanded(expanded => !expanded)
+  }
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
+
+  const handleTypeSelectChange = (types: string[]) => {
+    setSelectedTypes(types)
+  }
+  const handleQualitySelectChange = (qualities: string[]) => {
+    setSelectedQualities(qualities)
+  }
+
+  const { data, error, loading } = useQuery<{ buffs: ISpecialBuff[] }, {}>(
+    GET_BUFFS,
+    {
+      variables: {
+        where: {
+          AND: [
+            {
+              quality_in: selectedQualities.length
+                ? selectedQualities.map(
+                    (v, index) => buffQualities.findIndex(q => q === v) + 1
+                  )
+                : buffQualities.map((value, index) => index + 1),
+            },
+            ...selectedTypes.map(type => ({ buffDescription_contains: type })),
+          ],
+        },
+      },
+    }
+  )
+  if (error) {
+    return <div>Error.</div>
+  }
+
   return (
     <ListContainer>
       <>
@@ -188,7 +154,7 @@ const BuffMenuList = ({ data }: { data: { buffs: ISpecialBuff[] } }) => {
           <Flex
             direction='row'
             justify='center'
-            align='flex-start'
+            align='center'
             style={{ width: '100%' }}
           >
             <Input
@@ -200,115 +166,166 @@ const BuffMenuList = ({ data }: { data: { buffs: ISpecialBuff[] } }) => {
               type='text'
               style={{ margin: '10px', width: '100%' }}
             />
+            <Button
+              size='large'
+              icon={expanded ? 'shrink' : 'arrows-alt'}
+              onClick={handleExpandChange}
+            />
           </Flex>
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ margin: '0px 10px' }}
-          >
-            <CheckableTag checked={true}>Health Recovery</CheckableTag>
-            <CheckableTag checked={true}>Magicka Recovery</CheckableTag>
-            <CheckableTag checked={true}>Stamina Recovery</CheckableTag>
-            <CheckableTag checked={true}>Max Health</CheckableTag>
-            <CheckableTag checked={true}>Max Magicka</CheckableTag>
-            <CheckableTag checked={true}>Max Stamina</CheckableTag>
-          </Flex>
-          <Divider
-            style={{
-              margin: '10px 0px',
-            }}
-          />
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ margin: '0px 10px' }}
-          >
-            <CheckableTag checked={true}>Standard</CheckableTag>
-            <CheckableTag checked={true}>Difficult</CheckableTag>
-            <CheckableTag checked={true}>Complex</CheckableTag>
-            <CheckableTag checked={true}>Legendary</CheckableTag>
-          </Flex>
-        </Flex>
-
-        <List
-          style={{
-            height: '100%',
-            overflow: 'auto',
-          }}
-          dataSource={trail}
-          renderItem={(style: any, index) => {
-            const item = filteredBuffs[index]
-            return (
-              <animated.div style={style}>
-                <StyledCard
-                  hoverable
-                  active={item.name === (buff && buff.name)}
-                  onClick={handleClick(item)}
+          {expanded && (
+            <>
+              <Divider
+                style={{
+                  margin: '10px 0px',
+                }}
+              />
+              <Flex
+                direction='row'
+                justify='center'
+                align='center'
+                style={{
+                  margin: '0px 10px',
+                  overflow: 'auto',
+                  width: '100%',
+                }}
+              >
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%', margin: '5px 10px' }}
+                  placeholder='Filter by type...'
+                  onChange={handleTypeSelectChange}
                 >
-                  <div style={{ display: 'flex', maxWidth: 400 }}>
-                    <AvatarContainer>
-                      <MyAvatar
-                        title={item.name}
-                        src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
-                          item.icon
-                        }`}
-                      />
-                    </AvatarContainer>
-                    <div>
-                      <Title>{item.name}</Title>
+                  {buffTypes.map((type, index) => (
+                    <Option key={type}>{type}</Option>
+                  ))}
+                </Select>
+              </Flex>
 
-                      <Divider style={{ margin: '5px 0px' }} />
-                      <div
-                        style={{
-                          width: 140,
-                          display: 'flex',
-                          margin: '10px 0px',
-                        }}
-                      >
-                        <AttributeTag
-                          hasHealth={item.buffDescription.includes('Health')}
-                          hasMagicka={item.buffDescription.includes('Magicka')}
-                          hasStamina={item.buffDescription.includes('Stamina')}
-                        />
-                        <BuffTypeTag
-                          isSpecialDrink={
-                            item.buffType === 'drink' && item.type === null
-                          }
-                          isSpecialFood={
-                            item.buffType === 'food' && item.type === null
-                          }
-                          isFood={
-                            item.buffType === 'food' && item.type !== null
-                          }
-                          isDrink={
-                            item.buffType === 'drink' && item.type !== null
-                          }
-                        />
-                        <QualityTag quality={item.quality} />
-                      </div>
-                      <Description>{item.buffDescription}</Description>
-                      {item.description && (
-                        <>
-                          <Divider style={{ margin: '5px 0px' }} />
-                          <Description
-                            style={{ fontStyle: 'italic' }}
-                            newEffect
-                          >
-                            {item.description}
-                          </Description>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </StyledCard>
-              </animated.div>
-            )
-          }}
+              <Flex
+                direction='row'
+                justify='center'
+                align='center'
+                style={{ margin: '0px 10px', width: '100%' }}
+              >
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%', margin: '5px 10px' }}
+                  placeholder='Filter by quality...'
+                  onChange={handleQualitySelectChange}
+                >
+                  {buffQualities.map((quality, index) => (
+                    <Option key={quality}>{quality}</Option>
+                  ))}
+                </Select>
+              </Flex>
+            </>
+          )}
+        </Flex>
+        <BuffMenuList
+          buffs={(data && data.buffs) || []}
+          searchText={searchText}
+          loading={loading}
         />
       </>
     </ListContainer>
+  )
+}
+
+interface IBuffMenuProps {
+  loading: boolean
+  buffs: ISpecialBuff[]
+  searchText: string
+}
+const BuffMenuList = ({ buffs, loading, searchText }: IBuffMenuProps) => {
+  const [state, dispatch] = useContext(BuildContext)
+  const { buff } = state!
+  const handleClick = (buff: ISpecialBuff) => (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    dispatch!({ type: 'SET_BUFF', payload: { buff } })
+  }
+  const filteredBuffs = buffs.filter(buff =>
+    buff.name.toLowerCase().includes(searchText.toLowerCase())
+  )
+  const trail = useTrail(filteredBuffs.length, {
+    opacity: 1,
+    transform: 'translate(0px, 0px)',
+    from: {
+      opacity: 0,
+      transform: 'translate(0px, -40px)',
+    },
+    config: { mass: 1, tension: 2000, friction: 300 },
+  })
+  return (
+    <List
+      loading={loading}
+      style={{
+        height: '100%',
+        overflow: 'auto',
+      }}
+      dataSource={trail}
+      renderItem={(style: any, index) => {
+        const item = filteredBuffs[index]
+        return (
+          <animated.div style={style}>
+            <StyledCard
+              hoverable
+              active={item.name === (buff && buff.name)}
+              onClick={handleClick(item)}
+            >
+              <div style={{ display: 'flex', maxWidth: 400 }}>
+                <AvatarContainer>
+                  <MyAvatar
+                    title={item.name}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
+                      item.icon
+                    }`}
+                  />
+                </AvatarContainer>
+                <div>
+                  <Title>{item.name}</Title>
+
+                  <Divider style={{ margin: '5px 0px' }} />
+                  <div
+                    style={{
+                      width: 140,
+                      display: 'flex',
+                      margin: '10px 0px',
+                    }}
+                  >
+                    <AttributeTag
+                      hasHealth={item.buffDescription.includes('Health')}
+                      hasMagicka={item.buffDescription.includes('Magicka')}
+                      hasStamina={item.buffDescription.includes('Stamina')}
+                    />
+                    <BuffTypeTag
+                      isSpecialDrink={
+                        item.buffType === 'drink' && item.type === null
+                      }
+                      isSpecialFood={
+                        item.buffType === 'food' && item.type === null
+                      }
+                      isFood={item.buffType === 'food' && item.type !== null}
+                      isDrink={item.buffType === 'drink' && item.type !== null}
+                    />
+                    <QualityTag quality={item.quality} />
+                  </div>
+                  <Description>{item.buffDescription}</Description>
+                  {item.description && (
+                    <>
+                      <Divider style={{ margin: '5px 0px' }} />
+                      <Description style={{ fontStyle: 'italic' }} newEffect>
+                        {item.description}
+                      </Description>
+                    </>
+                  )}
+                </div>
+              </div>
+            </StyledCard>
+          </animated.div>
+        )
+      }}
+    />
   )
 }
 
