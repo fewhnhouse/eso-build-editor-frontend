@@ -1,15 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Input, Card, Spin } from 'antd'
+import { Typography, Divider, Card } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
 import gql from 'graphql-tag'
 import { build, raid } from '../../util/fragments'
-import { useQuery } from 'react-apollo'
-import { IBuild } from '../build/BuildStateContext'
 
-const { Search } = Input
 const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
@@ -24,15 +21,6 @@ const Wrapper = styled(Flex)`
   min-height: 100%;
   background: white;
   box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.35);
-`
-
-const InputContainer = styled(Flex)`
-  width: 100%;
-  z-index: 1;
-  position: fixed;
-  top: 100px;
-  min-height: 150px;
-  padding: 20px;
 `
 
 const RightSide = styled(Flex)`
@@ -56,9 +44,7 @@ const InnerContainer = styled(Flex)`
   background-image: url(${wcdt});
   background-size: contain;
 `
-const StyledSearch = styled(Search)`
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
-`
+
 const ACTIVITY_BUILDS = gql`
   query builds($where: BuildWhereInput!) {
     builds(where: $where) {

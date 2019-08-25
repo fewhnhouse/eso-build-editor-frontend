@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Flex from '../../../components/Flex';
-import { Typography, Divider, Card, Icon } from 'antd';
+import { Typography, Divider, Card } from 'antd';
 import GearView from '../../../components/GearView';
 import SkillView from '../../../components/SkillView';
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar';

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Input, Button, Icon } from 'antd'
+import { Typography, Divider, Button, Icon } from 'antd'
 import Flex from '../../components/Flex'
 import { Link } from 'react-router-dom'
 

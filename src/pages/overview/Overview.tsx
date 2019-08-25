@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import Flex from '../../components/Flex'
-import { Card, Tabs, Typography } from 'antd'
+import { Tabs, Typography } from 'antd'
 import BuffMenu from '../build/consumables/BuffMenu'
 import {
   OverviewContext,

@@ -3,8 +3,7 @@ import './App.css'
 import {
   Link,
   RouteComponentProps,
-  withRouter,
-  Redirect,
+  withRouter
 } from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'

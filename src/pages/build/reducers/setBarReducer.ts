@@ -2,7 +2,6 @@ import {
   IBuildAction,
   IBuildState,
   Slot,
-  SlotType,
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,

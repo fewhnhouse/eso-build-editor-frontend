@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { Popover, Card, Typography, Button } from 'antd'
+import { Popover, Typography, Button } from 'antd'
 
 import { useDrag, useDrop } from 'react-dnd'
 import {
