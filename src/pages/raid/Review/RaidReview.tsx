@@ -11,10 +11,7 @@ import {
   Popconfirm,
   Typography,
   Spin,
-  Card,
-  Divider,
-  Icon,
-  Avatar,
+  Divider
 } from 'antd';
 import styled from 'styled-components';
 import { raid } from '../../../util/fragments';

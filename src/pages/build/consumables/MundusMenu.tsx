@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { List, Card, Input, Spin } from 'antd'
 import styled from 'styled-components'
-import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import Meta from 'antd/lib/card/Meta'
 import { useTrail, animated } from 'react-spring'

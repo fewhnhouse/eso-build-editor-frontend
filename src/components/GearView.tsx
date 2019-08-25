@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Typography } from 'antd';
 import Flex from './Flex';
 import GearSlot, { DisplaySlot } from './GearSlot';
-import { ISetSelection, BuildContext } from '../pages/build/BuildStateContext';
+import { ISetSelection } from '../pages/build/BuildStateContext';
 
 const GearView = styled.div``;
 

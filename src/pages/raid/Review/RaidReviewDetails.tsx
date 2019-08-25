@@ -8,7 +8,7 @@ import BuildCard from '../builds/BuildCard'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Wrapper = styled(Flex)`
   padding: 20px;

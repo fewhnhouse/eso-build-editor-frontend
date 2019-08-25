@@ -5,8 +5,7 @@ import {
   SlotType,
   TwohandedWeapon,
   OnehandedWeapon,
-  WeaponType,
-  ISkillSelection,
+  WeaponType
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
 import {
@@ -16,8 +15,7 @@ import {
   Icon,
   // message,
   Tooltip,
-  notification,
-  Typography,
+  notification
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -32,7 +30,6 @@ import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
 
 const { Footer, Content } = Layout
-const { Text } = Typography
 const ButtonGroup = Button.Group
 
 const Container = styled(Content)`
@@ -210,13 +207,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          ),
+          )
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build update failed',
-          description: 'Your build could not be saved. Try again later.',
+          description: 'Your build could not be saved. Try again later.'
         })
       }
     } else {
@@ -244,13 +241,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          ),
+          )
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build creation failed',
-          description: 'Your build could not be saved. Try again later.',
+          description: 'Your build could not be saved. Try again later.'
         })
       }
     }
@@ -274,7 +271,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     smallPieceSelection,
     jewelrySelection,
     newBarOne,
-    newBarTwo,
+    newBarTwo
   } = state!
 
   const hasValidFrontbar = frontbarSelection[0].selectedSet
@@ -374,7 +371,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           display: 'flex',
           zIndex: 100,
           alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)'
         }}
       >
         <TabButton

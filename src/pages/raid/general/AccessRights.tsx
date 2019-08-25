@@ -15,7 +15,7 @@ const GET_USERS = gql`
 `
 export default () => {
   const [state, dispatch] = useContext(RaidContext)
-  const { data, loading, error } = useQuery(GET_USERS)
+  const { data, loading } = useQuery(GET_USERS)
   const { canEdit, canView } = state!
 
   const handleEditChange = (values: string[]) => {

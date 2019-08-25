@@ -1,14 +1,12 @@
 import React, {
   useContext,
-  useEffect,
   useState,
   Dispatch,
   SetStateAction,
 } from 'react'
-import { List, Tag, Divider, Button, Input, Spin, Select } from 'antd'
+import { List, Tag, Divider, Button, Input, Select } from 'antd'
 import styled from 'styled-components'
 import { ISet } from '../../../components/GearSlot'
-import { BuildContext } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'

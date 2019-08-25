@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { List, Tag, Divider, Input, Select, Button } from 'antd'
+import { List, Divider, Input, Select, Button } from 'antd'
 import styled from 'styled-components'
 import { useTrail, animated } from 'react-spring'
 import Flex from '../../../components/Flex'

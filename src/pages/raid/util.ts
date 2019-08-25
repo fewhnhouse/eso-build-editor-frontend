@@ -1,7 +1,6 @@
 import { IRaidState, IRole } from './RaidStateContext';
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo';
 import { ME } from '../home/UserHomeCard';
-import { build } from '../../util/fragments';
 
 export const handleEditSave = async (
   state: IRaidState,
@@ -40,9 +39,6 @@ export const handleEditSave = async (
             id: initialRole.id,
           })),
           create: roles.map(role => {
-            const prevRole = initialRoles.find(
-              (initialRole: IRole) => initialRole.id === role.id
-            );
             return {
               name: role.name,
               builds: {
