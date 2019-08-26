@@ -89,7 +89,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
     <Menu>
       <Menu.Item>
         <Link to='/profile'>
-          <Icon type='user' />
+          <Icon type='user' style={{ marginRight: 8 }} />
           Profile
         </Link>
       </Menu.Item>
