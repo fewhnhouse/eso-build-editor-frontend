@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export const set = gql`
   fragment Set on Set {
     id
+    setId
     name
     location
     type

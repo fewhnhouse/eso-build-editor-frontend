@@ -389,9 +389,16 @@ export const handleCreateSave = async (
   })
 }
 
-export const handleCopy = async (createBuild: (
-  options?: MutationFunctionOptions<any, any> | undefined
-) => Promise<void | ExecutionResult<any>>,
+export const handleCopy = async (
+  createSkillSelections: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<void | ExecutionResult<any>>,
+  createSetSelections: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<void | ExecutionResult<any>>,
+  createBuild: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<void | ExecutionResult<any>>,
   build: IBuild,
 ) => {
   const {
@@ -414,6 +421,65 @@ export const handleCopy = async (createBuild: (
     ultimateOne,
     ultimateTwo
   } = build;
+
+  console.log(bigPieceSelection, smallPieceSelection, jewelrySelection)
+
+  const createSetVariables = (setSelections: ISetSelection[]) => ({
+    slots: setSelections.map(setSelection => setSelection.slot),
+    types: setSelections.map(setSelection => setSelection.type || ''),
+    weaponTypes: setSelections.map(
+      setSelection => setSelection.weaponType || ''
+    ),
+    setIds: setSelections.map(setSelection =>
+      setSelection.selectedSet ? setSelection.selectedSet.setId : 0
+    ),
+    glyphDescriptions: setSelections.map(setSelection =>
+      setSelection.glyph ? setSelection.glyph.description : ''
+    ),
+    traitDescriptions: setSelections.map(setSelection =>
+      setSelection.trait ? setSelection.trait.description : ''
+    ),
+  })
+
+
+  const frontbarSkillSelections: any = await createSkillSelections({
+    variables: {
+      indices: newBarOne.map(sel => sel.index),
+      skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.skillId : 0)),
+    },
+  })
+  const backbarSkillSelections: any = await createSkillSelections({
+    variables: {
+      indices: newBarTwo.map(sel => sel.index),
+      skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.skillId : 0)),
+    },
+  })
+  const bigPieceSetSelections: any = await createSetSelections({
+    variables: {
+      ...createSetVariables(bigPieceSelection),
+    },
+  })
+  const smallPieceSetSelections: any = await createSetSelections({
+    variables: {
+      ...createSetVariables(smallPieceSelection),
+    },
+  })
+  const jewelrySetSelections: any = await createSetSelections({
+    variables: {
+      ...createSetVariables(jewelrySelection),
+    },
+  })
+  const frontbarSetSelections: any = await createSetSelections({
+    variables: {
+      ...createSetVariables(frontbarSelection),
+    },
+  })
+  const backbarSetSelections: any = await createSetSelections({
+    variables: {
+      ...createSetVariables(backbarSelection),
+    },
+  })
+
   return await createBuild({
     variables: {
       data: {
@@ -427,35 +493,35 @@ export const handleCopy = async (createBuild: (
         mundusStone: { connect: { name: mundusStone.name } },
         buff: { connect: { name: buff.name } },
         bigPieceSelection: {
-          connect: bigPieceSelection.map(
+          connect: bigPieceSetSelections.data.createSetSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
         frontbarSelection: {
-          connect: frontbarSelection.map(
+          connect: frontbarSetSelections.data.createSetSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
         backbarSelection: {
-          connect: backbarSelection.map(
+          connect: backbarSetSelections.data.createSetSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
         smallPieceSelection: {
-          connect: smallPieceSelection.map(
+          connect: smallPieceSetSelections.data.createSetSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
         jewelrySelection: {
-          connect: jewelrySelection.map(
+          connect: jewelrySetSelections.data.createSetSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
@@ -474,19 +540,20 @@ export const handleCopy = async (createBuild: (
             }
             : undefined,
         newBarOne: {
-          connect: newBarOne.map(
+          connect: frontbarSkillSelections.data.createSkillSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
         newBarTwo: {
-          connect: newBarTwo.map(
+          connect: backbarSkillSelections.data.createSkillSelections.map(
             (selection: any) => ({
               id: selection.id,
             })
           ),
         },
+
       },
     },
     refetchQueries: [{ query: ME }],

@@ -72,8 +72,6 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
         weaponType,
-        frontbarSelection: setTabKey === SetTab.frontbar ? [{ slot: Slot.mainHand }, { slot: Slot.offHand }] : frontbarSelection,
-        backbarSelection: setTabKey === SetTab.backbar ? [{ slot: Slot.mainHand }, { slot: Slot.offHand }] : backbarSelection
       }
     case 'SET_ARMOR_TYPE': {
       const { armorType } = action.payload
