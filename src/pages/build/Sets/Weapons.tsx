@@ -90,7 +90,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
         slot => slot.slot === Slot.offHand
       )
     )
-  }, [state])
+  }, [state!.selectedSet])
 
   const weaponGlyphQuery = useQuery(GET_MODIFICATIONS, {
     variables: { where: { modificationType: 'glyph', itemType: 'weapon' } }

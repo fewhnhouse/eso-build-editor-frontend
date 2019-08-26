@@ -61,7 +61,7 @@ export default ({ edit }: { edit: boolean }) => {
     if (state!.selectedSet) {
       setSelectedSet(state!.selectedSet)
     }
-  }, [state])
+  }, [state!.selectedSet])
 
   const { setTabKey } = state!
   const handleTabChange = (key: string) => {
