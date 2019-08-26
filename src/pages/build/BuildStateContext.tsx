@@ -1,72 +1,70 @@
-import React from 'react'; // { useReducer }
-import { ISkill } from '../../components/SkillSlot';
-import { skillReducer } from './reducers/skillReducer';
-import { skillBarReducer } from './reducers/skillBarReducer';
-import { ISet } from '../../components/GearSlot';
-import { setReducer } from './reducers/setReducer';
-import { SelectValue } from 'antd/lib/select';
-import { raceNameReducer } from './reducers/raceNameReducer';
-import { setBarReducer } from './reducers/setBarReducer';
-import { ISpecialBuff } from './consumables/BuffMenu';
+import React from 'react' // { useReducer }
+import { ISkill } from '../../components/SkillSlot'
+import { skillReducer } from './reducers/skillReducer'
+import { skillBarReducer } from './reducers/skillBarReducer'
+import { ISet } from '../../components/GearSlot'
+import { setReducer } from './reducers/setReducer'
+import { SelectValue } from 'antd/lib/select'
+import { raceNameReducer } from './reducers/raceNameReducer'
+import { setBarReducer } from './reducers/setBarReducer'
+import { ISpecialBuff } from './consumables/BuffMenu'
 
 export interface IMundus {
-  name: string;
-  effect: string;
-  value: string;
-  icon: string;
+  name: string
+  effect: string
+  value: string
+  icon: string
 }
 export interface ISlot {
-  id: number;
-  index: number;
+  id: number
+  index: number
 }
 
 export interface IBuild {
   id?: string
-  race: string;
-  esoClass: string;
-  name: string;
-  applicationArea: string;
-  role: string;
-  description: string;
-  mainResource: string;
-  bigPieceSelection: ISetSelection[];
-  smallPieceSelection: ISetSelection[];
-  jewelrySelection: ISetSelection[];
-  frontbarSelection: ISetSelection[];
-  backbarSelection: ISetSelection[];
-  newBarOne: ISkillSelection[];
-  newBarTwo: ISkillSelection[];
-  ultimateOne?: ISkill;
-  ultimateTwo?: ISkill;
-  mundusStone: IMundus;
-  buff: ISpecialBuff;
-  published: boolean;
-
+  race: string
+  esoClass: string
+  name: string
+  applicationArea: string
+  role: string
+  description: string
+  mainResource: string
+  bigPieceSelection: ISetSelection[]
+  smallPieceSelection: ISetSelection[]
+  jewelrySelection: ISetSelection[]
+  frontbarSelection: ISetSelection[]
+  backbarSelection: ISetSelection[]
+  newBarOne: ISkillSelection[]
+  newBarTwo: ISkillSelection[]
+  ultimateOne?: ISkill
+  ultimateTwo?: ISkill
+  mundusStone: IMundus
+  buff: ISpecialBuff
+  published: boolean
 }
 export interface IBuildState extends IBuild {
-  published: boolean;
-  skills: ISkill[];
-  hasTrash: boolean;
-  sets: ISet[];
-  skillLine: number;
+  published: boolean
+  skills: ISkill[]
+  hasTrash: boolean
+  sets: ISet[]
+  skillLine: number
   selectedSkillLines: {
-    id: number;
-    selectedSkills: ISkillSelection[];
-    selectedUltimate?: ISkill;
-  }[];
-  newActiveBar: ISkillSelection[];
-  selectedSet?: ISet;
-  weaponType: WeaponType;
-  armorType: ArmorType;
-  weapons: SelectValue[];
-  setTabKey: SetTab;
-
+    id: number
+    selectedSkills: ISkillSelection[]
+    selectedUltimate?: ISkill
+  }[]
+  newActiveBar: ISkillSelection[]
+  selectedSet?: ISet
+  weaponType: WeaponType
+  armorType: ArmorType
+  weapons: SelectValue[]
+  setTabKey: SetTab
 }
 
 export interface ISkillSelection {
-  id?: string;
-  index: number;
-  skill?: ISkill;
+  id?: string
+  index: number
+  skill?: ISkill
 }
 
 export enum Slot {
@@ -112,12 +110,12 @@ export enum SetTab {
   jewelry = 'JEWELRY_TAB',
 }
 
-export type SlotType = ArmorType | WeaponType | 'jewelry';
+export type SlotType = ArmorType | WeaponType | 'jewelry'
 
 export enum ArmorType {
   lightArmor = 'LIGHT_ARMOR',
   mediumArmor = 'MEDIUM_ARMOR',
-  heavyArmor = 'HEAVY_ARMOR'
+  heavyArmor = 'HEAVY_ARMOR',
 }
 
 export enum SetType {
@@ -126,7 +124,7 @@ export enum SetType {
   pvp = 'PvP',
   overland = 'Overland',
   trial = 'Trial',
-  dungeon = 'Dungeon'
+  dungeon = 'Dungeon',
 }
 
 export enum WeaponType {
@@ -134,30 +132,44 @@ export enum WeaponType {
   twohanded = 'TWO_HANDED',
 }
 export interface ISetSelection {
-  id?: string;
-  icon?: string;
-  slot: Slot;
-  selectedSet?: ISet;
-  type?: SlotType;
-  weaponType?: OnehandedWeapon | TwohandedWeapon;
-  trait?: IModification;
-  glyph?: IModification;
+  id?: string
+  icon?: string
+  slot: Slot
+  selectedSet?: ISet
+  type?: SlotType
+  weaponType?: OnehandedWeapon | TwohandedWeapon
+  trait?: IModification
+  glyph?: IModification
 }
 
 export interface IModification {
-  type: string;
-  modificationType: 'glyph' | 'trait';
-  itemType: 'armor' | 'weapon' | 'jewelry';
-  description: string;
-  icon: string;
+  type: string
+  modificationType: 'glyph' | 'trait'
+  itemType: 'armor' | 'weapon' | 'jewelry'
+  description: string
+  icon: string
 }
-export const defaultBuildState = {
+export const defaultBuildState: IBuildState = {
   published: false,
   skills: [],
   sets: [],
   skillLine: 0,
-  mundusStone: undefined,
-  buff: undefined,
+  mundusStone: {
+    effect: '',
+    name: '',
+    icon: '',
+    value: '',
+  },
+  buff: {
+    buffDescription: '',
+    buffType: '',
+    description: '',
+    duration: 0,
+    icon: '',
+    name: '',
+    notes: '',
+    quality: 1,
+  },
   hasTrash: false,
   applicationArea: '',
   esoClass: '',
@@ -306,13 +318,12 @@ export const defaultBuildState = {
   armorType: ArmorType.mediumArmor,
   weapons: ['', ''],
   race: '',
-  class: '',
   setTabKey: SetTab.armor,
-};
+}
 
 export interface IBuildAction {
-  payload: any;
-  type: string;
+  payload: any
+  type: string
 }
 
 const combineReducers = (
@@ -325,11 +336,11 @@ const combineReducers = (
       prev: IBuildState,
       curr: (state: IBuildState, action: IBuildAction) => IBuildState
     ) => {
-      return curr(prev, action);
+      return curr(prev, action)
     },
     state
-  );
-};
+  )
+}
 
 export const buildReducer = (state: IBuildState, action: IBuildAction) => {
   return combineReducers(state, action, [
@@ -338,9 +349,9 @@ export const buildReducer = (state: IBuildState, action: IBuildAction) => {
     setReducer,
     setBarReducer,
     raceNameReducer,
-  ]);
-};
+  ])
+}
 
 export const BuildContext = React.createContext<
   Partial<[IBuildState, React.Dispatch<IBuildAction>]>
->([]);
+>([])

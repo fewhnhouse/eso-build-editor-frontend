@@ -4,6 +4,7 @@ import {
   ISkillSelection,
   WeaponType,
   IBuild,
+  Slot,
 } from './BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ME } from '../home/UserHomeCard'
@@ -18,6 +19,8 @@ export const handleEditSave = async (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
   state: IBuildState,
+  initialFrontbarSelection: ISetSelection[],
+  initialBackbarSelection: ISetSelection[]
 ) => {
   const {
     id,
@@ -47,33 +50,73 @@ export const handleEditSave = async (
     data: {
       slot: setSelection.slot,
       selectedSet: setSelection.selectedSet
-        ? { connect: { id: setSelection.selectedSet.id } }
+        ? {
+          connect: { id: setSelection.selectedSet.id },
+        }
         : undefined,
       trait: setSelection.trait
         ? {
           connect: { description: setSelection.trait.description },
+
         }
         : undefined,
       glyph: setSelection.glyph
         ? {
           connect: { description: setSelection.glyph.description },
+
         }
         : undefined,
       type: setSelection.type,
       weaponType: setSelection.weaponType,
     },
   })
-  await frontbarSelection.map(async setSelection => {
+
+  const createWeaponSetVariables = (setSelection: ISetSelection, index: number, bar: "frontbar" | "backbar") => {
+    const prevSetSelection = bar === "frontbar" ? initialFrontbarSelection : initialBackbarSelection
+
+    return {
+      where: { id: setSelection.id || prevSetSelection[index].id },
+      data: {
+        slot: setSelection.slot,
+        selectedSet: setSelection.selectedSet
+          ? {
+            connect: { id: setSelection.selectedSet.id },
+          } : prevSetSelection[index].selectedSet ? {
+            disconnect: true
+          }
+            : undefined,
+        trait: setSelection.trait
+          ? {
+            connect: { description: setSelection.trait.description },
+
+          } : prevSetSelection[index].trait ? {
+            disconnect: true
+          }
+            : undefined,
+        glyph: setSelection.glyph
+          ? {
+            connect: { description: setSelection.glyph.description },
+
+          } : prevSetSelection[index].glyph ? {
+            disconnect: true
+          }
+            : undefined,
+        type: setSelection.id ? setSelection.type : null,
+        weaponType: setSelection.id ? setSelection.weaponType : null,
+      },
+    }
+  }
+  await frontbarSelection.map(async (setSelection, index) => {
     return updateSetSelection({
       variables: {
-        ...createSetVariables(setSelection),
+        ...createWeaponSetVariables(setSelection, index, "frontbar"),
       },
     })
   })
-  await backbarSelection.map(async setSelection => {
+  await backbarSelection.map(async (setSelection, index) => {
     return updateSetSelection({
       variables: {
-        ...createSetVariables(setSelection),
+        ...createWeaponSetVariables(setSelection, index, "backbar"),
       },
     })
   })

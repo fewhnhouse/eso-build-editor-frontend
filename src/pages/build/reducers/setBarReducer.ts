@@ -43,7 +43,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
           ),
         };
       } else if (setTabKey === SetTab.frontbar) {
-        const actualSlot = slot === Slot.eitherHand ? frontbarSelection[0].selectedSet ? frontbarSelection[1].selectedSet ? Slot.mainHand : Slot.offHand : Slot.mainHand : slot
+        const actualSlot = slot === Slot.eitherHand ? frontbarSelection[0].selectedSet ? frontbarSelection[1].selectedSet ? Slot.mainHand : frontbarSelection[0].type === WeaponType.twohanded ? Slot.mainHand : Slot.offHand : Slot.mainHand : slot
 
         if (state.weaponType === WeaponType.twohanded) {
           return {
@@ -91,7 +91,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
           ),
         };
       } else if (setTabKey === SetTab.backbar) {
-        const actualSlot = slot === Slot.eitherHand ? backbarSelection[0].selectedSet ? backbarSelection[1].selectedSet ? Slot.mainHand : Slot.offHand : Slot.mainHand : slot
+        const actualSlot = slot === Slot.eitherHand ? backbarSelection[0].selectedSet ? backbarSelection[1].selectedSet ? Slot.mainHand : backbarSelection[0].type === WeaponType.twohanded ? Slot.mainHand : Slot.offHand : Slot.mainHand : slot
         if (state.weaponType === WeaponType.twohanded) {
           return {
             ...state,
