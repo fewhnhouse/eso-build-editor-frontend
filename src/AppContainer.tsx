@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import {
-  Link,
-  RouteComponentProps,
-  withRouter
-} from 'react-router-dom'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
 import styled from 'styled-components'
 import {
@@ -15,7 +11,7 @@ import {
   Avatar,
   Spin,
   Dropdown,
-  Icon,
+  Icon
 } from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
 import { useQuery } from 'react-apollo'
@@ -91,6 +87,12 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
 
   const logoutMenu = (
     <Menu>
+      <Menu.Item>
+        <Link to='/profile'>
+          <Icon type='user' />
+          Profile
+        </Link>
+      </Menu.Item>
       <Menu.Item onClick={handleLogout}>
         <Icon type='logout' />
         Log out
@@ -158,7 +160,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
                 style={{
                   color: 'white',
                   margin: '0px 10px',
-                  cursor: 'pointer',
+                  cursor: 'pointer'
                 }}
               >
                 Hello, {data && data.me ? data.me.name : ''}
