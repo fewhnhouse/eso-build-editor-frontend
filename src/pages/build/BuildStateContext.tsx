@@ -31,7 +31,6 @@ export interface IBuild {
   applicationArea: string
   role: string
   description: string
-  mainResource: string
   bigPieceSelection: ISetSelection[]
   smallPieceSelection: ISetSelection[]
   jewelrySelection: ISetSelection[]
@@ -181,7 +180,6 @@ export const defaultBuildState: IBuildState = {
   esoClass: '',
   role: '',
   name: '',
-  mainResource: 'hybrid',
   description: '',
   newBarOne: [
     { index: 0, skill: undefined },

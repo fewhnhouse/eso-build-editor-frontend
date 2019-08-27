@@ -43,13 +43,6 @@ export const raceNameReducer = (state: IBuildState, action: IBuildAction) => {
         magicka
       }
     }
-    case 'SET_MAIN_RESOURCE': {
-      const { mainResource } = action.payload
-      return {
-        ...state,
-        mainResource,
-      }
-    }
     case 'SET_DESCRIPTION': {
       const { description } = action.payload
       return {
