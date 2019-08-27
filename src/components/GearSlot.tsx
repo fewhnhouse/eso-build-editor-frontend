@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Popover, Typography, Button } from 'antd'
-
 import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
@@ -130,6 +129,191 @@ const getImageSource = (
   }
 }
 
+const specialWeaponSets = [
+  {
+    name: 'Precise Regeneration',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.restorationStaff]
+  },
+  {
+    name: 'Concentrated Force',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.lightningStaff,
+      TwohandedWeapon.fireStaff,
+      TwohandedWeapon.iceStaff
+    ]
+  },
+  {
+    name: 'Chaotic Whirlwind',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.axe,
+      OnehandedWeapon.dagger,
+      OnehandedWeapon.mace,
+      OnehandedWeapon.sword
+    ]
+  },
+  {
+    name: 'Disciplined Slash',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.axe,
+      TwohandedWeapon.sword,
+      TwohandedWeapon.mace
+    ]
+  },
+  {
+    name: 'Timeless Blessing',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.restorationStaff]
+  },
+  {
+    name: 'Defensive Position',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.shield,
+      OnehandedWeapon.dagger,
+      OnehandedWeapon.mace,
+      OnehandedWeapon.sword,
+      OnehandedWeapon.axe
+    ]
+  },
+  {
+    name: 'Piercing Spray',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.bow]
+  },
+  {
+    name: 'Gallant Charge',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.axe,
+      OnehandedWeapon.dagger,
+      OnehandedWeapon.mace,
+      OnehandedWeapon.sword,
+      OnehandedWeapon.shield
+    ]
+  },
+  {
+    name: "Mender's Ward",
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.restorationStaff]
+  },
+  {
+    name: 'Radial Uppercut',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.axe,
+      TwohandedWeapon.sword,
+      TwohandedWeapon.mace
+    ]
+  },
+  {
+    name: 'Spectral Cloak',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.axe,
+      OnehandedWeapon.dagger,
+      OnehandedWeapon.mace,
+      OnehandedWeapon.sword
+    ]
+  },
+  {
+    name: 'Virulent Shot',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.bow]
+  },
+  {
+    name: 'Wild Impulse',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.lightningStaff,
+      TwohandedWeapon.iceStaff,
+      TwohandedWeapon.fireStaff
+    ]
+  },
+  {
+    name: 'Crushing Wall',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.lightningStaff,
+      TwohandedWeapon.iceStaff,
+      TwohandedWeapon.fireStaff
+    ]
+  },
+  {
+    name: 'Cruel Flurry',
+    type: 'onehanded',
+    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger]
+  },
+  {
+    name: 'Merciless Charge',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.axe,
+      TwohandedWeapon.sword,
+      TwohandedWeapon.mace
+    ]
+  },
+  {
+    name: 'Rampaging Slash',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.mace,
+      OnehandedWeapon.sword,
+      OnehandedWeapon.shield
+    ]
+  },
+  {
+    name: 'Thunderous Volley',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.bow]
+  },
+  {
+    name: 'Destructive Impact',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.lightningStaff,
+      TwohandedWeapon.iceStaff,
+      TwohandedWeapon.fireStaff
+    ]
+  },
+  {
+    name: 'Stinging Slashes',
+    type: 'onehanded',
+    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger]
+  },
+  {
+    name: 'Titanic Cleave',
+    type: 'twohanded',
+    weaponTypes: [
+      TwohandedWeapon.axe,
+      TwohandedWeapon.sword,
+      TwohandedWeapon.mace
+    ]
+  },
+  {
+    name: 'Grand Rejuvenation',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.restorationStaff]
+  },
+  {
+    name: 'Puncturing Remedy',
+    type: 'onehanded',
+    weaponTypes: [
+      OnehandedWeapon.mace,
+      OnehandedWeapon.shield,
+      OnehandedWeapon.sword
+    ]
+  },
+  {
+    name: 'Caustic Arrow',
+    type: 'twohanded',
+    weaponTypes: [TwohandedWeapon.bow]
+  }
+]
+
 const getGearSlot = (slot: ISetSelection) => {
   if (!slot.type) {
     return `${
@@ -142,17 +326,13 @@ const getGearSlot = (slot: ISetSelection) => {
         slot.selectedSet.slug
       }_${getImageSource(slot.slot)}`
     } else if (
-      slot.selectedSet.type === SetType.arena ||
-      slot.selectedSet.type === SetType.trial
+      specialWeaponSets.find(
+        set => set.name === (slot.selectedSet && slot.selectedSet.name)
+      )
     ) {
-      if (
-        slot.type === WeaponType.onehanded ||
-        slot.type === WeaponType.twohanded
-      ) {
-        return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
-          slot.selectedSet.slug
-        }_${getImageSource(slot.weaponType)}`
-      }
+      return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
+        slot.selectedSet.slug
+      }_${getImageSource(slot.weaponType)}`
     }
   }
   if (slot.type === WeaponType.onehanded) {
