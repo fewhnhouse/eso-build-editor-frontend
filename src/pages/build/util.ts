@@ -40,7 +40,9 @@ export const handleEditSave = async (
     ultimateOne,
     ultimateTwo,
     name,
-    // mainResource,
+    magicka,
+    stamina,
+    health,
     description,
     published,
   }: IBuildState = state!
@@ -166,8 +168,6 @@ export const handleEditSave = async (
     })
   })
 
-  console.log('done with prior')
-
   return await updateBuild({
     variables: {
       where: {
@@ -180,6 +180,9 @@ export const handleEditSave = async (
         description,
         applicationArea,
         published,
+        health,
+        stamina,
+        magicka,
         /*
         newBarOne: {
           delete: initialSkillBarOne.map(skillSelection => ({ id: skillSelection.id })),
@@ -240,7 +243,9 @@ export const handleCreateSave = async (
     role,
     name,
     published,
-    // mainResource,
+    magicka,
+    stamina,
+    health,
     description,
   }: IBuildState = state!
 
@@ -363,6 +368,9 @@ export const handleCreateSave = async (
         description,
         applicationArea,
         role,
+        health,
+        stamina,
+        magicka,
         mundusStone: { connect: { name: mundusStone.name } },
         buff: { connect: { name: buff.name } },
         bigPieceSelection: {
@@ -462,10 +470,12 @@ export const handleCopy = async (
     newBarOne,
     newBarTwo,
     ultimateOne,
-    ultimateTwo
-  } = build;
+    ultimateTwo,
+    magicka,
+    stamina,
+    health,
 
-  console.log(bigPieceSelection, smallPieceSelection, jewelrySelection)
+  } = build;
 
   const createSetVariables = (setSelections: ISetSelection[]) => ({
     slots: setSelections.map(setSelection => setSelection.slot),
@@ -533,6 +543,9 @@ export const handleCopy = async (
         description,
         applicationArea,
         role,
+        health,
+        stamina,
+        magicka,
         mundusStone: { connect: { name: mundusStone.name } },
         buff: { connect: { name: buff.name } },
         bigPieceSelection: {

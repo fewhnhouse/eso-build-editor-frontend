@@ -22,11 +22,25 @@ export const raceNameReducer = (state: IBuildState, action: IBuildAction) => {
         role,
       }
     }
-    case 'SET_MAIN_RESOURCE': {
-      const { mainResource } = action.payload
+    case 'SET_HEALTH': {
+      const { health } = action.payload
       return {
         ...state,
-        mainResource,
+        health
+      }
+    }
+    case 'SET_STAMINA': {
+      const { stamina } = action.payload
+      return {
+        ...state,
+        stamina
+      }
+    }
+    case 'SET_MAGICKA': {
+      const { magicka } = action.payload
+      return {
+        ...state,
+        magicka
       }
     }
     case 'SET_DESCRIPTION': {
