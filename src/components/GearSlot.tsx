@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Popover, Typography, Button } from 'antd'
-
 import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
@@ -14,6 +13,7 @@ import {
   SetType
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from './GearCard'
+import { specialWeaponSets } from '../pages/build/Sets/SetBar'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
@@ -142,17 +142,13 @@ const getGearSlot = (slot: ISetSelection) => {
         slot.selectedSet.slug
       }_${getImageSource(slot.slot)}`
     } else if (
-      slot.selectedSet.type === SetType.arena ||
-      slot.selectedSet.type === SetType.trial
+      specialWeaponSets.find(
+        set => set.name === (slot.selectedSet && slot.selectedSet.name)
+      )
     ) {
-      if (
-        slot.type === WeaponType.onehanded ||
-        slot.type === WeaponType.twohanded
-      ) {
-        return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
-          slot.selectedSet.slug
-        }_${getImageSource(slot.weaponType)}`
-      }
+      return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
+        slot.selectedSet.slug
+      }_${getImageSource(slot.weaponType)}`
     }
   }
   if (slot.type === WeaponType.onehanded) {
