@@ -51,26 +51,33 @@ const StyledCard = styled(Card)`
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   max-width: 400px;
-  min-height: 300px;
+  min-height: 80px;
   margin: 10px;
 `
 interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
   draggable?: boolean
+  expand: boolean
   role?: IRole
 }
-export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
+export default ({
+  item,
+  style,
+  draggable = true,
+  role,
+  expand,
+}: IBuildCardProps) => {
   return draggable ? (
-    <WithDnD item={item} style={style} />
+    <WithDnD expand={expand} item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard item={item} role={role} />
+      <BuildCard expand={expand} item={item} role={role} />
     </div>
   )
 }
 
-const WithDnD = ({ item, style }: IBuildCardProps) => {
+const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
@@ -83,12 +90,20 @@ const WithDnD = ({ item, style }: IBuildCardProps) => {
   })
   return (
     <div style={style} ref={drag}>
-      <BuildCard item={item} />
+      <BuildCard expand={expand} item={item} />
     </div>
   )
 }
 
-const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+const BuildCard = ({
+  item,
+  role,
+  expand,
+}: {
+  item: IBuild
+  role?: IRole
+  expand: boolean
+}) => {
   const [, dispatch] = useContext(RaidContext)
   const handleDeleteClick = () => {
     dispatch!({
@@ -132,7 +147,10 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             />
           ) : (
             <Tooltip title='Go to build'>
-              <Link to={`/builds/${item.id}`}>
+              <Link
+                style={{ top: 10, right: 10, position: 'absolute' }}
+                to={`/builds/${item.id}`}
+              >
                 <Button ghost icon='select' type='primary' />
               </Link>
             </Tooltip>
@@ -141,104 +159,104 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
         <Description direction='row' justify='flex-start'>
           <RaceClassContainer>
             <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
-                item.race
-              }.png`}
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
             />
             {item.race}
           </RaceClassContainer>
           <RaceClassContainer>
             <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
-                item.esoClass
-              }.png`}
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
             />
             {item.esoClass}
           </RaceClassContainer>
         </Description>
-        <Divider style={{ margin: '5px 0px' }} />
-        <Tabs defaultActiveKey='skills'>
-          <TabPane tab='Skills' key='skills'>
-            <Flex style={{ width: '100%' }}>
-              <AbilityBar>
-                <SkillView
-                  id={ABILITY_BAR_ONE}
-                  disabled
-                  size='small'
-                  ultimate={item.ultimateOne}
-                  skillSlots={item.newBarOne}
-                />
-              </AbilityBar>
-              <AbilityBar>
-                <SkillView
-                  size='small'
-                  id={ABILITY_BAR_TWO}
-                  disabled
-                  skillSlots={item.newBarTwo}
-                  ultimate={item.ultimateTwo}
-                />
-              </AbilityBar>
-            </Flex>
-          </TabPane>
-          <TabPane tab='Weapons' key='weapons'>
-            <ScrollContainer>
-              <GearView
-                setsCount={setsCount}
-                disabled
-                size='small'
-                setups={[
-                  {
-                    id: 'frontbar',
-                    label: 'Frontbar',
-                    data: item.frontbarSelection,
-                  },
-                  {
-                    id: 'backbar',
-                    label: 'Backbar',
-                    data: item.backbarSelection,
-                  },
-                ]}
-              />
-            </ScrollContainer>
-          </TabPane>
-          <TabPane tab='Armor' key='armor'>
-            <ScrollContainer>
-              <GearView
-                setsCount={setsCount}
-                disabled
-                size='small'
-                setups={[
-                  {
-                    id: 'bigpieces',
-                    label: 'Big Pieces',
-                    data: item.bigPieceSelection,
-                  },
-                  {
-                    id: 'smallpieces',
-                    label: 'Small Pieces',
-                    data: item.smallPieceSelection,
-                  },
-                ]}
-              />
-            </ScrollContainer>
-          </TabPane>
-          <TabPane tab='Jewelry' key='jewelry'>
-            <ScrollContainer>
-              <GearView
-                setsCount={setsCount}
-                disabled
-                size='small'
-                setups={[
-                  {
-                    id: 'jewelry',
-                    label: 'Jewelry',
-                    data: item.jewelrySelection,
-                  },
-                ]}
-              />
-            </ScrollContainer>
-          </TabPane>
-        </Tabs>
+        {expand && (
+          <>
+            <Divider style={{ margin: '5px 0px' }} />
+            <Tabs defaultActiveKey={'skills'}>
+              <TabPane tab='Skills' key='skills'>
+                <Flex style={{ width: '100%' }}>
+                  <AbilityBar>
+                    <SkillView
+                      id={ABILITY_BAR_ONE}
+                      disabled
+                      size='small'
+                      ultimate={item.ultimateOne}
+                      skillSlots={item.newBarOne}
+                    />
+                  </AbilityBar>
+                  <AbilityBar>
+                    <SkillView
+                      size='small'
+                      id={ABILITY_BAR_TWO}
+                      disabled
+                      skillSlots={item.newBarTwo}
+                      ultimate={item.ultimateTwo}
+                    />
+                  </AbilityBar>
+                </Flex>
+              </TabPane>
+              <TabPane tab='Weapons' key='weapons'>
+                <ScrollContainer>
+                  <GearView
+                    setsCount={setsCount}
+                    disabled
+                    size='small'
+                    setups={[
+                      {
+                        id: 'frontbar',
+                        label: 'Frontbar',
+                        data: item.frontbarSelection,
+                      },
+                      {
+                        id: 'backbar',
+                        label: 'Backbar',
+                        data: item.backbarSelection,
+                      },
+                    ]}
+                  />
+                </ScrollContainer>
+              </TabPane>
+              <TabPane tab='Armor' key='armor'>
+                <ScrollContainer>
+                  <GearView
+                    setsCount={setsCount}
+                    disabled
+                    size='small'
+                    setups={[
+                      {
+                        id: 'bigpieces',
+                        label: 'Big Pieces',
+                        data: item.bigPieceSelection,
+                      },
+                      {
+                        id: 'smallpieces',
+                        label: 'Small Pieces',
+                        data: item.smallPieceSelection,
+                      },
+                    ]}
+                  />
+                </ScrollContainer>
+              </TabPane>
+              <TabPane tab='Jewelry' key='jewelry'>
+                <ScrollContainer>
+                  <GearView
+                    setsCount={setsCount}
+                    disabled
+                    size='small'
+                    setups={[
+                      {
+                        id: 'jewelry',
+                        label: 'Jewelry',
+                        data: item.jewelrySelection,
+                      },
+                    ]}
+                  />
+                </ScrollContainer>
+              </TabPane>
+            </Tabs>
+          </>
+        )}
       </div>
     </StyledCard>
   )

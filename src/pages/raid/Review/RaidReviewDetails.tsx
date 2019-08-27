@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Typography, Divider } from 'antd'
+import { Card, Typography, Divider, Button } from 'antd'
 import { IRaidState, IRole } from '../RaidStateContext'
 import { Redirect } from 'react-router'
 import BuildCard from '../builds/BuildCard'
@@ -33,6 +33,12 @@ const CardList = styled(Flex)`
   flex-wrap: wrap;
 `
 
+const ExpandButton = styled(Button)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`
+
 interface IRaidReviewDetailsProps {
   loadedData: IRaidState
   local?: boolean
@@ -41,8 +47,11 @@ interface IRaidReviewDetailsProps {
 const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const { name, roles, applicationArea, description } = loadedData
   const [path] = useState('')
+  const [expand, setExpand] = useState(false)
   const area = applicationAreas.find(area => area.key === applicationArea)
-
+  const handleExpandChange = () => {
+    setExpand(prev => !prev)
+  }
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   } else {
@@ -50,6 +59,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
       <Wrapper direction='column' fluid justify='flex-start'>
         <Flex>
           <Typography.Title>{name}</Typography.Title>
+
           {local && (
             <Flex direction='row'>
               <InformationCard
@@ -83,6 +93,10 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
         </Flex>
         <RaidContent local={local} direction='row' align='flex-start'>
           <BuildInformation title={<Title level={2}>Builds</Title>}>
+            <ExpandButton
+              onClick={handleExpandChange}
+              icon={expand ? 'shrink' : 'arrows-alt'}
+            ></ExpandButton>
             {roles.map((role, index) => {
               return (
                 <React.Fragment key={index}>
@@ -93,6 +107,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                     {role.builds.map((build, index) => {
                       return (
                         <BuildCard
+                          expand={expand}
                           item={build.build}
                           draggable={false}
                           key={index}
