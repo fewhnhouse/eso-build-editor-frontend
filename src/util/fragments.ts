@@ -89,6 +89,9 @@ export const build = gql`
     published
     race
     description
+    health
+    magicka 
+    stamina
     applicationArea
     mundusStone {
       id
