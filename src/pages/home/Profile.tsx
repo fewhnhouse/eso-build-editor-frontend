@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Layout, Typography, Divider, Input, Button } from 'antd'
+import { Layout, Typography, Divider, Input, Button, Card } from 'antd'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Flex from '../../components/Flex'
@@ -14,7 +14,7 @@ const Container = styled(Content)`
   align-items: center;
   text-align: center;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   height: calc(100vh - 64px);
   color: ${props => props.theme.mainBg};
 `
@@ -38,78 +38,38 @@ const Profile = ({ loggedIn }: IProfileProps) => {
     <>
       <Container>
         <Title>Hello {data && data.me ? data.me.name : ''}!</Title>
-        <Flex direction='column' justify='space-around' align='center'>
-          <Flex
-            style={{ marginBottom: 20, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='center'
-          >
-            <Text strong style={{ marginBottom: 10 }}>
-              Change your email
-            </Text>
-            <Text>
-              Changing your email will require the new address to be verified.
-              Make sure to type the new address correctly and click the link in
-              the verification mail.
-            </Text>
-            <Text style={{ marginTop: 20 }}>
-              Current email: {data && data.me ? data.me.email : ''}
-            </Text>
-            <Input
-              style={{ width: 400 }}
-              size='large'
-              placeholder='Type new email...'
-            />
-            <Button type='primary'>Update email</Button>
-          </Flex>
+        <Flex direction='column' justify='space-around' align='center' style={{width: "100%", margin: 20}}>
+          <Card title='Change your email' style={{ maxWidth: 500, width: "40%" }}>
+            <Text>Current email: {data && data.me ? data.me.email : ''}</Text>
+            <Divider />
+            <Input size='large' placeholder='Type new email...' />
+            <Button block size='large' style={{ marginTop: 20 }} type='primary'>
+              Update email
+            </Button>
+          </Card>
           <Divider />
-          <Flex
-            style={{ marginBottom: 20, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='center'
-          >
-            <Text strong style={{ marginBottom: 10 }}>
-              Change your password
-            </Text>
-            <Input.Password
-              style={{ width: 400 }}
-              size='large'
-              placeholder='New password'
-            />
-            <Input.Password
-              style={{ width: 400 }}
-              size='large'
-              placeholder='Confirm new password'
-            />
-            <Button type='primary'>Update password</Button>
-          </Flex>
+          <Card title='Change your password' style={{ maxWidth: 500, width: "40%" }}>
+            <Input.Password size='large' placeholder='New password' />
+            <Button block size='large' style={{ marginTop: 20 }} type='primary'>
+              Update password
+            </Button>
+          </Card>
           <Divider />
-          <Flex
-            style={{ marginBottom: 20, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='center'
-          >
-            <Text strong style={{ color: 'red', marginBottom: 10 }}>
-              Delete the account
-            </Text>
+          <Card title='Delete account' style={{ maxWidth: 500, width: "40%" }}>
             <Text>
               Deleting will remove the account and all associated data. Builds
-              and raids created by this account will be
-              <span style={{ color: 'red' }}>
-                {' '}
-                deleted immediately and permanently
-              </span>
-              . Any access this account has to shared builds or raids will be
-              removed.
+              and raids created by this account will be deleted permanently.
+              <br /> Any access this account has to shared builds or raids will
+              be removed.
             </Text>
+            <Divider />
             <Text strong style={{ marginTop: 20 }}>
               This action cannot be undone.
             </Text>
-            <Button type='danger'>Delete account</Button>
-          </Flex>
+            <Button block size='large' style={{ marginTop: 20 }} type='danger'>
+              Delete account
+            </Button>
+          </Card>
         </Flex>
       </Container>
     </>
