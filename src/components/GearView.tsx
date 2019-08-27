@@ -4,12 +4,7 @@ import styled from 'styled-components'
 import { Typography } from 'antd'
 import Flex from './Flex'
 import GearSlot, { DisplaySlot } from './GearSlot'
-import {
-  ISetSelection,
-  Slot,
-  TwohandedWeapon,
-  WeaponType
-} from '../pages/build/BuildStateContext'
+import { ISetSelection, Slot } from '../pages/build/BuildStateContext'
 
 const GearView = styled.div``
 
@@ -51,7 +46,7 @@ export default ({
   droppable,
   disabled,
   size = 'normal',
-  setsCount
+  setsCount,
 }: IGearViewProps) => {
   return (
     <GearView>
@@ -66,9 +61,7 @@ export default ({
           >
             {setup.data.map((slot: ISetSelection, index: number) => {
               return disabled ? (
-                slot.slot === Slot.offHand && !slot.type ? (
-                  ''
-                ) : (
+                (slot.slot !== Slot.offHand || slot.type) && (
                   <DisplaySlot
                     key={index}
                     size={size}
