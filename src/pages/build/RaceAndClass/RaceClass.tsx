@@ -1,11 +1,22 @@
 import React, { useContext, useEffect } from 'react'
-import { Divider, Input, Select, Typography, Radio } from 'antd'
+import {
+  Divider,
+  Input,
+  Select,
+  Typography,
+  Radio,
+  Button,
+  Icon,
+  Card,
+} from 'antd'
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext } from '../BuildStateContext'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import Flex from '../../../components/Flex'
 import { races, classes } from './data'
+
+const ButtonGroup = Button.Group
 
 const CardContainer = styled.div`
   display: flex;
@@ -19,7 +30,11 @@ const GeneralContainer = styled.div`
   flex-direction: column;
   margin: auto;
 `
-
+const ResourceCard = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  margin: 0px 10px;
+`
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
@@ -54,9 +69,75 @@ export const applicationAreas = [
     key: 'pve_raid',
   },
 ]
+
+const TOTAL_ATTRIBUTES = 64
 export default ({ edit }: { edit: boolean }) => {
   const [state, dispatch] = useContext(BuildContext)
-  const { name, applicationArea, mainResource, role, description } = state!
+  const {
+    name,
+    applicationArea,
+    health,
+    magicka,
+    stamina,
+    role,
+    description,
+  } = state!
+  const totalAttributes = health + stamina + magicka
+
+  const handleAttributeChange = (
+    type: 'health' | 'magicka' | 'stamina',
+    operation: 'plus' | 'minus'
+  ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const modifier = e.shiftKey ? 10 : 1
+    const tooManyAttributes = totalAttributes + modifier > TOTAL_ATTRIBUTES
+    const tooLittleAttributes = state![type] - modifier < 0
+    if (type === 'health') {
+      if (tooManyAttributes && operation === 'plus') {
+        const difference = TOTAL_ATTRIBUTES - magicka - stamina
+        dispatch!({ type: 'SET_HEALTH', payload: { health: difference } })
+      } else if (tooLittleAttributes && operation === 'minus') {
+        dispatch!({ type: 'SET_HEALTH', payload: { health: 0 } })
+      } else {
+        dispatch!({
+          type: 'SET_HEALTH',
+          payload: {
+            health:
+              operation === 'plus' ? health + modifier : health - modifier,
+          },
+        })
+      }
+    } else if (type === 'magicka') {
+      if (tooManyAttributes && operation === 'plus') {
+        const difference = TOTAL_ATTRIBUTES - health - stamina
+        dispatch!({ type: 'SET_MAGICKA', payload: { magicka: difference } })
+      } else if (tooLittleAttributes && operation === 'minus') {
+        dispatch!({ type: 'SET_MAGICKA', payload: { magicka: 0 } })
+      } else {
+        dispatch!({
+          type: 'SET_MAGICKA',
+          payload: {
+            magicka:
+              operation === 'plus' ? magicka + modifier : magicka - modifier,
+          },
+        })
+      }
+    } else {
+      if (tooManyAttributes && operation === 'plus') {
+        const difference = TOTAL_ATTRIBUTES - magicka - health
+        dispatch!({ type: 'SET_STAMINA', payload: { stamina: difference } })
+      } else if (tooLittleAttributes && operation === 'minus') {
+        dispatch!({ type: 'SET_STAMINA', payload: { stamina: 0 } })
+      } else {
+        dispatch!({
+          type: 'SET_STAMINA',
+          payload: {
+            stamina:
+              operation === 'plus' ? stamina + modifier : stamina - modifier,
+          },
+        })
+      }
+    }
+  }
   useEffect(() => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
@@ -87,12 +168,6 @@ export default ({ edit }: { edit: boolean }) => {
     })
   }
 
-  const handleResourceChange = (e: RadioChangeEvent) => {
-    dispatch!({
-      type: 'SET_MAIN_RESOURCE',
-      payload: { mainResource: e.target.value },
-    })
-  }
   return (
     <div>
       <Divider>General Information</Divider>
@@ -145,7 +220,9 @@ export default ({ edit }: { edit: boolean }) => {
               placeholder='Select application area...'
             >
               {applicationAreas.map((area, index) => (
-                <Select.Option key={`appArea-${index}`} value={area.key}>{area.label}</Select.Option>
+                <Select.Option key={`appArea-${index}`} value={area.key}>
+                  {area.label}
+                </Select.Option>
               ))}
             </Select>
           </Flex>
@@ -178,19 +255,75 @@ export default ({ edit }: { edit: boolean }) => {
           justify='flex-start'
           align='center'
         >
-          <Typography.Text style={{ marginBottom: 5 }} strong>
-            Main Resource
-          </Typography.Text>
-          <Radio.Group
-            value={mainResource}
-            onChange={handleResourceChange}
-            defaultValue='hybrid'
-            buttonStyle='solid'
-          >
-            <Radio.Button value='magicka'>Magicka</Radio.Button>
-            <Radio.Button value='hybrid'>Hybrid</Radio.Button>
-            <Radio.Button value='stamina'>Stamina</Radio.Button>
-          </Radio.Group>
+          <Flex direction='row' justify='space-between'>
+            <ResourceCard>
+              <Typography.Text strong>Stamina</Typography.Text>
+              <Typography.Title style={{ margin: 5 }} level={4}>
+                {stamina}
+              </Typography.Title>
+              <ButtonGroup>
+                <Button
+                  disabled={stamina === 0}
+                  onClick={handleAttributeChange('stamina', 'minus')}
+                  type='default'
+                >
+                  <Icon type='minus' />
+                </Button>
+                <Button
+                  disabled={totalAttributes >= 64}
+                  onClick={handleAttributeChange('stamina', 'plus')}
+                  type='primary'
+                >
+                  <Icon type='plus' />
+                </Button>
+              </ButtonGroup>
+            </ResourceCard>
+            <ResourceCard>
+              <Typography.Text strong>Health</Typography.Text>
+              <Typography.Title style={{ margin: 5 }} level={4}>
+                {health}
+              </Typography.Title>
+              <ButtonGroup>
+                <Button
+                  disabled={health === 0}
+                  onClick={handleAttributeChange('health', 'minus')}
+                  type='default'
+                >
+                  <Icon type='minus' />
+                </Button>
+                <Button
+                  disabled={totalAttributes >= 64}
+                  onClick={handleAttributeChange('health', 'plus')}
+                  type='primary'
+                >
+                  <Icon type='plus' />
+                </Button>
+              </ButtonGroup>
+            </ResourceCard>
+
+            <ResourceCard>
+              <Typography.Text strong>Magicka</Typography.Text>
+              <Typography.Title style={{ margin: 5 }} level={4}>
+                {magicka}
+              </Typography.Title>
+              <ButtonGroup>
+                <Button
+                  disabled={magicka === 0}
+                  onClick={handleAttributeChange('magicka', 'minus')}
+                  type='default'
+                >
+                  <Icon type='minus' />
+                </Button>
+                <Button
+                  disabled={totalAttributes >= 64}
+                  onClick={handleAttributeChange('magicka', 'plus')}
+                  type='primary'
+                >
+                  <Icon type='plus' />
+                </Button>
+              </ButtonGroup>
+            </ResourceCard>
+          </Flex>
         </Flex>
       </GeneralContainer>
 
@@ -200,9 +333,7 @@ export default ({ edit }: { edit: boolean }) => {
           <RaceCard
             key={`race-${index}`}
             title={race.title}
-            imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${
-              race.title
-            }.png`}
+            imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race.title}.png`}
             description={race.description}
           />
         ))}
@@ -214,9 +345,7 @@ export default ({ edit }: { edit: boolean }) => {
             key={`esoclass-${index}`}
             description={esoClass.description}
             title={esoClass.title}
-            imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
-              esoClass.title
-            }.png`}
+            imageSource={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass.title}.png`}
           />
         ))}
       </CardContainer>

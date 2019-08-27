@@ -7,7 +7,6 @@ import RaidCard from './RaidCard';
 import BuildCard from './BuildCard';
 import { useQuery } from 'react-apollo';
 import gql from 'graphql-tag';
-import { build } from '../../util/fragments';
 const { Title } = Typography;
 
 const CardContainer = styled(Flex)`
@@ -67,15 +66,11 @@ export const ME = gql`
           id
           builds {
             id
-            build {
-              ...Build
-            }
           }
         }
       }
     }
   }
-  ${build}
 `;
 
 export default ({ isBuild }: { isBuild: boolean }) => {

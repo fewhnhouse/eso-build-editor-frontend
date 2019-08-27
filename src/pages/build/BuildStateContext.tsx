@@ -23,6 +23,9 @@ export interface ISlot {
 export interface IBuild {
   id?: string
   race: string
+  health: number
+  magicka: number
+  stamina: number
   esoClass: string
   name: string
   applicationArea: string
@@ -154,6 +157,9 @@ export const defaultBuildState: IBuildState = {
   skills: [],
   sets: [],
   skillLine: 0,
+  health: 0,
+  stamina: 0,
+  magicka: 0,
   mundusStone: {
     effect: '',
     name: '',
