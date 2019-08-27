@@ -5,7 +5,10 @@ import {
   SlotType,
   TwohandedWeapon,
   OnehandedWeapon,
-  WeaponType
+  WeaponType,
+  defaultBuildState,
+  ISetSelection,
+  IBuildState,
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
 import {
@@ -15,7 +18,7 @@ import {
   Icon,
   // message,
   Tooltip,
-  notification
+  notification,
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -135,7 +138,7 @@ const UPDATE_BUILD = gql`
 const { Step } = Steps
 
 interface IBuildProps {
-  build: any
+  build: IBuildState
   pageIndex: number
   path: string
   edit?: boolean
@@ -147,6 +150,17 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
+  const [initialFrontbar, setInitialFrontbar] = useState<ISetSelection[]>(
+    defaultBuildState.frontbarSelection
+  )
+  const [initialBackbar, setInitialBackbar] = useState<ISetSelection[]>(
+    defaultBuildState.frontbarSelection
+  )
+
+  useEffect(() => {
+    setInitialFrontbar(build.frontbarSelection)
+    setInitialBackbar(build.backbarSelection)
+  }, [])
 
   const handlePrivateChange = () => {
     dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
@@ -188,7 +202,9 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           updateSkillSelection,
           updateSetSelection,
           updateBuild,
-          state
+          state,
+          initialFrontbar,
+          initialBackbar
         )
         notification.success({
           message: 'Build update successful',
@@ -207,13 +223,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          )
+          ),
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build update failed',
-          description: 'Your build could not be saved. Try again later.'
+          description: 'Your build could not be saved. Try again later.',
         })
       }
     } else {
@@ -241,13 +257,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 <Button icon='share-alt'>Share link</Button>
               </Flex>
             </Flex>
-          )
+          ),
         })
       } catch (e) {
         console.error(e)
         notification.error({
           message: 'Build creation failed',
-          description: 'Your build could not be saved. Try again later.'
+          description: 'Your build could not be saved. Try again later.',
         })
       }
     }
@@ -271,7 +287,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     smallPieceSelection,
     jewelrySelection,
     newBarOne,
-    newBarTwo
+    newBarTwo,
   } = state!
 
   const hasValidFrontbar = frontbarSelection[0].selectedSet
@@ -371,7 +387,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           display: 'flex',
           zIndex: 100,
           alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)'
+          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
         }}
       >
         <TabButton
