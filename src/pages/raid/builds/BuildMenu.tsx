@@ -213,7 +213,7 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
         const item = builds[index]
         return (
           <animated.div style={style}>
-            <BuildCard item={item} />
+            <BuildCard item={item} expand />
           </animated.div>
         )
       }}

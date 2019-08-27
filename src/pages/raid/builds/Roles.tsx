@@ -175,6 +175,7 @@ export default () => {
             >
               {role.builds.map((build, buildIndex) => (
                 <BuildCard
+                  expand
                   draggable={false}
                   role={role}
                   style={{ width: 400 }}
