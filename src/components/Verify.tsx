@@ -1,9 +1,10 @@
-import React from 'react';
-import { useMutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import { RouteComponentProps } from 'react-router';
-import { message, Typography } from 'antd';
-import styled from 'styled-components';
+import React from 'react'
+import { useMutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { RouteComponentProps } from 'react-router'
+import { message, Typography, Result, Button, Spin } from 'antd'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const VERIFY = gql`
   mutation confirmSignup($token: String!) {
@@ -15,34 +16,65 @@ const VERIFY = gql`
       }
     }
   }
-`;
+`
 
 const Container = styled.div`
   width: 100%;
   height: calc(100vh - 68px);
-  text-align: center;
-  padding: 40px;
-`;
+  background: #ededed;
+`
 export default ({ match }: RouteComponentProps<{ token: string }>) => {
-  const { token } = match.params;
-  const [mutate, { error, data }] = useMutation(VERIFY, {
+  const { token } = match.params
+  const [mutate, { error, loading, data }] = useMutation(VERIFY, {
     variables: { token },
-  });
+  })
   if (!token) {
-    message.error('No token provided.');
+    message.error('No token provided.')
   } else {
-    mutate({ variables: { token } });
+    mutate({ variables: { token } })
   }
-  console.log(error, data, token);
+  if (loading) {
+    return (
+      <Container>
+        <Spin style={{ marginTop: 5 }} />
+      </Container>
+    )
+  }
   if (error) {
-    message.error('Invalid token.');
+    message.error('Invalid token.')
+    return (
+      <Container>
+        <Result
+          status='500'
+          title='500'
+          subTitle='Something went wrong. your Account could not be validated.'
+          extra={
+            <Link to='/'>
+              <Button type='primary'>Back Home</Button>
+            </Link>
+          }
+        />
+      </Container>
+    )
   } else if (data && data.confirmSignup) {
-    localStorage.setItem('token', data.confirmSignup.token);
-    message.success('Account verified.');
+    localStorage.setItem('token', data.confirmSignup.token)
+    return (
+      <Container>
+        <Result
+          status='success'
+          title='Account successfully validated!'
+          extra={
+            <Link to='/'>
+              <Button type='primary' key='console'>
+                Go to Home
+              </Button>
+            </Link>
+          }
+        />
+        ,
+      </Container>
+    )
+  } else {
+    return null
   }
-  return (
-    <Container>
-      <Typography.Title>Verify</Typography.Title>
-    </Container>
-  );
-};
+}
