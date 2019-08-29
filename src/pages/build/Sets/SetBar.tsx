@@ -13,7 +13,7 @@ import {
   OnehandedWeapon,
   SetTab,
   SetType,
-  IModification
+  IModification,
 } from '../BuildStateContext'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -32,7 +32,7 @@ export const specialWeaponSets = [
   {
     name: 'Precise Regeneration',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.restorationStaff]
+    weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
     name: 'Concentrated Force',
@@ -40,8 +40,8 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.fireStaff,
-      TwohandedWeapon.iceStaff
-    ]
+      TwohandedWeapon.iceStaff,
+    ],
   },
   {
     name: 'Chaotic Whirlwind',
@@ -50,8 +50,8 @@ export const specialWeaponSets = [
       OnehandedWeapon.axe,
       OnehandedWeapon.dagger,
       OnehandedWeapon.mace,
-      OnehandedWeapon.sword
-    ]
+      OnehandedWeapon.sword,
+    ],
   },
   {
     name: 'Disciplined Slash',
@@ -59,13 +59,13 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
-      TwohandedWeapon.mace
-    ]
+      TwohandedWeapon.mace,
+    ],
   },
   {
     name: 'Timeless Blessing',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.restorationStaff]
+    weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
     name: 'Defensive Position',
@@ -75,13 +75,13 @@ export const specialWeaponSets = [
       OnehandedWeapon.dagger,
       OnehandedWeapon.mace,
       OnehandedWeapon.sword,
-      OnehandedWeapon.axe
-    ]
+      OnehandedWeapon.axe,
+    ],
   },
   {
     name: 'Piercing Spray',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.bow]
+    weaponTypes: [TwohandedWeapon.bow],
   },
   {
     name: 'Gallant Charge',
@@ -91,13 +91,13 @@ export const specialWeaponSets = [
       OnehandedWeapon.dagger,
       OnehandedWeapon.mace,
       OnehandedWeapon.sword,
-      OnehandedWeapon.shield
-    ]
+      OnehandedWeapon.shield,
+    ],
   },
   {
     name: "Mender's Ward",
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.restorationStaff]
+    weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
     name: 'Radial Uppercut',
@@ -105,8 +105,8 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
-      TwohandedWeapon.mace
-    ]
+      TwohandedWeapon.mace,
+    ],
   },
   {
     name: 'Spectral Cloak',
@@ -115,13 +115,13 @@ export const specialWeaponSets = [
       OnehandedWeapon.axe,
       OnehandedWeapon.dagger,
       OnehandedWeapon.mace,
-      OnehandedWeapon.sword
-    ]
+      OnehandedWeapon.sword,
+    ],
   },
   {
     name: 'Virulent Shot',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.bow]
+    weaponTypes: [TwohandedWeapon.bow],
   },
   {
     name: 'Wild Impulse',
@@ -129,8 +129,8 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
-      TwohandedWeapon.fireStaff
-    ]
+      TwohandedWeapon.fireStaff,
+    ],
   },
   {
     name: 'Crushing Wall',
@@ -138,13 +138,13 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
-      TwohandedWeapon.fireStaff
-    ]
+      TwohandedWeapon.fireStaff,
+    ],
   },
   {
     name: 'Cruel Flurry',
     type: 'onehanded',
-    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger]
+    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger],
   },
   {
     name: 'Merciless Charge',
@@ -152,8 +152,8 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
-      TwohandedWeapon.mace
-    ]
+      TwohandedWeapon.mace,
+    ],
   },
   {
     name: 'Rampaging Slash',
@@ -161,13 +161,13 @@ export const specialWeaponSets = [
     weaponTypes: [
       OnehandedWeapon.mace,
       OnehandedWeapon.sword,
-      OnehandedWeapon.shield
-    ]
+      OnehandedWeapon.shield,
+    ],
   },
   {
     name: 'Thunderous Volley',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.bow]
+    weaponTypes: [TwohandedWeapon.bow],
   },
   {
     name: 'Destructive Impact',
@@ -175,13 +175,13 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
-      TwohandedWeapon.fireStaff
-    ]
+      TwohandedWeapon.fireStaff,
+    ],
   },
   {
     name: 'Stinging Slashes',
     type: 'onehanded',
-    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger]
+    weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger],
   },
   {
     name: 'Titanic Cleave',
@@ -189,13 +189,13 @@ export const specialWeaponSets = [
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
-      TwohandedWeapon.mace
-    ]
+      TwohandedWeapon.mace,
+    ],
   },
   {
     name: 'Grand Rejuvenation',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.restorationStaff]
+    weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
     name: 'Puncturing Remedy',
@@ -203,14 +203,14 @@ export const specialWeaponSets = [
     weaponTypes: [
       OnehandedWeapon.mace,
       OnehandedWeapon.shield,
-      OnehandedWeapon.sword
-    ]
+      OnehandedWeapon.sword,
+    ],
   },
   {
     name: 'Caustic Arrow',
     type: 'twohanded',
-    weaponTypes: [TwohandedWeapon.bow]
-  }
+    weaponTypes: [TwohandedWeapon.bow],
+  },
 ]
 
 interface IData {
@@ -231,7 +231,7 @@ const getSetups = ({
   selectedSet,
   bigPieceSelection,
   smallPieceSelection,
-  jewelrySelection
+  jewelrySelection,
 }: {
   armorType: ArmorType
   selectedSet?: ISet
@@ -256,8 +256,8 @@ const getSetups = ({
           type: armorType,
           selectedSet,
           glyph: bigPiece.glyph,
-          trait: bigPiece.trait
-        }))
+          trait: bigPiece.trait,
+        })),
     },
     {
       id: 'smallpieces',
@@ -274,8 +274,8 @@ const getSetups = ({
           type: armorType,
           selectedSet,
           glyph: smallPiece.glyph,
-          trait: smallPiece.trait
-        }))
+          trait: smallPiece.trait,
+        })),
     },
     {
       id: 'jewelry',
@@ -284,8 +284,8 @@ const getSetups = ({
         slot: jewelry.slot,
         selectedSet,
         glyph: jewelry.glyph,
-        trait: jewelry.trait
-      }))
+        trait: jewelry.trait,
+      })),
     },
     {
       id: 'onehanded',
@@ -295,33 +295,33 @@ const getSetups = ({
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.dagger
+          weaponType: OnehandedWeapon.dagger,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.axe
+          weaponType: OnehandedWeapon.axe,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.mace
+          weaponType: OnehandedWeapon.mace,
         },
         {
           slot: Slot.eitherHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.sword
+          weaponType: OnehandedWeapon.sword,
         },
         {
           slot: Slot.offHand,
           selectedSet,
           type: WeaponType.onehanded,
-          weaponType: OnehandedWeapon.shield
-        }
-      ]
+          weaponType: OnehandedWeapon.shield,
+        },
+      ],
     },
     {
       id: 'twohanded',
@@ -331,52 +331,52 @@ const getSetups = ({
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.axe,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.bow,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.sword,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.mace,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.fireStaff,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.lightningStaff,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.iceStaff,
-          type: WeaponType.twohanded
+          type: WeaponType.twohanded,
         },
         {
           slot: Slot.mainHand,
           selectedSet,
           weaponType: TwohandedWeapon.restorationStaff,
-          type: WeaponType.twohanded
-        }
-      ]
-    }
+          type: WeaponType.twohanded,
+        },
+      ],
+    },
   ]
 }
 
@@ -391,7 +391,7 @@ export default () => {
     frontbarSelection,
     backbarSelection,
     jewelrySelection,
-    selectedSet
+    selectedSet,
   } = state!
 
   const mySetups = getSetups({
@@ -401,12 +401,12 @@ export default () => {
     smallPieceSelection,
     frontbarSelection,
     backbarSelection,
-    jewelrySelection
+    jewelrySelection,
   })
 
   const showGear = (key: string) => {
     const specialWeaponSet: any = specialWeaponSets.find(
-      set => set.name === (selectedSet && selectedSet.name)
+      set => selectedSet && selectedSet.name.includes(set.name)
     )
     if (specialWeaponSet) {
       const actualSetup: ISetup | undefined = mySetups.find(
@@ -422,8 +422,8 @@ export default () => {
                       (type: any) => setupData.weaponType === type
                     )
                   : false
-              )
-            }
+              ),
+            },
           ]
         : []
     }
@@ -453,20 +453,20 @@ export default () => {
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || []
+      data: bigPieceSelection || [],
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || []
+      data: smallPieceSelection || [],
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || []
+      data: frontbarSelection || [],
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
 
   const showSetup = (key: string) => {

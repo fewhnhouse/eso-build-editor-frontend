@@ -10,7 +10,7 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
-  SetType
+  SetType,
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from './GearCard'
 import { specialWeaponSets } from '../pages/build/Sets/SetBar'
@@ -143,9 +143,12 @@ const getGearSlot = (slot: ISetSelection) => {
       }_${getImageSource(slot.slot)}`
     } else if (
       specialWeaponSets.find(
-        set => set.name === (slot.selectedSet && slot.selectedSet.name)
+        set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
+      if (slot.selectedSet.name.includes('Perfected')) {
+        slot.selectedSet.slug = slot.selectedSet.slug.split('-perfected-')[0]
+      }
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
         slot.selectedSet.slug
       }_${getImageSource(slot.weaponType)}`
@@ -193,7 +196,7 @@ export default ({
   group,
   size = 'normal',
   extended,
-  setSelectionCount
+  setSelectionCount,
 }: IGearSlotProps) => {
   const [, dispatch] = useContext(BuildContext)
 
@@ -202,11 +205,11 @@ export default ({
       type: slot.slot,
       set: slot.selectedSet,
       icon: slot.icon,
-      weaponType: slot.weaponType
+      weaponType: slot.weaponType,
     },
     collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
+      isDragging: !!monitor.isDragging(),
+    }),
   })
 
   const [{ canDrop }, drop] = useDrop({
@@ -214,7 +217,7 @@ export default ({
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
         ? [Slot.eitherHand]
-        : [])
+        : []),
     ],
     drop: (item: any, monitor) => {
       dispatch!({
@@ -224,13 +227,13 @@ export default ({
           icon: item.icon,
           slot: slot.slot,
           weaponType: item.weaponType,
-          group
-        }
+          group,
+        },
       })
     },
     collect: monitor => ({
-      canDrop: !!monitor.canDrop()
-    })
+      canDrop: !!monitor.canDrop(),
+    }),
   })
 
   const handleSlotClick = () => {
@@ -241,8 +244,8 @@ export default ({
         icon: slot.icon,
         slot: slot.slot,
         weaponType: slot.weaponType,
-        group
-      }
+        group,
+      },
     })
   }
   return extended ? (
@@ -440,7 +443,7 @@ const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
-  size
+  size,
 }: {
   slot: ISetSelection
   setSelectionCount: number

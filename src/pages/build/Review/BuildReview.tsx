@@ -14,6 +14,7 @@ import {
   Popconfirm,
   notification,
   Divider,
+  Result,
 } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
@@ -117,11 +118,23 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
   }, [createBuildResult.data, saved])
 
   if (!local) {
+    const { loading } = buildQuery || meQuery
     if (buildQuery.loading || meQuery.loading) {
       return (
         <Container>
           <Spin style={{ marginTop: 5 }} />
         </Container>
+      )
+    }
+    const { error } = buildQuery || meQuery
+    if (error) {
+      return (
+        <Result
+          status='403'
+          title='403'
+          subTitle='Sorry, you are not authorized to access this page.'
+          extra={<Button type='primary'>Back Home</Button>}
+        />
       )
     }
     if (
