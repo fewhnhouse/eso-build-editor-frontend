@@ -13,8 +13,6 @@ import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { BUILD } from '../pages/build/Review/BuildReview'
-import { RAID } from '../pages/raid/Review/RaidReview'
 import { LoginContext } from '../App'
 
 const LOGIN = gql`
@@ -81,13 +79,20 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
     IRegisterData
   >(REGISTER)
 
+  const {
+    getFieldDecorator,
+    getFieldsError,
+    getFieldError,
+    isFieldTouched,
+    validateFields,
+  } = form
   useEffect(() => {
-    form.validateFields()
-  }, [])
+    validateFields()
+  }, [validateFields])
 
   const handleSubmit = (e: React.SyntheticEvent<any>) => {
     e.preventDefault()
-    form.validateFields((err: any, values: any) => {
+    validateFields((err: any, values: any) => {
       if (!err) {
         if (register) {
           mutateRegister({
@@ -132,14 +137,8 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         })
       }
     }
-  }, [loginResult, registerResult])
+  }, [loginResult, registerResult, setLoggedIn])
 
-  const {
-    getFieldDecorator,
-    getFieldsError,
-    getFieldError,
-    isFieldTouched,
-  } = form
   const emailError = isFieldTouched('email') && getFieldError('email')
   const usernameError = isFieldTouched('username') && getFieldError('username')
   const passwordError = isFieldTouched('password') && getFieldError('password')
@@ -230,10 +229,10 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         >
           {register ? 'Register' : 'Login'}
         </Button>
-        Or{' '}
-        <a onClick={() => setRegister(register => !register)}>
+        Or
+        <Button type='link' onClick={() => setRegister(register => !register)}>
           {register ? 'login.' : 'register now!'}
-        </a>
+        </Button>
       </Form.Item>
     </StyledForm>
   )

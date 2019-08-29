@@ -56,14 +56,15 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
       payload: { weaponType: e.target.value },
     })
   }
+  const { frontbarSelection, backbarSelection, selectedSet } = state!
 
   useEffect(() => {
-    const { frontbarSelection, backbarSelection, selectedSet } = state!
     const specialWeaponSet: any = specialWeaponSets.find(
       set => selectedSet && selectedSet.name.includes(set.name)
     )
 
     if (specialWeaponSet && specialWeaponSet.type === 'onehanded') {
+      setOnehandedDisabled(false)
       setTwohandedDisabled(true)
       dispatch!({
         type: 'SET_WEAPON_TYPE',
@@ -71,6 +72,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
       })
     } else if (specialWeaponSet && specialWeaponSet.type === 'twohanded') {
       setOnehandedDisabled(true)
+      setTwohandedDisabled(false)
       dispatch!({
         type: 'SET_WEAPON_TYPE',
         payload: { weaponType: WeaponType.twohanded },
@@ -90,7 +92,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
         slot => slot.slot === Slot.offHand
       )
     )
-  }, [state!.selectedSet])
+  }, [selectedSet, frontbarSelection, backbarSelection, bar, dispatch])
 
   const weaponGlyphQuery = useQuery(GET_MODIFICATIONS, {
     variables: { where: { modificationType: 'glyph', itemType: 'weapon' } },

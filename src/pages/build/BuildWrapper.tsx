@@ -45,19 +45,12 @@ export default ({ edit, match }: IBuildWrapperProps) => {
     }
     return null
   } else {
-    const savedBuildState = localStorage.getItem('buildState')
-
-    return <NewBuild savedBuildState={savedBuildState} pageIndex={pageIndex} />
+    return <NewBuild pageIndex={pageIndex} />
   }
 }
 
-const NewBuild = ({
-  savedBuildState,
-  pageIndex,
-}: {
-  savedBuildState: string | null
-  pageIndex: number
-}) => {
+const NewBuild = ({ pageIndex }: { pageIndex: number }) => {
+  const savedBuildState = localStorage.getItem('buildState')
   useEffect(() => {
     try {
       const parsedBuildState = savedBuildState
@@ -69,7 +62,7 @@ const NewBuild = ({
     } catch (e) {
       console.error(e)
     }
-  }, [])
+  }, [savedBuildState])
   try {
     const parsedBuildState = JSON.parse(savedBuildState || '')
     return (

@@ -14,7 +14,6 @@ import {
   Popconfirm,
   notification,
   Divider,
-  Result,
 } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
@@ -78,9 +77,9 @@ const Container = styled(Content)`
   color: rgb(155, 155, 155);
 `
 
-const BuildReview = ({ match, theme, local }: IBuildReview) => {
+const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
-  const [loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
   const [redirect, setRedirect] = useState('')
 
@@ -101,10 +100,10 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
     variables: { id },
     refetchQueries: [{ query: ME }],
   })
-  
+
   useEffect(() => {
     buildQuery.refetch({ id })
-  }, [loggedIn])
+  }, [loggedIn, buildQuery, id])
 
   useEffect(() => {
     if (data) {

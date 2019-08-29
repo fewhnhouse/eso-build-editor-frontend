@@ -4,7 +4,6 @@ import {
   ISkillSelection,
   WeaponType,
   IBuild,
-  Slot,
 } from './BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ME } from '../home/UserHomeCard'

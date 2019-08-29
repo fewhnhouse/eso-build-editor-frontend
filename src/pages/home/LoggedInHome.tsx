@@ -4,8 +4,6 @@ import { Typography, Divider, Card } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
-import gql from 'graphql-tag'
-import { build, raid } from '../../util/fragments'
 
 const { Title } = Typography
 
@@ -45,46 +43,9 @@ const InnerContainer = styled(Flex)`
   background-size: contain;
 `
 
-const ACTIVITY_BUILDS = gql`
-  query builds($where: BuildWhereInput!) {
-    builds(where: $where) {
-      ...Build
-    }
-  }
-  ${build}
-`
-
-const ACTIVITY_RAIDS = gql`
-  query raids($where: RaidWhereInput!) {
-    raids(where: $where) {
-      ...Raid
-    }
-  }
-  ${raid}
-`
 export default () => {
   const now = new Date()
   now.setDate(now.getDate() - 1)
-  /*const buildQuery = useQuery(ACTIVITY_BUILDS, {
-    variables: {
-      where: {
-        OR: [
-          { createdAt_gt: now.toISOString() },
-          { updatedAt_gt: now.toISOString() },
-        ],
-      },
-    },
-  })
-  const raidQuery = useQuery(ACTIVITY_RAIDS, {
-    variables: {
-      where: {
-        OR: [
-          { createdAt_gt: now.toISOString() },
-          { updatedAt_gt: now.toISOString() },
-        ],
-      },
-    },
-  })*/
 
   return (
     <OuterWrapper

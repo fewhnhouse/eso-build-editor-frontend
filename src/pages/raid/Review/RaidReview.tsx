@@ -12,7 +12,6 @@ import {
   Typography,
   Spin,
   Divider,
-  Result,
 } from 'antd'
 import styled from 'styled-components'
 import { raid } from '../../../util/fragments'
@@ -84,8 +83,8 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
 
   useEffect(() => {
     raidQuery.refetch({ id })
-  }, [loggedIn])
-  
+  }, [loggedIn, id, raidQuery])
+
   useEffect(() => {
     if (data) {
       notification.success({

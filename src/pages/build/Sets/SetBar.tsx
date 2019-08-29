@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Divider } from 'antd'
 import GearView from '../../../components/GearView'

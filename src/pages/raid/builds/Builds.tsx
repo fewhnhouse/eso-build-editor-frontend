@@ -12,7 +12,7 @@ export default ({ edit }: { edit: boolean }) => {
     if (!edit) {
       localStorage.setItem('raidState', JSON.stringify(state));
     }
-  }, [state]);
+  }, [state, edit]);
   return (
     <DndProvider backend={HTML5Backend}>
       <div

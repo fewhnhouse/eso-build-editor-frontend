@@ -68,7 +68,6 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
       }
     case 'SET_WEAPON_TYPE':
       const { weaponType } = action.payload
-      const { setTabKey, frontbarSelection, backbarSelection } = state!;
       return {
         ...state,
         weaponType,

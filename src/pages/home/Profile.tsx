@@ -11,7 +11,7 @@ import {
   notification,
 } from 'antd'
 import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import Flex from '../../components/Flex'
 
 const { Content } = Layout
@@ -36,6 +36,11 @@ const ME = gql`
     }
   }
 `
+const UPDATE_EMAIL = gql`
+  mutation {
+
+  }
+`
 
 interface IProfileProps {
   loggedIn: boolean
@@ -57,14 +62,25 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const handleActionClick = (clickedAction: ProfileAction) => () => {
     setAction(clickedAction)
   }
-  const handleConfirm = () => {
-    if (action === ProfileAction.updateEmail) {
+
+  const [updateEmail, updateEmailResult] = useMutation<any,any>(UPDATE_EMAIL)
+
+  const handleConfirm = async () => {
+    try {
+      await (
+        updateEmail
+      )
+      setAction(undefined)
+      notification.success({
+        message: action,
+        description: `${action} update successful!`,
+      })
+    } catch (e) {
+      notification.error({
+        message: `${action} update failed.`,
+        description: "Changes couldn't be saved. Try again later",
+      })
     }
-    setAction(undefined)
-    notification.success({
-      message: action,
-      description: `${action} update successful!`,
-    })
   }
   const handleCancel = () => {
     setAction(undefined)

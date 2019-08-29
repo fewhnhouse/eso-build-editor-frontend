@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, {  useEffect, useContext } from 'react'
 import './App.css'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
@@ -69,20 +69,19 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
   }
 
   useEffect(() => {
-    console.log("call", loggedIn)
     loggedIn !== undefined && refetch()
-  }, [loggedIn])
+  }, [loggedIn, refetch])
   useEffect(() => {
     if (data && data.me) {
       setLoggedIn(true)
     } else {
     }
-  }, [data])
+  }, [data, setLoggedIn])
   useEffect(() => {
     if (error !== undefined) {
       setLoggedIn(false)
     }
-  }, [error])
+  }, [error, setLoggedIn])
   if (loading) {
     return (
       <LoadingContainer>

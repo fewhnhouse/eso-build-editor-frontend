@@ -50,18 +50,11 @@ export default ({ edit, match }: IRaidWrapperProps) => {
     }
     return null
   } else {
-    const savedRaidState = localStorage.getItem('raidState')
-
-    return <NewRaid savedRaidState={savedRaidState} pageIndex={pageIndex} />
+    return <NewRaid pageIndex={pageIndex} />
   }
 }
-const NewRaid = ({
-  savedRaidState,
-  pageIndex,
-}: {
-  savedRaidState: string | null
-  pageIndex: number
-}) => {
+const NewRaid = ({ pageIndex }: { pageIndex: number }) => {
+  const savedRaidState = localStorage.getItem('raidState')
   useEffect(() => {
     try {
       const parsedRaidState = savedRaidState
@@ -73,7 +66,7 @@ const NewRaid = ({
     } catch (e) {
       console.error(e)
     }
-  }, [])
+  }, [savedRaidState])
   try {
     const parsedRaidState = JSON.parse(savedRaidState || '')
     return (
