@@ -14,6 +14,7 @@ import { raid } from '../../util/fragments'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
+const ButtonGroup = Button.Group
 
 const Container = styled(Content)`
   display: flex;
@@ -73,9 +74,17 @@ export default ({
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
+
+  const handlePrivateChange = () => {
+    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
+  }
+
   const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID)
 
   const [createRaid, createRaidResult] = useMutation<any, any>(CREATE_RAID)
+
+  const isDisabled =
+    (tab === 0 && state.name === '') || (tab === 1 && state.roles.length <= 0)
 
   useEffect(() => {
     if (saved) {
@@ -221,18 +230,34 @@ export default ({
             description='Review and save.'
           />
         </Steps>
-        <Tooltip title={setTooltipTitle()}>
-          <TabButton
-            onClick={handleNextClick}
-            disabled={false || saved}
-            size='large'
-            type='primary'
-            loading={loading}
-          >
-            {tab === 2 ? 'Save' : 'Next'}
-            {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
-          </TabButton>
-        </Tooltip>
+        <ButtonGroup style={{ display: 'flex' }} size='large'>
+          {tab === 2 && (
+            <Tooltip
+              title={
+                state!.published
+                  ? 'Your raid is set to public. It will be visible for anyone. Click to change.'
+                  : 'Your raid is set to private. It will only be visible for you. Click to change.'
+              }
+            >
+              <Button
+                onClick={handlePrivateChange}
+                icon={state!.published ? 'unlock' : 'lock'}
+              />
+            </Tooltip>
+          )}
+          <Tooltip title={setTooltipTitle()}>
+            <TabButton
+              // style={{minWidth: 120}}
+              loading={loading}
+              onClick={handleNextClick}
+              disabled={isDisabled || saved}
+              type='primary'
+            >
+              {tab === 2 ? 'Save' : 'Next'}
+              {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
+            </TabButton>
+          </Tooltip>
+        </ButtonGroup>
         <Redirect to={`${path}/${tab}`} push />
       </Footer>
     </RaidContext.Provider>

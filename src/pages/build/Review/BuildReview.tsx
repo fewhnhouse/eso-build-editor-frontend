@@ -29,6 +29,7 @@ import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
+import ErrorPage from '../../../components/ErrorPage'
 const { Content, Footer } = Layout
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
@@ -128,14 +129,7 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
     }
     const { error } = buildQuery || meQuery
     if (error) {
-      return (
-        <Result
-          status='403'
-          title='403'
-          subTitle='Sorry, you are not authorized to access this page.'
-          extra={<Button type='primary'>Back Home</Button>}
-        />
-      )
+      return <ErrorPage />
     }
     if (
       buildQuery.data &&

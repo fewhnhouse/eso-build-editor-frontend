@@ -20,6 +20,7 @@ import { ME } from '../../home/UserHomeCard'
 import Flex from '../../../components/Flex'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
+import ErrorPage from '../../../components/ErrorPage'
 const { Content, Footer } = Layout
 
 const RAID = gql`
@@ -103,14 +104,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
     }
     const { error } = raidQuery || meQuery
     if (error) {
-      return (
-        <Result
-          status='403'
-          title='403'
-          subTitle='Sorry, you are not authorized to access this page.'
-          extra={<Button type='primary'>Back Home</Button>}
-        />
-      )
+      return <ErrorPage />
     }
     if (
       raidQuery.data &&
@@ -134,6 +128,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         description,
         applicationArea,
         roles,
+        published
       } = raidQuery.data.raid
       const area = applicationAreas.find(area => area.key === applicationArea)
       return (
@@ -187,6 +182,15 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
                   (prev: number, curr: IRole) => prev + curr.builds.length,
                   0
                 )}
+              />
+              <Divider
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
+              />
+              <InformationCard
+                icon={published ? 'unlock' : 'lock'}
+                title='Access Rights'
+                description={published ? 'Public' : 'Private'}
               />
             </Flex>
 

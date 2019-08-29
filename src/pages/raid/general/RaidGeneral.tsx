@@ -175,10 +175,10 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
           </Flex>
         </Flex>
       </GeneralContainer>
-      <Divider>Access Rights</Divider>
+      {/* TODO: Prospone to V2 <Divider>Access Rights</Divider>
       <GeneralContainer>
         <AccessRights />
-      </GeneralContainer>
+     </GeneralContainer>*/}
     </>
   )
 }
