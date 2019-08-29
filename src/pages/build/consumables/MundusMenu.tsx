@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { List, Card, Input, Spin } from 'antd'
+import { List, Card, Input, Spin, Divider } from 'antd'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import Meta from 'antd/lib/card/Meta'
@@ -156,7 +156,9 @@ const MundusList = ({
                       />
                     }
                     title={item.name}
-                    description={item.effect + ' by ' + item.value}
+                    description={
+                      <span>{item.effect + ' by ' + item.value}</span>
+                    }
                   />
                 </StyledCard>
               </animated.div>
