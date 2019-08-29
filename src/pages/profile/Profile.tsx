@@ -154,6 +154,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   }
   const handleCancel = () => {
     setAction(undefined)
+    setOldPassword('')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,7 +162,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   }
   return (
     <>
-      <Modal
+      <Modal 
         title='Confirm password'
         visible={action !== undefined}
         okText='Confirm and apply'
