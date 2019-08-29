@@ -7,6 +7,8 @@ export default ({ handleActionClick, value, setValue }: IActionProps) => {
     setValue && setValue(e.target.value)
   }
 
+  const isValid = value && value.length > 6
+
   return (
     <Card title='Change your password' style={{ maxWidth: 500, width: '40%' }}>
       <Input.Password
@@ -16,6 +18,7 @@ export default ({ handleActionClick, value, setValue }: IActionProps) => {
         placeholder='New password'
       />
       <Button
+        disabled={!isValid}
         onClick={handleActionClick(ProfileAction.updatePassword)}
         block
         size='large'
