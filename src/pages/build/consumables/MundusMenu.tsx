@@ -45,6 +45,9 @@ const GET_MUNDUS_STONES = gql`
       effect
       value
       icon
+      aldmeri
+      daggerfall
+      ebonheart
     }
   }
 `

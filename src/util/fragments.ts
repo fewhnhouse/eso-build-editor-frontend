@@ -99,6 +99,9 @@ export const build = gql`
       effect
       value
       icon
+      aldmeri
+      ebonheart
+      daggerfall
     }
     buff {
       ...Buff
