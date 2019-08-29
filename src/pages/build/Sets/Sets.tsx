@@ -26,7 +26,7 @@ const Content = styled.div`
 export default ({ edit }: { edit: boolean }) => {
   // const [skills, setSkills] = useState([]);
   const [state, dispatch] = useContext(BuildContext)
-  const [selectedSet, setSelectedSet] = useState<ISet | undefined>(undefined)
+  const [set, setSet] = useState<ISet | undefined>(undefined)
   const [collapsed, setCollapsed] = useState(state!.selectedSet !== undefined)
 
   const {
@@ -35,6 +35,7 @@ export default ({ edit }: { edit: boolean }) => {
     jewelrySelection,
     frontbarSelection,
     backbarSelection,
+    selectedSet
   } = state!
 
   const setsCount = bigPieceSelection
@@ -58,10 +59,10 @@ export default ({ edit }: { edit: boolean }) => {
   }, [edit, state])
 
   useEffect(() => {
-    if (state!.selectedSet) {
-      setSelectedSet(state!.selectedSet)
+    if (selectedSet) {
+      setSet(selectedSet)
     }
-  }, [state!.selectedSet])
+  }, [selectedSet])
 
   const { setTabKey } = state!
   const handleTabChange = (key: string) => {
@@ -83,13 +84,13 @@ export default ({ edit }: { edit: boolean }) => {
         context={BuildContext}
       />
       <Content>
-        {selectedSet ? (
+        {set ? (
           <>
             <AbilityContainer>
               <Divider>Set</Divider>
               <GearCard
-                set={selectedSet}
-                setSelectionCount={setsCount.get(selectedSet.name) || 0}
+                set={set}
+                setSelectionCount={setsCount.get(set.name) || 0}
               />
               <Tabs
                 onChange={handleTabChange}
@@ -97,14 +98,14 @@ export default ({ edit }: { edit: boolean }) => {
                 defaultActiveKey='frontbar'
               >
                 <TabPane
-                  disabled={!selectedSet!.has_weapons}
+                  disabled={!set!.has_weapons}
                   tab='Front-Bar'
                   key={SetTab.frontbar}
                 >
                   <Weapons bar='frontbar' />
                 </TabPane>
                 <TabPane
-                  disabled={!selectedSet!.has_weapons}
+                  disabled={!set!.has_weapons}
                   tab='Back-Bar'
                   key={SetTab.backbar}
                 >
@@ -112,9 +113,9 @@ export default ({ edit }: { edit: boolean }) => {
                 </TabPane>
                 <TabPane
                   disabled={
-                    !selectedSet!.has_heavy_armor &&
-                    !selectedSet!.has_medium_armor &&
-                    !selectedSet!.has_light_armor
+                    !set!.has_heavy_armor &&
+                    !set!.has_medium_armor &&
+                    !set!.has_light_armor
                   }
                   tab='Armor'
                   key={SetTab.armor}
@@ -122,7 +123,7 @@ export default ({ edit }: { edit: boolean }) => {
                   <Armor />
                 </TabPane>
                 <TabPane
-                  disabled={!selectedSet!.has_jewels}
+                  disabled={!set!.has_jewels}
                   tab='Jewelry'
                   key={SetTab.jewelry}
                 >

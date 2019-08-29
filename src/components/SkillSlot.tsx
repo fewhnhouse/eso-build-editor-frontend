@@ -86,7 +86,7 @@ export default ({
         hasTrash: isDragging,
       },
     });
-  }, [isDragging]);
+  }, [isDragging, dispatch]);
   const [, drop] = useDrop({
     accept: skillIndex === 5 ? 'ultimate' : 'skill',
     drop: (item: any) => {

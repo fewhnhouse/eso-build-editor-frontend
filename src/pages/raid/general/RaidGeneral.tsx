@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Typography, Input, Divider, Select, Slider } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
-import AccessRights from './AccessRights'
 import { SliderValue } from 'antd/lib/slider'
 
 const GeneralContainer = styled.div`
@@ -63,7 +62,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
     if (!edit) {
       localStorage.setItem('raidState', JSON.stringify(state))
     }
-  }, [state])
+  }, [state, edit])
 
   const handleRaidNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_RAID_NAME', payload: { name: e.target.value } })

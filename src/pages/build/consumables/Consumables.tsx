@@ -10,7 +10,7 @@ export default ({ edit }: { edit: boolean }) => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [state])
+  }, [state, edit])
   return (
     <div
       style={{

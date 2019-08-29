@@ -4,7 +4,6 @@ import {
   Input,
   Select,
   Typography,
-  Radio,
   Button,
   Icon,
   Card,
@@ -12,7 +11,6 @@ import {
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext } from '../BuildStateContext'
-import { RadioChangeEvent } from 'antd/lib/radio'
 import Flex from '../../../components/Flex'
 import { races, classes } from './data'
 
@@ -142,7 +140,7 @@ export default ({ edit }: { edit: boolean }) => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [state])
+  }, [state, edit])
 
   const handleBuildNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_BUILD_NAME', payload: { name: e.target.value } })

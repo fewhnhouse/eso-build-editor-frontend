@@ -14,7 +14,6 @@ import {
   Popconfirm,
   notification,
   Divider,
-  Result,
 } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
@@ -30,13 +29,14 @@ import Flex from '../../../components/Flex'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
 import ErrorPage from '../../../components/ErrorPage'
+import { LoginContext } from '../../../App'
 const { Content, Footer } = Layout
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
   local?: boolean
 }
 
-const BUILD = gql`
+export const BUILD = gql`
   query Build($id: ID!) {
     build(id: $id) {
       ...Build
@@ -77,11 +77,15 @@ const Container = styled(Content)`
   color: rgb(155, 155, 155);
 `
 
-const BuildReview = ({ match, theme, local }: IBuildReview) => {
+const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
-  const [loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [redirect, setRedirect] = useState('')
+
   const [state] = useContext(BuildContext)
+  const [loggedIn] = useContext(LoginContext)
+
   const buildQuery = useQuery(BUILD, { variables: { id } })
   const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
   const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
@@ -96,7 +100,11 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
     variables: { id },
     refetchQueries: [{ query: ME }],
   })
-  const [redirect, setRedirect] = useState('')
+
+  useEffect(() => {
+    buildQuery.refetch({ id })
+  }, [loggedIn, buildQuery, id])
+
   useEffect(() => {
     if (data) {
       notification.success({

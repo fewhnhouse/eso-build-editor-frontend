@@ -12,7 +12,6 @@ import {
   Typography,
   Spin,
   Divider,
-  Result,
 } from 'antd'
 import styled from 'styled-components'
 import { raid } from '../../../util/fragments'
@@ -21,9 +20,10 @@ import Flex from '../../../components/Flex'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
 import ErrorPage from '../../../components/ErrorPage'
+import { LoginContext } from '../../../App'
 const { Content, Footer } = Layout
 
-const RAID = gql`
+export const RAID = gql`
   query Raids($id: ID!) {
     raid(id: $id) {
       ...Raid
@@ -70,14 +70,20 @@ interface IRaidOverviewProps extends RouteComponentProps<any> {
 
 const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const { id } = match.params
+  const [redirect, setRedirect] = useState(false)
+  
   const [state] = useContext(RaidContext)
+  const [loggedIn] = useContext(LoginContext)
 
   const raidQuery = useQuery(RAID, { variables: { id } })
   const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_RAID, {
     variables: { id },
   })
-  const [redirect, setRedirect] = useState(false)
+
+  useEffect(() => {
+    raidQuery.refetch({ id })
+  }, [loggedIn, id, raidQuery])
 
   useEffect(() => {
     if (data) {
@@ -128,7 +134,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         description,
         applicationArea,
         roles,
-        published
+        published,
       } = raidQuery.data.raid
       const area = applicationAreas.find(area => area.key === applicationArea)
       return (

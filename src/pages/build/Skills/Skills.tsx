@@ -66,25 +66,23 @@ const defaultUltimate: ISkill = {
 }
 
 const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
-  // const [skills, setSkills] = useState([]);
   const [state, dispatch] = useContext(BuildContext)
   const [baseActives, setBaseActives] = useState<ISkill[]>([])
   const [morphedActives, setMorphedActives] = useState<ISkill[]>([])
   const [passives, setPassives] = useState<ISkill[]>([])
   const [baseUltimate, setBaseUltimate] = useState<ISkill>(defaultUltimate)
   const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([])
-
   useEffect(() => {
     if (!edit) {
       localStorage.setItem('buildState', JSON.stringify(state))
     }
-  }, [state])
+  }, [state, edit])
 
   const { skillLine } = state!
 
   useEffect(() => {
     const selectedSkillLine: ISkill[] = skills.filter(
-      (skill: ISkill) => skill.skillline === state!.skillLine
+      (skill: ISkill) => skill.skillline === skillLine
     )
     const actives = selectedSkillLine.filter(
       (skill: ISkill) => skill.type === 1
@@ -119,11 +117,11 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
           skill,
           index,
         })),
-        id: state!.skillLine,
+        id: skillLine,
         ultimate: baseUltimate || undefined,
       },
     })
-  }, [skillLine, dispatch])
+  }, [skillLine, dispatch, skills])
   const morphs = morphedUltimates.filter(ultimate =>
     ultimate.parent === baseUltimate.skillId ? baseUltimate.skillId : 0
   )

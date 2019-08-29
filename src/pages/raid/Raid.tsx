@@ -70,7 +70,6 @@ export default ({
   const [state, dispatch] = useReducer(raidReducer, raid)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
@@ -182,6 +181,16 @@ export default ({
     }
   }
 
+  const publishDisabled = !state.roles.reduce(
+    (prevRole, currRole) =>
+      prevRole &&
+      currRole.builds.reduce<boolean>(
+        (prevBuild, currBuild) => prevBuild && currBuild.build.published,
+        true
+      ),
+    true
+  )
+
   return (
     <RaidContext.Provider value={[state, dispatch]}>
       <Container>
@@ -234,12 +243,15 @@ export default ({
           {tab === 2 && (
             <Tooltip
               title={
-                state!.published
+                publishDisabled
+                  ? 'Some of the builds in your raid are set to private. Only use public builds to publish your raid.'
+                  : state!.published
                   ? 'Your raid is set to public. It will be visible for anyone. Click to change.'
                   : 'Your raid is set to private. It will only be visible for you. Click to change.'
               }
             >
               <Button
+                disabled={publishDisabled}
                 onClick={handlePrivateChange}
                 icon={state!.published ? 'unlock' : 'lock'}
               />

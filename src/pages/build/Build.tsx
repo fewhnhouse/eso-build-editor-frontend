@@ -6,8 +6,6 @@ import {
   TwohandedWeapon,
   OnehandedWeapon,
   WeaponType,
-  defaultBuildState,
-  ISetSelection,
   IBuildState,
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
@@ -150,17 +148,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-  const [initialFrontbar, setInitialFrontbar] = useState<ISetSelection[]>(
-    defaultBuildState.frontbarSelection
-  )
-  const [initialBackbar, setInitialBackbar] = useState<ISetSelection[]>(
-    defaultBuildState.frontbarSelection
-  )
-
-  useEffect(() => {
-    setInitialFrontbar(build.frontbarSelection)
-    setInitialBackbar(build.backbarSelection)
-  }, [])
 
   const handlePrivateChange = () => {
     dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
@@ -203,8 +190,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           updateSetSelection,
           updateBuild,
           state,
-          initialFrontbar,
-          initialBackbar
+          build.frontbarSelection,
+          build.backbarSelection
         )
         notification.success({
           message: 'Build update successful',
