@@ -3,7 +3,9 @@ import { Route, Switch, RouteProps, Redirect } from 'react-router'
 import Home from '../pages/home/Home'
 import Setup from '../pages/setup/Setup'
 import Verify from './Verify'
-import { Spin } from 'antd'
+import { Spin, Result, Button } from 'antd'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
@@ -72,7 +74,29 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
           path='/profile'
           component={Profile}
         />
+        <Route component={PageNotFound} />
       </Switch>
     </Suspense>
   )
 }
+
+const PageNotFoundContainer = styled.div`
+  background: #ededed;
+  width: 100vw;
+  height: calc(100vh - 64px);
+`
+
+const PageNotFound = () => (
+  <PageNotFoundContainer>
+    <Result
+      status='404'
+      title='404'
+      subTitle='Sorry, the page you visited does not exist.'
+      extra={
+        <Link to='/'>
+          <Button type='primary'>Back Home</Button>
+        </Link>
+      }
+    />
+  </PageNotFoundContainer>
+)

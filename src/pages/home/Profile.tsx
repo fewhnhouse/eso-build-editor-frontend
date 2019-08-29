@@ -41,32 +41,56 @@ interface IProfileProps {
   loggedIn: boolean
 }
 
+enum ProfileAction {
+  updateEmail = 'UPDATE_EMAIL',
+  updatePassword = 'UPDATE_PASSWORD',
+  deleteAccount = 'DELETE_ACCOUNT',
+}
+
 const Profile = ({ loggedIn }: IProfileProps) => {
   const { loading, error, data } = useQuery(ME)
-  const [action, setAction] = useState('')
-  const handleActionClick = (clickedAction: string) => () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [oldPassword, setOldPassword] = useState('')
+
+  const [action, setAction] = useState<ProfileAction>()
+  const handleActionClick = (clickedAction: ProfileAction) => () => {
     setAction(clickedAction)
   }
   const handleConfirm = () => {
-    setAction('');
+    if (action === ProfileAction.updateEmail) {
+    }
+    setAction(undefined)
     notification.success({
       message: action,
       description: `${action} update successful!`,
     })
   }
   const handleCancel = () => {
-    setAction('')
+    setAction(undefined)
   }
+
+  const handleChange = (
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState(e.target.value)
+  }
+
   return (
     <>
       <Modal
         title='Confirm password'
-        visible={action !== ''}
+        visible={action !== undefined}
         okText='Confirm and apply'
         onOk={handleConfirm}
         onCancel={handleCancel}
       >
-        <Input.Password size='large' placeholder='Type current password...' />
+        <Input.Password
+          onChange={handleChange(setOldPassword)}
+          value={oldPassword}
+          size='large'
+          placeholder='Type current password...'
+        />
       </Modal>
       <Container>
         <Title>Hello {data && data.me ? data.me.name : ''}!</Title>
@@ -82,9 +106,14 @@ const Profile = ({ loggedIn }: IProfileProps) => {
           >
             <Text>Current email: {data && data.me ? data.me.email : ''}</Text>
             <Divider />
-            <Input size='large' placeholder='Type new email...' />
+            <Input
+              value={email}
+              onChange={handleChange(setEmail)}
+              size='large'
+              placeholder='Type new email...'
+            />
             <Button
-              onClick={handleActionClick('email')}
+              onClick={handleActionClick(ProfileAction.updateEmail)}
               block
               size='large'
               style={{ marginTop: 20 }}
@@ -98,9 +127,14 @@ const Profile = ({ loggedIn }: IProfileProps) => {
             title='Change your password'
             style={{ maxWidth: 500, width: '40%' }}
           >
-            <Input.Password size='large' placeholder='New password' />
+            <Input.Password
+              value={password}
+              onChange={handleChange(setPassword)}
+              size='large'
+              placeholder='New password'
+            />
             <Button
-              onClick={handleActionClick('password')}
+              onClick={handleActionClick(ProfileAction.updatePassword)}
               block
               size='large'
               style={{ marginTop: 20 }}
@@ -122,7 +156,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
               This action cannot be undone.
             </Text>
             <Button
-              onClick={handleActionClick('account')}
+              onClick={handleActionClick(ProfileAction.deleteAccount)}
               block
               size='large'
               style={{ marginTop: 20 }}

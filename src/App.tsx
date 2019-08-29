@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
@@ -16,6 +16,7 @@ import { notification, Result, Button } from 'antd'
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token')
+  console.log(token)
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -45,11 +46,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_GRAPHQL_URL,
-  headers: {
-    headers: {
-      authorization: localStorage.getItem('auth-token') || '',
-    },
-  },
 })
 const cache = new InMemoryCache()
 
@@ -70,20 +66,24 @@ const client = new ApolloClient({
   cache,
 })
 
+export const LoginContext = React.createContext<any>(undefined)
 client.onResetStore(async () => cache.writeData({ data }))
 //Avoid cors for now
 
 const theme = globalStyles
 
 const App: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined)
   return (
-    <ApolloProvider client={client}>
-      <Router>
-        <ThemeProvider theme={theme}>
-          <AppContainer />
-        </ThemeProvider>
-      </Router>
-    </ApolloProvider>
+    <LoginContext.Provider value={[loggedIn, setLoggedIn]}>
+      <ApolloProvider client={client}>
+        <Router>
+          <ThemeProvider theme={theme}>
+            <AppContainer />
+          </ThemeProvider>
+        </Router>
+      </ApolloProvider>
+    </LoginContext.Provider>
   )
 }
 

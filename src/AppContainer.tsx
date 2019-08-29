@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './App.css'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './components/Routes'
@@ -11,11 +11,12 @@ import {
   Avatar,
   Spin,
   Dropdown,
-  Icon
+  Icon,
 } from 'antd'
 import WrappedNormalLoginForm from './components/LoginForm'
 import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
+import { LoginContext } from './App'
 
 const { Header } = Layout
 
@@ -50,7 +51,7 @@ const getSelectedKey = (pathname: string) => {
   return '1'
 }
 
-const ME = gql`
+export const ME = gql`
   query {
     me {
       email
@@ -60,12 +61,17 @@ const ME = gql`
 `
 
 const AppContainer = ({ location }: RouteComponentProps<any>) => {
-  const { loading, error, data } = useQuery(ME)
-  const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined)
+  const { loading, error, data, refetch } = useQuery(ME)
+  const [loggedIn, setLoggedIn] = useContext(LoginContext)
   const handleLogout = () => {
     setLoggedIn(false)
     localStorage.removeItem('token')
   }
+
+  useEffect(() => {
+    console.log("call", loggedIn)
+    loggedIn !== undefined && refetch()
+  }, [loggedIn])
   useEffect(() => {
     if (data && data.me) {
       setLoggedIn(true)
@@ -160,7 +166,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
                 style={{
                   color: 'white',
                   margin: '0px 10px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
               >
                 Hello, {data && data.me ? data.me.name : ''}
