@@ -12,7 +12,7 @@ const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
 const BuildWrapper = lazy(() => import('../pages/build/BuildWrapper'))
 const RaidWrapper = lazy(() => import('../pages/raid/RaidWrapper'))
 const Overview = lazy(() => import('../pages/overview/Overview'))
-const Profile = lazy(() => import('../pages/home/Profile'))
+const Profile = lazy(() => import('../pages/profile/Profile'))
 
 const LoadingFallback = () => <Spin />
 interface IProtectedRouteProps extends RouteProps {
