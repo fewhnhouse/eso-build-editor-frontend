@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Layout, Typography, Divider, Input, Modal, notification } from 'antd'
+import {
+  Layout,
+  Typography,
+  Divider,
+  Input,
+  Modal,
+  notification,
+  Button,
+  message,
+} from 'antd'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
 import Flex from '../../components/Flex'
 import UpdateEmail from './UpdateEmail'
 import DeleteAccount from './DeleteAccount'
 import UpdatePassword from './UpdatePassword'
+import { LoginContext } from '../../App'
+import { Redirect } from 'react-router'
+import { RESEND_VERIFICATION } from '../../AppContainer'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -74,17 +86,56 @@ export enum ProfileAction {
   deleteAccount = 'DELETE_ACCOUNT',
 }
 
+const openNotification = (resendMutation: any) => {
+  const key = `open${Date.now()}`
+  const handleResendClick = () => {
+    notification.close(key)
+    resendMutation()
+  }
+  const btn = (
+    <Flex
+      style={{ width: '100%' }}
+      direction='row'
+      align='center'
+      justify='space-between'
+    >
+      <Typography.Text style={{ marginRight: 30 }}>
+        Didnt get an email?{' '}
+      </Typography.Text>
+      <Button onClick={handleResendClick} icon='mail' type='primary'>
+        {'Resend'}
+      </Button>
+    </Flex>
+  )
+
+  notification.info({
+    key,
+    duration: 0,
+    message: 'Please verify your account.',
+    btn,
+    description: (
+      <Flex direction='column' align='center' justify='center'>
+        <div>
+          Check your Inbox. We have sent you a Mail to validate your account.
+        </div>
+        <Divider style={{ margin: '5px 0px' }} />
+      </Flex>
+    ),
+  })
+}
+
 const Profile = ({ loggedIn }: IProfileProps) => {
   const me = useQuery(ME)
   const [oldPassword, setOldPassword] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-
+  const [redirect, setRedirect] = useState(false)
+  const [, setLoggedIn] = useContext(LoginContext)
   const [action, setAction] = useState<ProfileAction>()
   const handleActionClick = (clickedAction: ProfileAction) => () => {
     setAction(clickedAction)
   }
-
+  const [resendMutation, resendResult] = useMutation(RESEND_VERIFICATION)
   const [updateEmail, updateEmailResult] = useMutation<any, any>(UPDATE_EMAIL)
   const [updatePassword, updatePasswordResult] = useMutation<any, any>(
     UPDATE_PASSWORD
@@ -92,17 +143,15 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const [deleteAccount, deleteAccountResult] = useMutation<any, any>(
     DELETE_ACCOUNT
   )
-  const { called, data, error, loading } =
-    updatePasswordResult || updateEmailResult || deleteAccountResult
   useEffect(() => {
-    if (data) {
+    if (
+      updatePasswordResult.data ||
+      updateEmailResult.data ||
+      deleteAccountResult.data
+    ) {
       switch (action) {
         case ProfileAction.updateEmail:
-          notification.success({
-            message: 'Registration successful.',
-            description:
-              'Check your Inbox. We have sent you a Mail to validate your account.',
-          })
+          openNotification(resendMutation)
           break
         case ProfileAction.updatePassword:
           notification.success({
@@ -111,29 +160,45 @@ const Profile = ({ loggedIn }: IProfileProps) => {
           })
           break
         case ProfileAction.deleteAccount:
+          localStorage.removeItem('token')
+          setLoggedIn(false)
           notification.success({
             message: action,
             description: `${action} update successful!`,
           })
+          setRedirect(true)
           break
         default:
           break
       }
       setAction(undefined)
-      setPassword("")
-      setEmail("")
-      setOldPassword("")
-    } else if (error) {
+      setPassword('')
+      setEmail('')
+      setOldPassword('')
+    } else if (
+      updatePasswordResult.error ||
+      updateEmailResult.error ||
+      deleteAccountResult.error
+    ) {
       notification.error({
         message: `${action} update failed.`,
         description: "Changes couldn't be saved. Try again later",
       })
       setAction(undefined)
-      setPassword("")
-      setEmail("")
-      setOldPassword("")
+      setPassword('')
+      setEmail('')
+      setOldPassword('')
     }
-  }, [called, error, data])
+  }, [updatePasswordResult, updateEmailResult, deleteAccountResult])
+
+  useEffect(() => {
+    if (resendResult.data) {
+      message.success('Verification Email resent.')
+    } else if (resendResult.error) {
+      message.error('Error sending Verification Email.')
+    }
+  }, [resendResult])
+
   const handleConfirm = async () => {
     switch (action) {
       case ProfileAction.updateEmail:
@@ -160,15 +225,22 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldPassword(e.target.value)
   }
+  if (redirect) {
+    return <Redirect to='/' />
+  }
   return (
     <>
-      <Modal 
+      <Modal
         title='Confirm password'
         visible={action !== undefined}
         okText='Confirm and apply'
         onOk={handleConfirm}
         onCancel={handleCancel}
-        confirmLoading={loading}
+        confirmLoading={
+          updatePasswordResult.loading ||
+          updateEmailResult.loading ||
+          deleteAccountResult.loading
+        }
       >
         <Input.Password
           onChange={handleChange}
@@ -178,16 +250,25 @@ const Profile = ({ loggedIn }: IProfileProps) => {
         />
       </Modal>
       <Container>
-        <Title>Hello {me.data.me ? me.data.me.name : ''}!</Title>
+        <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
         <Flex
           direction='column'
           justify='space-around'
           align='center'
           style={{ width: '100%', margin: 20 }}
         >
-          <UpdateEmail value={email} setValue={setEmail} me={me.data.me} handleActionClick={handleActionClick} />
+          <UpdateEmail
+            value={email}
+            setValue={setEmail}
+            me={me.data.me}
+            handleActionClick={handleActionClick}
+          />
           <Divider />
-          <UpdatePassword value={password} setValue={setPassword} handleActionClick={handleActionClick} />
+          <UpdatePassword
+            value={password}
+            setValue={setPassword}
+            handleActionClick={handleActionClick}
+          />
           <Divider />
           <DeleteAccount handleActionClick={handleActionClick} />
         </Flex>

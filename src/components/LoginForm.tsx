@@ -6,6 +6,8 @@ import {
   Checkbox,
   message,
   notification,
+  Divider,
+  Typography,
 } from 'antd'
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
@@ -14,6 +16,8 @@ import { useMutation } from 'react-apollo'
 import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { LoginContext } from '../App'
+import Flex from './Flex'
+import { RESEND_VERIFICATION } from '../AppContainer'
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -65,6 +69,44 @@ const hasErrors = (fieldsError: any) => {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
+const openNotification = (resendMutation: any) => {
+  const key = `open${Date.now()}`
+  const handleResendClick = () => {
+    notification.close(key)
+    resendMutation()
+  }
+  const btn = (
+    <Flex
+      style={{ width: '100%' }}
+      direction='row'
+      align='center'
+      justify='space-between'
+    >
+      <Typography.Text style={{ marginRight: 30 }}>
+        Didnt get an email?
+      </Typography.Text>
+      <Button onClick={handleResendClick} icon='mail' type='primary'>
+        {'Resend'}
+      </Button>
+    </Flex>
+  )
+
+  notification.info({
+    key,
+    duration: 0,
+    message: 'Registration successful.',
+    btn,
+    description: (
+      <Flex direction='column' align='center' justify='center'>
+        <div>
+          Check your Inbox. We have sent you a Mail to validate your account.
+        </div>
+        <Divider style={{ margin: '5px 0px' }} />
+      </Flex>
+    ),
+  })
+}
+
 interface LoginFormProps extends FormComponentProps, RouteComponentProps<any> {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
@@ -74,6 +116,8 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
   const [mutateLogin, loginResult] = useMutation<ILoginResult, ILoginData>(
     LOGIN
   )
+  const [resendMutation, resendResult] = useMutation(RESEND_VERIFICATION)
+
   const [mutateRegister, registerResult] = useMutation<
     IRegisterResult,
     IRegisterData
@@ -112,6 +156,14 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
   }
 
   useEffect(() => {
+    if (resendResult.data) {
+      message.success('Verification Email resent.')
+    } else if (resendResult.error) {
+      message.error('Error sending Verification Email.')
+    }
+  }, [resendResult])
+
+  useEffect(() => {
     if (loginResult.called) {
       if (loginResult.error !== undefined) {
         message.error(loginResult.error.message)
@@ -130,11 +182,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
       }
       if (registerResult.data) {
         setLoggedIn(true)
-        notification.success({
-          message: 'Registration successful.',
-          description:
-            'Check your Inbox. We have sent you a Mail to validate your account.',
-        })
+        openNotification(resendMutation)
       }
     }
   }, [loginResult, registerResult, setLoggedIn])
