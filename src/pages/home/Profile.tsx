@@ -48,7 +48,6 @@ const Profile = ({ loggedIn }: IProfileProps) => {
     setAction(clickedAction)
   }
   const handleConfirm = () => {
-    console.log(action)
     setAction('');
     notification.success({
       message: action,

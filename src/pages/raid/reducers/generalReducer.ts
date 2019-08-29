@@ -9,6 +9,12 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
         canView,
       };
     }
+    case 'TOGGLE_IS_PUBLISHED': {
+      return {
+        ...state,
+        published: !state.published,
+      }
+    }
     case 'SET_CAN_EDIT': {
       const { canEdit } = action.payload;
 

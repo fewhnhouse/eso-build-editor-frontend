@@ -45,7 +45,7 @@ interface IRaidReviewDetailsProps {
 }
 
 const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
-  const { name, roles, applicationArea, description } = loadedData
+  const { name, roles, applicationArea, description, published } = loadedData
   const [path] = useState('')
   const [expand, setExpand] = useState(false)
   const area = applicationAreas.find(area => area.key === applicationArea)
@@ -87,6 +87,15 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                   (prev: number, curr: IRole) => prev + curr.builds.length,
                   0
                 )}
+              />
+              <Divider
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
+              />
+              <InformationCard
+                icon={published ? 'unlock' : 'lock'}
+                title='Access Rights'
+                description={published ? 'Public' : 'Private'}
               />
             </Flex>
           )}

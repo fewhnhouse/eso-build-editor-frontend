@@ -175,7 +175,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
         <GeneralInformation
           title={<Title level={2}>General Information</Title>}
         >
-          <Divider>Race</Divider>
+          <Divider>Attributes</Divider>
           <MiscView direction='row' justify='space-around'>
             <ResourceCard>
               <Typography.Text strong>Stamina</Typography.Text>

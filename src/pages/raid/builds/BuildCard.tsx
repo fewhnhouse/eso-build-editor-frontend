@@ -137,7 +137,18 @@ const BuildCard = ({
     <StyledCard hoverable>
       <div>
         <Flex direction='row' justify='space-between'>
-          <Typography.Title level={3}>{item.name}</Typography.Title>
+          <Typography.Title
+            level={3}
+            style={{
+              maxWidth: 350,
+              width: "80%",
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {item.name}
+          </Typography.Title>
           {role ? (
             <Button
               type='danger'

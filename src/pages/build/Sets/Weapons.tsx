@@ -9,7 +9,7 @@ import {
   BuildContext,
   Slot,
   IModification,
-  WeaponType
+  WeaponType,
 } from '../BuildStateContext'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import gql from 'graphql-tag'
@@ -53,27 +53,27 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
   const onChange = (e: RadioChangeEvent) => {
     dispatch!({
       type: 'SET_WEAPON_TYPE',
-      payload: { weaponType: e.target.value }
+      payload: { weaponType: e.target.value },
     })
   }
 
   useEffect(() => {
     const { frontbarSelection, backbarSelection, selectedSet } = state!
     const specialWeaponSet: any = specialWeaponSets.find(
-      set => set.name === (selectedSet && selectedSet.name)
+      set => selectedSet && selectedSet.name.includes(set.name)
     )
 
     if (specialWeaponSet && specialWeaponSet.type === 'onehanded') {
       setTwohandedDisabled(true)
       dispatch!({
         type: 'SET_WEAPON_TYPE',
-        payload: { weaponType: WeaponType.onehanded }
+        payload: { weaponType: WeaponType.onehanded },
       })
     } else if (specialWeaponSet && specialWeaponSet.type === 'twohanded') {
       setOnehandedDisabled(true)
       dispatch!({
         type: 'SET_WEAPON_TYPE',
-        payload: { weaponType: WeaponType.twohanded }
+        payload: { weaponType: WeaponType.twohanded },
       })
     } else {
       setTwohandedDisabled(false)
@@ -93,16 +93,16 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
   }, [state!.selectedSet])
 
   const weaponGlyphQuery = useQuery(GET_MODIFICATIONS, {
-    variables: { where: { modificationType: 'glyph', itemType: 'weapon' } }
+    variables: { where: { modificationType: 'glyph', itemType: 'weapon' } },
   })
   const weaponTraitQuery = useQuery(GET_MODIFICATIONS, {
-    variables: { where: { modificationType: 'trait', itemType: 'weapon' } }
+    variables: { where: { modificationType: 'trait', itemType: 'weapon' } },
   })
   const armorGlyphQuery = useQuery(GET_MODIFICATIONS, {
-    variables: { where: { modificationType: 'glyph', itemType: 'armor' } }
+    variables: { where: { modificationType: 'glyph', itemType: 'armor' } },
   })
   const armorTraitQuery = useQuery(GET_MODIFICATIONS, {
-    variables: { where: { modificationType: 'trait', itemType: 'armor' } }
+    variables: { where: { modificationType: 'trait', itemType: 'armor' } },
   })
   if (
     weaponGlyphQuery.loading ||
@@ -153,8 +153,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
             slots,
             value: itemValue,
             type,
-            itemType
-          }
+            itemType,
+          },
         })
       } else {
         const itemValue =
@@ -168,8 +168,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
             slots,
             value: itemValue,
             type,
-            itemType
-          }
+            itemType,
+          },
         })
       }
     }

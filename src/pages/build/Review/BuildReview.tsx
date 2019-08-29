@@ -14,6 +14,7 @@ import {
   Popconfirm,
   notification,
   Divider,
+  Result,
 } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
@@ -28,6 +29,7 @@ import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
+import ErrorPage from '../../../components/ErrorPage'
 const { Content, Footer } = Layout
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
@@ -117,12 +119,17 @@ const BuildReview = ({ match, theme, local }: IBuildReview) => {
   }, [createBuildResult.data, saved])
 
   if (!local) {
+    const { loading } = buildQuery || meQuery
     if (buildQuery.loading || meQuery.loading) {
       return (
         <Container>
           <Spin style={{ marginTop: 5 }} />
         </Container>
       )
+    }
+    const { error } = buildQuery || meQuery
+    if (error) {
+      return <ErrorPage />
     }
     if (
       buildQuery.data &&
