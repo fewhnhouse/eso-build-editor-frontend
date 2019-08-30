@@ -4,7 +4,7 @@ import Flex from '../../components/Flex'
 import styled from 'styled-components'
 import { MenuCard, Image, Description, ContentCard } from './Overview'
 import MundusMenu from '../build/consumables/MundusMenu'
-import { Typography, Divider, Card, Modal } from 'antd'
+import { Typography, Divider, Card, Modal, Empty } from 'antd'
 
 interface IMundusStoneProps {
   context: React.Context<any>
@@ -63,7 +63,7 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
           overflow: 'auto',
         }}
       >
-        {mundusStone && (
+        {mundusStone ? (
           <Flex direction='column' fluid>
             <Card style={{ width: '100%' }}>
               <Flex direction='row' align='flex-start' justify='center' fluid>
@@ -86,8 +86,12 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
                   <Description>
                     {mundusStone.effect.trim() + ' by ' + mundusStone.value}
                     <span style={{ fontStyle: 'italic' }}>
-                      {" "}({Math.round(parsedMundusValue * 0.525 + parsedMundusValue)} with 7
-                      divines)
+                      {' '}
+                      (
+                      {Math.round(
+                        parsedMundusValue * 0.525 + parsedMundusValue
+                      )}{' '}
+                      with 7 divines)
                     </span>
                   </Description>
                 </Flex>
@@ -190,6 +194,18 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
               />
             </Modal>
           </Flex>
+        ) : (
+          <Empty
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flex: 2,
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            Select a Mundus Stone to get started.
+          </Empty>
         )}
       </ContentCard>
     </Flex>

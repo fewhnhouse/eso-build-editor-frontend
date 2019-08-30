@@ -7,7 +7,7 @@ import BuffMenu, {
 } from '../build/consumables/BuffMenu'
 import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
-import { Typography, Divider, Card } from 'antd'
+import { Typography, Divider, Card, Empty } from 'antd'
 
 interface IBuffProps {
   context: React.Context<any>
@@ -36,7 +36,7 @@ export default ({ context, buff }: IBuffProps) => {
           alignItems: 'center',
         }}
       >
-        {buff && (
+        {buff ? (
           <Card>
             <Flex direction='row' align='flex-start' justify='center'>
               <Image
@@ -91,6 +91,18 @@ export default ({ context, buff }: IBuffProps) => {
               </Flex>
             </Flex>
           </Card>
+        ) : (
+          <Empty
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flex: 2,
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            Select a Buff to get started.
+          </Empty>
         )}
       </ContentCard>
     </Flex>
