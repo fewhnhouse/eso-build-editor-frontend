@@ -116,7 +116,7 @@ export const DisplaySkillCard = ({
                   <Image
                     active
                     title={morph1.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph1.icon}`}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph1.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -128,7 +128,7 @@ export const DisplaySkillCard = ({
                   <Image
                     active
                     title={morph2.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph2.icon}`}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph2.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -217,7 +217,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   <Image
                     active={firstActive || false}
                     title={morph1.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph1.icon}`}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph1.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -232,7 +232,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   <Image
                     active={secondActive || false}
                     title={morph2.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph2.icon}`}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph2.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -245,7 +245,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
 }
 
 export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
-  if(!skill) {
+  if (!skill) {
     return null
   }
   const isMagicka = skill.cost.includes('Magicka')
@@ -256,7 +256,7 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
       <AvatarContainer>
         <MyAvatar
           title={skill.name}
-          src={`https://beast.pathfindermediagroup.com/storage/skills/${skill.icon}`}
+          src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
         />
       </AvatarContainer>
       <div>
