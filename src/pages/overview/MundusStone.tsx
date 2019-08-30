@@ -163,23 +163,37 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
                   )}.jpg`}
                 />
               </Card>
+              <Card
+                onClick={handleImageClick('Cyrodiil')}
+                title={<span>Cyrodiil</span>}
+                hoverable
+                style={{ margin: 10 }}
+              >
+                <Map
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusMaps/Cyrodiil.jpg`}
+                />
+              </Card>
             </Flex>
 
             <Modal
               visible={modalImage !== ''}
               title={
                 <span>
-                  <AllianceIcon
-                    src={`${
-                      process.env.REACT_APP_IMAGE_SERVICE
-                    }/alliances/alliance_${
-                      mundusStone.aldmeri === modalImage
-                        ? 'aldmeri'
-                        : mundusStone.ebonheart === modalImage
-                        ? 'ebonheart'
-                        : 'daggerfall'
-                    }.png`}
-                  />
+                  {modalImage !== 'Cyrodiil' && (
+                    <AllianceIcon
+                      src={`${
+                        process.env.REACT_APP_IMAGE_SERVICE
+                      }/alliances/alliance_${
+                        mundusStone.aldmeri === modalImage
+                          ? 'aldmeri'
+                          : mundusStone.ebonheart === modalImage
+                          ? 'ebonheart'
+                          : mundusStone.daggerfall === modalImage
+                          ? 'daggerfall'
+                          : ''
+                      }.png`}
+                    />
+                  )}
                   {modalImage}
                 </span>
               }
