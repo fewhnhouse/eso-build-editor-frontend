@@ -27,7 +27,7 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   const { id, raidId } = match.params
   const pageIndex = parseInt(id || '0', 10)
   const isDesktopOrLaptop = useMediaQuery({
-    minWidth: 1224,
+    minWidth: 900,
   })
   const { loading, error, data } = useQuery(GET_RAID, {
     variables: { id: raidId },

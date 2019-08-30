@@ -26,7 +26,7 @@ export default ({ edit, match }: IBuildWrapperProps) => {
   const { id, buildId } = match.params
   const pageIndex = parseInt(id || '0', 10)
   const isDesktopOrLaptop = useMediaQuery({
-    minWidth: 1224,
+    minWidth: 1100,
   })
 
   const { loading, error, data } = useQuery(GET_BUILD, {
