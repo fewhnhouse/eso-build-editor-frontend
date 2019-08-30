@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import Flex from '../../components/Flex'
-import { Tabs, Typography, Card } from 'antd'
+import { Tabs, Card } from 'antd'
 import {
   OverviewContext,
   defaultOverviewState,
