@@ -19,6 +19,7 @@
     "apollo-link-context": "^1.0.18",
     "apollo-link-error": "^1.1.11",
     "apollo-link-http": "^1.5.15",
+    "apollo-link-ws": "^1.0.18",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "react": "^16.8.6",
@@ -32,6 +33,7 @@
     "react-scripts": "3.0.1",
     "react-spring": "^8.0.27",
     "styled-components": "^4.3.2",
+    "subscriptions-transport-ws": "^0.9.16",
     "typescript": "3.5.3"
   },
   "scripts": {
