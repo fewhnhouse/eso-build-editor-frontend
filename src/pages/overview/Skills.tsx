@@ -27,7 +27,11 @@ const GET_SKILLS = gql`
 export default ({ context, skillLine }: ISetProps) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
-    return <Spin />
+    return (
+      <Flex fluid justify='center'>
+        <Spin />
+      </Flex>
+    )
   }
   if (error) {
     return <div>Error.</div>

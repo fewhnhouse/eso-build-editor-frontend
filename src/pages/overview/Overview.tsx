@@ -60,6 +60,7 @@ export default () => {
           height: 'calc(100vh - 64px)',
         }}
         direction='column'
+        align="center"
       >
         <Typography.Title>Overview</Typography.Title>
         <Tabs
