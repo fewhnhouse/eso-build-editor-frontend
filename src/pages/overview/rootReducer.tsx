@@ -10,6 +10,21 @@ export const rootReducer = (state: IOverviewState, action: IOverviewAction) => {
       }
     }
 
+    case 'SET_SKILLLINE': {
+      const { skillLine } = action.payload
+      return {
+        ...state,
+        skillLine,
+      }
+    }
+
+    case 'SET_ITEMSET': {
+      const { selectedSet } = action.payload
+      return {
+        ...state,
+        selectedSet,
+      }
+    }
     case 'SET_MUNDUS': {
       const { mundusStone } = action.payload
       return {

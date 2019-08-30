@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Menu, Button } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
-import { BuildContext } from '../BuildStateContext'
 import castle from '../../../assets/icons/castle-ico.png'
 import circle from '../../../assets/icons/circle-ico.png'
-import torch from '../../../assets/icons/torch-ico.png'
 import hammer from '../../../assets/icons/hammer-ico.png'
 import leaf from '../../../assets/icons/leaf-ico.png'
 import myt from '../../../assets/icons/myt-ico.png'
@@ -22,7 +20,7 @@ const EsoIcon = styled.img`
 `
 const classes = [
   {
-    class: 'Nightblade',
+    esoClass: 'Nightblade',
     items: [
       { title: 'Assassination', id: 10 },
       { title: 'Shadow', id: 11 },
@@ -30,7 +28,7 @@ const classes = [
     ],
   },
   {
-    class: 'Sorcerer',
+    esoClass: 'Sorcerer',
     items: [
       { title: 'Dark Magic', id: 7 },
       { title: 'Daedric Summoning', id: 8 },
@@ -38,7 +36,7 @@ const classes = [
     ],
   },
   {
-    class: 'Necromancer',
+    esoClass: 'Necromancer',
     items: [
       { title: 'Grave Lord', id: 54 },
       { title: 'Bone Tyrant', id: 55 },
@@ -46,7 +44,7 @@ const classes = [
     ],
   },
   {
-    class: 'Templar',
+    esoClass: 'Templar',
     items: [
       { title: 'Aedric Spear', id: 4 },
       { title: 'Dawn´s Wrath', id: 5 },
@@ -54,7 +52,7 @@ const classes = [
     ],
   },
   {
-    class: 'Dragonknight',
+    esoClass: 'Dragonknight',
     items: [
       { title: 'Ardent Flame', id: 1 },
       { title: 'Draconic Power', id: 2 },
@@ -62,7 +60,7 @@ const classes = [
     ],
   },
   {
-    class: 'Warden',
+    esoClass: 'Warden',
     items: [
       { title: 'Animal Companions', id: 13 },
       { title: 'Winter´s Embrace', id: 15 },
@@ -83,14 +81,20 @@ const MenuContainer = styled.div`
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
-  max-width: 256px;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `
 
-export default () => {
+interface ISkillMenuProps {
+  context: React.Context<any>
+  collapsable?: boolean
+  singleClass?: boolean
+  style?: React.CSSProperties
+}
+
+export default ({ context, collapsable, singleClass, style }: ISkillMenuProps) => {
   const [collapsed, setCollapsed] = useState(false)
-  const [state, dispatch] = useContext(BuildContext)
+  const [state, dispatch] = useContext(context)
   const handleClick = (e: ClickParam) => {
     dispatch!({
       type: 'SET_SKILLLINE',
@@ -102,14 +106,29 @@ export default () => {
     setCollapsed(collapse)
   }
 
-  const myClass = classes.find(esoClass => esoClass.class === state!.esoClass)
+  const myClass = classes.find(
+    esoClass => esoClass.esoClass === state!.esoClass
+  )
 
+  const shownClasses = singleClass
+    ? [
+        {
+          title: myClass ? myClass.esoClass : "Class",
+          icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
+            myClass ? myClass.esoClass : ''
+          }.png`,
+          items: singleClass && myClass ? myClass.items : [],
+        },
+      ]
+    : classes.map(esoClass => ({
+        title: esoClass.esoClass,
+        icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
+          esoClass ? esoClass.esoClass : ''
+        }.png`,
+        items: esoClass.items,
+      }))
   const menuStructure = [
-    {
-      title: 'Class',
-      icon: torch,
-      items: myClass ? myClass.items : [],
-    },
+    ...shownClasses,
     {
       title: 'Weapon',
       icon: shield,
@@ -190,14 +209,16 @@ export default () => {
   ]
 
   return (
-    <MenuContainer collapsed={collapsed}>
-      <StyledIconBtn
-        type='primary'
-        ghost
-        style={{ marginTop: 10 }}
-        onClick={handleIconClick(!collapsed)}
-        icon={collapsed ? 'double-right' : 'double-left'}
-      />
+    <MenuContainer style={style} collapsed={collapsable !== undefined && collapsed}>
+      {collapsable && (
+        <StyledIconBtn
+          type='primary'
+          ghost
+          style={{ marginTop: 10 }}
+          onClick={handleIconClick(!collapsed)}
+          icon={collapsed ? 'double-right' : 'double-left'}
+        />
+      )}
       <Menu
         onClick={handleClick}
         style={{
@@ -207,8 +228,8 @@ export default () => {
           overflowY: 'auto',
           textAlign: 'left',
           opacity: collapsed ? 0 : 1,
-          pointerEvents: collapsed ? "none" : "all",
-          transition: "opacity 0.2s ease-in-out"
+          pointerEvents: collapsed ? 'none' : 'all',
+          transition: 'opacity 0.2s ease-in-out',
         }}
         defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
         defaultOpenKeys={[]}

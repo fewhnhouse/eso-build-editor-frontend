@@ -1,20 +1,17 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer } from 'react'
 import Flex from '../../components/Flex'
-import { Tabs, Typography, Card, Divider, Modal } from 'antd'
-import BuffMenu, {
-  BuffTypeTag,
-  AttributeTag,
-  QualityTag,
-} from '../build/consumables/BuffMenu'
+import { Tabs, Typography, Card } from 'antd'
 import {
   OverviewContext,
   defaultOverviewState,
   overviewReducer,
 } from './OverviewStateContext'
-import MundusMenu from '../build/consumables/MundusMenu'
 import styled from 'styled-components'
-import SetMenu from '../build/Sets/SetMenu'
+import Set from './Set'
 import MundusStone from './MundusStone'
+import Buff from './Buff'
+import Skills from './Skills'
+
 const { TabPane } = Tabs
 
 export const MenuCard = styled.div`
@@ -51,12 +48,10 @@ export const Image = styled.img`
   border-radius: 4px;
 `
 
-
-
 export default () => {
   const [state, dispatch] = useReducer(overviewReducer, defaultOverviewState)
 
-  const { buff, mundusStone } = state
+  const { buff, mundusStone, selectedSet, skillLine } = state
   return (
     <OverviewContext.Provider value={[state, dispatch]}>
       <Flex
@@ -74,116 +69,16 @@ export default () => {
           size='large'
         >
           <TabPane tab='Buff Food' key='1'>
-            <Flex
-              direction='row'
-              align='flex-start'
-              style={{
-                height: 'calc(100vh - 100px)',
-                width: '100%',
-                padding: 20,
-              }}
-            >
-              <MenuCard minWidth='400px'>
-                <BuffMenu context={OverviewContext} />
-              </MenuCard>
-              <ContentCard
-                bodyStyle={{
-                  height: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {buff && (
-                  <Flex direction='row' align='flex-start' justify='center'>
-                    <Image
-                      src={
-                        state.buff
-                          ? `${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${state.buff.icon}`
-                          : ''
-                      }
-                    />
-                    <Flex
-                      direction='column'
-                      style={{ marginLeft: 20, maxWidth: 600 }}
-                    >
-                      <Typography.Title style={{ margin: 0 }}>
-                        {buff.name}
-                      </Typography.Title>
-                      <Divider style={{ margin: '10px 0px' }} />
-                      <Flex
-                        direction='row'
-                        wrap
-                        style={{
-                          width: '100%',
-                          margin: '10px 0px',
-                        }}
-                      >
-                        <AttributeTag
-                          hasHealth={buff.buffDescription.includes('Health')}
-                          hasMagicka={buff.buffDescription.includes('Magicka')}
-                          hasStamina={buff.buffDescription.includes('Stamina')}
-                        />
-                        <BuffTypeTag
-                          isSpecialDrink={
-                            buff.buffType === 'drink' && buff.type === null
-                          }
-                          isSpecialFood={
-                            buff.buffType === 'food' && buff.type === null
-                          }
-                          isFood={
-                            buff.buffType === 'food' && buff.type !== null
-                          }
-                          isDrink={
-                            buff.buffType === 'drink' && buff.type !== null
-                          }
-                        />
-                        <QualityTag quality={buff.quality} />
-                      </Flex>
-                      <Description>{buff.buffDescription}</Description>
-                      {buff.description && (
-                        <>
-                          <Divider style={{ margin: '5px 0px' }} />
-                          <Description
-                            style={{ fontStyle: 'italic' }}
-                            newEffect
-                          >
-                            {buff.description}
-                          </Description>
-                        </>
-                      )}
-                    </Flex>
-                  </Flex>
-                )}
-              </ContentCard>
-            </Flex>
+            <Buff context={OverviewContext} buff={buff} />
           </TabPane>
           <TabPane tab='Mundus Stones' key='2'>
-            
             <MundusStone mundusStone={mundusStone} context={OverviewContext} />
           </TabPane>
           <TabPane tab='Sets' key='3'>
-            <Flex
-              direction='row'
-              align='flex-start'
-              style={{
-                height: 'calc(100vh - 100px)',
-                width: '100%',
-                padding: 20,
-              }}
-            >
-              <MenuCard>
-                <SetMenu
-                  collapsed={false}
-                  setCollapsed={() => {}}
-                  context={OverviewContext}
-                />
-              </MenuCard>
-              <ContentCard>asd</ContentCard>
-            </Flex>
+            <Set selectedSet={selectedSet} context={OverviewContext} />
           </TabPane>
           <TabPane tab='Skills' key='4'>
-            <MenuCard>Skills</MenuCard>
+            <Skills context={OverviewContext} skillLine={skillLine} />
           </TabPane>
         </Tabs>
       </Flex>

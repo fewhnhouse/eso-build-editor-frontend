@@ -40,6 +40,7 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
   const handleImageClick = (image: string) => () => {
     setModalImage(image)
   }
+  const parsedMundusValue = parseInt(mundusStone ? mundusStone.value : '0', 10)
   return (
     <Flex
       direction='row'
@@ -64,7 +65,7 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
       >
         {mundusStone && (
           <Flex direction='column' fluid>
-            <Card style={{width: "100%"}}>
+            <Card style={{ width: '100%' }}>
               <Flex direction='row' align='flex-start' justify='center' fluid>
                 <Image
                   src={
@@ -84,6 +85,10 @@ export default ({ context, mundusStone }: IMundusStoneProps) => {
                   <Divider style={{ margin: '10px 0px' }} />
                   <Description>
                     {mundusStone.effect.trim() + ' by ' + mundusStone.value}
+                    <span style={{ fontStyle: 'italic' }}>
+                      {" "}({Math.round(parsedMundusValue * 0.525 + parsedMundusValue)} with 7
+                      divines)
+                    </span>
                   </Description>
                 </Flex>
               </Flex>
