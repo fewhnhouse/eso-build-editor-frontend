@@ -20,7 +20,7 @@ export default ({ icon, title, description }: IInformationCardProps) => {
   return (
     <FlexCard direction='row'>
       <Avatar icon={icon} shape='square' />
-      <Flex align='flex-start' style={{ marginLeft: 10 }}>
+      <Flex align='flex-start' style={{ marginLeft: 10 }} direction="column">
         <Typography.Text
           style={{
             whiteSpace: 'nowrap',
