@@ -6,6 +6,10 @@ import { Spin, message } from 'antd'
 import { defaultBuildState } from './BuildStateContext'
 import gql from 'graphql-tag'
 import { build } from '../../util/fragments'
+import { useMediaQuery } from 'react-responsive'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import ErrorPage from '../../components/ErrorPage'
 
 const GET_BUILD = gql`
   query Build($id: ID!) {
@@ -23,9 +27,22 @@ interface IBuildWrapperProps
 export default ({ edit, match }: IBuildWrapperProps) => {
   const { id, buildId } = match.params
   const pageIndex = parseInt(id || '0', 10)
+  const isDesktopOrLaptop = useMediaQuery({
+    minWidth: 1224,
+  })
+
   const { loading, error, data } = useQuery(GET_BUILD, {
     variables: { id: buildId },
   })
+  if (!isDesktopOrLaptop) {
+    return (
+      <ErrorPage
+        status='warning'
+        title='Unfortunately, editing builds is not supported on small screens yet.'
+        subTitle='Please try opening this page on a bigger screen.'
+      />
+    )
+  }
   if (edit) {
     if (loading) {
       return <Spin />

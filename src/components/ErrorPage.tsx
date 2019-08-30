@@ -28,9 +28,10 @@ export default ({
         status={status}
         title={title}
         subTitle={
-          subTitle || !loggedIn
+          subTitle ||
+          (!loggedIn
             ? 'You have to be logged in to access this page'
-            : 'Sorry, you are not authorized to access this page.'
+            : 'Sorry, you are not authorized to access this page.')
         }
         extra={
           <Link to='/'>

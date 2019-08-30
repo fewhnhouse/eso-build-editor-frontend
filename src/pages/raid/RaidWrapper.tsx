@@ -6,6 +6,9 @@ import Raid from './Raid'
 import { Spin, message } from 'antd'
 import { defaultRaidState } from './RaidStateContext'
 import { raid } from '../../util/fragments'
+import { useMediaQuery } from 'react-responsive'
+import styled from 'styled-components'
+import ErrorPage from '../../components/ErrorPage'
 
 const GET_RAID = gql`
   query raid($id: ID!) {
@@ -15,6 +18,10 @@ const GET_RAID = gql`
   }
   ${raid}
 `
+const Container = styled.div`
+  height: calc(100vh - 64px);
+  width: 100vw;
+`
 interface IRaidWrapperProps
   extends RouteComponentProps<{ id: string; raidId: string }> {
   edit?: boolean
@@ -23,9 +30,21 @@ interface IRaidWrapperProps
 export default ({ edit, match }: IRaidWrapperProps) => {
   const { id, raidId } = match.params
   const pageIndex = parseInt(id || '0', 10)
+  const isDesktopOrLaptop = useMediaQuery({
+    minWidth: 1224,
+  })
   const { loading, error, data } = useQuery(GET_RAID, {
     variables: { id: raidId },
   })
+  if (!isDesktopOrLaptop) {
+    return (
+      <ErrorPage
+        status='warning'
+        title='Unfortunately, editing raids is not supported on small screens yet.'
+        subTitle='Please try opening this page on a bigger screen.'
+      />
+    )
+  }
   if (edit) {
     if (loading) {
       return (
