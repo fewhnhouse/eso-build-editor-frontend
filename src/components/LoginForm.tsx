@@ -17,7 +17,7 @@ import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { LoginContext } from '../App'
 import Flex from './Flex'
-import { RESEND_VERIFICATION } from '../AppContainer'
+import { RESEND_VERIFICATION } from './AppContainer'
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {

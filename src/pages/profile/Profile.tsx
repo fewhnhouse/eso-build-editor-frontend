@@ -18,7 +18,7 @@ import DeleteAccount from './DeleteAccount'
 import UpdatePassword from './UpdatePassword'
 import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
-import { RESEND_VERIFICATION } from '../../AppContainer'
+import { RESEND_VERIFICATION } from '../../components/AppContainer'
 
 const { Content } = Layout
 const { Title } = Typography
