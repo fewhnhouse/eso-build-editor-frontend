@@ -113,7 +113,7 @@ const openNotification = (resendMutation: any) => {
 }
 
 const AppContainer = ({ location }: RouteComponentProps<any>) => {
-  const { loading, error, data, refetch } = useQuery(ME)
+  const { loading, error, data } = useQuery(ME)
   const [loggedIn, setLoggedIn] = useContext(LoginContext)
 
   const [resendMutation, resendResult] = useMutation(RESEND_VERIFICATION)
@@ -142,7 +142,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
       setLoggedIn(true)
     } else {
     }
-  }, [data, setLoggedIn])
+  }, [data, setLoggedIn, resendMutation])
   useEffect(() => {
     if (error !== undefined) {
       setLoggedIn(false)

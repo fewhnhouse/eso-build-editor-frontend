@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { List, Card, Input, Spin, Divider } from 'antd'
+import { List, Card, Input, Spin } from 'antd'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import Meta from 'antd/lib/card/Meta'

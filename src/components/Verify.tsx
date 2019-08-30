@@ -2,7 +2,7 @@ import React from 'react'
 import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps } from 'react-router'
-import { message, Typography, Result, Button, Spin } from 'antd'
+import { message, Result, Button, Spin } from 'antd'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 

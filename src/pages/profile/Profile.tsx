@@ -189,7 +189,14 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       setEmail('')
       setOldPassword('')
     }
-  }, [updatePasswordResult, updateEmailResult, deleteAccountResult])
+  }, [
+    updatePasswordResult,
+    updateEmailResult,
+    deleteAccountResult,
+    action,
+    resendMutation,
+    setLoggedIn,
+  ])
 
   useEffect(() => {
     if (resendResult.data) {
