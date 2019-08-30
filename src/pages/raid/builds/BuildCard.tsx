@@ -186,7 +186,7 @@ const BuildCard = ({
             <Divider style={{ margin: '5px 0px' }} />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <Flex style={{ width: '100%' }}>
+                <Flex direction="column" style={{ width: '100%' }}>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}

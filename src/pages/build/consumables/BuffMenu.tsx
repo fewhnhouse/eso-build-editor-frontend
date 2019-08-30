@@ -6,7 +6,7 @@ import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { buff } from '../../../util/fragments'
-import { titleCase } from '../../raid/builds/BuildMenu';
+import { titleCase } from '../../raid/builds/BuildMenu'
 
 const { Option } = Select
 
@@ -52,8 +52,9 @@ const StyledCard = styled(Card)`
   margin: 10px;
 `
 
-const StyledTag = styled(Tag)`
+export const StyledTag = styled(Tag)`
   min-width: 100px;
+  margin: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -79,7 +80,6 @@ const Title = styled.div`
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
   margin-bottom: 8px;
-  white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
 `
@@ -279,7 +279,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
               active={item.name === (buff && buff.name)}
               onClick={handleClick(item)}
             >
-              <div style={{ display: 'flex', maxWidth: 400 }}>
+              <Flex align="flex-start" direction='row' style={{ maxWidth: 400 }}>
                 <AvatarContainer>
                   <MyAvatar
                     title={item.name}
@@ -290,10 +290,11 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
                   <Title>{item.name}</Title>
 
                   <Divider style={{ margin: '5px 0px' }} />
-                  <div
+                  <Flex
+                    wrap
+                    direction='row'
                     style={{
-                      width: 140,
-                      display: 'flex',
+                      width: '100%',
                       margin: '10px 0px',
                     }}
                   >
@@ -313,7 +314,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
                       isDrink={item.buffType === 'drink' && item.type !== null}
                     />
                     <QualityTag quality={item.quality} />
-                  </div>
+                  </Flex>
                   <Description>{item.buffDescription}</Description>
                   {item.description && (
                     <>
@@ -324,7 +325,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
                     </>
                   )}
                 </div>
-              </div>
+              </Flex>
             </StyledCard>
           </animated.div>
         )
@@ -339,7 +340,7 @@ interface IAttributeTagProps {
   hasHealth: boolean
 }
 
-const AttributeTag = ({
+export const AttributeTag = ({
   hasMagicka,
   hasStamina,
   hasHealth,
@@ -361,7 +362,7 @@ interface IBuffTagProps {
   isSpecialFood: boolean
   isSpecialDrink: boolean
 }
-const BuffTypeTag = ({
+export const BuffTypeTag = ({
   isFood,
   isDrink,
   isSpecialFood,
@@ -378,7 +379,7 @@ const BuffTypeTag = ({
   }
 }
 
-const QualityTag = ({ quality }: { quality: number }) => {
+export const QualityTag = ({ quality }: { quality: number }) => {
   if (quality === 1) {
     return <StyledTag color='green'>Standard</StyledTag>
   } else if (quality === 2) {

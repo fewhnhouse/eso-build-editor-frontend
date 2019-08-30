@@ -1,25 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Divider, Empty, Spin } from 'antd'
+import { Spin } from 'antd'
 import styled from 'styled-components'
-import SkillCard from '../../../components/SkillCard'
-import Menu from './Menu'
+import Menu from './SkillMenu'
 import { BuildContext } from '../BuildStateContext'
 import AbilityBar from './AbilityBar'
 import { ISkill } from '../../../components/SkillSlot'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
-const AbilityContainer = styled.div`
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto;
-  padding: 40px;
-`
+import SkillsDisplay from '../../../components/SkillsDisplay'
+import { skill } from '../../../util/fragments'
 
 const Content = styled.div`
   width: 100%;
@@ -29,24 +20,13 @@ const Content = styled.div`
 const GET_SKILLS = gql`
   query {
     skills {
-      id
-      name
-      skillline
-      parent
-      type
-      effect_1
-      effect_2
-      cost
-      icon
-      cast_time
-      target
-      range
-      skillId
+      ...Skill
     }
   }
+  ${skill}
 `
 
-const defaultUltimate: ISkill = {
+export const defaultUltimate: ISkill = {
   cast_time: '0',
   cost: '0',
   effect_1: '0',
@@ -126,17 +106,6 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     ultimate.parent === baseUltimate.skillId ? baseUltimate.skillId : 0
   )
 
-  const [trail, set]: any = useTrail(baseActives.length, () => ({
-    opacity: 0,
-    transform: 'translate(0px, -40px)',
-  }))
-
-  useEffect(() => {
-    setTimeout(() => {
-      set({ opacity: 1, transform: 'translate(0px, 0px)' })
-    }, 300)
-  }, [baseActives, set])
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div
@@ -147,66 +116,17 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
           flexDirection: 'row',
         }}
       >
-        <Menu />
+        <Menu context={BuildContext} collapsable singleClass style={{maxWidth: 256}} />
         <Content>
-          {state!.skillLine !== 0 ? (
-            <AbilityContainer>
-              <Divider>Ultimate</Divider>
-              {baseUltimate && (
-                <SkillCard
-                  ultimate
-                  skill={baseUltimate || baseActives[0]}
-                  morph1={morphs[0] || defaultUltimate}
-                  morph2={morphs[1] || defaultUltimate}
-                />
-              )}
-              <Divider>Actives</Divider>
-              {baseActives.length > 0 && (
-                <>
-                  {trail.map(({ opacity, transform }: any, index: number) => {
-                    const morphs = morphedActives.filter(
-                      morph => morph.parent === baseActives[index].skillId
-                    )
-                    return (
-                      <animated.div style={{ opacity, transform }}>
-                        <SkillCard
-                          key={index}
-                          skill={baseActives[index]}
-                          morph1={morphs[0]}
-                          morph2={morphs[1]}
-                        />
-                      </animated.div>
-                    )
-                  })}
-                </>
-              )}
-
-              <Divider>Passives</Divider>
-              <>
-                {passives.map((el, key) => (
-                  <SkillCard
-                    key={key}
-                    passive
-                    skill={el}
-                    morph1={el}
-                    morph2={el}
-                  />
-                ))}
-              </>
-            </AbilityContainer>
-          ) : (
-            <Empty
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flex: 2,
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              Select a Skill Line to get started.
-            </Empty>
-          )}
+          <SkillsDisplay
+            interactive
+            morphedActives={morphedActives}
+            morphs={morphs}
+            baseActives={baseActives}
+            baseUltimate={baseUltimate}
+            passives={passives}
+            skillLine={skillLine}
+          />
           {baseActives.length > 0 && <AbilityBar />}
         </Content>
       </div>

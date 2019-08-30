@@ -93,6 +93,53 @@ interface ICardProps {
   ultimate?: boolean
 }
 
+export const DisplaySkillCard = ({
+  skill,
+  morph1,
+  morph2,
+  passive,
+  ultimate,
+}: ICardProps) => {
+  return (
+    <StyledCard
+      style={{ position: 'relative' }}
+      hoverable
+      actions={
+        passive
+          ? []
+          : [
+              <Popover content={<SkillCardContent skill={morph1} />}>
+                <RaceContainer>
+                  <MorphLabel active disabled>
+                    {morph1.name}
+                  </MorphLabel>
+                  <Image
+                    active
+                    title={morph1.name}
+                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph1.icon}`}
+                  />
+                </RaceContainer>
+              </Popover>,
+              <Popover content={<SkillCardContent skill={morph2} />}>
+                <RaceContainer>
+                  <MorphLabel active disabled>
+                    {morph2.name}
+                  </MorphLabel>
+                  <Image
+                    active
+                    title={morph2.name}
+                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph2.icon}`}
+                  />
+                </RaceContainer>
+              </Popover>,
+            ]
+      }
+    >
+      <SkillCardContent skill={skill} />
+    </StyledCard>
+  )
+}
+
 export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext)
   const { selectedSkillLines, skillLine } = state!
@@ -105,12 +152,14 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const { selectedSkills, selectedUltimate } = selectedSkillLine
   const firstActive = ultimate
     ? selectedUltimate && selectedUltimate.skillId === morph1.skillId
-    : selectedSkills.find(slot => slot.skill && slot.skill.skillId === morph1.skillId) !==
-      undefined
+    : selectedSkills.find(
+        slot => slot.skill && slot.skill.skillId === morph1.skillId
+      ) !== undefined
   const secondActive = ultimate
     ? selectedUltimate && selectedUltimate.skillId === morph2.skillId
-    : selectedSkills.find(slot => slot.skill && slot.skill.skillId === morph2.skillId) !==
-      undefined
+    : selectedSkills.find(
+        slot => slot.skill && slot.skill.skillId === morph2.skillId
+      ) !== undefined
   const handleFirstClick = () => {
     if (firstActive) {
       dispatch!({
@@ -168,9 +217,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   <Image
                     active={firstActive || false}
                     title={morph1.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${
-                      morph1.icon
-                    }`}
+                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph1.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -185,9 +232,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   <Image
                     active={secondActive || false}
                     title={morph2.name}
-                    src={`https://beast.pathfindermediagroup.com/storage/skills/${
-                      morph2.icon
-                    }`}
+                    src={`https://beast.pathfindermediagroup.com/storage/skills/${morph2.icon}`}
                   />
                 </RaceContainer>
               </Popover>,
@@ -200,6 +245,9 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
 }
 
 export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
+  if(!skill) {
+    return null
+  }
   const isMagicka = skill.cost.includes('Magicka')
   const isStamina = skill.cost.includes('Stamina')
   const isFree = skill.cost.includes('Nothing')
@@ -208,9 +256,7 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
       <AvatarContainer>
         <MyAvatar
           title={skill.name}
-          src={`https://beast.pathfindermediagroup.com/storage/skills/${
-            skill.icon
-          }`}
+          src={`https://beast.pathfindermediagroup.com/storage/skills/${skill.icon}`}
         />
       </AvatarContainer>
       <div>

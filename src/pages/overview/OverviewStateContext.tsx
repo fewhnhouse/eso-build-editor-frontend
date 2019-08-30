@@ -2,7 +2,8 @@ import React from 'react' // { useReducer }
 
 import { rootReducer } from './rootReducer'
 import { ISpecialBuff } from '../build/consumables/BuffMenu'
-import { IMundus, ISetSelection } from '../build/BuildStateContext'
+import { IMundus } from '../build/BuildStateContext'
+import { ISet } from '../../components/GearSlot';
 
 export interface IOverviewAction {
   payload: any
@@ -12,7 +13,8 @@ export interface IOverviewAction {
 export interface IOverviewState {
   buff?: ISpecialBuff
   mundusStone?: IMundus
-  selectedSet?: ISetSelection
+  selectedSet?: ISet
+  skillLine?: number
 }
 
 const combineReducers = (
@@ -38,6 +40,7 @@ export const defaultOverviewState: IOverviewState = {
   buff: undefined,
   mundusStone: undefined,
   selectedSet: undefined,
+  skillLine: undefined
 }
 export const overviewReducer = (
   state: IOverviewState,

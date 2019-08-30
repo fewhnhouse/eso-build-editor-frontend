@@ -46,15 +46,18 @@ export const setSelection = gql`
 export const skill = gql`
   fragment Skill on Skill {
     id
-    name
-    skillId
-    icon
-    range
-    type
-    cost
-    effect_1
-    effect_2
-    target
+      name
+      skillline
+      parent
+      type
+      effect_1
+      effect_2
+      cost
+      icon
+      cast_time
+      target
+      range
+      skillId
   }
 `
 export const skillSelection = gql`
@@ -99,6 +102,9 @@ export const build = gql`
       effect
       value
       icon
+      aldmeri
+      ebonheart
+      daggerfall
     }
     buff {
       ...Buff

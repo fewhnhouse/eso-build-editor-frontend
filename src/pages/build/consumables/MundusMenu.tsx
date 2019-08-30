@@ -45,6 +45,9 @@ const GET_MUNDUS_STONES = gql`
       effect
       value
       icon
+      aldmeri
+      daggerfall
+      ebonheart
     }
   }
 `
@@ -156,7 +159,9 @@ const MundusList = ({
                       />
                     }
                     title={item.name}
-                    description={item.effect + ' by ' + item.value}
+                    description={
+                      <span>{item.effect + ' by ' + item.value}</span>
+                    }
                   />
                 </StyledCard>
               </animated.div>

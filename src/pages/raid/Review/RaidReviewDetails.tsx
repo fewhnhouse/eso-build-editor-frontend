@@ -47,7 +47,7 @@ interface IRaidReviewDetailsProps {
 const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const { name, roles, applicationArea, description, published } = loadedData
   const [path] = useState('')
-  const [expand, setExpand] = useState(false)
+  const [expand, setExpand] = useState(true)
   const area = applicationAreas.find(area => area.key === applicationArea)
   const handleExpandChange = () => {
     setExpand(prev => !prev)
@@ -57,7 +57,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   } else {
     return (
       <Wrapper direction='column' fluid justify='flex-start'>
-        <Flex>
+        <Flex direction="column" align="center" justify="center" style={{width: "100%"}}>
           <Typography.Title>{name}</Typography.Title>
 
           {local && (
@@ -112,7 +112,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                   <Divider>
                     <Title level={3}>{role.name}</Title>
                   </Divider>
-                  <CardList direction='row'>
+                  <CardList direction='row' justify="space-around">
                     {role.builds.map((build, index) => {
                       return (
                         <BuildCard

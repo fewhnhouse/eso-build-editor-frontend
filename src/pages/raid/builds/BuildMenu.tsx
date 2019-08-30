@@ -212,7 +212,7 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
       renderItem={(style: any, index) => {
         const item = builds[index]
         return (
-          <animated.div style={style}>
+          <animated.div style={{ ...style, display: 'inline-flex' }}>
             <BuildCard item={item} expand />
           </animated.div>
         )

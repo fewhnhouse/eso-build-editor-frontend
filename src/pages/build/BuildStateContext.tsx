@@ -10,10 +10,14 @@ import { setBarReducer } from './reducers/setBarReducer'
 import { ISpecialBuff } from './consumables/BuffMenu'
 
 export interface IMundus {
+  id: string
   name: string
   effect: string
   value: string
   icon: string
+  aldmeri: string
+  daggerfall: string
+  ebonheart: string
 }
 export interface ISlot {
   id: number
@@ -160,10 +164,14 @@ export const defaultBuildState: IBuildState = {
   stamina: 0,
   magicka: 0,
   mundusStone: {
+    id: '',
     effect: '',
     name: '',
     icon: '',
     value: '',
+    aldmeri: '',
+    daggerfall: '',
+    ebonheart: ''
   },
   buff: {
     buffDescription: '',

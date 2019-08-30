@@ -185,7 +185,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         openNotification(resendMutation)
       }
     }
-  }, [loginResult, registerResult, setLoggedIn])
+  }, [loginResult, registerResult, setLoggedIn, resendMutation])
 
   const emailError = isFieldTouched('email') && getFieldError('email')
   const usernameError = isFieldTouched('username') && getFieldError('username')
@@ -224,6 +224,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
               required: true,
               message: 'Please input a valid email!',
               whitespace: true,
+              //eslint-disable-next-line
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             },
           ],
