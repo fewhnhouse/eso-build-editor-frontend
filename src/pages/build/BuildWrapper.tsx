@@ -7,8 +7,6 @@ import { defaultBuildState } from './BuildStateContext'
 import gql from 'graphql-tag'
 import { build } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import ErrorPage from '../../components/ErrorPage'
 
 const GET_BUILD = gql`

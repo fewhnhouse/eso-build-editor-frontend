@@ -7,7 +7,6 @@ import { Spin, message } from 'antd'
 import { defaultRaidState } from './RaidStateContext'
 import { raid } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
-import styled from 'styled-components'
 import ErrorPage from '../../components/ErrorPage'
 
 const GET_RAID = gql`
@@ -18,10 +17,7 @@ const GET_RAID = gql`
   }
   ${raid}
 `
-const Container = styled.div`
-  height: calc(100vh - 64px);
-  width: 100vw;
-`
+
 interface IRaidWrapperProps
   extends RouteComponentProps<{ id: string; raidId: string }> {
   edit?: boolean
