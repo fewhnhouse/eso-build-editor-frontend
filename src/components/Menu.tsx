@@ -48,7 +48,7 @@ const NavMenu = ({ me, location }: IMenuProps) => {
   }
   return (
     <StyledHeader>
-      <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', width: '100%', alignItems: "center" }}>
         {loggedIn ? (
           <>
             <Menu
@@ -136,7 +136,7 @@ const NavMenu = ({ me, location }: IMenuProps) => {
               theme='light'
               mode='horizontal'
               selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-              style={{ lineHeight: '64px' }}
+              style={{ lineHeight: '64px', width: '100%' }}
             >
               <Item key='1'>
                 <Link to='/'>Home</Link>
