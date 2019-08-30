@@ -71,7 +71,7 @@ interface IRaidOverviewProps extends RouteComponentProps<any> {
 const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const { id } = match.params
   const [redirect, setRedirect] = useState(false)
-  
+
   const [state] = useContext(RaidContext)
   const [loggedIn] = useContext(LoginContext)
 
@@ -152,9 +152,16 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
-            <Flex direction='row' justify='flex-start'>
+            <Flex
+              direction='row'
+              justify='flex-start'
+              style={{ overflow: 'auto', width: '100%' }}
+            >
               <Flex direction='column' align='flex-start'>
-                <Typography.Title style={{ marginBottom: 0 }} level={3}>
+                <Typography.Title
+                  style={{ marginBottom: 0, whiteSpace: 'nowrap' }}
+                  level={3}
+                >
                   {name}
                 </Typography.Title>
                 <Typography.Text>{description}</Typography.Text>

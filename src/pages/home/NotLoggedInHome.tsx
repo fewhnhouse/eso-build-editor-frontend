@@ -90,7 +90,7 @@ export default () => {
           </CardContainer>
         </Wrapper>
         <Divider />
-        <OverviewContainer justify='space-between'>
+        <OverviewContainer justify='space-between' direction="column" align="center">
           <Title level={3}>Overview</Title>
           <Typography.Text>
             Build Editor offers a simple Web Interface to explore Sets, Skills,
