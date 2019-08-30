@@ -69,8 +69,8 @@ export default () => {
         </Text>
         <Divider />
 
-        <Wrapper direction={'row'} align={'flex-start'}>
-          <CardContainer direction={'column'} justify={'space-between'}>
+        <Wrapper direction='row' align='flex-start' justify="center">
+          <CardContainer direction='column' justify='space-between' align="center">
             <Title level={3}>Builds</Title>
             <Text>Create, share, save and edit builds</Text>
             <Link style={{ width: '100%' }} to='/builds'>
@@ -79,7 +79,7 @@ export default () => {
               </Button>
             </Link>
           </CardContainer>
-          <CardContainer direction={'column'} justify={'space-between'}>
+          <CardContainer direction='column' justify='space-between' align="center">
             <Title level={3}>Raids</Title>
             <Text>Create, share, save and edit raids</Text>
             <Link style={{ width: '100%' }} to='/raids'>
@@ -90,7 +90,11 @@ export default () => {
           </CardContainer>
         </Wrapper>
         <Divider />
-        <OverviewContainer justify='space-between' direction="column" align="center">
+        <OverviewContainer
+          justify='space-between'
+          direction='column'
+          align='center'
+        >
           <Title level={3}>Overview</Title>
           <Typography.Text>
             Build Editor offers a simple Web Interface to explore Sets, Skills,

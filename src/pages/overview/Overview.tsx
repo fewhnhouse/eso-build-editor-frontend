@@ -15,9 +15,9 @@ import Skills from './Skills'
 const { TabPane } = Tabs
 
 export const MenuCard = styled.div`
-  height: calc(100vh - 200px);
+  height: calc(100vh - 150px);
   margin-right: 10px;
-  max-height: 85%;
+  max-height: 90%;
   min-width: ${(props: { minWidth?: string }) => props.minWidth || '300px'};
   flex: 1;
   max-width: 50%;
@@ -32,9 +32,9 @@ export const Description = styled.div`
 `
 
 export const ContentCard = styled(Card)`
-  height: calc(100vh - 200px);
+  height: calc(100vh - 150px);
   margin-left: 10px;
-  max-height: 85%;
+  max-height: 90%;
   width: 100%;
   max-width: 70%;
   min-width: 50%;
@@ -60,9 +60,8 @@ export default () => {
           height: 'calc(100vh - 64px)',
         }}
         direction='column'
-        align="center"
+        align='center'
       >
-        <Typography.Title>Overview</Typography.Title>
         <Tabs
           style={{ width: '100%', height: '100%' }}
           defaultActiveKey='1'
