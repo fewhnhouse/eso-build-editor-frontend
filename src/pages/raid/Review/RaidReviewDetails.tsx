@@ -7,6 +7,7 @@ import { Redirect } from 'react-router'
 import BuildCard from '../builds/BuildCard'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Title } = Typography
 
@@ -18,15 +19,15 @@ const RaidContent = styled(Flex)`
   width: 100%;
   flex-wrap: wrap;
   flex: 1;
-  max-height: ${(props: { local?: boolean }) => (props.local ? '80%' : '90%')};
+  max-height: ${(props: { local?: boolean }) =>
+    props.local ? '80%' : '90%'};
 `
 
 const BuildInformation = styled(Card)`
   flex: 2;
   flex-wrap: wrap;
-  margin: 20px;
+  overflow: auto;
   height: 100%;
-  overflow-y: auto;
   min-width: 400px;
 `
 const CardList = styled(Flex)`
@@ -57,7 +58,12 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   } else {
     return (
       <Wrapper direction='column' fluid justify='flex-start'>
-        <Flex direction="column" align="center" justify="center" style={{width: "100%"}}>
+        <Flex
+          direction='column'
+          align='center'
+          justify='center'
+          style={{ width: '100%' }}
+        >
           <Typography.Title>{name}</Typography.Title>
 
           {local && (
@@ -112,7 +118,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                   <Divider>
                     <Title level={3}>{role.name}</Title>
                   </Divider>
-                  <CardList direction='row' justify="space-around">
+                  <CardList direction='row' justify='space-around'>
                     {role.builds.map((build, index) => {
                       return (
                         <BuildCard

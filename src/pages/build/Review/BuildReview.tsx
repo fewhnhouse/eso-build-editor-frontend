@@ -30,7 +30,7 @@ import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
 import ErrorPage from '../../../components/ErrorPage'
 import { LoginContext } from '../../../App'
-import ScrollBar from 'react-scrollbars-custom'
+import Scrollbars from 'react-custom-scrollbars';
 
 const { Content, Footer } = Layout
 
@@ -223,7 +223,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
-            <ScrollBar width='100%' height='80px' noScrollY>
+            <Scrollbars>
               <Flex
                 direction='row'
                 justify='flex-start'
@@ -286,7 +286,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
                   description={published ? 'Public' : 'Private'}
                 />
               </Flex>
-            </ScrollBar>
+            </Scrollbars>
             {buildQuery.data.build.owner.id === meQuery.data.me.id && (
               <Flex direction='row'>
                 <Popconfirm

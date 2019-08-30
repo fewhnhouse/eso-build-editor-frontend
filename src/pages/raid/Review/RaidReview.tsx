@@ -21,7 +21,7 @@ import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
 import ErrorPage from '../../../components/ErrorPage'
 import { LoginContext } from '../../../App'
-import ScrollBar from 'react-scrollbars-custom'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 const { Content, Footer } = Layout
 
@@ -155,7 +155,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
-            <ScrollBar width='100%' height='80px' noScrollY>
+            <Scrollbars autoHide>
               <Flex
                 direction='row'
                 justify='flex-start'
@@ -230,7 +230,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
                   description={published ? 'Public' : 'Private'}
                 />
               </Flex>
-            </ScrollBar>
+            </Scrollbars>
 
             {owner.id === meQuery.data.me.id && (
               <Flex direction='row'>
