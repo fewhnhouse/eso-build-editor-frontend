@@ -3,6 +3,7 @@ import { List, Card, Typography, Divider } from 'antd'
 import styled from 'styled-components'
 import { Redirect } from 'react-router'
 import { applicationAreas } from '../build/RaceAndClass/RaceClass'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Text } = Typography
 
@@ -35,8 +36,6 @@ const StyledCard = styled(Card)`
 `
 
 const StyledList = styled(List)`
-  overflow-y: auto;
-  height: calc(100% - 120px);
   background: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -62,10 +61,10 @@ interface IBuildProps {
 
 interface IUserDataProps {
   data: IBuildProps[]
-  filterText: string
+  loading: boolean
 }
 
-const BuildCard = ({ data, filterText }: IUserDataProps) => {
+const BuildCard = ({ data,  loading }: IUserDataProps) => {
   const [path, setRedirect] = useState('')
   const handleClick = (path: string) => () => {
     setRedirect(path)
@@ -74,47 +73,49 @@ const BuildCard = ({ data, filterText }: IUserDataProps) => {
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   }
-  const filteredData = data.filter(build => build.name.includes(filterText))
   return (
-    <StyledList
-      dataSource={filteredData}
-      renderItem={(item, index: number) => {
-        const build = filteredData[index]
-        const applicationArea = applicationAreas.find(
-          area => area.key === build.applicationArea
-        )
-        return (
-          <List.Item style={{ justifyContent: 'center' }}>
-            <StyledCard
-              key={build.id}
-              hoverable
-              onClick={handleClick(`/builds/${build.id}`)}
-            >
-              <Title>
-                {build.name ? build.name : 'Unnamed build'}
-                <Text style={{ fontWeight: 'normal' }} />
-              </Title>
-              <Divider style={{ margin: '5px 0px' }} />
-
-              <Description>
-                <StyledImg
-                  style={{ marginRight: '5px' }}
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
-                />
-                {build.esoClass}
-                <StyledImg
-                  style={{ marginLeft: '10px', marginRight: '5px' }}
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
-                />
-                {build.race}
+    <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
+      <StyledList
+        loading={loading}
+        dataSource={data}
+        renderItem={(item, index: number) => {
+          const build = data[index]
+          const applicationArea = applicationAreas.find(
+            area => area.key === build.applicationArea
+          )
+          return (
+            <List.Item style={{ justifyContent: 'center' }}>
+              <StyledCard
+                key={build.id}
+                hoverable
+                onClick={handleClick(`/builds/${build.id}`)}
+              >
+                <Title>
+                  {build.name ? build.name : 'Unnamed build'}
+                  <Text style={{ fontWeight: 'normal' }} />
+                </Title>
                 <Divider style={{ margin: '5px 0px' }} />
-                {applicationArea ? applicationArea.label : ''}
-              </Description>
-            </StyledCard>
-          </List.Item>
-        )
-      }}
-    />
+
+                <Description>
+                  <StyledImg
+                    style={{ marginRight: '5px' }}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
+                  />
+                  {build.esoClass}
+                  <StyledImg
+                    style={{ marginLeft: '10px', marginRight: '5px' }}
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
+                  />
+                  {build.race}
+                  <Divider style={{ margin: '5px 0px' }} />
+                  {applicationArea ? applicationArea.label : ''}
+                </Description>
+              </StyledCard>
+            </List.Item>
+          )
+        }}
+      />
+    </Scrollbars>
   )
 }
 

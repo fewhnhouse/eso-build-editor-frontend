@@ -12,7 +12,7 @@ const OuterWrapper = styled(Flex)`
   height: 100%;
 `
 const Wrapper = styled(Flex)`
-  padding: 40px;
+  padding: 20px;
   flex-wrap: wrap;
   width: 100%;
   z-index: 20;
