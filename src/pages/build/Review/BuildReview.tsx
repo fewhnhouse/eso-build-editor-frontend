@@ -265,7 +265,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
                 <InformationCard
                   icon='user'
                   title='Owner'
-                  description={owner.name}
+                  description={owner ? owner.name : ""}
                 />
                 <Divider
                   type='vertical'
@@ -287,7 +287,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
                 />
               </Flex>
             </Scrollbars>
-            {buildQuery.data.build.owner.id === meQuery.data.me.id && (
+            {buildQuery.data.build.owner && buildQuery.data.build.owner.id === meQuery.data.me.id && (
               <Flex direction='row'>
                 <Popconfirm
                   title='Are you sure you want to copy this build?'

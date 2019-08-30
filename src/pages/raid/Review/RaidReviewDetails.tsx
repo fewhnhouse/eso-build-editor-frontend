@@ -17,6 +17,7 @@ const Wrapper = styled(Flex)`
 const RaidContent = styled(Flex)`
   width: 100%;
   flex-wrap: wrap;
+  padding: 20px;
   flex: 1;
   max-height: ${(props: { local?: boolean }) =>
     props.local ? '80%' : '90%'};
