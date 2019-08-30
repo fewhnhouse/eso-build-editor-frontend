@@ -9,10 +9,11 @@ import BuildCard from './BuildCard'
 import { IBuild } from '../../build/BuildStateContext'
 import { build } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
+import Scrollbars from 'react-custom-scrollbars'
 const { Option } = Select
 
 const ListContainer = styled.div`
-  width: 500px;
+  width: 420px;
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
@@ -202,22 +203,23 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
   })
 
   return (
-    <List
-      loading={loading}
-      style={{
-        height: '100%',
-        overflow: 'auto',
-      }}
-      dataSource={trail}
-      renderItem={(style: any, index) => {
-        const item = builds[index]
-        return (
-          <animated.div style={{ ...style, display: 'inline-flex' }}>
-            <BuildCard item={item} expand />
-          </animated.div>
-        )
-      }}
-    />
+    <Scrollbars autoHide style={{width: 420}}>
+      <List
+        loading={loading}
+        style={{
+          height: '100%',
+        }}
+        dataSource={trail}
+        renderItem={(style: any, index) => {
+          const item = builds[index]
+          return (
+            <animated.div style={{ ...style, display: 'inline-flex' }}>
+              <BuildCard item={item} expand />
+            </animated.div>
+          )
+        }}
+      />
+    </Scrollbars>
   )
 }
 

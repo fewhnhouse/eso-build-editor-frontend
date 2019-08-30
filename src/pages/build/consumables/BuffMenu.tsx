@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { buff } from '../../../util/fragments'
 import { titleCase } from '../../raid/builds/BuildMenu'
+import Scrollbars from 'react-custom-scrollbars';
 
 const { Option } = Select
 
@@ -263,74 +264,81 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
     config: { mass: 1, tension: 2000, friction: 300 },
   })
   return (
-    <List
-      loading={loading}
-      style={{
-        height: '100%',
-        overflow: 'auto',
-      }}
-      dataSource={trail}
-      renderItem={(style: any, index) => {
-        const item = buffs[index]
-        return (
-          <animated.div style={style}>
-            <StyledCard
-              hoverable
-              active={item.name === (buff && buff.name)}
-              onClick={handleClick(item)}
-            >
-              <Flex align="flex-start" direction='row' style={{ maxWidth: 400 }}>
-                <AvatarContainer>
-                  <MyAvatar
-                    title={item.name}
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.icon}`}
-                  />
-                </AvatarContainer>
-                <div>
-                  <Title>{item.name}</Title>
+    <Scrollbars>
+      <List
+        loading={loading}
+        style={{
+          height: '100%',
+        }}
+        dataSource={trail}
+        renderItem={(style: any, index) => {
+          const item = buffs[index]
+          return (
+            <animated.div style={style}>
+              <StyledCard
+                hoverable
+                active={item.name === (buff && buff.name)}
+                onClick={handleClick(item)}
+              >
+                <Flex
+                  align='flex-start'
+                  direction='row'
+                  style={{ maxWidth: 400 }}
+                >
+                  <AvatarContainer>
+                    <MyAvatar
+                      title={item.name}
+                      src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.icon}`}
+                    />
+                  </AvatarContainer>
+                  <div>
+                    <Title>{item.name}</Title>
 
-                  <Divider style={{ margin: '5px 0px' }} />
-                  <Flex
-                    wrap
-                    direction='row'
-                    style={{
-                      width: '100%',
-                      margin: '10px 0px',
-                    }}
-                  >
-                    <AttributeTag
-                      hasHealth={item.buffDescription.includes('Health')}
-                      hasMagicka={item.buffDescription.includes('Magicka')}
-                      hasStamina={item.buffDescription.includes('Stamina')}
-                    />
-                    <BuffTypeTag
-                      isSpecialDrink={
-                        item.buffType === 'drink' && item.type === null
-                      }
-                      isSpecialFood={
-                        item.buffType === 'food' && item.type === null
-                      }
-                      isFood={item.buffType === 'food' && item.type !== null}
-                      isDrink={item.buffType === 'drink' && item.type !== null}
-                    />
-                    <QualityTag quality={item.quality} />
-                  </Flex>
-                  <Description>{item.buffDescription}</Description>
-                  {item.description && (
-                    <>
-                      <Divider style={{ margin: '5px 0px' }} />
-                      <Description style={{ fontStyle: 'italic' }} newEffect>
-                        {item.description}
-                      </Description>
-                    </>
-                  )}
-                </div>
-              </Flex>
-            </StyledCard>
-          </animated.div>
-        )
-      }}
-    />
+                    <Divider style={{ margin: '5px 0px' }} />
+                    <Flex
+                      wrap
+                      direction='row'
+                      style={{
+                        width: '100%',
+                        margin: '10px 0px',
+                      }}
+                    >
+                      <AttributeTag
+                        hasHealth={item.buffDescription.includes('Health')}
+                        hasMagicka={item.buffDescription.includes('Magicka')}
+                        hasStamina={item.buffDescription.includes('Stamina')}
+                      />
+                      <BuffTypeTag
+                        isSpecialDrink={
+                          item.buffType === 'drink' && item.type === null
+                        }
+                        isSpecialFood={
+                          item.buffType === 'food' && item.type === null
+                        }
+                        isFood={item.buffType === 'food' && item.type !== null}
+                        isDrink={
+                          item.buffType === 'drink' && item.type !== null
+                        }
+                      />
+                      <QualityTag quality={item.quality} />
+                    </Flex>
+                    <Description>{item.buffDescription}</Description>
+                    {item.description && (
+                      <>
+                        <Divider style={{ margin: '5px 0px' }} />
+                        <Description style={{ fontStyle: 'italic' }} newEffect>
+                          {item.description}
+                        </Description>
+                      </>
+                    )}
+                  </div>
+                </Flex>
+              </StyledCard>
+            </animated.div>
+          )
+        }}
+      />
+    </Scrollbars>
   )
 }
 

@@ -11,6 +11,7 @@ import helmet from '../../../assets/icons/helmet-ico.png'
 
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
+import Scrollbars from 'react-custom-scrollbars'
 const { SubMenu } = Menu
 
 const EsoIcon = styled.img`
@@ -77,8 +78,10 @@ const StyledIconBtn = styled(Button)`
 
 const MenuContainer = styled.div`
   width: ${(props: { collapsed: boolean }) => (props.collapsed ? '60px' : '')};
+  min-width: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : "220px")};
   flex: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : 1)};
   border: 1px solid rgb(217, 217, 217);
+  background: white;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -92,7 +95,12 @@ interface ISkillMenuProps {
   style?: React.CSSProperties
 }
 
-export default ({ context, collapsable, singleClass, style }: ISkillMenuProps) => {
+export default ({
+  context,
+  collapsable,
+  singleClass,
+  style,
+}: ISkillMenuProps) => {
   const [collapsed, setCollapsed] = useState(false)
   const [state, dispatch] = useContext(context)
   const handleClick = (e: ClickParam) => {
@@ -113,7 +121,7 @@ export default ({ context, collapsable, singleClass, style }: ISkillMenuProps) =
   const shownClasses = singleClass
     ? [
         {
-          title: myClass ? myClass.esoClass : "Class",
+          title: myClass ? myClass.esoClass : 'Class',
           icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
             myClass ? myClass.esoClass : ''
           }.png`,
@@ -209,7 +217,10 @@ export default ({ context, collapsable, singleClass, style }: ISkillMenuProps) =
   ]
 
   return (
-    <MenuContainer style={style} collapsed={collapsable !== undefined && collapsed}>
+    <MenuContainer
+      style={style}
+      collapsed={collapsable !== undefined && collapsed}
+    >
       {collapsable && (
         <StyledIconBtn
           type='primary'
@@ -219,40 +230,40 @@ export default ({ context, collapsable, singleClass, style }: ISkillMenuProps) =
           icon={collapsed ? 'double-right' : 'double-left'}
         />
       )}
-      <Menu
-        onClick={handleClick}
-        style={{
-          width: '100%',
-          height: '100%',
-          overflowX: 'hidden',
-          overflowY: 'auto',
-          textAlign: 'left',
-          opacity: collapsed ? 0 : 1,
-          pointerEvents: collapsed ? 'none' : 'all',
-          transition: 'opacity 0.2s ease-in-out',
-        }}
-        defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
-        defaultOpenKeys={[]}
-        mode='inline'
-      >
-        {menuStructure.map((menu, index) => (
-          <SubMenu
-            key={`sub${index}`}
-            title={
-              <Flex direction='row' justify='flex-start' align='center'>
-                <EsoIcon src={menu.icon} />
-                <span>{menu.title}</span>
-              </Flex>
-            }
-          >
-            {menu.items.map(
-              (item: { id: number; title: string }, itemIndex: number) => (
-                <Menu.Item key={item.id}>{item.title}</Menu.Item>
-              )
-            )}
-          </SubMenu>
-        ))}
-      </Menu>
+      <Scrollbars autoHide>
+        <Menu
+          onClick={handleClick}
+          style={{
+            width: '100%',
+            height: '100%',
+            textAlign: 'left',
+            opacity: collapsed ? 0 : 1,
+            pointerEvents: collapsed ? 'none' : 'all',
+            transition: 'opacity 0.2s ease-in-out',
+          }}
+          defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
+          defaultOpenKeys={[]}
+          mode='inline'
+        >
+          {menuStructure.map((menu, index) => (
+            <SubMenu
+              key={`sub${index}`}
+              title={
+                <Flex direction='row' justify='flex-start' align='center'>
+                  <EsoIcon src={menu.icon} />
+                  <span>{menu.title}</span>
+                </Flex>
+              }
+            >
+              {menu.items.map(
+                (item: { id: number; title: string }, itemIndex: number) => (
+                  <Menu.Item key={item.id}>{item.title}</Menu.Item>
+                )
+              )}
+            </SubMenu>
+          ))}
+        </Menu>
+      </Scrollbars>
     </MenuContainer>
   )
 }

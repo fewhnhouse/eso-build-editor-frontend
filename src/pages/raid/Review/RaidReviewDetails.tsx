@@ -7,7 +7,6 @@ import { Redirect } from 'react-router'
 import BuildCard from '../builds/BuildCard'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
-import Scrollbars from 'react-custom-scrollbars'
 
 const { Title } = Typography
 

@@ -17,14 +17,13 @@ import {
 } from '../BuildStateContext'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import Scrollbars from 'react-custom-scrollbars'
 
 const OuterContainer = styled.div`
   flex: 1;
   height: 100%;
-  padding: 40px;
-  overflow: auto;
+  padding: 20px;
   max-width: 400px;
-
   background: white;
 `
 
@@ -500,17 +499,19 @@ export default () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <OuterContainer>
-        <Divider>Active Selection</Divider>
-        <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
+      <Scrollbars autoHide style={{maxWidth: 400, background: "white"}}>
+        <OuterContainer>
+          <Divider>Active Selection</Divider>
+          <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
 
-        <Divider>Setup</Divider>
-        <GearView
-          droppable
-          setups={showSetup(setTabKey)}
-          setsCount={setsCount}
-        />
-      </OuterContainer>
+          <Divider>Setup</Divider>
+          <GearView
+            droppable
+            setups={showSetup(setTabKey)}
+            setsCount={setsCount}
+          />
+        </OuterContainer>
+      </Scrollbars>
     </DndProvider>
   )
 }

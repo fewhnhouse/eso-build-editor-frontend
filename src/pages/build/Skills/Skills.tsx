@@ -116,7 +116,12 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
           flexDirection: 'row',
         }}
       >
-        <Menu context={BuildContext} collapsable singleClass style={{maxWidth: 256}} />
+        <Menu
+          context={BuildContext}
+          collapsable
+          singleClass
+          style={{ maxWidth: 256 }}
+        />
         <Content>
           <SkillsDisplay
             interactive

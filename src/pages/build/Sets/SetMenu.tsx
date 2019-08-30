@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import React, { useContext, useState, Dispatch, SetStateAction } from 'react'
 import { List, Tag, Divider, Button, Input, Select } from 'antd'
 import styled from 'styled-components'
 import { ISet } from '../../../components/GearSlot'
@@ -12,6 +7,7 @@ import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { titleCase } from '../../raid/builds/BuildMenu'
+import Scrollbars from 'react-custom-scrollbars';
 
 const { Option } = Select
 const { Item } = List
@@ -365,47 +361,48 @@ const SetList = ({
     config: { mass: 1, tension: 3000, friction: 100 },
   })
   return (
-    <List
-      loading={loading}
-      style={{
-        height: '100%',
-        overflow: 'auto',
-        opacity: collapsed ? 0 : 1,
-        pointerEvents: collapsed ? 'none' : 'all',
-        transition: 'opacity 0.2s ease-in-out',
-      }}
-      dataSource={trail}
-      renderItem={(style: any, index) => {
-        const item = sets[index]
-        return (
-          <animated.div style={style}>
-            <StyledListItem onClick={handleClick(item)}>
-              <div style={{ width: 140, display: 'flex' }}>
-                <ArmorTypeTag
-                  hasHeavyArmor={item.has_heavy_armor === 1}
-                  hasMediumArmor={item.has_medium_armor === 1}
-                  hasLightArmor={item.has_light_armor === 1}
-                  traitsNeeded={item.traits_needed !== null}
-                />
-                <StyledTag color='geekblue'>{item.type}</StyledTag>
-              </div>
-              <div
-                style={{
-                  textAlign: 'left',
-                  flex: 2,
-                  fontWeight:
-                    state!.selectedSet &&
-                    item.setId === state!.selectedSet.setId
-                      ? 500
-                      : 400,
-                }}
-              >
-                {item.name}
-              </div>
-            </StyledListItem>
-          </animated.div>
-        )
-      }}
-    />
+    <Scrollbars autoHide>
+      <List
+        loading={loading}
+        style={{
+          height: '100%',
+          opacity: collapsed ? 0 : 1,
+          pointerEvents: collapsed ? 'none' : 'all',
+          transition: 'opacity 0.2s ease-in-out',
+        }}
+        dataSource={trail}
+        renderItem={(style: any, index) => {
+          const item = sets[index]
+          return (
+            <animated.div style={style}>
+              <StyledListItem onClick={handleClick(item)}>
+                <div style={{ width: 140, display: 'flex' }}>
+                  <ArmorTypeTag
+                    hasHeavyArmor={item.has_heavy_armor === 1}
+                    hasMediumArmor={item.has_medium_armor === 1}
+                    hasLightArmor={item.has_light_armor === 1}
+                    traitsNeeded={item.traits_needed !== null}
+                  />
+                  <StyledTag color='geekblue'>{item.type}</StyledTag>
+                </div>
+                <div
+                  style={{
+                    textAlign: 'left',
+                    flex: 2,
+                    fontWeight:
+                      state!.selectedSet &&
+                      item.setId === state!.selectedSet.setId
+                        ? 500
+                        : 400,
+                  }}
+                >
+                  {item.name}
+                </div>
+              </StyledListItem>
+            </animated.div>
+          )
+        }}
+      />
+    </Scrollbars>
   )
 }

@@ -130,19 +130,20 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
         traitsNeeded={set.traits_needed !== null}
       />
       <Description big={size === 'big'}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map(count => (
             <span
               key={count}
               style={{
+                textAlign: "left", width: "100%",
                 fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
               }}
             >
               <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
-              {size === 'big' && <Divider style={{ margin: '5px 0px' }} />}
+              <Divider style={{ margin: '5px 0px' }} />
             </span>
           ))}
-        </div>
+        </Flex>
       </Description>
     </StyledCard>
   )

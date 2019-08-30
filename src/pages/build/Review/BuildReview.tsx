@@ -223,7 +223,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
-            <Scrollbars>
+            <Scrollbars autoHide>
               <Flex
                 direction='row'
                 justify='flex-start'

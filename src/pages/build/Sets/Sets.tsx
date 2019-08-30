@@ -9,12 +9,12 @@ import { BuildContext, SetTab } from '../BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import SetMenu from './SetMenu'
+import Scrollbars from 'react-custom-scrollbars';
 
 const { TabPane } = Tabs
 
 const AbilityContainer = styled.div`
   flex: 2;
-  overflow-y: auto;
   padding: 40px;
 `
 
@@ -85,7 +85,7 @@ export default ({ edit }: { edit: boolean }) => {
       />
       <Content>
         {set ? (
-          <>
+          <Scrollbars autoHide>
             <AbilityContainer>
               <Divider>Set</Divider>
               <GearCard
@@ -131,7 +131,7 @@ export default ({ edit }: { edit: boolean }) => {
                 </TabPane>
               </Tabs>
             </AbilityContainer>
-          </>
+          </Scrollbars>
         ) : (
           <Empty
             style={{

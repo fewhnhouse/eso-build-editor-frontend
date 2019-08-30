@@ -6,6 +6,7 @@ import Meta from 'antd/lib/card/Meta'
 import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import Scrollbars from 'react-custom-scrollbars'
 
 const ListContainer = styled.div`
   flex: 1;
@@ -134,40 +135,40 @@ const MundusList = ({
             />
           </Flex>
         </Flex>
-
-        <List
-          style={{
-            height: '100%',
-            overflow: 'auto',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
-          dataSource={trail}
-          renderItem={(style: any, index) => {
-            const item = filteredMundusStones[index]
-            console.log(item)
-            return (
-              <animated.div style={style}>
-                <StyledCard
-                  active={item.name === (mundusStone && mundusStone.name)}
-                  hoverable
-                  onClick={handleClick(item)}
-                >
-                  <Meta
-                    avatar={
-                      <MyAvatar
-                        src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
-                      />
-                    }
-                    title={item.name}
-                    description={
-                      <span>{item.effect + ' by ' + item.value}</span>
-                    }
-                  />
-                </StyledCard>
-              </animated.div>
-            )
-          }}
-        />
+        <Scrollbars autoHide>
+          <List
+            style={{
+              height: '100%',
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+            dataSource={trail}
+            renderItem={(style: any, index) => {
+              const item = filteredMundusStones[index]
+              console.log(item)
+              return (
+                <animated.div style={style}>
+                  <StyledCard
+                    active={item.name === (mundusStone && mundusStone.name)}
+                    hoverable
+                    onClick={handleClick(item)}
+                  >
+                    <Meta
+                      avatar={
+                        <MyAvatar
+                          src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
+                        />
+                      }
+                      title={item.name}
+                      description={
+                        <span>{item.effect + ' by ' + item.value}</span>
+                      }
+                    />
+                  </StyledCard>
+                </animated.div>
+              )
+            }}
+          />
+        </Scrollbars>
       </>
     </ListContainer>
   )

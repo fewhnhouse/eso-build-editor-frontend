@@ -134,8 +134,8 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const area = applicationAreas.find(area => area.key === applicationArea)
 
   return (
-    <Flex style={{ padding: 20 }} fluid direction='column' align="center">
-      <Flex>
+    <Flex style={{ padding: 20 }} fluid direction='column' align='center'>
+      <Flex direction='column' align="center">
         <Typography.Title>{name}</Typography.Title>
         {local && (
           <Flex direction='row'>

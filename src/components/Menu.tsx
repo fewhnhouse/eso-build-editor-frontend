@@ -12,6 +12,7 @@ const StyledHeader = styled(Header)`
   display: flex;
   flex-direction: row;
   background: white;
+  z-index: 10;
   align-items: center;
   justify-content: space-between;
   padding-right: 10px;
@@ -21,9 +22,9 @@ const StyledHeader = styled(Header)`
 const getSelectedKey = (pathname: string, loggedIn: boolean) => {
   if (loggedIn) {
     if (pathname.includes('/builds')) return 'build:1'
-    else if (pathname.includes('/buildEditor')) return 'build:2'
+    else if (pathname.includes('/buildEditor') || pathname.includes("/editBuild")) return 'build:2'
     else if (pathname.includes('/raids')) return 'raid:1'
-    else if (pathname.includes('/raidEditor')) return 'raid:2'
+    else if (pathname.includes('/raidEditor') || pathname.includes("/editRaid")) return 'raid:2'
   } else {
     if (pathname.includes('/builds')) return '2'
     else if (pathname.includes('/raids')) return '3'
