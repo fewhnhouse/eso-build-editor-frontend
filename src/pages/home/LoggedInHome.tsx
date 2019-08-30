@@ -4,43 +4,39 @@ import { Typography, Divider, Card } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: calc(100vh - 64px);
 `
 const Wrapper = styled(Flex)`
-  padding: 20px;
   flex-wrap: wrap;
   width: 100%;
   z-index: 20;
   min-height: 100%;
   background: white;
-  box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px -5px 0px 0px rgba(0, 0, 0, 0.35);
 `
 
 const RightSide = styled(Flex)`
   height: 100%;
   z-index: 30;
-  box-shadow: -2px 0px 5px 0px rgba(0, 0, 0, 0.35);
   flex: 1;
 `
 
 const RightWrapper = styled.div`
   height: 100%;
-  box-shadow: -5px 0px 2px -2px rgba(0, 0, 0, 0.2);
   min-width: 300px;
 `
 
-const InnerContainer = styled(Flex)`
+const ImageContainer = styled.div`
   width: 100%;
-  padding-top: 15%;
-  height: 100%;
-  overflow: auto;
+  height: 15%;
   background-image: url(${wcdt});
-  background-size: contain;
+  background-size: cover;
 `
 
 export default () => {
@@ -48,25 +44,16 @@ export default () => {
   now.setDate(now.getDate() - 1)
 
   return (
-    <OuterWrapper
-      direction='row'
-      justify='space-between'
-      align='center'
-      wrap
-      fluid
-    >
-      <InnerContainer
-        direction='column'
-        justify='center'
-        align='center'
-        wrap
-        fluid
-      >
-        <Wrapper direction={'row'} justify='center' align='center' wrap>
-          <UserHomeCard isBuild />
-          <UserHomeCard isBuild={false} />
-        </Wrapper>
-      </InnerContainer>
+    <OuterWrapper direction='row' justify='space-between' align='center' fluid>
+      <Flex direction='column' style={{width: "100%", height: "100%"}}>
+        <ImageContainer />
+        <Scrollbars autoHide>
+          <Wrapper direction={'row'} justify='center' align='center' wrap>
+            <UserHomeCard isBuild />
+            <UserHomeCard isBuild={false} />
+          </Wrapper>
+        </Scrollbars>
+      </Flex>
       <RightSide direction={'column'} justify={'flex-start'} align={'flex-end'}>
         <RightWrapper>
           <div style={{ height: '40%', padding: 5 }}>
