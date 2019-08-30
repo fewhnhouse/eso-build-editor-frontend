@@ -4,6 +4,7 @@ import { MenuCard, ContentCard } from './Overview'
 import SetMenu from '../build/Sets/SetMenu'
 import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
+import { Empty } from 'antd';
 
 interface ISetProps {
   context: React.Context<any>
@@ -31,8 +32,20 @@ export default ({ context, selectedSet }: ISetProps) => {
           alignItems: 'center',
         }}
       >
-        {selectedSet && (
+        {selectedSet ? (
           <GearCard size='big' set={selectedSet} setSelectionCount={0} />
+        ) : (
+          <Empty
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flex: 2,
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            Select a Set to get started.
+          </Empty>
         )}
       </ContentCard>
     </Flex>
