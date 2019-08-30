@@ -30,6 +30,8 @@ import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
 import ErrorPage from '../../../components/ErrorPage'
 import { LoginContext } from '../../../App'
+import ScrollBar from 'react-scrollbars-custom'
+
 const { Content, Footer } = Layout
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
@@ -213,6 +215,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
           <Footer
             style={{
               height: 80,
+              padding: '0px 20px',
               display: 'flex',
               justifyContent: 'space-between',
               zIndex: 100,
@@ -220,44 +223,72 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
-            <Flex direction='row' justify='flex-start'>
-              <Flex direction='column' align='flex-start'>
-                <Typography.Title style={{ marginBottom: 0 }} level={3}>
-                  {name}
-                </Typography.Title>
-                <Typography.Text>{description}</Typography.Text>
+            <ScrollBar width='100%' height='80px' noScrollY>
+              <Flex
+                direction='row'
+                justify='flex-start'
+                align='center'
+                style={{ height: 80 }}
+              >
+                <Flex
+                  direction='column'
+                  align='flex-start'
+                  style={{ width: 200 }}
+                >
+                  <Typography.Title
+                    style={{
+                      marginBottom: 0,
+                      width: 180,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                    level={3}
+                  >
+                    {name}
+                  </Typography.Title>
+                  <Typography.Text
+                    style={{
+                      whiteSpace: 'nowrap',
+                      width: 180,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {description}
+                  </Typography.Text>
+                </Flex>
+                <Divider
+                  type='vertical'
+                  style={{ height: 50, margin: '0px 20px' }}
+                />
+                <InformationCard
+                  icon='user'
+                  title='Owner'
+                  description={owner.name}
+                />
+                <Divider
+                  type='vertical'
+                  style={{ height: 50, margin: '0px 20px' }}
+                />
+                <InformationCard
+                  icon='environment'
+                  title='Application Area'
+                  description={area ? area.label : ''}
+                />
+                <Divider
+                  type='vertical'
+                  style={{ height: 50, margin: '0px 20px' }}
+                />
+                <InformationCard
+                  icon={published ? 'unlock' : 'lock'}
+                  title='Access Rights'
+                  description={published ? 'Public' : 'Private'}
+                />
               </Flex>
-              <Divider
-                type='vertical'
-                style={{ height: 50, margin: '0px 20px' }}
-              />
-              <InformationCard
-                icon='user'
-                title='Owner'
-                description={owner.name}
-              />
-              <Divider
-                type='vertical'
-                style={{ height: 50, margin: '0px 20px' }}
-              />
-              <InformationCard
-                icon='environment'
-                title='Application Area'
-                description={area ? area.label : ''}
-              />
-              <Divider
-                type='vertical'
-                style={{ height: 50, margin: '0px 20px' }}
-              />
-              <InformationCard
-                icon={published ? 'unlock' : 'lock'}
-                title='Access Rights'
-                description={published ? 'Public' : 'Private'}
-              />
-            </Flex>
-
+            </ScrollBar>
             {buildQuery.data.build.owner.id === meQuery.data.me.id && (
-              <div>
+              <Flex direction='row'>
                 <Popconfirm
                   title='Are you sure you want to copy this build?'
                   onConfirm={handleCopyClick}
@@ -293,7 +324,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
                     Delete
                   </ActionButton>
                 </Popconfirm>
-              </div>
+              </Flex>
             )}
           </Footer>
         </>
