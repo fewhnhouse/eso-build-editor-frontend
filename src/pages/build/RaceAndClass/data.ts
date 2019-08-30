@@ -67,7 +67,10 @@ export const races = [
       description:
         'Sorcerers summon and control weather phenomenon: hurling lightning bolts and creating electrified fields, summoning tornadoes and impenetrable fog, and calling upon Daedric forces to summon Storm Atronachs and magical armor',
     },
-    { title: 'Warden', description: '' },
+    { title: 'Warden',
+    description:
+    'Wardens are defenders of the Green, master storytellers whose nature tales become magical reality. They wield frost spells against enemies and summon animals to aid them.' 
+  },
     {
       title: 'Nightblade',
       description:
