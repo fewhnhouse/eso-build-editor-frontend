@@ -11,6 +11,7 @@ import { classes, races } from '../RaceAndClass/data'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
 import gql from 'graphql-tag'
+import { useMediaQuery } from 'react-responsive'
 
 const { Title, Text } = Typography
 
@@ -50,14 +51,16 @@ const Wrapper = styled(Flex)`
 `
 const BuildInformation = styled(Card)`
   margin: 20px;
-  height: calc(100% - 40px);
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 2;
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
   margin: 20px;
-  height: calc(100% - 40px);
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 1;
   max-width: 700px;
@@ -136,6 +139,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const setsCount = selectedSetup
     .map(setup => {
@@ -154,11 +158,13 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
     variables: { id },
   })
-  
+
   console.log(data)
-  if(data && data.buildUpdateSubscription) {
+  if (data && data.buildUpdateSubscription) {
     console.log(data)
-    message.info("This build has been updated. Refresh to see the latest changes")
+    message.info(
+      'This build has been updated. Refresh to see the latest changes'
+    )
   }
 
   return (
@@ -201,6 +207,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
         fluid
       >
         <GeneralInformation
+          isMobile={isMobile}
           title={<Title level={2}>General Information</Title>}
         >
           <Divider>Attributes</Divider>
@@ -269,7 +276,10 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             </>
           )}
         </GeneralInformation>
-        <BuildInformation title={<Title level={2}>Build Information</Title>}>
+        <BuildInformation
+          isMobile={isMobile}
+          title={<Title level={2}>Build Information</Title>}
+        >
           <SkillsView>
             <StyledTitle level={4}>Skills</StyledTitle>
             <SkillView
