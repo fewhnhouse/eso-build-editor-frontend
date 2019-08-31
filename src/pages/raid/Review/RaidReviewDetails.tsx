@@ -12,13 +12,15 @@ import { useMediaQuery } from 'react-responsive'
 const { Title } = Typography
 
 const Wrapper = styled(Flex)`
-  padding: 20px;
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
 `
 
 const RaidContent = styled(Flex)`
   width: 100%;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
   flex: 1;
   max-height: ${(props: { local?: boolean; isMobile: boolean }) =>
     props.isMobile ? '' : props.local ? '80%' : '90%'};
@@ -29,7 +31,7 @@ const BuildInformation = styled(Card)`
   flex-wrap: wrap;
   overflow: auto;
   height: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : '100%')};
-  min-width: 400px;
+  min-width: 370px;
 `
 const CardList = styled(Flex)`
   flex-wrap: wrap;
@@ -60,7 +62,12 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
     return <Redirect push to={`${path}`} />
   } else {
     return (
-      <Wrapper direction='column' fluid justify='flex-start'>
+      <Wrapper
+        isMobile={isMobile}
+        direction='column'
+        fluid
+        justify='flex-start'
+      >
         <Flex
           direction='column'
           align='center'
@@ -109,8 +116,17 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
             </Flex>
           )}
         </Flex>
-        <RaidContent isMobile={isMobile} local={local} direction='row' align='flex-start'>
-          <BuildInformation isMobile={isMobile} title={<Title level={2}>Builds</Title>}>
+        <RaidContent
+          isMobile={isMobile}
+          local={local}
+          direction='row'
+          align='flex-start'
+        >
+          <BuildInformation
+            bodyStyle={{ padding: isMobile ? '0px' : '24px' }}
+            isMobile={isMobile}
+            title={<Title level={2}>Builds</Title>}
+          >
             <ExpandButton
               onClick={handleExpandChange}
               icon={expand ? 'shrink' : 'arrows-alt'}

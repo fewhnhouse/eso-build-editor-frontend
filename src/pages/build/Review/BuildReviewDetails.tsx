@@ -47,10 +47,12 @@ const StyledTitle = styled(Title)`
 `
 const Wrapper = styled(Flex)`
   height: 100%;
-  padding: 20px;
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
 `
 const BuildInformation = styled(Card)`
-  margin: 20px;
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
@@ -200,6 +202,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
         )}
       </Flex>
       <Wrapper
+        isMobile={isMobile}
         direction='row'
         align='flex-start'
         justify='space-evenly'
