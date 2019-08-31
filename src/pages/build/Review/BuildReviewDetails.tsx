@@ -151,7 +151,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     )
   const area = applicationAreas.find(area => area.key === applicationArea)
 
-  const { data, loading } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
+  const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
     variables: { id },
   })
   

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
-import { Typography, Button, Input, Icon, Divider, Select } from 'antd'
+import { Typography, Button, Input, Icon, Select } from 'antd'
 import { Redirect } from 'react-router'
 import RaidCard from './RaidCard'
 import BuildCard from './BuildCard'

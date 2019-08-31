@@ -34,7 +34,6 @@ const RoleDropper = ({ role }: { role: IRole }) => {
   const [, drop] = useDrop({
     accept: 'build',
     drop: (item: any, monitor) => {
-      console.log(item)
       dispatch!({
         type: 'ADD_BUILD',
         payload: { name: role.name, build: item.build },

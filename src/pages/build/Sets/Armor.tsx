@@ -112,7 +112,6 @@ export default () => {
     const armorGlyphs: IModification[] = glyphQuery.data.modifications;
     const armorTraits: IModification[] = traitQuery.data.modifications;
 
-    console.log(armorGlyphs, armorTraits);
 
     const onChangeSelect = (
       slots: Slot[],

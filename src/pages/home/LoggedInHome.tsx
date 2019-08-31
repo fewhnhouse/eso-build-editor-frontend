@@ -23,7 +23,6 @@ const Wrapper = styled(Flex)`
 
 const RightSide = styled(Flex)`
   height: 100%;
-  z-index: 30;
   flex: 1;
 `
 
