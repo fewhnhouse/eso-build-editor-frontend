@@ -68,6 +68,7 @@ const NavMenu = ({ me, location }: IMenuProps) => {
   const [expanded, setExpanded] = useState(false)
   const handleLogout = () => {
     setLoggedIn(false)
+    setExpanded(false)
     localStorage.removeItem('token')
   }
 
