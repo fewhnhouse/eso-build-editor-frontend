@@ -24,6 +24,7 @@ const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
+        id
         name
       }
     }
@@ -33,8 +34,8 @@ const LOGIN = gql`
 const REGISTER = gql`
   mutation signup($username: String!, $email: String!, $password: String!) {
     signup(email: $email, name: $username, password: $password) {
-      name
       id
+      name
     }
   }
 `
@@ -278,6 +279,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         >
           {register ? 'Register' : 'Login'}
         </Button>
+        <br/>
         Or
         <Button type='link' onClick={() => setRegister(register => !register)}>
           {register ? 'login.' : 'register now!'}

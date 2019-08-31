@@ -30,6 +30,7 @@ const LoadingContainer = styled.div`
 export const ME = gql`
   query {
     me {
+      id
       email
       name
       verified

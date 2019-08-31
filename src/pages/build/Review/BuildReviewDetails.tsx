@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Typography, Divider, Card } from 'antd'
+import { Typography, Divider, Card, message } from 'antd'
+import { useSubscription } from 'react-apollo'
 import GearView from '../../../components/GearView'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
@@ -9,12 +10,14 @@ import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
+import gql from 'graphql-tag'
+import { useMediaQuery } from 'react-responsive'
 
 const { Title, Text } = Typography
 
 const ResourceCard = styled.div`
   display: flex;
-  width: 100px
+  width: 100px;
   color: rgba(0, 0, 0, 0.65);
   border: 1px solid #e8e8e8;
   border-radius: 2px;
@@ -48,14 +51,16 @@ const Wrapper = styled(Flex)`
 `
 const BuildInformation = styled(Card)`
   margin: 20px;
-  height: calc(100% - 40px);
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 2;
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
   margin: 20px;
-  height: calc(100% - 40px);
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 1;
   max-width: 700px;
@@ -74,8 +79,24 @@ interface IDetailViewProps {
   local?: boolean
 }
 
+const BUILD_UPDATE_SUBSCRIPTION = gql`
+  subscription buildUpdateSubscription($id: ID!) {
+    buildUpdateSubscription(id: $id) {
+      node {
+        id
+        owner {
+          name
+        }
+        name
+      }
+      updatedFields
+    }
+  }
+`
+
 const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const {
+    id,
     name,
     bigPieceSelection,
     smallPieceSelection,
@@ -118,6 +139,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const setsCount = selectedSetup
     .map(setup => {
@@ -133,9 +155,21 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     )
   const area = applicationAreas.find(area => area.key === applicationArea)
 
+  const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
+    variables: { id },
+  })
+
+  console.log(data)
+  if (data && data.buildUpdateSubscription) {
+    console.log(data)
+    message.info(
+      'This build has been updated. Refresh to see the latest changes'
+    )
+  }
+
   return (
     <Flex style={{ padding: 20 }} fluid direction='column' align='center'>
-      <Flex direction='column' align="center">
+      <Flex direction='column' align='center'>
         <Typography.Title>{name}</Typography.Title>
         {local && (
           <Flex direction='row'>
@@ -173,6 +207,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
         fluid
       >
         <GeneralInformation
+          isMobile={isMobile}
           title={<Title level={2}>General Information</Title>}
         >
           <Divider>Attributes</Divider>
@@ -241,7 +276,10 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             </>
           )}
         </GeneralInformation>
-        <BuildInformation title={<Title level={2}>Build Information</Title>}>
+        <BuildInformation
+          isMobile={isMobile}
+          title={<Title level={2}>Build Information</Title>}
+        >
           <SkillsView>
             <StyledTitle level={4}>Skills</StyledTitle>
             <SkillView

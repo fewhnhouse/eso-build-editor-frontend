@@ -8,6 +8,7 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
+import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink } from 'apollo-link'
 import { ApolloProvider } from 'react-apollo'
 import { setContext } from 'apollo-link-context'
@@ -23,6 +24,13 @@ const authLink = setContext((_, { headers }) => {
       authorization: token ? `Bearer ${token}` : '',
     },
   }
+})
+
+const wsLink = new WebSocketLink({
+  uri: process.env.REACT_APP_SUBSCRIPTION_URL || "",
+  options: {
+    reconnect: true,
+  },
 })
 
 notification.config({
@@ -61,7 +69,7 @@ const data = {
 cache.writeData({ data })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink, httpLink]),
+  link: ApolloLink.from([errorLink, authLink, httpLink, wsLink]),
   cache,
 })
 

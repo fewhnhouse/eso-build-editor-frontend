@@ -260,7 +260,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
 
   const handleNextClick = () => {
     if (tab === 4) {
-      console.log('save')
       handleSave()
     } else {
       setTab(tabIndex => tabIndex + 1)

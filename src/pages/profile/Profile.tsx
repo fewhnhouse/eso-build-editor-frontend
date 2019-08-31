@@ -37,6 +37,7 @@ const Container = styled(Content)`
 const ME = gql`
   query {
     me {
+      id
       email
       name
     }

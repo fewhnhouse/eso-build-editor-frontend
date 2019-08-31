@@ -24,7 +24,6 @@ const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
   if (loggedIn === undefined) {
     return null
   }
-  console.log(loggedIn)
   return loggedIn ? <Route {...props} /> : <Redirect to='/' />
 }
 

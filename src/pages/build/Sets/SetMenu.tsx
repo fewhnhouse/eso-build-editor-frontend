@@ -163,8 +163,6 @@ export default ({
     return <div>Error.</div>
   }
 
-  console.log(data)
-
   const handleTypeSelectChange = (types: string[]) => {
     setSelectedTypes(types)
   }
