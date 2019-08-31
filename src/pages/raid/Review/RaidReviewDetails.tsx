@@ -7,6 +7,7 @@ import { Redirect } from 'react-router'
 import BuildCard from '../builds/BuildCard'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
+import { useMediaQuery } from 'react-responsive'
 
 const { Title } = Typography
 
@@ -19,15 +20,15 @@ const RaidContent = styled(Flex)`
   flex-wrap: wrap;
   padding: 20px;
   flex: 1;
-  max-height: ${(props: { local?: boolean }) =>
-    props.local ? '80%' : '90%'};
+  max-height: ${(props: { local?: boolean; isMobile: boolean }) =>
+    props.isMobile ? '' : props.local ? '80%' : '90%'};
 `
 
 const BuildInformation = styled(Card)`
   flex: 2;
   flex-wrap: wrap;
   overflow: auto;
-  height: 100%;
+  height: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : '100%')};
   min-width: 400px;
 `
 const CardList = styled(Flex)`
@@ -53,6 +54,8 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const handleExpandChange = () => {
     setExpand(prev => !prev)
   }
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   } else {
@@ -106,8 +109,8 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
             </Flex>
           )}
         </Flex>
-        <RaidContent local={local} direction='row' align='flex-start'>
-          <BuildInformation title={<Title level={2}>Builds</Title>}>
+        <RaidContent isMobile={isMobile} local={local} direction='row' align='flex-start'>
+          <BuildInformation isMobile={isMobile} title={<Title level={2}>Builds</Title>}>
             <ExpandButton
               onClick={handleExpandChange}
               icon={expand ? 'shrink' : 'arrows-alt'}
