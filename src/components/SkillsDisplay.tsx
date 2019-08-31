@@ -50,7 +50,6 @@ export default ({
   return skillLine !== 0 ? (
     <AbilityContainer>
       <Divider>Ultimate</Divider>
-      {console.log(baseUltimate)}
       {baseUltimate &&
         baseUltimate.skillId !== 0 &&
         (interactive ? (
