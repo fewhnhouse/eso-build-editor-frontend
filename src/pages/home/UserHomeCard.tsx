@@ -33,7 +33,8 @@ const ListCard = styled.div`
   max-width: 450px;
   margin: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '20px'};
-  border-radius: 10px;
+  border-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
   box-shadow: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : '0px 0px 5px 2px rgba(0, 0, 0, 0.2)'};
 `
