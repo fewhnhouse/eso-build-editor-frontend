@@ -48,7 +48,7 @@ export default () => {
   return (
     <OuterWrapper direction='row' justify='space-between' align='center' fluid>
       <Flex direction='column' style={{ width: '100%', height: '100%' }}>
-        <ImageContainer />
+        {!isMobile && <ImageContainer />}
         {isMobile ? (
           <div style={{flex: 1, height: "100%", width: "100%"}}>
             <Tabs style={{height: "100%"}}>

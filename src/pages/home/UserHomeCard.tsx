@@ -20,7 +20,7 @@ const CardContainer = styled(Flex)`
   justify-content: center;
   flex: 1;
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 200px)' : '700px'};
+    props.isMobile ? 'calc(100vh - 120px)' : '700px'};
 `
 
 const ListCard = styled.div`
@@ -32,9 +32,10 @@ const ListCard = styled.div`
   flex-direction: column;
   max-width: 450px;
   margin: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '5px' : '20px'};
+    props.isMobile ? '0px' : '20px'};
   border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : '0px 0px 5px 2px rgba(0, 0, 0, 0.2)'};
 `
 const CardTitle = styled(Title)`
   display: flex;
@@ -44,11 +45,14 @@ const CardTitle = styled(Title)`
 `
 
 const CardHeader = styled(Flex)`
-  background-color: #e8e8e8;
+  background-color: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
   padding: 20px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
+  border-top-right-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
 `
 export const ME = gql`
   query {
@@ -241,7 +245,12 @@ export default ({ isBuild }: { isBuild: boolean }) => {
       align='center'
     >
       <ListCard isMobile={isMobile}>
-        <CardHeader direction='column' justify='center' align='center'>
+        <CardHeader
+          isMobile={isMobile}
+          direction='column'
+          justify='center'
+          align='center'
+        >
           <CardTitle level={3}>
             {isBuild ? 'My builds' : 'My raids'}
             <div>
@@ -256,7 +265,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               </Button>
             </div>
           </CardTitle>
-          <Flex style={{width: "100%"}} justify="space-between">
+          <Flex style={{ width: '100%' }} justify='space-between'>
             <Input
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
               value={search}
