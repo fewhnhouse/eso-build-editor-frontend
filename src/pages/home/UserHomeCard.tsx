@@ -10,25 +10,33 @@ import gql from 'graphql-tag'
 import { classes, races } from '../build/RaceAndClass/data'
 import { titleCase } from '../raid/builds/BuildMenu'
 import { applicationAreas } from '../raid/general/RaidGeneral'
+import { useMediaQuery } from 'react-responsive'
+
 const { Title } = Typography
 
 const { Option } = Select
+
 const CardContainer = styled(Flex)`
   justify-content: center;
   flex: 1;
-  height: 700px;
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'calc(100vh - 120px)' : '700px'};
 `
 
 const ListCard = styled.div`
-  width: 80%;
-  height: 80%;
+  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '100%' : '80%'};
   min-width: 400px;
   display: flex;
   flex-direction: column;
   max-width: 450px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  margin: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
+  border-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
+  box-shadow: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : '0px 0px 5px 2px rgba(0, 0, 0, 0.2)'};
 `
 const CardTitle = styled(Title)`
   display: flex;
@@ -38,11 +46,14 @@ const CardTitle = styled(Title)`
 `
 
 const CardHeader = styled(Flex)`
-  background-color: #e8e8e8;
+  background-color: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
   padding: 20px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
+  border-top-right-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
 `
 export const ME = gql`
   query {
@@ -156,6 +167,8 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   >([])
   const [selectedClasses, setSelectedClasses] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const buildsQuery = useQuery(OWN_BUILDS, {
     variables: {
       where: {
@@ -226,20 +239,22 @@ export default ({ isBuild }: { isBuild: boolean }) => {
     setSelectedApplicationAreas(applicationAreas)
   }
   return (
-    <CardContainer direction='column' justify='center' align='center'>
-      <ListCard>
-        <CardHeader direction='column' justify='center' align='center'>
+    <CardContainer
+      isMobile={isMobile}
+      direction='column'
+      justify='center'
+      align='center'
+    >
+      <ListCard isMobile={isMobile}>
+        <CardHeader
+          isMobile={isMobile}
+          direction='column'
+          justify='center'
+          align='center'
+        >
           <CardTitle level={3}>
             {isBuild ? 'My builds' : 'My raids'}
             <div>
-              <Button
-                type='primary'
-                icon={expanded ? 'shrink' : 'arrows-alt'}
-                ghost={true}
-                style={{ marginRight: 5 }}
-                onClick={handleExpandChange}
-              ></Button>
-
               <Button
                 type='primary'
                 ghost={true}
@@ -251,13 +266,22 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               </Button>
             </div>
           </CardTitle>
-          <Input
-            placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
-            value={search}
-            onChange={handleSearchChange}
-            addonAfter={<Icon type='search' />}
-            defaultValue='mysite'
-          />
+          <Flex style={{ width: '100%' }} justify='space-between'>
+            <Input
+              placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
+              value={search}
+              onChange={handleSearchChange}
+              addonAfter={<Icon type='search' />}
+              defaultValue='mysite'
+            />
+            <Button
+              type='primary'
+              icon={expanded ? 'shrink' : 'arrows-alt'}
+              ghost={true}
+              style={{ marginLeft: 5 }}
+              onClick={handleExpandChange}
+            ></Button>
+          </Flex>
           {expanded &&
             (isBuild ? (
               <>

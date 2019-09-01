@@ -13,7 +13,9 @@ import Scrollbars from 'react-custom-scrollbars'
 const { Option } = Select
 
 const ListContainer = styled.div`
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
+  min-width: 370px;
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
@@ -203,7 +205,7 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
   })
 
   return (
-    <Scrollbars autoHide style={{width: 420}}>
+    <Scrollbars autoHide style={{maxWidth: 420, width: "100%", minWidth: 370}}>
       <List
         loading={loading}
         style={{

@@ -46,11 +46,11 @@ const StyledTitle = styled(Title)`
   margin-bottom: 5px !important;
 `
 const Wrapper = styled(Flex)`
-  height: 100%;
-  padding: 20px;
+  height: calc(100% - 60px);
 `
 const BuildInformation = styled(Card)`
-  margin: 20px;
+  margin: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
@@ -58,7 +58,8 @@ const BuildInformation = styled(Card)`
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
-  margin: 20px;
+  margin: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
