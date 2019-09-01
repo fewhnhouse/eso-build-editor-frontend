@@ -8,8 +8,8 @@ import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
 
 const GET_SETS_BY_ID = gql`
-  query Sets($id: ID!) {
-    sets(where: { id: $id }) {
+  query Set($id: ID!) {
+    set(id: $id) {
       id
       setId
       name
@@ -38,8 +38,8 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { data } = useQuery(GET_SETS_BY_ID, {
     variables: { id: id }
   })
-  console.log(data)
-  const set: ISet = data.sets ? data.sets[0] : ''
+
+  const set: ISet = data.set ? data.set : ''
 
   return set ? (
     <Flex

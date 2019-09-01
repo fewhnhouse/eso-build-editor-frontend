@@ -7,8 +7,8 @@ import { Card, Divider, Typography, Spin } from 'antd'
 import { Description, Image } from '../overview/Overview'
 
 const GET_MUNDUS_BY_ID = gql`
-  query Munduses($id: ID!) {
-    mundusStones(where: { id: $id }) {
+  query Mundus($id: ID!) {
+    mundusStone(id: $id) {
       name
       effect
       value
@@ -26,7 +26,7 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
   const { data } = useQuery(GET_MUNDUS_BY_ID, {
     variables: { id: id }
   })
-  const mundusStone = data.mundusStones ? data.mundusStones[0] : ''
+  const mundusStone = data.mundusStone ? data.mundusStone : ''
   const parsedMundusValue = parseInt(mundusStone ? mundusStone.value : '')
 
   return mundusStone ? (

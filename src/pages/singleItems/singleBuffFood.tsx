@@ -12,8 +12,8 @@ import {
 } from '../build/consumables/BuffMenu'
 
 const GET_BUFF_BY_ID = gql`
-  query Buffs($id: ID!) {
-    buffs(where: { id: $id }) {
+  query Buff($id: ID!) {
+    buff(id: $id) {
       name
       icon
       buffDescription
@@ -28,7 +28,7 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
   const { data } = useQuery(GET_BUFF_BY_ID, {
     variables: { id: id }
   })
-  const buff = data.buffs ? data.buffs[0] : ''
+  const buff = data.buff ? data.buff : ''
 
   return buff ? (
     <Flex
