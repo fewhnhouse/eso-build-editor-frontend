@@ -6,6 +6,10 @@ import Verify from './Verify'
 import { Spin, Result, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import SingleBuffFood from '../pages/singleItems/SingleBuffFood'
+import SingleMundus from '../pages/singleItems/SingleMundus'
+import SingleSet from '../pages/singleItems/SingleSet'
+import SingleSkillLine from '../pages/singleItems/SingleSkillLine'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
@@ -61,6 +65,14 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         <Route exact path='/raids' render={() => <div>Test</div>} />
         <Route exact path='/overview' component={Overview} />
         <Route exact path='/builds/:id' component={BuildReview} />
+        <Route exact path='/overview/mundus/:id' component={SingleMundus} />
+        <Route
+          exact
+          path='/overview/skillLines/:id'
+          component={SingleSkillLine}
+        />
+        <Route exact path='/overview/buffs/:id' component={SingleBuffFood} />
+        <Route exact path='/overview/sets/:id' component={SingleSet} />
         <Route
           loggedIn={isLoggedIn}
           exact
