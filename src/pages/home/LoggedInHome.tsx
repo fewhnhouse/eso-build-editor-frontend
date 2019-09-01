@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Typography, Divider, Card } from 'antd'
+import { Typography, Divider, Card, Tabs } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
 import Scrollbars from 'react-custom-scrollbars'
+import { useMediaQuery } from 'react-responsive'
 
+const { TabPane } = Tabs
 const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
@@ -41,36 +43,77 @@ const ImageContainer = styled.div`
 export default () => {
   const now = new Date()
   now.setDate(now.getDate() - 1)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   return (
     <OuterWrapper direction='row' justify='space-between' align='center' fluid>
-      <Flex direction='column' style={{width: "100%", height: "100%"}}>
-        <ImageContainer />
-        <Scrollbars autoHide>
-          <Wrapper direction={'row'} justify='center' align='center' wrap>
-            <UserHomeCard isBuild />
-            <UserHomeCard isBuild={false} />
-          </Wrapper>
-        </Scrollbars>
-      </Flex>
-      <RightSide direction={'column'} justify={'flex-start'} align={'flex-end'}>
-        <RightWrapper>
-          <div style={{ height: '40%', padding: 5 }}>
-            <Title level={4} style={{ paddingTop: '20px' }}>
-              DISCOVERY
-            </Title>
-            <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
-              <Card title='Build Editor 1.0'>
-                Welcome to Build Editor Version 1.0! This version includes a
-                build and raid editor to create fully fledged ESO builds and
-                raids and to view and share them with your community.
-              </Card>
-            </div>
+      <Flex direction='column' style={{ width: '100%', height: '100%' }}>
+        {!isMobile && <ImageContainer />}
+        {isMobile ? (
+          <div style={{flex: 1, height: "100%", width: "100%"}}>
+            <Tabs style={{height: "100%"}}>
+              <TabPane
+                style={{
+                  display: 'flex',
+                  height: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                }}
+                tab='Builds'
+                key='1'
+              >
+                <div style={{ flex: 1 }}>
+                  <UserHomeCard isBuild />
+                </div>
+              </TabPane>
+              <TabPane
+                style={{
+                  display: 'flex',
+                  height: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                }}
+                tab='Raids'
+                key='2'
+              >
+                <UserHomeCard isBuild={false} />
+              </TabPane>
+            </Tabs>
           </div>
-          <Divider />
-          <div style={{ height: '60%', padding: 5 }}>
-            <Title level={4}>ACTIVITY</Title>
-            {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
+        ) : (
+          <Scrollbars autoHide>
+            <Wrapper direction={'row'} justify='center' align='center' wrap>
+              <UserHomeCard isBuild />
+              <UserHomeCard isBuild={false} />
+            </Wrapper>
+          </Scrollbars>
+        )}
+      </Flex>
+      {!isMobile && (
+        <RightSide
+          direction={'column'}
+          justify={'flex-start'}
+          align={'flex-end'}
+        >
+          <RightWrapper>
+            <div style={{ height: '40%', padding: 5 }}>
+              <Title level={4} style={{ paddingTop: '20px' }}>
+                DISCOVERY
+              </Title>
+              <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
+                <Card title='Build Editor 1.0'>
+                  Welcome to Build Editor Version 1.0! This version includes a
+                  build and raid editor to create fully fledged ESO builds and
+                  raids and to view and share them with your community.
+                </Card>
+              </div>
+            </div>
+            <Divider />
+            <div style={{ height: '60%', padding: 5 }}>
+              <Title level={4}>ACTIVITY</Title>
+              {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
             {buildQuery.data &&
               buildQuery.data.builds &&
               raidQuery.data &&
@@ -84,9 +127,10 @@ export default () => {
                   ))}
                 </div>
                   )*/}
-          </div>
-        </RightWrapper>
-      </RightSide>
+            </div>
+          </RightWrapper>
+        </RightSide>
+      )}
     </OuterWrapper>
   )
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Redirect } from 'react-router'
 import { applicationAreas } from '../build/RaceAndClass/RaceClass'
 import Scrollbars from 'react-custom-scrollbars'
+import { useMediaQuery } from 'react-responsive'
 
 const { Text } = Typography
 
@@ -37,8 +38,11 @@ const StyledCard = styled(Card)`
 
 const StyledList = styled(List)`
   background: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
+  border-bottom-right-radius: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
+
 `
 
 const StyledImg = styled.img`
@@ -69,13 +73,17 @@ const BuildCard = ({ data,  loading }: IUserDataProps) => {
   const handleClick = (path: string) => () => {
     setRedirect(path)
   }
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
 
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   }
+
+
   return (
     <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
-      <StyledList
+      <StyledList isMobile={isMobile}
         loading={loading}
         dataSource={data}
         renderItem={(item, index: number) => {
