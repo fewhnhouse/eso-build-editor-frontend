@@ -33,11 +33,11 @@ export default ({
   morphedActives,
   morphs,
   passives,
-  interactive,
+  interactive
 }: ISkillDisplay) => {
   const [trail, set]: any = useTrail(baseActives.length, () => ({
     opacity: 0,
-    transform: 'translate(0px, -40px)',
+    transform: 'translate(0px, -40px)'
   }))
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export default ({
     <AbilityContainer>
       <Divider>Ultimate</Divider>
       {baseUltimate &&
+        baseUltimate.skillId !== 0 &&
         (interactive ? (
           <SkillCard
             ultimate
@@ -129,7 +130,7 @@ export default ({
         justifyContent: 'center',
         flex: 2,
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'center'
       }}
     >
       Select a Skill Line to get started.
