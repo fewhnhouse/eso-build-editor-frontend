@@ -20,7 +20,6 @@ import UpdatePassword from './UpdatePassword'
 import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
 import { RESEND_VERIFICATION } from '../../components/AppContainer'
-import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 
 const { Content } = Layout
@@ -33,7 +32,7 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 64px);
+  height: 100%;
   color: ${props => props.theme.mainBg};
 `
 
@@ -153,7 +152,6 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const [deleteAccount, deleteAccountResult] = useMutation<any, any>(
     DELETE_ACCOUNT
   )
-  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   useEffect(() => {
     if (
@@ -275,7 +273,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
             direction='column'
             justify='space-around'
             align='center'
-            style={{ width: '100%', margin: isMobile ? 0 : 20 }}
+            style={{ width: '100%' }}
           >
             <UpdateEmail
               value={email}

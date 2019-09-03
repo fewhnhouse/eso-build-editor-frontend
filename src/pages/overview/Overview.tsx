@@ -57,7 +57,7 @@ export default () => {
       <Flex
         style={{
           width: '100%',
-          height: 'calc(100vh - 64px)',
+          height: '100%',
         }}
         direction='column'
         align='center'

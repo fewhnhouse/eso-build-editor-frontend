@@ -31,7 +31,7 @@ const Container = styled(Content)`
   overflow-y: auto;
   overflow-x: hidden;
   height: ${(props: { isMobile: boolean }) =>
-    `calc(100vh - ${props.isMobile ? '204px' : '144px'})`};
+    `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
   color: rgb(155, 155, 155);
 `
 interface IReviewProps extends ThemeProps<ITheme> {

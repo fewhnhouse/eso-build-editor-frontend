@@ -12,7 +12,7 @@ const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
   width: 100vw;
-  height: calc(100vh - 64px);
+  height: 100%;
 `
 const Wrapper = styled(Flex)`
   flex-wrap: wrap;
@@ -102,7 +102,7 @@ export default () => {
               <Title level={4} style={{ paddingTop: '20px' }}>
                 DISCOVERY
               </Title>
-              <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
+              <div style={{ overflowY: 'auto', height: '100%' }}>
                 <Card title='Build Editor 1.0'>
                   Welcome to Build Editor Version 1.0! This version includes a
                   build and raid editor to create fully fledged ESO builds and

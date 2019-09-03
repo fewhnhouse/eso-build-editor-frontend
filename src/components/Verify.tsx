@@ -20,7 +20,7 @@ const VERIFY = gql`
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 68px);
+  height: 100%;
   background: #ededed;
 `
 export default ({ match }: RouteComponentProps<{ token: string }>) => {

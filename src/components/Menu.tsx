@@ -31,7 +31,7 @@ const StyledHeader = styled(Header)`
 
 const MobileHeader = styled.div`
   height: ${(props: IStyledHeaderProps) =>
-    props.expanded ? 'calc(100vh - 64px)' : '0px'};
+    props.expanded ? 'calc(100% - 64px)' : '0px'};
   width: 100vw;
   position: fixed;
   transition: height 1s ease-in-out;

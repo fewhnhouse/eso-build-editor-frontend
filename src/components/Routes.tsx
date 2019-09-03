@@ -94,7 +94,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
 const PageNotFoundContainer = styled.div`
   background: #ededed;
   width: 100vw;
-  height: calc(100vh - 64px);
+  height: 100%;
 `
 
 const PageNotFound = () => (

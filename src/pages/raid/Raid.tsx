@@ -23,7 +23,7 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 178px);
+  height: 100%;
   color: ${props => props.theme.mainBg};
 `
 

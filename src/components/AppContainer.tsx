@@ -17,6 +17,7 @@ import gql from 'graphql-tag'
 import { LoginContext } from '../App'
 import Flex from './Flex'
 import Menu from './Menu'
+import Div100vh from 'react-div-100vh'
 
 const LoadingContainer = styled.div`
   text-align: center;
@@ -25,7 +26,6 @@ const LoadingContainer = styled.div`
   padding: 30px 50px;
   margin: 20px 0;
 `
-
 
 export const ME = gql`
   query {
@@ -125,10 +125,12 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
   }
 
   return (
-    <Layout>
-      <Menu me={data && data.me} />
-      <Routes isLoggedIn={loggedIn} />
-    </Layout>
+    <Div100vh>
+      <Layout style={{ height: '100vh' }}>
+        <Menu me={data && data.me} />
+        <Routes isLoggedIn={loggedIn} />
+      </Layout>
+    </Div100vh>
   )
 }
 
