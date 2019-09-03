@@ -8,10 +8,11 @@ import leaf from '../../../assets/icons/leaf-ico.png'
 import myt from '../../../assets/icons/myt-ico.png'
 import shield from '../../../assets/icons/shield-ico.png'
 import helmet from '../../../assets/icons/helmet-ico.png'
-
+import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'
+import { Redirect } from 'react-router'
 const { SubMenu } = Menu
 
 const EsoIcon = styled.img`
@@ -25,49 +26,49 @@ const classes = [
     items: [
       { title: 'Assassination', id: 10 },
       { title: 'Shadow', id: 11 },
-      { title: 'Siphoning', id: 12 },
-    ],
+      { title: 'Siphoning', id: 12 }
+    ]
   },
   {
     esoClass: 'Sorcerer',
     items: [
       { title: 'Dark Magic', id: 7 },
       { title: 'Daedric Summoning', id: 8 },
-      { title: 'Storm Calling', id: 9 },
-    ],
+      { title: 'Storm Calling', id: 9 }
+    ]
   },
   {
     esoClass: 'Necromancer',
     items: [
       { title: 'Grave Lord', id: 54 },
       { title: 'Bone Tyrant', id: 55 },
-      { title: 'Living Death', id: 56 },
-    ],
+      { title: 'Living Death', id: 56 }
+    ]
   },
   {
     esoClass: 'Templar',
     items: [
       { title: 'Aedric Spear', id: 4 },
       { title: 'Dawn´s Wrath', id: 5 },
-      { title: 'Restoring Light', id: 6 },
-    ],
+      { title: 'Restoring Light', id: 6 }
+    ]
   },
   {
     esoClass: 'Dragonknight',
     items: [
       { title: 'Ardent Flame', id: 1 },
       { title: 'Draconic Power', id: 2 },
-      { title: 'Earthen Heart', id: 3 },
-    ],
+      { title: 'Earthen Heart', id: 3 }
+    ]
   },
   {
     esoClass: 'Warden',
     items: [
       { title: 'Animal Companions', id: 13 },
       { title: 'Winter´s Embrace', id: 15 },
-      { title: 'Green Balance', id: 14 },
-    ],
-  },
+      { title: 'Green Balance', id: 14 }
+    ]
+  }
 ]
 
 const StyledIconBtn = styled(Button)`
@@ -78,7 +79,8 @@ const StyledIconBtn = styled(Button)`
 
 const MenuContainer = styled.div`
   width: ${(props: { collapsed: boolean }) => (props.collapsed ? '60px' : '')};
-  min-width: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : "220px")};
+  min-width: ${(props: { collapsed: boolean }) =>
+    props.collapsed ? '' : '220px'};
   flex: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : 1)};
   border: 1px solid rgb(217, 217, 217);
   background: white;
@@ -99,15 +101,22 @@ export default ({
   context,
   collapsable,
   singleClass,
-  style,
+  style
 }: ISkillMenuProps) => {
   const [collapsed, setCollapsed] = useState(false)
   const [state, dispatch] = useContext(context)
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const handleClick = (e: ClickParam) => {
-    dispatch!({
-      type: 'SET_SKILLLINE',
-      payload: { skillLine: parseInt(e.key, 10) },
-    })
+    if (isMobile) {
+      setRedirect(e.key || '')
+    } else {
+      dispatch!({
+        type: 'SET_SKILLLINE',
+        payload: { skillLine: parseInt(e.key, 10) }
+      })
+    }
   }
 
   const handleIconClick = (collapse: boolean) => () => {
@@ -125,15 +134,15 @@ export default ({
           icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
             myClass ? myClass.esoClass : ''
           }.png`,
-          items: singleClass && myClass ? myClass.items : [],
-        },
+          items: singleClass && myClass ? myClass.items : []
+        }
       ]
     : classes.map(esoClass => ({
         title: esoClass.esoClass,
         icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
           esoClass ? esoClass.esoClass : ''
         }.png`,
-        items: esoClass.items,
+        items: esoClass.items
       }))
   const menuStructure = [
     ...shownClasses,
@@ -146,8 +155,8 @@ export default ({
         { title: 'Dual Wield', id: 18 },
         { title: 'Bow', id: 19 },
         { title: 'Destruction Staff', id: 20 },
-        { title: 'Restoration Staff', id: 21 },
-      ],
+        { title: 'Restoration Staff', id: 21 }
+      ]
     },
     {
       title: 'Armor',
@@ -155,8 +164,8 @@ export default ({
       items: [
         { title: 'Light Armor', id: 22 },
         { title: 'Medium Armor', id: 23 },
-        { title: 'Heavy Armor', id: 24 },
-      ],
+        { title: 'Heavy Armor', id: 24 }
+      ]
     },
     {
       title: 'World',
@@ -165,8 +174,8 @@ export default ({
         { title: 'Soul Magic', id: 25 },
         { title: 'Legerdemain', id: 28 },
         { title: 'Vampirism', id: 26 },
-        { title: 'Werewolf', id: 27 },
-      ],
+        { title: 'Werewolf', id: 27 }
+      ]
     },
     {
       title: 'Guild',
@@ -177,13 +186,13 @@ export default ({
         { title: 'Psijic Order', id: 34 },
         { title: 'Undaunted', id: 31 },
         { title: 'Thieves Guild', id: 32 },
-        { title: 'Dark Brotherhood', id: 33 },
-      ],
+        { title: 'Dark Brotherhood', id: 33 }
+      ]
     },
     {
       title: 'Alliance War',
       icon: castle,
-      items: [{ title: 'Assault', id: 35 }, { title: 'Support', id: 36 }],
+      items: [{ title: 'Assault', id: 35 }, { title: 'Support', id: 36 }]
     },
     {
       title: 'Racial',
@@ -198,8 +207,8 @@ export default ({
         { title: 'Altmer', id: 50 },
         { title: 'Bosmer', id: 51 },
         { title: 'Khajiit', id: 52 },
-        { title: 'Imperial', id: 53 },
-      ],
+        { title: 'Imperial', id: 53 }
+      ]
     },
     {
       title: 'Craft',
@@ -211,9 +220,9 @@ export default ({
         { title: 'Enchanting', id: 1 },
         { title: 'Jewelry Crafting', id: 1 },
         { title: 'Provisioning', id: 1 },
-        { title: 'Woodworking', id: 1 },
-      ],
-    },
+        { title: 'Woodworking', id: 1 }
+      ]
+    }
   ]
 
   return (
@@ -221,6 +230,7 @@ export default ({
       style={style}
       collapsed={collapsable !== undefined && collapsed}
     >
+      {redirect && <Redirect to={`/overview/skillLines/${redirect}`} push />}
       {collapsable && (
         <StyledIconBtn
           type='primary'
@@ -239,7 +249,7 @@ export default ({
             textAlign: 'left',
             opacity: collapsed ? 0 : 1,
             pointerEvents: collapsed ? 'none' : 'all',
-            transition: 'opacity 0.2s ease-in-out',
+            transition: 'opacity 0.2s ease-in-out'
           }}
           defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
           defaultOpenKeys={[]}
