@@ -19,7 +19,7 @@ const Container = styled.div`
 const Description = styled.div`
   font-size: ${(props: { big?: boolean }) => (props.big ? '16px' : '14px')};
   line-height: 1.5;
-  margin-top: 5px;
+  margin-top: ${props => props.theme.margins.mini};
 `
 
 const Title = styled.div`
@@ -77,7 +77,7 @@ const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded,
+  traitsNeeded
 }: ISetTagProps) => {
   if (traitsNeeded) {
     return null
@@ -135,8 +135,9 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
             <span
               key={count}
               style={{
-                textAlign: "left", width: "100%",
-                fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
+                textAlign: 'left',
+                width: '100%',
+                fontWeight: count <= setSelectionCount ? 'bold' : 'normal'
               }}
             >
               <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
@@ -156,7 +157,7 @@ interface IGearCardContent {
 
 export const GearCardContent = ({
   gear,
-  setSelectionCount,
+  setSelectionCount
 }: IGearCardContent) => {
   const gearTypeTag = (gearType: string) => {
     switch (gearType) {
@@ -200,7 +201,7 @@ export const GearCardContent = ({
               <span
                 key={count}
                 style={{
-                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
+                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal'
                 }}
               >
                 {count} pcs:{' '}
@@ -219,7 +220,7 @@ export const GearCardContent = ({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px',
+            margin: '5px 0px'
           }}
         >
           <Flex direction='row' justify='flex-start' align='center'>
@@ -244,7 +245,7 @@ export const GearCardContent = ({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px',
+            margin: '5px 0px'
           }}
         >
           <Flex direction='row' justify='flex-start' align='center'>

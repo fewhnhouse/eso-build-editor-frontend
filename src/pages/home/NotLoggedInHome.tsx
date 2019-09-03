@@ -18,11 +18,11 @@ const CardContainer = styled(Flex)`
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
-  padding: 20px;
-  margin: 20px;
+  padding: ${props => props.theme.margins.medium};
+  margin: ${props => props.theme.margins.medium};
   height: 300px;
   background-color: white;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
 `
 
 const OverviewContainer = styled(Flex)`
@@ -55,6 +55,11 @@ const Content = styled.div`
   width: 100%;
 `
 
+const StyledIcon = styled(Icon)`
+  margin: ${props => props.theme.margins.medium};
+  font-size: 30px;
+`
+
 export default () => {
   return (
     <>
@@ -69,8 +74,12 @@ export default () => {
         </Text>
         <Divider />
 
-        <Wrapper direction='row' align='flex-start' justify="center">
-          <CardContainer direction='column' justify='space-between' align="center">
+        <Wrapper direction='row' align='flex-start' justify='center'>
+          <CardContainer
+            direction='column'
+            justify='space-between'
+            align='center'
+          >
             <Title level={3}>Builds</Title>
             <Text>Create, share, save and edit builds</Text>
             <Link style={{ width: '100%' }} to='/builds'>
@@ -79,7 +88,11 @@ export default () => {
               </Button>
             </Link>
           </CardContainer>
-          <CardContainer direction='column' justify='space-between' align="center">
+          <CardContainer
+            direction='column'
+            justify='space-between'
+            align='center'
+          >
             <Title level={3}>Raids</Title>
             <Text>Create, share, save and edit raids</Text>
             <Link style={{ width: '100%' }} to='/raids'>
@@ -106,19 +119,19 @@ export default () => {
 
           <Flex direction='row' style={{ width: '100%', flexWrap: 'wrap' }}>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <StyledIcon type='user' />
               <Title level={4}>Sets</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <StyledIcon type='user' />
               <Title level={4}>Skills</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <StyledIcon type='user' />
               <Title level={4}>Consumables</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <StyledIcon type='user' />
               <Title level={4}>Mundus Stones</Title>
             </OverviewTab>
           </Flex>

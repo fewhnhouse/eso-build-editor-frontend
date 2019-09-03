@@ -28,24 +28,17 @@ const ResourceCard = styled.div`
 `
 
 const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
+  width: ${props => props.theme.myAvatar.width};
+  height: ${props => props.theme.myAvatar.height};
   margin-right: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  padding: 5px;
-  background: rgba(0, 0, 0, 0.05);
-`
-const ClassImg = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 4px;
+  border: ${props => props.theme.myAvatar.border};
+  border-radius: ${props => props.theme.myAvatar.borderRadius};
 `
 
-const StyledTitle = styled(Title)`
-  margin-bottom: 5px !important;
+const StyledTitle = styled(Typography.Title)`
+  margin: ${props => props.theme.margins.mini};
 `
+
 const Wrapper = styled(Flex)`
   height: calc(100% - 60px);
 `
@@ -118,26 +111,26 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     ultimateOne,
     ultimateTwo,
     description,
-    applicationArea,
+    applicationArea
   } = loadedData
   const selectedSetup = [
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || [],
+      data: bigPieceSelection || []
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || [],
+      data: smallPieceSelection || []
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || [],
+      data: frontbarSelection || []
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
@@ -158,7 +151,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const area = applicationAreas.find(area => area.key === applicationArea)
 
   const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
-    variables: { id },
+    variables: { id }
   })
 
   if (data && data.buildUpdateSubscription) {
@@ -220,21 +213,15 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             <MiscView direction='row' justify='space-around'>
               <ResourceCard>
                 <Typography.Text strong>Stamina</Typography.Text>
-                <Typography.Title style={{ margin: 5 }} level={4}>
-                  {stamina}
-                </Typography.Title>
+                <StyledTitle level={4}>{stamina}</StyledTitle>
               </ResourceCard>
               <ResourceCard>
                 <Typography.Text strong>Health</Typography.Text>
-                <Typography.Title style={{ margin: 5 }} level={4}>
-                  {health}
-                </Typography.Title>
+                <StyledTitle level={4}>{health}</StyledTitle>
               </ResourceCard>
               <ResourceCard>
                 <Typography.Text strong>Magicka</Typography.Text>
-                <Typography.Title style={{ margin: 5 }} level={4}>
-                  {magicka}
-                </Typography.Title>
+                <StyledTitle level={4}>{magicka}</StyledTitle>
               </ResourceCard>
             </MiscView>
             <Divider>Race</Divider>
@@ -257,7 +244,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               <>
                 <Divider>Mundus Stone</Divider>
                 <MiscView direction='row' justify='flex-start' align='center'>
-                  <ClassImg
+                  <MyAvatar
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
                   />
                   <Text strong>{mundusStone.name}</Text>

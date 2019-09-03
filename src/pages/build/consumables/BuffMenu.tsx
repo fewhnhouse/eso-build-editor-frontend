@@ -53,28 +53,30 @@ const StyledCard = styled(Card)`
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
 export const StyledTag = styled(Tag)`
   min-width: 100px;
-  margin: 5px;
+  margin: ${props => props.theme.margins.mini};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `
 const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  border: 2px solid rgba(0, 0, 0, 0.45);
+  width: ${props => props.theme.myAvatar.width};
+  height: ${props => props.theme.myAvatar.height};
+  border-radius: ${props => props.theme.myAvatar.borderRadius};
+  border: ${props => props.theme.myAvatar.border};
 `
 
 const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
+  color: ${(descProps: { newEffect?: boolean }) =>
+    descProps.newEffect
+      ? props => props.theme.description.newEffect
+      : props => props.theme.description.notNewEffect};
   text-align: left;
 `
 

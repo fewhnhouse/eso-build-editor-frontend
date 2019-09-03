@@ -11,12 +11,22 @@ const GeneralContainer = styled.div`
   margin: auto;
 `
 
+const StyledFlex = styled(Flex)`
+  width: ${props => props.theme.widths.medium};
+  margin: ${props => props.theme.margins.small};
+`
+
+const StyledWideFlex = styled(Flex)`
+  width: ${props => props.theme.widths.medium};
+  flex: 1;
+`
+
 const marks = {
   1: '1',
   6: '6',
   12: '12',
   18: '18',
-  24: '24',
+  24: '24'
 }
 
 interface IRaidGeneralProps {
@@ -26,32 +36,32 @@ interface IRaidGeneralProps {
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
-    key: 'cyrodiil_raid',
+    key: 'cyrodiil_raid'
   },
   {
     label: 'Cyrodiil - Smallscale',
-    key: 'cyrodiil_smallscale',
+    key: 'cyrodiil_smallscale'
   },
   {
     label: 'Battlegrounds',
-    key: 'battlegrounds',
+    key: 'battlegrounds'
   },
   {
     label: 'PvE - Dungeons',
-    key: 'pve_dungeons',
+    key: 'pve_dungeons'
   },
   {
     label: 'PvE - Arena',
-    key: 'pve_arena',
+    key: 'pve_arena'
   },
   {
     label: 'PvE - Open World',
-    key: 'pve_openworld',
+    key: 'pve_openworld'
   },
   {
     label: 'PvE - Raids',
-    key: 'pve_raid',
-  },
+    key: 'pve_raid'
+  }
 ]
 const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const [state, dispatch] = useContext(RaidContext)
@@ -70,21 +80,21 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
       type: 'SET_RAID_DESCRIPTION',
-      payload: { description: e.target.value },
+      payload: { description: e.target.value }
     })
   }
 
   const handleApplicationAreaChange = (value: string) => {
     dispatch!({
       type: 'SET_RAID_APPLICATION_AREA',
-      payload: { applicationArea: value },
+      payload: { applicationArea: value }
     })
   }
 
   const handleGroupSizeChange = (value: SliderValue) => {
     dispatch!({
       type: 'SET_GROUP_SIZE',
-      payload: { groupSize: value },
+      payload: { groupSize: value }
     })
   }
 
@@ -93,8 +103,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
       <Divider>General Information</Divider>
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -107,9 +116,8 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
               onChange={handleRaidNameChange}
               placeholder='Type name...'
             />
-          </Flex>
-          <Flex
-            style={{ flex: 1, width: 400 }}
+          </StyledFlex>
+          <StyledWideFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -123,9 +131,8 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
               onChange={handleDescriptionChange}
               placeholder='Type description...'
             />
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledWideFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -153,9 +160,8 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
                 PvE - Open World
               </Select.Option>
             </Select>
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -171,7 +177,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
               onChange={handleGroupSizeChange}
               defaultValue={groupSize}
             />
-          </Flex>
+          </StyledFlex>
         </Flex>
       </GeneralContainer>
       {/* TODO: Prospone to V2 <Divider>Access Rights</Divider>

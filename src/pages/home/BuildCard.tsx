@@ -31,7 +31,7 @@ const StyledCard = styled(Card)`
   border-color: rgb(232, 232, 232);
   background: 'white';
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
   width: 90%;
   max-width: 400px;
 `
@@ -42,7 +42,6 @@ const StyledList = styled(List)`
     props.isMobile ? '0px' : '10px'};
   border-bottom-right-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
-
 `
 
 const StyledImg = styled.img`
@@ -68,22 +67,21 @@ interface IUserDataProps {
   loading: boolean
 }
 
-const BuildCard = ({ data,  loading }: IUserDataProps) => {
+const BuildCard = ({ data, loading }: IUserDataProps) => {
   const [path, setRedirect] = useState('')
   const handleClick = (path: string) => () => {
     setRedirect(path)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   }
 
-
   return (
     <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
-      <StyledList isMobile={isMobile}
+      <StyledList
+        isMobile={isMobile}
         loading={loading}
         dataSource={data}
         renderItem={(item, index: number) => {

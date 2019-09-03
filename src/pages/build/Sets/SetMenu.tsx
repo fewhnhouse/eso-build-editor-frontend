@@ -31,12 +31,13 @@ const ListContainer = styled.div`
 const StyledListItem = styled(Item)`
   cursor: pointer;
   display: flex;
-  margin: 5px;
+  margin: ${props => props.theme.margins.mini};
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px 5px;
-  border-radius: 4px;
-  padding: 10px 5px;
+  margin: 0px ${props => props.theme.margins.mini};
+  border-radius: ${props => props.theme.borderRadius};
+  padding: ${props => props.theme.margins.small};
+  ${props => props.theme.margins.mini};
   &:hover > div {
     font-weight: 500;
   }
@@ -53,7 +54,8 @@ const StyledTag = styled(Tag)`
 `
 
 const StyledIconBtn = styled(Button)`
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
+  margin-top: ${props => props.theme.margins.small};
   height: 40px;
   width: 40px;
 `
@@ -191,7 +193,6 @@ export default ({
         <StyledIconBtn
           type='primary'
           ghost
-          style={{ marginTop: 10 }}
           onClick={handleIconClick(false)}
           icon='double-right'
         />

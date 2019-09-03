@@ -25,13 +25,13 @@ const StyledCard = styled(Card)`
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
 const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+  width: ${props => props.theme.myAvatar.width};
+  height: ${props => props.theme.myAvatar.height};
+  border-radius: ${props => props.theme.myAvatar.borderRadius};
 `
 
 interface IMundusData {

@@ -1,6 +1,5 @@
 import React from 'react'
-import styled, { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from './globalStyles'
+import styled from 'styled-components'
 import { IBuildState } from '../pages/build/BuildStateContext'
 import { IRole, IRaidState } from '../pages/raid/RaidStateContext'
 import BuildReviewDetails from '../pages/build/Review/BuildReviewDetails'
@@ -19,7 +18,7 @@ const { Content, Footer } = Layout
 
 const ActionButton = styled(Button)`
   width: 100px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
 const Container = styled(Content)`
@@ -34,7 +33,7 @@ const Container = styled(Content)`
     `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
   color: rgb(155, 155, 155);
 `
-interface IReviewProps extends ThemeProps<ITheme> {
+interface IReviewProps {
   local?: boolean
   data: any
   me: {
@@ -61,7 +60,7 @@ const Review = ({
   onDelete,
   isBuild,
   saved,
-  state,
+  state
 }: IReviewProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -83,7 +82,7 @@ const Review = ({
         description,
         applicationArea,
         roles,
-        published,
+        published
       } = data
       const area = applicationAreas.find(area => area.key === applicationArea)
 
@@ -105,7 +104,7 @@ const Review = ({
               flexDirection: isMobile ? 'column' : 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)'
             }}
           >
             <Scrollbars autoHide>
@@ -126,7 +125,7 @@ const Review = ({
                       width: 180,
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      textOverflow: 'ellipsis'
                     }}
                     level={3}
                   >
@@ -137,7 +136,7 @@ const Review = ({
                       whiteSpace: 'nowrap',
                       width: 180,
                       overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      textOverflow: 'ellipsis'
                     }}
                   >
                     {description}
@@ -247,4 +246,4 @@ const Review = ({
   }
 }
 
-export default withTheme(Review)
+export default Review

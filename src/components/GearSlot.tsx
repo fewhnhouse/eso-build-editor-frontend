@@ -10,7 +10,7 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
-  SetType,
+  SetType
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from './GearCard'
 import { specialWeaponSets } from '../pages/build/Sets/SetBar'
@@ -196,7 +196,7 @@ export default ({
   group,
   size = 'normal',
   extended,
-  setSelectionCount,
+  setSelectionCount
 }: IGearSlotProps) => {
   const [, dispatch] = useContext(BuildContext)
 
@@ -205,11 +205,11 @@ export default ({
       type: slot.slot,
       set: slot.selectedSet,
       icon: slot.icon,
-      weaponType: slot.weaponType,
+      weaponType: slot.weaponType
     },
     collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
+      isDragging: !!monitor.isDragging()
+    })
   })
 
   const [{ canDrop }, drop] = useDrop({
@@ -217,7 +217,7 @@ export default ({
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
         ? [Slot.eitherHand]
-        : []),
+        : [])
     ],
     drop: (item: any, monitor) => {
       dispatch!({
@@ -227,13 +227,13 @@ export default ({
           icon: item.icon,
           slot: slot.slot,
           weaponType: item.weaponType,
-          group,
-        },
+          group
+        }
       })
     },
     collect: monitor => ({
-      canDrop: !!monitor.canDrop(),
-    }),
+      canDrop: !!monitor.canDrop()
+    })
   })
 
   const handleSlotClick = () => {
@@ -244,8 +244,8 @@ export default ({
         icon: slot.icon,
         slot: slot.slot,
         weaponType: slot.weaponType,
-        group,
-      },
+        group
+      }
     })
   }
   return extended ? (
@@ -358,7 +358,7 @@ const DisplayCard = styled.div`
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
 const InnerDisplay = styled.div`
@@ -443,7 +443,7 @@ const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
-  size,
+  size
 }: {
   slot: ISetSelection
   setSelectionCount: number

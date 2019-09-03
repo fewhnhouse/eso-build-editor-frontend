@@ -14,9 +14,9 @@ import { Link } from 'react-router-dom'
 const { TabPane } = Tabs
 
 const MyAvatar = styled.img`
-  width: 28px;
-  height: 28px;
-  margin-right: 5px;
+  width: ${props => props.theme.smallAvatar.width};
+  height: ${props => props.theme.smallAvatar.height};
+  margin-right: ${props => props.theme.margins.mini};
 `
 
 const ScrollContainer = styled.div`
@@ -50,9 +50,9 @@ const StyledCard = styled(Card)`
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
   min-height: 80px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 interface IBuildCardProps {
   item: IBuild
@@ -66,7 +66,7 @@ export default ({
   style,
   draggable = true,
   role,
-  expand,
+  expand
 }: IBuildCardProps) => {
   return draggable ? (
     <WithDnD expand={expand} item={item} style={style} />
@@ -81,12 +81,12 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
-      build: item,
+      build: item
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop(),
-    }),
+      didDrop: !!monitor.didDrop()
+    })
   })
   return (
     <div style={style} ref={drag}>
@@ -98,7 +98,7 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
 const BuildCard = ({
   item,
   role,
-  expand,
+  expand
 }: {
   item: IBuild
   role?: IRole
@@ -108,7 +108,7 @@ const BuildCard = ({
   const handleDeleteClick = () => {
     dispatch!({
       type: 'REMOVE_BUILD',
-      payload: { buildId: item.id, name: role ? role.name : '' },
+      payload: { buildId: item.id, name: role ? role.name : '' }
     })
   }
   const {
@@ -116,7 +116,7 @@ const BuildCard = ({
     backbarSelection,
     smallPieceSelection,
     bigPieceSelection,
-    jewelrySelection,
+    jewelrySelection
   } = item
   const concat = frontbarSelection.concat(
     backbarSelection,
@@ -141,10 +141,10 @@ const BuildCard = ({
             level={3}
             style={{
               maxWidth: 350,
-              width: "80%",
+              width: '80%',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
+              whiteSpace: 'nowrap'
             }}
           >
             {item.name}
@@ -186,7 +186,7 @@ const BuildCard = ({
             <Divider style={{ margin: '5px 0px' }} />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <Flex direction="column" style={{ width: '100%' }}>
+                <Flex direction='column' style={{ width: '100%' }}>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
@@ -217,13 +217,13 @@ const BuildCard = ({
                       {
                         id: 'frontbar',
                         label: 'Frontbar',
-                        data: item.frontbarSelection,
+                        data: item.frontbarSelection
                       },
                       {
                         id: 'backbar',
                         label: 'Backbar',
-                        data: item.backbarSelection,
-                      },
+                        data: item.backbarSelection
+                      }
                     ]}
                   />
                 </ScrollContainer>
@@ -238,13 +238,13 @@ const BuildCard = ({
                       {
                         id: 'bigpieces',
                         label: 'Big Pieces',
-                        data: item.bigPieceSelection,
+                        data: item.bigPieceSelection
                       },
                       {
                         id: 'smallpieces',
                         label: 'Small Pieces',
-                        data: item.smallPieceSelection,
-                      },
+                        data: item.smallPieceSelection
+                      }
                     ]}
                   />
                 </ScrollContainer>
@@ -259,8 +259,8 @@ const BuildCard = ({
                       {
                         id: 'jewelry',
                         label: 'Jewelry',
-                        data: item.jewelrySelection,
-                      },
+                        data: item.jewelrySelection
+                      }
                     ]}
                   />
                 </ScrollContainer>

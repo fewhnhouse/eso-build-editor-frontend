@@ -24,6 +24,11 @@ const RoleDropContainer = styled.div`
   border: 1px dashed #d9d9d9;
 `
 
+const StyledCard = styled(Card)`
+  width: calc(100% - 40px);
+  margin: ${props => props.theme.margins.medium};
+`
+
 const StyledButton = styled(Button)`
   margin: 0px 5px;
   width: 100px;
@@ -36,13 +41,13 @@ const RoleDropper = ({ role }: { role: IRole }) => {
     drop: (item: any, monitor) => {
       dispatch!({
         type: 'ADD_BUILD',
-        payload: { name: role.name, build: item.build },
+        payload: { name: role.name, build: item.build }
       })
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver(),
-    }),
+      isOver: !!monitor.isOver()
+    })
   })
 
   return (
@@ -76,14 +81,14 @@ export default () => {
   const handleDeleteClick = (roleName: string) => () => {
     dispatch!({
       type: 'REMOVE_ROLE',
-      payload: { name: roleName },
+      payload: { name: roleName }
     })
   }
 
   const handleSaveClick = (oldRoleName: string) => () => {
     dispatch!({
       type: 'EDIT_ROLE',
-      payload: { oldRoleName, newRoleName: editRole },
+      payload: { oldRoleName, newRoleName: editRole }
     })
     setEdit(false)
   }
@@ -112,8 +117,7 @@ export default () => {
         {roles &&
           roles.length > 0 &&
           roles.map((role, index) => (
-            <Card
-              style={{ width: 'calc(100% - 40px)', margin: 20 }}
+            <StyledCard
               key={'dropper-' + index}
               title={
                 <Flex direction='row' justify='space-between'>
@@ -185,7 +189,7 @@ export default () => {
                 ))}
               </Flex>
               <RoleDropper role={role} />
-            </Card>
+            </StyledCard>
           ))}
         <Divider>
           <Search

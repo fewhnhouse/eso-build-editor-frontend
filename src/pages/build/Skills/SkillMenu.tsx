@@ -72,7 +72,7 @@ const classes = [
 ]
 
 const StyledIconBtn = styled(Button)`
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
   height: 40px;
   width: 40px;
 `

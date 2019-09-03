@@ -3,16 +3,19 @@ import { Card, Divider, Popover } from 'antd'
 import styled from 'styled-components'
 import { BuildContext } from '../pages/build/BuildStateContext'
 import { ISkill } from './SkillSlot'
+import Flex from './Flex'
 
 const StyledCard = styled(Card)`
-  margin: 5px 10px 0 10px;
-  width: 450px;
+  margin: ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small} 0
+    ${props => props.theme.margins.small};
+  width: ${props => props.theme.styledCard.width};
 `
 
 const Image = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+  width: ${props => props.theme.myAvatar.width};
+  height: ${props => props.theme.myAvatar.height};
+  border-radius: ${props => props.theme.myAvatar.borderRadius};
   border: ${(props: { active: boolean }) =>
     props.active ? '2px solid #1890ff' : 'none'};
   filter: ${(props: { active: boolean }) =>
@@ -20,13 +23,13 @@ const Image = styled.img`
 `
 
 const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+  width: ${props => props.theme.myAvatar.width};
+  height: ${props => props.theme.myAvatar.height};
+  border-radius: ${props => props.theme.myAvatar.borderRadius};
 `
 
 const AvatarContainer = styled.div`
-  padding-right: 16px;
+  padding-right: ${props => props.theme.myAvatar.containerPadding};
 `
 
 const RaceContainer = styled.div`
@@ -59,14 +62,18 @@ const Title = styled.div`
 
 const CostSpan = styled.span`
   font-weight: 500;
-  color: ${(props: { type: string }) =>
-    props.type === 'Ultimate'
-      ? '#8e44ad'
-      : props.type === 'Magicka'
-      ? '#2980b9'
-      : props.type === 'Stamina'
-      ? '#27ae60'
-      : '#e74c3c'};
+  color: ${(costProps: { type: string }) =>
+    costProps.type === 'Ultimate'
+      ? props => props.theme.costs.ultimate
+      : costProps.type === 'Magicka'
+      ? props => props.theme.costs.magicka
+      : costProps.type === 'Stamina'
+      ? props => props.theme.costs.stamina
+      : props => props.theme.costs.ultimate};
+`
+
+const StyledFlex = styled(Flex)`
+  max-width: ${props => props.theme.widths.medium};
 `
 
 const MorphLabel = styled.span`
@@ -252,7 +259,7 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   const isStamina = skill.cost.includes('Stamina')
   const isFree = skill.cost.includes('Nothing')
   return (
-    <div style={{ display: 'flex', maxWidth: 400 }}>
+    <StyledFlex>
       <AvatarContainer>
         <MyAvatar
           title={skill.name}
@@ -288,6 +295,6 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
           </>
         )}
       </div>
-    </div>
+    </StyledFlex>
   )
 }

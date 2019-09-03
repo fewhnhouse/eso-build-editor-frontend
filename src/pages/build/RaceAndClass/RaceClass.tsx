@@ -1,13 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import {
-  Divider,
-  Input,
-  Select,
-  Typography,
-  Button,
-  Icon,
-  Card,
-} from 'antd'
+import { Divider, Input, Select, Typography, Button, Icon, Card } from 'antd'
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext } from '../BuildStateContext'
@@ -33,39 +25,54 @@ const ResourceCard = styled(Card)`
   flex-direction: column;
   margin: 0px 10px;
 `
+
+const StyledFlex = styled(Flex)`
+  margin: ${props => props.theme.margins.small};
+  width: 400px;
+`
+
+const StyledWideFlex = styled(Flex)`
+  flex: 1;
+  margin: ${props => props.theme.margins.small};
+`
+
+const StyledTitle = styled(Typography.Title)`
+  margin: ${props => props.theme.margins.mini};
+`
+
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
-    key: 'cyrodiil_raid',
+    key: 'cyrodiil_raid'
   },
   {
     label: 'Cyrodiil - Smallscale',
-    key: 'cyrodiil_smallscale',
+    key: 'cyrodiil_smallscale'
   },
   {
     label: 'Cyrodiil - Solo',
-    key: 'cyrodiil_solo',
+    key: 'cyrodiil_solo'
   },
   {
     label: 'Battlegrounds',
-    key: 'battlegrounds',
+    key: 'battlegrounds'
   },
   {
     label: 'PvE - Dungeons',
-    key: 'pve_dungeons',
+    key: 'pve_dungeons'
   },
   {
     label: 'PvE - Arena',
-    key: 'pve_arena',
+    key: 'pve_arena'
   },
   {
     label: 'PvE - Open World',
-    key: 'pve_openworld',
+    key: 'pve_openworld'
   },
   {
     label: 'PvE - Raids',
-    key: 'pve_raid',
-  },
+    key: 'pve_raid'
+  }
 ]
 
 const TOTAL_ATTRIBUTES = 64
@@ -78,7 +85,7 @@ export default ({ edit }: { edit: boolean }) => {
     magicka,
     stamina,
     role,
-    description,
+    description
   } = state!
   const totalAttributes = health + stamina + magicka
 
@@ -99,9 +106,8 @@ export default ({ edit }: { edit: boolean }) => {
         dispatch!({
           type: 'SET_HEALTH',
           payload: {
-            health:
-              operation === 'plus' ? health + modifier : health - modifier,
-          },
+            health: operation === 'plus' ? health + modifier : health - modifier
+          }
         })
       }
     } else if (type === 'magicka') {
@@ -115,8 +121,8 @@ export default ({ edit }: { edit: boolean }) => {
           type: 'SET_MAGICKA',
           payload: {
             magicka:
-              operation === 'plus' ? magicka + modifier : magicka - modifier,
-          },
+              operation === 'plus' ? magicka + modifier : magicka - modifier
+          }
         })
       }
     } else {
@@ -130,8 +136,8 @@ export default ({ edit }: { edit: boolean }) => {
           type: 'SET_STAMINA',
           payload: {
             stamina:
-              operation === 'plus' ? stamina + modifier : stamina - modifier,
-          },
+              operation === 'plus' ? stamina + modifier : stamina - modifier
+          }
         })
       }
     }
@@ -148,21 +154,21 @@ export default ({ edit }: { edit: boolean }) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
       type: 'SET_DESCRIPTION',
-      payload: { description: e.target.value },
+      payload: { description: e.target.value }
     })
   }
 
   const handleApplicationAreaChange = (value: string) => {
     dispatch!({
       type: 'SET_APPLICATION_AREA',
-      payload: { applicationArea: value },
+      payload: { applicationArea: value }
     })
   }
 
   const handleRoleChange = (value: string) => {
     dispatch!({
       type: 'SET_ROLE',
-      payload: { role: value },
+      payload: { role: value }
     })
   }
 
@@ -171,8 +177,7 @@ export default ({ edit }: { edit: boolean }) => {
       <Divider>General Information</Divider>
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -185,9 +190,8 @@ export default ({ edit }: { edit: boolean }) => {
               onChange={handleBuildNameChange}
               placeholder='Type name...'
             />
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -201,10 +205,9 @@ export default ({ edit }: { edit: boolean }) => {
               onChange={handleDescriptionChange}
               placeholder='Type description...'
             />
-          </Flex>
+          </StyledFlex>
 
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -223,16 +226,13 @@ export default ({ edit }: { edit: boolean }) => {
                 </Select.Option>
               ))}
             </Select>
-          </Flex>
-
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Role</Typography.Text>
-
             <Select
               size='large'
               style={{ width: 400 }}
@@ -245,20 +245,13 @@ export default ({ edit }: { edit: boolean }) => {
               <Select.Option value='pve_arena'>Support</Select.Option>
               <Select.Option value='pve_raid'>Tank</Select.Option>
             </Select>
-          </Flex>
+          </StyledFlex>
         </Flex>
-        <Flex
-          style={{ flex: 1, margin: 10 }}
-          direction='column'
-          justify='flex-start'
-          align='center'
-        >
+        <StyledWideFlex direction='column' justify='flex-start' align='center'>
           <Flex direction='row' justify='space-between'>
             <ResourceCard>
               <Typography.Text strong>Stamina</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {stamina}
-              </Typography.Title>
+              <StyledTitle level={4}>{stamina}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={stamina === 0}
@@ -278,9 +271,7 @@ export default ({ edit }: { edit: boolean }) => {
             </ResourceCard>
             <ResourceCard>
               <Typography.Text strong>Health</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {health}
-              </Typography.Title>
+              <StyledTitle level={4}>{health}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={health === 0}
@@ -301,9 +292,7 @@ export default ({ edit }: { edit: boolean }) => {
 
             <ResourceCard>
               <Typography.Text strong>Magicka</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {magicka}
-              </Typography.Title>
+              <StyledTitle level={4}>{magicka}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={magicka === 0}
@@ -322,7 +311,7 @@ export default ({ edit }: { edit: boolean }) => {
               </ButtonGroup>
             </ResourceCard>
           </Flex>
-        </Flex>
+        </StyledWideFlex>
       </GeneralContainer>
 
       <Divider>Race</Divider>

@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from '../../../components/globalStyles'
 import { BuildContext } from '../BuildStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -13,14 +11,14 @@ import {
   CREATE_SET_SELECTIONS,
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
-  ISetSelectionData,
+  ISetSelectionData
 } from '../Build'
 import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 
-interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
+interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
 }
 
@@ -69,7 +67,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
     variables: { id },
-    refetchQueries: [{ query: ME }],
+    refetchQueries: [{ query: ME }]
   })
 
   useEffect(() => {
@@ -80,12 +78,12 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     if (data) {
       notification.success({
         message: 'Build Deletion',
-        description: 'Build successfully deleted.',
+        description: 'Build successfully deleted.'
       })
     } else if (error) {
       notification.error({
         message: 'Build Deletion',
-        description: 'Error while deleting build. Try again later.',
+        description: 'Error while deleting build. Try again later.'
       })
     }
   }, [data, error])
@@ -126,14 +124,14 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               <Button icon='share-alt'>Share link</Button>
             </Flex>
           </Flex>
-        ),
+        )
       })
       setSaved(true)
     } catch (e) {
       console.error(e)
       notification.error({
         message: 'Build creation failed',
-        description: 'Your build could not be copied. Try again later.',
+        description: 'Your build could not be copied. Try again later.'
       })
     }
 
@@ -164,4 +162,4 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   )
 }
 
-export default withTheme(withRouter(BuildReview))
+export default withRouter(BuildReview)

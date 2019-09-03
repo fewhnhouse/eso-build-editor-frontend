@@ -46,19 +46,14 @@ export default ({
   droppable,
   disabled,
   size = 'normal',
-  setsCount,
+  setsCount
 }: IGearViewProps) => {
   return (
     <GearView>
       {setups.map((setup: IGearSetup, index) => (
         <div key={'setup' + index}>
           <StyledTitle level={4}>{setup.label}</StyledTitle>
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ flexWrap: 'wrap' }}
-          >
+          <Flex direction='row' justify='center' align='center' wrap>
             {setup.data.map((slot: ISetSelection, index: number) => {
               return disabled ? (
                 (slot.slot !== Slot.offHand || slot.type) && (

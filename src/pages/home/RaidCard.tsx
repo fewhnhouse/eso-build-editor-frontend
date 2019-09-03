@@ -32,7 +32,7 @@ const StyledCard = styled(Card)`
   border-color: rgb(232, 232, 232);
   background: 'white';
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
   width: 90%;
   max-width: 400px;
 `
@@ -88,7 +88,8 @@ const RaidCard = ({ data, loading }: IUserDataProps) => {
   }
   return (
     <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
-      <StyledList isMobile={isMobile}
+      <StyledList
+        isMobile={isMobile}
         loading={loading}
         dataSource={data}
         renderItem={(item, index) => {

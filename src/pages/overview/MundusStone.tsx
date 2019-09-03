@@ -12,6 +12,10 @@ interface IMundusStoneProps {
   isMobile: boolean
 }
 
+const StyledCard = styled(Card)`
+  margin: ${props => props.theme.margins.small};
+`
+
 const AllianceIcon = styled.img`
   width: 32px;
   height: 32px;
@@ -81,7 +85,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
 
       <Divider>Locations</Divider>
       <Flex direction='row' wrap justify='center'>
-        <Card
+        <StyledCard
           onClick={handleImageClick(mundusStone.aldmeri)}
           title={
             <span>
@@ -92,15 +96,14 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
             </span>
           }
           hoverable
-          style={{ margin: 10 }}
         >
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
             }/mundusMaps/${mundusStone.aldmeri.replace(/\s+/g, '')}.jpg`}
           />
-        </Card>
-        <Card
+        </StyledCard>
+        <StyledCard
           onClick={handleImageClick(mundusStone.ebonheart)}
           title={
             <span>
@@ -111,15 +114,14 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
             </span>
           }
           hoverable
-          style={{ margin: 10 }}
         >
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
             }/mundusMaps/${mundusStone.ebonheart.replace(/\s+/g, '')}.jpg`}
           />
-        </Card>
-        <Card
+        </StyledCard>
+        <StyledCard
           onClick={handleImageClick(mundusStone.daggerfall)}
           title={
             <span>
@@ -130,24 +132,22 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
             </span>
           }
           hoverable
-          style={{ margin: 10 }}
         >
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
             }/mundusMaps/${mundusStone.daggerfall.replace(/\s+/g, '')}.jpg`}
           />
-        </Card>
-        <Card
+        </StyledCard>
+        <StyledCard
           onClick={handleImageClick('Cyrodiil')}
           title={<span>Cyrodiil</span>}
           hoverable
-          style={{ margin: 10 }}
         >
           <Map
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusMaps/Cyrodiil.jpg`}
           />
-        </Card>
+        </StyledCard>
       </Flex>
 
       <Modal
