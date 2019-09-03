@@ -13,6 +13,7 @@ import { defaultUltimate } from '../build/Skills/Skills'
 interface ISetProps {
   context: React.Context<any>
   skillLine?: number
+  isMobile: boolean
 }
 
 const GET_SKILLS = gql`
@@ -24,7 +25,7 @@ const GET_SKILLS = gql`
   ${skill}
 `
 
-export default ({ context, skillLine }: ISetProps) => {
+export default ({ context, skillLine, isMobile }: ISetProps) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
     return (
@@ -64,29 +65,33 @@ export default ({ context, skillLine }: ISetProps) => {
           height: 'calc(100vh - 100px)',
           width: '100%',
           overflow: 'auto',
-          padding: 20,
+          padding: isMobile ? 0 : 20
         }}
       >
-        <MenuCard>
+        <MenuCard isMobile={isMobile}>
           <SkillMenu context={context} />
         </MenuCard>
-        <ContentCard
-          bodyStyle={{
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <SkillsDisplay
-            morphedActives={morphedActives}
-            morphs={morphs}
-            baseActives={baseActives}
-            baseUltimate={baseUltimate}
-            passives={passives}
-            skillLine={skillLine || 0}
-          />
-        </ContentCard>
+        {isMobile ? (
+          ''
+        ) : (
+          <ContentCard
+            bodyStyle={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <SkillsDisplay
+              morphedActives={morphedActives}
+              morphs={morphs}
+              baseActives={baseActives}
+              baseUltimate={baseUltimate}
+              passives={passives}
+              skillLine={skillLine || 0}
+            />
+          </ContentCard>
+        )}
       </Flex>
     )
   }

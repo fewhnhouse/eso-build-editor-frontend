@@ -7,6 +7,8 @@ import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Scrollbars from 'react-custom-scrollbars'
+import { useMediaQuery } from 'react-responsive'
+import { Redirect } from 'react-router'
 
 const ListContainer = styled.div`
   flex: 1;
@@ -33,6 +35,7 @@ const MyAvatar = styled.img`
 `
 
 interface IMundusData {
+  id?: string
   name: string
   effect: string
   value: string
@@ -42,6 +45,7 @@ interface IMundusData {
 const GET_MUNDUS_STONES = gql`
   query {
     mundusStones {
+      id
       name
       effect
       value
@@ -76,7 +80,7 @@ export default ({ context }: { context: React.Context<any> }) => {
 
 const MundusList = ({
   data,
-  context,
+  context
 }: {
   data: { mundusStones: IMundusData[] }
   context: React.Context<any>
@@ -85,10 +89,17 @@ const MundusList = ({
   const { mundusStone } = state!
 
   const [searchText, setSearchText] = useState('')
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const handleClick = (mundusStone: IMundusData) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    dispatch!({ type: 'SET_MUNDUS', payload: { mundusStone } })
+    if (isMobile) {
+      setRedirect(mundusStone.id || '')
+    } else {
+      dispatch!({ type: 'SET_MUNDUS', payload: { mundusStone } })
+    }
   }
   const filteredMundusStones = data.mundusStones.filter(mundus =>
     mundus.name.toLowerCase().includes(searchText.toLowerCase())
@@ -98,15 +109,16 @@ const MundusList = ({
     transform: 'translate(0px, 0px)',
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)',
+      transform: 'translate(0px, -40px)'
     },
-    config: { mass: 1, tension: 2000, friction: 200 },
+    config: { mass: 1, tension: 2000, friction: 200 }
   })
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
   return (
     <ListContainer>
+      {redirect && <Redirect to={`/overview/mundus/${redirect}`} push />}
       <>
         <Flex
           direction='column'
@@ -115,7 +127,7 @@ const MundusList = ({
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
             padding: '5px',
-            transition: 'opacity 0.2s ease-in-out',
+            transition: 'opacity 0.2s ease-in-out'
           }}
         >
           <Flex
@@ -139,7 +151,7 @@ const MundusList = ({
           <List
             style={{
               height: '100%',
-              transition: 'opacity 0.2s ease-in-out',
+              transition: 'opacity 0.2s ease-in-out'
             }}
             dataSource={trail}
             renderItem={(style: any, index) => {
