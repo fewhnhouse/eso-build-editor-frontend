@@ -1,7 +1,7 @@
 const theme = {
   primary: 'blue',
   mainBg: 'rgb(155, 155, 155)',
-  borderRadius: '3',
+  borderRadius: '3px',
   widths: {
     small: '250px',
     medium: '400px'
