@@ -6,6 +6,7 @@ import { LoginContext } from '../App'
 import WrappedNormalLoginForm from './LoginForm'
 import { useMediaQuery } from 'react-responsive'
 import Flex from './Flex'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Header } = Layout
 const { SubMenu, Item, ItemGroup } = Menu
@@ -23,17 +24,19 @@ const StyledHeader = styled(Header)`
   z-index: 10;
   align-items: center;
   padding: ${(props: IStyledHeaderProps) => (props.expanded ? '0px' : '')};
-  padding-right: 10px;
+  padding-right: ${(props: IStyledHeaderProps) =>
+    props.isTabletOrMobile ? '0px' : '10px'};
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `
 
 const MobileHeader = styled.div`
-  height: ${(props: IStyledHeaderProps) => (props.expanded ? '100vh' : '0px')};
+  height: ${(props: IStyledHeaderProps) =>
+    props.expanded ? 'calc(100vh - 64px)' : '0px'};
   width: 100vw;
   position: fixed;
   transition: height 1s ease-in-out;
   top: 64px;
-  z-index: 100 !important;
+  z-index: 100;
   background: #ededed;
 `
 
@@ -79,63 +82,65 @@ const NavMenu = ({ me, location }: IMenuProps) => {
 
   const MobileMenu = () =>
     loggedIn ? (
-      <Menu
-        theme='light'
-        mode={isMobile ? 'inline' : 'horizontal'}
-        selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-        style={{
-          lineHeight: '64px',
-          width: '100%',
-        }}
-      >
-        <Item key='1'>
-          <Link onClick={handleFoldBtnClick} to='/'>
-            Home
-          </Link>
-        </Item>
-        <Item key='4'>
-          <Link onClick={handleFoldBtnClick} to='/overview'>
-            Overview
-          </Link>
-        </Item>
-        <Divider />
-        <ItemGroup key='2' title={<span>Builds</span>}>
-          <Item key='build:1'>
-            <Link onClick={handleFoldBtnClick} to='/builds'>
-              Builds
+      <Scrollbars autoHide>
+        <Menu
+          theme='light'
+          mode={isMobile ? 'inline' : 'horizontal'}
+          selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
+          style={{
+            lineHeight: '64px',
+            width: '100%',
+          }}
+        >
+          <Item key='1'>
+            <Link onClick={handleFoldBtnClick} to='/'>
+              Home
             </Link>
           </Item>
-          <Item key='build:2'>
-            <Link onClick={handleFoldBtnClick} to='/buildEditor/0'>
-              Build Editor
+          <Item key='4'>
+            <Link onClick={handleFoldBtnClick} to='/overview'>
+              Overview
             </Link>
           </Item>
-        </ItemGroup>
-        <Divider />
-        <ItemGroup key='3' title={<span>Raids</span>}>
-          <Item key='raid:1'>
-            <Link onClick={handleFoldBtnClick} to='/raids'>
-              Raids
+          <Divider />
+          <ItemGroup key='2' title={<span>Builds</span>}>
+            <Item key='build:1'>
+              <Link onClick={handleFoldBtnClick} to='/builds'>
+                Builds
+              </Link>
+            </Item>
+            <Item key='build:2'>
+              <Link onClick={handleFoldBtnClick} to='/buildEditor/0'>
+                Build Editor
+              </Link>
+            </Item>
+          </ItemGroup>
+          <Divider />
+          <ItemGroup key='3' title={<span>Raids</span>}>
+            <Item key='raid:1'>
+              <Link onClick={handleFoldBtnClick} to='/raids'>
+                Raids
+              </Link>
+            </Item>
+            <Item key='raid:2'>
+              <Link onClick={handleFoldBtnClick} to='/raidEditor/0'>
+                Raid Editor
+              </Link>
+            </Item>
+          </ItemGroup>
+          <Divider />
+          <Item key='profile:1'>
+            <Link onClick={handleFoldBtnClick} to='/profile'>
+              <Icon type='user' />
+              Profile
             </Link>
           </Item>
-          <Item key='raid:2'>
-            <Link onClick={handleFoldBtnClick} to='/raidEditor/0'>
-              Raid Editor
-            </Link>
+          <Item onClick={handleLogout}>
+            <Icon type='logout' />
+            Log out
           </Item>
-        </ItemGroup>
-        <Divider />
-        <Item key='profile:1'>
-          <Link onClick={handleFoldBtnClick} to='/profile'>
-            <Icon type='user' style={{ marginRight: 8 }} />
-            Profile
-          </Link>
-        </Item>
-        <Item onClick={handleLogout}>
-          <Icon type='logout' />
-          Log out
-        </Item>
-      </Menu>
+        </Menu>
+      </Scrollbars>
     ) : (
       <>
         <Menu
