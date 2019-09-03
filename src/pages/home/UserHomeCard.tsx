@@ -252,7 +252,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
           justify='center'
           align='center'
         >
-          <CardTitle level={3}>
+          {!isMobile && <CardTitle level={3}>
             {isBuild ? 'My builds' : 'My raids'}
             <div>
               <Button
@@ -265,7 +265,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
                 Create
               </Button>
             </div>
-          </CardTitle>
+          </CardTitle>}
           <Flex style={{ width: '100%' }} justify='space-between'>
             <Input
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}

@@ -12,6 +12,7 @@ import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
 import gql from 'graphql-tag'
 import { useMediaQuery } from 'react-responsive'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Title, Text } = Typography
 
@@ -160,149 +161,154 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     variables: { id },
   })
 
-  console.log(data)
   if (data && data.buildUpdateSubscription) {
-    console.log(data)
     message.info(
       'This build has been updated. Refresh to see the latest changes'
     )
   }
 
   return (
-    <Flex style={{ padding: 20 }} fluid direction='column' align='center'>
-      <Flex direction='column' align='center'>
-        <Typography.Title>{name}</Typography.Title>
-        {local && (
-          <Flex direction='row'>
-            <InformationCard
-              icon='edit'
-              title='Description'
-              description={description}
-            />
-            <Divider
-              type='vertical'
-              style={{ height: 50, margin: '0px 20px' }}
-            />
-            <InformationCard
-              icon='environment'
-              title='Application Area'
-              description={area ? area.label : ''}
-            />
-            <Divider
-              type='vertical'
-              style={{ height: 50, margin: '0px 20px' }}
-            />
-            <InformationCard
-              icon={published ? 'unlock' : 'lock'}
-              title='Access Rights'
-              description={published ? 'Public' : 'Private'}
-            />
-          </Flex>
-        )}
-      </Flex>
-      <Wrapper
-        direction='row'
-        align='flex-start'
-        justify='space-evenly'
-        wrap
+    <Scrollbars autoHide disabled={!isMobile}>
+      <Flex
+        style={{ padding: isMobile ? 0 : 20 }}
         fluid
+        direction='column'
+        align='center'
       >
-        <GeneralInformation
-          isMobile={isMobile}
-          title={<Title level={2}>General Information</Title>}
-        >
-          <Divider>Attributes</Divider>
-          <MiscView direction='row' justify='space-around'>
-            <ResourceCard>
-              <Typography.Text strong>Stamina</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {stamina}
-              </Typography.Title>
-            </ResourceCard>
-            <ResourceCard>
-              <Typography.Text strong>Health</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {health}
-              </Typography.Title>
-            </ResourceCard>
-            <ResourceCard>
-              <Typography.Text strong>Magicka</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {magicka}
-              </Typography.Title>
-            </ResourceCard>
-          </MiscView>
-          <Divider>Race</Divider>
-          <MiscView direction='row' justify='flex-start'>
-            <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
-            />
-            <Text strong>{race}</Text>
-          </MiscView>
-          <Text>{raceData ? raceData.description : ''}</Text>
-          <Divider>Class</Divider>
-          <MiscView direction='row' justify='flex-start'>
-            <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}.png`}
-            />
-            <Text strong>{esoClass}</Text>
-          </MiscView>
-          <Text>{classData ? classData.description : ''}</Text>
-          {mundusStone && (
-            <>
-              <Divider>Mundus Stone</Divider>
-              <MiscView direction='row' justify='flex-start' align='center'>
-                <ClassImg
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
-                />
-                <Text strong>{mundusStone.name}</Text>
-              </MiscView>
-              <Text>
-                {mundusStone.effect} by {mundusStone.value}.
-              </Text>
-            </>
+        <Flex direction='column' align='center'>
+          <Typography.Title>{name}</Typography.Title>
+          {local && (
+            <Flex direction='row'>
+              <InformationCard
+                icon='edit'
+                title='Description'
+                description={description}
+              />
+              <Divider
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
+              />
+              <InformationCard
+                icon='environment'
+                title='Application Area'
+                description={area ? area.label : ''}
+              />
+              <Divider
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
+              />
+              <InformationCard
+                icon={published ? 'unlock' : 'lock'}
+                title='Access Rights'
+                description={published ? 'Public' : 'Private'}
+              />
+            </Flex>
           )}
-          {buff && (
-            <>
-              <Divider>Buff</Divider>
-              <MiscView direction='row' justify='flex-start' align='center'>
-                <MyAvatar
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`}
-                />
-                <Text strong>
-                  {buff.name} {buff.type}
+        </Flex>
+        <Wrapper
+          direction='row'
+          align='flex-start'
+          justify='space-evenly'
+          wrap
+          fluid
+        >
+          <GeneralInformation
+            isMobile={isMobile}
+            title={<Title level={2}>General Information</Title>}
+          >
+            <Divider>Attributes</Divider>
+            <MiscView direction='row' justify='space-around'>
+              <ResourceCard>
+                <Typography.Text strong>Stamina</Typography.Text>
+                <Typography.Title style={{ margin: 5 }} level={4}>
+                  {stamina}
+                </Typography.Title>
+              </ResourceCard>
+              <ResourceCard>
+                <Typography.Text strong>Health</Typography.Text>
+                <Typography.Title style={{ margin: 5 }} level={4}>
+                  {health}
+                </Typography.Title>
+              </ResourceCard>
+              <ResourceCard>
+                <Typography.Text strong>Magicka</Typography.Text>
+                <Typography.Title style={{ margin: 5 }} level={4}>
+                  {magicka}
+                </Typography.Title>
+              </ResourceCard>
+            </MiscView>
+            <Divider>Race</Divider>
+            <MiscView direction='row' justify='flex-start'>
+              <MyAvatar
+                src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
+              />
+              <Text strong>{race}</Text>
+            </MiscView>
+            <Text>{raceData ? raceData.description : ''}</Text>
+            <Divider>Class</Divider>
+            <MiscView direction='row' justify='flex-start'>
+              <MyAvatar
+                src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}.png`}
+              />
+              <Text strong>{esoClass}</Text>
+            </MiscView>
+            <Text>{classData ? classData.description : ''}</Text>
+            {mundusStone && (
+              <>
+                <Divider>Mundus Stone</Divider>
+                <MiscView direction='row' justify='flex-start' align='center'>
+                  <ClassImg
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
+                  />
+                  <Text strong>{mundusStone.name}</Text>
+                </MiscView>
+                <Text>
+                  {mundusStone.effect} by {mundusStone.value}.
                 </Text>
-              </MiscView>
-              <Text>{buff.buffDescription}</Text>
-            </>
-          )}
-        </GeneralInformation>
-        <BuildInformation
-          isMobile={isMobile}
-          title={<Title level={2}>Build Information</Title>}
-        >
-          <SkillsView>
-            <StyledTitle level={4}>Skills</StyledTitle>
-            <SkillView
-              size='small'
-              id={ABILITY_BAR_ONE}
-              disabled
-              skillSlots={newBarOne}
-              ultimate={ultimateOne}
-            />
-            <SkillView
-              size='small'
-              id={ABILITY_BAR_TWO}
-              disabled
-              skillSlots={newBarTwo}
-              ultimate={ultimateTwo}
-            />
-          </SkillsView>
-          <Divider />
-          <GearView disabled setups={selectedSetup} setsCount={setsCount} />
-        </BuildInformation>
-      </Wrapper>
-    </Flex>
+              </>
+            )}
+            {buff && (
+              <>
+                <Divider>Buff</Divider>
+                <MiscView direction='row' justify='flex-start' align='center'>
+                  <MyAvatar
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`}
+                  />
+                  <Text strong>
+                    {buff.name} {buff.type}
+                  </Text>
+                </MiscView>
+                <Text>{buff.buffDescription}</Text>
+              </>
+            )}
+          </GeneralInformation>
+          <BuildInformation
+            isMobile={isMobile}
+            title={<Title level={2}>Build Information</Title>}
+          >
+            <SkillsView>
+              <StyledTitle level={4}>Skills</StyledTitle>
+              <SkillView
+                size='small'
+                id={ABILITY_BAR_ONE}
+                disabled
+                skillSlots={newBarOne}
+                ultimate={ultimateOne}
+              />
+              <SkillView
+                size='small'
+                id={ABILITY_BAR_TWO}
+                disabled
+                skillSlots={newBarTwo}
+                ultimate={ultimateTwo}
+              />
+            </SkillsView>
+            <Divider />
+            <GearView disabled setups={selectedSetup} setsCount={setsCount} />
+          </BuildInformation>
+        </Wrapper>
+      </Flex>
+    </Scrollbars>
   )
 }
 
