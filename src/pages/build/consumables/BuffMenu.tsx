@@ -7,11 +7,14 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { buff } from '../../../util/fragments'
 import { titleCase } from '../../raid/builds/BuildMenu'
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars'
+import { Redirect } from 'react-router'
+import { useMediaQuery } from 'react-responsive'
 
 const { Option } = Select
 
 export interface ISpecialBuff {
+  id?: string
   name: string
   buffDescription: string
   description: string
@@ -91,12 +94,16 @@ const buffTypes = [
   'Magicka Recovery',
   'Max Health',
   'Max Stamina',
-  'Max Magicka',
+  'Max Magicka'
 ]
 
 const buffQualities = ['Standard', 'Difficult', 'Complex', 'Legendary']
 
-export default ({ context }: { context: React.Context<any> }) => {
+interface IBuffMenuProps {
+  context: React.Context<any>
+}
+
+export default ({ context }: IBuffMenuProps) => {
   const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
@@ -127,20 +134,20 @@ export default ({ context }: { context: React.Context<any> }) => {
                 { name_contains: searchText },
                 { name_contains: searchText.toLowerCase() },
                 { name_contains: searchText.toUpperCase() },
-                { name_contains: titleCase(searchText) },
-              ],
+                { name_contains: titleCase(searchText) }
+              ]
             },
             {
               quality_in: selectedQualities.length
                 ? selectedQualities.map(
                     (v, index) => buffQualities.findIndex(q => q === v) + 1
                   )
-                : buffQualities.map((value, index) => index + 1),
+                : buffQualities.map((value, index) => index + 1)
             },
-            ...selectedTypes.map(type => ({ buffDescription_contains: type })),
-          ],
-        },
-      },
+            ...selectedTypes.map(type => ({ buffDescription_contains: type }))
+          ]
+        }
+      }
     }
   )
   if (error) {
@@ -156,7 +163,7 @@ export default ({ context }: { context: React.Context<any> }) => {
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
           padding: '5px',
-          transition: 'opacity 0.2s ease-in-out',
+          transition: 'opacity 0.2s ease-in-out'
         }}
       >
         <Flex
@@ -184,7 +191,7 @@ export default ({ context }: { context: React.Context<any> }) => {
           <>
             <Divider
               style={{
-                margin: '10px 0px',
+                margin: '10px 0px'
               }}
             />
             <Flex
@@ -194,7 +201,7 @@ export default ({ context }: { context: React.Context<any> }) => {
               style={{
                 margin: '0px 10px',
                 overflow: 'auto',
-                width: '100%',
+                width: '100%'
               }}
             >
               <Select
@@ -239,19 +246,25 @@ export default ({ context }: { context: React.Context<any> }) => {
   )
 }
 
-interface IBuffMenuProps {
+interface IBuffMenuListProps {
   loading: boolean
   buffs: ISpecialBuff[]
   searchText: string
   context: React.Context<any>
 }
-const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
+const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
   const [state, dispatch] = useContext(context)
   const { buff } = state!
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleClick = (buff: ISpecialBuff) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    dispatch!({ type: 'SET_BUFF', payload: { buff } })
+    if (isMobile) {
+      setRedirect(buff.id || '')
+    } else {
+      dispatch!({ type: 'SET_BUFF', payload: { buff } })
+    }
   }
 
   const trail = useTrail(buffs.length, {
@@ -259,16 +272,17 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
     transform: 'translate(0px, 0px)',
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)',
+      transform: 'translate(0px, -40px)'
     },
-    config: { mass: 1, tension: 2000, friction: 300 },
+    config: { mass: 1, tension: 2000, friction: 300 }
   })
   return (
     <Scrollbars>
+      {redirect && <Redirect to={`/overview/buffs/${redirect}`} push />}
       <List
         loading={loading}
         style={{
-          height: '100%',
+          height: '100%'
         }}
         dataSource={trail}
         renderItem={(style: any, index) => {
@@ -300,7 +314,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuProps) => {
                       direction='row'
                       style={{
                         width: '100%',
-                        margin: '10px 0px',
+                        margin: '10px 0px'
                       }}
                     >
                       <AttributeTag
@@ -351,7 +365,7 @@ interface IAttributeTagProps {
 export const AttributeTag = ({
   hasMagicka,
   hasStamina,
-  hasHealth,
+  hasHealth
 }: IAttributeTagProps) => {
   if (hasMagicka && hasStamina && hasHealth) {
     return <StyledTag color='purple'>All</StyledTag>
@@ -374,7 +388,7 @@ export const BuffTypeTag = ({
   isFood,
   isDrink,
   isSpecialFood,
-  isSpecialDrink,
+  isSpecialDrink
 }: IBuffTagProps) => {
   if (isFood) {
     return <StyledTag color='purple'>Food</StyledTag>

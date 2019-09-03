@@ -8,17 +8,18 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { titleCase } from '../../raid/builds/BuildMenu'
 import Scrollbars from 'react-custom-scrollbars';
+import { useMediaQuery } from 'react-responsive'
 
 const { Option } = Select
 const { Item } = List
 
 const ListContainer = styled.div`
-  width: ${(props: { collapsed: boolean }) => (props.collapsed ? '60px' : '')};
-  flex: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : 1)};
+  width: ${(props: { collapsed: boolean, isMobile: boolean }) => (props.collapsed ? '60px' : '')};
+  flex: ${(props: { collapsed: boolean, isMobile: boolean }) => (props.collapsed ? '' : 1)};
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
-  max-width: 450px;
+  max-width: ${(props: { collapsed: boolean, isMobile: boolean }) => (props.isMobile ? '' : "450px")};;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `
@@ -106,6 +107,7 @@ export default ({
   const [selectedWeights, setSelectedWeights] = useState<string[]>([])
   const [searchText, setSearchText] = useState('')
   const [expanded, setExpanded] = useState(false)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const { error, loading, data } = useQuery(GET_SETS, {
     variables: {
@@ -180,7 +182,7 @@ export default ({
     setExpanded(expanded => !expanded)
   }
   return (
-    <ListContainer collapsed={collapsed}>
+    <ListContainer isMobile={isMobile} collapsed={collapsed}>
       {collapsed && (
         <StyledIconBtn
           type='primary'
