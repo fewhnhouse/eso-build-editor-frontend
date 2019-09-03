@@ -99,7 +99,7 @@ const setTypes = [
   'Trial',
   'Dungeon',
   'Battleground',
-  'Craftable'
+  'Craftable',
 ]
 const setWeight = ['Light', 'Medium', 'Heavy', 'Jewelry', 'Weapons']
 
@@ -107,7 +107,7 @@ export default ({
   collapsed,
   setCollapsed,
   context,
-  collapsable
+  collapsable,
 }: IMenuProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedWeights, setSelectedWeights] = useState<string[]>([])
@@ -124,47 +124,47 @@ export default ({
               { name_contains: searchText },
               { name_contains: searchText.toLowerCase() },
               { name_contains: searchText.toUpperCase() },
-              { name_contains: titleCase(searchText) }
-            ]
+              { name_contains: titleCase(searchText) },
+            ],
           },
           {
             has_medium_armor:
               selectedWeights.length && selectedWeights.includes('Medium')
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_light_armor:
               selectedWeights.length && selectedWeights.includes('Light')
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_heavy_armor:
               selectedWeights.length && selectedWeights.includes('Heavy')
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_jewels:
               selectedWeights.length && selectedWeights.includes('Jewelry')
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_weapons:
               selectedWeights.length && selectedWeights.includes('Weapons')
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             type_in: selectedTypes.length
               ? [...selectedTypes, 'Unknown']
-              : [...setTypes, 'Unknown']
-          }
-        ]
-      }
-    }
+              : [...setTypes, 'Unknown'],
+          },
+        ],
+      },
+    },
   })
 
   if (error) {
@@ -207,7 +207,7 @@ export default ({
             padding: '5px',
             opacity: collapsed ? 0 : 1,
             pointerEvents: collapsed ? 'none' : 'all',
-            transition: 'opacity 0.2s ease-in-out'
+            transition: 'opacity 0.2s ease-in-out',
           }}
         >
           <Flex
@@ -244,7 +244,7 @@ export default ({
             <>
               <Divider
                 style={{
-                  margin: '10px 0px'
+                  margin: '10px 0px',
                 }}
               />
               <Flex
@@ -254,7 +254,7 @@ export default ({
                 style={{
                   margin: '0px 10px',
                   overflow: 'auto',
-                  width: '100%'
+                  width: '100%',
                 }}
               >
                 <Select
@@ -316,7 +316,7 @@ const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded
+  traitsNeeded,
 }: ISetTagProps) => {
   if (traitsNeeded) {
     return null
@@ -345,7 +345,7 @@ const SetList = ({
   loading,
   collapsed,
   context,
-  setCollapsed
+  setCollapsed,
 }: ISetListProps) => {
   const [state, dispatch] = useContext(context)
   const [redirect, setRedirect] = useState('')
@@ -366,9 +366,9 @@ const SetList = ({
     transform: 'translate(0px, 0px)',
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)'
+      transform: 'translate(0px, -40px)',
     },
-    config: { mass: 1, tension: 3000, friction: 100 }
+    config: { mass: 1, tension: 3000, friction: 100 },
   })
   return (
     <Scrollbars autoHide>
@@ -379,7 +379,7 @@ const SetList = ({
           height: '100%',
           opacity: collapsed ? 0 : 1,
           pointerEvents: collapsed ? 'none' : 'all',
-          transition: 'opacity 0.2s ease-in-out'
+          transition: 'opacity 0.2s ease-in-out',
         }}
         dataSource={trail}
         renderItem={(style: any, index) => {
@@ -404,7 +404,7 @@ const SetList = ({
                       state!.selectedSet &&
                       item.setId === state!.selectedSet.setId
                         ? 500
-                        : 400
+                        : 400,
                   }}
                 >
                   {item.name}

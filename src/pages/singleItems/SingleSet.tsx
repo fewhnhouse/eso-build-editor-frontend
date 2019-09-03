@@ -36,7 +36,7 @@ const GET_SETS_BY_ID = gql`
 const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const { data } = useQuery(GET_SETS_BY_ID, {
-    variables: { id: id }
+    variables: { id: id },
   })
 
   const set: ISet = data.set ? data.set : ''
@@ -48,7 +48,7 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
       style={{
         height: '100%',
         width: '100%',
-        padding: 20
+        padding: 20,
       }}
     >
       <Flex direction='column' fluid>

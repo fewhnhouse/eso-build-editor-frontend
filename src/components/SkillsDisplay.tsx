@@ -13,7 +13,7 @@ const AbilityContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  padding: 40px;
+  padding: ${props => props.theme.margins.large};
 `
 
 interface ISkillDisplay {
@@ -33,11 +33,11 @@ export default ({
   morphedActives,
   morphs,
   passives,
-  interactive
+  interactive,
 }: ISkillDisplay) => {
   const [trail, set]: any = useTrail(baseActives.length, () => ({
     opacity: 0,
-    transform: 'translate(0px, -40px)'
+    transform: 'translate(0px, -40px)',
   }))
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export default ({
         justifyContent: 'center',
         flex: 2,
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       Select a Skill Line to get started.

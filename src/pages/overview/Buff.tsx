@@ -3,7 +3,7 @@ import BuffMenu, {
   ISpecialBuff,
   AttributeTag,
   BuffTypeTag,
-  QualityTag
+  QualityTag,
 } from '../build/consumables/BuffMenu'
 import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
@@ -35,7 +35,7 @@ export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
           wrap
           style={{
             width: '100%',
-            margin: '10px 0px'
+            margin: '10px 0px',
           }}
         >
           <AttributeTag
@@ -73,7 +73,7 @@ export default ({ context, buff, isMobile }: IBuffProps) => {
       style={{
         height: 'calc(100% - 100px)',
         width: '100%',
-        padding: isMobile ? 0 : 20
+        padding: isMobile ? 0 : 20,
       }}
     >
       <MenuCard minWidth='400px' isMobile={isMobile}>
@@ -87,7 +87,7 @@ export default ({ context, buff, isMobile }: IBuffProps) => {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           {buff ? (
@@ -99,7 +99,7 @@ export default ({ context, buff, isMobile }: IBuffProps) => {
                 justifyContent: 'center',
                 flex: 2,
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               Select a Buff to get started.

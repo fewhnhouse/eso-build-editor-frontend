@@ -60,7 +60,7 @@ const Review = ({
   onDelete,
   isBuild,
   saved,
-  state
+  state,
 }: IReviewProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -82,7 +82,7 @@ const Review = ({
         description,
         applicationArea,
         roles,
-        published
+        published,
       } = data
       const area = applicationAreas.find(area => area.key === applicationArea)
 
@@ -104,7 +104,7 @@ const Review = ({
               flexDirection: isMobile ? 'column' : 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
           >
             <Scrollbars autoHide>
@@ -125,7 +125,7 @@ const Review = ({
                       width: 180,
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
-                      textOverflow: 'ellipsis'
+                      textOverflow: 'ellipsis',
                     }}
                     level={3}
                   >
@@ -136,7 +136,7 @@ const Review = ({
                       whiteSpace: 'nowrap',
                       width: 180,
                       overflow: 'hidden',
-                      textOverflow: 'ellipsis'
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {description}

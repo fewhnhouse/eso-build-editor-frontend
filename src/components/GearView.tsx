@@ -46,7 +46,7 @@ export default ({
   droppable,
   disabled,
   size = 'normal',
-  setsCount
+  setsCount,
 }: IGearViewProps) => {
   return (
     <GearView>

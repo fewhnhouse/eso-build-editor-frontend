@@ -194,7 +194,7 @@ export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
       style={{
         height: 'calc(100% - 100px)',
         width: '100%',
-        padding: isMobile ? 0 : 20
+        padding: isMobile ? 0 : 20,
       }}
     >
       <MenuCard isMobile={isMobile || false}>
@@ -209,7 +209,7 @@ export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            overflow: 'auto'
+            overflow: 'auto',
           }}
         >
           {mundusStone ? (
@@ -221,7 +221,7 @@ export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
                 justifyContent: 'center',
                 flex: 2,
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               Select a Mundus Stone to get started.

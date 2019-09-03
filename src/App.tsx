@@ -21,20 +21,20 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ''
-    }
+      authorization: token ? `Bearer ${token}` : '',
+    },
   }
 })
 
 const wsLink = new WebSocketLink({
   uri: process.env.REACT_APP_SUBSCRIPTION_URL || '',
   options: {
-    reconnect: true
-  }
+    reconnect: true,
+  },
 })
 
 notification.config({
-  top: 80
+  top: 80,
 })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -52,7 +52,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_URL
+  uri: process.env.REACT_APP_GRAPHQL_URL,
 })
 const cache = new InMemoryCache()
 
@@ -62,15 +62,15 @@ const data = {
   visibilityFilter: 'SHOW_ALL',
   networkStatus: {
     __typename: 'NetworkStatus',
-    isConnected: false
-  }
+    isConnected: false,
+  },
 }
 
 cache.writeData({ data })
 
 const client = new ApolloClient({
   link: ApolloLink.from([errorLink, authLink, httpLink, wsLink]),
-  cache
+  cache,
 })
 
 export const LoginContext = React.createContext<any>(undefined)

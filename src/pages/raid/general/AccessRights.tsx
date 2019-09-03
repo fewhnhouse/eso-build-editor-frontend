@@ -28,14 +28,14 @@ export default () => {
   const handleEditChange = (values: string[]) => {
     dispatch!({
       type: 'SET_CAN_EDIT',
-      payload: { canEdit: values }
+      payload: { canEdit: values },
     })
   }
 
   const handleViewChange = (values: string[]) => {
     dispatch!({
       type: 'SET_CAN_VIEW',
-      payload: { canView: values }
+      payload: { canView: values },
     })
   }
   return (

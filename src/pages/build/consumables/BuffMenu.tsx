@@ -90,13 +90,17 @@ const Title = styled.div`
   text-align: left;
 `
 
+const ListWrapper = styled(Flex)`
+  max-width: ${props => props.theme.widths.medium};
+`
+
 const buffTypes = [
   'Health Recovery',
   'Stamina Recovery',
   'Magicka Recovery',
   'Max Health',
   'Max Stamina',
-  'Max Magicka'
+  'Max Magicka',
 ]
 
 const buffQualities = ['Standard', 'Difficult', 'Complex', 'Legendary']
@@ -136,20 +140,20 @@ export default ({ context }: IBuffMenuProps) => {
                 { name_contains: searchText },
                 { name_contains: searchText.toLowerCase() },
                 { name_contains: searchText.toUpperCase() },
-                { name_contains: titleCase(searchText) }
-              ]
+                { name_contains: titleCase(searchText) },
+              ],
             },
             {
               quality_in: selectedQualities.length
                 ? selectedQualities.map(
                     (v, index) => buffQualities.findIndex(q => q === v) + 1
                   )
-                : buffQualities.map((value, index) => index + 1)
+                : buffQualities.map((value, index) => index + 1),
             },
-            ...selectedTypes.map(type => ({ buffDescription_contains: type }))
-          ]
-        }
-      }
+            ...selectedTypes.map(type => ({ buffDescription_contains: type })),
+          ],
+        },
+      },
     }
   )
   if (error) {
@@ -165,7 +169,7 @@ export default ({ context }: IBuffMenuProps) => {
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
           padding: '5px',
-          transition: 'opacity 0.2s ease-in-out'
+          transition: 'opacity 0.2s ease-in-out',
         }}
       >
         <Flex
@@ -193,7 +197,7 @@ export default ({ context }: IBuffMenuProps) => {
           <>
             <Divider
               style={{
-                margin: '10px 0px'
+                margin: '10px 0px',
               }}
             />
             <Flex
@@ -203,7 +207,7 @@ export default ({ context }: IBuffMenuProps) => {
               style={{
                 margin: '0px 10px',
                 overflow: 'auto',
-                width: '100%'
+                width: '100%',
               }}
             >
               <Select
@@ -274,9 +278,9 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
     transform: 'translate(0px, 0px)',
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)'
+      transform: 'translate(0px, -40px)',
     },
-    config: { mass: 1, tension: 2000, friction: 300 }
+    config: { mass: 1, tension: 2000, friction: 300 },
   })
   return (
     <Scrollbars>
@@ -284,7 +288,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
       <List
         loading={loading}
         style={{
-          height: '100%'
+          height: '100%',
         }}
         dataSource={trail}
         renderItem={(style: any, index) => {
@@ -296,11 +300,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                 active={item.name === (buff && buff.name)}
                 onClick={handleClick(item)}
               >
-                <Flex
-                  align='flex-start'
-                  direction='row'
-                  style={{ maxWidth: 400 }}
-                >
+                <ListWrapper align='flex-start' direction='row'>
                   <AvatarContainer>
                     <MyAvatar
                       title={item.name}
@@ -316,7 +316,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                       direction='row'
                       style={{
                         width: '100%',
-                        margin: '10px 0px'
+                        margin: '10px 0px',
                       }}
                     >
                       <AttributeTag
@@ -348,7 +348,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                       </>
                     )}
                   </div>
-                </Flex>
+                </ListWrapper>
               </StyledCard>
             </animated.div>
           )
@@ -367,7 +367,7 @@ interface IAttributeTagProps {
 export const AttributeTag = ({
   hasMagicka,
   hasStamina,
-  hasHealth
+  hasHealth,
 }: IAttributeTagProps) => {
   if (hasMagicka && hasStamina && hasHealth) {
     return <StyledTag color='purple'>All</StyledTag>
@@ -390,7 +390,7 @@ export const BuffTypeTag = ({
   isFood,
   isDrink,
   isSpecialFood,
-  isSpecialDrink
+  isSpecialDrink,
 }: IBuffTagProps) => {
   if (isFood) {
     return <StyledTag color='purple'>Food</StyledTag>

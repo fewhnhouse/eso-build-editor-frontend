@@ -47,7 +47,7 @@ const BuildInformation = styled(Card)`
     props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
-  min-width: 400px;
+  min-width: ${props => props.theme.widths.medium};
   flex: 2;
   overflow-y: auto;
 `
@@ -56,17 +56,17 @@ const GeneralInformation = styled(Card)`
     props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
-  min-width: 400px;
+  min-width: ${props => props.theme.widths.medium};
   flex: 1;
   max-width: 700px;
   overflow-y: auto;
 `
 const SkillsView = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: ${props => props.theme.margins.small};
   width: 100%;
 `
 const MiscView = styled(Flex)`
-  margin-bottom: 10px;
+  margin-bottom: ${props => props.theme.margins.small};
 `
 
 interface IDetailViewProps {
@@ -111,26 +111,26 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     ultimateOne,
     ultimateTwo,
     description,
-    applicationArea
+    applicationArea,
   } = loadedData
   const selectedSetup = [
     {
       id: 'bigpieces',
       label: 'Big Pieces',
-      data: bigPieceSelection || []
+      data: bigPieceSelection || [],
     },
     {
       id: 'smallpieces',
       label: 'Small Pieces',
-      data: smallPieceSelection || []
+      data: smallPieceSelection || [],
     },
     { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
       id: 'frontbar',
       label: 'Frontbar',
-      data: frontbarSelection || []
+      data: frontbarSelection || [],
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] }
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
@@ -151,7 +151,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const area = applicationAreas.find(area => area.key === applicationArea)
 
   const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
-    variables: { id }
+    variables: { id },
   })
 
   if (data && data.buildUpdateSubscription) {

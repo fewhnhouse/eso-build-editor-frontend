@@ -22,9 +22,14 @@ import Scrollbars from 'react-custom-scrollbars'
 const OuterContainer = styled.div`
   flex: 1;
   height: 100%;
-  padding: 20px;
-  max-width: 400px;
+  padding: ${props => props.theme.margins.medium};
+  max-width: ${props => props.theme.widths.medium};
   background: white;
+`
+
+const StyledScrollbars = styled(Scrollbars)`
+  background-color: white;
+  max-width: ${props => props.theme.widths.medium};
 `
 
 export const specialWeaponSets = [
@@ -499,7 +504,7 @@ export default () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Scrollbars autoHide style={{maxWidth: 400, background: "white"}}>
+      <StyledScrollbars autoHide>
         <OuterContainer>
           <Divider>Active Selection</Divider>
           <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
@@ -511,7 +516,7 @@ export default () => {
             setsCount={setsCount}
           />
         </OuterContainer>
-      </Scrollbars>
+      </StyledScrollbars>
     </DndProvider>
   )
 }

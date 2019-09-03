@@ -27,10 +27,10 @@ const ListCard = styled.div`
   width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '80%'};
-  min-width: 400px;
+  min-width: ${props => props.theme.widths.medium};
   display: flex;
   flex-direction: column;
-  max-width: 450px;
+  max-width: ${props => props.theme.widths.large};
   margin: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '20px'};
   border-radius: ${(props: { isMobile: boolean }) =>
@@ -252,20 +252,22 @@ export default ({ isBuild }: { isBuild: boolean }) => {
           justify='center'
           align='center'
         >
-          {!isMobile && <CardTitle level={3}>
-            {isBuild ? 'My builds' : 'My raids'}
-            <div>
-              <Button
-                type='primary'
-                ghost={true}
-                onClick={handleCreateClick(
-                  isBuild ? '/buildEditor/0' : '/raidEditor/0'
-                )}
-              >
-                Create
-              </Button>
-            </div>
-          </CardTitle>}
+          {!isMobile && (
+            <CardTitle level={3}>
+              {isBuild ? 'My builds' : 'My raids'}
+              <div>
+                <Button
+                  type='primary'
+                  ghost={true}
+                  onClick={handleCreateClick(
+                    isBuild ? '/buildEditor/0' : '/raidEditor/0'
+                  )}
+                >
+                  Create
+                </Button>
+              </div>
+            </CardTitle>
+          )}
           <Flex style={{ width: '100%' }} justify='space-between'>
             <Input
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}

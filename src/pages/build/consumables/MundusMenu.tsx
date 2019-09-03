@@ -80,7 +80,7 @@ export default ({ context }: { context: React.Context<any> }) => {
 
 const MundusList = ({
   data,
-  context
+  context,
 }: {
   data: { mundusStones: IMundusData[] }
   context: React.Context<any>
@@ -109,9 +109,9 @@ const MundusList = ({
     transform: 'translate(0px, 0px)',
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)'
+      transform: 'translate(0px, -40px)',
     },
-    config: { mass: 1, tension: 2000, friction: 200 }
+    config: { mass: 1, tension: 2000, friction: 200 },
   })
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -127,7 +127,7 @@ const MundusList = ({
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
             padding: '5px',
-            transition: 'opacity 0.2s ease-in-out'
+            transition: 'opacity 0.2s ease-in-out',
           }}
         >
           <Flex
@@ -151,7 +151,7 @@ const MundusList = ({
           <List
             style={{
               height: '100%',
-              transition: 'opacity 0.2s ease-in-out'
+              transition: 'opacity 0.2s ease-in-out',
             }}
             dataSource={trail}
             renderItem={(style: any, index) => {

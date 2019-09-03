@@ -10,10 +10,11 @@ import {
   WeaponType,
   OnehandedWeapon,
   TwohandedWeapon,
-  SetType
+  SetType,
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from './GearCard'
 import { specialWeaponSets } from '../pages/build/Sets/SetBar'
+import Flex from './Flex'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
@@ -44,6 +45,22 @@ const GearFrame = styled.div`
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
+`
+
+const TextPrimary = styled(Typography.Text)`
+  width: ${props => props.theme.widths.mini};
+  text-align: left;
+`
+
+const TextSecondary = styled(Typography.Text)`
+  font-size: 12;
+  width: ${props => props.theme.widths.mini};
+  text-align: left;
+`
+
+const InnerDisplay = styled(Flex)`
+  height: 100%;
+  margin-left: ${props => props.theme.margins.small};
 `
 
 export interface ISet {
@@ -196,7 +213,7 @@ export default ({
   group,
   size = 'normal',
   extended,
-  setSelectionCount
+  setSelectionCount,
 }: IGearSlotProps) => {
   const [, dispatch] = useContext(BuildContext)
 
@@ -205,11 +222,11 @@ export default ({
       type: slot.slot,
       set: slot.selectedSet,
       icon: slot.icon,
-      weaponType: slot.weaponType
+      weaponType: slot.weaponType,
     },
     collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
+      isDragging: !!monitor.isDragging(),
+    }),
   })
 
   const [{ canDrop }, drop] = useDrop({
@@ -217,7 +234,7 @@ export default ({
       slot.slot,
       ...(slot.slot === Slot.mainHand || slot.slot === Slot.offHand
         ? [Slot.eitherHand]
-        : [])
+        : []),
     ],
     drop: (item: any, monitor) => {
       dispatch!({
@@ -227,13 +244,13 @@ export default ({
           icon: item.icon,
           slot: slot.slot,
           weaponType: item.weaponType,
-          group
-        }
+          group,
+        },
       })
     },
     collect: monitor => ({
-      canDrop: !!monitor.canDrop()
-    })
+      canDrop: !!monitor.canDrop(),
+    }),
   })
 
   const handleSlotClick = () => {
@@ -244,8 +261,8 @@ export default ({
         icon: slot.icon,
         slot: slot.slot,
         weaponType: slot.weaponType,
-        group
-      }
+        group,
+      },
     })
   }
   return extended ? (
@@ -278,30 +295,22 @@ export default ({
           <div />
         )}
       </GearFrame>
-      <InnerDisplay>
-        <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+      <InnerDisplay
+        direction='column'
+        justify='space-between'
+        align='flex-start'
+      >
+        <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
-        </Typography.Text>
+        </TextPrimary>
         {droppable ? (
           <>
-            <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-              ellipsis
-              type='secondary'
-            >
+            <TextSecondary ellipsis type='secondary'>
               {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
-            </Typography.Text>
-            <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-              ellipsis
-              type='secondary'
-            >
+            </TextSecondary>
+            <TextSecondary ellipsis type='secondary'>
               {slot.trait ? slot.trait.type : 'Trait not selected.'}
-            </Typography.Text>
+            </TextSecondary>
           </>
         ) : (
           <Button
@@ -354,20 +363,11 @@ const DisplayCard = styled.div`
   padding: 5px;
   display: flex;
   flex-direction: row;
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin: ${props => props.theme.margins.small};
-`
-
-const InnerDisplay = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 10px;
 `
 
 export const getItemType = (
@@ -443,7 +443,7 @@ const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
-  size
+  size,
 }: {
   slot: ISetSelection
   setSelectionCount: number
@@ -469,39 +469,27 @@ export const DisplaySlot = ({
         </GearFrame>
       </Popover>
 
-      <InnerDisplay>
-        <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+      <InnerDisplay
+        direction='column'
+        justify='space-between'
+        align='flex-start'
+      >
+        <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
-        </Typography.Text>
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+        </TextPrimary>
+        <TextPrimary ellipsis strong>
           <InnerSpan color={getTypeColor(slot.type)}>
             {getItemType(slot.type)}
           </InnerSpan>{' '}
           {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
-        </Typography.Text>
+        </TextPrimary>
 
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          type='secondary'
-        >
+        <TextSecondary ellipsis type='secondary'>
           {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
-        </Typography.Text>
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          type='secondary'
-        >
+        </TextSecondary>
+        <TextSecondary ellipsis type='secondary'>
           {slot.trait ? slot.trait.type : 'Trait not selected.'}
-        </Typography.Text>
+        </TextSecondary>
       </InnerDisplay>
     </DisplayCard>
   )

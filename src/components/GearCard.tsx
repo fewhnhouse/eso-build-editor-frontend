@@ -77,7 +77,7 @@ const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded
+  traitsNeeded,
 }: ISetTagProps) => {
   if (traitsNeeded) {
     return null
@@ -137,7 +137,7 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
               style={{
                 textAlign: 'left',
                 width: '100%',
-                fontWeight: count <= setSelectionCount ? 'bold' : 'normal'
+                fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
               }}
             >
               <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
@@ -157,7 +157,7 @@ interface IGearCardContent {
 
 export const GearCardContent = ({
   gear,
-  setSelectionCount
+  setSelectionCount,
 }: IGearCardContent) => {
   const gearTypeTag = (gearType: string) => {
     switch (gearType) {
@@ -201,7 +201,7 @@ export const GearCardContent = ({
               <span
                 key={count}
                 style={{
-                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal'
+                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
                 }}
               >
                 {count} pcs:{' '}
@@ -220,7 +220,7 @@ export const GearCardContent = ({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px'
+            margin: '5px 0px',
           }}
         >
           <Flex direction='row' justify='flex-start' align='center'>
@@ -245,7 +245,7 @@ export const GearCardContent = ({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            margin: '5px 0px'
+            margin: '5px 0px',
           }}
         >
           <Flex direction='row' justify='flex-start' align='center'>

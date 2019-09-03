@@ -28,7 +28,7 @@ const ResourceCard = styled(Card)`
 
 const StyledFlex = styled(Flex)`
   margin: ${props => props.theme.margins.small};
-  width: 400px;
+  width: ${props => props.theme.widths.medium};
 `
 
 const StyledWideFlex = styled(Flex)`
@@ -40,39 +40,43 @@ const StyledTitle = styled(Typography.Title)`
   margin: ${props => props.theme.margins.mini};
 `
 
+const StyledInput = styled(Input)`
+  width: ${props => props.theme.widths.medium};
+`
+
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
-    key: 'cyrodiil_raid'
+    key: 'cyrodiil_raid',
   },
   {
     label: 'Cyrodiil - Smallscale',
-    key: 'cyrodiil_smallscale'
+    key: 'cyrodiil_smallscale',
   },
   {
     label: 'Cyrodiil - Solo',
-    key: 'cyrodiil_solo'
+    key: 'cyrodiil_solo',
   },
   {
     label: 'Battlegrounds',
-    key: 'battlegrounds'
+    key: 'battlegrounds',
   },
   {
     label: 'PvE - Dungeons',
-    key: 'pve_dungeons'
+    key: 'pve_dungeons',
   },
   {
     label: 'PvE - Arena',
-    key: 'pve_arena'
+    key: 'pve_arena',
   },
   {
     label: 'PvE - Open World',
-    key: 'pve_openworld'
+    key: 'pve_openworld',
   },
   {
     label: 'PvE - Raids',
-    key: 'pve_raid'
-  }
+    key: 'pve_raid',
+  },
 ]
 
 const TOTAL_ATTRIBUTES = 64
@@ -85,7 +89,7 @@ export default ({ edit }: { edit: boolean }) => {
     magicka,
     stamina,
     role,
-    description
+    description,
   } = state!
   const totalAttributes = health + stamina + magicka
 
@@ -106,8 +110,9 @@ export default ({ edit }: { edit: boolean }) => {
         dispatch!({
           type: 'SET_HEALTH',
           payload: {
-            health: operation === 'plus' ? health + modifier : health - modifier
-          }
+            health:
+              operation === 'plus' ? health + modifier : health - modifier,
+          },
         })
       }
     } else if (type === 'magicka') {
@@ -121,8 +126,8 @@ export default ({ edit }: { edit: boolean }) => {
           type: 'SET_MAGICKA',
           payload: {
             magicka:
-              operation === 'plus' ? magicka + modifier : magicka - modifier
-          }
+              operation === 'plus' ? magicka + modifier : magicka - modifier,
+          },
         })
       }
     } else {
@@ -136,8 +141,8 @@ export default ({ edit }: { edit: boolean }) => {
           type: 'SET_STAMINA',
           payload: {
             stamina:
-              operation === 'plus' ? stamina + modifier : stamina - modifier
-          }
+              operation === 'plus' ? stamina + modifier : stamina - modifier,
+          },
         })
       }
     }
@@ -154,21 +159,21 @@ export default ({ edit }: { edit: boolean }) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
       type: 'SET_DESCRIPTION',
-      payload: { description: e.target.value }
+      payload: { description: e.target.value },
     })
   }
 
   const handleApplicationAreaChange = (value: string) => {
     dispatch!({
       type: 'SET_APPLICATION_AREA',
-      payload: { applicationArea: value }
+      payload: { applicationArea: value },
     })
   }
 
   const handleRoleChange = (value: string) => {
     dispatch!({
       type: 'SET_ROLE',
-      payload: { role: value }
+      payload: { role: value },
     })
   }
 
@@ -183,8 +188,7 @@ export default ({ edit }: { edit: boolean }) => {
             align='flex-start'
           >
             <Typography.Text strong>Build Name</Typography.Text>
-            <Input
-              style={{ width: 400 }}
+            <StyledInput
               size='large'
               value={name}
               onChange={handleBuildNameChange}
@@ -197,16 +201,13 @@ export default ({ edit }: { edit: boolean }) => {
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
-
-            <Input
+            <StyledInput
               size='large'
-              style={{ width: 400 }}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'
             />
           </StyledFlex>
-
           <StyledFlex
             direction='column'
             justify='flex-start'
@@ -234,8 +235,8 @@ export default ({ edit }: { edit: boolean }) => {
           >
             <Typography.Text strong>Role</Typography.Text>
             <Select
-              size='large'
               style={{ width: 400 }}
+              size='large'
               value={role}
               onChange={handleRoleChange}
               placeholder='Select application area...'

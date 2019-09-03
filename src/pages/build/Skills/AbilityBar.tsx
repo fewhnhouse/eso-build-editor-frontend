@@ -14,24 +14,16 @@ export const ACTIVE_ULTIMATE = 'activeUltimate'
 export const ULTIMATE_ONE = 'ultimate1'
 export const ULTIMATE_TWO = 'ultimate2'
 
-const AbilityBar = styled.div`
+const AbilityBar = styled(Flex)`
   height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 `
 
-const AbilityBarContainer = styled.div`
+const AbilityBarContainer = styled(Flex)`
   flex: 1;
   height: 100%;
-  padding: 40px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  padding: ${props => props.theme.margins.large};
+  max-width: ${props => props.theme.widths.large};
   background: white;
 `
 
@@ -41,7 +33,7 @@ const TrashContainer = styled.div`
     ${(props: { hasTrash: boolean }) =>
       props.hasTrash ? '#40a9ff' : '#d9d9d9'};
   border-radius: 4px;
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   height: 80px;
   text-align: center;
   display: flex;
@@ -100,7 +92,7 @@ export default () => {
     }
   }, [selectedSkillLines, skillLine])
   return (
-    <AbilityBarContainer>
+    <AbilityBarContainer direction='column' align='center'>
       <Flex
         direction='column'
         justify='space-around'
@@ -108,7 +100,7 @@ export default () => {
         style={{ height: '100%' }}
       >
         <Divider>Active Selection</Divider>
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             droppable={false}
             abilityBar={-1}
@@ -118,8 +110,7 @@ export default () => {
           />
         </AbilityBar>
         <Divider>Ability Bar</Divider>
-
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             abilityBar={0}
             ultimate={ultimateOne}
@@ -128,8 +119,7 @@ export default () => {
             skillSlots={newBarOne}
           />
         </AbilityBar>
-
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             abilityBar={1}
             id={ABILITY_BAR_TWO}

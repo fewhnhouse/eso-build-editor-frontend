@@ -29,7 +29,7 @@ interface IMetaProps {
 
 const CoverContainer = styled.div`
   display: flex;
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   justify-content: center;
   align-items: center;
   padding: ${props => props.theme.margins.medium};
@@ -40,7 +40,7 @@ const StyledCard = styled(Card)`
   background: ${(props: IMetaProps) =>
     props.selected ? 'rgba(0, 0, 0,0.1)' : 'white'};
   border-color: ${(props: IMetaProps) => (props.selected ? '#1890ff' : '')};
-  width: 250px;
+  width: ${props => props.theme.widths.small};
 `
 const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext)
@@ -49,11 +49,11 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const handleClick = () => {
     dispatch!({
       type,
-      payload: selected ? '' : title
+      payload: selected ? '' : title,
     })
     dispatch!({
       type: 'RESET_SKILLS',
-      payload: {}
+      payload: {},
     })
   }
 
@@ -100,7 +100,7 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
 export const EsoClassCard = ({
   title,
   imageSource,
-  description
+  description,
 }: IRootCard) => {
   return (
     <MyCard

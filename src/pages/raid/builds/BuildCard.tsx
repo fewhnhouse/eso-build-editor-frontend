@@ -66,7 +66,7 @@ export default ({
   style,
   draggable = true,
   role,
-  expand
+  expand,
 }: IBuildCardProps) => {
   return draggable ? (
     <WithDnD expand={expand} item={item} style={style} />
@@ -81,12 +81,12 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
-      build: item
+      build: item,
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      didDrop: !!monitor.didDrop()
-    })
+      didDrop: !!monitor.didDrop(),
+    }),
   })
   return (
     <div style={style} ref={drag}>
@@ -98,7 +98,7 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
 const BuildCard = ({
   item,
   role,
-  expand
+  expand,
 }: {
   item: IBuild
   role?: IRole
@@ -108,7 +108,7 @@ const BuildCard = ({
   const handleDeleteClick = () => {
     dispatch!({
       type: 'REMOVE_BUILD',
-      payload: { buildId: item.id, name: role ? role.name : '' }
+      payload: { buildId: item.id, name: role ? role.name : '' },
     })
   }
   const {
@@ -116,7 +116,7 @@ const BuildCard = ({
     backbarSelection,
     smallPieceSelection,
     bigPieceSelection,
-    jewelrySelection
+    jewelrySelection,
   } = item
   const concat = frontbarSelection.concat(
     backbarSelection,
@@ -144,7 +144,7 @@ const BuildCard = ({
               width: '80%',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
             }}
           >
             {item.name}
@@ -217,13 +217,13 @@ const BuildCard = ({
                       {
                         id: 'frontbar',
                         label: 'Frontbar',
-                        data: item.frontbarSelection
+                        data: item.frontbarSelection,
                       },
                       {
                         id: 'backbar',
                         label: 'Backbar',
-                        data: item.backbarSelection
-                      }
+                        data: item.backbarSelection,
+                      },
                     ]}
                   />
                 </ScrollContainer>
@@ -238,13 +238,13 @@ const BuildCard = ({
                       {
                         id: 'bigpieces',
                         label: 'Big Pieces',
-                        data: item.bigPieceSelection
+                        data: item.bigPieceSelection,
                       },
                       {
                         id: 'smallpieces',
                         label: 'Small Pieces',
-                        data: item.smallPieceSelection
-                      }
+                        data: item.smallPieceSelection,
+                      },
                     ]}
                   />
                 </ScrollContainer>
@@ -259,8 +259,8 @@ const BuildCard = ({
                       {
                         id: 'jewelry',
                         label: 'Jewelry',
-                        data: item.jewelrySelection
-                      }
+                        data: item.jewelrySelection,
+                      },
                     ]}
                   />
                 </ScrollContainer>

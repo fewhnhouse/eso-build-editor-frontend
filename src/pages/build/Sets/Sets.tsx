@@ -9,7 +9,7 @@ import { BuildContext, SetTab } from '../BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import SetMenu from './SetMenu'
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars'
 
 const { TabPane } = Tabs
 
@@ -35,7 +35,7 @@ export default ({ edit }: { edit: boolean }) => {
     jewelrySelection,
     frontbarSelection,
     backbarSelection,
-    selectedSet
+    selectedSet,
   } = state!
 
   const setsCount = bigPieceSelection

@@ -205,7 +205,10 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
   })
 
   return (
-    <Scrollbars autoHide style={{maxWidth: 420, width: "100%", minWidth: 370}}>
+    <Scrollbars
+      autoHide
+      style={{ maxWidth: 420, width: '100%', minWidth: 370 }}
+    >
       <List
         loading={loading}
         style={{
@@ -224,4 +227,3 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
     </Scrollbars>
   )
 }
-

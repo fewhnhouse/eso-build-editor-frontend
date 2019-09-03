@@ -34,7 +34,7 @@ const StyledCard = styled(Card)`
   border-width: 2px;
   margin: ${props => props.theme.margins.small};
   width: 90%;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
 `
 
 const StyledList = styled(List)`

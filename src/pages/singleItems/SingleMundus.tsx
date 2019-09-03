@@ -24,7 +24,7 @@ const GET_MUNDUS_BY_ID = gql`
 const SingleMundus = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const { data, loading, error } = useQuery(GET_MUNDUS_BY_ID, {
-    variables: { id: id }
+    variables: { id: id },
   })
 
   if (loading) {
@@ -45,7 +45,7 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
         style={{
           height: 'calc(100vh - 100px)',
           width: '100%',
-          padding: 20
+          padding: 20,
         }}
       >
         <MundusCard mundusStone={data.mundusStone} />

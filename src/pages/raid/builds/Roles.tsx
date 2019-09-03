@@ -34,6 +34,18 @@ const StyledButton = styled(Button)`
   width: 100px;
 `
 
+const StyledInput = styled(Input)`
+  max-width: ${props => props.theme.widths.medium};
+`
+
+const StyledBuildCard = styled(BuildCard)`
+  width: ${props => props.theme.widths.medium};
+`
+
+const StyledSearch = styled(Search)`
+  width: ${props => props.theme.widths.medium};
+`
+
 const RoleDropper = ({ role }: { role: IRole }) => {
   const [, dispatch] = useContext(RaidContext)
   const [, drop] = useDrop({
@@ -41,13 +53,13 @@ const RoleDropper = ({ role }: { role: IRole }) => {
     drop: (item: any, monitor) => {
       dispatch!({
         type: 'ADD_BUILD',
-        payload: { name: role.name, build: item.build }
+        payload: { name: role.name, build: item.build },
       })
     },
     collect: monitor => ({
       canDrop: !!monitor.canDrop(),
-      isOver: !!monitor.isOver()
-    })
+      isOver: !!monitor.isOver(),
+    }),
   })
 
   return (
@@ -81,14 +93,14 @@ export default () => {
   const handleDeleteClick = (roleName: string) => () => {
     dispatch!({
       type: 'REMOVE_ROLE',
-      payload: { name: roleName }
+      payload: { name: roleName },
     })
   }
 
   const handleSaveClick = (oldRoleName: string) => () => {
     dispatch!({
       type: 'EDIT_ROLE',
-      payload: { oldRoleName, newRoleName: editRole }
+      payload: { oldRoleName, newRoleName: editRole },
     })
     setEdit(false)
   }
@@ -122,8 +134,7 @@ export default () => {
               title={
                 <Flex direction='row' justify='space-between'>
                   {edit ? (
-                    <Input
-                      style={{ maxWidth: 400 }}
+                    <StyledInput
                       placeholder='Type a role name here...'
                       size='large'
                       value={editRole}
@@ -178,11 +189,10 @@ export default () => {
                 align='center'
               >
                 {role.builds.map((build, buildIndex) => (
-                  <BuildCard
+                  <StyledBuildCard
                     expand
                     draggable={false}
                     role={role}
-                    style={{ width: 400 }}
                     key={`buildCard-${index}-${buildIndex}`}
                     item={build.build}
                   />
@@ -192,11 +202,10 @@ export default () => {
             </StyledCard>
           ))}
         <Divider>
-          <Search
+          <StyledSearch
             value={role}
             size='large'
             onChange={handleRoleChange}
-            style={{ width: 400 }}
             type='text'
             onSearch={handleBtnClick}
             enterButton={

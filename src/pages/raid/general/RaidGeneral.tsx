@@ -21,12 +21,16 @@ const StyledWideFlex = styled(Flex)`
   flex: 1;
 `
 
+const StyledInput = styled(Input)`
+  width: ${props => props.theme.widths.medium};
+`
+
 const marks = {
   1: '1',
   6: '6',
   12: '12',
   18: '18',
-  24: '24'
+  24: '24',
 }
 
 interface IRaidGeneralProps {
@@ -36,32 +40,32 @@ interface IRaidGeneralProps {
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
-    key: 'cyrodiil_raid'
+    key: 'cyrodiil_raid',
   },
   {
     label: 'Cyrodiil - Smallscale',
-    key: 'cyrodiil_smallscale'
+    key: 'cyrodiil_smallscale',
   },
   {
     label: 'Battlegrounds',
-    key: 'battlegrounds'
+    key: 'battlegrounds',
   },
   {
     label: 'PvE - Dungeons',
-    key: 'pve_dungeons'
+    key: 'pve_dungeons',
   },
   {
     label: 'PvE - Arena',
-    key: 'pve_arena'
+    key: 'pve_arena',
   },
   {
     label: 'PvE - Open World',
-    key: 'pve_openworld'
+    key: 'pve_openworld',
   },
   {
     label: 'PvE - Raids',
-    key: 'pve_raid'
-  }
+    key: 'pve_raid',
+  },
 ]
 const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const [state, dispatch] = useContext(RaidContext)
@@ -80,21 +84,21 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
       type: 'SET_RAID_DESCRIPTION',
-      payload: { description: e.target.value }
+      payload: { description: e.target.value },
     })
   }
 
   const handleApplicationAreaChange = (value: string) => {
     dispatch!({
       type: 'SET_RAID_APPLICATION_AREA',
-      payload: { applicationArea: value }
+      payload: { applicationArea: value },
     })
   }
 
   const handleGroupSizeChange = (value: SliderValue) => {
     dispatch!({
       type: 'SET_GROUP_SIZE',
-      payload: { groupSize: value }
+      payload: { groupSize: value },
     })
   }
 
@@ -109,8 +113,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Raid Name</Typography.Text>
-            <Input
-              style={{ width: 400 }}
+            <StyledInput
               size='large'
               value={name}
               onChange={handleRaidNameChange}
@@ -124,9 +127,8 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
           >
             <Typography.Text strong>Description</Typography.Text>
 
-            <Input
+            <StyledInput
               size='large'
-              style={{ width: 400 }}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'

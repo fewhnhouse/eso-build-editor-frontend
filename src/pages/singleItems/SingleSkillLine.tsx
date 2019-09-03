@@ -21,7 +21,7 @@ const GET_SKILLS_BY_ID = gql`
 const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const { data } = useQuery(GET_SKILLS_BY_ID, {
-    variables: { id: parseInt(id) }
+    variables: { id: parseInt(id) },
   })
   const skillLine: ISkill[] = data.skills ? data.skills : ''
 
@@ -48,7 +48,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
         style={{
           height: '100%',
           width: '100%',
-          padding: 20
+          padding: 20,
         }}
       >
         <SkillsDisplay

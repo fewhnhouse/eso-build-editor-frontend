@@ -19,7 +19,7 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
       style={{
         height: '100%',
         width: '100%',
-        padding: isMobile ? 0 : 20
+        padding: isMobile ? 0 : 20,
       }}
     >
       <MenuCard isMobile={isMobile}>
@@ -33,7 +33,7 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           {selectedSet ? (
@@ -45,7 +45,7 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
                 justifyContent: 'center',
                 flex: 2,
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               Select a Set to get started.

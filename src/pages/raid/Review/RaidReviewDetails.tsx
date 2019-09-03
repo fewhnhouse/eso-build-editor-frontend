@@ -30,7 +30,8 @@ const RaidContent = styled(Flex)`
 const BuildInformation = styled(Card)`
   flex: 2;
   flex-wrap: wrap;
-  overflow: ${(props: { isMobile: boolean }) => (props.isMobile ? 'hidden' : 'auto')};
+  overflow: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'hidden' : 'auto'};
   height: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : '100%')};
   min-width: 370px;
 `

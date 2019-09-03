@@ -65,7 +65,7 @@ export default ({ context, skillLine, isMobile }: ISetProps) => {
           height: '100%',
           width: '100%',
           overflow: 'auto',
-          padding: isMobile ? 0 : 20
+          padding: isMobile ? 0 : 20,
         }}
       >
         <MenuCard isMobile={isMobile}>
@@ -79,7 +79,7 @@ export default ({ context, skillLine, isMobile }: ISetProps) => {
               height: '100%',
               display: 'flex',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <SkillsDisplay

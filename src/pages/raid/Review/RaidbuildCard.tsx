@@ -14,7 +14,7 @@ const StyledCard = styled(Card)`
   margin: ${props => props.theme.margins.mini}
     ${props => props.theme.margins.small} 0
     ${props => props.theme.margins.small};
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -57,27 +57,27 @@ const setColor = (role: string, theme: ITheme) => {
     case 'Stamina DD':
       return {
         borderColor: `${theme.roleCardColors.StamDD}`,
-        backgroundColor: ``
+        backgroundColor: ``,
       }
     case 'Stamina Support':
       return {
         borderColor: `${theme.roleCardColors.StamSupp}`,
-        backgroundColor: ``
+        backgroundColor: ``,
       }
     case 'Magicka DD':
       return {
         borderColor: `${theme.roleCardColors.MagDD}`,
-        backgroundColor: ``
+        backgroundColor: ``,
       }
     case 'Magicka Support':
       return {
         borderColor: `${theme.roleCardColors.MagSupp}`,
-        backgroundColor: ``
+        backgroundColor: ``,
       }
     default:
       return {
         borderColor: '',
-        backgroundColor: ''
+        backgroundColor: '',
       }
   }
 }
@@ -106,7 +106,7 @@ const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
             title={race}
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}`}
           />
-        </RaceContainer>
+        </RaceContainer>,
       ]}
     >
       <Meta

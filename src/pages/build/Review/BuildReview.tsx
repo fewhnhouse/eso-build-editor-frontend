@@ -11,7 +11,7 @@ import {
   CREATE_SET_SELECTIONS,
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
-  ISetSelectionData
+  ISetSelectionData,
 } from '../Build'
 import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
@@ -67,7 +67,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
     variables: { id },
-    refetchQueries: [{ query: ME }]
+    refetchQueries: [{ query: ME }],
   })
 
   useEffect(() => {
@@ -78,12 +78,12 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     if (data) {
       notification.success({
         message: 'Build Deletion',
-        description: 'Build successfully deleted.'
+        description: 'Build successfully deleted.',
       })
     } else if (error) {
       notification.error({
         message: 'Build Deletion',
-        description: 'Error while deleting build. Try again later.'
+        description: 'Error while deleting build. Try again later.',
       })
     }
   }, [data, error])
@@ -124,14 +124,14 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               <Button icon='share-alt'>Share link</Button>
             </Flex>
           </Flex>
-        )
+        ),
       })
       setSaved(true)
     } catch (e) {
       console.error(e)
       notification.error({
         message: 'Build creation failed',
-        description: 'Your build could not be copied. Try again later.'
+        description: 'Your build could not be copied. Try again later.',
       })
     }
 
