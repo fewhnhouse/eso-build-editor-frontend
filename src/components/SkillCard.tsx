@@ -98,7 +98,7 @@ export const DisplaySkillCard = ({
   morph1,
   morph2,
   passive,
-  ultimate,
+  ultimate
 }: ICardProps) => {
   return (
     <StyledCard
@@ -131,7 +131,7 @@ export const DisplaySkillCard = ({
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph2.icon}`}
                   />
                 </RaceContainer>
-              </Popover>,
+              </Popover>
             ]
       }
     >
@@ -164,17 +164,17 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     if (firstActive) {
       dispatch!({
         type: 'UNSELECT_MORPH',
-        payload: { baseSkill: skill, morph: morph1 },
+        payload: { baseSkill: skill, morph: morph1 }
       })
     } else if (!secondActive) {
       dispatch!({
         type: 'SELECT_MORPH',
-        payload: { baseSkill: skill, morph: morph1 },
+        payload: { baseSkill: skill, morph: morph1 }
       })
     } else {
       dispatch!({
         type: 'SWAP_MORPH',
-        payload: { oldMorph: morph2, newMorph: morph1 },
+        payload: { oldMorph: morph2, newMorph: morph1 }
       })
     }
   }
@@ -183,17 +183,17 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
     if (secondActive) {
       dispatch!({
         type: 'UNSELECT_MORPH',
-        payload: { baseSkill: skill, morph: morph2 },
+        payload: { baseSkill: skill, morph: morph2 }
       })
     } else if (!firstActive) {
       dispatch!({
         type: 'SELECT_MORPH',
-        payload: { baseSkill: skill, morph: morph2 },
+        payload: { baseSkill: skill, morph: morph2 }
       })
     } else {
       dispatch!({
         type: 'SWAP_MORPH',
-        payload: { oldMorph: morph1, newMorph: morph2 },
+        payload: { oldMorph: morph1, newMorph: morph2 }
       })
     }
   }
@@ -235,7 +235,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph2.icon}`}
                   />
                 </RaceContainer>
-              </Popover>,
+              </Popover>
             ]
       }
     >

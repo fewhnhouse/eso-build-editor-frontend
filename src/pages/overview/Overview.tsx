@@ -4,23 +4,27 @@ import { Tabs, Card } from 'antd'
 import {
   OverviewContext,
   defaultOverviewState,
-  overviewReducer,
+  overviewReducer
 } from './OverviewStateContext'
 import styled from 'styled-components'
 import Set from './Set'
 import MundusStone from './MundusStone'
 import Buff from './Buff'
 import Skills from './Skills'
+import { useMediaQuery } from 'react-responsive'
 
 const { TabPane } = Tabs
 
 export const MenuCard = styled.div`
   height: calc(100vh - 150px);
-  margin-right: 10px;
+  max-width: ${(props: { minWidth?: string; isMobile: boolean }) =>
+    props.isMobile ? '100%' : '50%'};
+  margin-right: ${(props: { minWidth?: string; isMobile: boolean }) =>
+    props.isMobile ? '0px' : '10px'};
   max-height: 90%;
-  min-width: ${(props: { minWidth?: string }) => props.minWidth || '300px'};
+  min-width: ${(props: { minWidth?: string; isMobile: boolean }) =>
+    props.minWidth || '300px'};
   flex: 1;
-  max-width: 50%;
 `
 
 export const Description = styled.div`
@@ -52,12 +56,14 @@ export default () => {
   const [state, dispatch] = useReducer(overviewReducer, defaultOverviewState)
 
   const { buff, mundusStone, selectedSet, skillLine } = state
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   return (
     <OverviewContext.Provider value={[state, dispatch]}>
       <Flex
         style={{
           width: '100%',
-          height: '100%',
+          height: 'calc(100vh - 64px)'
         }}
         direction='column'
         align='center'
@@ -69,16 +75,28 @@ export default () => {
           size='large'
         >
           <TabPane tab='Buff Food' key='1'>
-            <Buff context={OverviewContext} buff={buff} />
+            <Buff context={OverviewContext} buff={buff} isMobile={isMobile} />
           </TabPane>
           <TabPane tab='Mundus Stones' key='2'>
-            <MundusStone mundusStone={mundusStone} context={OverviewContext} />
+            <MundusStone
+              mundusStone={mundusStone}
+              context={OverviewContext}
+              isMobile={isMobile}
+            />
           </TabPane>
           <TabPane tab='Sets' key='3'>
-            <Set selectedSet={selectedSet} context={OverviewContext} />
+            <Set
+              selectedSet={selectedSet}
+              context={OverviewContext}
+              isMobile={isMobile}
+            />
           </TabPane>
           <TabPane tab='Skills' key='4'>
-            <Skills context={OverviewContext} skillLine={skillLine} />
+            <Skills
+              context={OverviewContext}
+              skillLine={skillLine}
+              isMobile={isMobile}
+            />
           </TabPane>
         </Tabs>
       </Flex>
