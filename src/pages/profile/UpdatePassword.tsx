@@ -1,16 +1,18 @@
 import React from 'react'
-import { IActionProps, ProfileAction } from './Profile'
-import { Card, Input, Button } from 'antd'
+import { IActionProps, ProfileAction, ItemCard } from './Profile'
+import { Input, Button } from 'antd'
+import { useMediaQuery } from 'react-responsive'
 
 export default ({ handleActionClick, value, setValue }: IActionProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue && setValue(e.target.value)
   }
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const isValid = value && value.length > 6
 
   return (
-    <Card title='Change your password' style={{ maxWidth: 500, width: '40%' }}>
+    <ItemCard title='Change your password' isMobile={isMobile}>
       <Input.Password
         value={value}
         onChange={handleChange}
@@ -27,6 +29,6 @@ export default ({ handleActionClick, value, setValue }: IActionProps) => {
       >
         Update password
       </Button>
-    </Card>
+    </ItemCard>
   )
 }

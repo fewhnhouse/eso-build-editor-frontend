@@ -9,6 +9,7 @@ import {
   notification,
   Button,
   message,
+  Card,
 } from 'antd'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
@@ -19,6 +20,8 @@ import UpdatePassword from './UpdatePassword'
 import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
 import { RESEND_VERIFICATION } from '../../components/AppContainer'
+import { useMediaQuery } from 'react-responsive'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -32,6 +35,12 @@ const Container = styled(Content)`
   overflow: auto;
   height: calc(100vh - 64px);
   color: ${props => props.theme.mainBg};
+`
+
+export const ItemCard = styled(Card)`
+  max-width: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : '500px'};
+  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '40%')};
 `
 
 const ME = gql`
@@ -144,6 +153,8 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const [deleteAccount, deleteAccountResult] = useMutation<any, any>(
     DELETE_ACCOUNT
   )
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   useEffect(() => {
     if (
       updatePasswordResult.data ||
@@ -258,28 +269,30 @@ const Profile = ({ loggedIn }: IProfileProps) => {
         />
       </Modal>
       <Container>
-        <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
-        <Flex
-          direction='column'
-          justify='space-around'
-          align='center'
-          style={{ width: '100%', margin: 20 }}
-        >
-          <UpdateEmail
-            value={email}
-            setValue={setEmail}
-            me={me.data.me}
-            handleActionClick={handleActionClick}
-          />
-          <Divider />
-          <UpdatePassword
-            value={password}
-            setValue={setPassword}
-            handleActionClick={handleActionClick}
-          />
-          <Divider />
-          <DeleteAccount handleActionClick={handleActionClick} />
-        </Flex>
+        <Scrollbars autoHide>
+          <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
+          <Flex
+            direction='column'
+            justify='space-around'
+            align='center'
+            style={{ width: '100%', margin: isMobile ? 0 : 20 }}
+          >
+            <UpdateEmail
+              value={email}
+              setValue={setEmail}
+              me={me.data.me}
+              handleActionClick={handleActionClick}
+            />
+            <Divider />
+            <UpdatePassword
+              value={password}
+              setValue={setPassword}
+              handleActionClick={handleActionClick}
+            />
+            <Divider />
+            <DeleteAccount handleActionClick={handleActionClick} />
+          </Flex>
+        </Scrollbars>
       </Container>
     </>
   )

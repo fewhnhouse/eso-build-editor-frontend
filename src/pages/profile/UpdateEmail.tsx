@@ -1,19 +1,23 @@
 import React from 'react'
-import { IActionProps, ProfileAction } from './Profile'
-import { Card, Typography, Input, Button, Divider } from 'antd'
+import { IActionProps, ProfileAction, ItemCard } from './Profile'
+import { Typography, Input, Button, Divider } from 'antd'
+import { useMediaQuery } from 'react-responsive'
+
 const { Text } = Typography
 
 export default ({ me, handleActionClick, value, setValue }: IActionProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue && setValue(e.target.value)
   }
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const re = new RegExp(
     //eslint-disable-next-line
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   )
   const isValid = re.test(value || '')
   return (
-    <Card title='Change your email' style={{ maxWidth: 500, width: '40%' }}>
+    <ItemCard title='Change your email' isMobile={isMobile}>
       <Text>Current email: {me ? me.email : ''}</Text>
       <Divider />
       <Input
@@ -32,6 +36,6 @@ export default ({ me, handleActionClick, value, setValue }: IActionProps) => {
       >
         Update email
       </Button>
-    </Card>
+    </ItemCard>
   )
 }
