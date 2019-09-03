@@ -33,7 +33,7 @@ const MobileHeader = styled.div`
   position: fixed;
   transition: height 1s ease-in-out;
   top: 64px;
-  z-index: 9999;
+  z-index: 100 !important;
   background: #ededed;
 `
 

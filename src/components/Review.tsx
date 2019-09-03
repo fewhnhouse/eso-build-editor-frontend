@@ -103,8 +103,7 @@ const Review = ({
               overflow: 'hidden',
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'space-between',
-              zIndex: 100,
+              justifyContent: 'center',
               alignItems: 'center',
               boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
             }}
