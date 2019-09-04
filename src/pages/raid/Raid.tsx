@@ -1,16 +1,16 @@
-import React, { useState, useReducer, useEffect } from 'react'
-import styled from 'styled-components'
-import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
-import { Redirect } from 'react-router'
-import RaidGeneral from './general/RaidGeneral'
-import { RaidContext, raidReducer, IRole } from './RaidStateContext'
-import Builds from './builds/Builds'
-import gql from 'graphql-tag'
-import { useMutation } from 'react-apollo'
-import Flex from '../../components/Flex'
-import RaidReview from './Review/RaidReview'
-import { handleCreateSave, handleEditSave } from './util'
-import { raid } from '../../util/fragments'
+import React, { useState, useReducer, useEffect } from "react"
+import styled from "styled-components"
+import { Layout, Icon, Button, Steps, Tooltip, notification } from "antd"
+import { Redirect } from "react-router"
+import RaidGeneral from "./general/RaidGeneral"
+import { RaidContext, raidReducer, IRole } from "./RaidStateContext"
+import Builds from "./builds/Builds"
+import gql from "graphql-tag"
+import { useMutation } from "react-apollo"
+import Flex from "../../components/Flex"
+import RaidReview from "./Review/RaidReview"
+import { handleCreateSave, handleEditSave } from "./util"
+import { raid } from "../../util/fragments"
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -69,13 +69,13 @@ export default ({
 
   const [state, dispatch] = useReducer(raidReducer, raid)
   const [tab, setTab] = useState(pageIndex || 0)
-  const [redirect, setRedirect] = useState('')
+  const [redirect, setRedirect] = useState("")
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
 
   const handlePrivateChange = () => {
-    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
+    dispatch!({ type: "TOGGLE_IS_PUBLISHED", payload: {} })
   }
 
   const [updateRaid, updateRaidResult] = useMutation<any, any>(UPDATE_RAID)
@@ -83,12 +83,12 @@ export default ({
   const [createRaid, createRaidResult] = useMutation<any, any>(CREATE_RAID)
 
   const isDisabled =
-    (tab === 0 && state.name === '') || (tab === 1 && state.roles.length <= 0)
+    (tab === 0 && state.name === "") || (tab === 1 && state.roles.length <= 0)
 
   useEffect(() => {
     if (saved) {
       if (createRaidResult.data && createRaidResult.data.createRaid) {
-        localStorage.removeItem('raidState')
+        localStorage.removeItem("raidState")
         setRedirect(createRaidResult.data.createRaid.id)
       } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
         setRedirect(updateRaidResult.data.updateRaid.id)
@@ -102,20 +102,20 @@ export default ({
       try {
         await handleEditSave(state, updateRaid, initialRoles)
         notification.success({
-          message: 'Raid update successful',
+          message: "Raid update successful",
           description: (
-            <Flex direction='column' align='center' justify='center'>
+            <Flex direction="column" align="center" justify="center">
               <div>
                 Your raid was successfully edited. You can now view it and share
                 it with others!
               </div>
               <Flex
-                style={{ width: '100%', marginTop: 10 }}
-                direction='row'
-                align='center'
-                justify='space-between'
+                style={{ width: "100%", marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button icon="share-alt">Share link</Button>
               </Flex>
             </Flex>
           ),
@@ -123,28 +123,28 @@ export default ({
       } catch (e) {
         console.error(e)
         notification.error({
-          message: 'Raid Update failed',
-          description: 'Your raid could not be updated. Try again later.',
+          message: "Raid Update failed",
+          description: "Your raid could not be updated. Try again later.",
         })
       }
     } else {
       try {
         await handleCreateSave(state, createRaid)
         notification.success({
-          message: 'Raid creation successful',
+          message: "Raid creation successful",
           description: (
-            <Flex direction='column' align='center' justify='center'>
+            <Flex direction="column" align="center" justify="center">
               <div>
                 Your raid was successfully saved. You can now view it and share
                 it with others!
               </div>
               <Flex
-                style={{ width: '100%', marginTop: 10 }}
-                direction='row'
-                align='center'
-                justify='space-between'
+                style={{ width: "100%", marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button icon="share-alt">Share link</Button>
               </Flex>
             </Flex>
           ),
@@ -152,8 +152,8 @@ export default ({
       } catch (e) {
         console.error(e)
         notification.error({
-          message: 'Raid creation failed',
-          description: 'Your raid could not be saved. Try again later.',
+          message: "Raid creation failed",
+          description: "Your raid could not be saved. Try again later.",
         })
       }
     }
@@ -173,11 +173,11 @@ export default ({
   const setTooltipTitle = () => {
     switch (tab) {
       case 0:
-        return 'Select some general Information.'
+        return "Select some general Information."
       case 1:
-        return 'Select the builds of your Setup.'
+        return "Select the builds of your Setup."
       case 2:
-        return 'Confirm and Save.'
+        return "Confirm and Save."
     }
   }
 
@@ -203,57 +203,57 @@ export default ({
         ) : (
           <Redirect to={`${path}/0`} />
         )}
-        {redirect !== '' ? <Redirect to={`/raids/${redirect}`} push /> : ''}
+        {redirect !== "" ? <Redirect to={`/raids/${redirect}`} push /> : ""}
       </Container>
       <Footer
         style={{
-          display: 'flex',
+          display: "flex",
           zIndex: 100,
-          alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+          alignItems: "center",
+          boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)",
         }}
       >
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
-          size='large'
-          type='primary'
+          size="large"
+          type="primary"
         >
-          <Icon type='left' />
+          <Icon type="left" />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='General Information'
-            description='Add general Raid info.'
+            style={{ whiteSpace: "nowrap" }}
+            title="General Information"
+            description="Add general Raid info."
           />
           <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Builds'
-            description='Add builds to your setup.'
+            style={{ whiteSpace: "nowrap" }}
+            title="Builds"
+            description="Add builds to your setup."
           />
           <Step
-            title='Review'
-            style={{ whiteSpace: 'nowrap' }}
-            description='Review and save.'
+            title="Review"
+            style={{ whiteSpace: "nowrap" }}
+            description="Review and save."
           />
         </Steps>
-        <ButtonGroup style={{ display: 'flex' }} size='large'>
+        <ButtonGroup style={{ display: "flex" }} size="large">
           {tab === 2 && (
             <Tooltip
               title={
                 publishDisabled
-                  ? 'Some of the builds in your raid are set to private. Only use public builds to publish your raid.'
+                  ? "Some of the builds in your raid are set to private. Only use public builds to publish your raid."
                   : state!.published
-                  ? 'Your raid is set to public. It will be visible for anyone. Click to change.'
-                  : 'Your raid is set to private. It will only be visible for you. Click to change.'
+                  ? "Your raid is set to public. It will be visible for anyone. Click to change."
+                  : "Your raid is set to private. It will only be visible for you. Click to change."
               }
             >
               <Button
                 disabled={publishDisabled}
                 onClick={handlePrivateChange}
-                icon={state!.published ? 'unlock' : 'lock'}
+                icon={state!.published ? "unlock" : "lock"}
               />
             </Tooltip>
           )}
@@ -263,10 +263,10 @@ export default ({
               loading={loading}
               onClick={handleNextClick}
               disabled={isDisabled || saved}
-              type='primary'
+              type="primary"
             >
-              {tab === 2 ? 'Save' : 'Next'}
-              {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
+              {tab === 2 ? "Save" : "Next"}
+              {!loading && <Icon type={tab === 2 ? "save" : "right"} />}
             </TabButton>
           </Tooltip>
         </ButtonGroup>

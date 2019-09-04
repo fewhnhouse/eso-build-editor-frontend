@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { List, Card, Typography, Divider } from 'antd'
-import styled from 'styled-components'
-import { Redirect } from 'react-router'
-import { applicationAreas } from '../build/RaceAndClass/RaceClass'
-import Scrollbars from 'react-custom-scrollbars'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from "react"
+import { List, Card, Typography, Divider } from "antd"
+import styled from "styled-components"
+import { Redirect } from "react-router"
+import { applicationAreas } from "../build/RaceAndClass/RaceClass"
+import Scrollbars from "react-custom-scrollbars"
+import { useMediaQuery } from "react-responsive"
 
 const { Text } = Typography
 
@@ -12,7 +12,7 @@ const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
+    props.newEffect ? "#2ecc71" : "rgba(0, 0, 0, 0.45)"};
   text-align: left;
 `
 
@@ -29,7 +29,7 @@ const Title = styled.div`
 
 const StyledCard = styled(Card)`
   border-color: rgb(232, 232, 232);
-  background: 'white';
+  background: "white";
   border-width: 2px;
   margin: 10px;
   width: 90%;
@@ -39,10 +39,9 @@ const StyledCard = styled(Card)`
 const StyledList = styled(List)`
   background: white;
   border-bottom-left-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
+    props.isMobile ? "0px" : "10px"};
   border-bottom-right-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
-
+    props.isMobile ? "0px" : "10px"};
 `
 
 const StyledImg = styled.img`
@@ -68,22 +67,21 @@ interface IUserDataProps {
   loading: boolean
 }
 
-const BuildCard = ({ data,  loading }: IUserDataProps) => {
-  const [path, setRedirect] = useState('')
+const BuildCard = ({ data, loading }: IUserDataProps) => {
+  const [path, setRedirect] = useState("")
   const handleClick = (path: string) => () => {
     setRedirect(path)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-
-  if (path !== '') {
+  if (path !== "") {
     return <Redirect push to={`${path}`} />
   }
 
-
   return (
-    <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
-      <StyledList isMobile={isMobile}
+    <Scrollbars style={{ height: "calc(100% - 120px)" }}>
+      <StyledList
+        isMobile={isMobile}
         loading={loading}
         dataSource={data}
         renderItem={(item, index: number) => {
@@ -92,31 +90,31 @@ const BuildCard = ({ data,  loading }: IUserDataProps) => {
             area => area.key === build.applicationArea
           )
           return (
-            <List.Item style={{ justifyContent: 'center' }}>
+            <List.Item style={{ justifyContent: "center" }}>
               <StyledCard
                 key={build.id}
                 hoverable
                 onClick={handleClick(`/builds/${build.id}`)}
               >
                 <Title>
-                  {build.name ? build.name : 'Unnamed build'}
-                  <Text style={{ fontWeight: 'normal' }} />
+                  {build.name ? build.name : "Unnamed build"}
+                  <Text style={{ fontWeight: "normal" }} />
                 </Title>
-                <Divider style={{ margin: '5px 0px' }} />
+                <Divider style={{ margin: "5px 0px" }} />
 
                 <Description>
                   <StyledImg
-                    style={{ marginRight: '5px' }}
+                    style={{ marginRight: "5px" }}
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
                   />
                   {build.esoClass}
                   <StyledImg
-                    style={{ marginLeft: '10px', marginRight: '5px' }}
+                    style={{ marginLeft: "10px", marginRight: "5px" }}
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
                   />
                   {build.race}
-                  <Divider style={{ margin: '5px 0px' }} />
-                  {applicationArea ? applicationArea.label : ''}
+                  <Divider style={{ margin: "5px 0px" }} />
+                  {applicationArea ? applicationArea.label : ""}
                 </Description>
               </StyledCard>
             </List.Item>

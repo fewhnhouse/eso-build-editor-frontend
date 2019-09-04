@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import { ISkill } from './SkillSlot'
-import { Divider, Empty } from 'antd'
-import SkillCard, { DisplaySkillCard } from './SkillCard'
-import { useTrail, animated } from 'react-spring'
-import { defaultUltimate } from '../pages/build/Skills/Skills'
-import styled from 'styled-components'
+import React, { useEffect } from "react"
+import { ISkill } from "./SkillSlot"
+import { Divider, Empty } from "antd"
+import SkillCard, { DisplaySkillCard } from "./SkillCard"
+import { useTrail, animated } from "react-spring"
+import { defaultUltimate } from "../pages/build/Skills/Skills"
+import styled from "styled-components"
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -33,16 +33,16 @@ export default ({
   morphedActives,
   morphs,
   passives,
-  interactive
+  interactive,
 }: ISkillDisplay) => {
   const [trail, set]: any = useTrail(baseActives.length, () => ({
     opacity: 0,
-    transform: 'translate(0px, -40px)'
+    transform: "translate(0px, -40px)",
   }))
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      set({ opacity: 1, transform: 'translate(0px, 0px)' })
+      set({ opacity: 1, transform: "translate(0px, 0px)" })
     }, 300)
     return () => clearTimeout(timeout)
   }, [baseActives, set])
@@ -126,11 +126,11 @@ export default ({
   ) : (
     <Empty
       style={{
-        display: 'flex',
-        justifyContent: 'center',
+        display: "flex",
+        justifyContent: "center",
         flex: 2,
-        flexDirection: 'column',
-        alignItems: 'center'
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       Select a Skill Line to get started.

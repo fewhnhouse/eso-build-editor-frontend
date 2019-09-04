@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react'
-import { List, Tag, Divider, Card, Input, Button, Select } from 'antd'
-import styled from 'styled-components'
-import Flex from '../../../components/Flex'
-import { useTrail, animated } from 'react-spring'
-import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
-import { buff } from '../../../util/fragments'
-import { titleCase } from '../../raid/builds/BuildMenu'
-import Scrollbars from 'react-custom-scrollbars'
-import { Redirect } from 'react-router'
-import { useMediaQuery } from 'react-responsive'
+import React, { useContext, useState } from "react"
+import { List, Tag, Divider, Card, Input, Button, Select } from "antd"
+import styled from "styled-components"
+import Flex from "../../../components/Flex"
+import { useTrail, animated } from "react-spring"
+import gql from "graphql-tag"
+import { useQuery } from "react-apollo"
+import { buff } from "../../../util/fragments"
+import { titleCase } from "../../raid/builds/BuildMenu"
+import Scrollbars from "react-custom-scrollbars"
+import { Redirect } from "react-router"
+import { useMediaQuery } from "react-responsive"
 
 const { Option } = Select
 
@@ -49,9 +49,9 @@ const AvatarContainer = styled.div`
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
+    props.active ? "rgb(21, 136, 246)" : "rgb(232, 232, 232)"};
   background: ${(props: { active: boolean }) =>
-    props.active ? 'rgba(0,0,0,0.05)' : 'white'};
+    props.active ? "rgba(0,0,0,0.05)" : "white"};
   border-width: 2px;
   margin: 10px;
 `
@@ -74,7 +74,7 @@ const Description = styled.div`
   font-size: 14px;
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
+    props.newEffect ? "#2ecc71" : "rgba(0, 0, 0, 0.45)"};
   text-align: left;
 `
 
@@ -89,15 +89,15 @@ const Title = styled.div`
 `
 
 const buffTypes = [
-  'Health Recovery',
-  'Stamina Recovery',
-  'Magicka Recovery',
-  'Max Health',
-  'Max Stamina',
-  'Max Magicka'
+  "Health Recovery",
+  "Stamina Recovery",
+  "Magicka Recovery",
+  "Max Health",
+  "Max Stamina",
+  "Max Magicka",
 ]
 
-const buffQualities = ['Standard', 'Difficult', 'Complex', 'Legendary']
+const buffQualities = ["Standard", "Difficult", "Complex", "Legendary"]
 
 interface IBuffMenuProps {
   context: React.Context<any>
@@ -105,7 +105,7 @@ interface IBuffMenuProps {
 
 export default ({ context }: IBuffMenuProps) => {
   const [expanded, setExpanded] = useState(false)
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("")
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedQualities, setSelectedQualities] = useState<string[]>([])
 
@@ -134,20 +134,20 @@ export default ({ context }: IBuffMenuProps) => {
                 { name_contains: searchText },
                 { name_contains: searchText.toLowerCase() },
                 { name_contains: searchText.toUpperCase() },
-                { name_contains: titleCase(searchText) }
-              ]
+                { name_contains: titleCase(searchText) },
+              ],
             },
             {
               quality_in: selectedQualities.length
                 ? selectedQualities.map(
                     (v, index) => buffQualities.findIndex(q => q === v) + 1
                   )
-                : buffQualities.map((value, index) => index + 1)
+                : buffQualities.map((value, index) => index + 1),
             },
-            ...selectedTypes.map(type => ({ buffDescription_contains: type }))
-          ]
-        }
-      }
+            ...selectedTypes.map(type => ({ buffDescription_contains: type })),
+          ],
+        },
+      },
     }
   )
   if (error) {
@@ -157,33 +157,33 @@ export default ({ context }: IBuffMenuProps) => {
   return (
     <ListContainer>
       <Flex
-        direction='column'
-        justify='center'
-        align='center'
+        direction="column"
+        justify="center"
+        align="center"
         style={{
-          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-          padding: '5px',
-          transition: 'opacity 0.2s ease-in-out'
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px",
+          padding: "5px",
+          transition: "opacity 0.2s ease-in-out",
         }}
       >
         <Flex
-          direction='row'
-          justify='center'
-          align='center'
-          style={{ width: '100%' }}
+          direction="row"
+          justify="center"
+          align="center"
+          style={{ width: "100%" }}
         >
           <Input
-            placeholder='Search for Food'
+            placeholder="Search for Food"
             allowClear
             value={searchText}
             onChange={handleSearchChange}
-            size='large'
-            type='text'
-            style={{ margin: '10px', width: '100%' }}
+            size="large"
+            type="text"
+            style={{ margin: "10px", width: "100%" }}
           />
           <Button
-            size='large'
-            icon={expanded ? 'shrink' : 'arrows-alt'}
+            size="large"
+            icon={expanded ? "shrink" : "arrows-alt"}
             onClick={handleExpandChange}
           />
         </Flex>
@@ -191,23 +191,23 @@ export default ({ context }: IBuffMenuProps) => {
           <>
             <Divider
               style={{
-                margin: '10px 0px'
+                margin: "10px 0px",
               }}
             />
             <Flex
-              direction='row'
-              justify='center'
-              align='center'
+              direction="row"
+              justify="center"
+              align="center"
               style={{
-                margin: '0px 10px',
-                overflow: 'auto',
-                width: '100%'
+                margin: "0px 10px",
+                overflow: "auto",
+                width: "100%",
               }}
             >
               <Select
-                mode='multiple'
-                style={{ width: '100%', margin: '5px 10px' }}
-                placeholder='Filter by type...'
+                mode="multiple"
+                style={{ width: "100%", margin: "5px 10px" }}
+                placeholder="Filter by type..."
                 onChange={handleTypeSelectChange}
               >
                 {buffTypes.map((type, index) => (
@@ -217,15 +217,15 @@ export default ({ context }: IBuffMenuProps) => {
             </Flex>
 
             <Flex
-              direction='row'
-              justify='center'
-              align='center'
-              style={{ margin: '0px 10px', width: '100%' }}
+              direction="row"
+              justify="center"
+              align="center"
+              style={{ margin: "0px 10px", width: "100%" }}
             >
               <Select
-                mode='multiple'
-                style={{ width: '100%', margin: '5px 10px' }}
-                placeholder='Filter by quality...'
+                mode="multiple"
+                style={{ width: "100%", margin: "5px 10px" }}
+                placeholder="Filter by quality..."
                 onChange={handleQualitySelectChange}
               >
                 {buffQualities.map((quality, index) => (
@@ -255,26 +255,26 @@ interface IBuffMenuListProps {
 const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
   const [state, dispatch] = useContext(context)
   const { buff } = state!
-  const [redirect, setRedirect] = useState('')
+  const [redirect, setRedirect] = useState("")
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleClick = (buff: ISpecialBuff) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     if (isMobile) {
-      setRedirect(buff.id || '')
+      setRedirect(buff.id || "")
     } else {
-      dispatch!({ type: 'SET_BUFF', payload: { buff } })
+      dispatch!({ type: "SET_BUFF", payload: { buff } })
     }
   }
 
   const trail = useTrail(buffs.length, {
     opacity: 1,
-    transform: 'translate(0px, 0px)',
+    transform: "translate(0px, 0px)",
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)'
+      transform: "translate(0px, -40px)",
     },
-    config: { mass: 1, tension: 2000, friction: 300 }
+    config: { mass: 1, tension: 2000, friction: 300 },
   })
   return (
     <Scrollbars>
@@ -282,7 +282,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
       <List
         loading={loading}
         style={{
-          height: '100%'
+          height: "100%",
         }}
         dataSource={trail}
         renderItem={(style: any, index) => {
@@ -295,8 +295,8 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                 onClick={handleClick(item)}
               >
                 <Flex
-                  align='flex-start'
-                  direction='row'
+                  align="flex-start"
+                  direction="row"
                   style={{ maxWidth: 400 }}
                 >
                   <AvatarContainer>
@@ -308,30 +308,30 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                   <div>
                     <Title>{item.name}</Title>
 
-                    <Divider style={{ margin: '5px 0px' }} />
+                    <Divider style={{ margin: "5px 0px" }} />
                     <Flex
                       wrap
-                      direction='row'
+                      direction="row"
                       style={{
-                        width: '100%',
-                        margin: '10px 0px'
+                        width: "100%",
+                        margin: "10px 0px",
                       }}
                     >
                       <AttributeTag
-                        hasHealth={item.buffDescription.includes('Health')}
-                        hasMagicka={item.buffDescription.includes('Magicka')}
-                        hasStamina={item.buffDescription.includes('Stamina')}
+                        hasHealth={item.buffDescription.includes("Health")}
+                        hasMagicka={item.buffDescription.includes("Magicka")}
+                        hasStamina={item.buffDescription.includes("Stamina")}
                       />
                       <BuffTypeTag
                         isSpecialDrink={
-                          item.buffType === 'drink' && item.type === null
+                          item.buffType === "drink" && item.type === null
                         }
                         isSpecialFood={
-                          item.buffType === 'food' && item.type === null
+                          item.buffType === "food" && item.type === null
                         }
-                        isFood={item.buffType === 'food' && item.type !== null}
+                        isFood={item.buffType === "food" && item.type !== null}
                         isDrink={
-                          item.buffType === 'drink' && item.type !== null
+                          item.buffType === "drink" && item.type !== null
                         }
                       />
                       <QualityTag quality={item.quality} />
@@ -339,8 +339,8 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                     <Description>{item.buffDescription}</Description>
                     {item.description && (
                       <>
-                        <Divider style={{ margin: '5px 0px' }} />
-                        <Description style={{ fontStyle: 'italic' }} newEffect>
+                        <Divider style={{ margin: "5px 0px" }} />
+                        <Description style={{ fontStyle: "italic" }} newEffect>
                           {item.description}
                         </Description>
                       </>
@@ -365,16 +365,16 @@ interface IAttributeTagProps {
 export const AttributeTag = ({
   hasMagicka,
   hasStamina,
-  hasHealth
+  hasHealth,
 }: IAttributeTagProps) => {
   if (hasMagicka && hasStamina && hasHealth) {
-    return <StyledTag color='purple'>All</StyledTag>
+    return <StyledTag color="purple">All</StyledTag>
   } else if (hasHealth) {
-    return <StyledTag color='red'>Health</StyledTag>
+    return <StyledTag color="red">Health</StyledTag>
   } else if (hasStamina) {
-    return <StyledTag color='green'>Stamina</StyledTag>
+    return <StyledTag color="green">Stamina</StyledTag>
   } else {
-    return <StyledTag color='blue'>Magicka</StyledTag>
+    return <StyledTag color="blue">Magicka</StyledTag>
   }
 }
 
@@ -388,27 +388,27 @@ export const BuffTypeTag = ({
   isFood,
   isDrink,
   isSpecialFood,
-  isSpecialDrink
+  isSpecialDrink,
 }: IBuffTagProps) => {
   if (isFood) {
-    return <StyledTag color='purple'>Food</StyledTag>
+    return <StyledTag color="purple">Food</StyledTag>
   } else if (isDrink) {
-    return <StyledTag color='red'>Drink</StyledTag>
+    return <StyledTag color="red">Drink</StyledTag>
   } else if (isSpecialFood) {
-    return <StyledTag color='green'>Special Food</StyledTag>
+    return <StyledTag color="green">Special Food</StyledTag>
   } else {
-    return <StyledTag color='blue'>Special Drink</StyledTag>
+    return <StyledTag color="blue">Special Drink</StyledTag>
   }
 }
 
 export const QualityTag = ({ quality }: { quality: number }) => {
   if (quality === 1) {
-    return <StyledTag color='green'>Standard</StyledTag>
+    return <StyledTag color="green">Standard</StyledTag>
   } else if (quality === 2) {
-    return <StyledTag color='blue'>Difficult</StyledTag>
+    return <StyledTag color="blue">Difficult</StyledTag>
   } else if (quality === 3) {
-    return <StyledTag color='purple'>Complex</StyledTag>
+    return <StyledTag color="purple">Complex</StyledTag>
   } else {
-    return <StyledTag color='yellow'>Legendary</StyledTag>
+    return <StyledTag color="yellow">Legendary</StyledTag>
   }
 }

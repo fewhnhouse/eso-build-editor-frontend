@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import styled, { CSSProperties } from 'styled-components'
-import { Popover } from 'antd'
-import { abilityFrame } from '../assets/misc'
-import { SkillCardContent } from './SkillCard'
-import { BuildContext } from '../pages/build/BuildStateContext'
-import { useDrag, useDrop } from 'react-dnd'
+import React, { useContext, useEffect } from "react"
+import styled, { CSSProperties } from "styled-components"
+import { Popover } from "antd"
+import { abilityFrame } from "../assets/misc"
+import { SkillCardContent } from "./SkillCard"
+import { BuildContext } from "../pages/build/BuildStateContext"
+import { useDrag, useDrop } from "react-dnd"
 
 interface ISkillSlotProps {
   id?: string
@@ -12,9 +12,9 @@ interface ISkillSlotProps {
   skillIndex: number
   style?: React.CSSProperties
   abilityBar?: number
-  size?: 'small' | 'normal'
+  size?: "small" | "normal"
   skill?: ISkill
-  tooltipPos?: 'top' | 'bottom' | undefined
+  tooltipPos?: "top" | "bottom" | undefined
 }
 
 export interface ISkill {
@@ -40,20 +40,20 @@ const SkillFrame = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
-  height: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+  width: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "64px" : "48px"};
+  height: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "64px" : "48px"};
   margin: 0;
   background-image: url(${abilityFrame});
   background-repeat: no-repeat;
 `
 
 const SkillImg = styled.img`
-  width: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '59px' : '43px'};
-  height: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '59px' : '43px'};
+  width: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "59px" : "43px"};
+  height: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "59px" : "43px"};
 `
 
 export default ({
@@ -64,12 +64,12 @@ export default ({
   tooltipPos,
   abilityBar,
   style,
-  size = 'normal',
+  size = "normal",
 }: ISkillSlotProps) => {
   const [, dispatch] = useContext(BuildContext)
   const [{ isDragging }, drag] = useDrag({
     item: {
-      type: skillIndex === 5 ? 'ultimate' : 'skill',
+      type: skillIndex === 5 ? "ultimate" : "skill",
       skill,
       index: skillIndex,
       abilityBar,
@@ -81,19 +81,19 @@ export default ({
 
   useEffect(() => {
     dispatch!({
-      type: 'SET_HAS_TRASH',
+      type: "SET_HAS_TRASH",
       payload: {
         hasTrash: isDragging,
       },
     })
   }, [isDragging, dispatch])
   const [, drop] = useDrop({
-    accept: skillIndex === 5 ? 'ultimate' : 'skill',
+    accept: skillIndex === 5 ? "ultimate" : "skill",
     drop: (item: any) => {
-      if (item.type === 'ultimate') {
+      if (item.type === "ultimate") {
         if (item.abilityBar === -1) {
           dispatch!({
-            type: 'DROP_ULTIMATE',
+            type: "DROP_ULTIMATE",
             payload: {
               barIndex: abilityBar,
               skill: item.skill,
@@ -101,7 +101,7 @@ export default ({
           })
         } else {
           dispatch!({
-            type: 'SWAP_ULTIMATE',
+            type: "SWAP_ULTIMATE",
             payload: {
               barIndex: item.abilityBar,
               destinationSkill: skill,
@@ -112,7 +112,7 @@ export default ({
       } else {
         if (item.abilityBar === abilityBar) {
           dispatch!({
-            type: 'SWAP_ABILITY_SAME',
+            type: "SWAP_ABILITY_SAME",
             payload: {
               barIndex: item.abilityBar,
               destinationIndex: item.index,
@@ -123,7 +123,7 @@ export default ({
           })
         } else if (item.abilityBar !== -1 && item.abilityBar !== abilityBar) {
           dispatch!({
-            type: 'SWAP_ABILITY_DIFFERENT',
+            type: "SWAP_ABILITY_DIFFERENT",
             payload: {
               sourceBarIndex: item.abilityBar,
               destinationBarIndex: abilityBar,
@@ -135,7 +135,7 @@ export default ({
           })
         } else {
           dispatch!({
-            type: 'DROP_ABILITY',
+            type: "DROP_ABILITY",
             payload: {
               barIndex: abilityBar,
               destinationIndex: skillIndex,
@@ -180,16 +180,16 @@ export default ({
 export const DisplaySlot = ({
   skill,
   style,
-  size = 'small',
+  size = "small",
 }: {
   skill?: ISkill
   style?: CSSProperties
-  size?: 'small' | 'normal'
+  size?: "small" | "normal"
 }) => {
   return skill !== undefined && skill !== null ? (
     <SkillFrame size={size} style={style}>
       <Popover
-        placement={'top'}
+        placement={"top"}
         mouseEnterDelay={0.5}
         content={<SkillCardContent skill={skill} />}
       >

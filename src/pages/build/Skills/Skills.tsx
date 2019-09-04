@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Spin } from 'antd'
-import styled from 'styled-components'
-import Menu from './SkillMenu'
-import { BuildContext } from '../BuildStateContext'
-import AbilityBar from './AbilityBar'
-import { ISkill } from '../../../components/SkillSlot'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
-import SkillsDisplay from '../../../components/SkillsDisplay'
-import { skill } from '../../../util/fragments'
+import React, { useEffect, useState, useContext } from "react"
+import { Spin } from "antd"
+import styled from "styled-components"
+import Menu from "./SkillMenu"
+import { BuildContext } from "../BuildStateContext"
+import AbilityBar from "./AbilityBar"
+import { ISkill } from "../../../components/SkillSlot"
+import { DndProvider } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
+import gql from "graphql-tag"
+import { useQuery } from "react-apollo"
+import SkillsDisplay from "../../../components/SkillsDisplay"
+import { skill } from "../../../util/fragments"
 
 const Content = styled.div`
   width: 100%;
@@ -27,19 +27,19 @@ const GET_SKILLS = gql`
 `
 
 export const defaultUltimate: ISkill = {
-  cast_time: '0',
-  cost: '0',
-  effect_1: '0',
+  cast_time: "0",
+  cost: "0",
+  effect_1: "0",
   effect_2: null,
-  icon: 'null',
-  id: '0',
+  icon: "null",
+  id: "0",
   skillId: 0,
-  name: 'name',
+  name: "name",
   parent: null,
   pts: 0,
   range: null,
   skillline: 0,
-  slug: '',
+  slug: "",
   target: null,
   type: 3,
   unlocks_at: null,
@@ -54,7 +54,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
   const [morphedUltimates, setMorphedUltimates] = useState<ISkill[]>([])
   useEffect(() => {
     if (!edit) {
-      localStorage.setItem('buildState', JSON.stringify(state))
+      localStorage.setItem("buildState", JSON.stringify(state))
     }
   }, [state, edit])
 
@@ -91,7 +91,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     setBaseUltimate(baseUltimate!)
     setPassives(passives)
     dispatch!({
-      type: 'SET_SELECTED_SKILLS_AND_ULTIMATE',
+      type: "SET_SELECTED_SKILLS_AND_ULTIMATE",
       payload: {
         selectedSkills: baseActives.map((skill: ISkill, index: number) => ({
           skill,
@@ -110,10 +110,10 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
     <DndProvider backend={HTML5Backend}>
       <div
         style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
         <Menu
@@ -142,7 +142,7 @@ export default ({ edit }: { edit: boolean }) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <Spin style={{ marginTop: 10 }} />
       </div>
     )

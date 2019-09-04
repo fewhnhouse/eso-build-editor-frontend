@@ -1,6 +1,6 @@
-import React from "react";
-import { Steps } from "antd";
-const { Step } = Steps;
+import React from "react"
+import { Steps } from "antd"
+const { Step } = Steps
 
 export default () => {
   return (
@@ -12,5 +12,5 @@ export default () => {
       </Steps>
       ,
     </div>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import { Typography } from 'antd'
-import Flex from './Flex'
-import GearSlot, { DisplaySlot } from './GearSlot'
-import { ISetSelection, Slot } from '../pages/build/BuildStateContext'
+import { Typography } from "antd"
+import Flex from "./Flex"
+import GearSlot, { DisplaySlot } from "./GearSlot"
+import { ISetSelection, Slot } from "../pages/build/BuildStateContext"
 
 const GearView = styled.div``
 
@@ -38,26 +38,26 @@ interface IGearViewProps {
   droppable?: boolean
   disabled?: boolean
   setsCount: Map<string, number>
-  size?: 'normal' | 'small'
+  size?: "normal" | "small"
 }
 
 export default ({
   setups,
   droppable,
   disabled,
-  size = 'normal',
+  size = "normal",
   setsCount,
 }: IGearViewProps) => {
   return (
     <GearView>
       {setups.map((setup: IGearSetup, index) => (
-        <div key={'setup' + index}>
+        <div key={"setup" + index}>
           <StyledTitle level={4}>{setup.label}</StyledTitle>
           <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ flexWrap: 'wrap' }}
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ flexWrap: "wrap" }}
           >
             {setup.data.map((slot: ISetSelection, index: number) => {
               return disabled ? (
@@ -68,7 +68,7 @@ export default ({
                     slot={slot}
                     setSelectionCount={
                       setsCount.get(
-                        slot.selectedSet ? slot.selectedSet.name : ''
+                        slot.selectedSet ? slot.selectedSet.name : ""
                       ) || 0
                     }
                   />
@@ -80,10 +80,10 @@ export default ({
                   droppable={droppable}
                   slot={slot}
                   group={setup.id}
-                  key={'drop' + slot.slot + index}
+                  key={"drop" + slot.slot + index}
                   setSelectionCount={
                     setsCount.get(
-                      slot.selectedSet ? slot.selectedSet.name : ''
+                      slot.selectedSet ? slot.selectedSet.name : ""
                     ) || 0
                   }
                 />

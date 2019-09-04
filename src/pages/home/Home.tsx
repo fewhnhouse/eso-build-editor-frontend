@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Layout } from 'antd'
-import NotLoggedInHome from './NotLoggedInHome'
-import LoggedInHome from './LoggedInHome'
+import React from "react"
+import styled from "styled-components"
+import { Layout } from "antd"
+import NotLoggedInHome from "./NotLoggedInHome"
+import LoggedInHome from "./LoggedInHome"
 
 const { Content } = Layout
 

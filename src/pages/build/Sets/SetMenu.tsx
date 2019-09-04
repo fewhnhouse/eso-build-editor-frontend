@@ -1,29 +1,29 @@
-import React, { useContext, useState, Dispatch, SetStateAction } from 'react'
-import { List, Tag, Divider, Button, Input, Select } from 'antd'
-import styled from 'styled-components'
-import { ISet } from '../../../components/GearSlot'
-import Flex from '../../../components/Flex'
-import { animated, useTrail } from 'react-spring'
-import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
-import { titleCase } from '../../raid/builds/BuildMenu'
-import Scrollbars from 'react-custom-scrollbars'
-import { useMediaQuery } from 'react-responsive'
-import { Redirect } from 'react-router'
+import React, { useContext, useState, Dispatch, SetStateAction } from "react"
+import { List, Tag, Divider, Button, Input, Select } from "antd"
+import styled from "styled-components"
+import { ISet } from "../../../components/GearSlot"
+import Flex from "../../../components/Flex"
+import { animated, useTrail } from "react-spring"
+import gql from "graphql-tag"
+import { useQuery } from "react-apollo"
+import { titleCase } from "../../raid/builds/BuildMenu"
+import Scrollbars from "react-custom-scrollbars"
+import { useMediaQuery } from "react-responsive"
+import { Redirect } from "react-router"
 
 const { Option } = Select
 const { Item } = List
 
 const ListContainer = styled.div`
   width: ${(props: { collapsed: boolean; isMobile: boolean }) =>
-    props.collapsed ? '60px' : ''};
+    props.collapsed ? "60px" : ""};
   flex: ${(props: { collapsed: boolean; isMobile: boolean }) =>
-    props.collapsed ? '' : 1};
+    props.collapsed ? "" : 1};
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
   max-width: ${(props: { collapsed: boolean; isMobile: boolean }) =>
-    props.isMobile ? '' : '450px'};
+    props.isMobile ? "" : "450px"};
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `
@@ -90,26 +90,26 @@ interface IMenuProps {
 }
 
 const setTypes = [
-  'Arena',
-  'Monster Set',
-  'Overland',
-  'PvP',
-  'Trial',
-  'Dungeon',
-  'Battleground',
-  'Craftable'
+  "Arena",
+  "Monster Set",
+  "Overland",
+  "PvP",
+  "Trial",
+  "Dungeon",
+  "Battleground",
+  "Craftable",
 ]
-const setWeight = ['Light', 'Medium', 'Heavy', 'Jewelry', 'Weapons']
+const setWeight = ["Light", "Medium", "Heavy", "Jewelry", "Weapons"]
 
 export default ({
   collapsed,
   setCollapsed,
   context,
-  collapsable
+  collapsable,
 }: IMenuProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedWeights, setSelectedWeights] = useState<string[]>([])
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("")
   const [expanded, setExpanded] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -122,47 +122,47 @@ export default ({
               { name_contains: searchText },
               { name_contains: searchText.toLowerCase() },
               { name_contains: searchText.toUpperCase() },
-              { name_contains: titleCase(searchText) }
-            ]
+              { name_contains: titleCase(searchText) },
+            ],
           },
           {
             has_medium_armor:
-              selectedWeights.length && selectedWeights.includes('Medium')
+              selectedWeights.length && selectedWeights.includes("Medium")
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_light_armor:
-              selectedWeights.length && selectedWeights.includes('Light')
+              selectedWeights.length && selectedWeights.includes("Light")
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_heavy_armor:
-              selectedWeights.length && selectedWeights.includes('Heavy')
+              selectedWeights.length && selectedWeights.includes("Heavy")
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_jewels:
-              selectedWeights.length && selectedWeights.includes('Jewelry')
+              selectedWeights.length && selectedWeights.includes("Jewelry")
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             has_weapons:
-              selectedWeights.length && selectedWeights.includes('Weapons')
+              selectedWeights.length && selectedWeights.includes("Weapons")
                 ? 1
-                : undefined
+                : undefined,
           },
           {
             type_in: selectedTypes.length
-              ? [...selectedTypes, 'Unknown']
-              : [...setTypes, 'Unknown']
-          }
-        ]
-      }
-    }
+              ? [...selectedTypes, "Unknown"]
+              : [...setTypes, "Unknown"],
+          },
+        ],
+      },
+    },
   })
 
   if (error) {
@@ -189,53 +189,53 @@ export default ({
     <ListContainer isMobile={isMobile} collapsed={collapsed}>
       {collapsed && (
         <StyledIconBtn
-          type='primary'
+          type="primary"
           ghost
           style={{ marginTop: 10 }}
           onClick={handleIconClick(false)}
-          icon='double-right'
+          icon="double-right"
         />
       )}
       <>
         <Flex
-          direction='column'
-          justify='center'
-          align='center'
+          direction="column"
+          justify="center"
+          align="center"
           style={{
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-            padding: '5px',
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 6px 0px",
+            padding: "5px",
             opacity: collapsed ? 0 : 1,
-            pointerEvents: collapsed ? 'none' : 'all',
-            transition: 'opacity 0.2s ease-in-out'
+            pointerEvents: collapsed ? "none" : "all",
+            transition: "opacity 0.2s ease-in-out",
           }}
         >
           <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ width: '100%' }}
+            direction="row"
+            justify="center"
+            align="center"
+            style={{ width: "100%" }}
           >
             <Input
-              placeholder='Search for Sets'
+              placeholder="Search for Sets"
               allowClear
               value={searchText}
               onChange={handleSearchChange}
-              size='large'
-              type='text'
-              style={{ margin: '10px', width: '100%' }}
+              size="large"
+              type="text"
+              style={{ margin: "10px", width: "100%" }}
             />
             <Button
-              size='large'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
+              size="large"
+              icon={expanded ? "shrink" : "arrows-alt"}
               onClick={handleExpandChange}
             />
             {collapsable && (
               <StyledIconBtn
-                type='primary'
+                type="primary"
                 ghost
                 style={{ marginRight: 10 }}
                 onClick={handleIconClick(true)}
-                icon='double-left'
+                icon="double-left"
               />
             )}
           </Flex>
@@ -243,23 +243,23 @@ export default ({
             <>
               <Divider
                 style={{
-                  margin: '10px 0px'
+                  margin: "10px 0px",
                 }}
               />
               <Flex
-                direction='row'
-                justify='center'
-                align='center'
+                direction="row"
+                justify="center"
+                align="center"
                 style={{
-                  margin: '0px 10px',
-                  overflow: 'auto',
-                  width: '100%'
+                  margin: "0px 10px",
+                  overflow: "auto",
+                  width: "100%",
                 }}
               >
                 <Select
-                  mode='multiple'
-                  style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by type...'
+                  mode="multiple"
+                  style={{ width: "100%", margin: "5px 10px" }}
+                  placeholder="Filter by type..."
                   onChange={handleTypeSelectChange}
                 >
                   {setTypes.map((type, index) => (
@@ -269,15 +269,15 @@ export default ({
               </Flex>
 
               <Flex
-                direction='row'
-                justify='center'
-                align='center'
-                style={{ margin: '0px 10px', width: '100%' }}
+                direction="row"
+                justify="center"
+                align="center"
+                style={{ margin: "0px 10px", width: "100%" }}
               >
                 <Select
-                  mode='multiple'
-                  style={{ width: '100%', margin: '5px 10px' }}
-                  placeholder='Filter by weight...'
+                  mode="multiple"
+                  style={{ width: "100%", margin: "5px 10px" }}
+                  placeholder="Filter by weight..."
                   onChange={handleWeightSelectChange}
                 >
                   {setWeight.map((weight, index) => (
@@ -315,19 +315,19 @@ const ArmorTypeTag = ({
   hasHeavyArmor,
   hasMediumArmor,
   hasLightArmor,
-  traitsNeeded
+  traitsNeeded,
 }: ISetTagProps) => {
   if (traitsNeeded) {
     return null
   } else {
     if (hasHeavyArmor && hasMediumArmor && hasLightArmor) {
-      return <StyledTag color='purple'>All</StyledTag>
+      return <StyledTag color="purple">All</StyledTag>
     } else if (hasHeavyArmor) {
-      return <StyledTag color='red'>Heavy</StyledTag>
+      return <StyledTag color="red">Heavy</StyledTag>
     } else if (hasMediumArmor) {
-      return <StyledTag color='green'>Medium</StyledTag>
+      return <StyledTag color="green">Medium</StyledTag>
     } else {
-      return <StyledTag color='blue'>Light</StyledTag>
+      return <StyledTag color="blue">Light</StyledTag>
     }
   }
 }
@@ -344,30 +344,30 @@ const SetList = ({
   loading,
   collapsed,
   context,
-  setCollapsed
+  setCollapsed,
 }: ISetListProps) => {
   const [state, dispatch] = useContext(context)
-  const [redirect, setRedirect] = useState('')
+  const [redirect, setRedirect] = useState("")
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleClick = (set: ISet) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     if (isMobile) {
-      setRedirect(set.id || '')
+      setRedirect(set.id || "")
     } else {
       setCollapsed(true)
-      dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
+      dispatch!({ type: "SET_ITEMSET", payload: { selectedSet: set } })
     }
   }
 
   const trail = useTrail(sets.length, {
     opacity: 1,
-    transform: 'translate(0px, 0px)',
+    transform: "translate(0px, 0px)",
     from: {
       opacity: 0,
-      transform: 'translate(0px, -40px)'
+      transform: "translate(0px, -40px)",
     },
-    config: { mass: 1, tension: 3000, friction: 100 }
+    config: { mass: 1, tension: 3000, friction: 100 },
   })
   return (
     <Scrollbars autoHide>
@@ -375,10 +375,10 @@ const SetList = ({
       <List
         loading={loading}
         style={{
-          height: '100%',
+          height: "100%",
           opacity: collapsed ? 0 : 1,
-          pointerEvents: collapsed ? 'none' : 'all',
-          transition: 'opacity 0.2s ease-in-out'
+          pointerEvents: collapsed ? "none" : "all",
+          transition: "opacity 0.2s ease-in-out",
         }}
         dataSource={trail}
         renderItem={(style: any, index) => {
@@ -386,24 +386,24 @@ const SetList = ({
           return (
             <animated.div style={style}>
               <StyledListItem onClick={handleClick(item)}>
-                <div style={{ width: 140, display: 'flex' }}>
+                <div style={{ width: 140, display: "flex" }}>
                   <ArmorTypeTag
                     hasHeavyArmor={item.has_heavy_armor === 1}
                     hasMediumArmor={item.has_medium_armor === 1}
                     hasLightArmor={item.has_light_armor === 1}
                     traitsNeeded={item.traits_needed !== null}
                   />
-                  <StyledTag color='geekblue'>{item.type}</StyledTag>
+                  <StyledTag color="geekblue">{item.type}</StyledTag>
                 </div>
                 <div
                   style={{
-                    textAlign: 'left',
+                    textAlign: "left",
                     flex: 2,
                     fontWeight:
                       state!.selectedSet &&
                       item.setId === state!.selectedSet.setId
                         ? 500
-                        : 400
+                        : 400,
                   }}
                 >
                   {item.name}

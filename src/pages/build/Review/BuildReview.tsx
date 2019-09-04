@@ -1,24 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from '../../../components/globalStyles'
-import { BuildContext } from '../BuildStateContext'
-import { useQuery, useMutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { Button, notification } from 'antd'
-import { build } from '../../../util/fragments'
-import { ME } from '../../home/UserHomeCard'
+import React, { useContext, useEffect, useState } from "react"
+import { RouteComponentProps, withRouter, Redirect } from "react-router"
+import { withTheme, ThemeProps } from "styled-components"
+import { ITheme } from "../../../components/globalStyles"
+import { BuildContext } from "../BuildStateContext"
+import { useQuery, useMutation } from "react-apollo"
+import gql from "graphql-tag"
+import { Button, notification } from "antd"
+import { build } from "../../../util/fragments"
+import { ME } from "../../home/UserHomeCard"
 import {
   CREATE_BUILD,
   CREATE_SET_SELECTIONS,
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
   ISetSelectionData,
-} from '../Build'
-import { handleCopy } from '../util'
-import Flex from '../../../components/Flex'
-import { LoginContext } from '../../../App'
-import Review from '../../../components/Review'
+} from "../Build"
+import { handleCopy } from "../util"
+import Flex from "../../../components/Flex"
+import { LoginContext } from "../../../App"
+import Review from "../../../components/Review"
 
 interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
   local?: boolean
@@ -53,7 +53,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
   const [, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
-  const [redirect, setRedirect] = useState('')
+  const [redirect, setRedirect] = useState("")
 
   const [state] = useContext(BuildContext)
   const [loggedIn] = useContext(LoginContext)
@@ -79,20 +79,20 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   useEffect(() => {
     if (data) {
       notification.success({
-        message: 'Build Deletion',
-        description: 'Build successfully deleted.',
+        message: "Build Deletion",
+        description: "Build successfully deleted.",
       })
     } else if (error) {
       notification.error({
-        message: 'Build Deletion',
-        description: 'Error while deleting build. Try again later.',
+        message: "Build Deletion",
+        description: "Error while deleting build. Try again later.",
       })
     }
   }, [data, error])
 
   useEffect(() => {
     if (saved && createBuildResult.data && createBuildResult.data.createBuild) {
-      localStorage.removeItem('buildState')
+      localStorage.removeItem("buildState")
       setRedirect(`/builds/${createBuildResult.data.createBuild.id}`)
     }
   }, [createBuildResult.data, saved])
@@ -110,20 +110,20 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         buildQuery.data.build
       )
       notification.success({
-        message: 'Build copy successful',
+        message: "Build copy successful",
         description: (
-          <Flex direction='column' align='center' justify='center'>
+          <Flex direction="column" align="center" justify="center">
             <div>
               Your build was successfully copied. You can now view it and share
               it with others!
             </div>
             <Flex
-              style={{ width: '100%', marginTop: 10 }}
-              direction='row'
-              align='center'
-              justify='space-between'
+              style={{ width: "100%", marginTop: 10 }}
+              direction="row"
+              align="center"
+              justify="space-between"
             >
-              <Button icon='share-alt'>Share link</Button>
+              <Button icon="share-alt">Share link</Button>
             </Flex>
           </Flex>
         ),
@@ -132,8 +132,8 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     } catch (e) {
       console.error(e)
       notification.error({
-        message: 'Build creation failed',
-        description: 'Your build could not be copied. Try again later.',
+        message: "Build creation failed",
+        description: "Your build could not be copied. Try again later.",
       })
     }
 

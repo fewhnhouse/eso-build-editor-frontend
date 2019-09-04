@@ -1,7 +1,7 @@
-import React from 'react'
-import { generalReducer } from './reducers/generalReducer'
-import { buildsReducer } from './reducers/buildsReducer'
-import { IBuild } from '../build/BuildStateContext'
+import React from "react"
+import { generalReducer } from "./reducers/generalReducer"
+import { buildsReducer } from "./reducers/buildsReducer"
+import { IBuild } from "../build/BuildStateContext"
 
 export interface ISlot {
   id: number
@@ -40,11 +40,11 @@ export interface IRole {
 }
 
 export const defaultRaidState: IRaidState = {
-  name: '',
-  applicationArea: '',
+  name: "",
+  applicationArea: "",
   published: false,
   groupSize: 12,
-  description: '',
+  description: "",
   canEdit: [],
   canView: [],
   roles: [],

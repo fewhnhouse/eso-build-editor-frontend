@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import { Popover, Typography, Button } from 'antd'
-import { useDrag, useDrop } from 'react-dnd'
+import React, { useContext } from "react"
+import styled from "styled-components"
+import { Popover, Typography, Button } from "antd"
+import { useDrag, useDrop } from "react-dnd"
 import {
   BuildContext,
   Slot,
@@ -11,22 +11,22 @@ import {
   OnehandedWeapon,
   TwohandedWeapon,
   SetType,
-} from '../pages/build/BuildStateContext'
-import { GearCardContent } from './GearCard'
-import { specialWeaponSets } from '../pages/build/Sets/SetBar'
+} from "../pages/build/BuildStateContext"
+import { GearCardContent } from "./GearCard"
+import { specialWeaponSets } from "../pages/build/Sets/SetBar"
 
 const GearImg = styled.img`
-  width: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
-  height: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+  width: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "64px" : "48px"};
+  height: ${(props: { size: "normal" | "small" }) =>
+    props.size === "normal" ? "64px" : "48px"};
 `
 
 interface IGearFrameProps {
   hasIcon: boolean
   canDrop?: boolean
   backgroundSource: string
-  size: 'normal' | 'small'
+  size: "normal" | "small"
 }
 
 const GearFrame = styled.div`
@@ -34,15 +34,15 @@ const GearFrame = styled.div`
   align-items: center;
   justify-content: center;
   width: ${(props: IGearFrameProps) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === "normal" ? "64px" : "48px"};
   height: ${(props: IGearFrameProps) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === "normal" ? "64px" : "48px"};
   border: 2px solid;
   border-color: ${(props: IGearFrameProps) =>
-    props.canDrop ? '#27ae60' : 'rgba(0, 0, 0, 0.45)'};
+    props.canDrop ? "#27ae60" : "rgba(0, 0, 0, 0.45)"};
   border-radius: 4px;
   background-image: url(${(props: IGearFrameProps) =>
-    props.hasIcon ? '' : props.backgroundSource});
+    props.hasIcon ? "" : props.backgroundSource});
   background-repeat: no-repeat;
 `
 
@@ -74,59 +74,59 @@ const getImageSource = (
 ) => {
   switch (slot) {
     case Slot.mainHand:
-      return 'mainhand.png'
+      return "mainhand.png"
     case Slot.offHand:
-      return 'offhand.png'
+      return "offhand.png"
     case Slot.legs:
-      return 'legs.png'
+      return "legs.png"
     case Slot.head:
-      return 'head.png'
+      return "head.png"
     case Slot.shoulders:
-      return 'shoulders.png'
+      return "shoulders.png"
     case Slot.waist:
-      return 'waist.png'
+      return "waist.png"
     case Slot.hands:
-      return 'hands.png'
+      return "hands.png"
     case Slot.feet:
-      return 'feet.png'
+      return "feet.png"
     case Slot.chest:
-      return 'chest.png'
+      return "chest.png"
     case Slot.ring:
-      return 'ring.png'
+      return "ring.png"
     case Slot.ring1:
-      return 'ring.png'
+      return "ring.png"
     case Slot.ring2:
-      return 'ring.png'
+      return "ring.png"
     case Slot.neck:
-      return 'neck.png'
+      return "neck.png"
     case OnehandedWeapon.dagger:
-      return 'dagger.png'
+      return "dagger.png"
     case OnehandedWeapon.shield:
-      return 'shield.png'
+      return "shield.png"
     case OnehandedWeapon.axe:
-      return 'axe.png'
+      return "axe.png"
     case OnehandedWeapon.mace:
-      return 'hammer.png'
+      return "hammer.png"
     case OnehandedWeapon.sword:
-      return 'sword.png'
+      return "sword.png"
     case TwohandedWeapon.axe:
-      return 'axe.png'
+      return "axe.png"
     case TwohandedWeapon.bow:
-      return 'bow.png'
+      return "bow.png"
     case TwohandedWeapon.fireStaff:
-      return 'staff.png'
+      return "staff.png"
     case TwohandedWeapon.iceStaff:
-      return 'staff.png'
+      return "staff.png"
     case TwohandedWeapon.lightningStaff:
-      return 'staff.png'
+      return "staff.png"
     case TwohandedWeapon.mace:
-      return 'hammer.png'
+      return "hammer.png"
     case TwohandedWeapon.restorationStaff:
-      return 'staff.png'
+      return "staff.png"
     case TwohandedWeapon.sword:
-      return 'sword.png'
+      return "sword.png"
     default:
-      return ''
+      return ""
   }
 }
 
@@ -146,8 +146,8 @@ const getGearSlot = (slot: ISetSelection) => {
         set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
-      if (slot.selectedSet.name.includes('Perfected')) {
-        slot.selectedSet.slug = slot.selectedSet.slug.split('-perfected-')[0]
+      if (slot.selectedSet.name.includes("Perfected")) {
+        slot.selectedSet.slug = slot.selectedSet.slug.split("-perfected-")[0]
       }
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
         slot.selectedSet.slug
@@ -187,14 +187,14 @@ export interface IGearSlotProps {
   group: string
   extended?: boolean
   setSelectionCount: number
-  size?: 'normal' | 'small'
+  size?: "normal" | "small"
 }
 
 export default ({
   slot,
   droppable,
   group,
-  size = 'normal',
+  size = "normal",
   extended,
   setSelectionCount,
 }: IGearSlotProps) => {
@@ -221,7 +221,7 @@ export default ({
     ],
     drop: (item: any, monitor) => {
       dispatch!({
-        type: 'DROP_SET_ITEM',
+        type: "DROP_SET_ITEM",
         payload: {
           set: item.set,
           icon: item.icon,
@@ -238,7 +238,7 @@ export default ({
 
   const handleSlotClick = () => {
     dispatch!({
-      type: 'DROP_SET_ITEM',
+      type: "DROP_SET_ITEM",
       payload: {
         set: slot.selectedSet,
         icon: slot.icon,
@@ -263,7 +263,7 @@ export default ({
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
         ) : slot.selectedSet ? (
           <Popover
-            placement={'top'}
+            placement={"top"}
             mouseEnterDelay={0.5}
             content={
               <GearCardContent
@@ -280,36 +280,36 @@ export default ({
       </GearFrame>
       <InnerDisplay>
         <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
+          style={{ width: 150, textAlign: "left" }}
           ellipsis
           strong
         >
-          {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
+          {slot.selectedSet ? slot.selectedSet.name : "Set not selected."}
         </Typography.Text>
         {droppable ? (
           <>
             <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+              style={{ fontSize: 12, width: 150, textAlign: "left" }}
               ellipsis
-              type='secondary'
+              type="secondary"
             >
-              {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
+              {slot.glyph ? slot.glyph.type : "Glyph not selected."}
             </Typography.Text>
             <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+              style={{ fontSize: 12, width: 150, textAlign: "left" }}
               ellipsis
-              type='secondary'
+              type="secondary"
             >
-              {slot.trait ? slot.trait.type : 'Trait not selected.'}
+              {slot.trait ? slot.trait.type : "Trait not selected."}
             </Typography.Text>
           </>
         ) : (
           <Button
             style={{ marginTop: 5 }}
             onClick={handleSlotClick}
-            size='small'
+            size="small"
             ghost
-            type='primary'
+            type="primary"
           >
             Slot
           </Button>
@@ -317,7 +317,7 @@ export default ({
       </InnerDisplay>
     </DisplayCard>
   ) : (
-    <div style={{ margin: '5px 10px 5px 10px' }}>
+    <div style={{ margin: "5px 10px 5px 10px" }}>
       <GearFrame
         size={size}
         canDrop={droppable && canDrop}
@@ -331,7 +331,7 @@ export default ({
           <GearImg size={size} ref={drag} src={getGearSlot(slot)} />
         ) : slot.selectedSet ? (
           <Popover
-            placement={'top'}
+            placement={"top"}
             mouseEnterDelay={0.5}
             content={
               <GearCardContent
@@ -371,21 +371,21 @@ const InnerDisplay = styled.div`
 `
 
 export const getItemType = (
-  type: ArmorType | WeaponType | 'jewelry' | undefined
+  type: ArmorType | WeaponType | "jewelry" | undefined
 ) => {
   switch (type) {
     case ArmorType.heavyArmor:
-      return 'Heavy'
+      return "Heavy"
     case ArmorType.mediumArmor:
-      return 'Medium'
+      return "Medium"
     case ArmorType.lightArmor:
-      return 'Light'
+      return "Light"
     case WeaponType.onehanded:
-      return '1H'
+      return "1H"
     case WeaponType.twohanded:
-      return '2H'
+      return "2H"
     default:
-      return ''
+      return ""
   }
 }
 
@@ -398,46 +398,46 @@ export const getWeaponType = (
 ) => {
   switch (weaponType) {
     case OnehandedWeapon.axe:
-      return 'Axe'
+      return "Axe"
     case TwohandedWeapon.axe:
-      return 'Axe'
+      return "Axe"
     case OnehandedWeapon.mace:
-      return 'Mace'
+      return "Mace"
     case TwohandedWeapon.mace:
-      return 'Mace'
+      return "Mace"
     case OnehandedWeapon.sword:
-      return 'Sword'
+      return "Sword"
     case TwohandedWeapon.sword:
-      return 'Sword'
+      return "Sword"
     case OnehandedWeapon.dagger:
-      return 'Dagger'
+      return "Dagger"
     case OnehandedWeapon.shield:
-      return 'Shield'
+      return "Shield"
     case TwohandedWeapon.bow:
-      return 'Bow'
+      return "Bow"
     case TwohandedWeapon.fireStaff:
-      return 'Fire Staff'
+      return "Fire Staff"
     case TwohandedWeapon.iceStaff:
-      return 'Ice Staff'
+      return "Ice Staff"
     case TwohandedWeapon.lightningStaff:
-      return 'Lightning Staff'
+      return "Lightning Staff"
     case TwohandedWeapon.restorationStaff:
-      return 'Restoration Staff'
+      return "Restoration Staff"
 
     default:
-      return ''
+      return ""
   }
 }
 
-const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
+const getTypeColor = (type: ArmorType | WeaponType | "jewelry" | undefined) => {
   if (type === ArmorType.lightArmor) {
-    return '#2980b9'
+    return "#2980b9"
   } else if (type === ArmorType.mediumArmor) {
-    return '#27ae60'
+    return "#27ae60"
   } else if (type === ArmorType.heavyArmor) {
-    return '#c0392b'
+    return "#c0392b"
   } else {
-    return 'rgba(0, 0, 0, 0.65)'
+    return "rgba(0, 0, 0, 0.65)"
   }
 }
 export const DisplaySlot = ({
@@ -447,60 +447,60 @@ export const DisplaySlot = ({
 }: {
   slot: ISetSelection
   setSelectionCount: number
-  size: 'normal' | 'small'
+  size: "normal" | "small"
 }) => {
   return (
     <DisplayCard>
       <Popover
         mouseEnterDelay={0.5}
-        placement='left'
+        placement="left"
         content={
           <GearCardContent setSelectionCount={setSelectionCount} gear={slot} />
         }
       >
         <GearFrame
-          size={'small'}
+          size={"small"}
           hasIcon={slot.icon !== undefined}
           backgroundSource={getImageSource(slot.slot)}
         >
           {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
-            <GearImg size={'small'} src={getGearSlot(slot)} />
+            <GearImg size={"small"} src={getGearSlot(slot)} />
           ) : null}
         </GearFrame>
       </Popover>
 
       <InnerDisplay>
         <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
+          style={{ width: 150, textAlign: "left" }}
           ellipsis
           strong
         >
-          {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
+          {slot.selectedSet ? slot.selectedSet.name : "Set not selected."}
         </Typography.Text>
         <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+          style={{ fontSize: 12, width: 150, textAlign: "left" }}
           ellipsis
           strong
         >
           <InnerSpan color={getTypeColor(slot.type)}>
             {getItemType(slot.type)}
-          </InnerSpan>{' '}
-          {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
+          </InnerSpan>{" "}
+          {slot.weaponType ? "-" : ""} {getWeaponType(slot.weaponType)}
         </Typography.Text>
 
         <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+          style={{ fontSize: 12, width: 150, textAlign: "left" }}
           ellipsis
-          type='secondary'
+          type="secondary"
         >
-          {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
+          {slot.glyph ? slot.glyph.type : "Glyph not selected."}
         </Typography.Text>
         <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
+          style={{ fontSize: 12, width: 150, textAlign: "left" }}
           ellipsis
-          type='secondary'
+          type="secondary"
         >
-          {slot.trait ? slot.trait.type : 'Trait not selected.'}
+          {slot.trait ? slot.trait.type : "Trait not selected."}
         </Typography.Text>
       </InnerDisplay>
     </DisplayCard>

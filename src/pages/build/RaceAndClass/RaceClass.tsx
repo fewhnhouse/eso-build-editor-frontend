@@ -1,18 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import {
-  Divider,
-  Input,
-  Select,
-  Typography,
-  Button,
-  Icon,
-  Card,
-} from 'antd'
-import styled from 'styled-components'
-import { EsoClassCard, RaceCard } from './Card'
-import { BuildContext } from '../BuildStateContext'
-import Flex from '../../../components/Flex'
-import { races, classes } from './data'
+import React, { useContext, useEffect } from "react"
+import { Divider, Input, Select, Typography, Button, Icon, Card } from "antd"
+import styled from "styled-components"
+import { EsoClassCard, RaceCard } from "./Card"
+import { BuildContext } from "../BuildStateContext"
+import Flex from "../../../components/Flex"
+import { races, classes } from "./data"
 
 const ButtonGroup = Button.Group
 
@@ -35,36 +27,36 @@ const ResourceCard = styled(Card)`
 `
 export const applicationAreas = [
   {
-    label: 'Cyrodiil - Raid',
-    key: 'cyrodiil_raid',
+    label: "Cyrodiil - Raid",
+    key: "cyrodiil_raid",
   },
   {
-    label: 'Cyrodiil - Smallscale',
-    key: 'cyrodiil_smallscale',
+    label: "Cyrodiil - Smallscale",
+    key: "cyrodiil_smallscale",
   },
   {
-    label: 'Cyrodiil - Solo',
-    key: 'cyrodiil_solo',
+    label: "Cyrodiil - Solo",
+    key: "cyrodiil_solo",
   },
   {
-    label: 'Battlegrounds',
-    key: 'battlegrounds',
+    label: "Battlegrounds",
+    key: "battlegrounds",
   },
   {
-    label: 'PvE - Dungeons',
-    key: 'pve_dungeons',
+    label: "PvE - Dungeons",
+    key: "pve_dungeons",
   },
   {
-    label: 'PvE - Arena',
-    key: 'pve_arena',
+    label: "PvE - Arena",
+    key: "pve_arena",
   },
   {
-    label: 'PvE - Open World',
-    key: 'pve_openworld',
+    label: "PvE - Open World",
+    key: "pve_openworld",
   },
   {
-    label: 'PvE - Raids',
-    key: 'pve_raid',
+    label: "PvE - Raids",
+    key: "pve_raid",
   },
 ]
 
@@ -83,54 +75,54 @@ export default ({ edit }: { edit: boolean }) => {
   const totalAttributes = health + stamina + magicka
 
   const handleAttributeChange = (
-    type: 'health' | 'magicka' | 'stamina',
-    operation: 'plus' | 'minus'
+    type: "health" | "magicka" | "stamina",
+    operation: "plus" | "minus"
   ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const modifier = e.shiftKey ? 10 : 1
     const tooManyAttributes = totalAttributes + modifier > TOTAL_ATTRIBUTES
     const tooLittleAttributes = state![type] - modifier < 0
-    if (type === 'health') {
-      if (tooManyAttributes && operation === 'plus') {
+    if (type === "health") {
+      if (tooManyAttributes && operation === "plus") {
         const difference = TOTAL_ATTRIBUTES - magicka - stamina
-        dispatch!({ type: 'SET_HEALTH', payload: { health: difference } })
-      } else if (tooLittleAttributes && operation === 'minus') {
-        dispatch!({ type: 'SET_HEALTH', payload: { health: 0 } })
+        dispatch!({ type: "SET_HEALTH", payload: { health: difference } })
+      } else if (tooLittleAttributes && operation === "minus") {
+        dispatch!({ type: "SET_HEALTH", payload: { health: 0 } })
       } else {
         dispatch!({
-          type: 'SET_HEALTH',
+          type: "SET_HEALTH",
           payload: {
             health:
-              operation === 'plus' ? health + modifier : health - modifier,
+              operation === "plus" ? health + modifier : health - modifier,
           },
         })
       }
-    } else if (type === 'magicka') {
-      if (tooManyAttributes && operation === 'plus') {
+    } else if (type === "magicka") {
+      if (tooManyAttributes && operation === "plus") {
         const difference = TOTAL_ATTRIBUTES - health - stamina
-        dispatch!({ type: 'SET_MAGICKA', payload: { magicka: difference } })
-      } else if (tooLittleAttributes && operation === 'minus') {
-        dispatch!({ type: 'SET_MAGICKA', payload: { magicka: 0 } })
+        dispatch!({ type: "SET_MAGICKA", payload: { magicka: difference } })
+      } else if (tooLittleAttributes && operation === "minus") {
+        dispatch!({ type: "SET_MAGICKA", payload: { magicka: 0 } })
       } else {
         dispatch!({
-          type: 'SET_MAGICKA',
+          type: "SET_MAGICKA",
           payload: {
             magicka:
-              operation === 'plus' ? magicka + modifier : magicka - modifier,
+              operation === "plus" ? magicka + modifier : magicka - modifier,
           },
         })
       }
     } else {
-      if (tooManyAttributes && operation === 'plus') {
+      if (tooManyAttributes && operation === "plus") {
         const difference = TOTAL_ATTRIBUTES - magicka - health
-        dispatch!({ type: 'SET_STAMINA', payload: { stamina: difference } })
-      } else if (tooLittleAttributes && operation === 'minus') {
-        dispatch!({ type: 'SET_STAMINA', payload: { stamina: 0 } })
+        dispatch!({ type: "SET_STAMINA", payload: { stamina: difference } })
+      } else if (tooLittleAttributes && operation === "minus") {
+        dispatch!({ type: "SET_STAMINA", payload: { stamina: 0 } })
       } else {
         dispatch!({
-          type: 'SET_STAMINA',
+          type: "SET_STAMINA",
           payload: {
             stamina:
-              operation === 'plus' ? stamina + modifier : stamina - modifier,
+              operation === "plus" ? stamina + modifier : stamina - modifier,
           },
         })
       }
@@ -138,30 +130,30 @@ export default ({ edit }: { edit: boolean }) => {
   }
   useEffect(() => {
     if (!edit) {
-      localStorage.setItem('buildState', JSON.stringify(state))
+      localStorage.setItem("buildState", JSON.stringify(state))
     }
   }, [state, edit])
 
   const handleBuildNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch!({ type: 'SET_BUILD_NAME', payload: { name: e.target.value } })
+    dispatch!({ type: "SET_BUILD_NAME", payload: { name: e.target.value } })
   }
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({
-      type: 'SET_DESCRIPTION',
+      type: "SET_DESCRIPTION",
       payload: { description: e.target.value },
     })
   }
 
   const handleApplicationAreaChange = (value: string) => {
     dispatch!({
-      type: 'SET_APPLICATION_AREA',
+      type: "SET_APPLICATION_AREA",
       payload: { applicationArea: value },
     })
   }
 
   const handleRoleChange = (value: string) => {
     dispatch!({
-      type: 'SET_ROLE',
+      type: "SET_ROLE",
       payload: { role: value },
     })
   }
@@ -170,52 +162,52 @@ export default ({ edit }: { edit: boolean }) => {
     <div>
       <Divider>General Information</Divider>
       <GeneralContainer>
-        <Flex direction='column' justify='space-around' align='center'>
+        <Flex direction="column" justify="space-around" align="center">
           <Flex
             style={{ margin: 10, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
           >
             <Typography.Text strong>Build Name</Typography.Text>
             <Input
               style={{ width: 400 }}
-              size='large'
+              size="large"
               value={name}
               onChange={handleBuildNameChange}
-              placeholder='Type name...'
+              placeholder="Type name..."
             />
           </Flex>
           <Flex
             style={{ margin: 10, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
           >
             <Typography.Text strong>Description</Typography.Text>
 
             <Input
-              size='large'
+              size="large"
               style={{ width: 400 }}
               value={description}
               onChange={handleDescriptionChange}
-              placeholder='Type description...'
+              placeholder="Type description..."
             />
           </Flex>
 
           <Flex
             style={{ margin: 10, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
           >
             <Typography.Text strong>Application Area</Typography.Text>
             <Select
               style={{ width: 400 }}
               value={applicationArea}
               onChange={handleApplicationAreaChange}
-              size='large'
-              placeholder='Select application area...'
+              size="large"
+              placeholder="Select application area..."
             >
               {applicationAreas.map((area, index) => (
                 <Select.Option key={`appArea-${index}`} value={area.key}>
@@ -227,33 +219,33 @@ export default ({ edit }: { edit: boolean }) => {
 
           <Flex
             style={{ margin: 10, width: 400 }}
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
+            direction="column"
+            justify="flex-start"
+            align="flex-start"
           >
             <Typography.Text strong>Role</Typography.Text>
 
             <Select
-              size='large'
+              size="large"
               style={{ width: 400 }}
               value={role}
               onChange={handleRoleChange}
-              placeholder='Select application area...'
+              placeholder="Select application area..."
             >
-              <Select.Option value='battlegrounds'>Healer</Select.Option>
-              <Select.Option value='cyrodiil_raid'>Damage Dealer</Select.Option>
-              <Select.Option value='pve_arena'>Support</Select.Option>
-              <Select.Option value='pve_raid'>Tank</Select.Option>
+              <Select.Option value="battlegrounds">Healer</Select.Option>
+              <Select.Option value="cyrodiil_raid">Damage Dealer</Select.Option>
+              <Select.Option value="pve_arena">Support</Select.Option>
+              <Select.Option value="pve_raid">Tank</Select.Option>
             </Select>
           </Flex>
         </Flex>
         <Flex
           style={{ flex: 1, margin: 10 }}
-          direction='column'
-          justify='flex-start'
-          align='center'
+          direction="column"
+          justify="flex-start"
+          align="center"
         >
-          <Flex direction='row' justify='space-between'>
+          <Flex direction="row" justify="space-between">
             <ResourceCard>
               <Typography.Text strong>Stamina</Typography.Text>
               <Typography.Title style={{ margin: 5 }} level={4}>
@@ -262,17 +254,17 @@ export default ({ edit }: { edit: boolean }) => {
               <ButtonGroup>
                 <Button
                   disabled={stamina === 0}
-                  onClick={handleAttributeChange('stamina', 'minus')}
-                  type='default'
+                  onClick={handleAttributeChange("stamina", "minus")}
+                  type="default"
                 >
-                  <Icon type='minus' />
+                  <Icon type="minus" />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('stamina', 'plus')}
-                  type='primary'
+                  onClick={handleAttributeChange("stamina", "plus")}
+                  type="primary"
                 >
-                  <Icon type='plus' />
+                  <Icon type="plus" />
                 </Button>
               </ButtonGroup>
             </ResourceCard>
@@ -284,17 +276,17 @@ export default ({ edit }: { edit: boolean }) => {
               <ButtonGroup>
                 <Button
                   disabled={health === 0}
-                  onClick={handleAttributeChange('health', 'minus')}
-                  type='default'
+                  onClick={handleAttributeChange("health", "minus")}
+                  type="default"
                 >
-                  <Icon type='minus' />
+                  <Icon type="minus" />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('health', 'plus')}
-                  type='primary'
+                  onClick={handleAttributeChange("health", "plus")}
+                  type="primary"
                 >
-                  <Icon type='plus' />
+                  <Icon type="plus" />
                 </Button>
               </ButtonGroup>
             </ResourceCard>
@@ -307,17 +299,17 @@ export default ({ edit }: { edit: boolean }) => {
               <ButtonGroup>
                 <Button
                   disabled={magicka === 0}
-                  onClick={handleAttributeChange('magicka', 'minus')}
-                  type='default'
+                  onClick={handleAttributeChange("magicka", "minus")}
+                  type="default"
                 >
-                  <Icon type='minus' />
+                  <Icon type="minus" />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('magicka', 'plus')}
-                  type='primary'
+                  onClick={handleAttributeChange("magicka", "plus")}
+                  type="primary"
                 >
-                  <Icon type='plus' />
+                  <Icon type="plus" />
                 </Button>
               </ButtonGroup>
             </ResourceCard>

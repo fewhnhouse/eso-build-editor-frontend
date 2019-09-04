@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
-import { useDrag } from 'react-dnd'
-import styled, { CSSProperties } from 'styled-components'
-import SkillView from '../../../components/SkillView'
-import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
-import { Card, Divider, Button, Typography, Tooltip } from 'antd'
-import GearView from '../../../components/GearView'
-import { Tabs } from 'antd'
-import Flex from '../../../components/Flex'
-import { IBuild } from '../../build/BuildStateContext'
-import { IRole, RaidContext } from '../RaidStateContext'
-import { Link } from 'react-router-dom'
+import React, { useContext } from "react"
+import { useDrag } from "react-dnd"
+import styled, { CSSProperties } from "styled-components"
+import SkillView from "../../../components/SkillView"
+import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from "../../build/Skills/AbilityBar"
+import { Card, Divider, Button, Typography, Tooltip } from "antd"
+import GearView from "../../../components/GearView"
+import { Tabs } from "antd"
+import Flex from "../../../components/Flex"
+import { IBuild } from "../../build/BuildStateContext"
+import { IRole, RaidContext } from "../RaidStateContext"
+import { Link } from "react-router-dom"
 
 const { TabPane } = Tabs
 
@@ -31,7 +31,7 @@ const RaceClassContainer = styled.div`
 const Description = styled(Flex)`
   font-size: 14px;
   line-height: 1.5;
-  color: 'rgba(0, 0, 0, 0.45)';
+  color: "rgba(0, 0, 0, 0.45)";
 `
 
 const AbilityBar = styled.div`
@@ -46,9 +46,9 @@ const AbilityBar = styled.div`
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active?: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
+    props.active ? "rgb(21, 136, 246)" : "rgb(232, 232, 232)"};
   background: ${(props: { active?: boolean }) =>
-    props.active ? 'rgba(0,0,0,0.05)' : 'white'};
+    props.active ? "rgba(0,0,0,0.05)" : "white"};
   border-width: 2px;
   max-width: 400px;
   min-height: 80px;
@@ -80,7 +80,7 @@ export default ({
 const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
-      type: 'build',
+      type: "build",
       build: item,
     },
     collect: monitor => ({
@@ -107,8 +107,8 @@ const BuildCard = ({
   const [, dispatch] = useContext(RaidContext)
   const handleDeleteClick = () => {
     dispatch!({
-      type: 'REMOVE_BUILD',
-      payload: { buildId: item.id, name: role ? role.name : '' },
+      type: "REMOVE_BUILD",
+      payload: { buildId: item.id, name: role ? role.name : "" },
     })
   }
   const {
@@ -126,7 +126,7 @@ const BuildCard = ({
   )
   const setsCount = concat
     .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
+      setSelection.selectedSet ? setSelection.selectedSet.name : ""
     )
     .reduce<Map<string, number>>(
       (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
@@ -136,38 +136,38 @@ const BuildCard = ({
   return (
     <StyledCard hoverable>
       <div>
-        <Flex direction='row' justify='space-between'>
+        <Flex direction="row" justify="space-between">
           <Typography.Title
             level={3}
             style={{
               maxWidth: 350,
               width: "80%",
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
             }}
           >
             {item.name}
           </Typography.Title>
           {role ? (
             <Button
-              type='danger'
+              type="danger"
               ghost
-              icon='delete'
+              icon="delete"
               onClick={handleDeleteClick}
             />
           ) : (
-            <Tooltip title='Go to build'>
+            <Tooltip title="Go to build">
               <Link
-                style={{ top: 10, right: 10, position: 'absolute' }}
+                style={{ top: 10, right: 10, position: "absolute" }}
                 to={`/builds/${item.id}`}
               >
-                <Button ghost icon='select' type='primary' />
+                <Button ghost icon="select" type="primary" />
               </Link>
             </Tooltip>
           )}
         </Flex>
-        <Description direction='row' justify='flex-start'>
+        <Description direction="row" justify="flex-start">
           <RaceClassContainer>
             <MyAvatar
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
@@ -183,22 +183,22 @@ const BuildCard = ({
         </Description>
         {expand && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
-            <Tabs defaultActiveKey={'skills'}>
-              <TabPane tab='Skills' key='skills'>
-                <Flex direction="column" style={{ width: '100%' }}>
+            <Divider style={{ margin: "5px 0px" }} />
+            <Tabs defaultActiveKey={"skills"}>
+              <TabPane tab="Skills" key="skills">
+                <Flex direction="column" style={{ width: "100%" }}>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
                       disabled
-                      size='small'
+                      size="small"
                       ultimate={item.ultimateOne}
                       skillSlots={item.newBarOne}
                     />
                   </AbilityBar>
                   <AbilityBar>
                     <SkillView
-                      size='small'
+                      size="small"
                       id={ABILITY_BAR_TWO}
                       disabled
                       skillSlots={item.newBarTwo}
@@ -207,58 +207,58 @@ const BuildCard = ({
                   </AbilityBar>
                 </Flex>
               </TabPane>
-              <TabPane tab='Weapons' key='weapons'>
+              <TabPane tab="Weapons" key="weapons">
                 <ScrollContainer>
                   <GearView
                     setsCount={setsCount}
                     disabled
-                    size='small'
+                    size="small"
                     setups={[
                       {
-                        id: 'frontbar',
-                        label: 'Frontbar',
+                        id: "frontbar",
+                        label: "Frontbar",
                         data: item.frontbarSelection,
                       },
                       {
-                        id: 'backbar',
-                        label: 'Backbar',
+                        id: "backbar",
+                        label: "Backbar",
                         data: item.backbarSelection,
                       },
                     ]}
                   />
                 </ScrollContainer>
               </TabPane>
-              <TabPane tab='Armor' key='armor'>
+              <TabPane tab="Armor" key="armor">
                 <ScrollContainer>
                   <GearView
                     setsCount={setsCount}
                     disabled
-                    size='small'
+                    size="small"
                     setups={[
                       {
-                        id: 'bigpieces',
-                        label: 'Big Pieces',
+                        id: "bigpieces",
+                        label: "Big Pieces",
                         data: item.bigPieceSelection,
                       },
                       {
-                        id: 'smallpieces',
-                        label: 'Small Pieces',
+                        id: "smallpieces",
+                        label: "Small Pieces",
                         data: item.smallPieceSelection,
                       },
                     ]}
                   />
                 </ScrollContainer>
               </TabPane>
-              <TabPane tab='Jewelry' key='jewelry'>
+              <TabPane tab="Jewelry" key="jewelry">
                 <ScrollContainer>
                   <GearView
                     setsCount={setsCount}
                     disabled
-                    size='small'
+                    size="small"
                     setups={[
                       {
-                        id: 'jewelry',
-                        label: 'Jewelry',
+                        id: "jewelry",
+                        label: "Jewelry",
                         data: item.jewelrySelection,
                       },
                     ]}

@@ -1,21 +1,21 @@
-import React, { ReactNode } from 'react';
-import Flex from '../../../components/Flex';
-import { Select, Typography } from 'antd';
-import styled from 'styled-components';
-import { SelectProps } from 'antd/lib/select';
-import { IModification } from '../BuildStateContext';
+import React, { ReactNode } from "react"
+import Flex from "../../../components/Flex"
+import { Select, Typography } from "antd"
+import styled from "styled-components"
+import { SelectProps } from "antd/lib/select"
+import { IModification } from "../BuildStateContext"
 
-const { Option } = Select;
+const { Option } = Select
 
 const StyledIcon = styled.img`
   width: 24px;
   height: 24px;
   margin: 0px 10px;
-`;
+`
 
 export interface ICustomSelectProps extends SelectProps {
-  items: IModification[];
-  className?: string;
+  items: IModification[]
+  className?: string
 }
 export const CustomSelect = ({
   items,
@@ -32,7 +32,7 @@ export const CustomSelect = ({
       <Option value={item.type} key={index}>
         <Flex direction="column" justify="flex-start" align="flex-start">
           <Flex
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             direction="row"
             justify="space-between"
             align="center"
@@ -45,7 +45,7 @@ export const CustomSelect = ({
             />
           </Flex>
           <Typography.Text
-            style={{ color: 'rgba(0, 0, 0, 0.25)', whiteSpace: 'normal' }}
+            style={{ color: "rgba(0, 0, 0, 0.25)", whiteSpace: "normal" }}
           >
             {item.description}
           </Typography.Text>
@@ -53,10 +53,10 @@ export const CustomSelect = ({
       </Option>
     ))}
   </Select>
-);
+)
 
 export interface ISelectWithTitleProps extends ICustomSelectProps {
-  title: string | ReactNode;
+  title: string | ReactNode
 }
 export const SelectWithTitle = ({
   items,
@@ -74,8 +74,8 @@ export const SelectWithTitle = ({
     <Typography.Text strong>{title}</Typography.Text>
     <StyledCustomSelect items={items} {...props} />
   </Flex>
-);
+)
 
 const StyledCustomSelect = styled(CustomSelect)`
   width: 100%;
-`;
+`

@@ -1,13 +1,13 @@
-import React from 'react' // { useReducer }
-import { ISkill } from '../../components/SkillSlot'
-import { skillReducer } from './reducers/skillReducer'
-import { skillBarReducer } from './reducers/skillBarReducer'
-import { ISet } from '../../components/GearSlot'
-import { setReducer } from './reducers/setReducer'
-import { SelectValue } from 'antd/lib/select'
-import { raceNameReducer } from './reducers/raceNameReducer'
-import { setBarReducer } from './reducers/setBarReducer'
-import { ISpecialBuff } from './consumables/BuffMenu'
+import React from "react" // { useReducer }
+import { ISkill } from "../../components/SkillSlot"
+import { skillReducer } from "./reducers/skillReducer"
+import { skillBarReducer } from "./reducers/skillBarReducer"
+import { ISet } from "../../components/GearSlot"
+import { setReducer } from "./reducers/setReducer"
+import { SelectValue } from "antd/lib/select"
+import { raceNameReducer } from "./reducers/raceNameReducer"
+import { setBarReducer } from "./reducers/setBarReducer"
+import { ISpecialBuff } from "./consumables/BuffMenu"
 
 export interface IMundus {
   id: string
@@ -74,68 +74,68 @@ export interface ISkillSelection {
 }
 
 export enum Slot {
-  head = 'HEAD',
-  mainHand = 'MAIN_HAND',
-  offHand = 'OFF_HAND',
-  eitherHand = 'EITHER_HAND',
-  shoulders = 'SHOULDERS',
-  chest = 'CHEST',
-  legs = 'LEGS',
-  waist = 'WAIST',
-  feet = 'FEET',
-  hands = 'HANDS',
-  ring = 'RING',
-  neck = 'NECK',
-  ring1 = 'RING1',
-  ring2 = 'RING2',
+  head = "HEAD",
+  mainHand = "MAIN_HAND",
+  offHand = "OFF_HAND",
+  eitherHand = "EITHER_HAND",
+  shoulders = "SHOULDERS",
+  chest = "CHEST",
+  legs = "LEGS",
+  waist = "WAIST",
+  feet = "FEET",
+  hands = "HANDS",
+  ring = "RING",
+  neck = "NECK",
+  ring1 = "RING1",
+  ring2 = "RING2",
 }
 
 export enum OnehandedWeapon {
-  dagger = 'DAGGER',
-  axe = '1H_AXE',
-  mace = '1H_MACE',
-  sword = '1H_SWORD',
-  shield = 'SHIELD',
+  dagger = "DAGGER",
+  axe = "1H_AXE",
+  mace = "1H_MACE",
+  sword = "1H_SWORD",
+  shield = "SHIELD",
 }
 
 export enum TwohandedWeapon {
-  axe = '2H_AXE',
-  mace = '2H_MACE',
-  sword = '2H_SWORD',
-  restorationStaff = 'RESTORATION_STAFF',
-  fireStaff = 'FIRE_STAFF',
-  lightningStaff = 'LIGHTNING_STAFF',
-  iceStaff = 'ICE_STAFF',
-  bow = 'BOW',
+  axe = "2H_AXE",
+  mace = "2H_MACE",
+  sword = "2H_SWORD",
+  restorationStaff = "RESTORATION_STAFF",
+  fireStaff = "FIRE_STAFF",
+  lightningStaff = "LIGHTNING_STAFF",
+  iceStaff = "ICE_STAFF",
+  bow = "BOW",
 }
 
 export enum SetTab {
-  armor = 'ARMOR_TAB',
-  frontbar = 'FRONTBAR_TAB',
-  backbar = 'BACKBAR_TAB',
-  jewelry = 'JEWELRY_TAB',
+  armor = "ARMOR_TAB",
+  frontbar = "FRONTBAR_TAB",
+  backbar = "BACKBAR_TAB",
+  jewelry = "JEWELRY_TAB",
 }
 
-export type SlotType = ArmorType | WeaponType | 'jewelry'
+export type SlotType = ArmorType | WeaponType | "jewelry"
 
 export enum ArmorType {
-  lightArmor = 'LIGHT_ARMOR',
-  mediumArmor = 'MEDIUM_ARMOR',
-  heavyArmor = 'HEAVY_ARMOR',
+  lightArmor = "LIGHT_ARMOR",
+  mediumArmor = "MEDIUM_ARMOR",
+  heavyArmor = "HEAVY_ARMOR",
 }
 
 export enum SetType {
-  undaunted = 'Monster Set',
-  arena = 'Arena',
-  pvp = 'PvP',
-  overland = 'Overland',
-  trial = 'Trial',
-  dungeon = 'Dungeon',
+  undaunted = "Monster Set",
+  arena = "Arena",
+  pvp = "PvP",
+  overland = "Overland",
+  trial = "Trial",
+  dungeon = "Dungeon",
 }
 
 export enum WeaponType {
-  onehanded = 'ONE_HANDED',
-  twohanded = 'TWO_HANDED',
+  onehanded = "ONE_HANDED",
+  twohanded = "TWO_HANDED",
 }
 export interface ISetSelection {
   id?: string
@@ -150,8 +150,8 @@ export interface ISetSelection {
 
 export interface IModification {
   type: string
-  modificationType: 'glyph' | 'trait'
-  itemType: 'armor' | 'weapon' | 'jewelry'
+  modificationType: "glyph" | "trait"
+  itemType: "armor" | "weapon" | "jewelry"
   description: string
   icon: string
 }
@@ -164,31 +164,31 @@ export const defaultBuildState: IBuildState = {
   stamina: 0,
   magicka: 0,
   mundusStone: {
-    id: '',
-    effect: '',
-    name: '',
-    icon: '',
-    value: '',
-    aldmeri: '',
-    daggerfall: '',
-    ebonheart: ''
+    id: "",
+    effect: "",
+    name: "",
+    icon: "",
+    value: "",
+    aldmeri: "",
+    daggerfall: "",
+    ebonheart: "",
   },
   buff: {
-    buffDescription: '',
-    buffType: '',
-    description: '',
+    buffDescription: "",
+    buffType: "",
+    description: "",
     duration: 0,
-    icon: '',
-    name: '',
-    notes: '',
+    icon: "",
+    name: "",
+    notes: "",
     quality: 1,
   },
   hasTrash: false,
-  applicationArea: '',
-  esoClass: '',
-  role: '',
-  name: '',
-  description: '',
+  applicationArea: "",
+  esoClass: "",
+  role: "",
+  name: "",
+  description: "",
   newBarOne: [
     { index: 0, skill: undefined },
     { index: 1, skill: undefined },
@@ -271,7 +271,7 @@ export const defaultBuildState: IBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
-      type: 'jewelry',
+      type: "jewelry",
     },
     {
       slot: Slot.ring1,
@@ -279,7 +279,7 @@ export const defaultBuildState: IBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
-      type: 'jewelry',
+      type: "jewelry",
     },
     {
       slot: Slot.ring2,
@@ -287,7 +287,7 @@ export const defaultBuildState: IBuildState = {
       icon: undefined,
       trait: undefined,
       glyph: undefined,
-      type: 'jewelry',
+      type: "jewelry",
     },
   ],
   frontbarSelection: [
@@ -328,8 +328,8 @@ export const defaultBuildState: IBuildState = {
   selectedSet: undefined,
   weaponType: WeaponType.onehanded,
   armorType: ArmorType.mediumArmor,
-  weapons: ['', ''],
-  race: '',
+  weapons: ["", ""],
+  race: "",
   setTabKey: SetTab.armor,
 }
 

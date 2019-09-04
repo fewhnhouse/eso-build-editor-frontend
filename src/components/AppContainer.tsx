@@ -1,8 +1,8 @@
-import React, { useEffect, useContext } from 'react'
-import '../App.css'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
-import Routes from './Routes'
-import styled from 'styled-components'
+import React, { useEffect, useContext } from "react"
+import "../App.css"
+import { RouteComponentProps, withRouter } from "react-router-dom"
+import Routes from "./Routes"
+import styled from "styled-components"
 import {
   Layout,
   Button,
@@ -11,13 +11,13 @@ import {
   Typography,
   Divider,
   message,
-} from 'antd'
-import { useQuery, useMutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { LoginContext } from '../App'
-import Flex from './Flex'
-import Menu from './Menu'
-import Div100vh from 'react-div-100vh'
+} from "antd"
+import { useQuery, useMutation } from "react-apollo"
+import gql from "graphql-tag"
+import { LoginContext } from "../App"
+import Flex from "./Flex"
+import Menu from "./Menu"
+import Div100vh from "react-div-100vh"
 
 const LoadingContainer = styled.div`
   text-align: center;
@@ -54,16 +54,16 @@ const openNotification = (resendMutation: any) => {
   }
   const btn = (
     <Flex
-      style={{ width: '100%' }}
-      direction='row'
-      align='center'
-      justify='space-between'
+      style={{ width: "100%" }}
+      direction="row"
+      align="center"
+      justify="space-between"
     >
       <Typography.Text style={{ marginRight: 30 }}>
-        Didnt get an email?{' '}
+        Didnt get an email?{" "}
       </Typography.Text>
-      <Button onClick={handleResendClick} icon='mail' type='primary'>
-        {'Resend'}
+      <Button onClick={handleResendClick} icon="mail" type="primary">
+        {"Resend"}
       </Button>
     </Flex>
   )
@@ -71,14 +71,14 @@ const openNotification = (resendMutation: any) => {
   notification.info({
     key,
     duration: 0,
-    message: 'Please verify your account.',
+    message: "Please verify your account.",
     btn,
     description: (
-      <Flex direction='column' align='center' justify='center'>
+      <Flex direction="column" align="center" justify="center">
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: '5px 0px' }} />
+        <Divider style={{ margin: "5px 0px" }} />
       </Flex>
     ),
   })
@@ -92,9 +92,9 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
 
   useEffect(() => {
     if (resendResult.data) {
-      message.success('Verification Email resent.')
+      message.success("Verification Email resent.")
     } else if (resendResult.error) {
-      message.error('Error sending Verification Email.')
+      message.error("Error sending Verification Email.")
     }
   }, [resendResult])
   /*
@@ -119,14 +119,14 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
   if (loading) {
     return (
       <LoadingContainer>
-        <Spin size='large' />
+        <Spin size="large" />
       </LoadingContainer>
     )
   }
 
   return (
     <Div100vh>
-      <Layout style={{ height: '100vh' }}>
+      <Layout style={{ height: "100vh" }}>
         <Menu me={data && data.me} />
         <Routes isLoggedIn={loggedIn} />
       </Layout>

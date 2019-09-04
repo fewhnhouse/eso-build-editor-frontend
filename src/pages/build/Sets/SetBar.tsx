@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import { Divider } from 'antd'
-import GearView from '../../../components/GearView'
-import { ISet } from '../../../components/GearSlot'
+import React, { useContext } from "react"
+import styled from "styled-components"
+import { Divider } from "antd"
+import GearView from "../../../components/GearView"
+import { ISet } from "../../../components/GearSlot"
 import {
   BuildContext,
   Slot,
@@ -14,10 +14,10 @@ import {
   SetTab,
   SetType,
   IModification,
-} from '../BuildStateContext'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-import Scrollbars from 'react-custom-scrollbars'
+} from "../BuildStateContext"
+import { DndProvider } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
+import Scrollbars from "react-custom-scrollbars"
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -29,13 +29,13 @@ const OuterContainer = styled.div`
 
 export const specialWeaponSets = [
   {
-    name: 'Precise Regeneration',
-    type: 'twohanded',
+    name: "Precise Regeneration",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
-    name: 'Concentrated Force',
-    type: 'twohanded',
+    name: "Concentrated Force",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.fireStaff,
@@ -43,8 +43,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Chaotic Whirlwind',
-    type: 'onehanded',
+    name: "Chaotic Whirlwind",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.axe,
       OnehandedWeapon.dagger,
@@ -53,8 +53,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Disciplined Slash',
-    type: 'twohanded',
+    name: "Disciplined Slash",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
@@ -62,13 +62,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Timeless Blessing',
-    type: 'twohanded',
+    name: "Timeless Blessing",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
-    name: 'Defensive Position',
-    type: 'onehanded',
+    name: "Defensive Position",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.shield,
       OnehandedWeapon.dagger,
@@ -78,13 +78,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Piercing Spray',
-    type: 'twohanded',
+    name: "Piercing Spray",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.bow],
   },
   {
-    name: 'Gallant Charge',
-    type: 'onehanded',
+    name: "Gallant Charge",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.axe,
       OnehandedWeapon.dagger,
@@ -95,12 +95,12 @@ export const specialWeaponSets = [
   },
   {
     name: "Mender's Ward",
-    type: 'twohanded',
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
-    name: 'Radial Uppercut',
-    type: 'twohanded',
+    name: "Radial Uppercut",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
@@ -108,8 +108,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Spectral Cloak',
-    type: 'onehanded',
+    name: "Spectral Cloak",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.axe,
       OnehandedWeapon.dagger,
@@ -118,13 +118,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Virulent Shot',
-    type: 'twohanded',
+    name: "Virulent Shot",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.bow],
   },
   {
-    name: 'Wild Impulse',
-    type: 'twohanded',
+    name: "Wild Impulse",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
@@ -132,8 +132,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Crushing Wall',
-    type: 'twohanded',
+    name: "Crushing Wall",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
@@ -141,13 +141,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Cruel Flurry',
-    type: 'onehanded',
+    name: "Cruel Flurry",
+    type: "onehanded",
     weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger],
   },
   {
-    name: 'Merciless Charge',
-    type: 'twohanded',
+    name: "Merciless Charge",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
@@ -155,8 +155,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Rampaging Slash',
-    type: 'onehanded',
+    name: "Rampaging Slash",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.mace,
       OnehandedWeapon.sword,
@@ -164,13 +164,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Thunderous Volley',
-    type: 'twohanded',
+    name: "Thunderous Volley",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.bow],
   },
   {
-    name: 'Destructive Impact',
-    type: 'twohanded',
+    name: "Destructive Impact",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.lightningStaff,
       TwohandedWeapon.iceStaff,
@@ -178,13 +178,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Stinging Slashes',
-    type: 'onehanded',
+    name: "Stinging Slashes",
+    type: "onehanded",
     weaponTypes: [OnehandedWeapon.axe, OnehandedWeapon.dagger],
   },
   {
-    name: 'Titanic Cleave',
-    type: 'twohanded',
+    name: "Titanic Cleave",
+    type: "twohanded",
     weaponTypes: [
       TwohandedWeapon.axe,
       TwohandedWeapon.sword,
@@ -192,13 +192,13 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Grand Rejuvenation',
-    type: 'twohanded',
+    name: "Grand Rejuvenation",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.restorationStaff],
   },
   {
-    name: 'Puncturing Remedy',
-    type: 'onehanded',
+    name: "Puncturing Remedy",
+    type: "onehanded",
     weaponTypes: [
       OnehandedWeapon.mace,
       OnehandedWeapon.shield,
@@ -206,8 +206,8 @@ export const specialWeaponSets = [
     ],
   },
   {
-    name: 'Caustic Arrow',
-    type: 'twohanded',
+    name: "Caustic Arrow",
+    type: "twohanded",
     weaponTypes: [TwohandedWeapon.bow],
   },
 ]
@@ -242,8 +242,8 @@ const getSetups = ({
 }): ISetup[] => {
   return [
     {
-      id: 'bigpieces',
-      label: 'Big Pieces',
+      id: "bigpieces",
+      label: "Big Pieces",
       data: bigPieceSelection
         .filter(bigPiece =>
           selectedSet && selectedSet.type === SetType.undaunted
@@ -259,8 +259,8 @@ const getSetups = ({
         })),
     },
     {
-      id: 'smallpieces',
-      label: 'Small Pieces',
+      id: "smallpieces",
+      label: "Small Pieces",
       data: smallPieceSelection
         .filter(smallPiece =>
           selectedSet && selectedSet.type === SetType.undaunted
@@ -277,8 +277,8 @@ const getSetups = ({
         })),
     },
     {
-      id: 'jewelry',
-      label: 'Jewelry',
+      id: "jewelry",
+      label: "Jewelry",
       data: jewelrySelection.map(jewelry => ({
         slot: jewelry.slot,
         selectedSet,
@@ -287,8 +287,8 @@ const getSetups = ({
       })),
     },
     {
-      id: 'onehanded',
-      label: 'One Handed',
+      id: "onehanded",
+      label: "One Handed",
       data: [
         {
           slot: Slot.eitherHand,
@@ -323,8 +323,8 @@ const getSetups = ({
       ],
     },
     {
-      id: 'twohanded',
-      label: 'Two Handed',
+      id: "twohanded",
+      label: "Two Handed",
       data: [
         {
           slot: Slot.mainHand,
@@ -429,56 +429,56 @@ export default () => {
 
     if (key === SetTab.frontbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter(setup => setup.id === "onehanded")
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter(setup => setup.id === "twohanded")
       }
     } else if (key === SetTab.backbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter(setup => setup.id === "onehanded")
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter(setup => setup.id === "twohanded")
       }
     } else if (key === SetTab.armor) {
       return mySetups.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
+        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
       )
     } else {
-      return mySetups.filter(setup => setup.id === 'jewelry')
+      return mySetups.filter(setup => setup.id === "jewelry")
     }
   }
 
   const selectedSetup = [
     {
-      id: 'bigpieces',
-      label: 'Big Pieces',
+      id: "bigpieces",
+      label: "Big Pieces",
       data: bigPieceSelection || [],
     },
     {
-      id: 'smallpieces',
-      label: 'Small Pieces',
+      id: "smallpieces",
+      label: "Small Pieces",
       data: smallPieceSelection || [],
     },
-    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
+    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
     {
-      id: 'frontbar',
-      label: 'Frontbar',
+      id: "frontbar",
+      label: "Frontbar",
       data: frontbarSelection || [],
     },
-    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
+    { id: "backbar", label: "Backbar", data: backbarSelection || [] },
   ]
 
   const showSetup = (key: string) => {
     if (key === SetTab.frontbar) {
-      return selectedSetup.filter(setup => setup.id === 'frontbar')
+      return selectedSetup.filter(setup => setup.id === "frontbar")
     } else if (key === SetTab.backbar) {
-      return selectedSetup.filter(setup => setup.id === 'backbar')
+      return selectedSetup.filter(setup => setup.id === "backbar")
     } else if (key === SetTab.armor) {
       return selectedSetup.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
+        setup => setup.id === "bigpieces" || setup.id === "smallpieces"
       )
     } else {
-      return selectedSetup.filter(setup => setup.id === 'jewelry')
+      return selectedSetup.filter(setup => setup.id === "jewelry")
     }
   }
 
@@ -490,7 +490,7 @@ export default () => {
   )
   const setsCount = concat
     .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
+      setSelection.selectedSet ? setSelection.selectedSet.name : ""
     )
     .reduce<Map<string, number>>(
       (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
@@ -499,7 +499,7 @@ export default () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Scrollbars autoHide style={{maxWidth: 400, background: "white"}}>
+      <Scrollbars autoHide style={{ maxWidth: 400, background: "white" }}>
         <OuterContainer>
           <Divider>Active Selection</Divider>
           <GearView setups={showGear(setTabKey)} setsCount={setsCount} />

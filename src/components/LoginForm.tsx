@@ -8,16 +8,16 @@ import {
   notification,
   Divider,
   Typography,
-} from 'antd'
-import React, { useState, useEffect, useContext } from 'react'
-import styled from 'styled-components'
-import gql from 'graphql-tag'
-import { useMutation } from 'react-apollo'
-import { FormComponentProps } from 'antd/lib/form'
-import { RouteComponentProps, withRouter } from 'react-router'
-import { LoginContext } from '../App'
-import Flex from './Flex'
-import { RESEND_VERIFICATION } from './AppContainer'
+} from "antd"
+import React, { useState, useEffect, useContext } from "react"
+import styled from "styled-components"
+import gql from "graphql-tag"
+import { useMutation } from "react-apollo"
+import { FormComponentProps } from "antd/lib/form"
+import { RouteComponentProps, withRouter } from "react-router"
+import { LoginContext } from "../App"
+import Flex from "./Flex"
+import { RESEND_VERIFICATION } from "./AppContainer"
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -41,7 +41,7 @@ const REGISTER = gql`
 `
 const StyledForm = styled(Form)`
   display: flex;
-  width: '300px';
+  width: "300px";
   flex-direction: column;
 `
 
@@ -78,16 +78,16 @@ const openNotification = (resendMutation: any) => {
   }
   const btn = (
     <Flex
-      style={{ width: '100%' }}
-      direction='row'
-      align='center'
-      justify='space-between'
+      style={{ width: "100%" }}
+      direction="row"
+      align="center"
+      justify="space-between"
     >
       <Typography.Text style={{ marginRight: 30 }}>
         Didnt get an email?
       </Typography.Text>
-      <Button onClick={handleResendClick} icon='mail' type='primary'>
-        {'Resend'}
+      <Button onClick={handleResendClick} icon="mail" type="primary">
+        {"Resend"}
       </Button>
     </Flex>
   )
@@ -95,14 +95,14 @@ const openNotification = (resendMutation: any) => {
   notification.info({
     key,
     duration: 0,
-    message: 'Registration successful.',
+    message: "Registration successful.",
     btn,
     description: (
-      <Flex direction='column' align='center' justify='center'>
+      <Flex direction="column" align="center" justify="center">
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: '5px 0px' }} />
+        <Divider style={{ margin: "5px 0px" }} />
       </Flex>
     ),
   })
@@ -158,9 +158,9 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
 
   useEffect(() => {
     if (resendResult.data) {
-      message.success('Verification Email resent.')
+      message.success("Verification Email resent.")
     } else if (resendResult.error) {
-      message.error('Error sending Verification Email.')
+      message.error("Error sending Verification Email.")
     }
   }, [resendResult])
 
@@ -172,8 +172,8 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
 
       if (loginResult.data) {
         localStorage.setItem(
-          'token',
-          loginResult.data ? loginResult.data.login.token : ''
+          "token",
+          loginResult.data ? loginResult.data.login.token : ""
         )
         setLoggedIn(true)
       }
@@ -188,42 +188,42 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
     }
   }, [loginResult, registerResult, setLoggedIn, resendMutation])
 
-  const emailError = isFieldTouched('email') && getFieldError('email')
-  const usernameError = isFieldTouched('username') && getFieldError('username')
-  const passwordError = isFieldTouched('password') && getFieldError('password')
+  const emailError = isFieldTouched("email") && getFieldError("email")
+  const usernameError = isFieldTouched("username") && getFieldError("username")
+  const passwordError = isFieldTouched("password") && getFieldError("password")
   return (
-    <StyledForm onSubmit={handleSubmit} className='login-form'>
+    <StyledForm onSubmit={handleSubmit} className="login-form">
       {register && (
         <Form.Item
-          validateStatus={usernameError ? 'error' : ''}
-          help={usernameError || ''}
+          validateStatus={usernameError ? "error" : ""}
+          help={usernameError || ""}
         >
-          {getFieldDecorator('username', {
+          {getFieldDecorator("username", {
             rules: [
               {
                 required: true,
-                message: 'Please input your username!',
+                message: "Please input your username!",
                 whitespace: true,
                 min: 2,
               },
             ],
           })(
             <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='Username'
+              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="Username"
             />
           )}
         </Form.Item>
       )}
       <Form.Item
-        validateStatus={emailError ? 'error' : ''}
-        help={emailError || ''}
+        validateStatus={emailError ? "error" : ""}
+        help={emailError || ""}
       >
-        {getFieldDecorator('email', {
+        {getFieldDecorator("email", {
           rules: [
             {
               required: true,
-              message: 'Please input a valid email!',
+              message: "Please input a valid email!",
               whitespace: true,
               //eslint-disable-next-line
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -231,39 +231,39 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
           ],
         })(
           <Input
-            prefix={<Icon type='email' style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder='Email'
+            prefix={<Icon type="email" style={{ color: "rgba(0,0,0,.25)" }} />}
+            placeholder="Email"
           />
         )}
       </Form.Item>
       <Form.Item
-        validateStatus={passwordError ? 'error' : ''}
-        help={passwordError || ''}
+        validateStatus={passwordError ? "error" : ""}
+        help={passwordError || ""}
       >
-        {getFieldDecorator('password', {
+        {getFieldDecorator("password", {
           rules: [
             {
               required: true,
-              message: 'Please input a valid Password!',
+              message: "Please input a valid Password!",
               min: 6,
               whitespace: true,
             },
           ],
         })(
           <Input
-            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-            type='password'
-            placeholder='Password'
+            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+            type="password"
+            placeholder="Password"
           />
         )}
       </Form.Item>
       <Form.Item>
-        {getFieldDecorator('remember', {
-          valuePropName: 'checked',
+        {getFieldDecorator("remember", {
+          valuePropName: "checked",
           initialValue: true,
         })(<Checkbox>Remember me</Checkbox>)}
         {!register && (
-          <a className='login-form-forgot' href='/resetPassword'>
+          <a className="login-form-forgot" href="/resetPassword">
             Forgot password
           </a>
         )}
@@ -272,17 +272,17 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         <Button
           disabled={hasErrors(getFieldsError())}
           loading={loginResult.loading || registerResult.loading}
-          style={{ width: '100%' }}
-          type='primary'
-          htmlType='submit'
-          className='login-form-button'
+          style={{ width: "100%" }}
+          type="primary"
+          htmlType="submit"
+          className="login-form-button"
         >
-          {register ? 'Register' : 'Login'}
+          {register ? "Register" : "Login"}
         </Button>
-        <br/>
+        <br />
         Or
-        <Button type='link' onClick={() => setRegister(register => !register)}>
-          {register ? 'login.' : 'register now!'}
+        <Button type="link" onClick={() => setRegister(register => !register)}>
+          {register ? "login." : "register now!"}
         </Button>
       </Form.Item>
     </StyledForm>
@@ -290,7 +290,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
 }
 
 const WrappedNormalLoginForm = Form.create<LoginFormProps>({
-  name: 'normal_login',
+  name: "normal_login",
 })(LoginForm)
 
 export default withRouter(WrappedNormalLoginForm)

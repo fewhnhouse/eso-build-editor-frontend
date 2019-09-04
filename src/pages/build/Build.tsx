@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer, useEffect } from "react"
 import {
   BuildContext,
   buildReducer,
@@ -7,8 +7,8 @@ import {
   OnehandedWeapon,
   WeaponType,
   IBuildState,
-} from './BuildStateContext'
-import { Redirect } from 'react-router'
+} from "./BuildStateContext"
+import { Redirect } from "react-router"
 import {
   Layout,
   Button,
@@ -17,18 +17,18 @@ import {
   // message,
   Tooltip,
   notification,
-} from 'antd'
-import styled from 'styled-components'
-import Consumables from './consumables/Consumables'
-import Sets from './Sets/Sets'
-import Skills from './Skills/Skills'
-import RaceClass from './RaceAndClass/RaceClass'
-import BuildReview from './Review/BuildReview'
-import gql from 'graphql-tag'
-import { useMutation } from 'react-apollo'
-import Flex from '../../components/Flex'
-import { handleCreateSave, handleEditSave } from './util'
-import { build } from '../../util/fragments'
+} from "antd"
+import styled from "styled-components"
+import Consumables from "./consumables/Consumables"
+import Sets from "./Sets/Sets"
+import Skills from "./Skills/Skills"
+import RaceClass from "./RaceAndClass/RaceClass"
+import BuildReview from "./Review/BuildReview"
+import gql from "graphql-tag"
+import { useMutation } from "react-apollo"
+import Flex from "../../components/Flex"
+import { handleCreateSave, handleEditSave } from "./util"
+import { build } from "../../util/fragments"
 
 const { Footer, Content } = Layout
 const ButtonGroup = Button.Group
@@ -61,8 +61,8 @@ export interface ISetSelectionData {
   glyphDescriptions: string[]
   traitDescriptions: string[]
   setIds: number[]
-  types: (SlotType | '' | undefined)[]
-  weaponTypes: (OnehandedWeapon | TwohandedWeapon | '' | undefined)[]
+  types: (SlotType | "" | undefined)[]
+  weaponTypes: (OnehandedWeapon | TwohandedWeapon | "" | undefined)[]
 }
 
 export const CREATE_SET_SELECTIONS = gql`
@@ -147,10 +147,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(pageIndex || 0)
-  const [redirect, setRedirect] = useState('')
+  const [redirect, setRedirect] = useState("")
 
   const handlePrivateChange = () => {
-    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
+    dispatch!({ type: "TOGGLE_IS_PUBLISHED", payload: {} })
   }
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
@@ -173,7 +173,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   useEffect(() => {
     if (saved) {
       if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem('buildState')
+        localStorage.removeItem("buildState")
         setRedirect(createBuildResult.data.createBuild.id)
       } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
         setRedirect(updateBuildResult.data.updateBuild.id)
@@ -194,20 +194,20 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           build.backbarSelection
         )
         notification.success({
-          message: 'Build update successful',
+          message: "Build update successful",
           description: (
-            <Flex direction='column' align='center' justify='center'>
+            <Flex direction="column" align="center" justify="center">
               <div>
                 Your build was successfully edited. You can now view it and
                 share it with others!
               </div>
               <Flex
-                style={{ width: '100%', marginTop: 10 }}
-                direction='row'
-                align='center'
-                justify='space-between'
+                style={{ width: "100%", marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button icon="share-alt">Share link</Button>
               </Flex>
             </Flex>
           ),
@@ -215,8 +215,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
       } catch (e) {
         console.error(e)
         notification.error({
-          message: 'Build update failed',
-          description: 'Your build could not be saved. Try again later.',
+          message: "Build update failed",
+          description: "Your build could not be saved. Try again later.",
         })
       }
     } else {
@@ -228,20 +228,20 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           state!
         )
         notification.success({
-          message: 'Build creation successful',
+          message: "Build creation successful",
           description: (
-            <Flex direction='column' align='center' justify='center'>
+            <Flex direction="column" align="center" justify="center">
               <div>
                 Your build was successfully saved. You can now view it and share
                 it with others!
               </div>
               <Flex
-                style={{ width: '100%', marginTop: 10 }}
-                direction='row'
-                align='center'
-                justify='space-between'
+                style={{ width: "100%", marginTop: 10 }}
+                direction="row"
+                align="center"
+                justify="space-between"
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button icon="share-alt">Share link</Button>
               </Flex>
             </Flex>
           ),
@@ -249,8 +249,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
       } catch (e) {
         console.error(e)
         notification.error({
-          message: 'Build creation failed',
-          description: 'Your build could not be saved. Try again later.',
+          message: "Build creation failed",
+          description: "Your build could not be saved. Try again later.",
         })
       }
     }
@@ -318,7 +318,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0
 
   const isDisabled =
-    (tab === 0 && (state.race === '' || state.esoClass === '')) ||
+    (tab === 0 && (state.race === "" || state.esoClass === "")) ||
     (tab === 1 &&
       !(
         hasValidSkillBarOne &&
@@ -337,15 +337,15 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
 
   const setTooltipTitle = () => {
     if (!isDisabled) {
-      return ''
+      return ""
     }
     switch (tab) {
       case 0:
-        return 'Select a Race and a Class to progress.'
+        return "Select a Race and a Class to progress."
       case 1:
-        return 'Slot Skills and Ultimates to progress.'
+        return "Slot Skills and Ultimates to progress."
       case 2:
-        return 'Slot Armor, Weapons and Jewelry to progress.'
+        return "Slot Armor, Weapons and Jewelry to progress."
     }
   }
 
@@ -370,57 +370,57 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
 
       <Footer
         style={{
-          display: 'flex',
+          display: "flex",
           zIndex: 100,
-          alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+          alignItems: "center",
+          boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)",
         }}
       >
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
-          size='large'
-          type='primary'
+          size="large"
+          type="primary"
         >
-          <Icon type='left' />
+          <Icon type="left" />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
           <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Race & Class'
-            description='Select race and class.'
+            style={{ whiteSpace: "nowrap" }}
+            title="Race & Class"
+            description="Select race and class."
           />
           <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Skills'
-            description='Select skills.'
+            style={{ whiteSpace: "nowrap" }}
+            title="Skills"
+            description="Select skills."
           />
           <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Sets'
-            description='Select sets.'
+            style={{ whiteSpace: "nowrap" }}
+            title="Sets"
+            description="Select sets."
           />
           <Step
-            title='Consumables'
-            style={{ whiteSpace: 'nowrap' }}
-            description='Select mundus, potions, food.'
+            title="Consumables"
+            style={{ whiteSpace: "nowrap" }}
+            description="Select mundus, potions, food."
           />
-          <Step title='Review' description='Review and save.' />
+          <Step title="Review" description="Review and save." />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
-          <ButtonGroup style={{ display: 'flex' }} size='large'>
+          <ButtonGroup style={{ display: "flex" }} size="large">
             {tab === 4 && (
               <Tooltip
                 title={
                   state!.published
-                    ? 'Your build is set to public. It will be visible for anyone. Click to change.'
-                    : 'Your build is set to private. It will only be visible for you. Click to change.'
+                    ? "Your build is set to public. It will be visible for anyone. Click to change."
+                    : "Your build is set to private. It will only be visible for you. Click to change."
                 }
               >
                 <Button
                   onClick={handlePrivateChange}
-                  icon={state!.published ? 'unlock' : 'lock'}
+                  icon={state!.published ? "unlock" : "lock"}
                 />
               </Tooltip>
             )}
@@ -429,10 +429,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               loading={loading}
               onClick={handleNextClick}
               disabled={isDisabled || saved}
-              type='primary'
+              type="primary"
             >
-              {tab === 4 ? 'Save' : 'Next'}
-              {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
+              {tab === 4 ? "Save" : "Next"}
+              {!loading && <Icon type={tab === 4 ? "save" : "right"} />}
             </TabButton>
           </ButtonGroup>
         </Tooltip>

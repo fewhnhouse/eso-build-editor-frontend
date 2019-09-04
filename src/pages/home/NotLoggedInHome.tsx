@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Typography, Divider, Button, Icon } from 'antd'
-import Flex from '../../components/Flex'
-import { Link } from 'react-router-dom'
+import React from "react"
+import styled from "styled-components"
+import { Typography, Divider, Button, Icon } from "antd"
+import Flex from "../../components/Flex"
+import { Link } from "react-router-dom"
 
 const { Title, Text } = Typography
 
@@ -15,7 +15,7 @@ const Wrapper = styled(Flex)`
 const CardContainer = styled(Flex)`
   flex: 1;
   border-color: rgb(232, 232, 232);
-  background: 'white';
+  background: "white";
   border-width: 2px;
   border-radius: 10px;
   padding: 20px;
@@ -29,7 +29,7 @@ const OverviewContainer = styled(Flex)`
   flex: 1;
   border-color: rgb(232, 232, 232);
   margin: auto;
-  background: 'white';
+  background: "white";
   border-width: 2px;
   border-radius: 10px;
   padding: 20px;
@@ -60,7 +60,7 @@ export default () => {
     <>
       <Content>
         <StyledTitle>Welcome to FIST Build Editor</StyledTitle>
-        <Text style={{ maxWidth: '400px' }}>
+        <Text style={{ maxWidth: "400px" }}>
           Build Editor allows you to create and save builds and combine them to
           <br />
           complete raid setups - to be shared with friends, guilds and
@@ -69,21 +69,29 @@ export default () => {
         </Text>
         <Divider />
 
-        <Wrapper direction='row' align='flex-start' justify="center">
-          <CardContainer direction='column' justify='space-between' align="center">
+        <Wrapper direction="row" align="flex-start" justify="center">
+          <CardContainer
+            direction="column"
+            justify="space-between"
+            align="center"
+          >
             <Title level={3}>Builds</Title>
             <Text>Create, share, save and edit builds</Text>
-            <Link style={{ width: '100%' }} to='/builds'>
-              <Button style={{ width: '100%' }} size='large' type='primary'>
+            <Link style={{ width: "100%" }} to="/builds">
+              <Button style={{ width: "100%" }} size="large" type="primary">
                 Explore Builds
               </Button>
             </Link>
           </CardContainer>
-          <CardContainer direction='column' justify='space-between' align="center">
+          <CardContainer
+            direction="column"
+            justify="space-between"
+            align="center"
+          >
             <Title level={3}>Raids</Title>
             <Text>Create, share, save and edit raids</Text>
-            <Link style={{ width: '100%' }} to='/raids'>
-              <Button style={{ width: '100%' }} size='large' type='primary'>
+            <Link style={{ width: "100%" }} to="/raids">
+              <Button style={{ width: "100%" }} size="large" type="primary">
                 Explore Raids
               </Button>
             </Link>
@@ -91,9 +99,9 @@ export default () => {
         </Wrapper>
         <Divider />
         <OverviewContainer
-          justify='space-between'
-          direction='column'
-          align='center'
+          justify="space-between"
+          direction="column"
+          align="center"
         >
           <Title level={3}>Overview</Title>
           <Typography.Text>
@@ -104,27 +112,27 @@ export default () => {
           </Typography.Text>
           <Divider />
 
-          <Flex direction='row' style={{ width: '100%', flexWrap: 'wrap' }}>
+          <Flex direction="row" style={{ width: "100%", flexWrap: "wrap" }}>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Icon style={{ margin: 20, fontSize: 30 }} type="user" />
               <Title level={4}>Sets</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Icon style={{ margin: 20, fontSize: 30 }} type="user" />
               <Title level={4}>Skills</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Icon style={{ margin: 20, fontSize: 30 }} type="user" />
               <Title level={4}>Consumables</Title>
             </OverviewTab>
             <OverviewTab>
-              <Icon style={{ margin: 20, fontSize: 30 }} type='user' />
+              <Icon style={{ margin: 20, fontSize: 30 }} type="user" />
               <Title level={4}>Mundus Stones</Title>
             </OverviewTab>
           </Flex>
           <Divider />
-          <Link to='/overview'>
-            <Button size='large' type='primary' style={{ minWidth: 300 }}>
+          <Link to="/overview">
+            <Button size="large" type="primary" style={{ minWidth: 300 }}>
               Explore
             </Button>
           </Link>

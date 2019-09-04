@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
-import { Typography, Button, Input, Icon, Select } from 'antd'
-import { Redirect } from 'react-router'
-import RaidCard from './RaidCard'
-import BuildCard from './BuildCard'
-import { useQuery } from 'react-apollo'
-import gql from 'graphql-tag'
-import { classes, races } from '../build/RaceAndClass/data'
-import { titleCase } from '../raid/builds/BuildMenu'
-import { applicationAreas } from '../raid/general/RaidGeneral'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from "react"
+import styled from "styled-components"
+import Flex from "../../components/Flex"
+import { Typography, Button, Input, Icon, Select } from "antd"
+import { Redirect } from "react-router"
+import RaidCard from "./RaidCard"
+import BuildCard from "./BuildCard"
+import { useQuery } from "react-apollo"
+import gql from "graphql-tag"
+import { classes, races } from "../build/RaceAndClass/data"
+import { titleCase } from "../raid/builds/BuildMenu"
+import { applicationAreas } from "../raid/general/RaidGeneral"
+import { useMediaQuery } from "react-responsive"
 
 const { Title } = Typography
 
@@ -20,23 +20,23 @@ const CardContainer = styled(Flex)`
   justify-content: center;
   flex: 1;
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 120px)' : '700px'};
+    props.isMobile ? "calc(100vh - 120px)" : "700px"};
 `
 
 const ListCard = styled.div`
-  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
+  width: ${(props: { isMobile: boolean }) => (props.isMobile ? "100%" : "80%")};
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '100%' : '80%'};
+    props.isMobile ? "100%" : "80%"};
   min-width: 400px;
   display: flex;
   flex-direction: column;
   max-width: 450px;
   margin: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '20px'};
+    props.isMobile ? "0px" : "20px"};
   border-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
+    props.isMobile ? "0px" : "10px"};
   box-shadow: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '' : '0px 0px 5px 2px rgba(0, 0, 0, 0.2)'};
+    props.isMobile ? "" : "0px 0px 5px 2px rgba(0, 0, 0, 0.2)"};
 `
 const CardTitle = styled(Title)`
   display: flex;
@@ -47,13 +47,13 @@ const CardTitle = styled(Title)`
 
 const CardHeader = styled(Flex)`
   background-color: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'transparent' : '#e8e8e8'};
+    props.isMobile ? "transparent" : "#e8e8e8"};
   margin-bottom: 0;
   padding: 20px;
   border-top-left-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
+    props.isMobile ? "0px" : "10px"};
   border-top-right-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
+    props.isMobile ? "0px" : "10px"};
 `
 export const ME = gql`
   query {
@@ -159,8 +159,8 @@ export const OWN_RAIDS = gql`
 `
 
 export default ({ isBuild }: { isBuild: boolean }) => {
-  const [redirect, setRedirect] = useState('')
-  const [search, setSearch] = useState('')
+  const [redirect, setRedirect] = useState("")
+  const [search, setSearch] = useState("")
   const [selectedRaces, setSelectedRaces] = useState<string[]>([])
   const [selectedApplicationAreas, setSelectedApplicationAreas] = useState<
     string[]
@@ -222,7 +222,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   const handleCreateClick = (path: string) => () => {
     setRedirect(path)
   }
-  if (redirect !== '') {
+  if (redirect !== "") {
     return <Redirect to={redirect} push />
   }
 
@@ -241,42 +241,44 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   return (
     <CardContainer
       isMobile={isMobile}
-      direction='column'
-      justify='center'
-      align='center'
+      direction="column"
+      justify="center"
+      align="center"
     >
       <ListCard isMobile={isMobile}>
         <CardHeader
           isMobile={isMobile}
-          direction='column'
-          justify='center'
-          align='center'
+          direction="column"
+          justify="center"
+          align="center"
         >
-          {!isMobile && <CardTitle level={3}>
-            {isBuild ? 'My builds' : 'My raids'}
-            <div>
-              <Button
-                type='primary'
-                ghost={true}
-                onClick={handleCreateClick(
-                  isBuild ? '/buildEditor/0' : '/raidEditor/0'
-                )}
-              >
-                Create
-              </Button>
-            </div>
-          </CardTitle>}
-          <Flex style={{ width: '100%' }} justify='space-between'>
+          {!isMobile && (
+            <CardTitle level={3}>
+              {isBuild ? "My builds" : "My raids"}
+              <div>
+                <Button
+                  type="primary"
+                  ghost={true}
+                  onClick={handleCreateClick(
+                    isBuild ? "/buildEditor/0" : "/raidEditor/0"
+                  )}
+                >
+                  Create
+                </Button>
+              </div>
+            </CardTitle>
+          )}
+          <Flex style={{ width: "100%" }} justify="space-between">
             <Input
-              placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
+              placeholder={isBuild ? "Search for builds" : "Search for raids"}
               value={search}
               onChange={handleSearchChange}
-              addonAfter={<Icon type='search' />}
-              defaultValue='mysite'
+              addonAfter={<Icon type="search" />}
+              defaultValue="mysite"
             />
             <Button
-              type='primary'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
+              type="primary"
+              icon={expanded ? "shrink" : "arrows-alt"}
               ghost={true}
               style={{ marginLeft: 5 }}
               onClick={handleExpandChange}
@@ -286,9 +288,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
             (isBuild ? (
               <>
                 <Select
-                  mode='multiple'
-                  style={{ width: '100%', marginTop: 10 }}
-                  placeholder='Filter by class...'
+                  mode="multiple"
+                  style={{ width: "100%", marginTop: 10 }}
+                  placeholder="Filter by class..."
                   onChange={handleClassSelectChange}
                 >
                   {classes.map((esoClass, index) => (
@@ -297,9 +299,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
                 </Select>
 
                 <Select
-                  mode='multiple'
-                  style={{ width: '100%', marginTop: 10 }}
-                  placeholder='Filter by race...'
+                  mode="multiple"
+                  style={{ width: "100%", marginTop: 10 }}
+                  placeholder="Filter by race..."
                   onChange={handleRaceSelectChange}
                 >
                   {races.map((race, index) => (
@@ -309,9 +311,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               </>
             ) : (
               <Select
-                mode='multiple'
-                style={{ width: '100%', marginTop: 10 }}
-                placeholder='Filter by Application Area...'
+                mode="multiple"
+                style={{ width: "100%", marginTop: 10 }}
+                placeholder="Filter by Application Area..."
                 onChange={handleAppAreaChange}
               >
                 {applicationAreas.map((area, index) => (

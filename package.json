@@ -30,6 +30,7 @@
     "typescript": "3.5.3"
   },
   "scripts": {
+    "prettier": "prettier",
     "pretty-quick": "pretty-quick",
     "start": "react-scripts start",
     "build": "react-scripts build",

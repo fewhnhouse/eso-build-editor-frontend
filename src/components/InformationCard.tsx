@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import Flex from './Flex'
-import { Avatar, Typography } from 'antd'
+import React from "react"
+import styled from "styled-components"
+import Flex from "./Flex"
+import { Avatar, Typography } from "antd"
 
 interface IInformationCardProps {
   icon: string
@@ -18,14 +18,14 @@ const FlexCard = styled(Flex)`
 
 export default ({ icon, title, description }: IInformationCardProps) => {
   return (
-    <FlexCard direction='row'>
-      <Avatar icon={icon} shape='square' />
-      <Flex align='flex-start' style={{ marginLeft: 10 }} direction="column">
+    <FlexCard direction="row">
+      <Avatar icon={icon} shape="square" />
+      <Flex align="flex-start" style={{ marginLeft: 10 }} direction="column">
         <Typography.Text
           style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
           strong
         >
@@ -33,9 +33,9 @@ export default ({ icon, title, description }: IInformationCardProps) => {
         </Typography.Text>
         <Typography.Text
           style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {description}

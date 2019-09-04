@@ -1,19 +1,19 @@
-import React from 'react'
-import styled, { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from './globalStyles'
-import { IBuildState } from '../pages/build/BuildStateContext'
-import { IRole, IRaidState } from '../pages/raid/RaidStateContext'
-import BuildReviewDetails from '../pages/build/Review/BuildReviewDetails'
-import RaidReviewDetails from '../pages/raid/Review/RaidReviewDetails'
-import { Layout, Typography, Button, Spin, Popconfirm, Divider } from 'antd'
+import React from "react"
+import styled, { withTheme, ThemeProps } from "styled-components"
+import { ITheme } from "./globalStyles"
+import { IBuildState } from "../pages/build/BuildStateContext"
+import { IRole, IRaidState } from "../pages/raid/RaidStateContext"
+import BuildReviewDetails from "../pages/build/Review/BuildReviewDetails"
+import RaidReviewDetails from "../pages/raid/Review/RaidReviewDetails"
+import { Layout, Typography, Button, Spin, Popconfirm, Divider } from "antd"
 
-import Flex from './Flex'
-import InformationCard from './InformationCard'
-import { applicationAreas } from '../pages/build/RaceAndClass/RaceClass'
-import ErrorPage from './ErrorPage'
-import Scrollbars from 'react-custom-scrollbars'
-import { useMediaQuery } from 'react-responsive'
-import { ApolloError } from 'apollo-client'
+import Flex from "./Flex"
+import InformationCard from "./InformationCard"
+import { applicationAreas } from "../pages/build/RaceAndClass/RaceClass"
+import ErrorPage from "./ErrorPage"
+import Scrollbars from "react-custom-scrollbars"
+import { useMediaQuery } from "react-responsive"
+import { ApolloError } from "apollo-client"
 
 const { Content, Footer } = Layout
 
@@ -31,7 +31,7 @@ const Container = styled(Content)`
   overflow-y: auto;
   overflow-x: hidden;
   height: ${(props: { isMobile: boolean }) =>
-    `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
+    `calc(100% - ${props.isMobile ? "204px" : "144px"})`};
   color: rgb(155, 155, 155);
 `
 interface IReviewProps extends ThemeProps<ITheme> {
@@ -99,34 +99,34 @@ const Review = ({
           <Footer
             style={{
               height: isMobile ? 140 : 80,
-              padding: '0px 20px',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
+              padding: "0px 20px",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0 -2px 6px 0 rgba(0, 0, 0, 0.1)",
             }}
           >
             <Scrollbars autoHide>
               <Flex
-                direction='row'
-                justify='flex-start'
-                align='center'
+                direction="row"
+                justify="flex-start"
+                align="center"
                 style={{ height: 80 }}
               >
                 <Flex
-                  direction='column'
-                  align='flex-start'
+                  direction="column"
+                  align="flex-start"
                   style={{ width: 200 }}
                 >
                   <Typography.Title
                     style={{
                       marginBottom: 0,
                       width: 180,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                     level={3}
                   >
@@ -134,42 +134,42 @@ const Review = ({
                   </Typography.Title>
                   <Typography.Text
                     style={{
-                      whiteSpace: 'nowrap',
+                      whiteSpace: "nowrap",
                       width: 180,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                   >
                     {description}
                   </Typography.Text>
                 </Flex>
                 <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
+                  type="vertical"
+                  style={{ height: 50, margin: "0px 20px" }}
                 />
                 <InformationCard
-                  icon='user'
-                  title='Owner'
-                  description={owner ? owner.name : ''}
+                  icon="user"
+                  title="Owner"
+                  description={owner ? owner.name : ""}
                 />
                 <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
+                  type="vertical"
+                  style={{ height: 50, margin: "0px 20px" }}
                 />
                 <InformationCard
-                  icon='environment'
-                  title='Application Area'
-                  description={area ? area.label : ''}
+                  icon="environment"
+                  title="Application Area"
+                  description={area ? area.label : ""}
                 />
                 <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
+                  type="vertical"
+                  style={{ height: 50, margin: "0px 20px" }}
                 />
                 {!isBuild && (
                   <>
                     <InformationCard
-                      icon='team'
-                      title='Group Size'
+                      icon="team"
+                      title="Group Size"
                       description={roles.reduce(
                         (prev: number, curr: IRole) =>
                           prev + curr.builds.length,
@@ -177,34 +177,34 @@ const Review = ({
                       )}
                     />
                     <Divider
-                      type='vertical'
-                      style={{ height: 50, margin: '0px 20px' }}
+                      type="vertical"
+                      style={{ height: 50, margin: "0px 20px" }}
                     />
                   </>
                 )}
                 <InformationCard
-                  icon={published ? 'unlock' : 'lock'}
-                  title='Access Rights'
-                  description={published ? 'Public' : 'Private'}
+                  icon={published ? "unlock" : "lock"}
+                  title="Access Rights"
+                  description={published ? "Public" : "Private"}
                 />
               </Flex>
             </Scrollbars>
             {(owner && owner.id) === (me && me.id) && (
-              <Flex direction='row'>
+              <Flex direction="row">
                 <Popconfirm
                   title={`Are you sure you want to copy this ${
-                    isBuild ? 'Build' : 'Raid'
+                    isBuild ? "Build" : "Raid"
                   }?`}
                   onConfirm={onCopy}
-                  okText='Yes'
-                  cancelText='No'
+                  okText="Yes"
+                  cancelText="No"
                 >
                   <ActionButton
                     loading={loading}
                     disabled={saved}
-                    icon='copy'
-                    size='large'
-                    type='default'
+                    icon="copy"
+                    size="large"
+                    type="default"
                   >
                     Copy
                   </ActionButton>
@@ -212,21 +212,21 @@ const Review = ({
 
                 <ActionButton
                   onClick={onEdit}
-                  icon='edit'
-                  size='large'
-                  type='primary'
+                  icon="edit"
+                  size="large"
+                  type="primary"
                 >
                   Edit
                 </ActionButton>
                 <Popconfirm
                   title={`Are you sure you want to delete this ${
-                    isBuild ? 'Build' : 'Raid'
+                    isBuild ? "Build" : "Raid"
                   }?`}
                   onConfirm={onDelete}
-                  okText='Yes'
-                  cancelText='No'
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  <ActionButton icon='delete' size='large' type='danger'>
+                  <ActionButton icon="delete" size="large" type="danger">
                     Delete
                   </ActionButton>
                 </Popconfirm>

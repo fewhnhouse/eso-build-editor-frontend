@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { IMundus } from '../build/BuildStateContext'
-import Flex from '../../components/Flex'
-import styled from 'styled-components'
-import { MenuCard, Image, Description, ContentCard } from './Overview'
-import MundusMenu from '../build/consumables/MundusMenu'
-import { Typography, Divider, Card, Modal, Empty } from 'antd'
+import React, { useState } from "react"
+import { IMundus } from "../build/BuildStateContext"
+import Flex from "../../components/Flex"
+import styled from "styled-components"
+import { MenuCard, Image, Description, ContentCard } from "./Overview"
+import MundusMenu from "../build/consumables/MundusMenu"
+import { Typography, Divider, Card, Modal, Empty } from "antd"
 
 interface IMundusStoneProps {
   context: React.Context<any>
@@ -35,43 +35,43 @@ interface IMundusCardProps {
   mundusStone: IMundus
 }
 export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
-  const [modalImage, setModalImage] = useState('')
+  const [modalImage, setModalImage] = useState("")
 
   const handleCancelModal = () => {
-    setModalImage('')
+    setModalImage("")
   }
   const handleImageClick = (image: string) => () => {
     setModalImage(image)
   }
-  const parsedMundusValue = parseInt(mundusStone ? mundusStone.value : '0', 10)
+  const parsedMundusValue = parseInt(mundusStone ? mundusStone.value : "0", 10)
 
   return (
-    <Flex direction='column' fluid>
-      <Card style={{ width: '100%' }}>
-        <Flex direction='row' align='flex-start' justify='center' fluid>
+    <Flex direction="column" fluid>
+      <Card style={{ width: "100%" }}>
+        <Flex direction="row" align="flex-start" justify="center" fluid>
           <Image
             src={
               mundusStone
                 ? `${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`
-                : ''
+                : ""
             }
           />
           <Flex
-            direction='column'
+            direction="column"
             fluid
             style={{ marginLeft: 20, maxWidth: 600 }}
           >
             <Typography.Title style={{ margin: 0 }}>
               {mundusStone && mundusStone.name}
             </Typography.Title>
-            <Divider style={{ margin: '10px 0px' }} />
+            <Divider style={{ margin: "10px 0px" }} />
             <Description>
-              {mundusStone.effect.trim() + ' by ' + mundusStone.value}
-              <span style={{ fontStyle: 'italic' }}>
-                {' '}
+              {mundusStone.effect.trim() + " by " + mundusStone.value}
+              <span style={{ fontStyle: "italic" }}>
+                {" "}
                 ({Math.round(
                   parsedMundusValue * 0.525 + parsedMundusValue
-                )}{' '}
+                )}{" "}
                 with 7 divines)
               </span>
             </Description>
@@ -80,7 +80,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
       </Card>
 
       <Divider>Locations</Divider>
-      <Flex direction='row' wrap justify='center'>
+      <Flex direction="row" wrap justify="center">
         <Card
           onClick={handleImageClick(mundusStone.aldmeri)}
           title={
@@ -97,7 +97,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.aldmeri.replace(/\s+/g, '')}.jpg`}
+            }/mundusMaps/${mundusStone.aldmeri.replace(/\s+/g, "")}.jpg`}
           />
         </Card>
         <Card
@@ -116,7 +116,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.ebonheart.replace(/\s+/g, '')}.jpg`}
+            }/mundusMaps/${mundusStone.ebonheart.replace(/\s+/g, "")}.jpg`}
           />
         </Card>
         <Card
@@ -135,11 +135,11 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
           <Map
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.daggerfall.replace(/\s+/g, '')}.jpg`}
+            }/mundusMaps/${mundusStone.daggerfall.replace(/\s+/g, "")}.jpg`}
           />
         </Card>
         <Card
-          onClick={handleImageClick('Cyrodiil')}
+          onClick={handleImageClick("Cyrodiil")}
           title={<span>Cyrodiil</span>}
           hoverable
           style={{ margin: 10 }}
@@ -151,21 +151,21 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
       </Flex>
 
       <Modal
-        visible={modalImage !== ''}
+        visible={modalImage !== ""}
         title={
           <span>
-            {modalImage !== 'Cyrodiil' && (
+            {modalImage !== "Cyrodiil" && (
               <AllianceIcon
                 src={`${
                   process.env.REACT_APP_IMAGE_SERVICE
                 }/alliances/alliance_${
                   mundusStone.aldmeri === modalImage
-                    ? 'aldmeri'
+                    ? "aldmeri"
                     : mundusStone.ebonheart === modalImage
-                    ? 'ebonheart'
+                    ? "ebonheart"
                     : mundusStone.daggerfall === modalImage
-                    ? 'daggerfall'
-                    : ''
+                    ? "daggerfall"
+                    : ""
                 }.png`}
               />
             )}
@@ -174,12 +174,12 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
         }
         onCancel={handleCancelModal}
         footer={null}
-        style={{ width: '60%', height: '60%' }}
+        style={{ width: "60%", height: "60%" }}
       >
         <ModalMap
           src={`${
             process.env.REACT_APP_IMAGE_SERVICE
-          }/mundusMaps/${modalImage.replace(/\s+/g, '')}.jpg`}
+          }/mundusMaps/${modalImage.replace(/\s+/g, "")}.jpg`}
         />
       </Modal>
     </Flex>
@@ -189,27 +189,27 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
 export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
   return (
     <Flex
-      direction='row'
-      align='flex-start'
+      direction="row"
+      align="flex-start"
       style={{
-        height: 'calc(100% - 100px)',
-        width: '100%',
-        padding: isMobile ? 0 : 20
+        height: "calc(100% - 100px)",
+        width: "100%",
+        padding: isMobile ? 0 : 20,
       }}
     >
       <MenuCard isMobile={isMobile || false}>
         <MundusMenu context={context} />
       </MenuCard>
       {isMobile ? (
-        ''
+        ""
       ) : (
         <ContentCard
           bodyStyle={{
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'auto'
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "auto",
           }}
         >
           {mundusStone ? (
@@ -217,11 +217,11 @@ export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
           ) : (
             <Empty
               style={{
-                display: 'flex',
-                justifyContent: 'center',
+                display: "flex",
+                justifyContent: "center",
                 flex: 2,
-                flexDirection: 'column',
-                alignItems: 'center'
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               Select a Mundus Stone to get started.

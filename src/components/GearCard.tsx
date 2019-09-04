@@ -1,12 +1,12 @@
-import React from 'react'
-import { Card, Divider, Tag, Typography } from 'antd'
-import styled from 'styled-components'
-import { ISet, getItemType, getWeaponType } from './GearSlot'
-import { ISetSelection } from '../pages/build/BuildStateContext'
-import Flex from './Flex'
+import React from "react"
+import { Card, Divider, Tag, Typography } from "antd"
+import styled from "styled-components"
+import { ISet, getItemType, getWeaponType } from "./GearSlot"
+import { ISetSelection } from "../pages/build/BuildStateContext"
+import Flex from "./Flex"
 
 const StyledCard = styled(Card)`
-  display: 'flex';
+  display: "flex";
   margin: 0 auto;
   width: 450px;
   position: relative;
@@ -17,7 +17,7 @@ const Container = styled.div`
 `
 
 const Description = styled.div`
-  font-size: ${(props: { big?: boolean }) => (props.big ? '16px' : '14px')};
+  font-size: ${(props: { big?: boolean }) => (props.big ? "16px" : "14px")};
   line-height: 1.5;
   margin-top: 5px;
 `
@@ -62,7 +62,7 @@ const GlyphIconImg = styled.img`
 
 interface IGearCard {
   set: ISet
-  size?: 'big' | 'normal'
+  size?: "big" | "normal"
   setSelectionCount: number
 }
 
@@ -83,13 +83,13 @@ const ArmorTypeTag = ({
     return null
   } else {
     if (hasHeavyArmor && hasMediumArmor && hasLightArmor) {
-      return <StyledTag color='purple'>All</StyledTag>
+      return <StyledTag color="purple">All</StyledTag>
     } else if (hasHeavyArmor) {
-      return <StyledTag color='red'>Heavy</StyledTag>
+      return <StyledTag color="red">Heavy</StyledTag>
     } else if (hasMediumArmor) {
-      return <StyledTag color='green'>Medium</StyledTag>
+      return <StyledTag color="green">Medium</StyledTag>
     } else {
-      return <StyledTag color='blue'>Light</StyledTag>
+      return <StyledTag color="blue">Light</StyledTag>
     }
   }
 }
@@ -115,32 +115,33 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
     <StyledCard
       hoverable
       title={
-        size === 'big' ? (
+        size === "big" ? (
           <Typography.Title level={3}>{set.name}</Typography.Title>
         ) : (
           set.name
         )
       }
     >
-      <StyledTag color='#1890ff'>{set.type}</StyledTag>
+      <StyledTag color="#1890ff">{set.type}</StyledTag>
       <ArmorTypeTag
         hasHeavyArmor={set.has_heavy_armor === 1}
         hasMediumArmor={set.has_medium_armor === 1}
         hasLightArmor={set.has_light_armor === 1}
         traitsNeeded={set.traits_needed !== null}
       />
-      <Description big={size === 'big'}>
-        <Flex direction='column' justify='flex-start'>
+      <Description big={size === "big"}>
+        <Flex direction="column" justify="flex-start">
           {totalBonus(set).map(count => (
             <span
               key={count}
               style={{
-                textAlign: "left", width: "100%",
-                fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
+                textAlign: "left",
+                width: "100%",
+                fontWeight: count <= setSelectionCount ? "bold" : "normal",
               }}
             >
               <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
-              <Divider style={{ margin: '5px 0px' }} />
+              <Divider style={{ margin: "5px 0px" }} />
             </span>
           ))}
         </Flex>
@@ -160,50 +161,50 @@ export const GearCardContent = ({
 }: IGearCardContent) => {
   const gearTypeTag = (gearType: string) => {
     switch (gearType) {
-      case 'lightarmor':
-        return <StyledTag color='blue'>Light</StyledTag>
-      case 'mediumarmor':
-        return <StyledTag color='green'>Medium</StyledTag>
-      case 'heavyarmor':
-        return <StyledTag color='red'>Heavy</StyledTag>
-      case 'onehanded':
-        return <StyledTag color='#108ee9'>Onehanded</StyledTag>
-      case 'twohanded':
-        return <StyledTag color='#108ee9'>Twohanded</StyledTag>
+      case "lightarmor":
+        return <StyledTag color="blue">Light</StyledTag>
+      case "mediumarmor":
+        return <StyledTag color="green">Medium</StyledTag>
+      case "heavyarmor":
+        return <StyledTag color="red">Heavy</StyledTag>
+      case "onehanded":
+        return <StyledTag color="#108ee9">Onehanded</StyledTag>
+      case "twohanded":
+        return <StyledTag color="#108ee9">Twohanded</StyledTag>
       default:
-        return ''
+        return ""
     }
   }
 
   return (
     <Container>
-      <Title style={{ display: 'flex', justifyContent: 'space-between' }}>
-        {gear.selectedSet ? gear.selectedSet.name : 'Set name'}{' '}
+      <Title style={{ display: "flex", justifyContent: "space-between" }}>
+        {gear.selectedSet ? gear.selectedSet.name : "Set name"}{" "}
         {gear.type ? (
           <SmallTitle>
             {getItemType(gear.type)}
-            {gear.weaponType ? ` - ${getWeaponType(gear.weaponType)}` : ''}
+            {gear.weaponType ? ` - ${getWeaponType(gear.weaponType)}` : ""}
           </SmallTitle>
         ) : (
-          ''
+          ""
         )}
       </Title>
-      {gear.type ? gearTypeTag(gear.type) : ''}
-      <StyledTag color='#108ee9'>
-        {gear.selectedSet ? gear.selectedSet.type : 'No type'}
+      {gear.type ? gearTypeTag(gear.type) : ""}
+      <StyledTag color="#108ee9">
+        {gear.selectedSet ? gear.selectedSet.type : "No type"}
       </StyledTag>
-      <Divider style={{ margin: '5px 0px' }} />
+      <Divider style={{ margin: "5px 0px" }} />
       <Description>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {gear.selectedSet ? (
             totalBonus(gear.selectedSet).map(count => (
               <span
                 key={count}
                 style={{
-                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
+                  fontWeight: count <= setSelectionCount ? "bold" : "normal",
                 }}
               >
-                {count} pcs:{' '}
+                {count} pcs:{" "}
                 {gear.selectedSet && gear.selectedSet[`bonus_item_${count}`]}
               </span>
             ))
@@ -212,17 +213,17 @@ export const GearCardContent = ({
           )}
         </div>
       </Description>
-      <Divider style={{ margin: '5px 0px' }} />
-      <Flex direction='column' justify='space-around' align='flex-start'>
+      <Divider style={{ margin: "5px 0px" }} />
+      <Flex direction="column" justify="space-around" align="flex-start">
         <Description
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
             flex: 1,
-            margin: '5px 0px',
+            margin: "5px 0px",
           }}
         >
-          <Flex direction='row' justify='flex-start' align='center'>
+          <Flex direction="row" justify="flex-start" align="center">
             {gear.trait ? (
               <IconImg
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/traits/${encodeURI(
@@ -230,24 +231,24 @@ export const GearCardContent = ({
                 )}`}
               />
             ) : (
-              'Trait not selected.'
+              "Trait not selected."
             )}
-            <b>{gear.trait ? gear.trait.type : ''}</b>
+            <b>{gear.trait ? gear.trait.type : ""}</b>
           </Flex>
-          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
-            {gear.trait ? gear.trait.description : ''}
+          <span style={{ color: "rgba(0,0,0,0.45)" }}>
+            {gear.trait ? gear.trait.description : ""}
           </span>
         </Description>
-        <Divider style={{ margin: '5px 0px' }} />
+        <Divider style={{ margin: "5px 0px" }} />
         <Description
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
             flex: 1,
-            margin: '5px 0px',
+            margin: "5px 0px",
           }}
         >
-          <Flex direction='row' justify='flex-start' align='center'>
+          <Flex direction="row" justify="flex-start" align="center">
             {gear.glyph ? (
               <GlyphIconImg
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/glyphs/${encodeURI(
@@ -256,12 +257,12 @@ export const GearCardContent = ({
                 style={{ marginRight: 5 }}
               />
             ) : (
-              'Glyph not selected.'
+              "Glyph not selected."
             )}
-            <b>{gear.glyph ? gear.glyph.type : ''}</b>
+            <b>{gear.glyph ? gear.glyph.type : ""}</b>
           </Flex>
-          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
-            {gear.glyph ? gear.glyph.description : ''}
+          <span style={{ color: "rgba(0,0,0,0.45)" }}>
+            {gear.glyph ? gear.glyph.description : ""}
           </span>
         </Description>
       </Flex>
