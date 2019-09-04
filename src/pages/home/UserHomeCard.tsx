@@ -55,6 +55,15 @@ const CardHeader = styled(Flex)`
   border-top-right-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
 `
+
+const StyledFlexFull = styled(Flex)`
+  width: 100%;
+`
+
+const StyledButton = styled(Button)`
+  margin-left: ${props => props.theme.margins.mini};
+`
+
 export const ME = gql`
   query {
     me {
@@ -268,7 +277,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               </div>
             </CardTitle>
           )}
-          <Flex style={{ width: '100%' }} justify='space-between'>
+          <StyledFlexFull justify='space-between'>
             <Input
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
               value={search}
@@ -276,14 +285,13 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               addonAfter={<Icon type='search' />}
               defaultValue='mysite'
             />
-            <Button
+            <StyledButton
               type='primary'
               icon={expanded ? 'shrink' : 'arrows-alt'}
               ghost={true}
-              style={{ marginLeft: 5 }}
               onClick={handleExpandChange}
-            ></Button>
-          </Flex>
+            ></StyledButton>
+          </StyledFlexFull>
           {expanded &&
             (isBuild ? (
               <>

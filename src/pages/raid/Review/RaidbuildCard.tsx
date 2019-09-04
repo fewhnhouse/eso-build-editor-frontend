@@ -45,6 +45,10 @@ const RaceContainer = styled.div`
   align-items: center;
 `
 
+const StyledMeta = styled(Meta)`
+  text-align: left;
+`
+
 interface ICardProps extends ThemeProps<ITheme> {
   description: string
   race: string
@@ -109,14 +113,13 @@ const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
         </RaceContainer>,
       ]}
     >
-      <Meta
+      <StyledMeta
         avatar={
           <Icon
             title={esoClass}
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
           />
         }
-        style={{ textAlign: 'left' }}
         title={esoClass}
         description={description}
       />

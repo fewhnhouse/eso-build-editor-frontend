@@ -2,8 +2,12 @@ import React from 'react'
 import { IActionProps, ProfileAction, ItemCard } from './Profile'
 import { Typography, Input, Button, Divider } from 'antd'
 import { useMediaQuery } from 'react-responsive'
+import styled from 'styled-components'
 
 const { Text } = Typography
+const StyledButton = styled(Button)`
+  margin-top: ${props => props.theme.margins.medium};
+`
 
 export default ({ me, handleActionClick, value, setValue }: IActionProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,16 +30,15 @@ export default ({ me, handleActionClick, value, setValue }: IActionProps) => {
         size='large'
         placeholder='Type new email...'
       />
-      <Button
+      <StyledButton
         onClick={handleActionClick(ProfileAction.updateEmail)}
         block
         disabled={!isValid}
         size='large'
-        style={{ marginTop: 20 }}
         type='primary'
       >
         Update email
-      </Button>
+      </StyledButton>
     </ItemCard>
   )
 }

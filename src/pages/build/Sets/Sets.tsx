@@ -10,7 +10,6 @@ import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import SetMenu from './SetMenu'
 import Scrollbars from 'react-custom-scrollbars'
-import Flex from '../../../components/Flex'
 
 const { TabPane } = Tabs
 

@@ -46,6 +46,32 @@ const StyledSearch = styled(Search)`
   width: ${props => props.theme.widths.medium};
 `
 
+const StyledIcon = styled(Icon)`
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  color: #d9d9d9;
+`
+
+const StyledScrollbars = styled(Scrollbars)`
+  min-width: 460px;
+`
+
+const StyledFlex = styled(Flex)`
+  flex: 2;
+`
+
+const StyledFlexRoles = styled(Flex)`
+  width: 100%;
+`
+
+const StyledEmpty = styled(Empty)`
+  margin-top: 30%;
+`
+
 const RoleDropper = ({ role }: { role: IRole }) => {
   const [, dispatch] = useContext(RaidContext)
   const [, drop] = useDrop({
@@ -65,10 +91,8 @@ const RoleDropper = ({ role }: { role: IRole }) => {
   return (
     <RoleContainer>
       <RoleDropContainer ref={drop}>
-        <Icon style={{ width: 100, height: 100, fontSize: 50 }} type='inbox' />
-        <Typography.Title style={{ color: '#d9d9d9' }} level={3}>
-          Drag a build here
-        </Typography.Title>
+        <StyledIcon type='inbox' />
+        <StyledTitle level={3}>Drag a build here</StyledTitle>
       </RoleDropContainer>
     </RoleContainer>
   )
@@ -118,14 +142,8 @@ export default () => {
   }
 
   return (
-    <Scrollbars autoHide style={{ minWidth: 460 }}>
-      <Flex
-        direction='column'
-        justify='flex-start'
-        align='center'
-        fluid
-        style={{ flex: 2 }}
-      >
+    <StyledScrollbars autoHide>
+      <StyledFlex direction='column' justify='flex-start' align='center' fluid>
         {roles &&
           roles.length > 0 &&
           roles.map((role, index) => (
@@ -182,11 +200,11 @@ export default () => {
                 </Flex>
               }
             >
-              <Flex
+              <StyledFlexRoles
                 direction='row'
                 justify='space-between'
-                style={{ flexWrap: 'wrap', width: '100%' }}
                 align='center'
+                wrap
               >
                 {role.builds.map((build, buildIndex) => (
                   <StyledBuildCard
@@ -197,7 +215,7 @@ export default () => {
                     item={build.build}
                   />
                 ))}
-              </Flex>
+              </StyledFlexRoles>
               <RoleDropper role={role} />
             </StyledCard>
           ))}
@@ -227,12 +245,9 @@ export default () => {
           />
         </Divider>
         {roles && roles.length === 0 && (
-          <Empty
-            style={{ marginTop: '30%' }}
-            description='Add a new role to begin.'
-          />
+          <StyledEmpty description='Add a new role to begin.' />
         )}
-      </Flex>
-    </Scrollbars>
+      </StyledFlex>
+    </StyledScrollbars>
   )
 }

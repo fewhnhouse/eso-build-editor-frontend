@@ -2,6 +2,11 @@ import React from 'react'
 import { IActionProps, ProfileAction, ItemCard } from './Profile'
 import { Input, Button } from 'antd'
 import { useMediaQuery } from 'react-responsive'
+import styled from 'styled-components'
+
+const StyledButton = styled(Button)`
+  margin-top: ${props => props.theme.margins.medium};
+`
 
 export default ({ handleActionClick, value, setValue }: IActionProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,16 +24,15 @@ export default ({ handleActionClick, value, setValue }: IActionProps) => {
         size='large'
         placeholder='New password'
       />
-      <Button
+      <StyledButton
         disabled={!isValid}
         onClick={handleActionClick(ProfileAction.updatePassword)}
         block
         size='large'
-        style={{ marginTop: 20 }}
         type='primary'
       >
         Update password
-      </Button>
+      </StyledButton>
     </ItemCard>
   )
 }

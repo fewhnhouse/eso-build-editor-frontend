@@ -42,6 +42,22 @@ export const ItemCard = styled(Card)`
   width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '40%')};
 `
 
+const StyledFlexButton = styled(Flex)`
+  width: 100%;
+`
+
+const StyledText = styled(Typography.Text)`
+  margin-right: 30px;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledFlexFull = styled(Flex)`
+  width: 100%;
+`
+
 const ME = gql`
   query {
     me {
@@ -102,19 +118,12 @@ const openNotification = (resendMutation: any) => {
     resendMutation()
   }
   const btn = (
-    <Flex
-      style={{ width: '100%' }}
-      direction='row'
-      align='center'
-      justify='space-between'
-    >
-      <Typography.Text style={{ marginRight: 30 }}>
-        Didnt get an email?{' '}
-      </Typography.Text>
+    <StyledFlexButton direction='row' align='center' justify='space-between'>
+      <StyledText>Didnt get an email? </StyledText>
       <Button onClick={handleResendClick} icon='mail' type='primary'>
         {'Resend'}
       </Button>
-    </Flex>
+    </StyledFlexButton>
   )
 
   notification.info({
@@ -127,7 +136,7 @@ const openNotification = (resendMutation: any) => {
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: '5px 0px' }} />
+        <StyledDivider />
       </Flex>
     ),
   })
@@ -269,11 +278,10 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       <Container>
         <Scrollbars autoHide>
           <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
-          <Flex
+          <StyledFlexFull
             direction='column'
             justify='space-around'
             align='center'
-            style={{ width: '100%' }}
           >
             <UpdateEmail
               value={email}
@@ -289,7 +297,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
             />
             <Divider />
             <DeleteAccount handleActionClick={handleActionClick} />
-          </Flex>
+          </StyledFlexFull>
         </Scrollbars>
       </Container>
     </>

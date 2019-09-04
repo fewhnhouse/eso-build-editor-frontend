@@ -9,6 +9,15 @@ import { useQuery } from 'react-apollo'
 import { Spin } from 'antd'
 import SkillsDisplay from '../../components/SkillsDisplay'
 import { defaultUltimate } from '../build/Skills/Skills'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: ${(flexProps: { isMobile: boolean }) =>
+    flexProps.isMobile ? 0 : props => props.theme.paddings.medium};
+`
 
 interface ISetProps {
   context: React.Context<any>
@@ -58,16 +67,7 @@ export default ({ context, skillLine, isMobile }: ISetProps) => {
     )
 
     return (
-      <Flex
-        direction='row'
-        align='flex-start'
-        style={{
-          height: '100%',
-          width: '100%',
-          overflow: 'auto',
-          padding: isMobile ? 0 : 20,
-        }}
-      >
+      <StyledFlex direction='row' align='flex-start' isMobile={isMobile}>
         <MenuCard isMobile={isMobile}>
           <SkillMenu context={context} />
         </MenuCard>
@@ -92,7 +92,7 @@ export default ({ context, skillLine, isMobile }: ISetProps) => {
             />
           </ContentCard>
         )}
-      </Flex>
+      </StyledFlex>
     )
   }
   return null

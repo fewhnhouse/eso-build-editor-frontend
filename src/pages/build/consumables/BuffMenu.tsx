@@ -82,7 +82,7 @@ const StyledInput = styled(Input)`
 `
 
 export const StyledTag = styled(Tag)`
-  min-width: 100px;
+  min-width: 50px;
   margin: ${props => props.theme.margins.mini};
   white-space: nowrap;
   overflow: hidden;

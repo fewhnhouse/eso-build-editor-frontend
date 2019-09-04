@@ -15,6 +15,9 @@ interface IMundusStoneProps {
 const StyledCard = styled(Card)`
   margin: ${props => props.theme.margins.small};
 `
+const StyledCardWrapper = styled(Card)`
+  width: 100%;
+`
 
 const AllianceIcon = styled.img`
   width: 32px;
@@ -35,6 +38,44 @@ const ModalMap = styled.img`
   border: 2px solid rgba(0, 0, 0, 0.45);
   border-radius: 4px;
 `
+
+const StyledFlexTitle = styled(Flex)`
+  margin-left: ${props => props.theme.margins.medium};
+  max-width: 600px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  margin: 0;
+`
+
+const StyledDidiver = styled(Divider)`
+  margin: ${props => props.theme.margins.small} 0px;
+`
+
+const StyledSpan = styled.span`
+  font-style: italic;
+`
+
+const StyledModal = styled(Modal)`
+  width: 60%;
+  height: 60%;
+`
+
+const StyledFlex = styled(Flex)`
+  height: calc(100% - 100px);
+  width: 100%;
+  padding: ${(flexProps: { isMobile: boolean }) =>
+    flexProps.isMobile ? 0 : props => props.theme.paddings.medium};
+`
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+`
+
 interface IMundusCardProps {
   mundusStone: IMundus
 }
@@ -51,7 +92,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
 
   return (
     <Flex direction='column' fluid>
-      <Card style={{ width: '100%' }}>
+      <StyledCardWrapper>
         <Flex direction='row' align='flex-start' justify='center' fluid>
           <Image
             src={
@@ -60,28 +101,22 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
                 : ''
             }
           />
-          <Flex
-            direction='column'
-            fluid
-            style={{ marginLeft: 20, maxWidth: 600 }}
-          >
-            <Typography.Title style={{ margin: 0 }}>
-              {mundusStone && mundusStone.name}
-            </Typography.Title>
-            <Divider style={{ margin: '10px 0px' }} />
+          <StyledFlexTitle direction='column' fluid>
+            <StyledTitle>{mundusStone && mundusStone.name}</StyledTitle>
+            <StyledDidiver />
             <Description>
               {mundusStone.effect.trim() + ' by ' + mundusStone.value}
-              <span style={{ fontStyle: 'italic' }}>
+              <StyledSpan>
                 {' '}
                 ({Math.round(
                   parsedMundusValue * 0.525 + parsedMundusValue
                 )}{' '}
                 with 7 divines)
-              </span>
+              </StyledSpan>
             </Description>
-          </Flex>
+          </StyledFlexTitle>
         </Flex>
-      </Card>
+      </StyledCardWrapper>
 
       <Divider>Locations</Divider>
       <Flex direction='row' wrap justify='center'>
@@ -150,7 +185,7 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
         </StyledCard>
       </Flex>
 
-      <Modal
+      <StyledModal
         visible={modalImage !== ''}
         title={
           <span>
@@ -174,29 +209,20 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
         }
         onCancel={handleCancelModal}
         footer={null}
-        style={{ width: '60%', height: '60%' }}
       >
         <ModalMap
           src={`${
             process.env.REACT_APP_IMAGE_SERVICE
           }/mundusMaps/${modalImage.replace(/\s+/g, '')}.jpg`}
         />
-      </Modal>
+      </StyledModal>
     </Flex>
   )
 }
 
 export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
   return (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: 'calc(100% - 100px)',
-        width: '100%',
-        padding: isMobile ? 0 : 20,
-      }}
-    >
+    <StyledFlex direction='row' align='flex-start' isMobile={isMobile}>
       <MenuCard isMobile={isMobile || false}>
         <MundusMenu context={context} />
       </MenuCard>
@@ -215,20 +241,10 @@ export default ({ context, mundusStone, isMobile }: IMundusStoneProps) => {
           {mundusStone ? (
             <MundusCard mundusStone={mundusStone} />
           ) : (
-            <Empty
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flex: 2,
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              Select a Mundus Stone to get started.
-            </Empty>
+            <StyledEmpty>Select a Mundus Stone to get started.</StyledEmpty>
           )}
         </ContentCard>
       )}
-    </Flex>
+    </StyledFlex>
   )
 }

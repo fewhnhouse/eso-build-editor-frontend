@@ -25,6 +25,10 @@ const StyledInput = styled(Input)`
   width: ${props => props.theme.widths.medium};
 `
 
+const StyledSlider = styled(Slider)`
+  width: 380px;
+`
+
 const marks = {
   1: '1',
   6: '6',
@@ -169,9 +173,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Group Size</Typography.Text>
-
-            <Slider
-              style={{ width: 380 }}
+            <StyledSlider
               min={1}
               max={24}
               marks={marks}
