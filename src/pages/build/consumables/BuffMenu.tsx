@@ -43,7 +43,7 @@ const ListContainer = styled.div`
   transition: width 0.2s ease-in-out;
 `
 
-const AvatarContainer = styled.div`
+const IconContainer = styled.div`
   padding-right: 16px;
 `
 
@@ -63,11 +63,11 @@ export const StyledTag = styled(Tag)`
   overflow: hidden;
   text-overflow: ellipsis;
 `
-const MyAvatar = styled.img`
-  width: ${props => props.theme.myAvatar.width};
-  height: ${props => props.theme.myAvatar.height};
-  border-radius: ${props => props.theme.myAvatar.borderRadius};
-  border: ${props => props.theme.myAvatar.border};
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
+  border: ${props => props.theme.icon.border};
 `
 
 const Description = styled.div`
@@ -301,12 +301,12 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                 onClick={handleClick(item)}
               >
                 <ListWrapper align='flex-start' direction='row'>
-                  <AvatarContainer>
-                    <MyAvatar
+                  <IconContainer>
+                    <Icon
                       title={item.name}
                       src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.icon}`}
                     />
-                  </AvatarContainer>
+                  </IconContainer>
                   <div>
                     <Title>{item.name}</Title>
 

@@ -31,9 +31,9 @@ const Image = styled.img`
   height: 20px;
 `
 
-const MyAvatar = styled.img`
-  width: ${props => props.theme.smallAvatar.width};
-  height: ${props => props.theme.smallAvatar.height};
+const Icon = styled.img`
+  width: ${props => props.theme.smallIcon.width};
+  height: ${props => props.theme.smallIcon.height};
 `
 
 const RaceContainer = styled.div`
@@ -111,7 +111,7 @@ const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
     >
       <Meta
         avatar={
-          <MyAvatar
+          <Icon
             title={esoClass}
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
           />

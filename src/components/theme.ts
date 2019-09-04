@@ -20,14 +20,14 @@ const theme = {
     StamSupp: 'rgb(109, 237, 186)',
     MagSupp: 'rgb(181, 135, 255)',
   },
-  myAvatar: {
+  icon: {
     width: '40px',
     height: '40px',
     borderRadius: '3px',
     containerPadding: '16px',
     border: '2px solid rgba(0, 0, 0, 0.45)',
   },
-  smallAvatar: {
+  smallIcon: {
     width: '28px',
     height: '28px',
   },

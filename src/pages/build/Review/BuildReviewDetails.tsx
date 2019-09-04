@@ -27,12 +27,12 @@ const ResourceCard = styled.div`
   margin: 0px 5px;
 `
 
-const MyAvatar = styled.img`
-  width: ${props => props.theme.myAvatar.width};
-  height: ${props => props.theme.myAvatar.height};
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
   margin-right: 10px;
-  border: ${props => props.theme.myAvatar.border};
-  border-radius: ${props => props.theme.myAvatar.borderRadius};
+  border: ${props => props.theme.icon.border};
+  border-radius: ${props => props.theme.icon.borderRadius};
 `
 
 const StyledTitle = styled(Typography.Title)`
@@ -226,7 +226,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             </MiscView>
             <Divider>Race</Divider>
             <MiscView direction='row' justify='flex-start'>
-              <MyAvatar
+              <Icon
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
               />
               <Text strong>{race}</Text>
@@ -234,7 +234,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             <Text>{raceData ? raceData.description : ''}</Text>
             <Divider>Class</Divider>
             <MiscView direction='row' justify='flex-start'>
-              <MyAvatar
+              <Icon
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}.png`}
               />
               <Text strong>{esoClass}</Text>
@@ -244,7 +244,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               <>
                 <Divider>Mundus Stone</Divider>
                 <MiscView direction='row' justify='flex-start' align='center'>
-                  <MyAvatar
+                  <Icon
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
                   />
                   <Text strong>{mundusStone.name}</Text>
@@ -258,7 +258,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               <>
                 <Divider>Buff</Divider>
                 <MiscView direction='row' justify='flex-start' align='center'>
-                  <MyAvatar
+                  <Icon
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`}
                   />
                   <Text strong>

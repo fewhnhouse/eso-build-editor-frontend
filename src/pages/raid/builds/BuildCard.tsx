@@ -13,9 +13,9 @@ import { Link } from 'react-router-dom'
 
 const { TabPane } = Tabs
 
-const MyAvatar = styled.img`
-  width: ${props => props.theme.smallAvatar.width};
-  height: ${props => props.theme.smallAvatar.height};
+const Icon = styled.img`
+  width: ${props => props.theme.smallIcon.width};
+  height: ${props => props.theme.smallIcon.height};
   margin-right: ${props => props.theme.margins.mini};
 `
 
@@ -169,13 +169,13 @@ const BuildCard = ({
         </Flex>
         <Description direction='row' justify='flex-start'>
           <RaceClassContainer>
-            <MyAvatar
+            <Icon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
             />
             {item.race}
           </RaceClassContainer>
           <RaceClassContainer>
-            <MyAvatar
+            <Icon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
             />
             {item.esoClass}

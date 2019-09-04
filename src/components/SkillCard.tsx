@@ -13,23 +13,23 @@ const StyledCard = styled(Card)`
 `
 
 const Image = styled.img`
-  width: ${props => props.theme.myAvatar.width};
-  height: ${props => props.theme.myAvatar.height};
-  border-radius: ${props => props.theme.myAvatar.borderRadius};
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
   border: ${(props: { active: boolean }) =>
     props.active ? '2px solid #1890ff' : 'none'};
   filter: ${(props: { active: boolean }) =>
     props.active ? '' : 'grayscale()'};
 `
 
-const MyAvatar = styled.img`
-  width: ${props => props.theme.myAvatar.width};
-  height: ${props => props.theme.myAvatar.height};
-  border-radius: ${props => props.theme.myAvatar.borderRadius};
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
 `
 
-const AvatarContainer = styled.div`
-  padding-right: ${props => props.theme.myAvatar.containerPadding};
+const IconContainer = styled.div`
+  padding-right: ${props => props.theme.icon.containerPadding};
 `
 
 const RaceContainer = styled.div`
@@ -260,12 +260,12 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   const isFree = skill.cost.includes('Nothing')
   return (
     <StyledFlex>
-      <AvatarContainer>
-        <MyAvatar
+      <IconContainer>
+        <Icon
           title={skill.name}
           src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
         />
-      </AvatarContainer>
+      </IconContainer>
       <div>
         <Title>{skill.name}</Title>
         {skill.type !== 2 && (

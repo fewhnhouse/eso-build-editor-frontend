@@ -28,10 +28,10 @@ const StyledCard = styled(Card)`
   margin: ${props => props.theme.margins.small};
 `
 
-const MyAvatar = styled.img`
-  width: ${props => props.theme.myAvatar.width};
-  height: ${props => props.theme.myAvatar.height};
-  border-radius: ${props => props.theme.myAvatar.borderRadius};
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
 `
 
 interface IMundusData {
@@ -166,7 +166,7 @@ const MundusList = ({
                   >
                     <Meta
                       avatar={
-                        <MyAvatar
+                        <Icon
                           src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
                         />
                       }
