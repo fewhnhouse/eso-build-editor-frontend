@@ -279,7 +279,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         >
           {register ? 'Register' : 'Login'}
         </Button>
-        <br/>
+        <br />
         Or
         <Button type='link' onClick={() => setRegister(register => !register)}>
           {register ? 'login.' : 'register now!'}

@@ -4,7 +4,7 @@ import { Tabs, Card } from 'antd'
 import {
   OverviewContext,
   defaultOverviewState,
-  overviewReducer
+  overviewReducer,
 } from './OverviewStateContext'
 import styled from 'styled-components'
 import Set from './Set'
@@ -63,7 +63,7 @@ export default () => {
       <Flex
         style={{
           width: '100%',
-          height: 'calc(100vh - 64px)'
+          height: 'calc(100vh - 64px)',
         }}
         direction='column'
         align='center'

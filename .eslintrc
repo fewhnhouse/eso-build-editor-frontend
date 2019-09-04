@@ -4,7 +4,6 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
-    "space-before-function-paren": ["error", "always"],
     "prettier/prettier": "error"
   },
   "overrides": [
