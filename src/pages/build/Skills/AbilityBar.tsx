@@ -19,10 +19,14 @@ const AbilityBar = styled(Flex)`
   width: 100%;
 `
 
+const StyledAbilityFlex = styled(Flex)`
+  height: 100%;
+`
+
 const AbilityBarContainer = styled(Flex)`
   flex: 1;
   height: 100%;
-  padding: ${props => props.theme.margins.large};
+  padding: ${props => props.theme.paddings.large};
   max-width: ${props => props.theme.widths.large};
   background: white;
 `
@@ -39,6 +43,12 @@ const TrashContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+const StyledIcon = styled(Icon)`
+  font-size: 30px;
+  color: ${(props: { isOver: boolean }) =>
+    props.isOver ? '#40a9ff' : 'rgb(155,155,155)'};
 `
 
 export default () => {
@@ -93,11 +103,10 @@ export default () => {
   }, [selectedSkillLines, skillLine])
   return (
     <AbilityBarContainer direction='column' align='center'>
-      <Flex
+      <StyledAbilityFlex
         direction='column'
         justify='space-around'
         align='center'
-        style={{ height: '100%' }}
       >
         <Divider>Active Selection</Divider>
         <AbilityBar direction='row' justify='space-between' align='center'>
@@ -129,15 +138,9 @@ export default () => {
           />
         </AbilityBar>
         <TrashContainer hasTrash={isOver} ref={drop}>
-          <Icon
-            style={{
-              fontSize: 30,
-              color: isOver ? '#40a9ff' : 'rgb(155,155,155)',
-            }}
-            type='delete'
-          />
+          <StyledIcon isOver={isOver} type='delete' />
         </TrashContainer>
-      </Flex>
+      </StyledAbilityFlex>
     </AbilityBarContainer>
   )
 }

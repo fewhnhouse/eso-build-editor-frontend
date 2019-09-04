@@ -1,5 +1,5 @@
 const theme = {
-  primary: 'blue',
+  primary: '#1890ff',
   mainBg: 'rgb(155, 155, 155)',
   borderRadius: '3px',
   widths: {
@@ -9,6 +9,12 @@ const theme = {
     large: '450px',
   },
   margins: {
+    mini: '5px',
+    small: '10px',
+    medium: '20px',
+    large: '40px',
+  },
+  paddings: {
     mini: '5px',
     small: '10px',
     medium: '20px',
@@ -43,19 +49,63 @@ const theme = {
   },
 }
 
+export interface Widths {
+  mini: string
+  small: string
+  medium: string
+  large: string
+}
+
+export interface Margins {
+  mini: string
+  small: string
+  medium: string
+  large: string
+}
+
+export interface RoleCardColors {
+  StamDD: string
+  MagDD: string
+  StamSupp: string
+  MagSupp: string
+}
+
+export interface Icon {
+  width: string
+  height: string
+  borderRadius: string
+  containerPadding: string
+  border: string
+}
+
+export interface SmallIcon {
+  width: string
+  height: string
+}
+
+export interface Costs {
+  ultimate: string
+  magicka: string
+  stamina: string
+  default: string
+}
+
+export interface Description {
+  newEffect: string
+  notNewEffect: string
+}
+
 export interface ITheme {
   primary: string
-  roleCardColors: {
-    StamDD: string
-    StamPale: string
-    MagDD: string
-    MagPale: string
-    StamSupp: string
-    StamSuppPale: string
-    MagSupp: string
-    MagSuppPale: string
-  }
   mainBg: string
+  borderRadius: string
+  widths: Widths
+  margins: Margins
+  roleCardColors: RoleCardColors
+  icon: Icon
+  smallIcon: SmallIcon
+  costs: Costs
+  description: Description
 }
 
 export default theme

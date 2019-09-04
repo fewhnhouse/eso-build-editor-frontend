@@ -49,7 +49,7 @@ const CardHeader = styled(Flex)`
   background-color: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
-  padding: 20px;
+  padding: ${props => props.theme.paddings.medium};
   border-top-left-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
   border-top-right-radius: ${(props: { isMobile: boolean }) =>

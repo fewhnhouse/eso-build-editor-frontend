@@ -32,7 +32,7 @@ const CoverContainer = styled.div`
   width: ${props => props.theme.widths.small};
   justify-content: center;
   align-items: center;
-  padding: ${props => props.theme.margins.medium};
+  padding: ${props => props.theme.paddings.medium};
 `
 
 const StyledCard = styled(Card)`

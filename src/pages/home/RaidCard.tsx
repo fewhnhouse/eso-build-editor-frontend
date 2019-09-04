@@ -45,6 +45,18 @@ const StyledList = styled(List)`
     props.isMobile ? '0px' : '10px'};
 `
 
+const StyledListItem = styled(List.Item)`
+  justify-content: center;
+`
+
+const StyledScrollbars = styled(Scrollbars)`
+  height: calc(100% - 120px);
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
 interface IOwnerProps {
   name: string
 }
@@ -87,7 +99,7 @@ const RaidCard = ({ data, loading }: IUserDataProps) => {
     return <Redirect push to={`${path}`} />
   }
   return (
-    <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
+    <StyledScrollbars>
       <StyledList
         isMobile={isMobile}
         loading={loading}
@@ -101,7 +113,7 @@ const RaidCard = ({ data, loading }: IUserDataProps) => {
             return prev + curr.builds.length
           }, 0)
           return (
-            <List.Item style={{ justifyContent: 'center' }}>
+            <StyledListItem>
               <StyledCard
                 key={raid.id}
                 hoverable
@@ -116,16 +128,16 @@ const RaidCard = ({ data, loading }: IUserDataProps) => {
                     </Text>
                   </Flex>
                 </Title>
-                <Divider style={{ margin: '5px 0px' }} />
+                <StyledDivider />
                 <Description>
                   {applicationArea ? applicationArea.label : ''}
                 </Description>
               </StyledCard>
-            </List.Item>
+            </StyledListItem>
           )
         }}
       />
-    </Scrollbars>
+    </StyledScrollbars>
   )
 }
 

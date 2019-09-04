@@ -33,6 +33,52 @@ const Container = styled(Content)`
     `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
   color: rgb(155, 155, 155);
 `
+
+const StyledFooter = styled(Footer)`
+  height: ${(footerProps: { isMobile: boolean }) =>
+    `${footerProps.isMobile ? '140px' : '80px'})`};
+  flex-direction: ${(footerProps: { isMobile: boolean }) =>
+    `${footerProps.isMobile ? 'column' : 'row'})`};
+  display: flex;
+  padding: 0px ${props => props.theme.paddings.medium};
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+`
+
+const StyledFlex80 = styled(Flex)`
+  height: 80px;
+`
+
+const StyledFlex200 = styled(Flex)`
+  height: 200px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  margin-bottom: 0;
+  width: 180;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const StyledText = styled(Typography.Text)`
+  white-space: nowrap;
+  width: 180;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.paddings.mini};
+`
+
+const StyledDivider = styled(Divider)`
+  height: 50px;
+  margin: 0px ${props => props.theme.paddings.medium};
+`
+
 interface IReviewProps {
   local?: boolean
   data: any
@@ -68,7 +114,7 @@ const Review = ({
     if (loading) {
       return (
         <Container isMobile={false}>
-          <Spin style={{ marginTop: 5 }} />
+          <StyledSpin />
         </Container>
       )
     }
@@ -95,75 +141,26 @@ const Review = ({
               <RaidReviewDetails loadedData={data} />
             )}
           </Container>
-          <Footer
-            style={{
-              height: isMobile ? 140 : 80,
-              padding: '0px 20px',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
-            }}
-          >
+          <StyledFooter isMobile={isMobile}>
             <Scrollbars autoHide>
-              <Flex
-                direction='row'
-                justify='flex-start'
-                align='center'
-                style={{ height: 80 }}
-              >
-                <Flex
-                  direction='column'
-                  align='flex-start'
-                  style={{ width: 200 }}
-                >
-                  <Typography.Title
-                    style={{
-                      marginBottom: 0,
-                      width: 180,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                    level={3}
-                  >
-                    {name}
-                  </Typography.Title>
-                  <Typography.Text
-                    style={{
-                      whiteSpace: 'nowrap',
-                      width: 180,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {description}
-                  </Typography.Text>
-                </Flex>
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+              <StyledFlex80 direction='row' justify='flex-start' align='center'>
+                <StyledFlex200 direction='column' align='flex-start'>
+                  <StyledTitle level={3}>{name}</StyledTitle>
+                  <StyledText>{description}</StyledText>
+                </StyledFlex200>
+                <StyledDivider type='vertical' />
                 <InformationCard
                   icon='user'
                   title='Owner'
                   description={owner ? owner.name : ''}
                 />
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+                <StyledDivider type='vertical' />
                 <InformationCard
                   icon='environment'
                   title='Application Area'
                   description={area ? area.label : ''}
                 />
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+                <StyledDivider type='vertical' />
                 {!isBuild && (
                   <>
                     <InformationCard
@@ -175,10 +172,7 @@ const Review = ({
                         0
                       )}
                     />
-                    <Divider
-                      type='vertical'
-                      style={{ height: 50, margin: '0px 20px' }}
-                    />
+                    <StyledDivider type='vertical' />
                   </>
                 )}
                 <InformationCard
@@ -186,7 +180,7 @@ const Review = ({
                   title='Access Rights'
                   description={published ? 'Public' : 'Private'}
                 />
-              </Flex>
+              </StyledFlex80>
             </Scrollbars>
             {(owner && owner.id) === (me && me.id) && (
               <Flex direction='row'>
@@ -231,7 +225,7 @@ const Review = ({
                 </Popconfirm>
               </Flex>
             )}
-          </Footer>
+          </StyledFooter>
         </>
       )
     } else {

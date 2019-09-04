@@ -10,6 +10,7 @@ const StyledCard = styled(Card)`
     ${props => props.theme.margins.small} 0
     ${props => props.theme.margins.small};
   width: ${props => props.theme.widths.medium};
+  position: relative;
 `
 
 const Image = styled.img`
@@ -36,7 +37,7 @@ const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px 10px;
+  padding: 0px ${props => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
 `
@@ -47,6 +48,10 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.paddings.mini} 0px;
 `
 
 const Title = styled.div`
@@ -109,7 +114,6 @@ export const DisplaySkillCard = ({
 }: ICardProps) => {
   return (
     <StyledCard
-      style={{ position: 'relative' }}
       hoverable
       actions={
         passive
@@ -207,7 +211,6 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
 
   return (
     <StyledCard
-      style={{ position: 'relative' }}
       hoverable
       actions={
         passive
@@ -286,11 +289,11 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
             {` | ${skill.range ? skill.range : skill.target}`}
           </Description>
         )}
-        <Divider style={{ margin: '5px 0px' }} />
+        <StyledDivider />
         <Description>{skill.effect_1}</Description>
         {skill.effect_2 && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
+            <StyledDivider />
             <Description newEffect>New Effect: {skill.effect_2}</Description>
           </>
         )}

@@ -22,7 +22,7 @@ const ResourceCard = styled.div`
   color: rgba(0, 0, 0, 0.65);
   border: 1px solid #e8e8e8;
   border-radius: 2px;
-  padding: 10px;
+  padding: ${props => props.theme.paddings.small};
   flex-direction: column;
   margin: 0px 5px;
 `
@@ -39,9 +39,19 @@ const StyledTitle = styled(Typography.Title)`
   margin: ${props => props.theme.margins.mini};
 `
 
+const StyledDivider = styled(Divider)`
+  height: 50px;
+  margin: 0px ${props => props.theme.paddings.medium};
+`
+
 const Wrapper = styled(Flex)`
   height: calc(100% - 60px);
 `
+const StyledFlex = styled(Flex)`
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : props => props.theme.paddings.medium};
+`
+
 const BuildInformation = styled(Card)`
   margin: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '20px'};
@@ -162,12 +172,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
 
   return (
     <Scrollbars autoHide disabled={!isMobile}>
-      <Flex
-        style={{ padding: isMobile ? 0 : 20 }}
-        fluid
-        direction='column'
-        align='center'
-      >
+      <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
         <Flex direction='column' align='center'>
           <Typography.Title>{name}</Typography.Title>
           {local && (
@@ -177,19 +182,13 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
                 title='Description'
                 description={description}
               />
-              <Divider
-                type='vertical'
-                style={{ height: 50, margin: '0px 20px' }}
-              />
+              <StyledDivider type='vertical' />
               <InformationCard
                 icon='environment'
                 title='Application Area'
                 description={area ? area.label : ''}
               />
-              <Divider
-                type='vertical'
-                style={{ height: 50, margin: '0px 20px' }}
-              />
+              <StyledDivider type='vertical' />
               <InformationCard
                 icon={published ? 'unlock' : 'lock'}
                 title='Access Rights'
@@ -294,7 +293,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             <GearView disabled setups={selectedSetup} setsCount={setsCount} />
           </BuildInformation>
         </Wrapper>
-      </Flex>
+      </StyledFlex>
     </Scrollbars>
   )
 }

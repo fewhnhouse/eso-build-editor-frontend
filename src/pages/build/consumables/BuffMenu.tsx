@@ -44,7 +44,7 @@ const ListContainer = styled.div`
 `
 
 const IconContainer = styled.div`
-  padding-right: 16px;
+  padding-right: ${props => props.theme.icon.containerPadding};
 `
 
 const StyledCard = styled(Card)`
@@ -54,6 +54,31 @@ const StyledCard = styled(Card)`
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
   margin: ${props => props.theme.margins.small};
+`
+
+const StyledFlex = styled(Flex)`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
+  padding: ${props => props.theme.paddings.mini};
+  transition: opacity 0.2s ease-in-out;
+`
+
+const StyledInnerFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledExpandedFlex = styled(Flex)`
+  margin: 0px ${props => props.theme.margins.small};
+  overflow: auto;
+  width: 100%;
+`
+
+const StyledList = styled(List)`
+  height: 100%;
+`
+
+const StyledInput = styled(Input)`
+  margin: 10px;
+  width: 100%;
 `
 
 export const StyledTag = styled(Tag)`
@@ -68,6 +93,11 @@ const Icon = styled.img`
   height: ${props => props.theme.icon.height};
   border-radius: ${props => props.theme.icon.borderRadius};
   border: ${props => props.theme.icon.border};
+`
+
+const StyledListFlex = styled(Flex)`
+  width: 100%;
+  margin: ${props => props.theme.margins.small} 0px;
 `
 
 const Description = styled.div`
@@ -92,6 +122,14 @@ const Title = styled.div`
 
 const ListWrapper = styled(Flex)`
   max-width: ${props => props.theme.widths.medium};
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.small} 0px;
+`
+
+const StyledDescription = styled(Description)`
+  font-style: italic;
 `
 
 const buffTypes = [
@@ -162,54 +200,26 @@ export default ({ context }: IBuffMenuProps) => {
 
   return (
     <ListContainer>
-      <Flex
-        direction='column'
-        justify='center'
-        align='center'
-        style={{
-          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-          padding: '5px',
-          transition: 'opacity 0.2s ease-in-out',
-        }}
-      >
-        <Flex
-          direction='row'
-          justify='center'
-          align='center'
-          style={{ width: '100%' }}
-        >
-          <Input
+      <StyledFlex direction='column' justify='center' align='center'>
+        <StyledInnerFlex direction='row' justify='center' align='center'>
+          <StyledInput
             placeholder='Search for Food'
             allowClear
             value={searchText}
             onChange={handleSearchChange}
             size='large'
             type='text'
-            style={{ margin: '10px', width: '100%' }}
           />
           <Button
             size='large'
             icon={expanded ? 'shrink' : 'arrows-alt'}
             onClick={handleExpandChange}
           />
-        </Flex>
+        </StyledInnerFlex>
         {expanded && (
           <>
-            <Divider
-              style={{
-                margin: '10px 0px',
-              }}
-            />
-            <Flex
-              direction='row'
-              justify='center'
-              align='center'
-              style={{
-                margin: '0px 10px',
-                overflow: 'auto',
-                width: '100%',
-              }}
-            >
+            <StyledDivider />
+            <StyledExpandedFlex direction='row' justify='center' align='center'>
               <Select
                 mode='multiple'
                 style={{ width: '100%', margin: '5px 10px' }}
@@ -220,14 +230,9 @@ export default ({ context }: IBuffMenuProps) => {
                   <Option key={type}>{type}</Option>
                 ))}
               </Select>
-            </Flex>
+            </StyledExpandedFlex>
 
-            <Flex
-              direction='row'
-              justify='center'
-              align='center'
-              style={{ margin: '0px 10px', width: '100%' }}
-            >
+            <StyledExpandedFlex direction='row' justify='center' align='center'>
               <Select
                 mode='multiple'
                 style={{ width: '100%', margin: '5px 10px' }}
@@ -238,10 +243,10 @@ export default ({ context }: IBuffMenuProps) => {
                   <Option key={quality}>{quality}</Option>
                 ))}
               </Select>
-            </Flex>
+            </StyledExpandedFlex>
           </>
         )}
-      </Flex>
+      </StyledFlex>
       <BuffMenuList
         context={context}
         buffs={(data && data.buffs) || []}
@@ -285,11 +290,8 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
   return (
     <Scrollbars>
       {redirect && <Redirect to={`/overview/buffs/${redirect}`} push />}
-      <List
+      <StyledList
         loading={loading}
-        style={{
-          height: '100%',
-        }}
         dataSource={trail}
         renderItem={(style: any, index) => {
           const item = buffs[index]
@@ -310,15 +312,8 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                   <div>
                     <Title>{item.name}</Title>
 
-                    <Divider style={{ margin: '5px 0px' }} />
-                    <Flex
-                      wrap
-                      direction='row'
-                      style={{
-                        width: '100%',
-                        margin: '10px 0px',
-                      }}
-                    >
+                    <StyledDivider />
+                    <StyledListFlex wrap direction='row'>
                       <AttributeTag
                         hasHealth={item.buffDescription.includes('Health')}
                         hasMagicka={item.buffDescription.includes('Magicka')}
@@ -337,14 +332,14 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                         }
                       />
                       <QualityTag quality={item.quality} />
-                    </Flex>
+                    </StyledListFlex>
                     <Description>{item.buffDescription}</Description>
                     {item.description && (
                       <>
-                        <Divider style={{ margin: '5px 0px' }} />
-                        <Description style={{ fontStyle: 'italic' }} newEffect>
+                        <StyledDivider />
+                        <StyledDescription newEffect>
                           {item.description}
-                        </Description>
+                        </StyledDescription>
                       </>
                     )}
                   </div>

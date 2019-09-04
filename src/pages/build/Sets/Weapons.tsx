@@ -27,6 +27,15 @@ const StyledSelectWithTitle = styled(SelectWithTitle)`
   margin: 0px 10px;
 `
 
+const StyledCheckbox = styled(Checkbox)`
+  margin: 20px 0px 10px 0px;
+`
+
+const StyledTwohandedFlex = styled(Flex)`
+  width: 100%;
+  min-height: 150px;
+`
+
 const GET_MODIFICATIONS = gql`
   query modifications($where: ModificationWhereInput) {
     modifications(where: $where) {
@@ -215,13 +224,12 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
           </Radio.Button>
         </Radio.Group>
         {weaponType === WeaponType.onehanded && (
-          <Checkbox
-            style={{ margin: '20px 0px 10px 0px' }}
+          <StyledCheckbox
             onChange={onChangeCheckbox(setShield, 'selectedGlyphs', bar)}
             value={shield}
           >
             Use Shield
-          </Checkbox>
+          </StyledCheckbox>
         )}
         <Divider>Enchants</Divider>
 
@@ -238,8 +246,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
             items={weaponGlyphs}
           />
         ) : (
-          <Flex
-            style={{ width: '100%', minHeigt: 150, flexWrap: 'wrap' }}
+          <StyledTwohandedFlex
+            wrap
             direction='row'
             justify='center'
             align='flex-start'
@@ -266,7 +274,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
               title='Off Hand'
               items={shield ? armorGlyphs : weaponGlyphs}
             />
-          </Flex>
+          </StyledTwohandedFlex>
         )}
 
         <Divider>Traits</Divider>
@@ -283,8 +291,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
             items={weaponTraits}
           />
         ) : (
-          <Flex
-            style={{ width: '100%', minHeight: 150, flexWrap: 'wrap' }}
+          <StyledTwohandedFlex
+            wrap
             direction='row'
             justify='center'
             align='flex-start'
@@ -311,7 +319,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
               title='Off Hand'
               items={shield ? armorTraits : weaponTraits}
             />
-          </Flex>
+          </StyledTwohandedFlex>
         )}
       </StyledFlex>
     )

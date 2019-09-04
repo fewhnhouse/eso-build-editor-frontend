@@ -36,7 +36,7 @@ const StyledListItem = styled(Item)`
   justify-content: space-between;
   margin: 0px ${props => props.theme.margins.mini};
   border-radius: ${props => props.theme.borderRadius};
-  padding: ${props => props.theme.margins.small};
+  padding: ${props => props.theme.paddings.small};
   ${props => props.theme.margins.mini};
   &:hover > div {
     font-weight: 500;

@@ -33,11 +33,11 @@ const RightWrapper = styled.div`
 `
 
 const StyledDivDiscovery = styled.div`
-  padding: ${props => props.theme.margins.mini};
+  padding: ${props => props.theme.paddings.mini};
   height: 40%;
 `
 const StyledDivActivity = styled.div`
-  padding: ${props => props.theme.margins.mini};
+  padding: ${props => props.theme.paddings.mini};
   height: 60%;
 `
 
@@ -81,7 +81,7 @@ const DiscoveryContent = styled.div`
 `
 
 const StyledTitle = styled(Title)`
-  padding: ${props => props.theme.margins.medium};
+  padding: ${props => props.theme.paddings.medium};
 `
 
 export default () => {

@@ -22,6 +22,14 @@ const SkillView = styled.div`
   flex-wrap: nowrap;
 `
 
+const StyledDisplaySlot = styled(DisplaySlot)`
+  margin-left: ${props => props.theme.margins.small};
+`
+
+const StyledSkillSlot = styled(SkillSlot)`
+  margin-left: ${props => props.theme.margins.small};
+`
+
 export default ({
   skillSlots,
   ultimate,
@@ -61,12 +69,11 @@ export default ({
         </animated.div>
       ))}
       {disabled ? (
-        <DisplaySlot size={size} skill={ultimate} style={{ marginLeft: 10 }} />
+        <StyledDisplaySlot size={size} skill={ultimate} />
       ) : abilityBar === -1 ? (
         ultimate && (
-          <SkillSlot
+          <StyledSkillSlot
             size={size}
-            style={{ marginLeft: 10 }}
             abilityBar={abilityBar}
             droppable={droppable}
             skill={ultimate}
@@ -74,9 +81,8 @@ export default ({
           />
         )
       ) : (
-        <SkillSlot
+        <StyledSkillSlot
           size={size}
-          style={{ marginLeft: 10 }}
           abilityBar={abilityBar}
           droppable={droppable}
           skill={ultimate}

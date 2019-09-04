@@ -63,6 +63,16 @@ const InnerDisplay = styled(Flex)`
   margin-left: ${props => props.theme.margins.small};
 `
 
+const StyledButton = styled(Button)`
+  margin-top: ${props => props.theme.margins.mini};
+`
+
+const StyledGearWrapper = styled.div`
+  margin: ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small} ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small};
+`
+
 export interface ISet {
   id: string
   setId: number
@@ -313,20 +323,19 @@ export default ({
             </TextSecondary>
           </>
         ) : (
-          <Button
-            style={{ marginTop: 5 }}
+          <StyledButton
             onClick={handleSlotClick}
             size='small'
             ghost
             type='primary'
           >
             Slot
-          </Button>
+          </StyledButton>
         )}
       </InnerDisplay>
     </DisplayCard>
   ) : (
-    <div style={{ margin: '5px 10px 5px 10px' }}>
+    <StyledGearWrapper>
       <GearFrame
         size={size}
         canDrop={droppable && canDrop}
@@ -355,12 +364,12 @@ export default ({
           <div />
         )}
       </GearFrame>
-    </div>
+    </StyledGearWrapper>
   )
 }
 
 const DisplayCard = styled.div`
-  padding: 5px;
+  padding: ${props => props.theme.paddings.mini};
   display: flex;
   flex-direction: row;
   width: ${props => props.theme.widths.small};

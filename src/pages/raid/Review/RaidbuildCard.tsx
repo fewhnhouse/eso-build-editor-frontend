@@ -40,7 +40,7 @@ const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px 10px;
+  padding: 0px ${props => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
 `

@@ -13,7 +13,15 @@ const AbilityContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  padding: ${props => props.theme.margins.large};
+  padding: ${props => props.theme.paddings.large};
+`
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
 `
 
 interface ISkillDisplay {
@@ -124,16 +132,6 @@ export default ({
       </>
     </AbilityContainer>
   ) : (
-    <Empty
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        flex: 2,
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      Select a Skill Line to get started.
-    </Empty>
+    <StyledEmpty>Select a Skill Line to get started.</StyledEmpty>
   )
 }

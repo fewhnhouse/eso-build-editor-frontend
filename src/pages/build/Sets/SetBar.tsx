@@ -22,7 +22,7 @@ import Scrollbars from 'react-custom-scrollbars'
 const OuterContainer = styled.div`
   flex: 1;
   height: 100%;
-  padding: ${props => props.theme.margins.medium};
+  padding: ${props => props.theme.paddings.medium};
   max-width: ${props => props.theme.widths.medium};
   background: white;
 `

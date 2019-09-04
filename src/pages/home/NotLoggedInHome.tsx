@@ -8,7 +8,7 @@ const { Title, Text } = Typography
 
 const Wrapper = styled(Flex)`
   display: flex;
-  padding-top: 20px;
+  padding-top: ${props => props.theme.paddings.medium};
   flex-wrap: wrap;
 `
 
@@ -18,8 +18,8 @@ const CardContainer = styled(Flex)`
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
-  padding: ${props => props.theme.margins.medium};
-  margin: ${props => props.theme.margins.medium};
+  padding: ${props => props.theme.paddings.medium};
+  margin: ${props => props.theme.paddings.medium};
   height: 300px;
   background-color: white;
   max-width: ${props => props.theme.widths.medium};
@@ -32,7 +32,7 @@ const OverviewContainer = styled(Flex)`
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
-  padding: 20px;
+  padding: ${props => props.theme.paddings.medium};
   background-color: white;
   max-width: 1200px;
 `
@@ -50,8 +50,12 @@ const StyledTitle = styled.h1`
 `
 
 const Content = styled.div`
-  padding: ${props => props.theme.widths.large};
+  padding: ${props => props.theme.paddings.large};
   overflow: auto;
+  width: 100%;
+`
+
+const StyledFlex = styled(Flex)`
   width: 100%;
 `
 
@@ -62,6 +66,18 @@ const StyledIcon = styled(Icon)`
 
 const StyledText = styled(Text)`
   max-width: ${props => props.theme.widths.medium};
+`
+
+const StyledLink = styled(Link)`
+  width: 100%;
+`
+
+const StyledButton = styled(Button)`
+  width: 100%;
+`
+
+const StyledWideButton = styled(Button)`
+  min-width: 300px;
 `
 
 export default () => {
@@ -85,11 +101,11 @@ export default () => {
         >
           <Title level={3}>Builds</Title>
           <Text>Create, share, save and edit builds</Text>
-          <Link style={{ width: '100%' }} to='/builds'>
-            <Button style={{ width: '100%' }} size='large' type='primary'>
+          <StyledLink to='/builds'>
+            <StyledButton size='large' type='primary'>
               Explore Builds
-            </Button>
-          </Link>
+            </StyledButton>
+          </StyledLink>
         </CardContainer>
         <CardContainer
           direction='column'
@@ -98,11 +114,11 @@ export default () => {
         >
           <Title level={3}>Raids</Title>
           <Text>Create, share, save and edit raids</Text>
-          <Link style={{ width: '100%' }} to='/raids'>
-            <Button style={{ width: '100%' }} size='large' type='primary'>
+          <StyledLink to='/raids'>
+            <StyledButton size='large' type='primary'>
               Explore Raids
-            </Button>
-          </Link>
+            </StyledButton>
+          </StyledLink>
         </CardContainer>
       </Wrapper>
       <Divider />
@@ -120,7 +136,7 @@ export default () => {
         </Typography.Text>
         <Divider />
 
-        <Flex direction='row' wrap style={{ width: '100%' }}>
+        <StyledFlex direction='row' wrap>
           <OverviewTab>
             <StyledIcon type='user' />
             <Title level={4}>Sets</Title>
@@ -137,12 +153,12 @@ export default () => {
             <StyledIcon type='user' />
             <Title level={4}>Mundus Stones</Title>
           </OverviewTab>
-        </Flex>
+        </StyledFlex>
         <Divider />
         <Link to='/overview'>
-          <Button size='large' type='primary' style={{ minWidth: 300 }}>
+          <StyledWideButton size='large' type='primary'>
             Explore
-          </Button>
+          </StyledWideButton>
         </Link>
       </OverviewContainer>
     </Content>
