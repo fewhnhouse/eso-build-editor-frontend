@@ -1,8 +1,8 @@
-import React, { useState } from "react"
-import { Card } from "antd"
-import styled, { withTheme, ThemeProps } from "styled-components"
-import { Redirect } from "react-router"
-import { ITheme } from "../../../components/globalStyles"
+import React, { useState } from 'react'
+import { Card } from 'antd'
+import styled, { withTheme, ThemeProps } from 'styled-components'
+import { Redirect } from 'react-router'
+import { ITheme } from '../../../components/globalStyles'
 
 interface IStyledCardProps {
   colors: {
@@ -17,9 +17,9 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ""};
+  border-color: ${(props: IStyledCardProps) => props.colors.borderColor || ''};
   background-color: ${(props: IStyledCardProps) =>
-    props.colors.backgroundColor || ""};
+    props.colors.backgroundColor || ''};
 `
 
 const { Meta } = Card
@@ -52,30 +52,30 @@ interface ICardProps extends ThemeProps<ITheme> {
 
 const setColor = (role: string, theme: ITheme) => {
   switch (role) {
-    case "Stamina DD": // ${props => props.theme.stamGreen};
+    case 'Stamina DD': // ${props => props.theme.stamGreen};
       return {
         borderColor: `${theme.roleCardColors.StamDD}`,
         backgroundColor: ``,
       }
-    case "Stamina Support":
+    case 'Stamina Support':
       return {
         borderColor: `${theme.roleCardColors.StamSupp}`,
         backgroundColor: ``,
       }
-    case "Magicka DD":
+    case 'Magicka DD':
       return {
         borderColor: `${theme.roleCardColors.MagDD}`,
         backgroundColor: ``,
       }
-    case "Magicka Support":
+    case 'Magicka Support':
       return {
         borderColor: `${theme.roleCardColors.MagSupp}`,
         backgroundColor: ``,
       }
     default:
       return {
-        borderColor: "",
-        backgroundColor: "",
+        borderColor: '',
+        backgroundColor: '',
       }
   }
 }
@@ -114,7 +114,7 @@ const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
           />
         }
-        style={{ textAlign: "left" }}
+        style={{ textAlign: 'left' }}
         title={esoClass}
         description={description}
       />

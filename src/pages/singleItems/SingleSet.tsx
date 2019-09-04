@@ -1,11 +1,11 @@
-import React from "react"
-import Flex from "../../components/Flex"
-import { RouteComponentProps, withRouter } from "react-router"
-import gql from "graphql-tag"
-import { useQuery } from "react-apollo"
-import { Card, Spin } from "antd"
-import GearCard from "../../components/GearCard"
-import { ISet } from "../../components/GearSlot"
+import React from 'react'
+import Flex from '../../components/Flex'
+import { RouteComponentProps, withRouter } from 'react-router'
+import gql from 'graphql-tag'
+import { useQuery } from 'react-apollo'
+import { Card, Spin } from 'antd'
+import GearCard from '../../components/GearCard'
+import { ISet } from '../../components/GearSlot'
 
 const GET_SETS_BY_ID = gql`
   query Set($id: ID!) {
@@ -39,26 +39,26 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
     variables: { id: id },
   })
 
-  const set: ISet = data.set ? data.set : ""
+  const set: ISet = data.set ? data.set : ''
 
   return set ? (
     <Flex
-      direction="row"
-      align="flex-start"
+      direction='row'
+      align='flex-start'
       style={{
-        height: "100%",
-        width: "100%",
+        height: '100%',
+        width: '100%',
         padding: 20,
       }}
     >
-      <Flex direction="column" fluid>
-        <Card style={{ width: "100%" }}>
-          <GearCard size="big" set={set} setSelectionCount={0} />
+      <Flex direction='column' fluid>
+        <Card style={{ width: '100%' }}>
+          <GearCard size='big' set={set} setSelectionCount={0} />
         </Card>
       </Flex>
     </Flex>
   ) : (
-    <Flex fluid justify="center">
+    <Flex fluid justify='center'>
       <Spin />
     </Flex>
   )

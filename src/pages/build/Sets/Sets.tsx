@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useContext } from "react"
-import { Divider, Tabs, Empty } from "antd"
-import styled from "styled-components"
-import Weapons from "./Weapons"
-import Armor from "./Armor"
-import Jewelry from "./Jewelry"
-import SetBar from "./SetBar"
-import { BuildContext, SetTab } from "../BuildStateContext"
-import { ISet } from "../../../components/GearSlot"
-import GearCard from "../../../components/GearCard"
-import SetMenu from "./SetMenu"
-import Scrollbars from "react-custom-scrollbars"
+import React, { useEffect, useState, useContext } from 'react'
+import { Divider, Tabs, Empty } from 'antd'
+import styled from 'styled-components'
+import Weapons from './Weapons'
+import Armor from './Armor'
+import Jewelry from './Jewelry'
+import SetBar from './SetBar'
+import { BuildContext, SetTab } from '../BuildStateContext'
+import { ISet } from '../../../components/GearSlot'
+import GearCard from '../../../components/GearCard'
+import SetMenu from './SetMenu'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { TabPane } = Tabs
 
@@ -46,7 +46,7 @@ export default ({ edit }: { edit: boolean }) => {
       backbarSelection
     )
     .map(item => {
-      return item.selectedSet ? item.selectedSet.name : ""
+      return item.selectedSet ? item.selectedSet.name : ''
     })
     .reduce<Map<string, number>>(
       (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
@@ -54,7 +54,7 @@ export default ({ edit }: { edit: boolean }) => {
     )
   useEffect(() => {
     if (!edit) {
-      localStorage.setItem("buildState", JSON.stringify(state))
+      localStorage.setItem('buildState', JSON.stringify(state))
     }
   }, [edit, state])
 
@@ -66,15 +66,15 @@ export default ({ edit }: { edit: boolean }) => {
 
   const { setTabKey } = state!
   const handleTabChange = (key: string) => {
-    dispatch!({ type: "SET_SET_TAB_KEY", payload: { setTabKey: key } })
+    dispatch!({ type: 'SET_SET_TAB_KEY', payload: { setTabKey: key } })
   }
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "row",
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
       }}
     >
       <SetMenu
@@ -95,21 +95,21 @@ export default ({ edit }: { edit: boolean }) => {
               <Tabs
                 onChange={handleTabChange}
                 activeKey={setTabKey}
-                defaultActiveKey="frontbar"
+                defaultActiveKey='frontbar'
               >
                 <TabPane
                   disabled={!set!.has_weapons}
-                  tab="Front-Bar"
+                  tab='Front-Bar'
                   key={SetTab.frontbar}
                 >
-                  <Weapons bar="frontbar" />
+                  <Weapons bar='frontbar' />
                 </TabPane>
                 <TabPane
                   disabled={!set!.has_weapons}
-                  tab="Back-Bar"
+                  tab='Back-Bar'
                   key={SetTab.backbar}
                 >
-                  <Weapons bar="backbar" />
+                  <Weapons bar='backbar' />
                 </TabPane>
                 <TabPane
                   disabled={
@@ -117,14 +117,14 @@ export default ({ edit }: { edit: boolean }) => {
                     !set!.has_medium_armor &&
                     !set!.has_light_armor
                   }
-                  tab="Armor"
+                  tab='Armor'
                   key={SetTab.armor}
                 >
                   <Armor />
                 </TabPane>
                 <TabPane
                   disabled={!set!.has_jewels}
-                  tab="Jewelry"
+                  tab='Jewelry'
                   key={SetTab.jewelry}
                 >
                   <Jewelry />
@@ -135,11 +135,11 @@ export default ({ edit }: { edit: boolean }) => {
         ) : (
           <Empty
             style={{
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
               flex: 2,
-              flexDirection: "column",
-              alignItems: "center",
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             Select a set to get started.

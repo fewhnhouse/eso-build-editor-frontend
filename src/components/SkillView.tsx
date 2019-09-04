@@ -1,15 +1,15 @@
-import React from "react"
-import styled from "styled-components"
-import { ABILITY_BAR_ONE } from "../pages/build/Skills/AbilityBar"
-import SkillSlot, { DisplaySlot, ISkill } from "./SkillSlot"
-import { useTrail, animated } from "react-spring"
-import { ISkillSelection } from "../pages/build/BuildStateContext"
+import React from 'react'
+import styled from 'styled-components'
+import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
+import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
+import { useTrail, animated } from 'react-spring'
+import { ISkillSelection } from '../pages/build/BuildStateContext'
 
 export interface ISKillViewProps {
   skillSlots: ISkillSelection[]
   ultimate?: ISkill
   droppable?: boolean
-  size?: "small" | "normal"
+  size?: 'small' | 'normal'
   id: string
   abilityBar?: number
   disabled?: boolean
@@ -28,13 +28,13 @@ export default ({
   droppable,
   id,
   abilityBar,
-  size = "normal",
+  size = 'normal',
   disabled,
 }: ISKillViewProps) => {
   const pos = (id: string) => {
     if (id === ABILITY_BAR_ONE) {
-      return "top"
-    } else return "bottom"
+      return 'top'
+    } else return 'bottom'
   }
   const trail = useTrail(skillSlots.length, {
     config: { mass: 5, tension: 2000, friction: 200 },

@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react"
-import Flex from "../../../components/Flex"
-import { Select, Typography } from "antd"
-import styled from "styled-components"
-import { SelectProps } from "antd/lib/select"
-import { IModification } from "../BuildStateContext"
+import React, { ReactNode } from 'react'
+import Flex from '../../../components/Flex'
+import { Select, Typography } from 'antd'
+import styled from 'styled-components'
+import { SelectProps } from 'antd/lib/select'
+import { IModification } from '../BuildStateContext'
 
 const { Option } = Select
 
@@ -24,18 +24,18 @@ export const CustomSelect = ({
 }: ICustomSelectProps) => (
   <Select
     className={className}
-    size="large"
-    placeholder="Select a glyph"
+    size='large'
+    placeholder='Select a glyph'
     {...props}
   >
     {items.map((item, index) => (
       <Option value={item.type} key={index}>
-        <Flex direction="column" justify="flex-start" align="flex-start">
+        <Flex direction='column' justify='flex-start' align='flex-start'>
           <Flex
-            style={{ width: "100%" }}
-            direction="row"
-            justify="space-between"
-            align="center"
+            style={{ width: '100%' }}
+            direction='row'
+            justify='space-between'
+            align='center'
           >
             {item.type}
             <StyledIcon
@@ -45,7 +45,7 @@ export const CustomSelect = ({
             />
           </Flex>
           <Typography.Text
-            style={{ color: "rgba(0, 0, 0, 0.25)", whiteSpace: "normal" }}
+            style={{ color: 'rgba(0, 0, 0, 0.25)', whiteSpace: 'normal' }}
           >
             {item.description}
           </Typography.Text>
@@ -67,9 +67,9 @@ export const SelectWithTitle = ({
   <Flex
     className={className}
     style={{ flex: 1 }}
-    direction="column"
-    justify="flex-start"
-    align="flex-start"
+    direction='column'
+    justify='flex-start'
+    align='flex-start'
   >
     <Typography.Text strong>{title}</Typography.Text>
     <StyledCustomSelect items={items} {...props} />

@@ -1,7 +1,7 @@
-import React from "react"
-import { IActionProps, ProfileAction, ItemCard } from "./Profile"
-import { Typography, Input, Button, Divider } from "antd"
-import { useMediaQuery } from "react-responsive"
+import React from 'react'
+import { IActionProps, ProfileAction, ItemCard } from './Profile'
+import { Typography, Input, Button, Divider } from 'antd'
+import { useMediaQuery } from 'react-responsive'
 
 const { Text } = Typography
 
@@ -15,24 +15,24 @@ export default ({ me, handleActionClick, value, setValue }: IActionProps) => {
     //eslint-disable-next-line
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   )
-  const isValid = re.test(value || "")
+  const isValid = re.test(value || '')
   return (
-    <ItemCard title="Change your email" isMobile={isMobile}>
-      <Text>Current email: {me ? me.email : ""}</Text>
+    <ItemCard title='Change your email' isMobile={isMobile}>
+      <Text>Current email: {me ? me.email : ''}</Text>
       <Divider />
       <Input
         value={value}
         onChange={handleChange}
-        size="large"
-        placeholder="Type new email..."
+        size='large'
+        placeholder='Type new email...'
       />
       <Button
         onClick={handleActionClick(ProfileAction.updateEmail)}
         block
         disabled={!isValid}
-        size="large"
+        size='large'
         style={{ marginTop: 20 }}
-        type="primary"
+        type='primary'
       >
         Update email
       </Button>

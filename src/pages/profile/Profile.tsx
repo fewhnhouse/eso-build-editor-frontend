@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react"
-import styled from "styled-components"
+import React, { useState, useEffect, useContext } from 'react'
+import styled from 'styled-components'
 import {
   Layout,
   Typography,
@@ -10,17 +10,17 @@ import {
   Button,
   message,
   Card,
-} from "antd"
-import gql from "graphql-tag"
-import { useQuery, useMutation } from "react-apollo"
-import Flex from "../../components/Flex"
-import UpdateEmail from "./UpdateEmail"
-import DeleteAccount from "./DeleteAccount"
-import UpdatePassword from "./UpdatePassword"
-import { LoginContext } from "../../App"
-import { Redirect } from "react-router"
-import { RESEND_VERIFICATION } from "../../components/AppContainer"
-import Scrollbars from "react-custom-scrollbars"
+} from 'antd'
+import gql from 'graphql-tag'
+import { useQuery, useMutation } from 'react-apollo'
+import Flex from '../../components/Flex'
+import UpdateEmail from './UpdateEmail'
+import DeleteAccount from './DeleteAccount'
+import UpdatePassword from './UpdatePassword'
+import { LoginContext } from '../../App'
+import { Redirect } from 'react-router'
+import { RESEND_VERIFICATION } from '../../components/AppContainer'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -38,8 +38,8 @@ const Container = styled(Content)`
 
 export const ItemCard = styled(Card)`
   max-width: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? "" : "500px"};
-  width: ${(props: { isMobile: boolean }) => (props.isMobile ? "100%" : "40%")};
+    props.isMobile ? '' : '500px'};
+  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '40%')};
 `
 
 const ME = gql`
@@ -90,9 +90,9 @@ export interface IActionProps {
 }
 
 export enum ProfileAction {
-  updateEmail = "UPDATE_EMAIL",
-  updatePassword = "UPDATE_PASSWORD",
-  deleteAccount = "DELETE_ACCOUNT",
+  updateEmail = 'UPDATE_EMAIL',
+  updatePassword = 'UPDATE_PASSWORD',
+  deleteAccount = 'DELETE_ACCOUNT',
 }
 
 const openNotification = (resendMutation: any) => {
@@ -103,16 +103,16 @@ const openNotification = (resendMutation: any) => {
   }
   const btn = (
     <Flex
-      style={{ width: "100%" }}
-      direction="row"
-      align="center"
-      justify="space-between"
+      style={{ width: '100%' }}
+      direction='row'
+      align='center'
+      justify='space-between'
     >
       <Typography.Text style={{ marginRight: 30 }}>
-        Didnt get an email?{" "}
+        Didnt get an email?{' '}
       </Typography.Text>
-      <Button onClick={handleResendClick} icon="mail" type="primary">
-        {"Resend"}
+      <Button onClick={handleResendClick} icon='mail' type='primary'>
+        {'Resend'}
       </Button>
     </Flex>
   )
@@ -120,14 +120,14 @@ const openNotification = (resendMutation: any) => {
   notification.info({
     key,
     duration: 0,
-    message: "Please verify your account.",
+    message: 'Please verify your account.',
     btn,
     description: (
-      <Flex direction="column" align="center" justify="center">
+      <Flex direction='column' align='center' justify='center'>
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: "5px 0px" }} />
+        <Divider style={{ margin: '5px 0px' }} />
       </Flex>
     ),
   })
@@ -135,9 +135,9 @@ const openNotification = (resendMutation: any) => {
 
 const Profile = ({ loggedIn }: IProfileProps) => {
   const me = useQuery(ME)
-  const [oldPassword, setOldPassword] = useState("")
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
+  const [oldPassword, setOldPassword] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [, setLoggedIn] = useContext(LoginContext)
   const [action, setAction] = useState<ProfileAction>()
@@ -170,7 +170,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
           })
           break
         case ProfileAction.deleteAccount:
-          localStorage.removeItem("token")
+          localStorage.removeItem('token')
           setLoggedIn(false)
           notification.success({
             message: action,
@@ -182,9 +182,9 @@ const Profile = ({ loggedIn }: IProfileProps) => {
           break
       }
       setAction(undefined)
-      setPassword("")
-      setEmail("")
-      setOldPassword("")
+      setPassword('')
+      setEmail('')
+      setOldPassword('')
     } else if (
       updatePasswordResult.error ||
       updateEmailResult.error ||
@@ -195,9 +195,9 @@ const Profile = ({ loggedIn }: IProfileProps) => {
         description: "Changes couldn't be saved. Try again later",
       })
       setAction(undefined)
-      setPassword("")
-      setEmail("")
-      setOldPassword("")
+      setPassword('')
+      setEmail('')
+      setOldPassword('')
     }
   }, [
     updatePasswordResult,
@@ -210,9 +210,9 @@ const Profile = ({ loggedIn }: IProfileProps) => {
 
   useEffect(() => {
     if (resendResult.data) {
-      message.success("Verification Email resent.")
+      message.success('Verification Email resent.')
     } else if (resendResult.error) {
-      message.error("Error sending Verification Email.")
+      message.error('Error sending Verification Email.')
     }
   }, [resendResult])
 
@@ -232,25 +232,25 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       default:
         break
     }
-    setOldPassword("")
+    setOldPassword('')
   }
   const handleCancel = () => {
     setAction(undefined)
-    setOldPassword("")
+    setOldPassword('')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldPassword(e.target.value)
   }
   if (redirect) {
-    return <Redirect to="/" />
+    return <Redirect to='/' />
   }
   return (
     <>
       <Modal
-        title="Confirm password"
+        title='Confirm password'
         visible={action !== undefined}
-        okText="Confirm and apply"
+        okText='Confirm and apply'
         onOk={handleConfirm}
         onCancel={handleCancel}
         confirmLoading={
@@ -262,18 +262,18 @@ const Profile = ({ loggedIn }: IProfileProps) => {
         <Input.Password
           onChange={handleChange}
           value={oldPassword}
-          size="large"
-          placeholder="Type current password..."
+          size='large'
+          placeholder='Type current password...'
         />
       </Modal>
       <Container>
         <Scrollbars autoHide>
-          <Title>Hello {me && me.data.me ? me.data.me.name : ""}!</Title>
+          <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
           <Flex
-            direction="column"
-            justify="space-around"
-            align="center"
-            style={{ width: "100%" }}
+            direction='column'
+            justify='space-around'
+            align='center'
+            style={{ width: '100%' }}
           >
             <UpdateEmail
               value={email}

@@ -1,18 +1,18 @@
-import React from "react"
-import styled from "styled-components"
-import Flex from "../../../components/Flex"
-import { Typography, Divider, Card, message } from "antd"
-import { useSubscription } from "react-apollo"
-import GearView from "../../../components/GearView"
-import SkillView from "../../../components/SkillView"
-import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from "../Skills/AbilityBar"
-import { IBuildState } from "../BuildStateContext"
-import { classes, races } from "../RaceAndClass/data"
-import InformationCard from "../../../components/InformationCard"
-import { applicationAreas } from "../RaceAndClass/RaceClass"
-import gql from "graphql-tag"
-import { useMediaQuery } from "react-responsive"
-import Scrollbars from "react-custom-scrollbars"
+import React from 'react'
+import styled from 'styled-components'
+import Flex from '../../../components/Flex'
+import { Typography, Divider, Card, message } from 'antd'
+import { useSubscription } from 'react-apollo'
+import GearView from '../../../components/GearView'
+import SkillView from '../../../components/SkillView'
+import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
+import { IBuildState } from '../BuildStateContext'
+import { classes, races } from '../RaceAndClass/data'
+import InformationCard from '../../../components/InformationCard'
+import { applicationAreas } from '../RaceAndClass/RaceClass'
+import gql from 'graphql-tag'
+import { useMediaQuery } from 'react-responsive'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Title, Text } = Typography
 
@@ -51,18 +51,18 @@ const Wrapper = styled(Flex)`
 `
 const BuildInformation = styled(Card)`
   margin: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? "0px" : "20px"};
+    props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? "" : "calc(100% - 40px)"};
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 2;
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
   margin: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? "0px" : "20px"};
+    props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? "" : "calc(100% - 40px)"};
+    props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: 400px;
   flex: 1;
   max-width: 700px;
@@ -122,22 +122,22 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   } = loadedData
   const selectedSetup = [
     {
-      id: "bigpieces",
-      label: "Big Pieces",
+      id: 'bigpieces',
+      label: 'Big Pieces',
       data: bigPieceSelection || [],
     },
     {
-      id: "smallpieces",
-      label: "Small Pieces",
+      id: 'smallpieces',
+      label: 'Small Pieces',
       data: smallPieceSelection || [],
     },
-    { id: "jewelry", label: "Jewelry", data: jewelrySelection || [] },
+    { id: 'jewelry', label: 'Jewelry', data: jewelrySelection || [] },
     {
-      id: "frontbar",
-      label: "Frontbar",
+      id: 'frontbar',
+      label: 'Frontbar',
       data: frontbarSelection || [],
     },
-    { id: "backbar", label: "Backbar", data: backbarSelection || [] },
+    { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
   const raceData = races.find(rc => rc.title === race)
   const classData = classes.find(esoC => esoC.title === esoClass)
@@ -149,7 +149,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     })
     .flat()
     .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ""
+      setSelection.selectedSet ? setSelection.selectedSet.name : ''
     )
     .reduce<Map<string, number>>(
       (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
@@ -163,7 +163,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
 
   if (data && data.buildUpdateSubscription) {
     message.info(
-      "This build has been updated. Refresh to see the latest changes"
+      'This build has been updated. Refresh to see the latest changes'
     )
   }
 
@@ -172,43 +172,43 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
       <Flex
         style={{ padding: isMobile ? 0 : 20 }}
         fluid
-        direction="column"
-        align="center"
+        direction='column'
+        align='center'
       >
-        <Flex direction="column" align="center">
+        <Flex direction='column' align='center'>
           <Typography.Title>{name}</Typography.Title>
           {local && (
-            <Flex direction="row">
+            <Flex direction='row'>
               <InformationCard
-                icon="edit"
-                title="Description"
+                icon='edit'
+                title='Description'
                 description={description}
               />
               <Divider
-                type="vertical"
-                style={{ height: 50, margin: "0px 20px" }}
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
               />
               <InformationCard
-                icon="environment"
-                title="Application Area"
-                description={area ? area.label : ""}
+                icon='environment'
+                title='Application Area'
+                description={area ? area.label : ''}
               />
               <Divider
-                type="vertical"
-                style={{ height: 50, margin: "0px 20px" }}
+                type='vertical'
+                style={{ height: 50, margin: '0px 20px' }}
               />
               <InformationCard
-                icon={published ? "unlock" : "lock"}
-                title="Access Rights"
-                description={published ? "Public" : "Private"}
+                icon={published ? 'unlock' : 'lock'}
+                title='Access Rights'
+                description={published ? 'Public' : 'Private'}
               />
             </Flex>
           )}
         </Flex>
         <Wrapper
-          direction="row"
-          align="flex-start"
-          justify="space-evenly"
+          direction='row'
+          align='flex-start'
+          justify='space-evenly'
           wrap
           fluid
         >
@@ -217,7 +217,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             title={<Title level={2}>General Information</Title>}
           >
             <Divider>Attributes</Divider>
-            <MiscView direction="row" justify="space-around">
+            <MiscView direction='row' justify='space-around'>
               <ResourceCard>
                 <Typography.Text strong>Stamina</Typography.Text>
                 <Typography.Title style={{ margin: 5 }} level={4}>
@@ -238,25 +238,25 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               </ResourceCard>
             </MiscView>
             <Divider>Race</Divider>
-            <MiscView direction="row" justify="flex-start">
+            <MiscView direction='row' justify='flex-start'>
               <MyAvatar
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${race}.png`}
               />
               <Text strong>{race}</Text>
             </MiscView>
-            <Text>{raceData ? raceData.description : ""}</Text>
+            <Text>{raceData ? raceData.description : ''}</Text>
             <Divider>Class</Divider>
-            <MiscView direction="row" justify="flex-start">
+            <MiscView direction='row' justify='flex-start'>
               <MyAvatar
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}.png`}
               />
               <Text strong>{esoClass}</Text>
             </MiscView>
-            <Text>{classData ? classData.description : ""}</Text>
+            <Text>{classData ? classData.description : ''}</Text>
             {mundusStone && (
               <>
                 <Divider>Mundus Stone</Divider>
-                <MiscView direction="row" justify="flex-start" align="center">
+                <MiscView direction='row' justify='flex-start' align='center'>
                   <ClassImg
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`}
                   />
@@ -270,7 +270,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             {buff && (
               <>
                 <Divider>Buff</Divider>
-                <MiscView direction="row" justify="flex-start" align="center">
+                <MiscView direction='row' justify='flex-start' align='center'>
                   <MyAvatar
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`}
                   />
@@ -289,14 +289,14 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             <SkillsView>
               <StyledTitle level={4}>Skills</StyledTitle>
               <SkillView
-                size="small"
+                size='small'
                 id={ABILITY_BAR_ONE}
                 disabled
                 skillSlots={newBarOne}
                 ultimate={ultimateOne}
               />
               <SkillView
-                size="small"
+                size='small'
                 id={ABILITY_BAR_TWO}
                 disabled
                 skillSlots={newBarTwo}

@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react"
-import Flex from "../../../components/Flex"
-import { Divider, Button, Empty, Input, Icon, Typography, Card } from "antd"
-import { RaidContext, IRole } from "../RaidStateContext"
-import styled from "styled-components"
-import { useDrop } from "react-dnd"
-import BuildCard from "./BuildCard"
-import Scrollbars from "react-custom-scrollbars"
+import React, { useState, useContext } from 'react'
+import Flex from '../../../components/Flex'
+import { Divider, Button, Empty, Input, Icon, Typography, Card } from 'antd'
+import { RaidContext, IRole } from '../RaidStateContext'
+import styled from 'styled-components'
+import { useDrop } from 'react-dnd'
+import BuildCard from './BuildCard'
+import Scrollbars from 'react-custom-scrollbars'
 const { Search } = Input
 
 const RoleContainer = styled.div`
@@ -32,10 +32,10 @@ const StyledButton = styled(Button)`
 const RoleDropper = ({ role }: { role: IRole }) => {
   const [, dispatch] = useContext(RaidContext)
   const [, drop] = useDrop({
-    accept: "build",
+    accept: 'build',
     drop: (item: any, monitor) => {
       dispatch!({
-        type: "ADD_BUILD",
+        type: 'ADD_BUILD',
         payload: { name: role.name, build: item.build },
       })
     },
@@ -48,8 +48,8 @@ const RoleDropper = ({ role }: { role: IRole }) => {
   return (
     <RoleContainer>
       <RoleDropContainer ref={drop}>
-        <Icon style={{ width: 100, height: 100, fontSize: 50 }} type="inbox" />
-        <Typography.Title style={{ color: "#d9d9d9" }} level={3}>
+        <Icon style={{ width: 100, height: 100, fontSize: 50 }} type='inbox' />
+        <Typography.Title style={{ color: '#d9d9d9' }} level={3}>
           Drag a build here
         </Typography.Title>
       </RoleDropContainer>
@@ -59,13 +59,13 @@ const RoleDropper = ({ role }: { role: IRole }) => {
 export default () => {
   const [state, dispatch] = useContext(RaidContext)
   const { roles } = state!
-  const [role, setRole] = useState("")
+  const [role, setRole] = useState('')
   const [edit, setEdit] = useState(false)
-  const [editRole, setEditRole] = useState("")
+  const [editRole, setEditRole] = useState('')
 
   const handleBtnClick = () => {
-    dispatch!({ type: "ADD_ROLE", payload: { name: role } })
-    setRole("")
+    dispatch!({ type: 'ADD_ROLE', payload: { name: role } })
+    setRole('')
   }
 
   const handleEditClick = (roleName: string) => () => {
@@ -75,14 +75,14 @@ export default () => {
 
   const handleDeleteClick = (roleName: string) => () => {
     dispatch!({
-      type: "REMOVE_ROLE",
+      type: 'REMOVE_ROLE',
       payload: { name: roleName },
     })
   }
 
   const handleSaveClick = (oldRoleName: string) => () => {
     dispatch!({
-      type: "EDIT_ROLE",
+      type: 'EDIT_ROLE',
       payload: { oldRoleName, newRoleName: editRole },
     })
     setEdit(false)
@@ -103,9 +103,9 @@ export default () => {
   return (
     <Scrollbars autoHide style={{ minWidth: 460 }}>
       <Flex
-        direction="column"
-        justify="flex-start"
-        align="center"
+        direction='column'
+        justify='flex-start'
+        align='center'
         fluid
         style={{ flex: 2 }}
       >
@@ -113,31 +113,31 @@ export default () => {
           roles.length > 0 &&
           roles.map((role, index) => (
             <Card
-              style={{ width: "calc(100% - 40px)", margin: 20 }}
-              key={"dropper-" + index}
+              style={{ width: 'calc(100% - 40px)', margin: 20 }}
+              key={'dropper-' + index}
               title={
-                <Flex direction="row" justify="space-between">
+                <Flex direction='row' justify='space-between'>
                   {edit ? (
                     <Input
                       style={{ maxWidth: 400 }}
-                      placeholder="Type a role name here..."
-                      size="large"
+                      placeholder='Type a role name here...'
+                      size='large'
                       value={editRole}
                       onChange={handleEditRoleChange}
                     />
                   ) : (
                     <Typography.Title level={2}>{role.name}</Typography.Title>
                   )}
-                  <Flex direction="row">
+                  <Flex direction='row'>
                     {edit ? (
                       <>
-                        <StyledButton icon="close" onClick={handleCancelClick}>
+                        <StyledButton icon='close' onClick={handleCancelClick}>
                           Cancel
                         </StyledButton>
                         <StyledButton
-                          icon="save"
+                          icon='save'
                           ghost
-                          type="primary"
+                          type='primary'
                           onClick={handleSaveClick(role.name)}
                         >
                           Save
@@ -146,17 +146,17 @@ export default () => {
                     ) : (
                       <>
                         <StyledButton
-                          icon="delete"
+                          icon='delete'
                           ghost
-                          type="danger"
+                          type='danger'
                           onClick={handleDeleteClick(role.name)}
                         >
                           Delete
                         </StyledButton>
                         <StyledButton
-                          icon="edit"
+                          icon='edit'
                           ghost
-                          type="primary"
+                          type='primary'
                           onClick={handleEditClick(role.name)}
                         >
                           Edit
@@ -168,10 +168,10 @@ export default () => {
               }
             >
               <Flex
-                direction="row"
-                justify="space-between"
-                style={{ flexWrap: "wrap", width: "100%" }}
-                align="center"
+                direction='row'
+                justify='space-between'
+                style={{ flexWrap: 'wrap', width: '100%' }}
+                align='center'
               >
                 {role.builds.map((build, buildIndex) => (
                   <BuildCard
@@ -190,33 +190,33 @@ export default () => {
         <Divider>
           <Search
             value={role}
-            size="large"
+            size='large'
             onChange={handleRoleChange}
             style={{ width: 400 }}
-            type="text"
+            type='text'
             onSearch={handleBtnClick}
             enterButton={
               <Button
                 disabled={
-                  role === "" ||
+                  role === '' ||
                   (roles &&
                     roles.find(
                       existingRole => existingRole && existingRole.name === role
                     ) !== undefined)
                 }
-                type="primary"
-                icon="plus"
+                type='primary'
+                icon='plus'
               >
                 Add Role
               </Button>
             }
-            placeholder="Type a role name here..."
+            placeholder='Type a role name here...'
           />
         </Divider>
         {roles && roles.length === 0 && (
           <Empty
-            style={{ marginTop: "30%" }}
-            description="Add a new role to begin."
+            style={{ marginTop: '30%' }}
+            description='Add a new role to begin.'
           />
         )}
       </Flex>

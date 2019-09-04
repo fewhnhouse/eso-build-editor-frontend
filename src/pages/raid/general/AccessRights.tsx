@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
-import { Select, Typography } from "antd"
-import Flex from "../../../components/Flex"
-import { RaidContext } from "../RaidStateContext"
-import gql from "graphql-tag"
-import { useQuery } from "react-apollo"
+import React, { useContext } from 'react'
+import { Select, Typography } from 'antd'
+import Flex from '../../../components/Flex'
+import { RaidContext } from '../RaidStateContext'
+import gql from 'graphql-tag'
+import { useQuery } from 'react-apollo'
 
 const GET_USERS = gql`
   query {
@@ -20,36 +20,36 @@ export default () => {
 
   const handleEditChange = (values: string[]) => {
     dispatch!({
-      type: "SET_CAN_EDIT",
+      type: 'SET_CAN_EDIT',
       payload: { canEdit: values },
     })
   }
 
   const handleViewChange = (values: string[]) => {
     dispatch!({
-      type: "SET_CAN_VIEW",
+      type: 'SET_CAN_VIEW',
       payload: { canView: values },
     })
   }
   return (
-    <Flex direction="row" justify="space-around" align="center">
+    <Flex direction='row' justify='space-around' align='center'>
       <Flex
         style={{ flex: 1, margin: 10 }}
-        direction="column"
-        justify="flex-start"
-        align="center"
+        direction='column'
+        justify='flex-start'
+        align='center'
       >
         <Typography.Text strong>Can Edit</Typography.Text>
 
         <Select
           allowClear
           loading={loading}
-          mode="multiple"
+          mode='multiple'
           style={{ width: 300 }}
           defaultValue={canEdit}
           onChange={handleEditChange}
-          size="large"
-          placeholder="Select users..."
+          size='large'
+          placeholder='Select users...'
         >
           {data &&
             data.users &&
@@ -62,21 +62,21 @@ export default () => {
       </Flex>
       <Flex
         style={{ flex: 1, margin: 10 }}
-        direction="column"
-        justify="flex-start"
-        align="center"
+        direction='column'
+        justify='flex-start'
+        align='center'
       >
         <Typography.Text strong>Can View</Typography.Text>
 
         <Select
           allowClear
           loading={loading}
-          mode="multiple"
+          mode='multiple'
           style={{ width: 300 }}
           defaultValue={canView}
           onChange={handleViewChange}
-          size="large"
-          placeholder="Select users..."
+          size='large'
+          placeholder='Select users...'
         >
           {data &&
             data.users &&

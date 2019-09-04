@@ -1,8 +1,8 @@
-import { IOverviewAction, IOverviewState } from "./OverviewStateContext"
+import { IOverviewAction, IOverviewState } from './OverviewStateContext'
 
 export const rootReducer = (state: IOverviewState, action: IOverviewAction) => {
   switch (action.type) {
-    case "SET_BUFF": {
+    case 'SET_BUFF': {
       const { buff } = action.payload
       return {
         ...state,
@@ -10,7 +10,7 @@ export const rootReducer = (state: IOverviewState, action: IOverviewAction) => {
       }
     }
 
-    case "SET_SKILLLINE": {
+    case 'SET_SKILLLINE': {
       const { skillLine } = action.payload
       return {
         ...state,
@@ -18,14 +18,14 @@ export const rootReducer = (state: IOverviewState, action: IOverviewAction) => {
       }
     }
 
-    case "SET_ITEMSET": {
+    case 'SET_ITEMSET': {
       const { selectedSet } = action.payload
       return {
         ...state,
         selectedSet,
       }
     }
-    case "SET_MUNDUS": {
+    case 'SET_MUNDUS': {
       const { mundusStone } = action.payload
       return {
         ...state,

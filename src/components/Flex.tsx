@@ -1,22 +1,22 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
 
 export interface FlexProps {
-  direction?: "column" | "row"
+  direction?: 'column' | 'row'
   justify?:
-    | "center"
-    | "flex-start"
-    | "flex-end"
-    | "space-evenly"
-    | "space-around"
-    | "space-between"
+    | 'center'
+    | 'flex-start'
+    | 'flex-end'
+    | 'space-evenly'
+    | 'space-around'
+    | 'space-between'
   align?:
-    | "center"
-    | "flex-start"
-    | "flex-end"
-    | "space-evenly"
-    | "space-around"
-    | "space-between"
+    | 'center'
+    | 'flex-start'
+    | 'flex-end'
+    | 'space-evenly'
+    | 'space-around'
+    | 'space-between'
   fluid?: boolean
   style?: object
   wrap?: boolean
@@ -26,12 +26,12 @@ export interface FlexProps {
 
 const StyledFlex = styled.div`
   display: flex;
-  width: ${(props: FlexProps) => (props.fluid ? "100%" : "")};
-  height: ${(props: FlexProps) => (props.fluid ? "100%" : "")};
-  flex-direction: ${(props: FlexProps) => props.direction || "row"};
-  align-items: ${(props: FlexProps) => props.align || "flex-start"};
-  justify-content: ${(props: FlexProps) => props.justify || "flex-start"};
-  flex-wrap: ${(props: FlexProps) => (props.wrap ? "wrap" : "")};
+  width: ${(props: FlexProps) => (props.fluid ? '100%' : '')};
+  height: ${(props: FlexProps) => (props.fluid ? '100%' : '')};
+  flex-direction: ${(props: FlexProps) => props.direction || 'row'};
+  align-items: ${(props: FlexProps) => props.align || 'flex-start'};
+  justify-content: ${(props: FlexProps) => props.justify || 'flex-start'};
+  flex-wrap: ${(props: FlexProps) => (props.wrap ? 'wrap' : '')};
 `
 
 const Flex = ({

@@ -1,10 +1,10 @@
-import React from "react"
-import { useMutation } from "react-apollo"
-import gql from "graphql-tag"
-import { RouteComponentProps } from "react-router"
-import { message, Result, Button, Spin } from "antd"
-import styled from "styled-components"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { useMutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { RouteComponentProps } from 'react-router'
+import { message, Result, Button, Spin } from 'antd'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const VERIFY = gql`
   mutation confirmSignup($token: String!) {
@@ -29,7 +29,7 @@ export default ({ match }: RouteComponentProps<{ token: string }>) => {
     variables: { token },
   })
   if (!token) {
-    message.error("No token provided.")
+    message.error('No token provided.')
   } else {
     mutate({ variables: { token } })
   }
@@ -41,31 +41,31 @@ export default ({ match }: RouteComponentProps<{ token: string }>) => {
     )
   }
   if (error) {
-    message.error("Invalid token.")
+    message.error('Invalid token.')
     return (
       <Container>
         <Result
-          status="500"
-          title="500"
-          subTitle="Something went wrong. your Account could not be validated."
+          status='500'
+          title='500'
+          subTitle='Something went wrong. your Account could not be validated.'
           extra={
-            <Link to="/">
-              <Button type="primary">Back Home</Button>
+            <Link to='/'>
+              <Button type='primary'>Back Home</Button>
             </Link>
           }
         />
       </Container>
     )
   } else if (data && data.confirmSignup) {
-    localStorage.setItem("token", data.confirmSignup.token)
+    localStorage.setItem('token', data.confirmSignup.token)
     return (
       <Container>
         <Result
-          status="success"
-          title="Account successfully validated!"
+          status='success'
+          title='Account successfully validated!'
           extra={
-            <Link to="/">
-              <Button type="primary" key="console">
+            <Link to='/'>
+              <Button type='primary' key='console'>
                 Go to Home
               </Button>
             </Link>

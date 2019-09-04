@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react"
-import { RaidContext } from "../RaidStateContext"
-import { useQuery, useMutation } from "react-apollo"
-import gql from "graphql-tag"
-import { RouteComponentProps, withRouter, Redirect } from "react-router"
-import { notification } from "antd"
-import { raid } from "../../../util/fragments"
-import { ME } from "../../home/UserHomeCard"
-import { LoginContext } from "../../../App"
-import Review from "../../../components/Review"
+import React, { useEffect, useState, useContext } from 'react'
+import { RaidContext } from '../RaidStateContext'
+import { useQuery, useMutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { RouteComponentProps, withRouter, Redirect } from 'react-router'
+import { notification } from 'antd'
+import { raid } from '../../../util/fragments'
+import { ME } from '../../home/UserHomeCard'
+import { LoginContext } from '../../../App'
+import Review from '../../../components/Review'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -61,13 +61,13 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   useEffect(() => {
     if (data) {
       notification.success({
-        message: "Raid Deletion",
-        description: "Raid successfully deleted.",
+        message: 'Raid Deletion',
+        description: 'Raid successfully deleted.',
       })
     } else if (error) {
       notification.error({
-        message: "Raid Deletion",
-        description: "Error while deleting Raid. Try again later.",
+        message: 'Raid Deletion',
+        description: 'Error while deleting Raid. Try again later.',
       })
     }
   }, [data, error])

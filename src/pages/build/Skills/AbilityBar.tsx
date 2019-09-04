@@ -1,18 +1,18 @@
-import React, { useContext, useState, useEffect } from "react"
-import styled from "styled-components"
-import { Divider, Icon } from "antd"
-import { BuildContext, ISkillSelection } from "../BuildStateContext"
-import SkillView from "../../../components/SkillView"
-import { ISkill } from "../../../components/SkillSlot"
-import { useDrop } from "react-dnd"
-import Flex from "../../../components/Flex"
+import React, { useContext, useState, useEffect } from 'react'
+import styled from 'styled-components'
+import { Divider, Icon } from 'antd'
+import { BuildContext, ISkillSelection } from '../BuildStateContext'
+import SkillView from '../../../components/SkillView'
+import { ISkill } from '../../../components/SkillSlot'
+import { useDrop } from 'react-dnd'
+import Flex from '../../../components/Flex'
 
-export const ABILITY_BAR_ONE = "abilityBar1"
-export const ABILITY_BAR_TWO = "abilityBar2"
-export const ACTIVE_BAR = "activeBar"
-export const ACTIVE_ULTIMATE = "activeUltimate"
-export const ULTIMATE_ONE = "ultimate1"
-export const ULTIMATE_TWO = "ultimate2"
+export const ABILITY_BAR_ONE = 'abilityBar1'
+export const ABILITY_BAR_TWO = 'abilityBar2'
+export const ACTIVE_BAR = 'activeBar'
+export const ACTIVE_ULTIMATE = 'activeUltimate'
+export const ULTIMATE_ONE = 'ultimate1'
+export const ULTIMATE_TWO = 'ultimate2'
 
 const AbilityBar = styled.div`
   height: 100px;
@@ -39,7 +39,7 @@ const TrashContainer = styled.div`
   background: #fafafa;
   border: 1px dashed
     ${(props: { hasTrash: boolean }) =>
-      props.hasTrash ? "#40a9ff" : "#d9d9d9"};
+      props.hasTrash ? '#40a9ff' : '#d9d9d9'};
   border-radius: 4px;
   width: 250px;
   height: 80px;
@@ -65,21 +65,21 @@ export default () => {
   } = state!
 
   const [{ isOver }, drop] = useDrop({
-    accept: ["ultimate", "skill"],
+    accept: ['ultimate', 'skill'],
     drop: (item: any, monitor) => {
-      if (item.type === "ultimate") {
+      if (item.type === 'ultimate') {
         dispatch!({
-          type: "REMOVE_ULTIMATE",
+          type: 'REMOVE_ULTIMATE',
           payload: { barIndex: item.abilityBar },
         })
       } else {
         dispatch!({
-          type: "REMOVE_ABILITY",
+          type: 'REMOVE_ABILITY',
           payload: { barIndex: item.abilityBar, skill: item.skill },
         })
       }
       dispatch!({
-        type: "SET_HAS_TRASH",
+        type: 'SET_HAS_TRASH',
         payload: { hasTrash: false },
       })
     },
@@ -102,10 +102,10 @@ export default () => {
   return (
     <AbilityBarContainer>
       <Flex
-        direction="column"
-        justify="space-around"
-        align="center"
-        style={{ height: "100%" }}
+        direction='column'
+        justify='space-around'
+        align='center'
+        style={{ height: '100%' }}
       >
         <Divider>Active Selection</Divider>
         <AbilityBar>
@@ -142,9 +142,9 @@ export default () => {
           <Icon
             style={{
               fontSize: 30,
-              color: isOver ? "#40a9ff" : "rgb(155,155,155)",
+              color: isOver ? '#40a9ff' : 'rgb(155,155,155)',
             }}
-            type="delete"
+            type='delete'
           />
         </TrashContainer>
       </Flex>
