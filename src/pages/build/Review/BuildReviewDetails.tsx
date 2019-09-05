@@ -46,7 +46,9 @@ const StyledDivider = styled(Divider)`
 `
 
 const Wrapper = styled(Flex)`
-  height: calc(100% - 60px);
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'calc(100% - 60px)'};
+  width: 100%;
 `
 const StyledFlex = styled(Flex)`
   padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
@@ -60,7 +62,7 @@ const BuildInformation = styled(Card)`
     props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
-  flex: 2;
+  flex: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : 2)};
   overflow-y: auto;
 `
 const GeneralInformation = styled(Card)`
@@ -70,8 +72,9 @@ const GeneralInformation = styled(Card)`
     props.isMobile ? '' : 'calc(100% - 40px)'};
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
-  flex: 1;
-  max-width: 700px;
+  flex: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : 1)};
+  max-width: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : '700px'};
   overflow-y: auto;
 `
 const SkillsView = styled.div`
@@ -201,11 +204,10 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
           )}
         </Flex>
         <Wrapper
-          direction='row'
+          isMobile={isMobile}
+          direction={isMobile ? 'column' : 'row'}
           align='flex-start'
           justify='space-evenly'
-          wrap
-          fluid
         >
           <GeneralInformation
             isMobile={isMobile}
