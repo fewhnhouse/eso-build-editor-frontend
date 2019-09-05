@@ -6,6 +6,14 @@ const theme = {
     normal: '16px',
     huge: '30px'
   },
+  colors: {
+    grey: {
+      light: "rgba(0,0,0,0.25)",
+      medium: "rgba(0,0,0,0.45)",
+      normal: "rgba(0,0,0,0.65)",
+      dark: "rgba(0,0,0,0.85)"
+    }
+  },
   borderRadius: '4px',
   widths: {
     mini: '150px',
@@ -67,6 +75,15 @@ export interface FontSizes {
   huge: string
 }
 
+export interface Colors {
+  grey: {
+    light: string
+    medium: string
+    normal: string
+    dark: string
+  }
+}
+
 export interface Margins {
   mini: string
   small: string
@@ -109,6 +126,7 @@ export interface Description {
 export interface ITheme {
   primary: string
   mainBg: string
+  colors: Colors
   borderRadius: string
   widths: Widths
   fontSizes: FontSizes
