@@ -21,7 +21,7 @@ import Div100vh from 'react-div-100vh'
 
 const LoadingContainer = styled.div`
   text-align: center;
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   margin-bottom: 20px;
   padding: 30px 50px;
   margin: 20px 0;

@@ -10,6 +10,7 @@ import { titleCase } from '../../raid/builds/BuildMenu'
 import Scrollbars from 'react-custom-scrollbars'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../../components/theme'
 
 const { Option } = Select
 
@@ -103,10 +104,10 @@ const StyledListFlex = styled(Flex)`
 const Description = styled.div`
   font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
-  color: ${(descProps: { newEffect?: boolean }) =>
-    descProps.newEffect
-      ? props => props.theme.description.newEffect
-      : props => props.theme.description.notNewEffect};
+  color: ${(props: { newEffect?: boolean; theme: ITheme }) =>
+    props.newEffect
+      ? props.theme.description.newEffect
+      : props.theme.description.notNewEffect};
   text-align: left;
 `
 
@@ -337,7 +338,7 @@ const BuffMenuList = ({ buffs, loading, context }: IBuffMenuListProps) => {
                     {item.description && (
                       <>
                         <StyledDivider />
-                        <StyledDescription newEffect>
+                        <StyledDescription>
                           {item.description}
                         </StyledDescription>
                       </>

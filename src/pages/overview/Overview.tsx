@@ -49,7 +49,7 @@ export const Image = styled.img`
   width: 64px;
   height: 64px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
 `
 
 const StyledFlex = styled(Flex)`

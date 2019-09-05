@@ -6,7 +6,7 @@ const theme = {
     normal: '16px',
     huge: '30px'
   },
-  borderRadius: '3px',
+  borderRadius: '4px',
   widths: {
     mini: '150px',
     small: '250px',

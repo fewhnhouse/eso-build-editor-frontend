@@ -29,14 +29,14 @@ const Map = styled.img`
   width: 256px;
   height: 256px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
 `
 
 const ModalMap = styled.img`
   width: 100%;
   height: 100%;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
 `
 
 const StyledFlexTitle = styled(Flex)`

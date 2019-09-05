@@ -41,7 +41,7 @@ const GearFrame = styled.div`
   border: 2px solid;
   border-color: ${(props: IGearFrameProps) =>
     props.canDrop ? '#27ae60' : 'rgba(0, 0, 0, 0.45)'};
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
@@ -375,7 +375,7 @@ const DisplayCard = styled.div`
   width: ${props => props.theme.widths.small};
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   margin: ${props => props.theme.margins.small};
 `
 

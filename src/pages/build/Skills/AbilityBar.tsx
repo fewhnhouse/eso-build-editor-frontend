@@ -36,7 +36,7 @@ const TrashContainer = styled.div`
   border: 1px dashed
     ${(props: { hasTrash: boolean }) =>
       props.hasTrash ? '#40a9ff' : '#d9d9d9'};
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   width: ${props => props.theme.widths.small};
   height: 80px;
   text-align: center;
