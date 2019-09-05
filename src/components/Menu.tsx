@@ -57,9 +57,6 @@ const StyledMenuNarrow = styled(Menu)`
   line-height: 64px;
 `
 
-const StyledItem = styled(Item)`
-  height: 350px;
-`
 
 const StyledFlexDesktop = styled(Flex)`
   width: 100%;
