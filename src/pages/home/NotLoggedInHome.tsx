@@ -45,7 +45,7 @@ const OverviewTab = styled(Flex)`
   margin: 0px ${props => props.theme.margins.small};
 `
 const StyledTitle = styled.h1`
-  margin-top: ${props => props.theme.widths.small};
+  margin-top: ${props => props.theme.margins.small};
   font-size: 50px;
 `
 
