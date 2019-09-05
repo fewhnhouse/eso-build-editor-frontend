@@ -45,7 +45,7 @@ const AbilityBar = styled.div`
   max-width: 300px;
 `
 
-const StyledFlexFull = styled(Flex)`
+const AbilityBarContainer = styled(Flex)`
   width: 100%;
 `
 
@@ -196,7 +196,7 @@ const BuildCard = ({
             <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <StyledFlexFull direction='column'>
+                <AbilityBarContainer direction='column' align="center">
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
@@ -215,7 +215,7 @@ const BuildCard = ({
                       ultimate={item.ultimateTwo}
                     />
                   </AbilityBar>
-                </StyledFlexFull>
+                </AbilityBarContainer>
               </TabPane>
               <TabPane tab='Weapons' key='weapons'>
                 <ScrollContainer>

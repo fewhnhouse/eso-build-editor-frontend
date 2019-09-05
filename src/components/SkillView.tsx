@@ -4,6 +4,7 @@ import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
 import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
 import { useTrail, animated } from 'react-spring'
 import { ISkillSelection } from '../pages/build/BuildStateContext'
+import Flex from './Flex'
 
 export interface ISKillViewProps {
   skillSlots: ISkillSelection[]
@@ -15,11 +16,10 @@ export interface ISKillViewProps {
   disabled?: boolean
 }
 
-const SkillView = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
+const SkillView = styled(Flex)`
+  max-width: ${(props: { size: 'small' | 'normal' }) =>
+    props.size === 'normal' ? '400px' : '300px'};
+  width: 100%;
 `
 
 const StyledDisplaySlot = styled(DisplaySlot)`
@@ -50,24 +50,27 @@ export default ({
     from: { opacity: 0 },
   })
   return (
-    <SkillView>
-      {trail.map(({ opacity }: any, index: number) => (
-        <animated.div key={index} style={{ opacity }}>
-          {disabled ? (
-            <DisplaySlot size={size} skill={skillSlots[index].skill} />
-          ) : (
-            <SkillSlot
-              size={size}
-              id={skillSlots[index].id}
-              abilityBar={abilityBar}
-              droppable={droppable}
-              skillIndex={skillSlots[index].index}
-              tooltipPos={pos(id)}
-              skill={skillSlots[index] ? skillSlots[index].skill : undefined}
-            />
-          )}
-        </animated.div>
-      ))}
+    <SkillView size={size} justify='space-between'>
+      <Flex>
+        {trail.map(({ opacity }: any, index: number) => (
+          <animated.div key={index} style={{ opacity }}>
+            {disabled ? (
+              <DisplaySlot size={size} skill={skillSlots[index].skill} />
+            ) : (
+              <SkillSlot
+                size={size}
+                id={skillSlots[index].id}
+                abilityBar={abilityBar}
+                droppable={droppable}
+                skillIndex={skillSlots[index].index}
+                tooltipPos={pos(id)}
+                skill={skillSlots[index] ? skillSlots[index].skill : undefined}
+              />
+            )}
+          </animated.div>
+        ))}
+      </Flex>
+
       {disabled ? (
         <StyledDisplaySlot size={size} skill={ultimate} />
       ) : abilityBar === -1 ? (

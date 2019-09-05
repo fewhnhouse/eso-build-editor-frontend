@@ -18,10 +18,6 @@ import { AppContext } from '../../../components/AppContainer'
 
 const { Title, Text } = Typography
 
-const BuildTitleFlex = styled(Flex)`
-  min-height: 50px;
-`
-
 const ResourceCard = styled.div`
   display: flex;
   width: 100px;
@@ -138,7 +134,10 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   } = loadedData
   const [, appDispatch] = useContext(AppContext)
   useEffect(() => {
-    appDispatch!({ type: 'SET_HEADER_SUBTITLE', payload: { headerSubTitle: name } })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: name },
+    })
   }, [name])
   const selectedSetup = [
     {
@@ -190,7 +189,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   return (
     <Scrollbars autoHide disabled={!isMobile}>
       <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
-        <BuildTitleFlex direction='column' align='center'>
+        <Flex direction='column' align='center'>
           {!isMobile && <Typography.Title>{name}</Typography.Title>}
           {local && (
             <Flex direction='row'>
@@ -213,7 +212,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               />
             </Flex>
           )}
-        </BuildTitleFlex>
+        </Flex>
         <Wrapper
           isMobile={isMobile}
           direction={isMobile ? 'column' : 'row'}
@@ -296,21 +295,24 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
           >
             <SkillsView>
               <StyledTitle level={4}>Skills</StyledTitle>
-              <SkillView
-                size='small'
-                id={ABILITY_BAR_ONE}
-                disabled
-                skillSlots={newBarOne}
-                ultimate={ultimateOne}
-              />
-              <SkillView
-                size='small'
-                id={ABILITY_BAR_TWO}
-                disabled
-                skillSlots={newBarTwo}
-                ultimate={ultimateTwo}
-              />
+              <Flex fluid direction="column" align="center">
+                <SkillView
+                  size='small'
+                  id={ABILITY_BAR_ONE}
+                  disabled
+                  skillSlots={newBarOne}
+                  ultimate={ultimateOne}
+                />
+                <SkillView
+                  size='small'
+                  id={ABILITY_BAR_TWO}
+                  disabled
+                  skillSlots={newBarTwo}
+                  ultimate={ultimateTwo}
+                />
+              </Flex>
             </SkillsView>
+
             <Divider />
             <GearView disabled setups={selectedSetup} setsCount={setsCount} />
           </BuildInformation>
