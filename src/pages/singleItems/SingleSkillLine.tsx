@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
 import { classSkillLines, skillLines } from '../build/Skills/SkillMenu'
+import Scrollbars from 'react-custom-scrollbars'
 
 const StyledFlex = styled(Flex)`
   width: 100%;
@@ -43,11 +44,6 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
       payload: { headerTitle: 'Skill Line' },
     })
     if (data.skills) {
-      console.log(
-        [...classSkillLines, ...skillLines]
-          .map(skillLine => skillLine.items)
-          .flat()
-      )
       const skillLine = [...classSkillLines, ...skillLines]
         .map(skillLine => skillLine.items)
         .flat()
@@ -79,16 +75,18 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
     )
 
     return (
-      <StyledFlex isMobile={isMobile} direction='row' align='flex-start'>
-        <SkillsDisplay
-          morphedActives={morphedActives}
-          morphs={morphs}
-          baseActives={baseActives}
-          baseUltimate={baseUltimate}
-          passives={passives}
-          skillLine={id || 0}
-        />
-      </StyledFlex>
+      <Scrollbars>
+        <StyledFlex isMobile={isMobile} direction='row' align='flex-start'>
+          <SkillsDisplay
+            morphedActives={morphedActives}
+            morphs={morphs}
+            baseActives={baseActives}
+            baseUltimate={baseUltimate}
+            passives={passives}
+            skillLine={id || 0}
+          />
+        </StyledFlex>
+      </Scrollbars>
     )
   } else {
     return (

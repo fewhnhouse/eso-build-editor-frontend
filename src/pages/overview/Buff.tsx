@@ -10,6 +10,7 @@ import { MenuCard, ContentCard, Description, Image } from './Overview'
 import { Typography, Divider, Card, Empty } from 'antd'
 import styled from 'styled-components'
 import { ITheme } from '../../components/theme'
+import Scrollbars from 'react-custom-scrollbars'
 
 interface IBuffProps {
   context: React.Context<any>
@@ -59,42 +60,46 @@ const StyledEmpty = styled(Empty)`
 `
 
 export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
-  <Card>
-    <Flex direction='row' align='flex-start' justify='center'>
-      <Image
-        src={
-          buff
-            ? `${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`
-            : ''
-        }
-      />
-      <StyledBuffFlexInner direction='column'>
-        <StyledTitle level={3}>{buff.name}</StyledTitle>
-        <StyledDivider />
-        <StyledFlexAttrWrap direction='row' wrap>
-          <AttributeTag
-            hasHealth={buff.buffDescription.includes('Health')}
-            hasMagicka={buff.buffDescription.includes('Magicka')}
-            hasStamina={buff.buffDescription.includes('Stamina')}
-          />
-          <BuffTypeTag
-            isSpecialDrink={buff.buffType === 'drink' && buff.type === null}
-            isSpecialFood={buff.buffType === 'food' && buff.type === null}
-            isFood={buff.buffType === 'food' && buff.type !== null}
-            isDrink={buff.buffType === 'drink' && buff.type !== null}
-          />
-          <QualityTag quality={buff.quality} />
-        </StyledFlexAttrWrap>
-        <Description>{buff.buffDescription}</Description>
-        {buff.description && (
-          <>
-            <StyledDividerSmall />
-            <StyledDescription newEffect>{buff.description}</StyledDescription>
-          </>
-        )}
-      </StyledBuffFlexInner>
-    </Flex>
-  </Card>
+  <Scrollbars autoHide>
+    <Card>
+      <Flex direction='row' align='flex-start' justify='center'>
+        <Image
+          src={
+            buff
+              ? `${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff.icon}`
+              : ''
+          }
+        />
+        <StyledBuffFlexInner direction='column'>
+          <StyledTitle level={3}>{buff.name}</StyledTitle>
+          <StyledDivider />
+          <StyledFlexAttrWrap direction='row' wrap>
+            <AttributeTag
+              hasHealth={buff.buffDescription.includes('Health')}
+              hasMagicka={buff.buffDescription.includes('Magicka')}
+              hasStamina={buff.buffDescription.includes('Stamina')}
+            />
+            <BuffTypeTag
+              isSpecialDrink={buff.buffType === 'drink' && buff.type === null}
+              isSpecialFood={buff.buffType === 'food' && buff.type === null}
+              isFood={buff.buffType === 'food' && buff.type !== null}
+              isDrink={buff.buffType === 'drink' && buff.type !== null}
+            />
+            <QualityTag quality={buff.quality} />
+          </StyledFlexAttrWrap>
+          <Description>{buff.buffDescription}</Description>
+          {buff.description && (
+            <>
+              <StyledDividerSmall />
+              <StyledDescription newEffect>
+                {buff.description}
+              </StyledDescription>
+            </>
+          )}
+        </StyledBuffFlexInner>
+      </Flex>
+    </Card>
+  </Scrollbars>
 )
 
 export default ({ context, buff, isMobile }: IBuffProps) => {

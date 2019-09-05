@@ -8,6 +8,7 @@ import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
+import Scrollbars from 'react-custom-scrollbars'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -49,7 +50,7 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const [, appDispatch] = useContext(AppContext)
 
-  const { data } = useQuery(GET_SETS_BY_ID, {
+  const { data, loading } = useQuery(GET_SETS_BY_ID, {
     variables: { id: id },
   })
 
@@ -66,20 +67,29 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
       })
     }
   }, [appDispatch, set])
-
-  return set ? (
-    <StyledFlex direction='row' align='flex-start'>
-      <Flex direction='column' fluid>
-        <StyledCard>
-          <GearCard size='big' set={set} setSelectionCount={0} />
-        </StyledCard>
+  if (loading) {
+    return (
+      <Flex fluid justify='center'>
+        <Spin />
       </Flex>
-    </StyledFlex>
-  ) : (
-    <Flex fluid justify='center'>
-      <Spin />
-    </Flex>
-  )
+    )
+  }
+  if (data) {
+    return (
+      set && (
+        <Scrollbars autoHide>
+          <StyledFlex direction='row' align='flex-start'>
+            <Flex direction='column' fluid>
+              <StyledCard>
+                <GearCard size='big' set={set} setSelectionCount={0} />
+              </StyledCard>
+            </Flex>
+          </StyledFlex>
+        </Scrollbars>
+      )
+    )
+  }
+  return null
 }
 
 export default withRouter(SingleSet)

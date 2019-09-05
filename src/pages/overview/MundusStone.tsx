@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { MenuCard, Image, Description, ContentCard } from './Overview'
 import MundusMenu from '../build/consumables/MundusMenu'
 import { Typography, Divider, Card, Modal, Empty } from 'antd'
+import Scrollbars from 'react-custom-scrollbars'
 
 interface IMundusStoneProps {
   context: React.Context<any>
@@ -91,134 +92,136 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
   const parsedMundusValue = parseInt(mundusStone ? mundusStone.value : '0', 10)
 
   return (
-    <Flex direction='column' fluid>
-      <StyledCardWrapper>
-        <Flex direction='row' align='flex-start' justify='center' fluid>
-          <Image
-            src={
-              mundusStone
-                ? `${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`
-                : ''
+    <Scrollbars autoHide>
+      <Flex direction='column' fluid>
+        <StyledCardWrapper>
+          <Flex direction='row' align='flex-start' justify='center' fluid>
+            <Image
+              src={
+                mundusStone
+                  ? `${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${mundusStone.icon}`
+                  : ''
+              }
+            />
+            <StyledFlexTitle direction='column' fluid>
+              <StyledTitle level={3}>
+                {mundusStone && mundusStone.name}
+              </StyledTitle>
+              <StyledDidiver />
+              <Description>
+                {mundusStone.effect.trim() + ' by ' + mundusStone.value}
+                <StyledSpan>
+                  {' '}
+                  ({Math.round(
+                    parsedMundusValue * 0.525 + parsedMundusValue
+                  )}{' '}
+                  with 7 divines)
+                </StyledSpan>
+              </Description>
+            </StyledFlexTitle>
+          </Flex>
+        </StyledCardWrapper>
+
+        <Divider>Locations</Divider>
+        <Flex direction='row' wrap justify='center'>
+          <StyledCard
+            onClick={handleImageClick(mundusStone.aldmeri)}
+            title={
+              <span>
+                <AllianceIcon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_aldmeri.png`}
+                />
+                {mundusStone.aldmeri}
+              </span>
             }
-          />
-          <StyledFlexTitle direction='column' fluid>
-            <StyledTitle level={3}>
-              {mundusStone && mundusStone.name}
-            </StyledTitle>
-            <StyledDidiver />
-            <Description>
-              {mundusStone.effect.trim() + ' by ' + mundusStone.value}
-              <StyledSpan>
-                {' '}
-                ({Math.round(
-                  parsedMundusValue * 0.525 + parsedMundusValue
-                )}{' '}
-                with 7 divines)
-              </StyledSpan>
-            </Description>
-          </StyledFlexTitle>
+            hoverable
+          >
+            <Map
+              src={`${
+                process.env.REACT_APP_IMAGE_SERVICE
+              }/mundusMaps/${mundusStone.aldmeri.replace(/\s+/g, '')}.jpg`}
+            />
+          </StyledCard>
+          <StyledCard
+            onClick={handleImageClick(mundusStone.ebonheart)}
+            title={
+              <span>
+                <AllianceIcon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_ebonheart.png`}
+                />
+                {mundusStone.ebonheart}
+              </span>
+            }
+            hoverable
+          >
+            <Map
+              src={`${
+                process.env.REACT_APP_IMAGE_SERVICE
+              }/mundusMaps/${mundusStone.ebonheart.replace(/\s+/g, '')}.jpg`}
+            />
+          </StyledCard>
+          <StyledCard
+            onClick={handleImageClick(mundusStone.daggerfall)}
+            title={
+              <span>
+                <AllianceIcon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_daggerfall.png`}
+                />
+                {mundusStone.daggerfall}
+              </span>
+            }
+            hoverable
+          >
+            <Map
+              src={`${
+                process.env.REACT_APP_IMAGE_SERVICE
+              }/mundusMaps/${mundusStone.daggerfall.replace(/\s+/g, '')}.jpg`}
+            />
+          </StyledCard>
+          <StyledCard
+            onClick={handleImageClick('Cyrodiil')}
+            title={<span>Cyrodiil</span>}
+            hoverable
+          >
+            <Map
+              src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusMaps/Cyrodiil.jpg`}
+            />
+          </StyledCard>
         </Flex>
-      </StyledCardWrapper>
 
-      <Divider>Locations</Divider>
-      <Flex direction='row' wrap justify='center'>
-        <StyledCard
-          onClick={handleImageClick(mundusStone.aldmeri)}
+        <StyledModal
+          visible={modalImage !== ''}
           title={
             <span>
-              <AllianceIcon
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_aldmeri.png`}
-              />
-              {mundusStone.aldmeri}
+              {modalImage !== 'Cyrodiil' && (
+                <AllianceIcon
+                  src={`${
+                    process.env.REACT_APP_IMAGE_SERVICE
+                  }/alliances/alliance_${
+                    mundusStone.aldmeri === modalImage
+                      ? 'aldmeri'
+                      : mundusStone.ebonheart === modalImage
+                      ? 'ebonheart'
+                      : mundusStone.daggerfall === modalImage
+                      ? 'daggerfall'
+                      : ''
+                  }.png`}
+                />
+              )}
+              {modalImage}
             </span>
           }
-          hoverable
+          onCancel={handleCancelModal}
+          footer={null}
         >
-          <Map
+          <ModalMap
             src={`${
               process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.aldmeri.replace(/\s+/g, '')}.jpg`}
+            }/mundusMaps/${modalImage.replace(/\s+/g, '')}.jpg`}
           />
-        </StyledCard>
-        <StyledCard
-          onClick={handleImageClick(mundusStone.ebonheart)}
-          title={
-            <span>
-              <AllianceIcon
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_ebonheart.png`}
-              />
-              {mundusStone.ebonheart}
-            </span>
-          }
-          hoverable
-        >
-          <Map
-            src={`${
-              process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.ebonheart.replace(/\s+/g, '')}.jpg`}
-          />
-        </StyledCard>
-        <StyledCard
-          onClick={handleImageClick(mundusStone.daggerfall)}
-          title={
-            <span>
-              <AllianceIcon
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/alliances/alliance_daggerfall.png`}
-              />
-              {mundusStone.daggerfall}
-            </span>
-          }
-          hoverable
-        >
-          <Map
-            src={`${
-              process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusMaps/${mundusStone.daggerfall.replace(/\s+/g, '')}.jpg`}
-          />
-        </StyledCard>
-        <StyledCard
-          onClick={handleImageClick('Cyrodiil')}
-          title={<span>Cyrodiil</span>}
-          hoverable
-        >
-          <Map
-            src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusMaps/Cyrodiil.jpg`}
-          />
-        </StyledCard>
+        </StyledModal>
       </Flex>
-
-      <StyledModal
-        visible={modalImage !== ''}
-        title={
-          <span>
-            {modalImage !== 'Cyrodiil' && (
-              <AllianceIcon
-                src={`${
-                  process.env.REACT_APP_IMAGE_SERVICE
-                }/alliances/alliance_${
-                  mundusStone.aldmeri === modalImage
-                    ? 'aldmeri'
-                    : mundusStone.ebonheart === modalImage
-                    ? 'ebonheart'
-                    : mundusStone.daggerfall === modalImage
-                    ? 'daggerfall'
-                    : ''
-                }.png`}
-              />
-            )}
-            {modalImage}
-          </span>
-        }
-        onCancel={handleCancelModal}
-        footer={null}
-      >
-        <ModalMap
-          src={`${
-            process.env.REACT_APP_IMAGE_SERVICE
-          }/mundusMaps/${modalImage.replace(/\s+/g, '')}.jpg`}
-        />
-      </StyledModal>
-    </Flex>
+    </Scrollbars>
   )
 }
 
