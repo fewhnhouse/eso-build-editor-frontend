@@ -206,9 +206,9 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Link to='/overview'>Overview</Link>
           </Item>
           <Divider />
-          <StyledItem>
+          <Item style={{height: 350}} key='5'>
             <WrappedNormalLoginForm setLoggedIn={setLoggedIn} />
-          </StyledItem>
+          </Item>
         </StyledMenu>
       </>
     )
