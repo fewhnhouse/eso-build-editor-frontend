@@ -13,14 +13,14 @@ import { applicationAreas } from '../RaceAndClass/RaceClass'
 import gql from 'graphql-tag'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
-import { ITheme } from '../../../components/theme';
+import { ITheme } from '../../../components/theme'
 
 const { Title, Text } = Typography
 
 const ResourceCard = styled.div`
   display: flex;
   width: 100px;
-  color: ${props => props.theme.colors.grey.normal};;
+  color: ${props => props.theme.colors.grey.normal};
   border: 1px solid #e8e8e8;
   border-radius: 2px;
   padding: ${props => props.theme.paddings.small};
@@ -49,7 +49,7 @@ const Wrapper = styled(Flex)`
   height: calc(100% - 60px);
 `
 const StyledFlex = styled(Flex)`
-  padding: ${(props: { isMobile: boolean, theme: ITheme }) =>
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? '0px' : props.theme.paddings.medium};
 `
 
@@ -58,7 +58,8 @@ const BuildInformation = styled(Card)`
     props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
-  min-width: ${props => props.theme.widths.medium};
+  min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   flex: 2;
   overflow-y: auto;
 `
@@ -67,7 +68,8 @@ const GeneralInformation = styled(Card)`
     props.isMobile ? '0px' : '20px'};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : 'calc(100% - 40px)'};
-  min-width: ${props => props.theme.widths.medium};
+  min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   flex: 1;
   max-width: 700px;
   overflow-y: auto;
