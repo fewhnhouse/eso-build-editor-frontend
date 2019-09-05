@@ -9,7 +9,7 @@ import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
 import { Typography, Divider, Card, Empty } from 'antd'
 import styled from 'styled-components'
-import { ITheme } from '../../components/theme';
+import { ITheme } from '../../components/theme'
 
 interface IBuffProps {
   context: React.Context<any>
@@ -46,7 +46,7 @@ const StyledDescription = styled(Description)`
 const StyledFlexWrapper = styled(Flex)`
   height: 100%;
   width: 100%;
-  padding: ${(props: { isMobile: boolean, theme: ITheme }) =>
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? '0px' : props.theme.margins.medium};
 `
 
@@ -100,7 +100,7 @@ export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
 export default ({ context, buff, isMobile }: IBuffProps) => {
   return (
     <StyledFlexWrapper direction='row' align='flex-start' isMobile={isMobile}>
-      <MenuCard minWidth='400px' isMobile={isMobile}>
+      <MenuCard isMobile={isMobile}>
         <BuffMenu context={context} />
       </MenuCard>
       {isMobile ? (

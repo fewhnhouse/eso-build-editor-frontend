@@ -12,18 +12,19 @@ import MundusStone from './MundusStone'
 import Buff from './Buff'
 import Skills from './Skills'
 import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../components/theme'
 
 const { TabPane } = Tabs
 
 export const MenuCard = styled.div`
-  height: calc(100vh - 150px);
-  max-width: ${(props: { minWidth?: string; isMobile: boolean }) =>
+  height: calc(100vh - 100px);
+  max-width: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '50%'};
-  margin-right: ${(props: { minWidth?: string; isMobile: boolean }) =>
+  margin-right: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
   max-height: 90%;
-  min-width: ${(props: { minWidth?: string; isMobile: boolean }) =>
-    props.minWidth || '300px'};
+  min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   flex: 1;
 `
 
