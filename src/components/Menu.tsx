@@ -66,7 +66,7 @@ const StyledFlexDesktop = styled(Flex)`
 
 const StyledIcon = styled(Icon)`
   margin-left: ${props => props.theme.margins.mini};
-  font-size: 10;
+  font-size: 10px;
 `
 
 const StyledAvatar = styled(Avatar)`
@@ -83,8 +83,8 @@ const StyledLoginButton = styled(Button)`
 
 const StyledMobileButton = styled(Button)`
   position: absolute;
-  top: 10;
-  right: 10;
+  top: 10px;
+  right: 10px;
 `
 
 const getSelectedKey = (pathname: string, loggedIn: boolean) => {

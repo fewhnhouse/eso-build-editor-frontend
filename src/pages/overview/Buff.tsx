@@ -43,7 +43,7 @@ const StyledDescription = styled(Description)`
 `
 
 const StyledFlexWrapper = styled(Flex)`
-  height: calc(100% - 100px);
+  height: 100%;
   width: 100%;
   padding: ${(flexProps: { isMobile: boolean }) =>
     flexProps.isMobile ? '0px' : props => props.theme.margins.medium};

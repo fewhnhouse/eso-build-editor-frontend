@@ -18,9 +18,9 @@ import Flex from './Flex'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === 'normal' ? '62px' : '46px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === 'normal' ? '62px' : '46px'};
 `
 
 interface IGearFrameProps {

@@ -35,10 +35,10 @@ const Container = styled(Content)`
 `
 
 const StyledFooter = styled(Footer)`
-  height: ${(footerProps: { isMobile: boolean }) =>
-    `${footerProps.isMobile ? '140px' : '80px'})`};
-  flex-direction: ${(footerProps: { isMobile: boolean }) =>
-    `${footerProps.isMobile ? 'column' : 'row'})`};
+  height: ${(props: { isMobile: boolean }) =>
+    `${props.isMobile ? '140px' : '80px'}`};
+  flex-direction: ${(props: { isMobile: boolean }) =>
+    `${props.isMobile ? 'column' : 'row'}`};
   display: flex;
   padding: 0px ${props => props.theme.paddings.medium};
   overflow: hidden;
@@ -52,7 +52,7 @@ const StyledFlex80 = styled(Flex)`
 `
 
 const StyledFlex200 = styled(Flex)`
-  height: 200px;
+  width: 200px;
 `
 
 const StyledTitle = styled(Typography.Title)`
