@@ -57,7 +57,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
         payload: { headerSubTitle: skillLine ? skillLine.title : '' },
       })
     }
-  }, [appDispatch, data.skills])
+  }, [appDispatch, data.skills, id])
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const skillLine: ISkill[] = data.skills ? data.skills : ''

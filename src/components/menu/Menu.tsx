@@ -3,27 +3,18 @@ import styled from 'styled-components'
 import {
   Layout,
   Menu,
-  Icon,
-  Avatar,
-  Popover,
   Button,
-  Divider,
-  Typography,
   PageHeader,
 } from 'antd'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { LoginContext } from '../../App'
-import WrappedNormalLoginForm from '../LoginForm'
 import { useMediaQuery } from 'react-responsive'
-import Flex from '../Flex'
-import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../theme'
 import { AppContext } from '../AppContainer'
 import MobileMenu from './MobileMenu'
 import DesktopMenu from './DesktopMenu'
 
 const { Header } = Layout
-const { SubMenu, Item, ItemGroup } = Menu
 
 interface IStyledHeaderProps {
   expanded: boolean
@@ -153,7 +144,6 @@ const NavMenu = ({ me, history }: IMenuProps) => {
         <DesktopMenu
           handleLogout={handleLogout}
           isMobile={isMobile}
-          setExpanded={setExpanded}
           setLoggedIn={setLoggedIn}
           loggedIn={loggedIn}
         />

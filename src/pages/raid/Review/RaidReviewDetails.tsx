@@ -76,7 +76,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
       type: 'SET_HEADER_SUBTITLE',
       payload: { headerSubTitle: name },
     })
-  }, [name])
+  }, [name, appDispatch])
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   } else {

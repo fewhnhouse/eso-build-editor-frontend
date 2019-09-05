@@ -138,7 +138,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
       type: 'SET_HEADER_SUBTITLE',
       payload: { headerSubTitle: name },
     })
-  }, [name])
+  }, [name, appDispatch])
   const selectedSetup = [
     {
       id: 'bigpieces',

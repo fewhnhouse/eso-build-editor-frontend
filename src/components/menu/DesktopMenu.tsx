@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
-import { Menu, Icon, Button, Avatar, Typography, Popover } from 'antd'
+import { Menu, Icon, Button, Avatar, Popover } from 'antd'
 import styled from 'styled-components'
 import { StyledMenu, getSelectedKey } from './Menu'
 import Flex from '../Flex'
@@ -8,9 +8,6 @@ import LoginForm from '../LoginForm'
 
 const { Item, SubMenu } = Menu
 
-const HeaderTitle = styled(Typography.Title)`
-  margin-bottom: 0 !important;
-`
 
 const StyledSubMenu = styled(SubMenu)`
   float: ${(props: { isMobile: boolean }) =>
@@ -45,7 +42,6 @@ const StyledLoginButton = styled(Button)`
 
 interface IDesktopMenuProps extends RouteComponentProps<any> {
   loggedIn: boolean
-  setExpanded: React.Dispatch<React.SetStateAction<boolean>>
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
   handleLogout: () => void
   isMobile: boolean
@@ -56,15 +52,12 @@ interface IDesktopMenuProps extends RouteComponentProps<any> {
 const DesktopMenu = ({
   loggedIn,
   setLoggedIn,
-  setExpanded,
   handleLogout,
   isMobile,
   me,
   location,
 }: IDesktopMenuProps) => {
-  const handleFoldBtnClick = () => {
-    setExpanded(expanded => !expanded)
-  }
+
   return (
     <StyledFlexDesktop direction={isMobile ? 'column' : 'row'} align='center'>
       {loggedIn ? (

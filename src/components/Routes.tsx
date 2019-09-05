@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Switch, RouteProps, Redirect } from 'react-router'
 import Home from '../pages/home/Home'
 import Setup from '../pages/setup/Setup'
@@ -10,7 +10,6 @@ import SingleBuffFood from '../pages/singleItems/SingleBuffFood'
 import SingleMundus from '../pages/singleItems/SingleMundus'
 import SingleSet from '../pages/singleItems/SingleSet'
 import SingleSkillLine from '../pages/singleItems/SingleSkillLine'
-import { AppContext } from './AppContainer';
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
