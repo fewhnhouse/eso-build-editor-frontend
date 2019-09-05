@@ -4,7 +4,7 @@ import { IBuildState } from '../pages/build/BuildStateContext'
 import { IRole, IRaidState } from '../pages/raid/RaidStateContext'
 import BuildReviewDetails from '../pages/build/Review/BuildReviewDetails'
 import RaidReviewDetails from '../pages/raid/Review/RaidReviewDetails'
-import { Layout, Typography, Button, Spin, Popconfirm, Divider } from 'antd'
+import { Layout, Button, Spin, Popconfirm, Divider } from 'antd'
 
 import Flex from './Flex'
 import InformationCard from './InformationCard'
@@ -34,6 +34,10 @@ const Container = styled(Content)`
   color: ${props => props.theme.mainBg};
 `
 
+const StyledScrollbars = styled(Scrollbars)`
+  height: 80px !important;
+`
+
 const StyledFooter = styled(Footer)`
   height: ${(props: { isMobile: boolean }) =>
     `${props.isMobile ? '140px' : '80px'}`};
@@ -49,24 +53,6 @@ const StyledFooter = styled(Footer)`
 
 const StyledFlex80 = styled(Flex)`
   height: 80px;
-`
-
-const StyledFlex200 = styled(Flex)`
-  width: 200px;
-`
-
-const StyledTitle = styled(Typography.Title)`
-  margin-bottom: 0;
-  width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
-
-const StyledText = styled(Typography.Text)`
-  white-space: nowrap;
-  width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `
 
 const StyledSpin = styled(Spin)`
@@ -141,7 +127,7 @@ const Review = ({
             )}
           </Container>
           <StyledFooter isMobile={isMobile}>
-            <Scrollbars autoHide>
+            <StyledScrollbars autoHide>
               <StyledFlex80 direction='row' justify='flex-start' align='center'>
                 <InformationCard
                   icon='highlight'
@@ -187,7 +173,7 @@ const Review = ({
                   description={published ? 'Public' : 'Private'}
                 />
               </StyledFlex80>
-            </Scrollbars>
+            </StyledScrollbars>
             {(owner && owner.id) === (me && me.id) && (
               <Flex direction='row'>
                 <Popconfirm
