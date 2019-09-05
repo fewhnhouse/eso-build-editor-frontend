@@ -58,7 +58,6 @@ const StyledFlex200 = styled(Flex)`
 const StyledTitle = styled(Typography.Title)`
   margin-bottom: 0;
   width: 180px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `
@@ -144,10 +143,17 @@ const Review = ({
           <StyledFooter isMobile={isMobile}>
             <Scrollbars autoHide>
               <StyledFlex80 direction='row' justify='flex-start' align='center'>
-                <StyledFlex200 direction='column' align='flex-start'>
-                  <StyledTitle level={3}>{name}</StyledTitle>
-                  <StyledText>{description}</StyledText>
-                </StyledFlex200>
+                <InformationCard
+                  icon='highlight'
+                  title='Title'
+                  description={name || ''}
+                />
+                <StyledDivider type='vertical' />
+                <InformationCard
+                  icon='edit'
+                  title='Description'
+                  description={description || ''}
+                />
                 <StyledDivider type='vertical' />
                 <InformationCard
                   icon='user'

@@ -24,6 +24,7 @@ const StyledText = styled(Typography.Text)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 300px;
 `
 
 export default ({ icon, title, description }: IInformationCardProps) => {

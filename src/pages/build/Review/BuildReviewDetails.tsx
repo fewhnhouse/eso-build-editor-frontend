@@ -211,6 +211,12 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
             isMobile={isMobile}
             title={<Title level={2}>General Information</Title>}
           >
+            {description && (
+              <>
+                <Divider>Description</Divider>
+                <Text>{description}</Text>
+              </>
+            )}
             <Divider>Attributes</Divider>
             <MiscView direction='row' justify='space-around'>
               <ResourceCard>
