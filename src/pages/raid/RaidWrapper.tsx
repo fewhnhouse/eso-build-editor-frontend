@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
@@ -9,6 +9,7 @@ import { raid } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
 import ErrorPage from '../../components/ErrorPage'
 import styled from 'styled-components'
+import { AppContext } from '../../components/AppContainer'
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -39,6 +40,11 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 900,
   })
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({ type: 'SET_HEADER_TITLE', payload: { headerTitle: 'Raid Editor' } })
+  }, [appDispatch])
+
   const { loading, error, data } = useQuery(GET_RAID, {
     variables: { id: raidId },
   })

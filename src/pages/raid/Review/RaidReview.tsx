@@ -8,6 +8,7 @@ import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
+import { AppContext } from '../../../components/AppContainer';
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -46,6 +47,13 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
 
   const [state] = useContext(RaidContext)
   const [loggedIn] = useContext(LoginContext)
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Raid Review' },
+    })
+  }, [appDispatch])
 
   const raidQuery = useQuery(RAID, { variables: { id } })
   const meQuery = useQuery(MY_ID)

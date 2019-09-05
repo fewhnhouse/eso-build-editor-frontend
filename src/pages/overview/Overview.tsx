@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useContext, useEffect } from 'react'
 import Flex from '../../components/Flex'
 import { Tabs, Card } from 'antd'
 import {
@@ -13,6 +13,7 @@ import Buff from './Buff'
 import Skills from './Skills'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
+import { AppContext } from '../../components/AppContainer'
 
 const { TabPane } = Tabs
 
@@ -65,6 +66,14 @@ const StyledTabs = styled(Tabs)`
 
 export default () => {
   const [state, dispatch] = useReducer(overviewReducer, defaultOverviewState)
+  const [, appDispatch] = useContext(AppContext)
+
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Overview' },
+    })
+  }, [appDispatch])
 
   const { buff, mundusStone, selectedSet, skillLine } = state
   const isMobile = useMediaQuery({ maxWidth: 800 })

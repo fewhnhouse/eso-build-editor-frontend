@@ -19,7 +19,7 @@ import DeleteAccount from './DeleteAccount'
 import UpdatePassword from './UpdatePassword'
 import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
-import { RESEND_VERIFICATION } from '../../components/AppContainer'
+import { RESEND_VERIFICATION, AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
 
 const { Content } = Layout
@@ -144,6 +144,14 @@ const openNotification = (resendMutation: any) => {
 
 const Profile = ({ loggedIn }: IProfileProps) => {
   const me = useQuery(ME)
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Profile' },
+    })
+  }, [appDispatch])
+
   const [oldPassword, setOldPassword] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')

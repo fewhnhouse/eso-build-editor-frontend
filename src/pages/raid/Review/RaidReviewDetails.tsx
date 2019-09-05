@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Card, Typography, Divider, Button } from 'antd'
@@ -9,6 +9,7 @@ import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
+import { AppContext } from '../../../components/AppContainer'
 
 const { Title } = Typography
 
@@ -69,7 +70,13 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
     setExpand(prev => !prev)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
-
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: name },
+    })
+  }, [name])
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   } else {
@@ -82,7 +89,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
           justify='flex-start'
         >
           <StyledFlex direction='column' align='center' justify='center'>
-            <Typography.Title>{name}</Typography.Title>
+            {!isMobile && <Typography.Title>{name}</Typography.Title>}
 
             {local && (
               <Flex direction='row'>
