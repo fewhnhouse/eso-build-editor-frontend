@@ -216,6 +216,7 @@ const MobileSlot = ({
       <Modal
         bodyStyle={{ display: 'flex', justifyContent: 'center', margin: 0 }}
         visible={visible}
+        onCancel={toggleModal}
         footer={null}
         title='Skill Details'
       >
