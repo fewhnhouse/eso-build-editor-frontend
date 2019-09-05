@@ -23,6 +23,46 @@ const ListContainer = styled.div`
   transition: width 0.2s ease-in-out;
 `
 
+const StyledFlexOuter = styled(Flex)`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
+  padding: ${props => props.theme.paddings.mini};
+  transition: opacity 0.2s ease-in-out;
+`
+
+const StyledFlexInner = styled(Flex)`
+  width: 100%;
+`
+
+const StyledInput = styled(Input)`
+  width: 100%;
+  margin: ${props => props.theme.paddings.small};
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.paddings.small} 0px;
+`
+
+const StyledFlexExpanded = styled(Flex)`
+  margin: 0px ${props => props.theme.paddings.small};
+  overflow: auto;
+  width: 100%;
+`
+
+const StyledFlexExpandedSecond = styled(Flex)`
+  margin: 0px ${props => props.theme.paddings.small};
+  width: 100%;
+`
+
+const StyledScrollbars = styled(Scrollbars)`
+  max-width: 420px;
+  width: 100%;
+  min-width: 370px;
+`
+
+const StyledList = styled(List)`
+  height; 100%;
+`
+
 export function titleCase(str: string): string {
   let string = str.toLowerCase().split(' ')
   for (var i = 0; i < string.length; i++) {
@@ -107,49 +147,29 @@ export default () => {
   return (
     <ListContainer>
       <>
-        <Flex
-          direction='column'
-          justify='center'
-          align='center'
-          style={{
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-            padding: '5px',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
-        >
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ width: '100%' }}
-          >
-            <Input
+        <StyledFlexOuter direction='column' justify='center' align='center'>
+          <StyledFlexInner direction='row' justify='center' align='center'>
+            <StyledInput
               placeholder='Search for Builds'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
               size='large'
               type='text'
-              style={{ margin: '10px', width: '100%' }}
             />
             <Button
               size='large'
               icon={expanded ? 'shrink' : 'arrows-alt'}
               onClick={handleExpandChange}
             />
-          </Flex>
+          </StyledFlexInner>
           {expanded && (
             <>
-              <Divider
-                style={{
-                  margin: '10px 0px',
-                }}
-              />
-              <Flex
+              <StyledDivider />
+              <StyledFlexExpanded
                 direction='row'
                 justify='center'
                 align='center'
-                style={{ margin: '0px 10px', overflow: 'auto', width: '100%' }}
               >
                 <Select
                   mode='multiple'
@@ -161,13 +181,12 @@ export default () => {
                     <Option key={esoClass.title}>{esoClass.title}</Option>
                   ))}
                 </Select>
-              </Flex>
+              </StyledFlexExpanded>
 
-              <Flex
+              <StyledFlexExpandedSecond
                 direction='row'
                 justify='center'
                 align='center'
-                style={{ margin: '0px 10px', width: '100%' }}
               >
                 <Select
                   mode='multiple'
@@ -179,10 +198,10 @@ export default () => {
                     <Option key={race.title}>{race.title}</Option>
                   ))}
                 </Select>
-              </Flex>
+              </StyledFlexExpandedSecond>
             </>
           )}
-        </Flex>
+        </StyledFlexOuter>
         <BuildsList loading={loading} builds={(data && data.builds) || []} />
       </>
     </ListContainer>
@@ -205,15 +224,9 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
   })
 
   return (
-    <Scrollbars
-      autoHide
-      style={{ maxWidth: 420, width: '100%', minWidth: 370 }}
-    >
-      <List
+    <StyledScrollbars autoHide>
+      <StyledList
         loading={loading}
-        style={{
-          height: '100%',
-        }}
         dataSource={trail}
         renderItem={(style: any, index) => {
           const item = builds[index]
@@ -224,6 +237,6 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
           )
         }}
       />
-    </Scrollbars>
+    </StyledScrollbars>
   )
 }

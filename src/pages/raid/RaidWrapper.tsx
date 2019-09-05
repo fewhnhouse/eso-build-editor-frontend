@@ -8,6 +8,16 @@ import { defaultRaidState } from './RaidStateContext'
 import { raid } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
 import ErrorPage from '../../components/ErrorPage'
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.small};
+`
 
 const GET_RAID = gql`
   query raid($id: ID!) {
@@ -44,9 +54,9 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   if (edit) {
     if (loading) {
       return (
-        <div style={{ width: '100%', height: '100%' }}>
-          <Spin style={{ marginTop: 10 }} />
-        </div>
+        <StyledDiv>
+          <StyledSpin />
+        </StyledDiv>
       )
     }
     if (error) {

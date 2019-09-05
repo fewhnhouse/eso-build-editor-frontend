@@ -8,6 +8,13 @@ import { skill } from '../../util/fragments'
 import { ISkill } from '../../components/SkillSlot'
 import { defaultUltimate } from '../build/Skills/Skills'
 import { Spin } from 'antd'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  width: 100%;
+  height: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
 
 const GET_SKILLS_BY_ID = gql`
   query Skills($id: Int!) {
@@ -42,15 +49,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
     )
 
     return (
-      <Flex
-        direction='row'
-        align='flex-start'
-        style={{
-          height: '100%',
-          width: '100%',
-          padding: 20,
-        }}
-      >
+      <StyledFlex direction='row' align='flex-start'>
         <SkillsDisplay
           morphedActives={morphedActives}
           morphs={morphs}
@@ -59,7 +58,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
           passives={passives}
           skillLine={id || 0}
         />
-      </Flex>
+      </StyledFlex>
     )
   } else {
     return (

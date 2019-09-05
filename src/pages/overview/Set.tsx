@@ -5,6 +5,22 @@ import SetMenu from '../build/Sets/SetMenu'
 import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
 import { Empty } from 'antd'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  height: 100%;
+  width: 100%;
+  padding: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 0 : props => props.theme.paddings.medium};
+`
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+`
 
 interface ISetProps {
   context: React.Context<any>
@@ -13,15 +29,7 @@ interface ISetProps {
 }
 export default ({ context, selectedSet, isMobile }: ISetProps) => {
   return (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: '100%',
-        width: '100%',
-        padding: isMobile ? 0 : 20,
-      }}
-    >
+    <StyledFlex direction='row' align='flex-start' isMobile={isMobile}>
       <MenuCard isMobile={isMobile}>
         <SetMenu collapsed={false} setCollapsed={() => {}} context={context} />
       </MenuCard>
@@ -39,20 +47,10 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
           {selectedSet ? (
             <GearCard size='big' set={selectedSet} setSelectionCount={0} />
           ) : (
-            <Empty
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flex: 2,
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              Select a Set to get started.
-            </Empty>
+            <StyledEmpty>Select a Set to get started.</StyledEmpty>
           )}
         </ContentCard>
       )}
-    </Flex>
+    </StyledFlex>
   )
 }

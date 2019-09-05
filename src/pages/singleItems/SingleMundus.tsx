@@ -6,6 +6,13 @@ import { useQuery } from 'react-apollo'
 import { Spin } from 'antd'
 import { MundusCard } from '../overview/MundusStone'
 import ErrorPage from '../../components/ErrorPage'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  height: calc(100vh - 100px);
+  width: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
 
 const GET_MUNDUS_BY_ID = gql`
   query Mundus($id: ID!) {
@@ -39,17 +46,9 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
   }
   if (data) {
     return (
-      <Flex
-        direction='row'
-        align='flex-start'
-        style={{
-          height: 'calc(100vh - 100px)',
-          width: '100%',
-          padding: 20,
-        }}
-      >
+      <StyledFlex direction='row' align='flex-start'>
         <MundusCard mundusStone={data.mundusStone} />
-      </Flex>
+      </StyledFlex>
     )
   }
   return null

@@ -23,6 +23,11 @@ const Container = styled.div`
   height: 100%;
   background: #ededed;
 `
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.mini};
+`
+
 export default ({ match }: RouteComponentProps<{ token: string }>) => {
   const { token } = match.params
   const [mutate, { error, loading, data }] = useMutation(VERIFY, {
@@ -36,7 +41,7 @@ export default ({ match }: RouteComponentProps<{ token: string }>) => {
   if (loading) {
     return (
       <Container>
-        <Spin style={{ marginTop: 5 }} />
+        <StyledSpin />
       </Container>
     )
   }

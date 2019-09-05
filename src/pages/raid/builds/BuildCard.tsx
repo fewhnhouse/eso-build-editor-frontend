@@ -13,10 +13,10 @@ import { Link } from 'react-router-dom'
 
 const { TabPane } = Tabs
 
-const MyAvatar = styled.img`
-  width: 28px;
-  height: 28px;
-  margin-right: 5px;
+const Icon = styled.img`
+  width: ${props => props.theme.smallIcon.width};
+  height: ${props => props.theme.smallIcon.height};
+  margin-right: ${props => props.theme.margins.mini};
 `
 
 const ScrollContainer = styled.div`
@@ -44,16 +44,39 @@ const AbilityBar = styled.div`
   max-width: 300px;
 `
 
+const StyledFlexFull = styled(Flex)`
+  width: 100%;
+`
+
 const StyledCard = styled(Card)`
   border-color: ${(props: { active?: boolean }) =>
     props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
   min-height: 80px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
+
+const StyledLink = styled(Link)`
+  top: 10px;
+  right: 10px;
+  position: absolute;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  max-width: 350px;
+  width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
@@ -137,18 +160,7 @@ const BuildCard = ({
     <StyledCard hoverable>
       <div>
         <Flex direction='row' justify='space-between'>
-          <Typography.Title
-            level={3}
-            style={{
-              maxWidth: 350,
-              width: '80%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {item.name}
-          </Typography.Title>
+          <StyledTitle level={3}>{item.name}</StyledTitle>
           {role ? (
             <Button
               type='danger'
@@ -158,24 +170,21 @@ const BuildCard = ({
             />
           ) : (
             <Tooltip title='Go to build'>
-              <Link
-                style={{ top: 10, right: 10, position: 'absolute' }}
-                to={`/builds/${item.id}`}
-              >
+              <StyledLink to={`/builds/${item.id}`}>
                 <Button ghost icon='select' type='primary' />
-              </Link>
+              </StyledLink>
             </Tooltip>
           )}
         </Flex>
         <Description direction='row' justify='flex-start'>
           <RaceClassContainer>
-            <MyAvatar
+            <Icon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
             />
             {item.race}
           </RaceClassContainer>
           <RaceClassContainer>
-            <MyAvatar
+            <Icon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
             />
             {item.esoClass}
@@ -183,10 +192,10 @@ const BuildCard = ({
         </Description>
         {expand && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
+            <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <Flex direction='column' style={{ width: '100%' }}>
+                <StyledFlexFull direction='column'>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
@@ -205,7 +214,7 @@ const BuildCard = ({
                       ultimate={item.ultimateTwo}
                     />
                   </AbilityBar>
-                </Flex>
+                </StyledFlexFull>
               </TabPane>
               <TabPane tab='Weapons' key='weapons'>
                 <ScrollContainer>

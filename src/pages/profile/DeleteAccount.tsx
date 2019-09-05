@@ -2,8 +2,17 @@ import React from 'react'
 import { IActionProps, ProfileAction, ItemCard } from './Profile'
 import { Typography, Button, Divider } from 'antd'
 import { useMediaQuery } from 'react-responsive'
+import styled from 'styled-components'
 
 const { Text } = Typography
+
+const StyledText = styled(Text)`
+  margin-top: ${props => props.theme.margins.medium};
+`
+
+const StyledButton = styled(Button)`
+  margin-top: ${props => props.theme.margins.medium};
+`
 
 export default ({ handleActionClick }: IActionProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
@@ -17,18 +26,15 @@ export default ({ handleActionClick }: IActionProps) => {
         removed.
       </Text>
       <Divider />
-      <Text strong style={{ marginTop: 20 }}>
-        This action cannot be undone.
-      </Text>
-      <Button
+      <StyledText strong>This action cannot be undone.</StyledText>
+      <StyledButton
         onClick={handleActionClick(ProfileAction.deleteAccount)}
         block
         size='large'
-        style={{ marginTop: 20 }}
         type='danger'
       >
         Delete account
-      </Button>
+      </StyledButton>
     </ItemCard>
   )
 }

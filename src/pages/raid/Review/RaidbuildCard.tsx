@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Card } from 'antd'
 import styled, { withTheme, ThemeProps } from 'styled-components'
 import { Redirect } from 'react-router'
-import { ITheme } from '../../../components/globalStyles'
+import { ITheme } from '../../../components/theme'
 
 interface IStyledCardProps {
   colors: {
@@ -11,8 +11,10 @@ interface IStyledCardProps {
   }
 }
 const StyledCard = styled(Card)`
-  margin: 5px 10px 0 10px;
-  width: 250px;
+  margin: ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small} 0
+    ${props => props.theme.margins.small};
+  width: ${props => props.theme.widths.small};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,18 +31,22 @@ const Image = styled.img`
   height: 20px;
 `
 
-const MyAvatar = styled.img`
-  width: 26px;
-  height: 26px;
+const Icon = styled.img`
+  width: ${props => props.theme.smallIcon.width};
+  height: ${props => props.theme.smallIcon.height};
 `
 
 const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px 10px;
+  padding: 0px ${props => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
+`
+
+const StyledMeta = styled(Meta)`
+  text-align: left;
 `
 
 interface ICardProps extends ThemeProps<ITheme> {
@@ -52,7 +58,7 @@ interface ICardProps extends ThemeProps<ITheme> {
 
 const setColor = (role: string, theme: ITheme) => {
   switch (role) {
-    case 'Stamina DD': // ${props => props.theme.stamGreen};
+    case 'Stamina DD':
       return {
         borderColor: `${theme.roleCardColors.StamDD}`,
         backgroundColor: ``,
@@ -107,14 +113,13 @@ const HomeCard = ({ race, role, esoClass, description, theme }: ICardProps) => {
         </RaceContainer>,
       ]}
     >
-      <Meta
+      <StyledMeta
         avatar={
-          <MyAvatar
+          <Icon
             title={esoClass}
             src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${esoClass}`}
           />
         }
-        style={{ textAlign: 'left' }}
         title={esoClass}
         description={description}
       />

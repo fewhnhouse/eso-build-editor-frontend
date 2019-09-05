@@ -18,6 +18,10 @@ const StyledFlex = styled(Flex)`
   overflow-y: auto;
 `
 
+const StyledInnerFlex = styled(Flex)`
+  flex: 1;
+`
+
 interface IPiece {
   title: string
   slot: Slot
@@ -96,8 +100,8 @@ export default () => {
         {modes.map(mode => (
           <div key={mode.title}>
             <Divider>{mode.title}</Divider>
-            <Flex
-              style={{ width: '100%', minHeigt: 150, flexWrap: 'wrap' }}
+            <StyledInnerFlex
+              wrap
               direction='row'
               justify='space-between'
               align='flex-start'
@@ -129,7 +133,7 @@ export default () => {
                   }
                 />
               ))}
-            </Flex>
+            </StyledInnerFlex>
           </div>
         ))}
       </StyledFlex>

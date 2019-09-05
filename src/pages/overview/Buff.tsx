@@ -8,12 +8,54 @@ import BuffMenu, {
 import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
 import { Typography, Divider, Card, Empty } from 'antd'
+import styled from 'styled-components'
 
 interface IBuffProps {
   context: React.Context<any>
   buff?: ISpecialBuff
   isMobile: boolean
 }
+
+const StyledBuffFlexInner = styled(Flex)`
+  margin-left: ${props => props.theme.margins.medium};
+  max-width: 600px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  margin: 0;
+`
+
+const StyledFlexAttrWrap = styled(Flex)`
+  width: 100%;
+  margin: ${props => props.theme.margins.small} 0px;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.small} 0px;
+`
+
+const StyledDividerSmall = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledDescription = styled(Description)`
+  font-style: italic;
+`
+
+const StyledFlexWrapper = styled(Flex)`
+  height: 100%;
+  width: 100%;
+  padding: ${(flexProps: { isMobile: boolean }) =>
+    flexProps.isMobile ? '0px' : props => props.theme.margins.medium};
+`
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+`
 
 export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
   <Card>
@@ -25,19 +67,10 @@ export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
             : ''
         }
       />
-      <Flex direction='column' style={{ marginLeft: 20, maxWidth: 600 }}>
-        <Typography.Title level={3} style={{ margin: 0 }}>
-          {buff.name}
-        </Typography.Title>
-        <Divider style={{ margin: '10px 0px' }} />
-        <Flex
-          direction='row'
-          wrap
-          style={{
-            width: '100%',
-            margin: '10px 0px',
-          }}
-        >
+      <StyledBuffFlexInner direction='column'>
+        <StyledTitle level={3}>{buff.name}</StyledTitle>
+        <StyledDivider />
+        <StyledFlexAttrWrap direction='row' wrap>
           <AttributeTag
             hasHealth={buff.buffDescription.includes('Health')}
             hasMagicka={buff.buffDescription.includes('Magicka')}
@@ -50,32 +83,22 @@ export const BuffCard = ({ buff }: { buff: ISpecialBuff }) => (
             isDrink={buff.buffType === 'drink' && buff.type !== null}
           />
           <QualityTag quality={buff.quality} />
-        </Flex>
+        </StyledFlexAttrWrap>
         <Description>{buff.buffDescription}</Description>
         {buff.description && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
-            <Description style={{ fontStyle: 'italic' }} newEffect>
-              {buff.description}
-            </Description>
+            <StyledDividerSmall />
+            <StyledDescription newEffect>{buff.description}</StyledDescription>
           </>
         )}
-      </Flex>
+      </StyledBuffFlexInner>
     </Flex>
   </Card>
 )
 
 export default ({ context, buff, isMobile }: IBuffProps) => {
   return (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: 'calc(100% - 100px)',
-        width: '100%',
-        padding: isMobile ? 0 : 20,
-      }}
-    >
+    <StyledFlexWrapper direction='row' align='flex-start' isMobile={isMobile}>
       <MenuCard minWidth='400px' isMobile={isMobile}>
         <BuffMenu context={context} />
       </MenuCard>
@@ -93,20 +116,10 @@ export default ({ context, buff, isMobile }: IBuffProps) => {
           {buff ? (
             <BuffCard buff={buff} />
           ) : (
-            <Empty
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flex: 2,
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              Select a Buff to get started.
-            </Empty>
+            <StyledEmpty>Select a Buff to get started.</StyledEmpty>
           )}
         </ContentCard>
       )}
-    </Flex>
+    </StyledFlexWrapper>
   )
 }

@@ -2,6 +2,13 @@ import React, { useContext, useEffect } from 'react'
 import BuffMenu from './BuffMenu'
 import MundusMenu from './MundusMenu'
 import { BuildContext } from '../BuildStateContext'
+import styled from 'styled-components'
+import Flex from '../../../components/Flex'
+
+const StyledFlex = styled(Flex)`
+  width: 100%;
+  height: 100%;
+`
 
 export default ({ edit }: { edit: boolean }) => {
   const [state] = useContext(BuildContext)
@@ -12,16 +19,9 @@ export default ({ edit }: { edit: boolean }) => {
     }
   }, [state, edit])
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-      }}
-    >
+    <StyledFlex direction='row'>
       <BuffMenu context={BuildContext} />
       <MundusMenu context={BuildContext} />
-    </div>
+    </StyledFlex>
   )
 }

@@ -72,9 +72,10 @@ const classes = [
 ]
 
 const StyledIconBtn = styled(Button)`
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
   height: 40px;
   width: 40px;
+  margin-top: ${props => props.theme.margins.small};
 `
 
 const MenuContainer = styled.div`
@@ -88,6 +89,16 @@ const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease-in-out;
+`
+
+const StyledMenu = styled(Menu)`
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: opacity 0.2s ease-in-out;
+  opacity: ${(props: { collapsed: boolean }) => (props.collapsed ? 0 : 1)};
+  pointer-events: ${(props: { collapsed: boolean }) =>
+    props.collapsed ? 'none' : 'all'};
 `
 
 interface ISkillMenuProps {
@@ -235,22 +246,14 @@ export default ({
         <StyledIconBtn
           type='primary'
           ghost
-          style={{ marginTop: 10 }}
           onClick={handleIconClick(!collapsed)}
           icon={collapsed ? 'double-right' : 'double-left'}
         />
       )}
       <Scrollbars autoHide>
-        <Menu
+        <StyledMenu
           onClick={handleClick}
-          style={{
-            width: '100%',
-            height: '100%',
-            textAlign: 'left',
-            opacity: collapsed ? 0 : 1,
-            pointerEvents: collapsed ? 'none' : 'all',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
+          collapsed={collapsed}
           defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
           defaultOpenKeys={[]}
           mode='inline'
@@ -272,7 +275,7 @@ export default ({
               )}
             </SubMenu>
           ))}
-        </Menu>
+        </StyledMenu>
       </Scrollbars>
     </MenuContainer>
   )

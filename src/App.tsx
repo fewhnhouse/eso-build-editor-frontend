@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import AppContainer from './components/AppContainer'
-import globalStyles from './components/globalStyles'
+import theme from './components/theme'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
@@ -76,8 +76,6 @@ const client = new ApolloClient({
 export const LoginContext = React.createContext<any>(undefined)
 client.onResetStore(async () => cache.writeData({ data }))
 //Avoid cors for now
-
-const theme = globalStyles
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined)

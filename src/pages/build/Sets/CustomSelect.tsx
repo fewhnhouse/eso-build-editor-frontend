@@ -13,6 +13,19 @@ const StyledIcon = styled.img`
   margin: 0px 10px;
 `
 
+const StyledFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledTitleFlex = styled(Flex)`
+  flex: 1;
+`
+
+const StyledText = styled(Typography.Text)`
+  color: rgba(0, 0, 0, 0.25);
+  white-space: normal;
+`
+
 export interface ICustomSelectProps extends SelectProps {
   items: IModification[]
   className?: string
@@ -31,24 +44,15 @@ export const CustomSelect = ({
     {items.map((item, index) => (
       <Option value={item.type} key={index}>
         <Flex direction='column' justify='flex-start' align='flex-start'>
-          <Flex
-            style={{ width: '100%' }}
-            direction='row'
-            justify='space-between'
-            align='center'
-          >
+          <StyledFlex direction='row' justify='space-between' align='center'>
             {item.type}
             <StyledIcon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/${
                 item.modificationType
               }s/${item.icon.trim()}`}
             />
-          </Flex>
-          <Typography.Text
-            style={{ color: 'rgba(0, 0, 0, 0.25)', whiteSpace: 'normal' }}
-          >
-            {item.description}
-          </Typography.Text>
+          </StyledFlex>
+          <StyledText>{item.description}</StyledText>
         </Flex>
       </Option>
     ))}
@@ -64,16 +68,15 @@ export const SelectWithTitle = ({
   className,
   ...props
 }: ISelectWithTitleProps) => (
-  <Flex
+  <StyledTitleFlex
     className={className}
-    style={{ flex: 1 }}
     direction='column'
     justify='flex-start'
     align='flex-start'
   >
     <Typography.Text strong>{title}</Typography.Text>
     <StyledCustomSelect items={items} {...props} />
-  </Flex>
+  </StyledTitleFlex>
 )
 
 const StyledCustomSelect = styled(CustomSelect)`

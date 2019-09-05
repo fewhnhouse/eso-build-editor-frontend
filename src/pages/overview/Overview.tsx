@@ -52,6 +52,16 @@ export const Image = styled.img`
   border-radius: 4px;
 `
 
+const StyledFlex = styled(Flex)`
+  width: 100%;
+  height: calc(100vh - 64px);
+`
+
+const StyledTabs = styled(Tabs)`
+  width: 100%;
+  height: 100%;
+`
+
 export default () => {
   const [state, dispatch] = useReducer(overviewReducer, defaultOverviewState)
 
@@ -60,20 +70,8 @@ export default () => {
 
   return (
     <OverviewContext.Provider value={[state, dispatch]}>
-      <Flex
-        style={{
-          width: '100%',
-          height: 'calc(100vh - 64px)',
-        }}
-        direction='column'
-        align='center'
-      >
-        <Tabs
-          style={{ width: '100%', height: '100%' }}
-          defaultActiveKey='1'
-          tabPosition='top'
-          size='large'
-        >
+      <StyledFlex direction='column' align='center'>
+        <StyledTabs defaultActiveKey='1' tabPosition='top' size='large'>
           <TabPane tab='Buff Food' key='1'>
             <Buff context={OverviewContext} buff={buff} isMobile={isMobile} />
           </TabPane>
@@ -98,8 +96,8 @@ export default () => {
               isMobile={isMobile}
             />
           </TabPane>
-        </Tabs>
-      </Flex>
+        </StyledTabs>
+      </StyledFlex>
     </OverviewContext.Provider>
   )
 }

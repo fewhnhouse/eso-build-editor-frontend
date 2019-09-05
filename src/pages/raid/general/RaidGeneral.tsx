@@ -11,6 +11,24 @@ const GeneralContainer = styled.div`
   margin: auto;
 `
 
+const StyledFlex = styled(Flex)`
+  width: ${props => props.theme.widths.medium};
+  margin: ${props => props.theme.margins.small};
+`
+
+const StyledWideFlex = styled(Flex)`
+  width: ${props => props.theme.widths.medium};
+  flex: 1;
+`
+
+const StyledInput = styled(Input)`
+  width: ${props => props.theme.widths.medium};
+`
+
+const StyledSlider = styled(Slider)`
+  width: 380px;
+`
+
 const marks = {
   1: '1',
   6: '6',
@@ -93,39 +111,34 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
       <Divider>General Information</Divider>
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Raid Name</Typography.Text>
-            <Input
-              style={{ width: 400 }}
+            <StyledInput
               size='large'
               value={name}
               onChange={handleRaidNameChange}
               placeholder='Type name...'
             />
-          </Flex>
-          <Flex
-            style={{ flex: 1, width: 400 }}
+          </StyledFlex>
+          <StyledWideFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
 
-            <Input
+            <StyledInput
               size='large'
-              style={{ width: 400 }}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'
             />
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledWideFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -153,17 +166,14 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
                 PvE - Open World
               </Select.Option>
             </Select>
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Group Size</Typography.Text>
-
-            <Slider
-              style={{ width: 380 }}
+            <StyledSlider
               min={1}
               max={24}
               marks={marks}
@@ -171,7 +181,7 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
               onChange={handleGroupSizeChange}
               defaultValue={groupSize}
             />
-          </Flex>
+          </StyledFlex>
         </Flex>
       </GeneralContainer>
       {/* TODO: Prospone to V2 <Divider>Access Rights</Divider>

@@ -45,6 +45,26 @@ const StyledForm = styled(Form)`
   flex-direction: column;
 `
 
+const StyledFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledText = styled(Typography.Text)`
+  margin-right: 30;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledIcon = styled(Icon)`
+  color: rgba(0, 0, 0, 0.25);
+`
+
+const StyledButton = styled(Button)`
+  width: 100%;
+`
+
 interface ILoginData {
   email: string
   password: string
@@ -77,19 +97,12 @@ const openNotification = (resendMutation: any) => {
     resendMutation()
   }
   const btn = (
-    <Flex
-      style={{ width: '100%' }}
-      direction='row'
-      align='center'
-      justify='space-between'
-    >
-      <Typography.Text style={{ marginRight: 30 }}>
-        Didnt get an email?
-      </Typography.Text>
+    <StyledFlex direction='row' align='center' justify='space-between'>
+      <StyledText>Didnt get an email?</StyledText>
       <Button onClick={handleResendClick} icon='mail' type='primary'>
         {'Resend'}
       </Button>
-    </Flex>
+    </StyledFlex>
   )
 
   notification.info({
@@ -102,7 +115,7 @@ const openNotification = (resendMutation: any) => {
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: '5px 0px' }} />
+        <StyledDivider />
       </Flex>
     ),
   })
@@ -111,7 +124,7 @@ const openNotification = (resendMutation: any) => {
 interface LoginFormProps extends FormComponentProps, RouteComponentProps<any> {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
-const LoginForm = ({ form, location, match }: LoginFormProps) => {
+const LoginForm = ({ form }: LoginFormProps) => {
   const [register, setRegister] = useState(false)
   const [, setLoggedIn] = useContext(LoginContext)
   const [mutateLogin, loginResult] = useMutation<ILoginResult, ILoginData>(
@@ -208,10 +221,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
               },
             ],
           })(
-            <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='Username'
-            />
+            <Input prefix={<StyledIcon type='user' />} placeholder='Username' />
           )}
         </Form.Item>
       )}
@@ -229,12 +239,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             },
           ],
-        })(
-          <Input
-            prefix={<Icon type='email' style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder='Email'
-          />
-        )}
+        })(<Input prefix={<StyledIcon type='email' />} placeholder='Email' />)}
       </Form.Item>
       <Form.Item
         validateStatus={passwordError ? 'error' : ''}
@@ -251,7 +256,7 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
           ],
         })(
           <Input
-            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<StyledIcon type='lock' />}
             type='password'
             placeholder='Password'
           />
@@ -269,16 +274,15 @@ const LoginForm = ({ form, location, match }: LoginFormProps) => {
         )}
       </Form.Item>
       <Form.Item>
-        <Button
+        <StyledButton
           disabled={hasErrors(getFieldsError())}
           loading={loginResult.loading || registerResult.loading}
-          style={{ width: '100%' }}
           type='primary'
           htmlType='submit'
           className='login-form-button'
         >
           {register ? 'Register' : 'Login'}
-        </Button>
+        </StyledButton>
         <br />
         Or
         <Button type='link' onClick={() => setRegister(register => !register)}>

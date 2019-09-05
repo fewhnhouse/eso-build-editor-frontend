@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { withTheme, ThemeProps } from 'styled-components'
-import { ITheme } from '../../../components/globalStyles'
 import { BuildContext } from '../BuildStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -19,10 +17,16 @@ import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
+import styled from 'styled-components'
 
-interface IBuildReview extends ThemeProps<ITheme>, RouteComponentProps<any> {
+interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
 }
+
+const StyledLinkFlex = styled(Flex)`
+  width: 100%;
+  margin-top: ${props => props.theme.margins.small};
+`
 
 export const BUILD = gql`
   query Build($id: ID!) {
@@ -117,14 +121,13 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               Your build was successfully copied. You can now view it and share
               it with others!
             </div>
-            <Flex
-              style={{ width: '100%', marginTop: 10 }}
+            <StyledLinkFlex
               direction='row'
               align='center'
               justify='space-between'
             >
               <Button icon='share-alt'>Share link</Button>
-            </Flex>
+            </StyledLinkFlex>
           </Flex>
         ),
       })
@@ -164,4 +167,4 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   )
 }
 
-export default withTheme(withRouter(BuildReview))
+export default withRouter(BuildReview)

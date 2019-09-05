@@ -14,12 +14,13 @@ import {
 } from '../pages/build/BuildStateContext'
 import { GearCardContent } from './GearCard'
 import { specialWeaponSets } from '../pages/build/Sets/SetBar'
+import Flex from './Flex'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === 'normal' ? '62px' : '46px'};
   height: ${(props: { size: 'normal' | 'small' }) =>
-    props.size === 'normal' ? '64px' : '48px'};
+    props.size === 'normal' ? '62px' : '46px'};
 `
 
 interface IGearFrameProps {
@@ -44,6 +45,32 @@ const GearFrame = styled.div`
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
+`
+
+const TextPrimary = styled(Typography.Text)`
+  width: ${props => props.theme.widths.mini};
+  text-align: left;
+`
+
+const TextSecondary = styled(Typography.Text)`
+  font-size: 12;
+  width: ${props => props.theme.widths.mini};
+  text-align: left;
+`
+
+const InnerDisplay = styled(Flex)`
+  height: 100%;
+  margin-left: ${props => props.theme.margins.small};
+`
+
+const StyledButton = styled(Button)`
+  margin-top: ${props => props.theme.margins.mini};
+`
+
+const StyledGearWrapper = styled.div`
+  margin: ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small} ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small};
 `
 
 export interface ISet {
@@ -278,46 +305,37 @@ export default ({
           <div />
         )}
       </GearFrame>
-      <InnerDisplay>
-        <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+      <InnerDisplay
+        direction='column'
+        justify='space-between'
+        align='flex-start'
+      >
+        <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
-        </Typography.Text>
+        </TextPrimary>
         {droppable ? (
           <>
-            <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-              ellipsis
-              type='secondary'
-            >
+            <TextSecondary ellipsis type='secondary'>
               {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
-            </Typography.Text>
-            <Typography.Text
-              style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-              ellipsis
-              type='secondary'
-            >
+            </TextSecondary>
+            <TextSecondary ellipsis type='secondary'>
               {slot.trait ? slot.trait.type : 'Trait not selected.'}
-            </Typography.Text>
+            </TextSecondary>
           </>
         ) : (
-          <Button
-            style={{ marginTop: 5 }}
+          <StyledButton
             onClick={handleSlotClick}
             size='small'
             ghost
             type='primary'
           >
             Slot
-          </Button>
+          </StyledButton>
         )}
       </InnerDisplay>
     </DisplayCard>
   ) : (
-    <div style={{ margin: '5px 10px 5px 10px' }}>
+    <StyledGearWrapper>
       <GearFrame
         size={size}
         canDrop={droppable && canDrop}
@@ -346,28 +364,19 @@ export default ({
           <div />
         )}
       </GearFrame>
-    </div>
+    </StyledGearWrapper>
   )
 }
 
 const DisplayCard = styled.div`
-  padding: 5px;
+  padding: ${props => props.theme.paddings.mini};
   display: flex;
   flex-direction: row;
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  margin: 10px;
-`
-
-const InnerDisplay = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
 export const getItemType = (
@@ -469,39 +478,27 @@ export const DisplaySlot = ({
         </GearFrame>
       </Popover>
 
-      <InnerDisplay>
-        <Typography.Text
-          style={{ width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+      <InnerDisplay
+        direction='column'
+        justify='space-between'
+        align='flex-start'
+      >
+        <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
-        </Typography.Text>
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          strong
-        >
+        </TextPrimary>
+        <TextPrimary ellipsis strong>
           <InnerSpan color={getTypeColor(slot.type)}>
             {getItemType(slot.type)}
           </InnerSpan>{' '}
           {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
-        </Typography.Text>
+        </TextPrimary>
 
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          type='secondary'
-        >
+        <TextSecondary ellipsis type='secondary'>
           {slot.glyph ? slot.glyph.type : 'Glyph not selected.'}
-        </Typography.Text>
-        <Typography.Text
-          style={{ fontSize: 12, width: 150, textAlign: 'left' }}
-          ellipsis
-          type='secondary'
-        >
+        </TextSecondary>
+        <TextSecondary ellipsis type='secondary'>
           {slot.trait ? slot.trait.type : 'Trait not selected.'}
-        </Typography.Text>
+        </TextSecondary>
       </InnerDisplay>
     </DisplayCard>
   )

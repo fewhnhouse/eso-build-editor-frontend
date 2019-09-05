@@ -4,6 +4,7 @@ import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import styled from 'styled-components'
 
 const GET_USERS = gql`
   query {
@@ -13,6 +14,12 @@ const GET_USERS = gql`
     }
   }
 `
+
+const StyledFlex = styled(Flex)`
+  flex: 1;
+  margin: ${props => props.theme.margins.small};
+`
+
 export default () => {
   const [state, dispatch] = useContext(RaidContext)
   const { data, loading } = useQuery(GET_USERS)
@@ -33,12 +40,7 @@ export default () => {
   }
   return (
     <Flex direction='row' justify='space-around' align='center'>
-      <Flex
-        style={{ flex: 1, margin: 10 }}
-        direction='column'
-        justify='flex-start'
-        align='center'
-      >
+      <StyledFlex direction='column' justify='flex-start' align='center'>
         <Typography.Text strong>Can Edit</Typography.Text>
 
         <Select
@@ -59,13 +61,8 @@ export default () => {
               </Select.Option>
             ))}
         </Select>
-      </Flex>
-      <Flex
-        style={{ flex: 1, margin: 10 }}
-        direction='column'
-        justify='flex-start'
-        align='center'
-      >
+      </StyledFlex>
+      <StyledFlex direction='column' justify='flex-start' align='center'>
         <Typography.Text strong>Can View</Typography.Text>
 
         <Select
@@ -86,7 +83,7 @@ export default () => {
               </Select.Option>
             ))}
         </Select>
-      </Flex>
+      </StyledFlex>
     </Flex>
   )
 }

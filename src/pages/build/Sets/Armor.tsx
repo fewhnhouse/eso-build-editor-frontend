@@ -20,6 +20,11 @@ const StyledFlex = styled(Flex)`
   margin-top: 20px;
 `
 
+const StyledModeFlex = styled(Flex)`
+  width: 100%;
+  min-height: 150px;
+`
+
 interface IPiece {
   title: string
   slot: Slot
@@ -205,8 +210,8 @@ export default () => {
                 >
                   Select individually
                 </Checkbox>
-                <Flex
-                  style={{ width: '100%', minHeight: 150, flexWrap: 'wrap' }}
+                <StyledModeFlex
+                  wrap
                   direction='row'
                   justify='space-between'
                   align='flex-start'
@@ -286,7 +291,7 @@ export default () => {
                       title={piece.title}
                     />
                   )}
-                </Flex>
+                </StyledModeFlex>
               </div>
             ))}
           </div>

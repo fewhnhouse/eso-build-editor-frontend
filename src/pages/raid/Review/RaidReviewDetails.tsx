@@ -46,6 +46,15 @@ const ExpandButton = styled(Button)`
   right: 10px;
 `
 
+const StyledFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledDivider = styled(Divider)`
+  height: 50px;
+  margin: 0px ${props => props.theme.margins.medium};
+`
+
 interface IRaidReviewDetailsProps {
   loadedData: IRaidState
   local?: boolean
@@ -72,12 +81,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
           fluid
           justify='flex-start'
         >
-          <Flex
-            direction='column'
-            align='center'
-            justify='center'
-            style={{ width: '100%' }}
-          >
+          <StyledFlex direction='column' align='center' justify='center'>
             <Typography.Title>{name}</Typography.Title>
 
             {local && (
@@ -87,19 +91,13 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                   title='Description'
                   description={description}
                 />
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+                <StyledDivider type='vertical' />
                 <InformationCard
                   icon='environment'
                   title='Application Area'
                   description={area ? area.label : ''}
                 />
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+                <StyledDivider type='vertical' />
                 <InformationCard
                   icon='team'
                   title='Group Size'
@@ -108,10 +106,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                     0
                   )}
                 />
-                <Divider
-                  type='vertical'
-                  style={{ height: 50, margin: '0px 20px' }}
-                />
+                <StyledDivider type='vertical' />
                 <InformationCard
                   icon={published ? 'unlock' : 'lock'}
                   title='Access Rights'
@@ -119,7 +114,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                 />
               </Flex>
             )}
-          </Flex>
+          </StyledFlex>
           <RaidContent
             isMobile={isMobile}
             local={local}

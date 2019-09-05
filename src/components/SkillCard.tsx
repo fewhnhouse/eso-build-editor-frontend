@@ -3,37 +3,41 @@ import { Card, Divider, Popover } from 'antd'
 import styled from 'styled-components'
 import { BuildContext } from '../pages/build/BuildStateContext'
 import { ISkill } from './SkillSlot'
+import Flex from './Flex'
 
 const StyledCard = styled(Card)`
-  margin: 5px 10px 0 10px;
-  width: 450px;
+  margin: ${props => props.theme.margins.mini}
+    ${props => props.theme.margins.small} 0
+    ${props => props.theme.margins.small};
+  width: ${props => props.theme.widths.medium};
+  position: relative;
 `
 
 const Image = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
   border: ${(props: { active: boolean }) =>
     props.active ? '2px solid #1890ff' : 'none'};
   filter: ${(props: { active: boolean }) =>
     props.active ? '' : 'grayscale()'};
 `
 
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
 `
 
-const AvatarContainer = styled.div`
-  padding-right: 16px;
+const IconContainer = styled.div`
+  padding-right: ${props => props.theme.icon.containerPadding};
 `
 
 const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px 10px;
+  padding: 0px ${props => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
 `
@@ -44,6 +48,10 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.paddings.mini} 0px;
 `
 
 const Title = styled.div`
@@ -59,14 +67,18 @@ const Title = styled.div`
 
 const CostSpan = styled.span`
   font-weight: 500;
-  color: ${(props: { type: string }) =>
-    props.type === 'Ultimate'
-      ? '#8e44ad'
-      : props.type === 'Magicka'
-      ? '#2980b9'
-      : props.type === 'Stamina'
-      ? '#27ae60'
-      : '#e74c3c'};
+  color: ${(costProps: { type: string }) =>
+    costProps.type === 'Ultimate'
+      ? props => props.theme.costs.ultimate
+      : costProps.type === 'Magicka'
+      ? props => props.theme.costs.magicka
+      : costProps.type === 'Stamina'
+      ? props => props.theme.costs.stamina
+      : props => props.theme.costs.ultimate};
+`
+
+const StyledFlex = styled(Flex)`
+  max-width: ${props => props.theme.widths.medium};
 `
 
 const MorphLabel = styled.span`
@@ -102,7 +114,6 @@ export const DisplaySkillCard = ({
 }: ICardProps) => {
   return (
     <StyledCard
-      style={{ position: 'relative' }}
       hoverable
       actions={
         passive
@@ -200,7 +211,6 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
 
   return (
     <StyledCard
-      style={{ position: 'relative' }}
       hoverable
       actions={
         passive
@@ -252,13 +262,13 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   const isStamina = skill.cost.includes('Stamina')
   const isFree = skill.cost.includes('Nothing')
   return (
-    <div style={{ display: 'flex', maxWidth: 400 }}>
-      <AvatarContainer>
-        <MyAvatar
+    <StyledFlex>
+      <IconContainer>
+        <Icon
           title={skill.name}
           src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
         />
-      </AvatarContainer>
+      </IconContainer>
       <div>
         <Title>{skill.name}</Title>
         {skill.type !== 2 && (
@@ -279,15 +289,15 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
             {` | ${skill.range ? skill.range : skill.target}`}
           </Description>
         )}
-        <Divider style={{ margin: '5px 0px' }} />
+        <StyledDivider />
         <Description>{skill.effect_1}</Description>
         {skill.effect_2 && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
+            <StyledDivider />
             <Description newEffect>New Effect: {skill.effect_2}</Description>
           </>
         )}
       </div>
-    </div>
+    </StyledFlex>
   )
 }

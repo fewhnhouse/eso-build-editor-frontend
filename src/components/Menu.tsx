@@ -23,9 +23,10 @@ const StyledHeader = styled(Header)`
   background: white;
   z-index: 10;
   align-items: center;
-  padding: ${(props: IStyledHeaderProps) => (props.expanded ? '0px' : '')};
-  padding-right: ${(props: IStyledHeaderProps) =>
-    props.isTabletOrMobile ? '0px' : '10px'};
+  padding: ${(headerProps: IStyledHeaderProps) =>
+    headerProps.expanded ? '0px' : ''};
+  padding-right: ${(headerProps: IStyledHeaderProps) =>
+    headerProps.isTabletOrMobile ? '0px' : props => props.theme.paddings.small};
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `
 
@@ -38,6 +39,52 @@ const MobileHeader = styled.div`
   top: 64px;
   z-index: 100;
   background: #ededed;
+`
+
+const StyledMenu = styled(Menu)`
+  line-height: 64px;
+  width: 100%;
+`
+
+const StyledSubMenu = styled(SubMenu)`
+  float: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'initial' : 'right'};
+`
+
+const StyledMenuNarrow = styled(Menu)`
+  line-height: 64px;
+`
+
+const StyledItem = styled(Item)`
+  height: 350px;
+`
+
+const StyledFlexDesktop = styled(Flex)`
+  width: 100%;
+  height: 100%;
+`
+
+const StyledIcon = styled(Icon)`
+  margin-left: ${props => props.theme.margins.mini};
+  font-size: 10px;
+`
+
+const StyledAvatar = styled(Avatar)`
+  margin-right: ${props => props.theme.margins.mini};
+`
+
+const StyledUserIcon = styled(Icon)`
+  margin-right: 8px;
+`
+
+const StyledLoginButton = styled(Button)`
+  float: right;
+`
+
+const StyledMobileButton = styled(Button)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `
 
 const getSelectedKey = (pathname: string, loggedIn: boolean) => {
@@ -83,14 +130,10 @@ const NavMenu = ({ me, location }: IMenuProps) => {
   const MobileMenu = () =>
     loggedIn ? (
       <Scrollbars autoHide>
-        <Menu
+        <StyledMenu
           theme='light'
           mode={isMobile ? 'inline' : 'horizontal'}
           selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-          style={{
-            lineHeight: '64px',
-            width: '100%',
-          }}
         >
           <Item key='1'>
             <Link onClick={handleFoldBtnClick} to='/'>
@@ -139,15 +182,14 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Icon type='logout' />
             Log out
           </Item>
-        </Menu>
+        </StyledMenu>
       </Scrollbars>
     ) : (
       <>
-        <Menu
+        <StyledMenu
           theme='light'
           mode='inline'
           selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-          style={{ lineHeight: '64px', width: '100%' }}
         >
           <Item key='1'>
             <Link to='/'>Home</Link>
@@ -162,28 +204,20 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Link to='/overview'>Overview</Link>
           </Item>
           <Divider />
-          <Item style={{ height: 350 }}>
+          <StyledItem>
             <WrappedNormalLoginForm setLoggedIn={setLoggedIn} />
-          </Item>
-        </Menu>
+          </StyledItem>
+        </StyledMenu>
       </>
     )
   const DesktopMenu = () => (
-    <Flex
-      direction={isMobile ? 'column' : 'row'}
-      align='center'
-      style={{ width: '100%', height: '100%' }}
-    >
+    <StyledFlexDesktop direction={isMobile ? 'column' : 'row'} align='center'>
       {loggedIn ? (
         <>
-          <Menu
+          <StyledMenu
             theme='light'
             mode={isMobile ? 'inline' : 'horizontal'}
             selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-            style={{
-              lineHeight: '64px',
-              width: '100%',
-            }}
           >
             <Item key='1'>
               <Link to='/'>Home</Link>
@@ -193,7 +227,7 @@ const NavMenu = ({ me, location }: IMenuProps) => {
               title={
                 <span>
                   Builds
-                  <Icon type='down' style={{ marginLeft: 5, fontSize: 10 }} />
+                  <StyledIcon type='down' />
                 </span>
               }
             >
@@ -209,7 +243,7 @@ const NavMenu = ({ me, location }: IMenuProps) => {
               title={
                 <span>
                   Raids
-                  <Icon type='down' style={{ marginLeft: 5, fontSize: 10 }} />
+                  <StyledIcon type='down' />
                 </span>
               }
             >
@@ -223,29 +257,28 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Item key='4'>
               <Link to='/overview'>Overview</Link>
             </Item>
-          </Menu>
-          <Menu
+          </StyledMenu>
+          <StyledMenuNarrow
             theme='light'
             mode={isMobile ? 'inline' : 'horizontal'}
             selectedKeys={[
               location.pathname.includes('/profile') ? 'profile:1' : '',
             ]}
-            style={{ lineHeight: '64px' }}
           >
-            <SubMenu
+            <StyledSubMenu
               key='5'
-              style={{ float: isMobile ? 'initial' : 'right' }}
+              isMobile={isMobile}
               title={
                 <span>
-                  <Avatar style={{ marginRight: 5 }} />
+                  <StyledAvatar />
                   Hello, {me && me.name}
-                  <Icon type='down' style={{ marginLeft: 5, fontSize: 10 }} />
+                  <StyledIcon type='down' />
                 </span>
               }
             >
               <Item key='profile:1'>
                 <Link to='/profile'>
-                  <Icon type='user' style={{ marginRight: 8 }} />
+                  <StyledUserIcon type='user' />
                   Profile
                 </Link>
               </Item>
@@ -253,16 +286,15 @@ const NavMenu = ({ me, location }: IMenuProps) => {
                 <Icon type='logout' />
                 Log out
               </Item>
-            </SubMenu>
-          </Menu>
+            </StyledSubMenu>
+          </StyledMenuNarrow>
         </>
       ) : (
         <>
-          <Menu
+          <StyledMenu
             theme='light'
             mode='horizontal'
             selectedKeys={[getSelectedKey(location.pathname, loggedIn)]}
-            style={{ lineHeight: '64px', width: '100%' }}
           >
             <Item key='1'>
               <Link to='/'>Home</Link>
@@ -276,36 +308,30 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Item key='4'>
               <Link to='/overview'>Overview</Link>
             </Item>
-          </Menu>
+          </StyledMenu>
           <Popover
             placement='bottomRight'
             title='Login'
             content={<WrappedNormalLoginForm setLoggedIn={setLoggedIn} />}
             trigger='click'
           >
-            <Button
-              style={{ float: 'right' }}
-              type='primary'
-              icon='user'
-              size='large'
-            >
+            <StyledLoginButton type='primary' icon='user' size='large'>
               Login
-            </Button>
+            </StyledLoginButton>
           </Popover>
         </>
       )}
-    </Flex>
+    </StyledFlexDesktop>
   )
 
   return (
     <StyledHeader isTabletOrMobile={isMobile} expanded={expanded}>
       {isMobile && (
-        <Button
-          style={{ position: 'absolute', top: 10, right: 10 }}
+        <StyledMobileButton
           onClick={handleFoldBtnClick}
           size='large'
           icon={expanded ? 'menu-unfold' : 'menu-fold'}
-        ></Button>
+        ></StyledMobileButton>
       )}
       {isMobile && expanded && (
         <MobileHeader isTabletOrMobile={isMobile} expanded={expanded}>

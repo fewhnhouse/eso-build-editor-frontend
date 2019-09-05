@@ -29,18 +29,18 @@ interface IMetaProps {
 
 const CoverContainer = styled.div`
   display: flex;
-  width: 250px;
+  width: ${props => props.theme.widths.small};
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: ${props => props.theme.paddings.medium};
 `
 
 const StyledCard = styled(Card)`
-  margin: 20px;
+  margin: ${props => props.theme.margins.medium};
   background: ${(props: IMetaProps) =>
     props.selected ? 'rgba(0, 0, 0,0.1)' : 'white'};
   border-color: ${(props: IMetaProps) => (props.selected ? '#1890ff' : '')};
-  width: 250px;
+  width: ${props => props.theme.widths.small};
 `
 const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext)

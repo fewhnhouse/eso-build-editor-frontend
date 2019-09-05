@@ -6,6 +6,17 @@ import { useQuery } from 'react-apollo'
 import { Card, Spin } from 'antd'
 import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  height: calc(100vh - 100px);
+  width: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
+
+const StyledCard = styled(Card)`
+  width: 100%;
+`
 
 const GET_SETS_BY_ID = gql`
   query Set($id: ID!) {
@@ -42,21 +53,13 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const set: ISet = data.set ? data.set : ''
 
   return set ? (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: '100%',
-        width: '100%',
-        padding: 20,
-      }}
-    >
+    <StyledFlex direction='row' align='flex-start'>
       <Flex direction='column' fluid>
-        <Card style={{ width: '100%' }}>
+        <StyledCard>
           <GearCard size='big' set={set} setSelectionCount={0} />
-        </Card>
+        </StyledCard>
       </Flex>
-    </Flex>
+    </StyledFlex>
   ) : (
     <Flex fluid justify='center'>
       <Spin />

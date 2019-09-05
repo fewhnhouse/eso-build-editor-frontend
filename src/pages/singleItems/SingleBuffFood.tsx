@@ -6,6 +6,13 @@ import { useQuery } from 'react-apollo'
 import { Spin } from 'antd'
 import ErrorPage from '../../components/ErrorPage'
 import { BuffCard } from '../overview/Buff'
+import styled from 'styled-components'
+
+const StyledFlex = styled(Flex)`
+  height: calc(100vh - 100px);
+  width: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
 
 const GET_BUFF_BY_ID = gql`
   query Buff($id: ID!) {
@@ -36,19 +43,11 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
   }
   if (data) {
     return (
-      <Flex
-        direction='row'
-        align='flex-start'
-        style={{
-          height: 'calc(100vh - 100px)',
-          width: '100%',
-          padding: 20,
-        }}
-      >
+      <StyledFlex direction='row' align='flex-start'>
         <Flex direction='column' fluid>
           <BuffCard buff={data.buff} />
         </Flex>
-      </Flex>
+      </StyledFlex>
     )
   }
   return null
