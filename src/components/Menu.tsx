@@ -57,7 +57,6 @@ const StyledMenuNarrow = styled(Menu)`
   line-height: 64px;
 `
 
-
 const StyledFlexDesktop = styled(Flex)`
   width: 100%;
   height: 100%;
@@ -65,7 +64,7 @@ const StyledFlexDesktop = styled(Flex)`
 
 const StyledIcon = styled(Icon)`
   margin-left: ${props => props.theme.margins.mini};
-  font-size: 10px;
+  font-size: 10px !important;
 `
 
 const StyledAvatar = styled(Avatar)`
@@ -78,6 +77,10 @@ const StyledUserIcon = styled(Icon)`
 
 const StyledLoginButton = styled(Button)`
   float: right;
+`
+
+const StyledItem = styled(Item)`
+  height: 350px !important;
 `
 
 const StyledMobileButton = styled(Button)`
@@ -203,9 +206,9 @@ const NavMenu = ({ me, location }: IMenuProps) => {
             <Link to='/overview'>Overview</Link>
           </Item>
           <Divider />
-          <Item style={{height: 350}} key='5'>
+          <StyledItem key='5'>
             <WrappedNormalLoginForm setLoggedIn={setLoggedIn} />
-          </Item>
+          </StyledItem>
         </StyledMenu>
       </>
     )
