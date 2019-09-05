@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { Popover, Typography, Button } from 'antd'
+import { Popover, Typography, Button, Modal } from 'antd'
 import { useDrag, useDrop } from 'react-dnd'
 import {
   BuildContext,
@@ -12,6 +12,7 @@ import {
   TwohandedWeapon,
   SetType,
 } from '../pages/build/BuildStateContext'
+import { useMediaQuery } from 'react-responsive'
 import { GearCardContent } from './GearCard'
 import { specialWeaponSets } from '../pages/build/Sets/SetBar'
 import Flex from './Flex'
@@ -449,6 +450,59 @@ const getTypeColor = (type: ArmorType | WeaponType | 'jewelry' | undefined) => {
     return 'rgba(0, 0, 0, 0.65)'
   }
 }
+
+interface IContentProps {
+  slot: ISetSelection
+  setSelectionCount: number
+}
+const MobileContent = ({ slot, setSelectionCount }: IContentProps) => {
+  const [visible, setVisible] = useState(false)
+  const toggleModal = () => {
+    setVisible(visible => !visible)
+  }
+  return (
+    <GearFrame
+      onClick={toggleModal}
+      size={'small'}
+      hasIcon={slot.icon !== undefined}
+      backgroundSource={getImageSource(slot.slot)}
+    >
+      <Modal
+        bodyStyle={{ display: 'flex', justifyContent: 'center', margin: 0 }}
+        visible={visible}
+        footer={null}
+        title='Set Details'
+      >
+        <GearCardContent setSelectionCount={setSelectionCount} gear={slot} />
+      </Modal>
+      {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
+        <GearImg size={'small'} src={getGearSlot(slot)} />
+      ) : null}
+    </GearFrame>
+  )
+}
+
+const DesktopContent = ({ slot, setSelectionCount }: IContentProps) => {
+  return (
+    <Popover
+      mouseEnterDelay={0.5}
+      placement='left'
+      content={
+        <GearCardContent setSelectionCount={setSelectionCount} gear={slot} />
+      }
+    >
+      <GearFrame
+        size={'small'}
+        hasIcon={slot.icon !== undefined}
+        backgroundSource={getImageSource(slot.slot)}
+      >
+        {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
+          <GearImg size={'small'} src={getGearSlot(slot)} />
+        ) : null}
+      </GearFrame>
+    </Popover>
+  )
+}
 export const DisplaySlot = ({
   slot,
   setSelectionCount,
@@ -458,26 +512,15 @@ export const DisplaySlot = ({
   setSelectionCount: number
   size: 'normal' | 'small'
 }) => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   return (
     <DisplayCard>
-      <Popover
-        mouseEnterDelay={0.5}
-        placement='left'
-        content={
-          <GearCardContent setSelectionCount={setSelectionCount} gear={slot} />
-        }
-      >
-        <GearFrame
-          size={'small'}
-          hasIcon={slot.icon !== undefined}
-          backgroundSource={getImageSource(slot.slot)}
-        >
-          {slot.selectedSet !== null && slot.selectedSet !== undefined ? (
-            <GearImg size={'small'} src={getGearSlot(slot)} />
-          ) : null}
-        </GearFrame>
-      </Popover>
-
+      {isMobile ? (
+        <MobileContent slot={slot} setSelectionCount={setSelectionCount} />
+      ) : (
+        <DesktopContent slot={slot} setSelectionCount={setSelectionCount} />
+      )}
       <InnerDisplay
         direction='column'
         justify='space-between'

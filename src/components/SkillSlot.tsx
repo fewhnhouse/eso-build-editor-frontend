@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled, { CSSProperties } from 'styled-components'
-import { Popover } from 'antd'
+import { Popover, Modal } from 'antd'
 import { abilityFrame } from '../assets/misc'
 import { SkillCardContent } from './SkillCard'
 import { BuildContext } from '../pages/build/BuildStateContext'
 import { useDrag, useDrop } from 'react-dnd'
+import { useMediaQuery } from 'react-responsive'
 
 interface ISkillSlotProps {
   id?: string
@@ -177,6 +178,58 @@ export default ({
   )
 }
 
+const DesktopSlot = ({
+  skill,
+  size,
+}: {
+  skill: ISkill
+  size: 'small' | 'normal'
+}) => {
+  return (
+    <Popover
+      placement={'top'}
+      mouseEnterDelay={0.5}
+      content={<SkillCardContent skill={skill} />}
+    >
+      <SkillImg
+        size={size}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
+      />
+    </Popover>
+  )
+}
+
+const MobileSlot = ({
+  skill,
+  size,
+}: {
+  skill: ISkill
+  size: 'small' | 'normal'
+}) => {
+  const [visible, setVisible] = useState(false)
+  const toggleModal = () => {
+    setVisible(visible => !visible)
+  }
+
+  return (
+    <>
+      <Modal
+        bodyStyle={{ display: 'flex', justifyContent: 'center', margin: 0 }}
+        visible={visible}
+        footer={null}
+        title='Skill Details'
+      >
+        <SkillCardContent skill={skill} />
+      </Modal>
+      <SkillImg
+        onClick={toggleModal}
+        size={size}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
+      />
+    </>
+  )
+}
+
 export const DisplaySlot = ({
   skill,
   style,
@@ -186,18 +239,15 @@ export const DisplaySlot = ({
   style?: CSSProperties
   size?: 'small' | 'normal'
 }) => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   return skill !== undefined && skill !== null ? (
     <SkillFrame size={size} style={style}>
-      <Popover
-        placement={'top'}
-        mouseEnterDelay={0.5}
-        content={<SkillCardContent skill={skill} />}
-      >
-        <SkillImg
-          size={size}
-          src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${skill.icon}`}
-        />
-      </Popover>
+      {isMobile ? (
+        <MobileSlot skill={skill} size={size} />
+      ) : (
+        <DesktopSlot skill={skill} size={size} />
+      )}
     </SkillFrame>
   ) : (
     <SkillFrame size={size} style={style} />
