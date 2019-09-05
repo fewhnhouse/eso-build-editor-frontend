@@ -9,11 +9,14 @@ import { ISkill } from '../../components/SkillSlot'
 import { defaultUltimate } from '../build/Skills/Skills'
 import { Spin } from 'antd'
 import styled from 'styled-components'
+import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../components/theme'
 
 const StyledFlex = styled(Flex)`
   width: 100%;
   height: 100%;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? '0px' : props.theme.paddings.medium};
 `
 
 const GET_SKILLS_BY_ID = gql`
@@ -30,6 +33,8 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
   const { data } = useQuery(GET_SKILLS_BY_ID, {
     variables: { id: parseInt(id) },
   })
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const skillLine: ISkill[] = data.skills ? data.skills : ''
 
   if (data && data.skills && skillLine) {
@@ -49,7 +54,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
     )
 
     return (
-      <StyledFlex direction='row' align='flex-start'>
+      <StyledFlex isMobile={isMobile} direction='row' align='flex-start'>
         <SkillsDisplay
           morphedActives={morphedActives}
           morphs={morphs}

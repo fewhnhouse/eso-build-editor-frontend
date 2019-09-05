@@ -1,16 +1,17 @@
-import React, { useContext } from 'react'
-import { Card, Divider, Popover } from 'antd'
+import React, { useContext, useState } from 'react'
+import { Card, Divider, Popover, Modal } from 'antd'
 import styled from 'styled-components'
 import { BuildContext } from '../pages/build/BuildStateContext'
 import { ISkill } from './SkillSlot'
 import Flex from './Flex'
-import { ITheme } from './theme';
+import { useMediaQuery } from 'react-responsive'
+import { ITheme } from './theme'
 
 const StyledCard = styled(Card)`
-  margin: ${props => props.theme.margins.mini}
-    ${props => props.theme.margins.small} 0
-    ${props => props.theme.margins.small};
-  width: ${props => props.theme.widths.medium};
+  margin: ${props => props.theme.margins.mini} 0px;
+  min-width: ${props => props.theme.widths.small};
+  max-width: ${props => props.theme.widths.medium};
+  width: 100%;
   position: relative;
 `
 
@@ -106,45 +107,61 @@ interface ICardProps {
   ultimate?: boolean
 }
 
+const DesktopAction = ({ morph }: { morph: ISkill }) => (
+  <Popover content={<SkillCardContent skill={morph} />}>
+    <RaceContainer>
+      <MorphLabel active disabled>
+        {morph.name}
+      </MorphLabel>
+      <Image
+        active
+        title={morph.name}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph.icon}`}
+      />
+    </RaceContainer>
+  </Popover>
+)
+
+const MobileAction = ({ morph }: { morph: ISkill }) => {
+  const [visible, setVisible] = useState(false)
+  const toggleVisible = () => {
+    setVisible(visible => !visible)
+  }
+  return (
+    <RaceContainer onClick={toggleVisible}>
+      <Modal footer={null} title={morph.name} visible={visible}>
+        <SkillCardContent skill={morph} />
+      </Modal>
+
+      <MorphLabel active disabled>
+        {morph.name}
+      </MorphLabel>
+      <Image
+        active
+        title={morph.name}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph.icon}`}
+      />
+    </RaceContainer>
+  )
+}
+
 export const DisplaySkillCard = ({
   skill,
   morph1,
   morph2,
   passive,
-  ultimate,
 }: ICardProps) => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   return (
     <StyledCard
       hoverable
       actions={
         passive
           ? []
-          : [
-              <Popover content={<SkillCardContent skill={morph1} />}>
-                <RaceContainer>
-                  <MorphLabel active disabled>
-                    {morph1.name}
-                  </MorphLabel>
-                  <Image
-                    active
-                    title={morph1.name}
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph1.icon}`}
-                  />
-                </RaceContainer>
-              </Popover>,
-              <Popover content={<SkillCardContent skill={morph2} />}>
-                <RaceContainer>
-                  <MorphLabel active disabled>
-                    {morph2.name}
-                  </MorphLabel>
-                  <Image
-                    active
-                    title={morph2.name}
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/skills/${morph2.icon}`}
-                  />
-                </RaceContainer>
-              </Popover>,
-            ]
+          : isMobile
+          ? [<MobileAction morph={morph1} />, <MobileAction morph={morph2} />]
+          : [<DesktopAction morph={morph1} />, <DesktopAction morph={morph2} />]
       }
     >
       <SkillCardContent skill={skill} />

@@ -8,7 +8,9 @@ import Flex from './Flex'
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
-  width: 450px;
+  min-width: ${props => props.theme.widths.small}
+  max-width: ${props => props.theme.widths.large}
+  width: 100%;
   position: relative;
 `
 
@@ -68,7 +70,7 @@ const StyledSpan = styled.span`
 `
 
 const StyledSpanColor = styled.span`
-  color: ${props => props.theme.colors.grey.medium};;
+  color: ${props => props.theme.colors.grey.medium};
 `
 
 const StyledDivider = styled(Divider)`

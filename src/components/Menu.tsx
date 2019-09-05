@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Layout, Menu, Icon, Avatar, Popover, Button, Divider } from 'antd'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
@@ -123,6 +123,12 @@ const NavMenu = ({ me, location }: IMenuProps) => {
     setExpanded(false)
     localStorage.removeItem('token')
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      setExpanded(false)
+    }
+  }, [loggedIn])
 
   const handleFoldBtnClick = () => {
     setExpanded(expanded => !expanded)

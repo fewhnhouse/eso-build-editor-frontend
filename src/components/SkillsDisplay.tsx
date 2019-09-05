@@ -5,6 +5,8 @@ import SkillCard, { DisplaySkillCard } from './SkillCard'
 import { useTrail, animated } from 'react-spring'
 import { defaultUltimate } from '../pages/build/Skills/Skills'
 import styled from 'styled-components'
+import { useMediaQuery } from 'react-responsive'
+import { ITheme } from './theme'
 
 const AbilityContainer = styled.div`
   flex: 2;
@@ -13,7 +15,8 @@ const AbilityContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  padding: ${props => props.theme.paddings.large};
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? '0px' : props.theme.paddings.large};
 `
 
 const StyledEmpty = styled(Empty)`
@@ -47,6 +50,7 @@ export default ({
     opacity: 0,
     transform: 'translate(0px, -40px)',
   }))
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -56,7 +60,7 @@ export default ({
   }, [baseActives, set])
 
   return skillLine !== 0 ? (
-    <AbilityContainer>
+    <AbilityContainer isMobile={isMobile}>
       <Divider>Ultimate</Divider>
       {baseUltimate &&
         baseUltimate.skillId !== 0 &&

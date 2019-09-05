@@ -102,7 +102,9 @@ export const MundusCard = ({ mundusStone }: IMundusCardProps) => {
             }
           />
           <StyledFlexTitle direction='column' fluid>
-            <StyledTitle>{mundusStone && mundusStone.name}</StyledTitle>
+            <StyledTitle level={3}>
+              {mundusStone && mundusStone.name}
+            </StyledTitle>
             <StyledDidiver />
             <Description>
               {mundusStone.effect.trim() + ' by ' + mundusStone.value}
