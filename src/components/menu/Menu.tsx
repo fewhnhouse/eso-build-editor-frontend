@@ -17,7 +17,7 @@ interface IStyledHeaderProps {
   theme: ITheme
 }
 const MenuButton = styled(Button)`
-  margin-right: 5px;
+  margin-right: 10px;
   width: 40px;
 `
 const StyledPageHeader = styled(PageHeader)`
