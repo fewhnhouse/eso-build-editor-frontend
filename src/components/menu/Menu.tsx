@@ -1,11 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import {
-  Layout,
-  Menu,
-  Button,
-  PageHeader,
-} from 'antd'
+import { Layout, Menu, Button, PageHeader } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { LoginContext } from '../../App'
 import { useMediaQuery } from 'react-responsive'
@@ -21,15 +16,17 @@ interface IStyledHeaderProps {
   isTabletOrMobile: boolean
   theme: ITheme
 }
-
+const MenuButton = styled(Button)`
+  margin-right: 5px;
+  width: 40px;
+`
 const StyledPageHeader = styled(PageHeader)`
   width: 100%;
 `
 const StyledHeader = styled(Header)`
   display: flex;
   width: 100vw;
-  flex-direction: ${(props: IStyledHeaderProps) =>
-    props.isTabletOrMobile ? 'column' : 'row'};
+  flex-direction: row;
   background: white;
   z-index: 10;
   align-items: center;
@@ -58,12 +55,6 @@ const MobileHeader = styled.div`
 export const StyledMenu = styled(Menu)`
   line-height: 64px;
   width: 100%;
-`
-
-const StyledMobileButton = styled(Button)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
 `
 
 export const getSelectedKey = (pathname: string, loggedIn: boolean) => {
@@ -118,15 +109,15 @@ const NavMenu = ({ me, history }: IMenuProps) => {
       {isMobile && (
         <>
           <StyledPageHeader
-            onBack={() => history.goBack()}
-            title={appState!.headerTitle}
-            subTitle={appState!.headerSubTitle}
+            onBack={expanded ? undefined : () => history.goBack()}
+            title={expanded ? 'Navigation' : appState!.headerTitle}
+            subTitle={!expanded && appState!.headerSubTitle}
           />
-          <StyledMobileButton
-            onClick={handleFoldBtnClick}
+          <MenuButton
             size='large'
-            icon={expanded ? 'menu-unfold' : 'menu-fold'}
-          ></StyledMobileButton>
+            icon={expanded ? 'up' : 'down'}
+            onClick={handleFoldBtnClick}
+          ></MenuButton>
         </>
       )}
       {isMobile && expanded && (
