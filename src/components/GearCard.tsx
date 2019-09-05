@@ -26,7 +26,7 @@ const Title = styled.div`
   font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
+  color: ${props => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -34,7 +34,7 @@ const Title = styled.div`
 `
 
 const SmallTitle = styled.div`
-  color: rgba(0, 0, 0, 0.55);
+  color: ${props => props.theme.colors.grey.medium};
   font-weight: 400;
   font-size: ${props => props.theme.fontSizes.small};
   display: inline;
@@ -68,7 +68,7 @@ const StyledSpan = styled.span`
 `
 
 const StyledSpanColor = styled.span`
-  color: rgba(0, 0, 0, 0.45);
+  color: ${props => props.theme.colors.grey.medium};;
 `
 
 const StyledDivider = styled(Divider)`

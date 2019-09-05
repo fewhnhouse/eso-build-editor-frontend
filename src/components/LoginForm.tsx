@@ -58,7 +58,7 @@ const StyledDivider = styled(Divider)`
 `
 
 const StyledIcon = styled(Icon)`
-  color: rgba(0, 0, 0, 0.25);
+  color: ${props => props.theme.colors.grey.light};;
 `
 
 const StyledButton = styled(Button)`

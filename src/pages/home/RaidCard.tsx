@@ -21,7 +21,7 @@ const Title = styled.div`
   font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
+  color: ${props => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -31,7 +31,7 @@ const RaceClassContainer = styled.div`
 const Description = styled(Flex)`
   font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
-  color: 'rgba(0, 0, 0, 0.45)';
+  color: ${props => props.theme.colors.grey.medium};
 `
 
 const AbilityBar = styled.div`

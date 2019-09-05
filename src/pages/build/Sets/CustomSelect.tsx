@@ -22,7 +22,7 @@ const StyledTitleFlex = styled(Flex)`
 `
 
 const StyledText = styled(Typography.Text)`
-  color: rgba(0, 0, 0, 0.25);
+  color: ${props => props.theme.colors.grey.light};;
   white-space: normal;
 `
 

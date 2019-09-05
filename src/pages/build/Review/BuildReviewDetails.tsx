@@ -19,7 +19,7 @@ const { Title, Text } = Typography
 const ResourceCard = styled.div`
   display: flex;
   width: 100px;
-  color: rgba(0, 0, 0, 0.65);
+  color: ${props => props.theme.colors.grey.normal};;
   border: 1px solid #e8e8e8;
   border-radius: 2px;
   padding: ${props => props.theme.paddings.small};
