@@ -1,6 +1,11 @@
 const theme = {
   primary: '#1890ff',
   mainBg: 'rgb(155, 155, 155)',
+  fontSizes: {
+    small: '14px',
+    normal: '16px',
+    huge: '30px'
+  },
   borderRadius: '3px',
   widths: {
     mini: '150px',
@@ -56,6 +61,12 @@ export interface Widths {
   large: string
 }
 
+export interface FontSizes {
+  small: string
+  normal: string
+  huge: string
+}
+
 export interface Margins {
   mini: string
   small: string
@@ -100,6 +111,7 @@ export interface ITheme {
   mainBg: string
   borderRadius: string
   widths: Widths
+  fontSizes: FontSizes
   margins: Margins
   roleCardColors: RoleCardColors
   icon: Icon

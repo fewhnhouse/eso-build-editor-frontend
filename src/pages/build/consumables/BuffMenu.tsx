@@ -101,7 +101,7 @@ const StyledListFlex = styled(Flex)`
 `
 
 const Description = styled.div`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
   color: ${(descProps: { newEffect?: boolean }) =>
     descProps.newEffect
@@ -111,7 +111,7 @@ const Description = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);

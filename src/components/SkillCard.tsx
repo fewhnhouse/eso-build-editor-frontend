@@ -43,7 +43,7 @@ const RaceContainer = styled.div`
 `
 
 const Description = styled.div`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
@@ -55,7 +55,7 @@ const StyledDivider = styled(Divider)`
 `
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
@@ -82,7 +82,7 @@ const StyledFlex = styled(Flex)`
 `
 
 const MorphLabel = styled.span`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   font-weight: 500;
   max-width: 140px;
   color: ${(props: { active: boolean; disabled: boolean }) =>

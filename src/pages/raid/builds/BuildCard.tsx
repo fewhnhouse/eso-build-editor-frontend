@@ -29,7 +29,7 @@ const RaceClassContainer = styled.div`
 `
 
 const Description = styled(Flex)`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
   color: 'rgba(0, 0, 0, 0.45)';
 `

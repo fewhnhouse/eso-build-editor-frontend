@@ -57,7 +57,7 @@ const StyledFlex200 = styled(Flex)`
 
 const StyledTitle = styled(Typography.Title)`
   margin-bottom: 0;
-  width: 180;
+  width: 180px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -65,7 +65,7 @@ const StyledTitle = styled(Typography.Title)`
 
 const StyledText = styled(Typography.Text)`
   white-space: nowrap;
-  width: 180;
+  width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
 `

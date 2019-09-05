@@ -53,7 +53,7 @@ const TextPrimary = styled(Typography.Text)`
 `
 
 const TextSecondary = styled(Typography.Text)`
-  font-size: 12;
+  font-size: 12px;
   width: ${props => props.theme.widths.mini};
   text-align: left;
 `

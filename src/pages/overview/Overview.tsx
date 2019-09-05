@@ -28,7 +28,7 @@ export const MenuCard = styled.div`
 `
 
 export const Description = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};

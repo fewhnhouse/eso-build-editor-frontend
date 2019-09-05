@@ -23,7 +23,7 @@ const Description = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
@@ -36,7 +36,7 @@ const Title = styled.div`
 const SmallTitle = styled.div`
   color: rgba(0, 0, 0, 0.55);
   font-weight: 400;
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   display: inline;
 `
 
