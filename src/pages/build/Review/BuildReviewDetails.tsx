@@ -17,6 +17,10 @@ import { ITheme } from '../../../components/theme'
 
 const { Title, Text } = Typography
 
+const BuildTitleFlex = styled(Flex)`
+  min-height: 50px;
+`
+
 const ResourceCard = styled.div`
   display: flex;
   width: 100px;
@@ -63,7 +67,8 @@ const BuildInformation = styled(Card)`
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   flex: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : 2)};
-  overflow-y: auto;
+  overflow-y: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'auto'};
 `
 const GeneralInformation = styled(Card)`
   margin: ${(props: { isMobile: boolean }) =>
@@ -75,7 +80,8 @@ const GeneralInformation = styled(Card)`
   flex: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : 1)};
   max-width: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '' : '700px'};
-  overflow-y: auto;
+  overflow-y: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : 'auto'};
 `
 const SkillsView = styled.div`
   margin-bottom: ${props => props.theme.margins.small};
@@ -179,7 +185,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   return (
     <Scrollbars autoHide disabled={!isMobile}>
       <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
-        <Flex direction='column' align='center'>
+        <BuildTitleFlex direction='column' align='center'>
           <Typography.Title>{name}</Typography.Title>
           {local && (
             <Flex direction='row'>
@@ -202,12 +208,12 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               />
             </Flex>
           )}
-        </Flex>
+        </BuildTitleFlex>
         <Wrapper
           isMobile={isMobile}
           direction={isMobile ? 'column' : 'row'}
-          align='flex-start'
-          justify='space-evenly'
+          align={isMobile ? 'center' : 'flex-start'}
+          justify={isMobile ? 'space-between' : 'space-evenly'}
         >
           <GeneralInformation
             isMobile={isMobile}
