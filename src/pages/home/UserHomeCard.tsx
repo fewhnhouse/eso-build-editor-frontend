@@ -11,6 +11,7 @@ import { classes, races } from '../build/RaceAndClass/data'
 import { titleCase } from '../raid/builds/BuildMenu'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../components/theme'
 
 const { Title } = Typography
 
@@ -27,7 +28,8 @@ const ListCard = styled.div`
   width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '80%'};
-  min-width: ${props => props.theme.widths.medium};
+  min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   display: flex;
   flex-direction: column;
   max-width: ${props => props.theme.widths.large};
