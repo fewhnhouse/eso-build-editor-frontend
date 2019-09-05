@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Flex from '../../components/Flex'
 import { RouteComponentProps, withRouter } from 'react-router'
 import gql from 'graphql-tag'
@@ -11,6 +11,8 @@ import { Spin } from 'antd'
 import styled from 'styled-components'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
+import { AppContext } from '../../components/AppContainer'
+import { classSkillLines, skillLines } from '../build/Skills/SkillMenu'
 
 const StyledFlex = styled(Flex)`
   width: 100%;
@@ -19,7 +21,7 @@ const StyledFlex = styled(Flex)`
     props.isMobile ? '0px' : props.theme.paddings.medium};
 `
 
-const GET_SKILLS_BY_ID = gql`
+const GET_SKILLS_BY_SKILLLINE_ID = gql`
   query Skills($id: Int!) {
     skills(where: { skillline: $id }) {
       ...Skill
@@ -30,9 +32,32 @@ const GET_SKILLS_BY_ID = gql`
 
 const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
-  const { data } = useQuery(GET_SKILLS_BY_ID, {
+  const [, appDispatch] = useContext(AppContext)
+
+  const { data } = useQuery(GET_SKILLS_BY_SKILLLINE_ID, {
     variables: { id: parseInt(id) },
   })
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Skill Line' },
+    })
+    if (data.skills) {
+      console.log(
+        [...classSkillLines, ...skillLines]
+          .map(skillLine => skillLine.items)
+          .flat()
+      )
+      const skillLine = [...classSkillLines, ...skillLines]
+        .map(skillLine => skillLine.items)
+        .flat()
+        .find((item: any) => item.id === parseInt(id))
+      appDispatch!({
+        type: 'SET_HEADER_SUBTITLE',
+        payload: { headerSubTitle: skillLine ? skillLine.title : '' },
+      })
+    }
+  }, [appDispatch, data.skills])
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const skillLine: ISkill[] = data.skills ? data.skills : ''

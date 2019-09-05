@@ -344,8 +344,10 @@ const ArmorTypeTag = ({
       return <StyledTag color='red'>Heavy</StyledTag>
     } else if (hasMediumArmor) {
       return <StyledTag color='green'>Medium</StyledTag>
-    } else {
+    } else if (hasLightArmor) {
       return <StyledTag color='blue'>Light</StyledTag>
+    } else {
+      return null;
     }
   }
 }

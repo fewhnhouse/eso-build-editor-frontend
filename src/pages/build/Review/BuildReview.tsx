@@ -18,6 +18,7 @@ import Flex from '../../../components/Flex'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import styled from 'styled-components'
+import { AppContext } from '../../../components/AppContainer'
 
 interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
@@ -61,6 +62,14 @@ const BuildReview = ({ match, local }: IBuildReview) => {
 
   const [state] = useContext(BuildContext)
   const [loggedIn] = useContext(LoginContext)
+  const [, appDispatch] = useContext(AppContext)
+
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Build Review' },
+    })
+  }, [appDispatch])
 
   const buildQuery = useQuery(BUILD, { variables: { id } })
   const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)

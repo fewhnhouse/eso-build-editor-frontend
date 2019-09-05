@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Flex from '../../components/Flex'
 import { RouteComponentProps, withRouter } from 'react-router'
 import gql from 'graphql-tag'
@@ -7,6 +7,7 @@ import { Spin } from 'antd'
 import ErrorPage from '../../components/ErrorPage'
 import { BuffCard } from '../overview/Buff'
 import styled from 'styled-components'
+import { AppContext } from '../../components/AppContainer'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -28,9 +29,23 @@ const GET_BUFF_BY_ID = gql`
 
 const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
+  const [, appDispatch] = useContext(AppContext)
+
   const { data, loading, error } = useQuery(GET_BUFF_BY_ID, {
     variables: { id: id },
   })
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Buff Food' },
+    })
+    if (data.buff) {
+      appDispatch!({
+        type: 'SET_HEADER_SUBTITLE',
+        payload: { headerSubTitle: data.buff.name },
+      })
+    }
+  }, [appDispatch, data.buff])
   if (loading) {
     return (
       <Flex fluid justify='center'>

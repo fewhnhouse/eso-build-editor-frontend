@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useReducer } from 'react'
 import '../App.css'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Routes from './Routes'
@@ -16,7 +16,7 @@ import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { LoginContext } from '../App'
 import Flex from './Flex'
-import Menu from './Menu'
+import Menu from './menu/Menu'
 import Div100vh from 'react-div-100vh'
 
 const LoadingContainer = styled.div`
@@ -26,6 +26,9 @@ const LoadingContainer = styled.div`
   padding: 30px 50px;
   margin: 20px 0;
 `
+export const AppContext = React.createContext<
+  Partial<[IAppState, React.Dispatch<IAppAction>]>
+>([])
 
 export const ME = gql`
   query {
@@ -45,6 +48,40 @@ export const RESEND_VERIFICATION = gql`
     }
   }
 `
+
+interface IAppAction {
+  type: string
+  payload: any
+}
+
+const appReducer = (state: IAppState, action: IAppAction) => {
+  switch (action.type) {
+    case 'SET_HEADER_TITLE':
+      const { headerTitle } = action.payload
+      return {
+        ...state,
+        headerTitle,
+        headerSubTitle: ""
+      }
+    case 'SET_HEADER_SUBTITLE':
+      const { headerSubTitle } = action.payload
+      return {
+        ...state,
+        headerSubTitle,
+      }
+    default:
+      return state
+  }
+}
+
+interface IAppState {
+  headerTitle: string
+  headerSubTitle: string
+}
+const defaultAppState: IAppState = {
+  headerTitle: '',
+  headerSubTitle: '',
+}
 
 const openNotification = (resendMutation: any) => {
   const key = `open${Date.now()}`
@@ -89,6 +126,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
   const [loggedIn, setLoggedIn] = useContext(LoginContext)
 
   const [resendMutation, resendResult] = useMutation(RESEND_VERIFICATION)
+  const [state, dispatch] = useReducer(appReducer, defaultAppState)
 
   useEffect(() => {
     if (resendResult.data) {
@@ -127,8 +165,10 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
   return (
     <Div100vh>
       <Layout style={{ height: '100%' }}>
-        <Menu me={data && data.me} />
-        <Routes isLoggedIn={loggedIn} />
+        <AppContext.Provider value={[state, dispatch]}>
+          <Menu me={data && data.me} />
+          <Routes isLoggedIn={loggedIn} />
+        </AppContext.Provider>
       </Layout>
     </Div100vh>
   )

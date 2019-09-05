@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Typography, Divider, Card, message } from 'antd'
@@ -14,6 +14,7 @@ import gql from 'graphql-tag'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../../../components/theme'
+import { AppContext } from '../../../components/AppContainer'
 
 const { Title, Text } = Typography
 
@@ -135,6 +136,10 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     description,
     applicationArea,
   } = loadedData
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({ type: 'SET_HEADER_SUBTITLE', payload: { headerSubTitle: name } })
+  }, [name])
   const selectedSetup = [
     {
       id: 'bigpieces',
@@ -186,7 +191,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     <Scrollbars autoHide disabled={!isMobile}>
       <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
         <BuildTitleFlex direction='column' align='center'>
-          <Typography.Title>{name}</Typography.Title>
+          {!isMobile && <Typography.Title>{name}</Typography.Title>}
           {local && (
             <Flex direction='row'>
               <InformationCard
