@@ -126,7 +126,7 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
 
   return (
     <Div100vh>
-      <Layout style={{ height: '100vh' }}>
+      <Layout style={{ height: '100%' }}>
         <Menu me={data && data.me} />
         <Routes isLoggedIn={loggedIn} />
       </Layout>
