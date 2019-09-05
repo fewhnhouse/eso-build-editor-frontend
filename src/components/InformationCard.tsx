@@ -11,7 +11,7 @@ interface IInformationCardProps {
 
 const FlexCard = styled(Flex)`
   padding: ${props => props.theme.paddings.small};
-  border: 1px solid rgb(232, 232, 232);
+  border: 1px solid ${props => props.theme.mainBorderColor};
   border-radius: 2px;
   background: white;
 `

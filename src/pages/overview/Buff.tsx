@@ -9,6 +9,7 @@ import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
 import { Typography, Divider, Card, Empty } from 'antd'
 import styled from 'styled-components'
+import { ITheme } from '../../components/theme';
 
 interface IBuffProps {
   context: React.Context<any>
@@ -45,8 +46,8 @@ const StyledDescription = styled(Description)`
 const StyledFlexWrapper = styled(Flex)`
   height: 100%;
   width: 100%;
-  padding: ${(flexProps: { isMobile: boolean }) =>
-    flexProps.isMobile ? '0px' : props => props.theme.margins.medium};
+  padding: ${(props: { isMobile: boolean, theme: ITheme }) =>
+    props.isMobile ? '0px' : props.theme.margins.medium};
 `
 
 const StyledEmpty = styled(Empty)`

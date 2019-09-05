@@ -7,6 +7,7 @@ import WrappedNormalLoginForm from './LoginForm'
 import { useMediaQuery } from 'react-responsive'
 import Flex from './Flex'
 import Scrollbars from 'react-custom-scrollbars'
+import { ITheme } from './theme'
 
 const { Header } = Layout
 const { SubMenu, Item, ItemGroup } = Menu
@@ -14,6 +15,7 @@ const { SubMenu, Item, ItemGroup } = Menu
 interface IStyledHeaderProps {
   expanded: boolean
   isTabletOrMobile: boolean
+  theme: ITheme
 }
 const StyledHeader = styled(Header)`
   display: flex;
@@ -26,7 +28,7 @@ const StyledHeader = styled(Header)`
   padding: ${(headerProps: IStyledHeaderProps) =>
     headerProps.expanded ? '0px' : ''};
   padding-right: ${(headerProps: IStyledHeaderProps) =>
-    headerProps.isTabletOrMobile ? '0px' : props => props.theme.paddings.small};
+    headerProps.isTabletOrMobile ? '0px' : headerProps.theme.paddings.small};
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 `
 

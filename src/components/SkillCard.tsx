@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { BuildContext } from '../pages/build/BuildStateContext'
 import { ISkill } from './SkillSlot'
 import Flex from './Flex'
+import { ITheme } from './theme';
 
 const StyledCard = styled(Card)`
   margin: ${props => props.theme.margins.mini}
@@ -67,14 +68,14 @@ const Title = styled.div`
 
 const CostSpan = styled.span`
   font-weight: 500;
-  color: ${(costProps: { type: string }) =>
-    costProps.type === 'Ultimate'
-      ? props => props.theme.costs.ultimate
-      : costProps.type === 'Magicka'
-      ? props => props.theme.costs.magicka
-      : costProps.type === 'Stamina'
-      ? props => props.theme.costs.stamina
-      : props => props.theme.costs.ultimate};
+  color: ${(props: { type: string; theme: ITheme }) =>
+    props.type === 'Ultimate'
+      ? props.theme.costs.ultimate
+      : props.type === 'Magicka'
+      ? props.theme.costs.magicka
+      : props.type === 'Stamina'
+      ? props.theme.costs.stamina
+      : props.theme.costs.ultimate};
 `
 
 const StyledFlex = styled(Flex)`

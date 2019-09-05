@@ -41,7 +41,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: 100%;
-  color: rgb(155, 155, 155);
+  color: ${props => props.theme.mainBg};
 `
 const TabButton = styled(Button)`
   margin: 0px 10px;

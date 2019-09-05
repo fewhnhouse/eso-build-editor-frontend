@@ -13,6 +13,7 @@ import { applicationAreas } from '../RaceAndClass/RaceClass'
 import gql from 'graphql-tag'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
+import { ITheme } from '../../../components/theme';
 
 const { Title, Text } = Typography
 
@@ -48,8 +49,8 @@ const Wrapper = styled(Flex)`
   height: calc(100% - 60px);
 `
 const StyledFlex = styled(Flex)`
-  padding: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : props => props.theme.paddings.medium};
+  padding: ${(props: { isMobile: boolean, theme: ITheme }) =>
+    props.isMobile ? '0px' : props.theme.paddings.medium};
 `
 
 const BuildInformation = styled(Card)`

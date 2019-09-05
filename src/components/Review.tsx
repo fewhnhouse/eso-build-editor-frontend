@@ -31,7 +31,7 @@ const Container = styled(Content)`
   overflow-x: hidden;
   height: ${(props: { isMobile: boolean }) =>
     `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
-  color: rgb(155, 155, 155);
+  color: ${props => props.theme.mainBg};
 `
 
 const StyledFooter = styled(Footer)`

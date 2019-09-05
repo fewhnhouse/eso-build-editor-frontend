@@ -49,8 +49,8 @@ const IconContainer = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
+  border-color: ${(props: { active: boolean, theme: ITheme }) =>
+    props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;

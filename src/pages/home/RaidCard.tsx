@@ -29,7 +29,7 @@ const Title = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  border-color: rgb(232, 232, 232);
+  border-color: ${props => props.theme.mainBorderColor};
   background: 'white';
   border-width: 2px;
   margin: ${props => props.theme.margins.small};

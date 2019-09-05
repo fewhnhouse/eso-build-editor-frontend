@@ -10,13 +10,14 @@ import { Spin } from 'antd'
 import SkillsDisplay from '../../components/SkillsDisplay'
 import { defaultUltimate } from '../build/Skills/Skills'
 import styled from 'styled-components'
+import { ITheme } from '../../components/theme'
 
 const StyledFlex = styled(Flex)`
   height: 100%;
   width: 100%;
   overflow: auto;
-  padding: ${(flexProps: { isMobile: boolean }) =>
-    flexProps.isMobile ? 0 : props => props.theme.paddings.medium};
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? 0 : props.theme.paddings.medium};
 `
 
 interface ISetProps {

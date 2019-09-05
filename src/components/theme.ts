@@ -1,6 +1,7 @@
 const theme = {
   primary: '#1890ff',
   mainBg: 'rgb(155, 155, 155)',
+  mainBorderColor: 'rgb(232, 232, 232)',
   fontSizes: {
     small: '14px',
     normal: '16px',
@@ -90,7 +91,12 @@ export interface Margins {
   medium: string
   large: string
 }
-
+export interface Paddings {
+  mini: string
+  small: string
+  medium: string
+  large: string
+}
 export interface RoleCardColors {
   StamDD: string
   MagDD: string
@@ -126,11 +132,13 @@ export interface Description {
 export interface ITheme {
   primary: string
   mainBg: string
+  mainBorderColor: string
   colors: Colors
   borderRadius: string
   widths: Widths
   fontSizes: FontSizes
   margins: Margins
+  paddings: Paddings
   roleCardColors: RoleCardColors
   icon: Icon
   smallIcon: SmallIcon

@@ -14,7 +14,7 @@ const Wrapper = styled(Flex)`
 
 const CardContainer = styled(Flex)`
   flex: 1;
-  border-color: rgb(232, 232, 232);
+  border-color: ${props => props.theme.mainBorderColor};
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
@@ -27,7 +27,7 @@ const CardContainer = styled(Flex)`
 
 const OverviewContainer = styled(Flex)`
   flex: 1;
-  border-color: rgb(232, 232, 232);
+  border-color: ${props => props.theme.mainBorderColor};
   margin: auto;
   background: 'white';
   border-width: 2px;
