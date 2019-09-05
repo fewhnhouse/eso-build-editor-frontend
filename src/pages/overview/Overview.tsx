@@ -73,6 +73,10 @@ export default () => {
       type: 'SET_HEADER_TITLE',
       payload: { headerTitle: 'Overview' },
     })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
   }, [appDispatch])
 
   const { buff, mundusStone, selectedSet, skillLine } = state

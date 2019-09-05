@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router'
 import { message, Result, Button, Spin } from 'antd'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { AppContext } from './AppContainer';
+import { AppContext } from './AppContainer'
 
 const VERIFY = gql`
   mutation confirmSignup($token: String!) {
@@ -33,7 +33,14 @@ export default ({ match }: RouteComponentProps<{ token: string }>) => {
   const [, appDispatch] = useContext(AppContext)
 
   useEffect(() => {
-    appDispatch!({ type: 'SET_HEADER_TITLE', payload: { headerTitle: 'Verify' } })
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Verify' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
   }, [appDispatch])
 
   const { token } = match.params

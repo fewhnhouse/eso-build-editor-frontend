@@ -150,6 +150,10 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       type: 'SET_HEADER_TITLE',
       payload: { headerTitle: 'Profile' },
     })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
   }, [appDispatch])
 
   const [oldPassword, setOldPassword] = useState('')

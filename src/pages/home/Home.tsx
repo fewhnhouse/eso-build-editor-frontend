@@ -25,6 +25,10 @@ const Home = ({ loggedIn }: IHomeProps) => {
   const [, appDispatch] = useContext(AppContext)
   useEffect(() => {
     appDispatch!({ type: 'SET_HEADER_TITLE', payload: { headerTitle: 'Home' } })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
   }, [appDispatch])
   return (
     <Container>{loggedIn ? <LoggedInHome /> : <NotLoggedInHome />}</Container>

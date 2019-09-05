@@ -42,7 +42,14 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   })
   const [, appDispatch] = useContext(AppContext)
   useEffect(() => {
-    appDispatch!({ type: 'SET_HEADER_TITLE', payload: { headerTitle: 'Raid Editor' } })
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Raid Editor' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
   }, [appDispatch])
 
   const { loading, error, data } = useQuery(GET_RAID, {

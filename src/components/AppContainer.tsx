@@ -61,7 +61,6 @@ const appReducer = (state: IAppState, action: IAppAction) => {
       return {
         ...state,
         headerTitle,
-        headerSubTitle: ""
       }
     case 'SET_HEADER_SUBTITLE':
       const { headerSubTitle } = action.payload

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Menu, Button, PageHeader } from 'antd'
+import { Layout, Menu, Button, PageHeader, Icon } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { LoginContext } from '../../App'
 import { useMediaQuery } from 'react-responsive'
@@ -16,12 +16,16 @@ interface IStyledHeaderProps {
   isTabletOrMobile: boolean
   theme: ITheme
 }
+
+
 const MenuButton = styled(Button)`
   margin-right: 10px;
   width: 40px;
 `
 const StyledPageHeader = styled(PageHeader)`
   width: 100%;
+  padding: 0px 10px;
+  display: flex;
 `
 const StyledHeader = styled(Header)`
   display: flex;
@@ -109,6 +113,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
       {isMobile && (
         <>
           <StyledPageHeader
+            backIcon={<Icon type="arrow-left" />}
             onBack={expanded ? undefined : () => history.goBack()}
             title={expanded ? 'Navigation' : appState!.headerTitle}
             subTitle={!expanded && appState!.headerSubTitle}
