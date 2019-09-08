@@ -10,7 +10,7 @@ import Flex from '../../../components/Flex'
 import { IBuild } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
 import { Link } from 'react-router-dom'
-import { ITheme } from '../../../components/theme';
+import { ITheme } from '../../../components/theme'
 
 const { TabPane } = Tabs
 
@@ -50,7 +50,7 @@ const AbilityBarContainer = styled(Flex)`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active?: boolean, theme: ITheme }) =>
+  border-color: ${(props: { active?: boolean; theme: ITheme }) =>
     props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
@@ -76,6 +76,11 @@ const StyledTitle = styled(Typography.Title)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`
+
+const BuffTitle = styled.span`
+  margin-bottom: ${props => props.theme.margins.mini};
+  font-weight: bold;
 `
 
 interface IBuildCardProps {
@@ -196,7 +201,7 @@ const BuildCard = ({
             <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <AbilityBarContainer direction='column' align="center">
+                <AbilityBarContainer direction='column' align='center'>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
@@ -274,6 +279,22 @@ const BuildCard = ({
                     ]}
                   />
                 </ScrollContainer>
+              </TabPane>
+              <TabPane tab='Mundus' key='mundus'>
+                <Icon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.mundusStone.icon}`}
+                />
+                <BuffTitle>{item.mundusStone.name}</BuffTitle>
+                <br />
+                {item.mundusStone.effect} by {item.mundusStone.value}.
+              </TabPane>
+              <TabPane tab='Foodbuff' key='buff'>
+                <Icon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${item.buff.icon}`}
+                />
+                <BuffTitle>{item.buff.name}</BuffTitle>
+                <br />
+                {item.buff.buffDescription}
               </TabPane>
             </Tabs>
           </>
