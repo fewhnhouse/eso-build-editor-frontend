@@ -52,6 +52,14 @@ export default ({
   }))
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
+  baseActives.sort((skill1, skill2) =>
+    skill1.unlocks_at && skill2.unlocks_at
+      ? skill1.unlocks_at > skill2.unlocks_at
+        ? 1
+        : -1
+      : 0
+  )
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       set({ opacity: 1, transform: 'translate(0px, 0px)' })
