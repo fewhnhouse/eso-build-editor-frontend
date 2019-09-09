@@ -208,7 +208,6 @@ export default () => {
               >
                 {role.builds.map((build, buildIndex) => (
                   <StyledBuildCard
-                    expand
                     draggable={false}
                     role={role}
                     key={`buildCard-${index}-${buildIndex}`}
