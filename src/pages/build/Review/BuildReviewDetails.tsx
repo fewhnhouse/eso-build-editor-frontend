@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Typography, Divider, Card, message } from 'antd'
-import { useSubscription } from 'react-apollo'
+import { Typography, Divider, Card } from 'antd'
 import GearView from '../../../components/GearView'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
@@ -10,7 +9,6 @@ import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
 import InformationCard from '../../../components/InformationCard'
 import { applicationAreas } from '../RaceAndClass/RaceClass'
-import gql from 'graphql-tag'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../../../components/theme'
@@ -93,24 +91,8 @@ interface IDetailViewProps {
   local?: boolean
 }
 
-const BUILD_UPDATE_SUBSCRIPTION = gql`
-  subscription buildUpdateSubscription($id: ID!) {
-    buildUpdateSubscription(id: $id) {
-      node {
-        id
-        owner {
-          name
-        }
-        name
-      }
-      updatedFields
-    }
-  }
-`
-
 const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const {
-    id,
     name,
     bigPieceSelection,
     smallPieceSelection,
@@ -175,16 +157,6 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
       new Map()
     )
   const area = applicationAreas.find(area => area.key === applicationArea)
-
-  const { data } = useSubscription(BUILD_UPDATE_SUBSCRIPTION, {
-    variables: { id },
-  })
-
-  if (data && data.buildUpdateSubscription) {
-    message.info(
-      'This build has been updated. Refresh to see the latest changes'
-    )
-  }
 
   return (
     <Scrollbars autoHide disabled={!isMobile}>

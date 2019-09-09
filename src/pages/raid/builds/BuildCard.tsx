@@ -251,6 +251,7 @@ const BuildCard = ({
             <Divider />
             {sets.map(set => (
               <Popover
+                key={set.id}
                 content={
                   <GearCard size='normal' set={set} setSelectionCount={0} />
                 }

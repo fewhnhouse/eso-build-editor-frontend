@@ -20,7 +20,6 @@ const Profile = lazy(() => import('../pages/profile/Profile'))
 const Raids = lazy(() => import('../pages/exploration/raids'))
 const Builds = lazy(() => import('../pages/exploration/builds'))
 
-const LoadingFallback = () => <Spin />
 interface IProtectedRouteProps extends RouteProps {
   loggedIn: boolean
 }
@@ -36,7 +35,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
     return <Spin />
   }
   return (
-    <Suspense fallback={LoadingFallback}>
+    <Suspense fallback={<Spin />}>
       <Switch>
         <Route exact path='/' render={() => <Home loggedIn={isLoggedIn} />} />
         <Route exact path='/verify/:token' component={Verify} />
