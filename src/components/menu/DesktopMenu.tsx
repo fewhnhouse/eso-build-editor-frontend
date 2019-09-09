@@ -152,7 +152,7 @@ const DesktopMenu = ({
               <Link to='/raids'>Raids</Link>
             </Item>
             <Item key='4'>
-              <Link to='/overview'>Overview</Link>
+              <Link to='/overview/0'>Overview</Link>
             </Item>
           </StyledMenu>
           <Popover
