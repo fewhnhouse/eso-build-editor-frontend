@@ -41,12 +41,6 @@ const CardList = styled(Flex)`
   width: 100%;
 `
 
-const ExpandButton = styled(Button)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`
-
 const StyledFlex = styled(Flex)`
   width: 100%;
 `
@@ -64,11 +58,8 @@ interface IRaidReviewDetailsProps {
 const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const { name, roles, applicationArea, description, published } = loadedData
   const [path] = useState('')
-  const [expand, setExpand] = useState(false)
   const area = applicationAreas.find(area => area.key === applicationArea)
-  const handleExpandChange = () => {
-    setExpand(prev => !prev)
-  }
+
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const [, appDispatch] = useContext(AppContext)
   useEffect(() => {
@@ -133,10 +124,6 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
               isMobile={isMobile}
               title={<Title level={2}>Builds</Title>}
             >
-              <ExpandButton
-                onClick={handleExpandChange}
-                icon={expand ? 'shrink' : 'arrows-alt'}
-              ></ExpandButton>
               {roles.map((role, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -147,7 +134,6 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                       {role.builds.map((build, index) => {
                         return (
                           <BuildCard
-                            expand={expand}
                             item={build.build}
                             draggable={false}
                             key={index}

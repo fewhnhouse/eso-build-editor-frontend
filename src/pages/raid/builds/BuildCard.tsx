@@ -1,10 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import styled, { CSSProperties } from 'styled-components'
-import SkillView from '../../../components/SkillView'
-import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
 import { Card, Divider, Button, Typography, Tooltip, Popover, Tag } from 'antd'
-import GearView from '../../../components/GearView'
+import { useMediaQuery } from 'react-responsive'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
@@ -13,8 +11,7 @@ import { Link } from 'react-router-dom'
 import { ITheme } from '../../../components/theme'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
-
-const { TabPane } = Tabs
+import ExpandedInformation from './ExpandedInformation'
 
 const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
@@ -22,11 +19,6 @@ const Icon = styled.img`
   margin-right: ${props => props.theme.margins.mini};
   border-radius: ${(props: { isMundusStone: boolean; theme: ITheme }) =>
     props.isMundusStone ? props.theme.borderRadius : ''};
-`
-
-const ScrollContainer = styled.div`
-  overflow-y: auto;
-  height: 250px;
 `
 
 const InfoContainer = styled(Flex)`
@@ -48,20 +40,6 @@ const Description = styled(Flex)`
   color: ${props => props.theme.colors.grey.medium};
 `
 
-const AbilityBar = styled.div`
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 300px;
-`
-
-const AbilityBarContainer = styled(Flex)`
-  width: 100%;
-`
-
 const StyledCard = styled(Card)`
   border-color: ${(props: { active?: boolean; theme: ITheme }) =>
     props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
@@ -79,10 +57,6 @@ const StyledLink = styled(Link)`
   position: absolute;
 `
 
-const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
-`
-
 const StyledTag = styled(Tag)`
   margin-bottom: 5px;
 `
@@ -95,30 +69,29 @@ const StyledTitle = styled(Typography.Title)`
   white-space: nowrap;
 `
 
+const MoreButton = styled(Button)`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`
+
 interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
   draggable?: boolean
-  expand: boolean
   role?: IRole
 }
-export default ({
-  item,
-  style,
-  draggable = true,
-  role,
-  expand,
-}: IBuildCardProps) => {
+export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
   return draggable ? (
-    <WithDnD expand={expand} item={item} style={style} />
+    <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard expand={expand} item={item} role={role} />
+      <BuildCard item={item} role={role} />
     </div>
   )
 }
 
-const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
+const WithDnD = ({ item, style }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
@@ -131,7 +104,7 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   })
   return (
     <div style={style} ref={drag}>
-      <BuildCard expand={expand} item={item} />
+      <BuildCard item={item} />
     </div>
   )
 }
@@ -156,16 +129,13 @@ const ShortInfo = ({
   </Tooltip>
 )
 
-const BuildCard = ({
-  item,
-  role,
-  expand,
-}: {
-  item: IBuild
-  role?: IRole
-  expand: boolean
-}) => {
+const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
+  const handleExpandClick = () => {
+    setIsExpanded(expanded => !expanded)
+  }
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleDeleteClick = () => {
     dispatch!({
       type: 'REMOVE_BUILD',
@@ -246,7 +216,7 @@ const BuildCard = ({
             label={item.buff.name}
           />
         </Description>
-        {!expand && (
+        {!isExpanded && (
           <>
             <Divider />
             {sets.map(set => (
@@ -261,94 +231,16 @@ const BuildCard = ({
             ))}
           </>
         )}
-        {expand && (
-          <>
-            <StyledDivider />
-            <Tabs defaultActiveKey={'skills'}>
-              <TabPane tab='Skills' key='skills'>
-                <AbilityBarContainer direction='column' align='center'>
-                  <AbilityBar>
-                    <SkillView
-                      id={ABILITY_BAR_ONE}
-                      disabled
-                      size='small'
-                      ultimate={item.ultimateOne}
-                      skillSlots={item.newBarOne}
-                    />
-                  </AbilityBar>
-                  <AbilityBar>
-                    <SkillView
-                      size='small'
-                      id={ABILITY_BAR_TWO}
-                      disabled
-                      skillSlots={item.newBarTwo}
-                      ultimate={item.ultimateTwo}
-                    />
-                  </AbilityBar>
-                </AbilityBarContainer>
-              </TabPane>
-              <TabPane tab='Weapons' key='weapons'>
-                <ScrollContainer>
-                  <GearView
-                    setsCount={setsCount}
-                    disabled
-                    size='small'
-                    setups={[
-                      {
-                        id: 'frontbar',
-                        label: 'Frontbar',
-                        data: item.frontbarSelection,
-                      },
-                      {
-                        id: 'backbar',
-                        label: 'Backbar',
-                        data: item.backbarSelection,
-                      },
-                    ]}
-                  />
-                </ScrollContainer>
-              </TabPane>
-              <TabPane tab='Armor' key='armor'>
-                <ScrollContainer>
-                  <GearView
-                    setsCount={setsCount}
-                    disabled
-                    size='small'
-                    setups={[
-                      {
-                        id: 'bigpieces',
-                        label: 'Big Pieces',
-                        data: item.bigPieceSelection,
-                      },
-                      {
-                        id: 'smallpieces',
-                        label: 'Small Pieces',
-                        data: item.smallPieceSelection,
-                      },
-                    ]}
-                  />
-                </ScrollContainer>
-              </TabPane>
-              <TabPane tab='Jewelry' key='jewelry'>
-                <ScrollContainer>
-                  <GearView
-                    setsCount={setsCount}
-                    disabled
-                    size='small'
-                    setups={[
-                      {
-                        id: 'jewelry',
-                        label: 'Jewelry',
-                        data: item.jewelrySelection,
-                      },
-                    ]}
-                  />
-                </ScrollContainer>
-              </TabPane>
-            </Tabs>
-          </>
+        {isExpanded && (
+          <ExpandedInformation setsCount={setsCount} id={item.id} />
         )}
       </div>
+      {!isMobile && (
+        <MoreButton
+          onClick={handleExpandClick}
+          icon={isExpanded ? 'minus' : 'plus'}
+        />
+      )}
     </StyledCard>
   )
 }
