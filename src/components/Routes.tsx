@@ -62,7 +62,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         />
         <Route exact path='/builds' render={() => <div>Test</div>} />
         <Route exact path='/raids' render={() => <div>Test</div>} />
-        <Route exact path='/overview' component={Overview} />
+        <Route exact path='/overview/:tab' component={Overview} />
         <Route exact path='/builds/:id' component={BuildReview} />
         <Route exact path='/overview/mundus/:id' component={SingleMundus} />
         <Route

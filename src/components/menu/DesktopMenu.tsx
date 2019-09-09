@@ -8,7 +8,6 @@ import LoginForm from '../LoginForm'
 
 const { Item, SubMenu } = Menu
 
-
 const StyledSubMenu = styled(SubMenu)`
   float: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'initial' : 'right'};
@@ -57,7 +56,6 @@ const DesktopMenu = ({
   me,
   location,
 }: IDesktopMenuProps) => {
-
   return (
     <StyledFlexDesktop direction={isMobile ? 'column' : 'row'} align='center'>
       {loggedIn ? (
@@ -103,7 +101,7 @@ const DesktopMenu = ({
               </Item>
             </SubMenu>
             <Item key='overview'>
-              <Link to='/overview'>Overview</Link>
+              <Link to='/overview/0'>Overview</Link>
             </Item>
           </StyledMenu>
           <StyledMenuNarrow

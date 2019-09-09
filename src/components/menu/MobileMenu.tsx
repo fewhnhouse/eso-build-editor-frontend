@@ -44,7 +44,7 @@ const MobileMenu = ({
           </Link>
         </Item>
         <Item key='overview'>
-          <Link onClick={handleFoldBtnClick} to='/overview'>
+          <Link onClick={handleFoldBtnClick} to='/overview/0'>
             Overview
           </Link>
         </Item>
