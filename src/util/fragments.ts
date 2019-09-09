@@ -46,18 +46,19 @@ export const setSelection = gql`
 export const skill = gql`
   fragment Skill on Skill {
     id
-      name
-      skillline
-      parent
-      type
-      effect_1
-      effect_2
-      cost
-      icon
-      cast_time
-      target
-      range
-      skillId
+    name
+    skillline
+    parent
+    type
+    effect_1
+    effect_2
+    cost
+    icon
+    cast_time
+    target
+    range
+    skillId
+    unlocks_at
   }
 `
 export const skillSelection = gql`
@@ -93,7 +94,7 @@ export const build = gql`
     race
     description
     health
-    magicka 
+    magicka
     stamina
     applicationArea
     mundusStone {

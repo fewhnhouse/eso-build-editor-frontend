@@ -135,11 +135,6 @@ const UPDATE_BUILD = gql`
 `
 const { Step } = Steps
 
-const StyledFlex = styled(Flex)`
-  width: 100%;
-  margin-top: ${props => props.theme.margins.small};
-`
-
 const StyledFooter = styled(Footer)`
   display: flex;
   z-index: 100;
@@ -164,11 +159,8 @@ interface IBuildProps {
 
 export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
-  const [loading, setLoading] = useState(false)
-  const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-
   const handlePrivateChange = () => {
     dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
   }
@@ -191,18 +183,15 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const { ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
-    if (saved) {
-      if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem('buildState')
-        setRedirect(createBuildResult.data.createBuild.id)
-      } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
-        setRedirect(updateBuildResult.data.updateBuild.id)
-      }
+    if (createBuildResult.data && createBuildResult.data.createBuild) {
+      localStorage.removeItem('buildState')
+      setRedirect(createBuildResult.data.createBuild.id)
+    } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
+      setRedirect(updateBuildResult.data.updateBuild.id)
     }
-  }, [createBuildResult.data, saved, updateBuildResult.data])
+  }, [createBuildResult.data, updateBuildResult.data])
 
   const handleSave = async () => {
-    setLoading(true)
     if (edit) {
       try {
         await handleEditSave(
@@ -221,18 +210,18 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully edited. You can now view it and
                 share it with others!
               </div>
-              <StyledFlex
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlex>
+              </Flex>
             </Flex>
           ),
         })
       } catch (e) {
-        console.error(e)
         notification.error({
           message: 'Build update failed',
           description: 'Your build could not be saved. Try again later.',
@@ -254,26 +243,28 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully saved. You can now view it and share
                 it with others!
               </div>
-              <StyledFlex
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlex>
+              </Flex>
             </Flex>
           ),
         })
       } catch (e) {
-        console.error(e)
+        await notification.error({
+          message: 'Build creation failed',
+          description: 'Your build could not be saved. Try again later.',
+        })
         notification.error({
           message: 'Build creation failed',
           description: 'Your build could not be saved. Try again later.',
         })
       }
     }
-    setLoading(false)
-    setSaved(true)
   }
 
   const handleNextClick = () => {
@@ -379,7 +370,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         ) : pageIndex === 3 ? (
           <Consumables edit={edit} />
         ) : pageIndex === 4 ? (
-          <BuildReview local={true} />
+          <BuildReview local />
         ) : (
           <Redirect to={`${path}/0`} />
         )}
@@ -426,13 +417,17 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               </Tooltip>
             )}
             <TabButton
-              loading={loading}
+              loading={createBuildResult.loading || updateBuildResult.loading}
               onClick={handleNextClick}
-              disabled={isDisabled || saved}
+              disabled={
+                isDisabled || createBuildResult.data || updateBuildResult.data
+              }
               type='primary'
             >
               {tab === 4 ? 'Save' : 'Next'}
-              {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
+              {!(createBuildResult.loading || updateBuildResult.loading) && (
+                <Icon type={tab === 4 ? 'save' : 'right'} />
+              )}
             </TabButton>
           </StyledButtonGroup>
         </Tooltip>

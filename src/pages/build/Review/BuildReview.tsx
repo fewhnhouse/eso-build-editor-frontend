@@ -72,7 +72,9 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   }, [appDispatch])
 
   const buildQuery = useQuery(BUILD, { variables: { id } })
-  const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
+  const [createBuildCopy, createBuildCopyResult] = useMutation<any, any>(
+    CREATE_BUILD
+  )
   const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
     CREATE_SKILL_SELECTIONS
   )
@@ -104,11 +106,15 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   }, [data, error])
 
   useEffect(() => {
-    if (saved && createBuildResult.data && createBuildResult.data.createBuild) {
+    if (
+      saved &&
+      createBuildCopyResult.data &&
+      createBuildCopyResult.data.createBuild
+    ) {
       localStorage.removeItem('buildState')
-      setRedirect(`/builds/${createBuildResult.data.createBuild.id}`)
+      setRedirect(`/builds/${createBuildCopyResult.data.createBuild.id}`)
     }
-  }, [createBuildResult.data, saved])
+  }, [createBuildCopyResult.data, saved])
   const handleDeleteConfirm = () => {
     deleteMutation({ variables: { id } })
   }
@@ -119,7 +125,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
       await handleCopy(
         createSkillSelections,
         createSetSelections,
-        createBuild,
+        createBuildCopy,
         buildQuery.data.build
       )
       notification.success({

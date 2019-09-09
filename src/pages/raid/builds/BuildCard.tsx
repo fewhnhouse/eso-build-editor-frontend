@@ -3,14 +3,16 @@ import { useDrag } from 'react-dnd'
 import styled, { CSSProperties } from 'styled-components'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
-import { Card, Divider, Button, Typography, Tooltip } from 'antd'
+import { Card, Divider, Button, Typography, Tooltip, Popover, Tag } from 'antd'
 import GearView from '../../../components/GearView'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
-import { IBuild } from '../../build/BuildStateContext'
+import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
 import { Link } from 'react-router-dom'
-import { ITheme } from '../../../components/theme';
+import { ITheme } from '../../../components/theme'
+import { ISet } from '../../../components/GearSlot'
+import GearCard from '../../../components/GearCard'
 
 const { TabPane } = Tabs
 
@@ -18,6 +20,8 @@ const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
   height: ${props => props.theme.smallIcon.height};
   margin-right: ${props => props.theme.margins.mini};
+  border-radius: ${(props: { isMundusStone: boolean; theme: ITheme }) =>
+    props.isMundusStone ? props.theme.borderRadius : ''};
 `
 
 const ScrollContainer = styled.div`
@@ -25,8 +29,17 @@ const ScrollContainer = styled.div`
   height: 250px;
 `
 
-const RaceClassContainer = styled.div`
+const InfoContainer = styled(Flex)`
   margin-right: 10px;
+  flex: 1;
+  max-width: 25%;
+`
+
+const InfoLabel = styled.label`
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Description = styled(Flex)`
@@ -50,7 +63,7 @@ const AbilityBarContainer = styled(Flex)`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active?: boolean, theme: ITheme }) =>
+  border-color: ${(props: { active?: boolean; theme: ITheme }) =>
     props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
@@ -68,6 +81,10 @@ const StyledLink = styled(Link)`
 
 const StyledDivider = styled(Divider)`
   margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledTag = styled(Tag)`
+  margin-bottom: 5px;
 `
 
 const StyledTitle = styled(Typography.Title)`
@@ -119,6 +136,26 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   )
 }
 
+const ShortInfo = ({
+  icon,
+  label,
+  type,
+}: {
+  icon: string
+  label: string
+  type: string
+}) => (
+  <Tooltip title={label} trigger='hover'>
+    <InfoContainer direction='column' align='center'>
+      <Icon
+        isMundusStone={type === 'mundusStones'}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/${type}/${icon}`}
+      />
+      <InfoLabel>{label}</InfoLabel>
+    </InfoContainer>
+  </Tooltip>
+)
+
 const BuildCard = ({
   item,
   role,
@@ -147,6 +184,20 @@ const BuildCard = ({
     smallPieceSelection,
     bigPieceSelection,
     jewelrySelection
+  )
+
+  const sets = concat.reduce(
+    (prev: ISet[], curr: ISetSelection) => {
+      const isExisting = prev.find(
+        set => set && curr.selectedSet && set.name === curr.selectedSet.name
+      )
+      if (!isExisting) {
+        return curr.selectedSet ? [...prev, curr.selectedSet] : prev
+      } else {
+        return prev
+      }
+    },
+    [] as ISet[]
   )
   const setsCount = concat
     .map(setSelection =>
@@ -177,26 +228,45 @@ const BuildCard = ({
             </Tooltip>
           )}
         </Flex>
-        <Description direction='row' justify='flex-start'>
-          <RaceClassContainer>
-            <Icon
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
-            />
-            {item.race}
-          </RaceClassContainer>
-          <RaceClassContainer>
-            <Icon
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
-            />
-            {item.esoClass}
-          </RaceClassContainer>
+        <Description direction='row' justify='space-between'>
+          <ShortInfo type='races' icon={`${item.race}.png`} label={item.race} />
+          <ShortInfo
+            type='classes'
+            icon={`${item.esoClass}.png`}
+            label={item.esoClass}
+          />
+          <ShortInfo
+            type='mundusStones'
+            icon={item.mundusStone.icon}
+            label={item.mundusStone.name}
+          />
+          <ShortInfo
+            type='buffs'
+            icon={item.buff.icon}
+            label={item.buff.name}
+          />
         </Description>
+        {!expand && (
+          <>
+            <Divider />
+            {sets.map(set => (
+              <Popover
+                key={set.id}
+                content={
+                  <GearCard size='normal' set={set} setSelectionCount={0} />
+                }
+              >
+                <StyledTag>{set.name}</StyledTag>
+              </Popover>
+            ))}
+          </>
+        )}
         {expand && (
           <>
             <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <AbilityBarContainer direction='column' align="center">
+                <AbilityBarContainer direction='column' align='center'>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
