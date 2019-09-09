@@ -64,7 +64,7 @@ interface IRaidReviewDetailsProps {
 const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const { name, roles, applicationArea, description, published } = loadedData
   const [path] = useState('')
-  const [expand, setExpand] = useState(true)
+  const [expand, setExpand] = useState(false)
   const area = applicationAreas.find(area => area.key === applicationArea)
   const handleExpandChange = () => {
     setExpand(prev => !prev)

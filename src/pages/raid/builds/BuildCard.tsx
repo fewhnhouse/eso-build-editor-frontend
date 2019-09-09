@@ -3,14 +3,16 @@ import { useDrag } from 'react-dnd'
 import styled, { CSSProperties } from 'styled-components'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
-import { Card, Divider, Button, Typography, Tooltip } from 'antd'
+import { Card, Divider, Button, Typography, Tooltip, Popover, Tag } from 'antd'
 import GearView from '../../../components/GearView'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
-import { IBuild } from '../../build/BuildStateContext'
+import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
 import { Link } from 'react-router-dom'
 import { ITheme } from '../../../components/theme'
+import { ISet } from '../../../components/GearSlot'
+import GearCard from '../../../components/GearCard'
 
 const { TabPane } = Tabs
 
@@ -79,6 +81,10 @@ const StyledLink = styled(Link)`
 
 const StyledDivider = styled(Divider)`
   margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledTag = styled(Tag)`
+  margin-bottom: 5px;
 `
 
 const StyledTitle = styled(Typography.Title)`
@@ -179,6 +185,20 @@ const BuildCard = ({
     bigPieceSelection,
     jewelrySelection
   )
+
+  const sets = concat.reduce(
+    (prev: ISet[], curr: ISetSelection) => {
+      const isExisting = prev.find(
+        set => set && curr.selectedSet && set.name === curr.selectedSet.name
+      )
+      if (!isExisting) {
+        return curr.selectedSet ? [...prev, curr.selectedSet] : prev
+      } else {
+        return prev
+      }
+    },
+    [] as ISet[]
+  )
   const setsCount = concat
     .map(setSelection =>
       setSelection.selectedSet ? setSelection.selectedSet.name : ''
@@ -226,6 +246,20 @@ const BuildCard = ({
             label={item.buff.name}
           />
         </Description>
+        {!expand && (
+          <>
+            <Divider />
+            {sets.map(set => (
+              <Popover
+                content={
+                  <GearCard size='normal' set={set} setSelectionCount={0} />
+                }
+              >
+                <StyledTag>{set.name}</StyledTag>
+              </Popover>
+            ))}
+          </>
+        )}
         {expand && (
           <>
             <StyledDivider />
