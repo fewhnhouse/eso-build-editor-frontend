@@ -1,6 +1,6 @@
-import { IRaidState, IRole } from './RaidStateContext';
-import { MutationFunctionOptions, ExecutionResult } from 'react-apollo';
-import { ME } from '../home/UserHomeCard';
+import { IRaidState, IRole } from './RaidStateContext'
+import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
+import { ME } from '../home/UserHomeCard'
 
 export const handleEditSave = async (
   state: IRaidState,
@@ -18,13 +18,13 @@ export const handleEditSave = async (
     canView,
     published,
     id,
-  } = state!;
+  } = state!
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ];
+  ]
   return await updateRaid({
     variables: {
       data: {
@@ -42,9 +42,12 @@ export const handleEditSave = async (
             return {
               name: role.name,
               builds: {
-                create: role.builds.map((build, index) => ({ build: { connect: { id: build.build.id } }, index })),
+                create: role.builds.map((build, index) => ({
+                  build: { connect: { id: build.build.id } },
+                  index,
+                })),
               },
-            };
+            }
           }),
         },
       },
@@ -52,8 +55,8 @@ export const handleEditSave = async (
         id,
       },
     },
-  });
-};
+  })
+}
 export const handleCreateSave = async (
   state: IRaidState,
   createRaid: (
@@ -68,13 +71,13 @@ export const handleCreateSave = async (
     canView,
     published,
     description,
-  } = state!;
+  } = state!
 
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
-  ];
+  ]
 
   return await createRaid({
     variables: {
@@ -89,12 +92,47 @@ export const handleCreateSave = async (
           create: roles.map(role => ({
             name: role.name,
             builds: {
-              create: role.builds.map((build, index) => ({ build: { connect: { id: build.build.id } }, index })),
+              create: role.builds.map((build, index) => ({
+                build: { connect: { id: build.build.id } },
+                index,
+              })),
             },
           })),
         },
       },
     },
     refetchQueries: [{ query: ME }],
-  });
-};
+  })
+}
+
+export const handleCopy = async (
+  createRaid: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<void | ExecutionResult<any>>,
+  raid: IRaidState
+) => {
+  const { name, description, applicationArea, published, roles } = raid
+
+  return await createRaid({
+    variables: {
+      data: {
+        name,
+        description,
+        applicationArea,
+        published,
+        roles: {
+          create: roles.map(role => ({
+            name: role.name,
+            builds: {
+              create: role.builds.map((build, index) => ({
+                build: { connect: { id: build.build.id } },
+                index,
+              })),
+            },
+          })),
+        },
+      },
+    },
+    refetchQueries: [{ query: ME }],
+  })
+}

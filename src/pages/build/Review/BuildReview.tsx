@@ -56,7 +56,6 @@ const DELETE_BUILD = gql`
 
 const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
-  const [, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
   const [redirect, setRedirect] = useState('')
 
@@ -120,7 +119,6 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   }
 
   const handleCopyClick = async () => {
-    setLoading(true)
     try {
       await handleCopy(
         createSkillSelections,
@@ -136,13 +134,17 @@ const BuildReview = ({ match, local }: IBuildReview) => {
               Your build was successfully copied. You can now view it and share
               it with others!
             </div>
-            <StyledLinkFlex
+            <Flex
+              style={{
+                width: '100%',
+                marginTop: '5px',
+              }}
               direction='row'
               align='center'
               justify='space-between'
             >
               <Button icon='share-alt'>Share link</Button>
-            </StyledLinkFlex>
+            </Flex>
           </Flex>
         ),
       })
@@ -150,12 +152,10 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     } catch (e) {
       console.error(e)
       notification.error({
-        message: 'Build creation failed',
+        message: 'Build copy failed',
         description: 'Your build could not be copied. Try again later.',
       })
     }
-
-    setLoading(false)
   }
 
   const handleEditClick = () => {

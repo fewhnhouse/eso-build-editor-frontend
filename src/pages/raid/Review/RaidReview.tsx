@@ -3,12 +3,15 @@ import { RaidContext } from '../RaidStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { notification } from 'antd'
+import { notification, Button } from 'antd'
 import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
-import { AppContext } from '../../../components/AppContainer';
+import { AppContext } from '../../../components/AppContainer'
+import { handleCopy } from '../util'
+import { CREATE_RAID } from '../Raid'
+import Flex from '../../../components/Flex'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -41,7 +44,7 @@ interface IRaidOverviewProps extends RouteComponentProps<any> {
 
 const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const { id } = match.params
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState('')
   const [saved, setSaved] = useState(false)
   //const [copyLoading, setLoading] = useState(false)
 
@@ -56,6 +59,9 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   }, [appDispatch])
 
   const raidQuery = useQuery(RAID, { variables: { id } })
+  const [createRaidCopy, createRaidCopyResult] = useMutation<any, any>(
+    CREATE_RAID
+  )
   const meQuery = useQuery(MY_ID)
   const [deleteMutation, { data, error }] = useMutation(DELETE_RAID, {
     variables: { id },
@@ -79,19 +85,62 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
       })
     }
   }, [data, error])
+
+  useEffect(() => {
+    if (
+      saved &&
+      createRaidCopyResult.data &&
+      createRaidCopyResult.data.createRaid
+    ) {
+      localStorage.removeItem('raidState')
+      setRedirect(`/raids/${createRaidCopyResult.data.createRaid.id}`)
+    }
+  }, [createRaidCopyResult.data, saved])
+
   const handleDeleteConfirm = () => {
     deleteMutation({ variables: { id }, refetchQueries: [{ query: ME }] })
   }
 
   const handleCopyClick = async () => {
-    setSaved(true)
+    try {
+      await handleCopy(createRaidCopy, raidQuery.data.raid)
+      notification.success({
+        message: 'Raid copy successful',
+        description: (
+          <Flex direction='column' align='center' justify='center'>
+            <div>
+              Your raid was successfully copied. You can now view it and share
+              it with others!
+            </div>
+            <Flex
+              style={{
+                width: '100%',
+                marginTop: '5px',
+              }}
+              direction='row'
+              align='center'
+              justify='space-between'
+            >
+              <Button icon='share-alt'>Share link</Button>
+            </Flex>
+          </Flex>
+        ),
+      })
+      setSaved(true)
+    } catch (e) {
+      console.error(e)
+      notification.error({
+        message: 'Raid copy failed',
+        description: 'Your raid could not be copied. Try again later.',
+      })
+    }
   }
 
   const handleEditClick = () => {
-    setRedirect(true)
+    setRedirect(`/editRaid/${id}/0`)
   }
   if (redirect) {
-    return <Redirect to={`/editRaid/${id}/0`} push />
+    return <Redirect to={redirect} push />
   }
   return (
     <Review

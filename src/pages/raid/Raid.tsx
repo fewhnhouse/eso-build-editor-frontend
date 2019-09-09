@@ -46,7 +46,7 @@ const StyledButtonGroup = styled(ButtonGroup)`
   display: flex;
 `
 
-const CREATE_RAID = gql`
+export const CREATE_RAID = gql`
   mutation createRaid($data: RaidCreateInput!) {
     createRaid(data: $data) {
       ...Raid
