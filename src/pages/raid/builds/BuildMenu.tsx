@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import BuildCard from './BuildCard'
 import { IBuild } from '../../build/BuildStateContext'
-import { build } from '../../../util/fragments'
+import { build, reducedBuild } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 import Scrollbars from 'react-custom-scrollbars'
 const { Option } = Select
@@ -60,7 +60,7 @@ const StyledScrollbars = styled(Scrollbars)`
 `
 
 const StyledList = styled(List)`
-  height; 100%;
+  height: 100%;
 `
 
 export function titleCase(str: string): string {
@@ -90,10 +90,10 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
-      ...Build
+      ...ReducedBuild
     }
   }
-  ${build}
+  ${reducedBuild}
 `
 
 export default () => {
@@ -202,7 +202,11 @@ export default () => {
             </>
           )}
         </StyledFlexOuter>
-        <BuildsList loading={loading} builds={(data && data.builds) || []} />
+        <BuildsList
+          expanded={expanded}
+          loading={loading}
+          builds={(data && data.builds) || []}
+        />
       </>
     </ListContainer>
   )
@@ -211,8 +215,9 @@ export default () => {
 interface IBuildsListProps {
   builds: IBuild[]
   loading: boolean
+  expanded: boolean
 }
-const BuildsList = ({ builds, loading }: IBuildsListProps) => {
+const BuildsList = ({ builds, loading, expanded }: IBuildsListProps) => {
   const trail = useTrail(builds.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
@@ -232,7 +237,7 @@ const BuildsList = ({ builds, loading }: IBuildsListProps) => {
           const item = builds[index]
           return (
             <animated.div style={{ ...style, display: 'inline-flex' }}>
-              <BuildCard item={item} expand />
+              <BuildCard item={item} />
             </animated.div>
           )
         }}

@@ -20,6 +20,22 @@ export const set = gql`
     has_medium_armor
   }
 `
+
+export const reducedSetSelection = gql`
+  fragment ReducedSetSelection on SetSelection {
+    id
+    selectedSet {
+      id
+      name
+      type
+      bonus_item_1
+      bonus_item_2
+      bonus_item_3
+      bonus_item_4
+      bonus_item_5
+    }
+  }
+`
 export const setSelection = gql`
   fragment SetSelection on SetSelection {
     id
@@ -46,18 +62,19 @@ export const setSelection = gql`
 export const skill = gql`
   fragment Skill on Skill {
     id
-      name
-      skillline
-      parent
-      type
-      effect_1
-      effect_2
-      cost
-      icon
-      cast_time
-      target
-      range
-      skillId
+    name
+    skillline
+    parent
+    type
+    effect_1
+    effect_2
+    cost
+    icon
+    cast_time
+    target
+    range
+    skillId
+    unlocks_at
   }
 `
 export const skillSelection = gql`
@@ -85,6 +102,52 @@ export const buff = gql`
     quality
   }
 `
+
+export const reducedBuild = gql`
+  fragment ReducedBuild on Build {
+    id
+    name
+    published
+    race
+    description
+    health
+    magicka
+    stamina
+    applicationArea
+    mundusStone {
+      id
+      name
+      icon
+    }
+    buff {
+      id
+      name
+      icon
+    }
+    owner {
+      id
+      name
+    }
+    esoClass
+    frontbarSelection {
+      ...ReducedSetSelection
+    }
+    backbarSelection {
+      ...ReducedSetSelection
+    }
+    bigPieceSelection {
+      ...ReducedSetSelection
+    }
+    smallPieceSelection {
+      ...ReducedSetSelection
+    }
+    jewelrySelection {
+      ...ReducedSetSelection
+    }
+  }
+  ${reducedSetSelection}
+`
+
 export const build = gql`
   fragment Build on Build {
     id
@@ -93,7 +156,7 @@ export const build = gql`
     race
     description
     health
-    magicka 
+    magicka
     stamina
     applicationArea
     mundusStone {
@@ -165,10 +228,10 @@ export const raid = gql`
         id
         index
         build {
-          ...Build
+          ...ReducedBuild
         }
       }
     }
   }
-  ${build}
+  ${reducedBuild}
 `
