@@ -22,11 +22,11 @@ const SkillView = styled(Flex)`
   width: 100%;
 `
 
-const StyledDisplaySlot = styled(DisplaySlot)`
+const UltimateDisplaySlot = styled(DisplaySlot)`
   margin-left: ${props => props.theme.margins.small};
 `
 
-const StyledSkillSlot = styled(SkillSlot)`
+const UltimateSlot = styled(SkillSlot)`
   margin-left: ${props => props.theme.margins.small};
 `
 
@@ -72,10 +72,11 @@ export default ({
       </Flex>
 
       {disabled ? (
-        <StyledDisplaySlot size={size} skill={ultimate} />
+        <UltimateDisplaySlot size={size} skill={ultimate} />
       ) : abilityBar === -1 ? (
-        ultimate && (
-          <StyledSkillSlot
+        ultimate &&
+        ultimate.skillId > 0 && (
+          <UltimateSlot
             size={size}
             abilityBar={abilityBar}
             droppable={droppable}
@@ -84,7 +85,7 @@ export default ({
           />
         )
       ) : (
-        <StyledSkillSlot
+        <UltimateSlot
           size={size}
           abilityBar={abilityBar}
           droppable={droppable}
