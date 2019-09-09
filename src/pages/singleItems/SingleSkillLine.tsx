@@ -39,7 +39,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
   return (
     <Scrollbars>
       <StyledFlex isMobile={isMobile} direction='row' align='flex-start'>
-        <SkillsDisplay skillline={id || 0} />
+        <SkillsDisplay skillline={parseInt(id) || 0} />
       </StyledFlex>
     </Scrollbars>
   )
