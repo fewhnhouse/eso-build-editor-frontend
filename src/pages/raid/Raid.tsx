@@ -84,9 +84,6 @@ export default ({
   edit = false,
   initialRoles = [],
 }: IRaidProps) => {
-  const [loading, setLoading] = useState(false)
-  const [saved, setSaved] = useState(false)
-
   const [state, dispatch] = useReducer(raidReducer, raid)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
@@ -106,18 +103,15 @@ export default ({
     (tab === 0 && state.name === '') || (tab === 1 && state.roles.length <= 0)
 
   useEffect(() => {
-    if (saved) {
-      if (createRaidResult.data && createRaidResult.data.createRaid) {
-        localStorage.removeItem('raidState')
-        setRedirect(createRaidResult.data.createRaid.id)
-      } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
-        setRedirect(updateRaidResult.data.updateRaid.id)
-      }
+    if (createRaidResult.data && createRaidResult.data.createRaid) {
+      localStorage.removeItem('raidState')
+      setRedirect(createRaidResult.data.createRaid.id)
+    } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
+      setRedirect(updateRaidResult.data.updateRaid.id)
     }
-  }, [createRaidResult.data, saved, updateRaidResult.data])
+  }, [createRaidResult.data, updateRaidResult.data])
 
   const handleSave = async () => {
-    setLoading(true)
     if (edit) {
       try {
         await handleEditSave(state, updateRaid, initialRoles)
@@ -175,9 +169,6 @@ export default ({
         })
       }
     }
-
-    setLoading(false)
-    setSaved(true)
   }
 
   const handleNextClick = () => {
@@ -261,13 +252,17 @@ export default ({
           )}
           <Tooltip title={setTooltipTitle()}>
             <TabButton
-              loading={loading}
+              loading={createRaidResult.loading || updateRaidResult.loading}
               onClick={handleNextClick}
-              disabled={isDisabled || saved}
+              disabled={
+                isDisabled || (createRaidResult.data || updateRaidResult.data)
+              }
               type='primary'
             >
               {tab === 2 ? 'Save' : 'Next'}
-              {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
+              {!(createRaidResult.loading || updateRaidResult.loading) && (
+                <Icon type={tab === 2 ? 'save' : 'right'} />
+              )}
             </TabButton>
           </Tooltip>
         </StyledButtonGroup>

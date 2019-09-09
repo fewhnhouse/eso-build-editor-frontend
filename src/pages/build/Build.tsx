@@ -164,8 +164,6 @@ interface IBuildProps {
 
 export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
-  const [loading, setLoading] = useState(false)
-  const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
 
@@ -191,18 +189,15 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const { ultimateOne, ultimateTwo } = state!
 
   useEffect(() => {
-    if (saved) {
-      if (createBuildResult.data && createBuildResult.data.createBuild) {
-        localStorage.removeItem('buildState')
-        setRedirect(createBuildResult.data.createBuild.id)
-      } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
-        setRedirect(updateBuildResult.data.updateBuild.id)
-      }
+    if (createBuildResult.data && createBuildResult.data.createBuild) {
+      localStorage.removeItem('buildState')
+      setRedirect(createBuildResult.data.createBuild.id)
+    } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
+      setRedirect(updateBuildResult.data.updateBuild.id)
     }
-  }, [createBuildResult.data, saved, updateBuildResult.data])
+  }, [createBuildResult.data, redirect, updateBuildResult.data])
 
   const handleSave = async () => {
-    setLoading(true)
     if (edit) {
       try {
         await handleEditSave(
@@ -272,8 +267,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         })
       }
     }
-    setLoading(false)
-    setSaved(true)
   }
 
   const handleNextClick = () => {
@@ -379,7 +372,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         ) : pageIndex === 3 ? (
           <Consumables edit={edit} />
         ) : pageIndex === 4 ? (
-          <BuildReview local={true} />
+          <BuildReview local />
         ) : (
           <Redirect to={`${path}/0`} />
         )}
@@ -426,13 +419,17 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               </Tooltip>
             )}
             <TabButton
-              loading={loading}
+              loading={createBuildResult.loading || updateBuildResult.loading}
               onClick={handleNextClick}
-              disabled={isDisabled || saved}
+              disabled={
+                isDisabled || createBuildResult.data || updateBuildResult.data
+              }
               type='primary'
             >
               {tab === 4 ? 'Save' : 'Next'}
-              {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
+              {!(createBuildResult.loading || updateBuildResult.loading) && (
+                <Icon type={tab === 4 ? 'save' : 'right'} />
+              )}
             </TabButton>
           </StyledButtonGroup>
         </Tooltip>
