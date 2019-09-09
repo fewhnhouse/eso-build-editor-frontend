@@ -17,6 +17,8 @@ const BuildWrapper = lazy(() => import('../pages/build/BuildWrapper'))
 const RaidWrapper = lazy(() => import('../pages/raid/RaidWrapper'))
 const Overview = lazy(() => import('../pages/overview/Overview'))
 const Profile = lazy(() => import('../pages/profile/Profile'))
+const Raids = lazy(() => import('../pages/exploration/raids'))
+const Builds = lazy(() => import('../pages/exploration/builds'))
 
 const LoadingFallback = () => <Spin />
 interface IProtectedRouteProps extends RouteProps {
@@ -30,7 +32,6 @@ const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
 }
 
 export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
-
   if (isLoggedIn === undefined) {
     return <Spin />
   }
@@ -62,8 +63,8 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
           path='/raidEditor/:id'
           render={props => <RaidWrapper {...props} />}
         />
-        <Route exact path='/builds' render={() => <div>Test</div>} />
-        <Route exact path='/raids' render={() => <div>Test</div>} />
+        <Route exact path='/builds' component={Builds} />
+        <Route exact path='/raids' component={Raids} />
         <Route exact path='/overview' component={Overview} />
         <Route exact path='/builds/:id' component={BuildReview} />
         <Route exact path='/overview/mundus/:id' component={SingleMundus} />

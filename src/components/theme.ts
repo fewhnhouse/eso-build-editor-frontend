@@ -5,15 +5,15 @@ const theme = {
   fontSizes: {
     small: '14px',
     normal: '16px',
-    huge: '30px'
+    huge: '30px',
   },
   colors: {
     grey: {
-      light: "rgba(0,0,0,0.25)",
-      medium: "rgba(0,0,0,0.45)",
-      normal: "rgba(0,0,0,0.65)",
-      dark: "rgba(0,0,0,0.85)"
-    }
+      light: 'rgba(0,0,0,0.25)',
+      medium: 'rgba(0,0,0,0.45)',
+      normal: 'rgba(0,0,0,0.65)',
+      dark: 'rgba(0,0,0,0.85)',
+    },
   },
   borderRadius: '4px',
   widths: {

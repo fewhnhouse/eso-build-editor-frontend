@@ -295,7 +295,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
           >
             <SkillsView>
               <StyledTitle level={4}>Skills</StyledTitle>
-              <Flex fluid direction="column" align="center">
+              <Flex fluid direction='column' align='center'>
                 <SkillView
                   size='small'
                   id={ABILITY_BAR_ONE}

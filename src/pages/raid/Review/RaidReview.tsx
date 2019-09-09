@@ -8,7 +8,7 @@ import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
-import { AppContext } from '../../../components/AppContainer';
+import { AppContext } from '../../../components/AppContainer'
 
 export const RAID = gql`
   query Raids($id: ID!) {
