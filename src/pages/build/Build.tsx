@@ -135,11 +135,6 @@ const UPDATE_BUILD = gql`
 `
 const { Step } = Steps
 
-const StyledFlex = styled(Flex)`
-  width: 100%;
-  margin-top: ${props => props.theme.margins.small};
-`
-
 const StyledFooter = styled(Footer)`
   display: flex;
   z-index: 100;
@@ -166,7 +161,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-
   const handlePrivateChange = () => {
     dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
   }
@@ -195,7 +189,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
       setRedirect(updateBuildResult.data.updateBuild.id)
     }
-  }, [createBuildResult.data, redirect, updateBuildResult.data])
+  }, [createBuildResult.data, updateBuildResult.data])
 
   const handleSave = async () => {
     if (edit) {
@@ -216,18 +210,18 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully edited. You can now view it and
                 share it with others!
               </div>
-              <StyledFlex
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlex>
+              </Flex>
             </Flex>
           ),
         })
       } catch (e) {
-        console.error(e)
         notification.error({
           message: 'Build update failed',
           description: 'Your build could not be saved. Try again later.',
@@ -249,18 +243,22 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully saved. You can now view it and share
                 it with others!
               </div>
-              <StyledFlex
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlex>
+              </Flex>
             </Flex>
           ),
         })
       } catch (e) {
-        console.error(e)
+        await notification.error({
+          message: 'Build creation failed',
+          description: 'Your build could not be saved. Try again later.',
+        })
         notification.error({
           message: 'Build creation failed',
           description: 'Your build could not be saved. Try again later.',

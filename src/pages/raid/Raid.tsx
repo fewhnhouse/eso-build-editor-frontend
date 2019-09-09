@@ -38,11 +38,6 @@ const TabButton = styled(Button)`
   margin: 0px 10px;
 `
 
-const StyledFlexNotification = styled(Flex)`
-  width: 100%;
-  margin-top: ${props => props.theme.margins.small};
-`
-
 const StyledStep = styled(Step)`
   white-space: nowrap;
 `
@@ -123,13 +118,14 @@ export default ({
                 Your raid was successfully edited. You can now view it and share
                 it with others!
               </div>
-              <StyledFlexNotification
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlexNotification>
+              </Flex>
             </Flex>
           ),
         })
@@ -151,13 +147,14 @@ export default ({
                 Your raid was successfully saved. You can now view it and share
                 it with others!
               </div>
-              <StyledFlexNotification
+              <Flex
+                style={{ width: ' 100%', marginTop: '5px' }}
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </StyledFlexNotification>
+              </Flex>
             </Flex>
           ),
         })
