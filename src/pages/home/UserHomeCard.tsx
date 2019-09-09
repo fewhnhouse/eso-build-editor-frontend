@@ -11,6 +11,7 @@ import { classes, races } from '../build/RaceAndClass/data'
 import { titleCase } from '../raid/builds/BuildMenu'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../components/theme'
 
 const { Title } = Typography
 
@@ -27,10 +28,11 @@ const ListCard = styled.div`
   width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '80%'};
-  min-width: 400px;
+  min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   display: flex;
   flex-direction: column;
-  max-width: 450px;
+  max-width: ${props => props.theme.widths.large};
   margin: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '20px'};
   border-radius: ${(props: { isMobile: boolean }) =>
@@ -49,12 +51,21 @@ const CardHeader = styled(Flex)`
   background-color: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
-  padding: 20px;
+  padding: ${props => props.theme.paddings.medium};
   border-top-left-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
   border-top-right-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
 `
+
+const StyledFlexFull = styled(Flex)`
+  width: 100%;
+`
+
+const StyledButton = styled(Button)`
+  margin-left: ${props => props.theme.margins.mini};
+`
+
 export const ME = gql`
   query {
     me {
@@ -252,21 +263,23 @@ export default ({ isBuild }: { isBuild: boolean }) => {
           justify='center'
           align='center'
         >
-          <CardTitle level={3}>
-            {isBuild ? 'My builds' : 'My raids'}
-            <div>
-              <Button
-                type='primary'
-                ghost={true}
-                onClick={handleCreateClick(
-                  isBuild ? '/buildEditor/0' : '/raidEditor/0'
-                )}
-              >
-                Create
-              </Button>
-            </div>
-          </CardTitle>
-          <Flex style={{ width: '100%' }} justify='space-between'>
+          {!isMobile && (
+            <CardTitle level={3}>
+              {isBuild ? 'My builds' : 'My raids'}
+              <div>
+                <Button
+                  type='primary'
+                  ghost={true}
+                  onClick={handleCreateClick(
+                    isBuild ? '/buildEditor/0' : '/raidEditor/0'
+                  )}
+                >
+                  Create
+                </Button>
+              </div>
+            </CardTitle>
+          )}
+          <StyledFlexFull justify='space-between'>
             <Input
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
               value={search}
@@ -274,14 +287,13 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               addonAfter={<Icon type='search' />}
               defaultValue='mysite'
             />
-            <Button
+            <StyledButton
               type='primary'
               icon={expanded ? 'shrink' : 'arrows-alt'}
               ghost={true}
-              style={{ marginLeft: 5 }}
               onClick={handleExpandChange}
-            ></Button>
-          </Flex>
+            ></StyledButton>
+          </StyledFlexFull>
           {expanded &&
             (isBuild ? (
               <>

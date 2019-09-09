@@ -1,21 +1,34 @@
-import React, { ReactNode } from 'react';
-import Flex from '../../../components/Flex';
-import { Select, Typography } from 'antd';
-import styled from 'styled-components';
-import { SelectProps } from 'antd/lib/select';
-import { IModification } from '../BuildStateContext';
+import React, { ReactNode } from 'react'
+import Flex from '../../../components/Flex'
+import { Select, Typography } from 'antd'
+import styled from 'styled-components'
+import { SelectProps } from 'antd/lib/select'
+import { IModification } from '../BuildStateContext'
 
-const { Option } = Select;
+const { Option } = Select
 
 const StyledIcon = styled.img`
   width: 24px;
   height: 24px;
   margin: 0px 10px;
-`;
+`
+
+const StyledFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledTitleFlex = styled(Flex)`
+  flex: 1;
+`
+
+const StyledText = styled(Typography.Text)`
+  color: ${props => props.theme.colors.grey.light};
+  white-space: normal;
+`
 
 export interface ICustomSelectProps extends SelectProps {
-  items: IModification[];
-  className?: string;
+  items: IModification[]
+  className?: string
 }
 export const CustomSelect = ({
   items,
@@ -24,39 +37,30 @@ export const CustomSelect = ({
 }: ICustomSelectProps) => (
   <Select
     className={className}
-    size="large"
-    placeholder="Select a glyph"
+    size='large'
+    placeholder='Select a glyph'
     {...props}
   >
     {items.map((item, index) => (
       <Option value={item.type} key={index}>
-        <Flex direction="column" justify="flex-start" align="flex-start">
-          <Flex
-            style={{ width: '100%' }}
-            direction="row"
-            justify="space-between"
-            align="center"
-          >
+        <Flex direction='column' justify='flex-start' align='flex-start'>
+          <StyledFlex direction='row' justify='space-between' align='center'>
             {item.type}
             <StyledIcon
               src={`${process.env.REACT_APP_IMAGE_SERVICE}/${
                 item.modificationType
               }s/${item.icon.trim()}`}
             />
-          </Flex>
-          <Typography.Text
-            style={{ color: 'rgba(0, 0, 0, 0.25)', whiteSpace: 'normal' }}
-          >
-            {item.description}
-          </Typography.Text>
+          </StyledFlex>
+          <StyledText>{item.description}</StyledText>
         </Flex>
       </Option>
     ))}
   </Select>
-);
+)
 
 export interface ISelectWithTitleProps extends ICustomSelectProps {
-  title: string | ReactNode;
+  title: string | ReactNode
 }
 export const SelectWithTitle = ({
   items,
@@ -64,18 +68,17 @@ export const SelectWithTitle = ({
   className,
   ...props
 }: ISelectWithTitleProps) => (
-  <Flex
+  <StyledTitleFlex
     className={className}
-    style={{ flex: 1 }}
-    direction="column"
-    justify="flex-start"
-    align="flex-start"
+    direction='column'
+    justify='flex-start'
+    align='flex-start'
   >
     <Typography.Text strong>{title}</Typography.Text>
     <StyledCustomSelect items={items} {...props} />
-  </Flex>
-);
+  </StyledTitleFlex>
+)
 
 const StyledCustomSelect = styled(CustomSelect)`
   width: 100%;
-`;
+`

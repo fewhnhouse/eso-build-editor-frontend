@@ -7,6 +7,9 @@ import { useTrail, animated } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Scrollbars from 'react-custom-scrollbars'
+import { useMediaQuery } from 'react-responsive'
+import { Redirect } from 'react-router'
+import { ITheme } from '../../../components/theme'
 
 const ListContainer = styled.div`
   flex: 1;
@@ -18,21 +21,46 @@ const ListContainer = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
+  border-color: ${(props: { active: boolean; theme: ITheme }) =>
+    props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
 
-const MyAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+const Icon = styled.img`
+  width: ${props => props.theme.icon.width};
+  height: ${props => props.theme.icon.height};
+  border-radius: ${props => props.theme.icon.borderRadius};
+`
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.mini};
+`
+
+const StyledFlex = styled(Flex)`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
+  padding: ${props => props.theme.paddings.mini};
+  transition: opacity 0.2s ease-in-out;
+`
+
+const StyledInnerFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledInput = styled(Input)`
+  margin: ${props => props.theme.margins.small};
+  width: 100%;
+`
+
+const StyledList = styled(List)`
+  height: 100%;
+  transition: opacity 0.2s ease-in-out;
 `
 
 interface IMundusData {
+  id?: string
   name: string
   effect: string
   value: string
@@ -42,6 +70,7 @@ interface IMundusData {
 const GET_MUNDUS_STONES = gql`
   query {
     mundusStones {
+      id
       name
       effect
       value
@@ -53,7 +82,7 @@ const GET_MUNDUS_STONES = gql`
   }
 `
 export default ({ context }: { context: React.Context<any> }) => {
-  const { data, error, loading } = useQuery<
+  const { data, loading, error } = useQuery<
     { mundusStones: IMundusData[] },
     {}
   >(GET_MUNDUS_STONES)
@@ -61,7 +90,7 @@ export default ({ context }: { context: React.Context<any> }) => {
   if (loading) {
     return (
       <ListContainer>
-        <Spin style={{ marginTop: 5 }} />
+        <StyledSpin />
       </ListContainer>
     )
   }
@@ -85,10 +114,17 @@ const MundusList = ({
   const { mundusStone } = state!
 
   const [searchText, setSearchText] = useState('')
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const handleClick = (mundusStone: IMundusData) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    dispatch!({ type: 'SET_MUNDUS', payload: { mundusStone } })
+    if (isMobile) {
+      setRedirect(mundusStone.id || '')
+    } else {
+      dispatch!({ type: 'SET_MUNDUS', payload: { mundusStone } })
+    }
   }
   const filteredMundusStones = data.mundusStones.filter(mundus =>
     mundus.name.toLowerCase().includes(searchText.toLowerCase())
@@ -107,40 +143,22 @@ const MundusList = ({
   }
   return (
     <ListContainer>
+      {redirect && <Redirect to={`/overview/mundus/${redirect}`} push />}
       <>
-        <Flex
-          direction='column'
-          justify='center'
-          align='center'
-          style={{
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-            padding: '5px',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
-        >
-          <Flex
-            direction='row'
-            justify='center'
-            align='flex-start'
-            style={{ width: '100%' }}
-          >
-            <Input
+        <StyledFlex direction='column' justify='center' align='center'>
+          <StyledInnerFlex direction='row' justify='center' align='flex-start'>
+            <StyledInput
               placeholder='Search for Mundus Stones'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
               size='large'
               type='text'
-              style={{ margin: '10px', width: '100%' }}
             />
-          </Flex>
-        </Flex>
+          </StyledInnerFlex>
+        </StyledFlex>
         <Scrollbars autoHide>
-          <List
-            style={{
-              height: '100%',
-              transition: 'opacity 0.2s ease-in-out',
-            }}
+          <StyledList
             dataSource={trail}
             renderItem={(style: any, index) => {
               const item = filteredMundusStones[index]
@@ -154,7 +172,7 @@ const MundusList = ({
                   >
                     <Meta
                       avatar={
-                        <MyAvatar
+                        <Icon
                           src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
                         />
                       }

@@ -10,37 +10,31 @@ interface IInformationCardProps {
 }
 
 const FlexCard = styled(Flex)`
-  padding: 10px;
-  border: 1px solid rgb(232, 232, 232);
+  padding: ${props => props.theme.paddings.small};
+  border: 1px solid ${props => props.theme.mainBorderColor};
   border-radius: 2px;
   background: white;
+`
+
+const StyledFlex = styled(Flex)`
+  margin-left: ${props => props.theme.paddings.small};
+`
+
+const StyledText = styled(Typography.Text)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
 `
 
 export default ({ icon, title, description }: IInformationCardProps) => {
   return (
     <FlexCard direction='row'>
       <Avatar icon={icon} shape='square' />
-      <Flex align='flex-start' style={{ marginLeft: 10 }} direction="column">
-        <Typography.Text
-          style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-          strong
-        >
-          {title}
-        </Typography.Text>
-        <Typography.Text
-          style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {description}
-        </Typography.Text>
-      </Flex>
+      <StyledFlex align='flex-start' direction='column'>
+        <StyledText strong>{title}</StyledText>
+        <StyledText>{description}</StyledText>
+      </StyledFlex>
     </FlexCard>
   )
 }

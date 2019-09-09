@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
@@ -8,6 +8,17 @@ import { defaultRaidState } from './RaidStateContext'
 import { raid } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
 import ErrorPage from '../../components/ErrorPage'
+import styled from 'styled-components'
+import { AppContext } from '../../components/AppContainer'
+
+const StyledDiv = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.small};
+`
 
 const GET_RAID = gql`
   query raid($id: ID!) {
@@ -29,6 +40,18 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 900,
   })
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Raid Editor' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
+  }, [appDispatch])
+
   const { loading, error, data } = useQuery(GET_RAID, {
     variables: { id: raidId },
   })
@@ -44,9 +67,9 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   if (edit) {
     if (loading) {
       return (
-        <div style={{ width: '100%', height: '100%' }}>
-          <Spin style={{ marginTop: 10 }} />
-        </div>
+        <StyledDiv>
+          <StyledSpin />
+        </StyledDiv>
       )
     }
     if (error) {

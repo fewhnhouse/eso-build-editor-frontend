@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Flex from '../../components/Flex'
 import { RouteComponentProps, withRouter } from 'react-router'
 import gql from 'graphql-tag'
@@ -6,6 +6,19 @@ import { useQuery } from 'react-apollo'
 import { Card, Spin } from 'antd'
 import GearCard from '../../components/GearCard'
 import { ISet } from '../../components/GearSlot'
+import styled from 'styled-components'
+import { AppContext } from '../../components/AppContainer'
+import Scrollbars from 'react-custom-scrollbars'
+
+const StyledFlex = styled(Flex)`
+  height: calc(100vh - 100px);
+  width: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
+
+const StyledCard = styled(Card)`
+  width: 100%;
+`
 
 const GET_SETS_BY_ID = gql`
   query Set($id: ID!) {
@@ -35,33 +48,48 @@ const GET_SETS_BY_ID = gql`
 
 const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
-  const { data } = useQuery(GET_SETS_BY_ID, {
-    variables: { id: id }
+  const [, appDispatch] = useContext(AppContext)
+
+  const { data, loading } = useQuery(GET_SETS_BY_ID, {
+    variables: { id: id },
   })
 
   const set: ISet = data.set ? data.set : ''
-
-  return set ? (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: 'calc(100vh - 100px)',
-        width: '100%',
-        padding: 20
-      }}
-    >
-      <Flex direction='column' fluid>
-        <Card style={{ width: '100%' }}>
-          <GearCard size='big' set={set} setSelectionCount={0} />
-        </Card>
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Set' },
+    })
+    if (set) {
+      appDispatch!({
+        type: 'SET_HEADER_SUBTITLE',
+        payload: { headerSubTitle: set.name },
+      })
+    }
+  }, [appDispatch, set])
+  if (loading) {
+    return (
+      <Flex fluid justify='center'>
+        <Spin />
       </Flex>
-    </Flex>
-  ) : (
-    <Flex fluid justify='center'>
-      <Spin />
-    </Flex>
-  )
+    )
+  }
+  if (data) {
+    return (
+      set && (
+        <Scrollbars autoHide>
+          <StyledFlex direction='row' align='flex-start'>
+            <Flex direction='column' fluid>
+              <StyledCard>
+                <GearCard size='big' set={set} setSelectionCount={0} />
+              </StyledCard>
+            </Flex>
+          </StyledFlex>
+        </Scrollbars>
+      )
+    )
+  }
+  return null
 }
 
 export default withRouter(SingleSet)

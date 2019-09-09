@@ -14,24 +14,20 @@ export const ACTIVE_ULTIMATE = 'activeUltimate'
 export const ULTIMATE_ONE = 'ultimate1'
 export const ULTIMATE_TWO = 'ultimate2'
 
-const AbilityBar = styled.div`
+const AbilityBar = styled(Flex)`
   height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 `
 
-const AbilityBarContainer = styled.div`
+const StyledAbilityFlex = styled(Flex)`
+  height: 100%;
+`
+
+const AbilityBarContainer = styled(Flex)`
   flex: 1;
   height: 100%;
-  padding: 40px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  padding: ${props => props.theme.paddings.large};
+  max-width: ${props => props.theme.widths.large};
   background: white;
 `
 
@@ -40,13 +36,19 @@ const TrashContainer = styled.div`
   border: 1px dashed
     ${(props: { hasTrash: boolean }) =>
       props.hasTrash ? '#40a9ff' : '#d9d9d9'};
-  border-radius: 4px;
-  width: 250px;
+  border-radius: ${props => props.theme.borderRadius};
+  width: ${props => props.theme.widths.small};
   height: 80px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+const StyledIcon = styled(Icon)`
+  font-size: 30px;
+  color: ${(props: { isOver: boolean }) =>
+    props.isOver ? '#40a9ff' : 'rgb(155,155,155)'};
 `
 
 export default () => {
@@ -100,15 +102,14 @@ export default () => {
     }
   }, [selectedSkillLines, skillLine])
   return (
-    <AbilityBarContainer>
-      <Flex
+    <AbilityBarContainer direction='column' align='center'>
+      <StyledAbilityFlex
         direction='column'
         justify='space-around'
         align='center'
-        style={{ height: '100%' }}
       >
         <Divider>Active Selection</Divider>
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             droppable={false}
             abilityBar={-1}
@@ -118,8 +119,7 @@ export default () => {
           />
         </AbilityBar>
         <Divider>Ability Bar</Divider>
-
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             abilityBar={0}
             ultimate={ultimateOne}
@@ -128,8 +128,7 @@ export default () => {
             skillSlots={newBarOne}
           />
         </AbilityBar>
-
-        <AbilityBar>
+        <AbilityBar direction='row' justify='space-between' align='center'>
           <SkillView
             abilityBar={1}
             id={ABILITY_BAR_TWO}
@@ -139,15 +138,9 @@ export default () => {
           />
         </AbilityBar>
         <TrashContainer hasTrash={isOver} ref={drop}>
-          <Icon
-            style={{
-              fontSize: 30,
-              color: isOver ? '#40a9ff' : 'rgb(155,155,155)',
-            }}
-            type='delete'
-          />
+          <StyledIcon isOver={isOver} type='delete' />
         </TrashContainer>
-      </Flex>
+      </StyledAbilityFlex>
     </AbilityBarContainer>
   )
 }

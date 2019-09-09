@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive'
 const { Text } = Typography
 
 const Description = styled.div`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
@@ -17,10 +17,10 @@ const Description = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
+  color: ${props => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -28,12 +28,12 @@ const Title = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  border-color: rgb(232, 232, 232);
+  border-color: ${props => props.theme.mainBorderColor};
   background: 'white';
   border-width: 2px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
   width: 90%;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
 `
 
 const StyledList = styled(List)`
@@ -42,12 +42,35 @@ const StyledList = styled(List)`
     props.isMobile ? '0px' : '10px'};
   border-bottom-right-radius: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
+`
 
+const StyledScrollbars = styled(Scrollbars)`
+  height: calc(100% - 120px);
+`
+
+const StyledListItem = styled(List.Item)`
+  justify-content: center;
 `
 
 const StyledImg = styled.img`
   width: 25px;
   height: 25px;
+  margin-right: ${props => props.theme.margins.mini};
+`
+
+const StyledImgSpace = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-left: ${props => props.theme.margins.small};
+  margin-right: ${props => props.theme.margins.mini};
+`
+
+const StyledNormalText = styled(Text)`
+  font-weight: normal;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
 `
 
 interface IOwnerProps {
@@ -68,22 +91,21 @@ interface IUserDataProps {
   loading: boolean
 }
 
-const BuildCard = ({ data,  loading }: IUserDataProps) => {
+const BuildCard = ({ data, loading }: IUserDataProps) => {
   const [path, setRedirect] = useState('')
   const handleClick = (path: string) => () => {
     setRedirect(path)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   }
 
-
   return (
-    <Scrollbars style={{ height: 'calc(100% - 120px)' }}>
-      <StyledList isMobile={isMobile}
+    <StyledScrollbars>
+      <StyledList
+        isMobile={isMobile}
         loading={loading}
         dataSource={data}
         renderItem={(item, index: number) => {
@@ -92,7 +114,7 @@ const BuildCard = ({ data,  loading }: IUserDataProps) => {
             area => area.key === build.applicationArea
           )
           return (
-            <List.Item style={{ justifyContent: 'center' }}>
+            <StyledListItem>
               <StyledCard
                 key={build.id}
                 hoverable
@@ -100,30 +122,28 @@ const BuildCard = ({ data,  loading }: IUserDataProps) => {
               >
                 <Title>
                   {build.name ? build.name : 'Unnamed build'}
-                  <Text style={{ fontWeight: 'normal' }} />
+                  <StyledNormalText />
                 </Title>
-                <Divider style={{ margin: '5px 0px' }} />
+                <StyledDivider />
 
                 <Description>
                   <StyledImg
-                    style={{ marginRight: '5px' }}
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
                   />
                   {build.esoClass}
-                  <StyledImg
-                    style={{ marginLeft: '10px', marginRight: '5px' }}
+                  <StyledImgSpace
                     src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
                   />
                   {build.race}
-                  <Divider style={{ margin: '5px 0px' }} />
+                  <StyledDivider />
                   {applicationArea ? applicationArea.label : ''}
                 </Description>
               </StyledCard>
-            </List.Item>
+            </StyledListItem>
           )
         }}
       />
-    </Scrollbars>
+    </StyledScrollbars>
   )
 }
 

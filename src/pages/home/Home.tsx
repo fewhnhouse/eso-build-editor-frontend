@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Layout } from 'antd'
 import NotLoggedInHome from './NotLoggedInHome'
 import LoggedInHome from './LoggedInHome'
+import { AppContext } from '../../components/AppContainer'
 
 const { Content } = Layout
 
@@ -13,7 +14,7 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: hidden;
-  height: calc(100vh - 64px);
+  height: 100%;
   color: ${props => props.theme.mainBg};
 `
 
@@ -21,6 +22,14 @@ interface IHomeProps {
   loggedIn: boolean
 }
 const Home = ({ loggedIn }: IHomeProps) => {
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({ type: 'SET_HEADER_TITLE', payload: { headerTitle: 'Home' } })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
+  }, [appDispatch])
   return (
     <Container>{loggedIn ? <LoggedInHome /> : <NotLoggedInHome />}</Container>
   )

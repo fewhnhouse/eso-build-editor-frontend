@@ -17,6 +17,26 @@ const Content = styled.div`
   display: flex;
 `
 
+const StyledDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+`
+
+const StyledMenu = styled(Menu)`
+  max-width: 256px;
+`
+
+const StyledSpinDiv = styled.div`
+  height: 100%;
+  width: 100%;
+`
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.small};
+`
+
 const GET_SKILLS = gql`
   query {
     skills {
@@ -108,20 +128,8 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <Menu
-          context={BuildContext}
-          collapsable
-          singleClass
-          style={{ maxWidth: 256 }}
-        />
+      <StyledDiv>
+        <StyledMenu context={BuildContext} collapsable singleClass />
         <Content>
           <SkillsDisplay
             interactive
@@ -134,7 +142,7 @@ const Skills = ({ skills, edit }: { skills: ISkill[]; edit: boolean }) => {
           />
           {baseActives.length > 0 && <AbilityBar />}
         </Content>
-      </div>
+      </StyledDiv>
     </DndProvider>
   )
 }
@@ -142,9 +150,9 @@ export default ({ edit }: { edit: boolean }) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
-        <Spin style={{ marginTop: 10 }} />
-      </div>
+      <StyledSpinDiv>
+        <StyledSpin />
+      </StyledSpinDiv>
     )
   }
   if (error) {

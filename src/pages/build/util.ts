@@ -52,28 +52,31 @@ export const handleEditSave = async (
       slot: setSelection.slot,
       selectedSet: setSelection.selectedSet
         ? {
-          connect: { id: setSelection.selectedSet.id },
-        }
+            connect: { id: setSelection.selectedSet.id },
+          }
         : undefined,
       trait: setSelection.trait
         ? {
-          connect: { description: setSelection.trait.description },
-
-        }
+            connect: { description: setSelection.trait.description },
+          }
         : undefined,
       glyph: setSelection.glyph
         ? {
-          connect: { description: setSelection.glyph.description },
-
-        }
+            connect: { description: setSelection.glyph.description },
+          }
         : undefined,
       type: setSelection.type,
       weaponType: setSelection.weaponType,
     },
   })
 
-  const createWeaponSetVariables = (setSelection: ISetSelection, index: number, bar: "frontbar" | "backbar") => {
-    const prevSetSelection = bar === "frontbar" ? initialFrontbarSelection : initialBackbarSelection
+  const createWeaponSetVariables = (
+    setSelection: ISetSelection,
+    index: number,
+    bar: 'frontbar' | 'backbar'
+  ) => {
+    const prevSetSelection =
+      bar === 'frontbar' ? initialFrontbarSelection : initialBackbarSelection
 
     return {
       where: { id: setSelection.id || prevSetSelection[index].id },
@@ -81,27 +84,31 @@ export const handleEditSave = async (
         slot: setSelection.slot,
         selectedSet: setSelection.selectedSet
           ? {
-            connect: { id: setSelection.selectedSet.id },
-          } : prevSetSelection[index].selectedSet ? {
-            disconnect: true
-          }
-            : undefined,
+              connect: { id: setSelection.selectedSet.id },
+            }
+          : prevSetSelection[index].selectedSet
+          ? {
+              disconnect: true,
+            }
+          : undefined,
         trait: setSelection.trait
           ? {
-            connect: { description: setSelection.trait.description },
-
-          } : prevSetSelection[index].trait ? {
-            disconnect: true
-          }
-            : undefined,
+              connect: { description: setSelection.trait.description },
+            }
+          : prevSetSelection[index].trait
+          ? {
+              disconnect: true,
+            }
+          : undefined,
         glyph: setSelection.glyph
           ? {
-            connect: { description: setSelection.glyph.description },
-
-          } : prevSetSelection[index].glyph ? {
-            disconnect: true
-          }
-            : undefined,
+              connect: { description: setSelection.glyph.description },
+            }
+          : prevSetSelection[index].glyph
+          ? {
+              disconnect: true,
+            }
+          : undefined,
         type: setSelection.id ? setSelection.type : null,
         weaponType: setSelection.id ? setSelection.weaponType : null,
       },
@@ -110,14 +117,14 @@ export const handleEditSave = async (
   await frontbarSelection.map(async (setSelection, index) => {
     return updateSetSelection({
       variables: {
-        ...createWeaponSetVariables(setSelection, index, "frontbar"),
+        ...createWeaponSetVariables(setSelection, index, 'frontbar'),
       },
     })
   })
   await backbarSelection.map(async (setSelection, index) => {
     return updateSetSelection({
       variables: {
-        ...createWeaponSetVariables(setSelection, index, "backbar"),
+        ...createWeaponSetVariables(setSelection, index, 'backbar'),
       },
     })
   })
@@ -197,14 +204,14 @@ export const handleEditSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-              connect: { skillId: ultimateOne.skillId },
-            }
+                connect: { skillId: ultimateOne.skillId },
+              }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-              connect: { skillId: ultimateTwo.skillId },
-            }
+                connect: { skillId: ultimateTwo.skillId },
+              }
             : undefined,
       },
     },
@@ -221,8 +228,7 @@ export const handleCreateSave = async (
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
-  state: IBuildState,
-
+  state: IBuildState
 ) => {
   const {
     race,
@@ -410,14 +416,14 @@ export const handleCreateSave = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-              connect: { skillId: ultimateOne.skillId },
-            }
+                connect: { skillId: ultimateOne.skillId },
+              }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-              connect: { skillId: ultimateTwo.skillId },
-            }
+                connect: { skillId: ultimateTwo.skillId },
+              }
             : undefined,
         newBarOne: {
           connect: frontbarSkillSelections.data.createSkillSelections.map(
@@ -449,7 +455,7 @@ export const handleCopy = async (
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
-  build: IBuild,
+  build: IBuild
 ) => {
   const {
     race,
@@ -473,8 +479,7 @@ export const handleCopy = async (
     magicka,
     stamina,
     health,
-
-  } = build;
+  } = build
 
   const createSetVariables = (setSelections: ISetSelection[]) => ({
     slots: setSelections.map(setSelection => setSelection.slot),
@@ -492,7 +497,6 @@ export const handleCopy = async (
       setSelection.trait ? setSelection.trait.description : ''
     ),
   })
-
 
   const frontbarSkillSelections: any = await createSkillSelections({
     variables: {
@@ -585,14 +589,14 @@ export const handleCopy = async (
         ultimateOne:
           ultimateOne && ultimateOne.skillId !== 0
             ? {
-              connect: { skillId: ultimateOne.skillId },
-            }
+                connect: { skillId: ultimateOne.skillId },
+              }
             : undefined,
         ultimateTwo:
           ultimateTwo && ultimateTwo.skillId !== 0
             ? {
-              connect: { skillId: ultimateTwo.skillId },
-            }
+                connect: { skillId: ultimateTwo.skillId },
+              }
             : undefined,
         newBarOne: {
           connect: frontbarSkillSelections.data.createSkillSelections.map(
@@ -608,7 +612,6 @@ export const handleCopy = async (
             })
           ),
         },
-
       },
     },
     refetchQueries: [{ query: ME }],

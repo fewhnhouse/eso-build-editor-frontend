@@ -171,7 +171,7 @@ export const defaultBuildState: IBuildState = {
     value: '',
     aldmeri: '',
     daggerfall: '',
-    ebonheart: ''
+    ebonheart: '',
   },
   buff: {
     buffDescription: '',

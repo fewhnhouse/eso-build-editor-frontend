@@ -8,7 +8,9 @@ import Flex from './Flex'
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
-  width: 450px;
+  min-width: ${props => props.theme.widths.small}
+  max-width: ${props => props.theme.widths.large}
+  width: 100%;
   position: relative;
 `
 
@@ -19,14 +21,14 @@ const Container = styled.div`
 const Description = styled.div`
   font-size: ${(props: { big?: boolean }) => (props.big ? '16px' : '14px')};
   line-height: 1.5;
-  margin-top: 5px;
+  margin-top: ${props => props.theme.margins.mini};
 `
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
+  color: ${props => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -34,9 +36,9 @@ const Title = styled.div`
 `
 
 const SmallTitle = styled.div`
-  color: rgba(0, 0, 0, 0.55);
+  color: ${props => props.theme.colors.grey.medium};
   font-weight: 400;
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   display: inline;
 `
 
@@ -51,13 +53,40 @@ const StyledTag = styled(Tag)`
 const IconImg = styled.img`
   width: 30px;
   height: 30px;
-  margin-right: 5px;
+  margin-right: ${props => props.theme.margins.mini};
 `
 
 const GlyphIconImg = styled.img`
   width: 25px;
   height: 25px;
-  margin-right: 5px;
+  margin-right: ${props => props.theme.margins.mini};
+`
+
+const StyledSpan = styled.span`
+  text-align: left;
+  width: 100%;
+  font-weight: ${(props: { bold: boolean }) =>
+    props.bold ? 'bold' : 'normal'};
+`
+
+const StyledSpanColor = styled.span`
+  color: ${props => props.theme.colors.grey.medium};
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledSetTitle = styled(Title)`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledDescription = styled(Description)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: ${props => props.theme.margins.mini} 0px;
 `
 
 interface IGearCard {
@@ -132,16 +161,10 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
       <Description big={size === 'big'}>
         <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map(count => (
-            <span
-              key={count}
-              style={{
-                textAlign: "left", width: "100%",
-                fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
-              }}
-            >
+            <StyledSpan key={count} bold={count <= setSelectionCount}>
               <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
-              <Divider style={{ margin: '5px 0px' }} />
-            </span>
+              <StyledDivider />
+            </StyledSpan>
           ))}
         </Flex>
       </Description>
@@ -177,7 +200,7 @@ export const GearCardContent = ({
 
   return (
     <Container>
-      <Title style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <StyledSetTitle>
         {gear.selectedSet ? gear.selectedSet.name : 'Set name'}{' '}
         {gear.type ? (
           <SmallTitle>
@@ -187,41 +210,29 @@ export const GearCardContent = ({
         ) : (
           ''
         )}
-      </Title>
+      </StyledSetTitle>
       {gear.type ? gearTypeTag(gear.type) : ''}
       <StyledTag color='#108ee9'>
         {gear.selectedSet ? gear.selectedSet.type : 'No type'}
       </StyledTag>
-      <Divider style={{ margin: '5px 0px' }} />
+      <StyledDivider />
       <Description>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Flex direction='column'>
           {gear.selectedSet ? (
             totalBonus(gear.selectedSet).map(count => (
-              <span
-                key={count}
-                style={{
-                  fontWeight: count <= setSelectionCount ? 'bold' : 'normal',
-                }}
-              >
+              <StyledSpan bold={count <= setSelectionCount} key={count}>
                 {count} pcs:{' '}
                 {gear.selectedSet && gear.selectedSet[`bonus_item_${count}`]}
-              </span>
+              </StyledSpan>
             ))
           ) : (
             <span />
           )}
-        </div>
+        </Flex>
       </Description>
-      <Divider style={{ margin: '5px 0px' }} />
+      <StyledDivider />
       <Flex direction='column' justify='space-around' align='flex-start'>
-        <Description
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1,
-            margin: '5px 0px',
-          }}
-        >
+        <StyledDescription>
           <Flex direction='row' justify='flex-start' align='center'>
             {gear.trait ? (
               <IconImg
@@ -234,36 +245,28 @@ export const GearCardContent = ({
             )}
             <b>{gear.trait ? gear.trait.type : ''}</b>
           </Flex>
-          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
+          <StyledSpanColor>
             {gear.trait ? gear.trait.description : ''}
-          </span>
-        </Description>
-        <Divider style={{ margin: '5px 0px' }} />
-        <Description
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1,
-            margin: '5px 0px',
-          }}
-        >
+          </StyledSpanColor>
+        </StyledDescription>
+        <StyledDivider />
+        <StyledDescription>
           <Flex direction='row' justify='flex-start' align='center'>
             {gear.glyph ? (
               <GlyphIconImg
                 src={`${process.env.REACT_APP_IMAGE_SERVICE}/glyphs/${encodeURI(
                   gear.glyph.icon
                 )}`}
-                style={{ marginRight: 5 }}
               />
             ) : (
               'Glyph not selected.'
             )}
             <b>{gear.glyph ? gear.glyph.type : ''}</b>
           </Flex>
-          <span style={{ color: 'rgba(0,0,0,0.45)' }}>
+          <StyledSpanColor>
             {gear.glyph ? gear.glyph.description : ''}
-          </span>
-        </Description>
+          </StyledSpanColor>
+        </StyledDescription>
       </Flex>
     </Container>
   )

@@ -8,7 +8,7 @@ import { LoginContext } from '../App'
 const Container = styled.div`
   background: #ededed;
   width: 100vw;
-  height: calc(100vh - 64px);
+  height: calc(100% - 64px);
 `
 
 interface IErrorPageProps {

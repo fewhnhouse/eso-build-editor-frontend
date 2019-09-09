@@ -12,10 +12,9 @@ const { Title } = Typography
 
 const OuterWrapper = styled(Flex)`
   width: 100vw;
-  height: calc(100vh - 64px);
+  height: 100%;
 `
 const Wrapper = styled(Flex)`
-  flex-wrap: wrap;
   width: 100%;
   z-index: 20;
   min-height: 100%;
@@ -33,11 +32,57 @@ const RightWrapper = styled.div`
   min-width: 300px;
 `
 
+const StyledDivDiscovery = styled.div`
+  padding: ${props => props.theme.paddings.mini};
+  height: 40%;
+`
+const StyledDivActivity = styled.div`
+  padding: ${props => props.theme.paddings.mini};
+  height: 60%;
+`
+
 const ImageContainer = styled.div`
   width: 100%;
   height: 15%;
   background-image: url(${wcdt});
   background-size: cover;
+`
+
+const InnerWrapper = styled(Flex)`
+  width: 100%;
+  height: 100%;
+`
+
+const MobileWrapper = styled(Flex)`
+  flex: 1;
+  height: 100%;
+  width: 100%;
+`
+
+const MobileTabs = styled(Tabs)`
+  height: 100%;
+  width: 100%;
+`
+
+const StyledTabPane = styled(TabPane)`
+  display: flex;
+  height: 100%;
+  flex-direction: 'row';
+  justify-content: 'center';
+  align-items: 'flex-start';
+`
+
+const UserCardWrapper = styled(Flex)`
+  flex: 1;
+`
+
+const DiscoveryContent = styled.div`
+  overflow-y: auto;
+  height: 100%;
+`
+
+const StyledTitle = styled(Title)`
+  padding: ${props => props.theme.paddings.medium};
 `
 
 export default () => {
@@ -47,72 +92,46 @@ export default () => {
 
   return (
     <OuterWrapper direction='row' justify='space-between' align='center' fluid>
-      <Flex direction='column' style={{ width: '100%', height: '100%' }}>
+      <InnerWrapper direction='column'>
         {!isMobile && <ImageContainer />}
         {isMobile ? (
-          <div style={{flex: 1, height: "100%", width: "100%"}}>
-            <Tabs style={{height: "100%"}}>
-              <TabPane
-                style={{
-                  display: 'flex',
-                  height: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                }}
-                tab='Builds'
-                key='1'
-              >
-                <div style={{ flex: 1 }}>
+          <MobileWrapper>
+            <MobileTabs>
+              <StyledTabPane tab='Builds' key='1'>
+                <UserCardWrapper>
                   <UserHomeCard isBuild />
-                </div>
-              </TabPane>
-              <TabPane
-                style={{
-                  display: 'flex',
-                  height: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                }}
-                tab='Raids'
-                key='2'
-              >
+                </UserCardWrapper>
+              </StyledTabPane>
+              <StyledTabPane tab='Raids' key='2'>
                 <UserHomeCard isBuild={false} />
-              </TabPane>
-            </Tabs>
-          </div>
+              </StyledTabPane>
+            </MobileTabs>
+          </MobileWrapper>
         ) : (
           <Scrollbars autoHide>
-            <Wrapper direction={'row'} justify='center' align='center' wrap>
+            <Wrapper justify='center' align='center' wrap>
               <UserHomeCard isBuild />
               <UserHomeCard isBuild={false} />
             </Wrapper>
           </Scrollbars>
         )}
-      </Flex>
+      </InnerWrapper>
       {!isMobile && (
-        <RightSide
-          direction={'column'}
-          justify={'flex-start'}
-          align={'flex-end'}
-        >
+        <RightSide direction='column' justify='flex-start' align='flex-end'>
           <RightWrapper>
-            <div style={{ height: '40%', padding: 5 }}>
-              <Title level={4} style={{ paddingTop: '20px' }}>
-                DISCOVERY
-              </Title>
-              <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
+            <StyledDivDiscovery>
+              <StyledTitle level={4}>DISCOVERY</StyledTitle>
+              <DiscoveryContent>
                 <Card title='Build Editor 1.0'>
                   Welcome to Build Editor Version 1.0! This version includes a
                   build and raid editor to create fully fledged ESO builds and
                   raids and to view and share them with your community.
                 </Card>
-              </div>
-            </div>
+              </DiscoveryContent>
+            </StyledDivDiscovery>
             <Divider />
-            <div style={{ height: '60%', padding: 5 }}>
-              <Title level={4}>ACTIVITY</Title>
+            <StyledDivActivity>
+              <StyledTitle level={4}>ACTIVITY</StyledTitle>
               {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
             {buildQuery.data &&
               buildQuery.data.builds &&
@@ -127,7 +146,7 @@ export default () => {
                   ))}
                 </div>
                   )*/}
-            </div>
+            </StyledDivActivity>
           </RightWrapper>
         </RightSide>
       )}

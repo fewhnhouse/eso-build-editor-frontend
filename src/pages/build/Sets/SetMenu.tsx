@@ -7,18 +7,23 @@ import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { titleCase } from '../../raid/builds/BuildMenu'
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars'
+import { useMediaQuery } from 'react-responsive'
+import { Redirect } from 'react-router'
 
 const { Option } = Select
 const { Item } = List
 
 const ListContainer = styled.div`
-  width: ${(props: { collapsed: boolean }) => (props.collapsed ? '60px' : '')};
-  flex: ${(props: { collapsed: boolean }) => (props.collapsed ? '' : 1)};
+  width: ${(props: { collapsed: boolean; isMobile: boolean }) =>
+    props.collapsed ? '60px' : ''};
+  flex: ${(props: { collapsed: boolean; isMobile: boolean }) =>
+    props.collapsed ? '' : 1};
   border: 1px solid rgb(217, 217, 217);
   height: 100%;
   display: flex;
-  max-width: 450px;
+  max-width: ${(props: { collapsed: boolean; isMobile: boolean }) =>
+    props.isMobile ? '' : '450px'};
   flex-direction: column;
   transition: width 0.2s ease-in-out;
 `
@@ -26,12 +31,13 @@ const ListContainer = styled.div`
 const StyledListItem = styled(Item)`
   cursor: pointer;
   display: flex;
-  margin: 5px;
+  margin: ${props => props.theme.margins.mini};
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px 5px;
-  border-radius: 4px;
-  padding: 10px 5px;
+  margin: 0px ${props => props.theme.margins.mini};
+  border-radius: ${props => props.theme.borderRadius};
+  padding: ${props => props.theme.paddings.small};
+  ${props => props.theme.margins.mini};
   &:hover > div {
     font-weight: 500;
   }
@@ -48,9 +54,59 @@ const StyledTag = styled(Tag)`
 `
 
 const StyledIconBtn = styled(Button)`
-  margin: 10px;
-  height: 40px;
-  width: 40px;
+  margin: ${props => props.theme.margins.small};
+  margin-top: ${props => props.theme.margins.small};
+  height: ${props => props.theme.icon.height};
+  width: ${props => props.theme.icon.width};
+  margin-right: ${props => props.theme.margins.small};
+`
+
+const StyledFlex = styled(Flex)`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
+  padding: ${props => props.theme.paddings.mini};
+  opacity: ${(flexProps: { collapsed: boolean }) =>
+    flexProps.collapsed ? 0 : 1};
+  pointer-events: ${(flexProps: { collapsed: boolean }) =>
+    flexProps.collapsed ? 'none' : 'all'};
+  transition: opacity 0.2s ease-in-out;
+`
+
+const StyledInnerFlex = styled(Flex)`
+  width: 100%;
+`
+
+const StyledSelectFlex = styled(Flex)`
+  margin: 0px ${props => props.theme.margins.small};
+  overflow: auto;
+  width: 100%;
+`
+
+const StyledInput = styled(Input)`
+  width: 100%;
+  margin: ${props => props.theme.margins.small};
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.small} 0px;
+`
+
+const StyledList = styled(List)`
+  height: 100%;
+  opacity: ${(props: { collapsed: boolean }) => (props.collapsed ? 0 : 1)};
+  pointer-events: ${(props: { collapsed: boolean }) =>
+    props.collapsed ? 'none' : 'all'};
+  transition: opacity 0.2s ease-in-out;
+`
+
+const StyledTagDiv = styled.div`
+  width: 140px;
+  display: flex;
+`
+
+const StyledItemNameDiv = styled.div`
+  text-align: left;
+  flex: 2;
+  font-weight: ${(props: { bold: boolean }) => (props.bold ? 500 : 400)};
 `
 
 const GET_SETS = gql`
@@ -106,6 +162,7 @@ export default ({
   const [selectedWeights, setSelectedWeights] = useState<string[]>([])
   const [searchText, setSearchText] = useState('')
   const [expanded, setExpanded] = useState(false)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const { error, loading, data } = useQuery(GET_SETS, {
     variables: {
@@ -180,43 +237,30 @@ export default ({
     setExpanded(expanded => !expanded)
   }
   return (
-    <ListContainer collapsed={collapsed}>
+    <ListContainer isMobile={isMobile} collapsed={collapsed}>
       {collapsed && (
         <StyledIconBtn
           type='primary'
           ghost
-          style={{ marginTop: 10 }}
           onClick={handleIconClick(false)}
           icon='double-right'
         />
       )}
       <>
-        <Flex
+        <StyledFlex
           direction='column'
           justify='center'
           align='center'
-          style={{
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 6px 0px',
-            padding: '5px',
-            opacity: collapsed ? 0 : 1,
-            pointerEvents: collapsed ? 'none' : 'all',
-            transition: 'opacity 0.2s ease-in-out',
-          }}
+          collapsed={collapsed}
         >
-          <Flex
-            direction='row'
-            justify='center'
-            align='center'
-            style={{ width: '100%' }}
-          >
-            <Input
+          <StyledInnerFlex direction='row' justify='center' align='center'>
+            <StyledInput
               placeholder='Search for Sets'
               allowClear
               value={searchText}
               onChange={handleSearchChange}
               size='large'
               type='text'
-              style={{ margin: '10px', width: '100%' }}
             />
             <Button
               size='large'
@@ -227,29 +271,15 @@ export default ({
               <StyledIconBtn
                 type='primary'
                 ghost
-                style={{ marginRight: 10 }}
                 onClick={handleIconClick(true)}
                 icon='double-left'
               />
             )}
-          </Flex>
+          </StyledInnerFlex>
           {expanded && (
             <>
-              <Divider
-                style={{
-                  margin: '10px 0px',
-                }}
-              />
-              <Flex
-                direction='row'
-                justify='center'
-                align='center'
-                style={{
-                  margin: '0px 10px',
-                  overflow: 'auto',
-                  width: '100%',
-                }}
-              >
+              <StyledDivider />
+              <StyledSelectFlex direction='row' justify='center' align='center'>
                 <Select
                   mode='multiple'
                   style={{ width: '100%', margin: '5px 10px' }}
@@ -260,14 +290,8 @@ export default ({
                     <Option key={type}>{type}</Option>
                   ))}
                 </Select>
-              </Flex>
-
-              <Flex
-                direction='row'
-                justify='center'
-                align='center'
-                style={{ margin: '0px 10px', width: '100%' }}
-              >
+              </StyledSelectFlex>
+              <StyledSelectFlex direction='row' justify='center' align='center'>
                 <Select
                   mode='multiple'
                   style={{ width: '100%', margin: '5px 10px' }}
@@ -278,10 +302,10 @@ export default ({
                     <Option key={weight}>{weight}</Option>
                   ))}
                 </Select>
-              </Flex>
+              </StyledSelectFlex>
             </>
           )}
-        </Flex>
+        </StyledFlex>
         {data && data.sets && (
           <SetList
             context={context}
@@ -320,8 +344,10 @@ const ArmorTypeTag = ({
       return <StyledTag color='red'>Heavy</StyledTag>
     } else if (hasMediumArmor) {
       return <StyledTag color='green'>Medium</StyledTag>
-    } else {
+    } else if (hasLightArmor) {
       return <StyledTag color='blue'>Light</StyledTag>
+    } else {
+      return null
     }
   }
 }
@@ -341,12 +367,17 @@ const SetList = ({
   setCollapsed,
 }: ISetListProps) => {
   const [state, dispatch] = useContext(context)
-
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleClick = (set: ISet) => (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setCollapsed(true)
-    dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
+    if (isMobile) {
+      setRedirect(set.id || '')
+    } else {
+      setCollapsed(true)
+      dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
+    }
   }
 
   const trail = useTrail(sets.length, {
@@ -360,21 +391,17 @@ const SetList = ({
   })
   return (
     <Scrollbars autoHide>
-      <List
+      {redirect && <Redirect to={`/overview/sets/${redirect}`} push />}
+      <StyledList
         loading={loading}
-        style={{
-          height: '100%',
-          opacity: collapsed ? 0 : 1,
-          pointerEvents: collapsed ? 'none' : 'all',
-          transition: 'opacity 0.2s ease-in-out',
-        }}
+        collapsed={collapsed}
         dataSource={trail}
         renderItem={(style: any, index) => {
           const item = sets[index]
           return (
             <animated.div style={style}>
               <StyledListItem onClick={handleClick(item)}>
-                <div style={{ width: 140, display: 'flex' }}>
+                <StyledTagDiv>
                   <ArmorTypeTag
                     hasHeavyArmor={item.has_heavy_armor === 1}
                     hasMediumArmor={item.has_medium_armor === 1}
@@ -382,20 +409,15 @@ const SetList = ({
                     traitsNeeded={item.traits_needed !== null}
                   />
                   <StyledTag color='geekblue'>{item.type}</StyledTag>
-                </div>
-                <div
-                  style={{
-                    textAlign: 'left',
-                    flex: 2,
-                    fontWeight:
-                      state!.selectedSet &&
-                      item.setId === state!.selectedSet.setId
-                        ? 500
-                        : 400,
-                  }}
+                </StyledTagDiv>
+                <StyledItemNameDiv
+                  bold={
+                    state!.selectedSet &&
+                    item.setId === state!.selectedSet.setId
+                  }
                 >
                   {item.name}
-                </div>
+                </StyledItemNameDiv>
               </StyledListItem>
             </animated.div>
           )

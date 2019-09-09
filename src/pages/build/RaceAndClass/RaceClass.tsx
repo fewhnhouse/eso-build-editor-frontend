@@ -1,13 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import {
-  Divider,
-  Input,
-  Select,
-  Typography,
-  Button,
-  Icon,
-  Card,
-} from 'antd'
+import { Divider, Input, Select, Typography, Button, Icon, Card } from 'antd'
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext } from '../BuildStateContext'
@@ -33,6 +25,25 @@ const ResourceCard = styled(Card)`
   flex-direction: column;
   margin: 0px 10px;
 `
+
+const StyledFlex = styled(Flex)`
+  margin: ${props => props.theme.margins.small};
+  width: ${props => props.theme.widths.medium};
+`
+
+const StyledWideFlex = styled(Flex)`
+  flex: 1;
+  margin: ${props => props.theme.margins.small};
+`
+
+const StyledTitle = styled(Typography.Title)`
+  margin: ${props => props.theme.margins.mini};
+`
+
+const StyledInput = styled(Input)`
+  width: ${props => props.theme.widths.medium};
+`
+
 export const applicationAreas = [
   {
     label: 'Cyrodiil - Raid',
@@ -171,40 +182,33 @@ export default ({ edit }: { edit: boolean }) => {
       <Divider>General Information</Divider>
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Build Name</Typography.Text>
-            <Input
-              style={{ width: 400 }}
+            <StyledInput
               size='large'
               value={name}
               onChange={handleBuildNameChange}
               placeholder='Type name...'
             />
-          </Flex>
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
-
-            <Input
+            <StyledInput
               size='large'
-              style={{ width: 400 }}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'
             />
-          </Flex>
-
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
@@ -223,19 +227,16 @@ export default ({ edit }: { edit: boolean }) => {
                 </Select.Option>
               ))}
             </Select>
-          </Flex>
-
-          <Flex
-            style={{ margin: 10, width: 400 }}
+          </StyledFlex>
+          <StyledFlex
             direction='column'
             justify='flex-start'
             align='flex-start'
           >
             <Typography.Text strong>Role</Typography.Text>
-
             <Select
-              size='large'
               style={{ width: 400 }}
+              size='large'
               value={role}
               onChange={handleRoleChange}
               placeholder='Select application area...'
@@ -245,20 +246,13 @@ export default ({ edit }: { edit: boolean }) => {
               <Select.Option value='pve_arena'>Support</Select.Option>
               <Select.Option value='pve_raid'>Tank</Select.Option>
             </Select>
-          </Flex>
+          </StyledFlex>
         </Flex>
-        <Flex
-          style={{ flex: 1, margin: 10 }}
-          direction='column'
-          justify='flex-start'
-          align='center'
-        >
+        <StyledWideFlex direction='column' justify='flex-start' align='center'>
           <Flex direction='row' justify='space-between'>
             <ResourceCard>
               <Typography.Text strong>Stamina</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {stamina}
-              </Typography.Title>
+              <StyledTitle level={4}>{stamina}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={stamina === 0}
@@ -278,9 +272,7 @@ export default ({ edit }: { edit: boolean }) => {
             </ResourceCard>
             <ResourceCard>
               <Typography.Text strong>Health</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {health}
-              </Typography.Title>
+              <StyledTitle level={4}>{health}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={health === 0}
@@ -301,9 +293,7 @@ export default ({ edit }: { edit: boolean }) => {
 
             <ResourceCard>
               <Typography.Text strong>Magicka</Typography.Text>
-              <Typography.Title style={{ margin: 5 }} level={4}>
-                {magicka}
-              </Typography.Title>
+              <StyledTitle level={4}>{magicka}</StyledTitle>
               <ButtonGroup>
                 <Button
                   disabled={magicka === 0}
@@ -322,7 +312,7 @@ export default ({ edit }: { edit: boolean }) => {
               </ButtonGroup>
             </ResourceCard>
           </Flex>
-        </Flex>
+        </StyledWideFlex>
       </GeneralContainer>
 
       <Divider>Race</Divider>

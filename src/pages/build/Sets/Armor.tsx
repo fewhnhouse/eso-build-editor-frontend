@@ -1,37 +1,46 @@
-import React, { useContext, useState } from 'react';
-import { Divider, Radio, Checkbox, Spin } from 'antd';
-import { RadioChangeEvent } from 'antd/lib/radio';
-import Flex from '../../../components/Flex';
-import styled from 'styled-components';
-import { SelectWithTitle } from './CustomSelect';
-import { BuildContext, Slot, ISetSelection, IModification, ArmorType } from '../BuildStateContext';
-import { SelectValue } from 'antd/lib/select';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo';
+import React, { useContext, useState } from 'react'
+import { Divider, Radio, Checkbox, Spin } from 'antd'
+import { RadioChangeEvent } from 'antd/lib/radio'
+import Flex from '../../../components/Flex'
+import styled from 'styled-components'
+import { SelectWithTitle } from './CustomSelect'
+import {
+  BuildContext,
+  Slot,
+  ISetSelection,
+  IModification,
+  ArmorType,
+} from '../BuildStateContext'
+import { SelectValue } from 'antd/lib/select'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
+import gql from 'graphql-tag'
+import { useQuery } from 'react-apollo'
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;
-`;
+`
+
+const StyledModeFlex = styled(Flex)`
+  width: 100%;
+  min-height: 150px;
+`
 
 interface IPiece {
-  title: string;
-  slot: Slot;
-  value: ISetSelection | undefined;
+  title: string
+  slot: Slot
+  value: ISetSelection | undefined
 }
 
 interface IPieceSelection {
-  type: 'bigPieces' | 'smallPieces' | 'frontbar' | 'backbar';
-  title: string;
-  pieces: IPiece[];
+  type: 'bigPieces' | 'smallPieces' | 'frontbar' | 'backbar'
+  title: string
+  pieces: IPiece[]
 }
 
 interface IMode {
-  title: string;
-  type: 'selectedGlyphs' | 'selectedTraits';
+  title: string
+  type: 'selectedGlyphs' | 'selectedTraits'
 }
-
-
 
 const GET_MODIFICATIONS = gql`
   query modifications($where: ModificationWhereInput) {
@@ -43,75 +52,74 @@ const GET_MODIFICATIONS = gql`
       icon
     }
   }
-`;
+`
 
 export default () => {
-  const [state, dispatch] = useContext(BuildContext);
-  const [enchantBigIndividual, setEnchantBigIndividual] = useState(false);
-  const [enchantSmallIndividual, setEnchantSmallIndividual] = useState(false);
-  const [traitBigIndividual, setTraitBigIndividual] = useState(false);
-  const [traitSmallIndividual, setTraitSmallIndividual] = useState(false);
+  const [state, dispatch] = useContext(BuildContext)
+  const [enchantBigIndividual, setEnchantBigIndividual] = useState(false)
+  const [enchantSmallIndividual, setEnchantSmallIndividual] = useState(false)
+  const [traitBigIndividual, setTraitBigIndividual] = useState(false)
+  const [traitSmallIndividual, setTraitSmallIndividual] = useState(false)
   const {
     armorType,
     selectedSet,
     bigPieceSelection,
     smallPieceSelection,
-  } = state!;
+  } = state!
 
-  const head = bigPieceSelection.find(slot => slot.slot === Slot.head);
-  const legs = bigPieceSelection.find(slot => slot.slot === Slot.legs);
-  const chest = bigPieceSelection.find(slot => slot.slot === Slot.chest);
-  const hands = smallPieceSelection.find(slot => slot.slot === Slot.hands);
-  const feet = smallPieceSelection.find(slot => slot.slot === Slot.feet);
+  const head = bigPieceSelection.find(slot => slot.slot === Slot.head)
+  const legs = bigPieceSelection.find(slot => slot.slot === Slot.legs)
+  const chest = bigPieceSelection.find(slot => slot.slot === Slot.chest)
+  const hands = smallPieceSelection.find(slot => slot.slot === Slot.hands)
+  const feet = smallPieceSelection.find(slot => slot.slot === Slot.feet)
   const shoulders = smallPieceSelection.find(
     slot => slot.slot === Slot.shoulders
-  );
-  const waist = smallPieceSelection.find(slot => slot.slot === Slot.waist);
+  )
+  const waist = smallPieceSelection.find(slot => slot.slot === Slot.waist)
 
   const bigPieces = [
     { title: 'Head', slot: Slot.head, value: head },
     { title: 'Chest', slot: Slot.chest, value: chest },
     { title: 'Legs', slot: Slot.legs, value: legs },
-  ];
+  ]
   const smallPieces = [
     { title: 'Hands', slot: Slot.hands, value: hands },
     { title: 'Feet', slot: Slot.feet, value: feet },
     { title: 'Shoulders', slot: Slot.shoulders, value: shoulders },
     { title: 'Waist', slot: Slot.waist, value: waist },
-  ];
+  ]
 
   const pieces: IPieceSelection[] = [
     { type: 'bigPieces', title: 'Big Pieces', pieces: bigPieces },
     { type: 'smallPieces', title: 'Small Pieces', pieces: smallPieces },
-  ];
+  ]
 
   const modes: IMode[] = [
     { title: 'Enchants', type: 'selectedGlyphs' },
     { title: 'Traits', type: 'selectedTraits' },
-  ];
+  ]
 
   const glyphQuery = useQuery(GET_MODIFICATIONS, {
     variables: { where: { modificationType: 'glyph', itemType: 'armor' } },
-  });
+  })
   const traitQuery = useQuery(GET_MODIFICATIONS, {
     variables: { where: { modificationType: 'trait', itemType: 'armor' } },
-  });
+  })
   if (glyphQuery.loading || traitQuery.loading) {
-    return <Spin />;
+    return <Spin />
   } else if (glyphQuery.error || traitQuery.error) {
-    console.error(glyphQuery.error || traitQuery.error);
-    return <div>"Error"</div>;
+    console.error(glyphQuery.error || traitQuery.error)
+    return <div>"Error"</div>
   } else if (glyphQuery.data && traitQuery.data) {
     const onChange = (e: RadioChangeEvent) => {
       dispatch!({
         type: 'SET_ARMOR_TYPE',
         payload: { armorType: e.target.value },
-      });
-    };
+      })
+    }
 
-    const armorGlyphs: IModification[] = glyphQuery.data.modifications;
-    const armorTraits: IModification[] = traitQuery.data.modifications;
-
+    const armorGlyphs: IModification[] = glyphQuery.data.modifications
+    const armorTraits: IModification[] = traitQuery.data.modifications
 
     const onChangeSelect = (
       slots: Slot[],
@@ -130,8 +138,8 @@ export default () => {
           type,
           itemType,
         },
-      });
-    };
+      })
+    }
 
     const handleCheckboxChange = (
       setCheckbox: React.Dispatch<React.SetStateAction<boolean>>,
@@ -139,12 +147,12 @@ export default () => {
       type: 'selectedTraits' | 'selectedGlyphs',
       itemType: 'bigPieces' | 'smallPieces' | 'frontbar' | 'backbar'
     ) => (e: CheckboxChangeEvent) => {
-      onChangeSelect(resetSlots, 'SET_ARMOR_STATS', type, itemType)('');
-      setCheckbox(checkbox => !checkbox);
-    };
+      onChangeSelect(resetSlots, 'SET_ARMOR_STATS', type, itemType)('')
+      setCheckbox(checkbox => !checkbox)
+    }
 
     return (
-      <StyledFlex direction="column" justify="center" align="center">
+      <StyledFlex direction='column' justify='center' align='center'>
         <Radio.Group
           value={armorType}
           onChange={onChange}
@@ -202,11 +210,11 @@ export default () => {
                 >
                   Select individually
                 </Checkbox>
-                <Flex
-                  style={{ width: '100%', minHeight: 150, flexWrap: 'wrap' }}
-                  direction="row"
-                  justify="space-between"
-                  align="flex-start"
+                <StyledModeFlex
+                  wrap
+                  direction='row'
+                  justify='space-between'
+                  align='flex-start'
                 >
                   {(mode.type === 'selectedGlyphs' ? (
                     piece.type === 'bigPieces' ? (
@@ -283,21 +291,21 @@ export default () => {
                       title={piece.title}
                     />
                   )}
-                </Flex>
+                </StyledModeFlex>
               </div>
             ))}
           </div>
         ))}
       </StyledFlex>
-    );
+    )
   } else {
-    return null;
+    return null
   }
-};
+}
 
 const StyledSelectWithTitle = styled(SelectWithTitle)`
   flex: 1;
   min-width: 320px;
   max-width: 320px;
   margin: 0px 10px;
-`;
+`

@@ -40,8 +40,8 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 178px);
-  color: rgb(155, 155, 155);
+  height: 100%;
+  color: ${props => props.theme.mainBg};
 `
 const TabButton = styled(Button)`
   margin: 0px 10px;
@@ -135,6 +135,26 @@ const UPDATE_BUILD = gql`
 `
 const { Step } = Steps
 
+const StyledFlex = styled(Flex)`
+  width: 100%;
+  margin-top: ${props => props.theme.margins.small};
+`
+
+const StyledFooter = styled(Footer)`
+  display: flex;
+  z-index: 100;
+  align-items: center;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+`
+
+const StyledStep = styled(Step)`
+  white-space: nowrap;
+`
+
+const StyledButtonGroup = styled(ButtonGroup)`
+  display: flex;
+`
+
 interface IBuildProps {
   build: IBuildState
   pageIndex: number
@@ -201,14 +221,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully edited. You can now view it and
                 share it with others!
               </div>
-              <Flex
-                style={{ width: '100%', marginTop: 10 }}
+              <StyledFlex
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </Flex>
+              </StyledFlex>
             </Flex>
           ),
         })
@@ -235,14 +254,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 Your build was successfully saved. You can now view it and share
                 it with others!
               </div>
-              <Flex
-                style={{ width: '100%', marginTop: 10 }}
+              <StyledFlex
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </Flex>
+              </StyledFlex>
             </Flex>
           ),
         })
@@ -368,14 +386,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         {redirect && <Redirect to={`/builds/${redirect}`} push />}
       </Container>
 
-      <Footer
-        style={{
-          display: 'flex',
-          zIndex: 100,
-          alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
-        }}
-      >
+      <StyledFooter>
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
@@ -386,30 +397,20 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
-          <Step
-            style={{ whiteSpace: 'nowrap' }}
+          <StyledStep
             title='Race & Class'
             description='Select race and class.'
           />
-          <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Skills'
-            description='Select skills.'
-          />
-          <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Sets'
-            description='Select sets.'
-          />
-          <Step
+          <StyledStep title='Skills' description='Select skills.' />
+          <StyledStep title='Sets' description='Select sets.' />
+          <StyledStep
             title='Consumables'
-            style={{ whiteSpace: 'nowrap' }}
             description='Select mundus, potions, food.'
           />
           <Step title='Review' description='Review and save.' />
         </Steps>
         <Tooltip title={setTooltipTitle()}>
-          <ButtonGroup style={{ display: 'flex' }} size='large'>
+          <StyledButtonGroup size='large'>
             {tab === 4 && (
               <Tooltip
                 title={
@@ -425,7 +426,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               </Tooltip>
             )}
             <TabButton
-              // style={{minWidth: 120}}
               loading={loading}
               onClick={handleNextClick}
               disabled={isDisabled || saved}
@@ -434,10 +434,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               {tab === 4 ? 'Save' : 'Next'}
               {!loading && <Icon type={tab === 4 ? 'save' : 'right'} />}
             </TabButton>
-          </ButtonGroup>
+          </StyledButtonGroup>
         </Tooltip>
         <Redirect to={`${path}/${tab}`} push />
-      </Footer>
+      </StyledFooter>
     </BuildContext.Provider>
   )
 }

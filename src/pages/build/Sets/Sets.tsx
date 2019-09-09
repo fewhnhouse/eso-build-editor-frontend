@@ -9,7 +9,7 @@ import { BuildContext, SetTab } from '../BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import SetMenu from './SetMenu'
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars'
 
 const { TabPane } = Tabs
 
@@ -23,8 +23,22 @@ const Content = styled.div`
   display: flex;
 `
 
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+`
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+`
+
 export default ({ edit }: { edit: boolean }) => {
-  // const [skills, setSkills] = useState([]);
   const [state, dispatch] = useContext(BuildContext)
   const [set, setSet] = useState<ISet | undefined>(undefined)
   const [collapsed, setCollapsed] = useState(state!.selectedSet !== undefined)
@@ -35,7 +49,7 @@ export default ({ edit }: { edit: boolean }) => {
     jewelrySelection,
     frontbarSelection,
     backbarSelection,
-    selectedSet
+    selectedSet,
   } = state!
 
   const setsCount = bigPieceSelection
@@ -69,14 +83,7 @@ export default ({ edit }: { edit: boolean }) => {
     dispatch!({ type: 'SET_SET_TAB_KEY', payload: { setTabKey: key } })
   }
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-      }}
-    >
+    <StyledDiv>
       <SetMenu
         collapsable
         collapsed={collapsed}
@@ -133,20 +140,10 @@ export default ({ edit }: { edit: boolean }) => {
             </AbilityContainer>
           </Scrollbars>
         ) : (
-          <Empty
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flex: 2,
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            Select a set to get started.
-          </Empty>
+          <StyledEmpty>Select a set to get started.</StyledEmpty>
         )}
         {collapsed && <SetBar />}
       </Content>
-    </div>
+    </StyledDiv>
   )
 }

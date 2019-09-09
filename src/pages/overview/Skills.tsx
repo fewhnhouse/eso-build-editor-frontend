@@ -9,10 +9,21 @@ import { useQuery } from 'react-apollo'
 import { Spin } from 'antd'
 import SkillsDisplay from '../../components/SkillsDisplay'
 import { defaultUltimate } from '../build/Skills/Skills'
+import styled from 'styled-components'
+import { ITheme } from '../../components/theme'
+
+const StyledFlex = styled(Flex)`
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? 0 : props.theme.paddings.medium};
+`
 
 interface ISetProps {
   context: React.Context<any>
   skillLine?: number
+  isMobile: boolean
 }
 
 const GET_SKILLS = gql`
@@ -24,7 +35,7 @@ const GET_SKILLS = gql`
   ${skill}
 `
 
-export default ({ context, skillLine }: ISetProps) => {
+export default ({ context, skillLine, isMobile }: ISetProps) => {
   const { loading, error, data } = useQuery(GET_SKILLS)
   if (loading) {
     return (
@@ -57,37 +68,32 @@ export default ({ context, skillLine }: ISetProps) => {
     )
 
     return (
-      <Flex
-        direction='row'
-        align='flex-start'
-        style={{
-          height: 'calc(100vh - 100px)',
-          width: '100%',
-          overflow: 'auto',
-          padding: 20,
-        }}
-      >
-        <MenuCard>
+      <StyledFlex direction='row' align='flex-start' isMobile={isMobile}>
+        <MenuCard isMobile={isMobile}>
           <SkillMenu context={context} />
         </MenuCard>
-        <ContentCard
-          bodyStyle={{
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <SkillsDisplay
-            morphedActives={morphedActives}
-            morphs={morphs}
-            baseActives={baseActives}
-            baseUltimate={baseUltimate}
-            passives={passives}
-            skillLine={skillLine || 0}
-          />
-        </ContentCard>
-      </Flex>
+        {isMobile ? (
+          ''
+        ) : (
+          <ContentCard
+            bodyStyle={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <SkillsDisplay
+              morphedActives={morphedActives}
+              morphs={morphs}
+              baseActives={baseActives}
+              baseUltimate={baseUltimate}
+              passives={passives}
+              skillLine={skillLine || 0}
+            />
+          </ContentCard>
+        )}
+      </StyledFlex>
     )
   }
   return null

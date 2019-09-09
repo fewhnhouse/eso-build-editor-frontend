@@ -9,6 +9,7 @@ import {
   notification,
   Button,
   message,
+  Card,
 } from 'antd'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
@@ -18,7 +19,8 @@ import DeleteAccount from './DeleteAccount'
 import UpdatePassword from './UpdatePassword'
 import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
-import { RESEND_VERIFICATION } from '../../components/AppContainer'
+import { RESEND_VERIFICATION, AppContext } from '../../components/AppContainer'
+import Scrollbars from 'react-custom-scrollbars'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -30,8 +32,30 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 64px);
+  height: 100%;
   color: ${props => props.theme.mainBg};
+`
+
+export const ItemCard = styled(Card)`
+  max-width: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '' : '500px'};
+  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '40%')};
+`
+
+const StyledFlexButton = styled(Flex)`
+  width: 100%;
+`
+
+const StyledText = styled(Typography.Text)`
+  margin-right: 30px;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledFlexFull = styled(Flex)`
+  width: 100%;
 `
 
 const ME = gql`
@@ -94,19 +118,12 @@ const openNotification = (resendMutation: any) => {
     resendMutation()
   }
   const btn = (
-    <Flex
-      style={{ width: '100%' }}
-      direction='row'
-      align='center'
-      justify='space-between'
-    >
-      <Typography.Text style={{ marginRight: 30 }}>
-        Didnt get an email?{' '}
-      </Typography.Text>
+    <StyledFlexButton direction='row' align='center' justify='space-between'>
+      <StyledText>Didnt get an email? </StyledText>
       <Button onClick={handleResendClick} icon='mail' type='primary'>
         {'Resend'}
       </Button>
-    </Flex>
+    </StyledFlexButton>
   )
 
   notification.info({
@@ -119,7 +136,7 @@ const openNotification = (resendMutation: any) => {
         <div>
           Check your Inbox. We have sent you a Mail to validate your account.
         </div>
-        <Divider style={{ margin: '5px 0px' }} />
+        <StyledDivider />
       </Flex>
     ),
   })
@@ -127,6 +144,18 @@ const openNotification = (resendMutation: any) => {
 
 const Profile = ({ loggedIn }: IProfileProps) => {
   const me = useQuery(ME)
+  const [, appDispatch] = useContext(AppContext)
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Profile' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
+  }, [appDispatch])
+
   const [oldPassword, setOldPassword] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -144,6 +173,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   const [deleteAccount, deleteAccountResult] = useMutation<any, any>(
     DELETE_ACCOUNT
   )
+
   useEffect(() => {
     if (
       updatePasswordResult.data ||
@@ -258,28 +288,29 @@ const Profile = ({ loggedIn }: IProfileProps) => {
         />
       </Modal>
       <Container>
-        <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
-        <Flex
-          direction='column'
-          justify='space-around'
-          align='center'
-          style={{ width: '100%', margin: 20 }}
-        >
-          <UpdateEmail
-            value={email}
-            setValue={setEmail}
-            me={me.data.me}
-            handleActionClick={handleActionClick}
-          />
-          <Divider />
-          <UpdatePassword
-            value={password}
-            setValue={setPassword}
-            handleActionClick={handleActionClick}
-          />
-          <Divider />
-          <DeleteAccount handleActionClick={handleActionClick} />
-        </Flex>
+        <Scrollbars autoHide>
+          <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
+          <StyledFlexFull
+            direction='column'
+            justify='space-around'
+            align='center'
+          >
+            <UpdateEmail
+              value={email}
+              setValue={setEmail}
+              me={me.data.me}
+              handleActionClick={handleActionClick}
+            />
+            <Divider />
+            <UpdatePassword
+              value={password}
+              setValue={setPassword}
+              handleActionClick={handleActionClick}
+            />
+            <Divider />
+            <DeleteAccount handleActionClick={handleActionClick} />
+          </StyledFlexFull>
+        </Scrollbars>
       </Container>
     </>
   )

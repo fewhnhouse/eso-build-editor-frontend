@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { useQuery } from 'react-apollo'
 import Build from './Build'
@@ -8,6 +8,7 @@ import gql from 'graphql-tag'
 import { build } from '../../util/fragments'
 import { useMediaQuery } from 'react-responsive'
 import ErrorPage from '../../components/ErrorPage'
+import { AppContext } from '../../components/AppContainer'
 
 const GET_BUILD = gql`
   query Build($id: ID!) {
@@ -28,6 +29,18 @@ export default ({ edit, match }: IBuildWrapperProps) => {
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 1100,
   })
+  const [, appDispatch] = useContext(AppContext)
+
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Build Editor' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
+  }, [appDispatch])
 
   const { loading, error, data } = useQuery(GET_BUILD, {
     variables: { id: buildId },

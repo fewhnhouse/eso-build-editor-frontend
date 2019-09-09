@@ -23,12 +23,32 @@ const Container = styled(Content)`
   text-align: center;
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 178px);
+  height: 100%;
   color: ${props => props.theme.mainBg};
+`
+
+const StyledFooter = styled(Footer)`
+  display: flex;
+  z-index: 100;
+  align-items: center;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
 `
 
 const TabButton = styled(Button)`
   margin: 0px 10px;
+`
+
+const StyledFlexNotification = styled(Flex)`
+  width: 100%;
+  margin-top: ${props => props.theme.margins.small};
+`
+
+const StyledStep = styled(Step)`
+  white-space: nowrap;
+`
+
+const StyledButtonGroup = styled(ButtonGroup)`
+  display: flex;
 `
 
 const CREATE_RAID = gql`
@@ -109,14 +129,13 @@ export default ({
                 Your raid was successfully edited. You can now view it and share
                 it with others!
               </div>
-              <Flex
-                style={{ width: '100%', marginTop: 10 }}
+              <StyledFlexNotification
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </Flex>
+              </StyledFlexNotification>
             </Flex>
           ),
         })
@@ -138,14 +157,13 @@ export default ({
                 Your raid was successfully saved. You can now view it and share
                 it with others!
               </div>
-              <Flex
-                style={{ width: '100%', marginTop: 10 }}
+              <StyledFlexNotification
                 direction='row'
                 align='center'
                 justify='space-between'
               >
                 <Button icon='share-alt'>Share link</Button>
-              </Flex>
+              </StyledFlexNotification>
             </Flex>
           ),
         })
@@ -205,14 +223,7 @@ export default ({
         )}
         {redirect !== '' ? <Redirect to={`/raids/${redirect}`} push /> : ''}
       </Container>
-      <Footer
-        style={{
-          display: 'flex',
-          zIndex: 100,
-          alignItems: 'center',
-          boxShadow: '0 -2px 6px 0 rgba(0, 0, 0, 0.1)',
-        }}
-      >
+      <StyledFooter>
         <TabButton
           onClick={handlePrevClick}
           disabled={tab === 0}
@@ -223,23 +234,14 @@ export default ({
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
-          <Step
-            style={{ whiteSpace: 'nowrap' }}
+          <StyledStep
             title='General Information'
             description='Add general Raid info.'
           />
-          <Step
-            style={{ whiteSpace: 'nowrap' }}
-            title='Builds'
-            description='Add builds to your setup.'
-          />
-          <Step
-            title='Review'
-            style={{ whiteSpace: 'nowrap' }}
-            description='Review and save.'
-          />
+          <StyledStep title='Builds' description='Add builds to your setup.' />
+          <StyledStep title='Review' description='Review and save.' />
         </Steps>
-        <ButtonGroup style={{ display: 'flex' }} size='large'>
+        <StyledButtonGroup size='large'>
           {tab === 2 && (
             <Tooltip
               title={
@@ -259,7 +261,6 @@ export default ({
           )}
           <Tooltip title={setTooltipTitle()}>
             <TabButton
-              // style={{minWidth: 120}}
               loading={loading}
               onClick={handleNextClick}
               disabled={isDisabled || saved}
@@ -269,9 +270,9 @@ export default ({
               {!loading && <Icon type={tab === 2 ? 'save' : 'right'} />}
             </TabButton>
           </Tooltip>
-        </ButtonGroup>
+        </StyledButtonGroup>
         <Redirect to={`${path}/${tab}`} push />
-      </Footer>
+      </StyledFooter>
     </RaidContext.Provider>
   )
 }

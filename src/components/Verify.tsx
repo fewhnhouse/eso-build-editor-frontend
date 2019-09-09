@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps } from 'react-router'
 import { message, Result, Button, Spin } from 'antd'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { AppContext } from './AppContainer'
 
 const VERIFY = gql`
   mutation confirmSignup($token: String!) {
@@ -20,10 +21,28 @@ const VERIFY = gql`
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 68px);
+  height: 100%;
   background: #ededed;
 `
+
+const StyledSpin = styled(Spin)`
+  margin-top: ${props => props.theme.margins.mini};
+`
+
 export default ({ match }: RouteComponentProps<{ token: string }>) => {
+  const [, appDispatch] = useContext(AppContext)
+
+  useEffect(() => {
+    appDispatch!({
+      type: 'SET_HEADER_TITLE',
+      payload: { headerTitle: 'Verify' },
+    })
+    appDispatch!({
+      type: 'SET_HEADER_SUBTITLE',
+      payload: { headerSubTitle: '' },
+    })
+  }, [appDispatch])
+
   const { token } = match.params
   const [mutate, { error, loading, data }] = useMutation(VERIFY, {
     variables: { token },
@@ -36,7 +55,7 @@ export default ({ match }: RouteComponentProps<{ token: string }>) => {
   if (loading) {
     return (
       <Container>
-        <Spin style={{ marginTop: 5 }} />
+        <StyledSpin />
       </Container>
     )
   }

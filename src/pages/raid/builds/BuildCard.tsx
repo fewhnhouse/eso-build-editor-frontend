@@ -3,20 +3,25 @@ import { useDrag } from 'react-dnd'
 import styled, { CSSProperties } from 'styled-components'
 import SkillView from '../../../components/SkillView'
 import { ABILITY_BAR_TWO, ABILITY_BAR_ONE } from '../../build/Skills/AbilityBar'
-import { Card, Divider, Button, Typography, Tooltip } from 'antd'
+import { Card, Divider, Button, Typography, Tooltip, Popover, Tag } from 'antd'
 import GearView from '../../../components/GearView'
 import { Tabs } from 'antd'
 import Flex from '../../../components/Flex'
-import { IBuild } from '../../build/BuildStateContext'
+import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
 import { Link } from 'react-router-dom'
+import { ITheme } from '../../../components/theme'
+import { ISet } from '../../../components/GearSlot'
+import GearCard from '../../../components/GearCard'
 
 const { TabPane } = Tabs
 
-const MyAvatar = styled.img`
-  width: 28px;
-  height: 28px;
-  margin-right: 5px;
+const Icon = styled.img`
+  width: ${props => props.theme.smallIcon.width};
+  height: ${props => props.theme.smallIcon.height};
+  margin-right: ${props => props.theme.margins.mini};
+  border-radius: ${(props: { isMundusStone: boolean; theme: ITheme }) =>
+    props.isMundusStone ? props.theme.borderRadius : ''};
 `
 
 const ScrollContainer = styled.div`
@@ -24,14 +29,23 @@ const ScrollContainer = styled.div`
   height: 250px;
 `
 
-const RaceClassContainer = styled.div`
+const InfoContainer = styled(Flex)`
   margin-right: 10px;
+  flex: 1;
+  max-width: 25%;
+`
+
+const InfoLabel = styled.label`
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Description = styled(Flex)`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
   line-height: 1.5;
-  color: 'rgba(0, 0, 0, 0.45)';
+  color: ${props => props.theme.colors.grey.medium};
 `
 
 const AbilityBar = styled.div`
@@ -44,16 +58,43 @@ const AbilityBar = styled.div`
   max-width: 300px;
 `
 
+const AbilityBarContainer = styled(Flex)`
+  width: 100%;
+`
+
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active?: boolean }) =>
-    props.active ? 'rgb(21, 136, 246)' : 'rgb(232, 232, 232)'};
+  border-color: ${(props: { active?: boolean; theme: ITheme }) =>
+    props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  max-width: 400px;
+  max-width: ${props => props.theme.widths.medium};
   min-height: 80px;
-  margin: 10px;
+  margin: ${props => props.theme.margins.small};
 `
+
+const StyledLink = styled(Link)`
+  top: 10px;
+  right: 10px;
+  position: absolute;
+`
+
+const StyledDivider = styled(Divider)`
+  margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledTag = styled(Tag)`
+  margin-bottom: 5px;
+`
+
+const StyledTitle = styled(Typography.Title)`
+  max-width: 350px;
+  width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
@@ -95,6 +136,26 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   )
 }
 
+const ShortInfo = ({
+  icon,
+  label,
+  type,
+}: {
+  icon: string
+  label: string
+  type: string
+}) => (
+  <Tooltip title={label} trigger='hover'>
+    <InfoContainer direction='column' align='center'>
+      <Icon
+        isMundusStone={type === 'mundusStones'}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/${type}/${icon}`}
+      />
+      <InfoLabel>{label}</InfoLabel>
+    </InfoContainer>
+  </Tooltip>
+)
+
 const BuildCard = ({
   item,
   role,
@@ -124,6 +185,20 @@ const BuildCard = ({
     bigPieceSelection,
     jewelrySelection
   )
+
+  const sets = concat.reduce(
+    (prev: ISet[], curr: ISetSelection) => {
+      const isExisting = prev.find(
+        set => set && curr.selectedSet && set.name === curr.selectedSet.name
+      )
+      if (!isExisting) {
+        return curr.selectedSet ? [...prev, curr.selectedSet] : prev
+      } else {
+        return prev
+      }
+    },
+    [] as ISet[]
+  )
   const setsCount = concat
     .map(setSelection =>
       setSelection.selectedSet ? setSelection.selectedSet.name : ''
@@ -137,18 +212,7 @@ const BuildCard = ({
     <StyledCard hoverable>
       <div>
         <Flex direction='row' justify='space-between'>
-          <Typography.Title
-            level={3}
-            style={{
-              maxWidth: 350,
-              width: "80%",
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {item.name}
-          </Typography.Title>
+          <StyledTitle level={3}>{item.name}</StyledTitle>
           {role ? (
             <Button
               type='danger'
@@ -158,35 +222,50 @@ const BuildCard = ({
             />
           ) : (
             <Tooltip title='Go to build'>
-              <Link
-                style={{ top: 10, right: 10, position: 'absolute' }}
-                to={`/builds/${item.id}`}
-              >
+              <StyledLink to={`/builds/${item.id}`}>
                 <Button ghost icon='select' type='primary' />
-              </Link>
+              </StyledLink>
             </Tooltip>
           )}
         </Flex>
-        <Description direction='row' justify='flex-start'>
-          <RaceClassContainer>
-            <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
-            />
-            {item.race}
-          </RaceClassContainer>
-          <RaceClassContainer>
-            <MyAvatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
-            />
-            {item.esoClass}
-          </RaceClassContainer>
+        <Description direction='row' justify='space-between'>
+          <ShortInfo type='races' icon={`${item.race}.png`} label={item.race} />
+          <ShortInfo
+            type='classes'
+            icon={`${item.esoClass}.png`}
+            label={item.esoClass}
+          />
+          <ShortInfo
+            type='mundusStones'
+            icon={item.mundusStone.icon}
+            label={item.mundusStone.name}
+          />
+          <ShortInfo
+            type='buffs'
+            icon={item.buff.icon}
+            label={item.buff.name}
+          />
         </Description>
+        {!expand && (
+          <>
+            <Divider />
+            {sets.map(set => (
+              <Popover
+                content={
+                  <GearCard size='normal' set={set} setSelectionCount={0} />
+                }
+              >
+                <StyledTag>{set.name}</StyledTag>
+              </Popover>
+            ))}
+          </>
+        )}
         {expand && (
           <>
-            <Divider style={{ margin: '5px 0px' }} />
+            <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <Flex direction="column" style={{ width: '100%' }}>
+                <AbilityBarContainer direction='column' align='center'>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
@@ -205,7 +284,7 @@ const BuildCard = ({
                       ultimate={item.ultimateTwo}
                     />
                   </AbilityBar>
-                </Flex>
+                </AbilityBarContainer>
               </TabPane>
               <TabPane tab='Weapons' key='weapons'>
                 <ScrollContainer>
