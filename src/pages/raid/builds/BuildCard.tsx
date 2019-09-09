@@ -10,7 +10,7 @@ import Flex from '../../../components/Flex'
 import { IBuild } from '../../build/BuildStateContext'
 import { IRole, RaidContext } from '../RaidStateContext'
 import { Link } from 'react-router-dom'
-import { ITheme } from '../../../components/theme';
+import { ITheme } from '../../../components/theme'
 
 const { TabPane } = Tabs
 
@@ -18,6 +18,8 @@ const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
   height: ${props => props.theme.smallIcon.height};
   margin-right: ${props => props.theme.margins.mini};
+  border-radius: ${(props: { isMundusStone: boolean; theme: ITheme }) =>
+    props.isMundusStone ? props.theme.borderRadius : ''};
 `
 
 const ScrollContainer = styled.div`
@@ -25,8 +27,17 @@ const ScrollContainer = styled.div`
   height: 250px;
 `
 
-const RaceClassContainer = styled.div`
+const InfoContainer = styled(Flex)`
   margin-right: 10px;
+  flex: 1;
+  max-width: 25%;
+`
+
+const InfoLabel = styled.label`
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Description = styled(Flex)`
@@ -50,7 +61,7 @@ const AbilityBarContainer = styled(Flex)`
 `
 
 const StyledCard = styled(Card)`
-  border-color: ${(props: { active?: boolean, theme: ITheme }) =>
+  border-color: ${(props: { active?: boolean; theme: ITheme }) =>
     props.active ? 'rgb(21, 136, 246)' : props.theme.mainBorderColor};
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
@@ -119,6 +130,26 @@ const WithDnD = ({ item, style, expand }: IBuildCardProps) => {
   )
 }
 
+const ShortInfo = ({
+  icon,
+  label,
+  type,
+}: {
+  icon: string
+  label: string
+  type: string
+}) => (
+  <Tooltip title={label} trigger='hover'>
+    <InfoContainer direction='column' align='center'>
+      <Icon
+        isMundusStone={type === 'mundusStones'}
+        src={`${process.env.REACT_APP_IMAGE_SERVICE}/${type}/${icon}`}
+      />
+      <InfoLabel>{label}</InfoLabel>
+    </InfoContainer>
+  </Tooltip>
+)
+
 const BuildCard = ({
   item,
   role,
@@ -177,26 +208,30 @@ const BuildCard = ({
             </Tooltip>
           )}
         </Flex>
-        <Description direction='row' justify='flex-start'>
-          <RaceClassContainer>
-            <Icon
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${item.race}.png`}
-            />
-            {item.race}
-          </RaceClassContainer>
-          <RaceClassContainer>
-            <Icon
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
-            />
-            {item.esoClass}
-          </RaceClassContainer>
+        <Description direction='row' justify='space-between'>
+          <ShortInfo type='races' icon={`${item.race}.png`} label={item.race} />
+          <ShortInfo
+            type='classes'
+            icon={`${item.esoClass}.png`}
+            label={item.esoClass}
+          />
+          <ShortInfo
+            type='mundusStones'
+            icon={item.mundusStone.icon}
+            label={item.mundusStone.name}
+          />
+          <ShortInfo
+            type='buffs'
+            icon={item.buff.icon}
+            label={item.buff.name}
+          />
         </Description>
         {expand && (
           <>
             <StyledDivider />
             <Tabs defaultActiveKey={'skills'}>
               <TabPane tab='Skills' key='skills'>
-                <AbilityBarContainer direction='column' align="center">
+                <AbilityBarContainer direction='column' align='center'>
                   <AbilityBar>
                     <SkillView
                       id={ABILITY_BAR_ONE}
