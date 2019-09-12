@@ -96,6 +96,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         message: 'Build Deletion',
         description: 'Build successfully deleted.',
       })
+      setRedirect(`/`)
     } else if (error) {
       notification.error({
         message: 'Build Deletion',
