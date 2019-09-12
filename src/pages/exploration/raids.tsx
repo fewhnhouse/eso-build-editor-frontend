@@ -3,22 +3,23 @@ import Flex from '../../components/Flex'
 import { MenuCard, ContentCard } from '../overview/Overview'
 import { Input, Divider, Rate, Select, Typography, Slider } from 'antd'
 import { applicationAreas, marks } from '../raid/general/RaidGeneral'
+import { useMediaQuery } from 'react-responsive'
+import styled from 'styled-components'
 
 const { Option } = Select
 const { Title } = Typography
 
+const MenuFlex = styled(Flex)`
+  height: calc(100vh - 100px);
+  width: 100%;
+  padding: ${props => props.theme.paddings.medium};
+`
+
 export default () => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   return (
-    <Flex
-      direction='row'
-      align='flex-start'
-      style={{
-        height: 'calc(100vh - 100px)',
-        width: '100%',
-        padding: 20
-      }}
-    >
-      <MenuCard minWidth='400px'>
+    <MenuFlex direction='row' align='flex-start'>
+      <MenuCard isMobile={isMobile}>
         <Title level={3}>Browse public raids</Title>
         <Title level={4}>Filters</Title>
         <Input placeholder='Raid name...'></Input>
@@ -58,11 +59,11 @@ export default () => {
           height: '100%',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <h1>Raids matching filters</h1>
       </ContentCard>
-    </Flex>
+    </MenuFlex>
   )
 }

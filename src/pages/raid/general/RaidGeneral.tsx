@@ -29,7 +29,7 @@ const StyledSlider = styled(Slider)`
   width: 380px;
 `
 
-const marks = {
+export const marks = {
   1: '1',
   6: '6',
   12: '12',
