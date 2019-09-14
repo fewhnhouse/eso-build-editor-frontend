@@ -100,6 +100,22 @@ const DesktopMenu = ({
                 <Link to='/raidEditor/0'>Raid Editor</Link>
               </Item>
             </SubMenu>
+            <SubMenu
+              key='group'
+              title={
+                <span>
+                  Groups
+                  <StyledIcon type='down' />
+                </span>
+              }
+            >
+              <Item key='group:1'>
+                <Link to='/groups'>Groups</Link>
+              </Item>
+              <Item key='group:2'>
+                <Link to='/groupEditor/0'>Group Editor</Link>
+              </Item>
+            </SubMenu>
             <Item key='overview'>
               <Link to='/overview/0'>Overview</Link>
             </Item>
