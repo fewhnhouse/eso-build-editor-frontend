@@ -78,6 +78,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         message: 'Raid Deletion',
         description: 'Raid successfully deleted.',
       })
+      setRedirect(`/`)
     } else if (error) {
       notification.error({
         message: 'Raid Deletion',
