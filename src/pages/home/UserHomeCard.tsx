@@ -233,6 +233,10 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   const handleCreateClick = (path: string) => () => {
     setRedirect(path)
   }
+  const handleRedirectClick = (redirect: string) => () => {
+    setRedirect('/raids/' + redirect)
+  }
+
   if (redirect !== '') {
     return <Redirect to={redirect} push />
   }
@@ -249,6 +253,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   const handleAppAreaChange = (applicationAreas: string[]) => {
     setSelectedApplicationAreas(applicationAreas)
   }
+
   return (
     <CardContainer
       isMobile={isMobile}
@@ -343,6 +348,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
           />
         ) : (
           <RaidCard
+            onCardClick={handleRedirectClick}
             loading={raidsQuery.loading}
             data={
               raidsQuery.data && raidsQuery.data.ownRaids

@@ -1,53 +1,75 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Select, Divider } from 'antd'
+import { Card, Select, Divider, Icon } from 'antd'
+import gql from 'graphql-tag'
+import { raid } from '../../../util/fragments'
+import { useQuery } from 'react-apollo'
 
 const { Option } = Select
 
-const Container = styled(Flex)`
-  flex: 1;
+export const RAID = gql`
+  query Raids($id: ID!) {
+    raid(id: $id) {
+      ...Raid
+    }
+  }
+  ${raid}
 `
 
-const RaidCardsContainer = styled(Flex)`
+const RaidCardsWrapper = styled(Flex)`
   width: 100%;
 `
 
-const RaidCard = styled(Card)`
-  width: 254px;
+const RoleWrapper = styled(Flex)`
+  width: 100%;
 `
 
-export default () => {
+const RoleInnerCard = styled(Card)`
+  width: 200px;
+`
+
+interface IGroupAssignments {
+  useRaid?: string
+}
+
+export default ({ useRaid }: IGroupAssignments) => {
+  const raidQuery = useQuery(RAID, { variables: { id: useRaid } })
+  const singleRaid = raidQuery.data ? raidQuery.data.raid : ''
   return (
-    <Container direction='column' justify='center' align='center'>
-      <RaidCardsContainer
-        direction='row'
-        align='space-around'
-        justify='space-around'
-      >
-        <RaidCard title='DD'>
-          <Divider>Primary</Divider>
-          <Select
-            mode='multiple'
-            style={{ width: '100%' }}
-            placeholder='Primary'
-          >
-            <Option value='Member 1'>Member 1</Option>
-            <Option value='Member 2'>Member 2</Option>
-            <Option value='Member 3'>Member 3</Option>
-          </Select>
-          <Divider>Secondary</Divider>
-          <Select
-            mode='multiple'
-            style={{ width: '100%' }}
-            placeholder='Secondary'
-          >
-            <Option value='Member 1'>Member 1</Option>
-            <Option value='Member 2'>Member 2</Option>
-            <Option value='Member 3'>Member 3</Option>
-          </Select>
-        </RaidCard>
-      </RaidCardsContainer>
-    </Container>
+    <RaidCardsWrapper direction='column' align='center'>
+      {raidQuery.loading ? (
+        <Icon type='loading' />
+      ) : raidQuery.data && raidQuery.data.raid ? (
+        <>
+          <h3>Assign members to roles in "{singleRaid.name}"</h3>
+          {singleRaid.roles.map((role: any) => (
+            <>
+              <h3>{role.name}</h3>
+              <RoleWrapper direction='row' justify='space-around' wrap>
+                {role.builds.map((sortedBuild: any) => (
+                  <RoleInnerCard type='inner' title={sortedBuild.build.name}>
+                    <span>Primary members:</span>
+                    <Select mode='multiple' style={{ width: '100%' }}>
+                      <Option value='Member 1'>Member 1</Option>
+                      <Option value='Member 2'>Member 2</Option>
+                      <Option value='Member 3'>Member 3</Option>
+                    </Select>
+                    <span>Secondary members:</span>
+                    <Select mode='multiple' style={{ width: '100%' }}>
+                      <Option value='Member 1'>Member 1</Option>
+                      <Option value='Member 2'>Member 2</Option>
+                      <Option value='Member 3'>Member 3</Option>
+                    </Select>
+                  </RoleInnerCard>
+                ))}
+              </RoleWrapper>
+            </>
+          ))}
+        </>
+      ) : (
+        'No raid selected'
+      )}
+    </RaidCardsWrapper>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Divider } from 'antd'
 import styled from 'styled-components'
 import GroupRaidMenu from './GroupRaidMenu'
@@ -12,12 +12,15 @@ const StyledDiv = styled.div`
 `
 
 export default () => {
+  const [usedRaid, setUsedRaid] = useState('')
+  const setSelectedRaid = (id: string) => {
+    setUsedRaid(id)
+  }
   return (
     <>
-      <Divider>Set up a group</Divider>
       <StyledDiv>
-        <GroupRaidMenu />
-        <GroupAssignments />
+        <GroupRaidMenu selectRaid={setSelectedRaid} />
+        <GroupAssignments useRaid={usedRaid} />
       </StyledDiv>
     </>
   )
