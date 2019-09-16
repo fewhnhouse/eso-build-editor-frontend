@@ -7,7 +7,6 @@ import { OWN_RAIDS } from '../../home/UserHomeCard'
 import { useQuery } from 'react-apollo'
 import { titleCase } from '../../raid/builds/BuildMenu'
 import { applicationAreas } from '../../raid/general/RaidGeneral'
-import { RAID } from '../../raid/Review/RaidReview'
 
 const ListContainer = styled.div`
   border: 1px solid rgb(217, 217, 217);

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Divider } from 'antd'
 import styled from 'styled-components'
 import GroupRaidMenu from './GroupRaidMenu'
 import GroupAssignments from './GroupAssignments'

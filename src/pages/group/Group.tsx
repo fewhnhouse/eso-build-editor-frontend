@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import styled from 'styled-components'
 import { Layout, Steps, Button, Icon, Tooltip } from 'antd'
 import { Redirect } from 'react-router'
 import GroupGeneral from './general/GroupGeneral'
 import GroupSetup from './groupsetup/GroupSetup'
 import GroupReview from './review/GroupReview'
+import { IGroupState, GroupContext, groupReducer } from './GroupStateContext'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -41,13 +42,14 @@ const StyledButtonGroup = styled(ButtonGroup)`
 `
 
 interface IGroupProps {
-  group: any
+  group: IGroupState
   edit?: boolean
   pageIndex: number
   path: string
 }
 
 export default ({ group, edit, pageIndex, path }: IGroupProps) => {
+  const [state, dispatch] = useReducer(groupReducer, group)
   const [redirect, setRedirect] = useState('')
   const [tab, setTab] = useState(pageIndex || 0)
 
@@ -75,7 +77,7 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
   }
 
   return (
-    <>
+    <GroupContext.Provider value={[state, dispatch]}>
       <Container>
         {pageIndex === 0 ? (
           <GroupGeneral edit={edit} />
@@ -120,6 +122,6 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
         </StyledButtonGroup>
         <Redirect to={`${path}/${tab}`} push />
       </StyledFooter>
-    </>
+    </GroupContext.Provider>
   )
 }

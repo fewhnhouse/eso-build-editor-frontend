@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { List, Card, Typography, Divider, Icon } from 'antd'
 import styled from 'styled-components'
-import { Redirect } from 'react-router'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import Flex from '../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Divider, Typography, Select, Input, Icon } from 'antd'
 import Flex from '../../../components/Flex'
+import { GroupContext } from '../GroupStateContext'
 
 const { Option } = Select
 
@@ -39,6 +40,29 @@ interface IGroupGeneralProps {
 }
 
 export default ({ edit }: IGroupGeneralProps) => {
+  const [state, dispatch] = useContext(GroupContext)
+  const { name, description, applicationArea } = state!
+
+  const handleGroupNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch!({ type: 'SET_GROUP_NAME', payload: { name: e.target.value } })
+  }
+
+  const handleGroupDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    dispatch!({
+      type: 'SET_GROUP_DESCRIPTION',
+      payload: { description: e.target.value },
+    })
+  }
+
+  const handleApplicationAreaChange = (value: string) => {
+    dispatch!({
+      type: 'SET_GROUP_APPLICATION_AREA',
+      payload: { applicationArea: value },
+    })
+  }
+
   return (
     <>
       <Divider>General Information</Divider>
@@ -50,7 +74,12 @@ export default ({ edit }: IGroupGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Group name</Typography.Text>
-            <StyledInput size='large' placeholder='Type name...' />
+            <StyledInput
+              size='large'
+              placeholder='Type name...'
+              value={name}
+              onChange={handleGroupNameChange}
+            />
           </StyledFlex>
           <StyledWideFlex
             direction='column'
@@ -58,8 +87,12 @@ export default ({ edit }: IGroupGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
-
-            <StyledInput size='large' placeholder='Type description...' />
+            <StyledInput
+              size='large'
+              placeholder='Type description...'
+              value={description}
+              onChange={handleGroupDescriptionChange}
+            />
           </StyledWideFlex>
           <StyledFlex
             direction='column'
@@ -71,6 +104,8 @@ export default ({ edit }: IGroupGeneralProps) => {
               style={{ width: 400 }}
               size='large'
               placeholder='Select application area...'
+              value={applicationArea}
+              onChange={handleApplicationAreaChange}
             >
               <Select.Option value='battlegrounds'>Battlegrounds</Select.Option>
               <Select.Option value='cyrodiil_raid'>

@@ -17,17 +17,11 @@ import { handleCopy } from '../util'
 import Flex from '../../../components/Flex'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
-import styled from 'styled-components'
 import { AppContext } from '../../../components/AppContainer'
 
 interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
 }
-
-const StyledLinkFlex = styled(Flex)`
-  width: 100%;
-  margin-top: ${props => props.theme.margins.small};
-`
 
 export const BUILD = gql`
   query Build($id: ID!) {

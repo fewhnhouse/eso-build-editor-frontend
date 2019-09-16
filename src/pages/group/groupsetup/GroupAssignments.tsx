@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Select, Divider, Icon } from 'antd'
+import { Card, Select, Icon } from 'antd'
 import gql from 'graphql-tag'
 import { raid } from '../../../util/fragments'
 import { useQuery } from 'react-apollo'
@@ -26,7 +26,8 @@ const RoleWrapper = styled(Flex)`
 `
 
 const RoleInnerCard = styled(Card)`
-  width: 200px;
+  width: ${props => props.theme.widths.small};
+  margin: ${props => props.theme.margins.mini};
 `
 
 interface IGroupAssignments {
@@ -37,7 +38,11 @@ export default ({ useRaid }: IGroupAssignments) => {
   const raidQuery = useQuery(RAID, { variables: { id: useRaid } })
   const singleRaid = raidQuery.data ? raidQuery.data.raid : ''
   return (
-    <RaidCardsWrapper direction='column' align='center'>
+    <RaidCardsWrapper
+      direction='column'
+      align='center'
+      justify={raidQuery.loading ? 'center' : undefined}
+    >
       {raidQuery.loading ? (
         <Icon type='loading' />
       ) : raidQuery.data && raidQuery.data.raid ? (
@@ -46,7 +51,7 @@ export default ({ useRaid }: IGroupAssignments) => {
           {singleRaid.roles.map((role: any) => (
             <>
               <h3>{role.name}</h3>
-              <RoleWrapper direction='row' justify='space-around' wrap>
+              <RoleWrapper direction='row' justify='center' wrap>
                 {role.builds.map((sortedBuild: any) => (
                   <RoleInnerCard type='inner' title={sortedBuild.build.name}>
                     <span>Primary members:</span>
