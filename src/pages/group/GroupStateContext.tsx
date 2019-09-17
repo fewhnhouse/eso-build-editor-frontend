@@ -7,13 +7,13 @@ interface IAssignedRole {
 }
 
 interface IGroupMember {
-  memberID: string
+  memberId?: string
   memberName: string
-  assignedRoles: IAssignedRole[]
+  assignedRoles?: IAssignedRole[]
 }
 
 export interface IGroupState {
-  id: string
+  id?: string
   name: string
   selectedRaidId: string
   description: string
@@ -27,18 +27,7 @@ export const defaultGroupState: IGroupState = {
   selectedRaidId: '',
   description: '',
   applicationArea: '',
-  members: [
-    {
-      memberID: '',
-      memberName: '',
-      assignedRoles: [
-        {
-          role: '',
-          priority: '',
-        },
-      ],
-    },
-  ],
+  members: [],
 }
 
 export interface IGroupAction {

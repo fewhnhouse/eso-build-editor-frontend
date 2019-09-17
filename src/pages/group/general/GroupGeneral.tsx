@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Divider, Typography, Select, Input, Icon } from 'antd'
+import { Divider, Typography, Select, Input, Icon, Button } from 'antd'
 import Flex from '../../../components/Flex'
 import { GroupContext } from '../GroupStateContext'
 
@@ -41,7 +41,15 @@ interface IGroupGeneralProps {
 
 export default ({ edit }: IGroupGeneralProps) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { name, description, applicationArea } = state!
+  const { name, description, applicationArea, members } = state!
+  const [customMember, setCustomMember] = useState('')
+  const [customAdd, setCustomAdd] = useState(false)
+
+  useEffect(() => {
+    if (!edit) {
+      localStorage.setItem('groupState', JSON.stringify(state))
+    }
+  }, [state, edit])
 
   const handleGroupNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_GROUP_NAME', payload: { name: e.target.value } })
@@ -62,6 +70,29 @@ export default ({ edit }: IGroupGeneralProps) => {
       payload: { applicationArea: value },
     })
   }
+
+  const handleMembersChange = () => {
+    dispatch!({
+      type: 'SET_GROUP_MEMBERS',
+      payload: { members: members },
+    })
+  }
+
+  const handleAddCustom = () => {
+    setCustomAdd(true)
+  }
+
+  const handleAddCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomMember(e.target.value)
+  }
+
+  const handleAddCustomConfirm = () => {
+    const newMember = { memberName: customMember }
+    members.push(newMember)
+    setCustomMember('')
+    setCustomAdd(false)
+  }
+  console.log(state)
 
   return (
     <>
@@ -128,22 +159,41 @@ export default ({ edit }: IGroupGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Group Members</Typography.Text>
+            {customAdd ? (
+              <StyledWideFlex
+                direction='column'
+                justify='flex-start'
+                align='flex-start'
+              >
+                <Typography.Text strong>Add new member</Typography.Text>
+                <StyledInput
+                  size='large'
+                  placeholder='Name...'
+                  onChange={handleAddCustomChange}
+                />
+                <Button onClick={handleAddCustomConfirm}>Add</Button>
+              </StyledWideFlex>
+            ) : (
+              ''
+            )}
             <Select
               mode='multiple'
               placeholder='Select members for group'
               style={{ width: 400 }}
+              onChange={handleMembersChange}
               dropdownRender={menu => (
                 <div>
                   {menu}
                   <SelectDivider />
-                  <StyledSelectDiv>
-                    <Icon type='plus' /> Add custom member
+                  <StyledSelectDiv onClick={handleAddCustom}>
+                    <Icon type='plus' /> Add member
                   </StyledSelectDiv>
                 </div>
               )}
             >
-              <Option value='old mcdonald'>Old McDonald</Option>
-              <Option value='Potato'>Potato</Option>
+              {members.map(member => (
+                <Option value={member.memberName}>{member.memberName}</Option>
+              ))}
             </Select>
           </StyledFlex>
         </Flex>

@@ -23,6 +23,13 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         applicationArea,
       }
     }
+    case 'SET_GROUP_MEMBERS': {
+      const { members } = action.payload
+      return {
+        ...state,
+        members,
+      }
+    }
     default:
       return state
   }
