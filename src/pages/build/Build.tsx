@@ -220,6 +220,11 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 align='center'
                 justify='space-between'
               >
+                <p>
+                  <b>Link to raid:</b>
+                  <br />
+                  {window.location.href}
+                </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
                   Share link
                 </Button>
@@ -259,6 +264,11 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 align='center'
                 justify='space-between'
               >
+                <p>
+                  <b>Link to raid:</b>
+                  <br />
+                  {window.location.href}
+                </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
                   Share link
                 </Button>

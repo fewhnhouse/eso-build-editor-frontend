@@ -124,12 +124,17 @@ export default ({
               </div>
               <Flex
                 style={{ width: ' 100%', marginTop: '5px' }}
-                direction='row'
+                direction='column'
                 align='center'
                 justify='space-between'
               >
+                <p>
+                  <b>Link to raid:</b>
+                  <br />
+                  {window.location.href}
+                </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
-                  Share link
+                  Copy link
                 </Button>
               </Flex>
             </Flex>
@@ -163,6 +168,11 @@ export default ({
                 align='center'
                 justify='space-between'
               >
+                <p>
+                  <b>Link to raid:</b>
+                  <br />
+                  {window.location.href}
+                </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
                   Share link
                 </Button>
