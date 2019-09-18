@@ -1,6 +1,6 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
+import { Layout, Icon, Button, Steps, Tooltip, notification, Input } from 'antd'
 import { Redirect } from 'react-router'
 import RaidGeneral from './general/RaidGeneral'
 import { RaidContext, raidReducer, IRole } from './RaidStateContext'
@@ -110,13 +110,17 @@ export default ({
     if (edit) {
       try {
         await handleEditSave(state, updateRaid, initialRoles)
+        const handleShareClick = () => {
+          const link = window.location.href
+          alert('Link: ' + link)
+        }
         notification.success({
           message: 'Raid update successful',
           description: (
             <Flex direction='column' align='center' justify='center'>
               <div>
-                Your raid was successfully edited. You can now view it and share
-                it with others!
+                Your raid was successfully edited. You can now copy the link for
+                sharing.
               </div>
               <Flex
                 style={{ width: ' 100%', marginTop: '5px' }}
@@ -124,7 +128,9 @@ export default ({
                 align='center'
                 justify='space-between'
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button onClick={handleShareClick} icon='share-alt'>
+                  Share link
+                </Button>
               </Flex>
             </Flex>
           ),
@@ -139,6 +145,10 @@ export default ({
     } else {
       try {
         await handleCreateSave(state, createRaid)
+        const handleShareClick = () => {
+          const link = window.location.href
+          alert('Link: ' + link)
+        }
         notification.success({
           message: 'Raid creation successful',
           description: (
@@ -153,7 +163,9 @@ export default ({
                 align='center'
                 justify='space-between'
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button onClick={handleShareClick} icon='share-alt'>
+                  Share link
+                </Button>
               </Flex>
             </Flex>
           ),

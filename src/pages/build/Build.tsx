@@ -202,6 +202,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           build.frontbarSelection,
           build.backbarSelection
         )
+        const handleShareClick = () => {
+          const link = window.location.href
+          alert('Link: ' + link)
+        }
         notification.success({
           message: 'Build update successful',
           description: (
@@ -216,7 +220,9 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 align='center'
                 justify='space-between'
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button onClick={handleShareClick} icon='share-alt'>
+                  Share link
+                </Button>
               </Flex>
             </Flex>
           ),
@@ -235,6 +241,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           createBuild,
           state!
         )
+        const handleShareClick = () => {
+          const link = window.location.href
+          alert('Link: ' + link)
+        }
         notification.success({
           message: 'Build creation successful',
           description: (
@@ -249,7 +259,9 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 align='center'
                 justify='space-between'
               >
-                <Button icon='share-alt'>Share link</Button>
+                <Button onClick={handleShareClick} icon='share-alt'>
+                  Share link
+                </Button>
               </Flex>
             </Flex>
           ),
