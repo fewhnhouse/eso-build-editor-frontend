@@ -221,12 +221,12 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 justify='space-between'
               >
                 <p>
-                  <b>Link to raid:</b>
+                  <b>Link to build:</b>
                   <br />
                   {window.location.href}
                 </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
-                  Share link
+                  Copy link
                 </Button>
               </Flex>
             </Flex>
@@ -265,12 +265,12 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
                 justify='space-between'
               >
                 <p>
-                  <b>Link to raid:</b>
+                  <b>Link to build:</b>
                   <br />
                   {window.location.href}
                 </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
-                  Share link
+                  Copy link
                 </Button>
               </Flex>
             </Flex>

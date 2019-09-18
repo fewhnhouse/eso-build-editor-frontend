@@ -174,7 +174,7 @@ export default ({
                   {window.location.href}
                 </p>
                 <Button onClick={handleShareClick} icon='share-alt'>
-                  Share link
+                  Copy link
                 </Button>
               </Flex>
             </Flex>
