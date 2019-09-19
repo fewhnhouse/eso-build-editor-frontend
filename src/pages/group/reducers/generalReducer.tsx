@@ -30,6 +30,13 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         members,
       }
     }
+    case 'SET_PRIMARY_ROLE': {
+      const { assignedRoles } = action.payload
+      return {
+        ...state,
+        assignedRoles,
+      }
+    }
     default:
       return state
   }

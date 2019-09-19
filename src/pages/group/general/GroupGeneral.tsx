@@ -87,7 +87,7 @@ export default ({ edit }: IGroupGeneralProps) => {
   }
 
   const handleAddCustomConfirm = () => {
-    const newMember = { memberName: customMember }
+    const newMember = { memberName: customMember, assignedRoles: [] }
     members.push(newMember)
     setCustomMember('')
     setCustomAdd(false)

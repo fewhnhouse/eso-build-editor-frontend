@@ -2,14 +2,14 @@ import React from 'react'
 import { generalReducer } from '../group/reducers/generalReducer'
 
 interface IAssignedRole {
-  role: string
+  build: string
   priority: string
 }
 
 interface IGroupMember {
   memberId?: string
   memberName: string
-  assignedRoles?: IAssignedRole[]
+  assignedRoles: IAssignedRole[]
 }
 
 export interface IGroupState {
