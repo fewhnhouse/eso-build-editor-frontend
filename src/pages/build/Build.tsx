@@ -17,6 +17,8 @@ import {
   // message,
   Tooltip,
   notification,
+  Input,
+  message,
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -29,6 +31,7 @@ import { useMutation } from 'react-apollo'
 import Flex from '../../components/Flex'
 import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const { Footer, Content } = Layout
 const ButtonGroup = Button.Group
@@ -157,6 +160,34 @@ interface IBuildProps {
   edit?: boolean
 }
 
+export const createNotification = (
+  title: string,
+  description: string,
+  id: string
+) => ({
+  message: title,
+  description: (
+    <Flex direction='column' align='center' justify='center'>
+      <div>{description}</div>
+      <div>
+        <Input
+          addonAfter={
+            <Tooltip title='Copy to clipboard'>
+              <CopyToClipboard
+                text={`${window.location.origin}/builds/${id}`}
+                onCopy={() => message.success('Copied to clipboard.')}
+              >
+                <Icon type='share-alt' />
+              </CopyToClipboard>
+            </Tooltip>
+          }
+          defaultValue={`${window.location.origin}/builds/${id}`}
+        />
+      </div>
+    </Flex>
+  ),
+})
+
 export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [tab, setTab] = useState(pageIndex || 0)
@@ -185,8 +216,22 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   useEffect(() => {
     if (createBuildResult.data && createBuildResult.data.createBuild) {
       localStorage.removeItem('buildState')
+      notification.success(
+        createNotification(
+          'Build creation successful.',
+          'Your build was successfully created. You can now view it and share it with others!',
+          createBuildResult.data.createBuild.id
+        )
+      )
       setRedirect(createBuildResult.data.createBuild.id)
     } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
+      notification.success(
+        createNotification(
+          'Build update successful.',
+          'Your build was successfully edited. You can now view it and share it with others!',
+          updateBuildResult.data.updateBuild.id
+        )
+      )
       setRedirect(updateBuildResult.data.updateBuild.id)
     }
   }, [createBuildResult.data, updateBuildResult.data])
@@ -202,36 +247,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           build.frontbarSelection,
           build.backbarSelection
         )
-        const handleShareClick = () => {
-          const link = window.location.href
-          alert('Link: ' + link)
-        }
-        notification.success({
-          message: 'Build update successful',
-          description: (
-            <Flex direction='column' align='center' justify='center'>
-              <div>
-                Your build was successfully edited. You can now view it and
-                share it with others!
-              </div>
-              <Flex
-                style={{ width: ' 100%', marginTop: '5px' }}
-                direction='row'
-                align='center'
-                justify='space-between'
-              >
-                <p>
-                  <b>Link to build:</b>
-                  <br />
-                  {window.location.href}
-                </p>
-                <Button onClick={handleShareClick} icon='share-alt'>
-                  Copy link
-                </Button>
-              </Flex>
-            </Flex>
-          ),
-        })
       } catch (e) {
         notification.error({
           message: 'Build update failed',
@@ -246,36 +261,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           createBuild,
           state!
         )
-        const handleShareClick = () => {
-          const link = window.location.href
-          alert('Link: ' + link)
-        }
-        notification.success({
-          message: 'Build creation successful',
-          description: (
-            <Flex direction='column' align='center' justify='center'>
-              <div>
-                Your build was successfully saved. You can now view it and share
-                it with others!
-              </div>
-              <Flex
-                style={{ width: ' 100%', marginTop: '5px' }}
-                direction='row'
-                align='center'
-                justify='space-between'
-              >
-                <p>
-                  <b>Link to build:</b>
-                  <br />
-                  {window.location.href}
-                </p>
-                <Button onClick={handleShareClick} icon='share-alt'>
-                  Copy link
-                </Button>
-              </Flex>
-            </Flex>
-          ),
-        })
       } catch (e) {
         await notification.error({
           message: 'Build creation failed',
