@@ -82,7 +82,7 @@ export default ({
   id?: string
   setsCount: Map<string, number>
 }) => {
-  const { loading, error, data } = useQuery(GET_DETAILED_BUILD_INFO, {
+  const { loading, data } = useQuery(GET_DETAILED_BUILD_INFO, {
     variables: { id },
   })
   if (loading) {

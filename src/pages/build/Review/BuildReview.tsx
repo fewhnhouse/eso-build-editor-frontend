@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { BuildContext } from '../BuildStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Button, notification } from 'antd'
+import { notification } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import {
@@ -12,9 +12,9 @@ import {
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
   ISetSelectionData,
+  createNotification,
 } from '../Build'
 import { handleCopy } from '../util'
-import Flex from '../../../components/Flex'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
@@ -106,6 +106,13 @@ const BuildReview = ({ match, local }: IBuildReview) => {
       createBuildCopyResult.data.createBuild
     ) {
       localStorage.removeItem('buildState')
+      notification.success(
+        createNotification(
+          'Build copy successful',
+          'Your build was successfully copied. You can now view it and share it with others!',
+          createBuildCopyResult.data.createBuild.id
+        )
+      )
       setRedirect(`/builds/${createBuildCopyResult.data.createBuild.id}`)
     }
   }, [createBuildCopyResult.data, saved])
@@ -121,28 +128,6 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         createBuildCopy,
         buildQuery.data.build
       )
-      notification.success({
-        message: 'Build copy successful',
-        description: (
-          <Flex direction='column' align='center' justify='center'>
-            <div>
-              Your build was successfully copied. You can now view it and share
-              it with others!
-            </div>
-            <Flex
-              style={{
-                width: '100%',
-                marginTop: '5px',
-              }}
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Button icon='share-alt'>Share link</Button>
-            </Flex>
-          </Flex>
-        ),
-      })
       setSaved(true)
     } catch (e) {
       console.error(e)
