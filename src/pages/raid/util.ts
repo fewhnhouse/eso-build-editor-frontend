@@ -25,7 +25,7 @@ export const handleEditSave = async (
     ...canView,
     ...canEdit.filter(editId => !canView.includes(editId)),
   ]
-  return await updateRaid({
+  await updateRaid({
     variables: {
       data: {
         name,
@@ -79,7 +79,7 @@ export const handleCreateSave = async (
     ...canEdit.filter(editId => !canView.includes(editId)),
   ]
 
-  return await createRaid({
+  await createRaid({
     variables: {
       data: {
         name,
@@ -113,7 +113,7 @@ export const handleCopy = async (
 ) => {
   const { name, description, applicationArea, published, roles } = raid
 
-  return await createRaid({
+  await createRaid({
     variables: {
       data: {
         name,

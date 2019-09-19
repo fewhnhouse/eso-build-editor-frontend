@@ -3,15 +3,14 @@ import { RaidContext } from '../RaidStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { notification, Button } from 'antd'
+import { notification } from 'antd'
 import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
 import { handleCopy } from '../util'
-import { CREATE_RAID } from '../Raid'
-import Flex from '../../../components/Flex'
+import { CREATE_RAID, createNotification } from '../Raid'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -94,6 +93,13 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
       createRaidCopyResult.data.createRaid
     ) {
       localStorage.removeItem('raidState')
+      notification.success(
+        createNotification(
+          'Raid copy successful',
+          'Your raid was successfully copied. You can now view it and share it with others!',
+          createRaidCopyResult.data.createRaid.id
+        )
+      )
       setRedirect(`/raids/${createRaidCopyResult.data.createRaid.id}`)
     }
   }, [createRaidCopyResult.data, saved])
@@ -105,28 +111,6 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const handleCopyClick = async () => {
     try {
       await handleCopy(createRaidCopy, raidQuery.data.raid)
-      notification.success({
-        message: 'Raid copy successful',
-        description: (
-          <Flex direction='column' align='center' justify='center'>
-            <div>
-              Your raid was successfully copied. You can now view it and share
-              it with others!
-            </div>
-            <Flex
-              style={{
-                width: '100%',
-                marginTop: '5px',
-              }}
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Button icon='share-alt'>Share link</Button>
-            </Flex>
-          </Flex>
-        ),
-      })
       setSaved(true)
     } catch (e) {
       console.error(e)

@@ -16,6 +16,7 @@
     "graphql-tag": "^2.10.1",
     "react": "^16.8.6",
     "react-apollo": "^3.0.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-div-100vh": "^0.3.4",
     "react-dnd": "^9.3.2",
