@@ -11,6 +11,8 @@ import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
 import { handleCopy } from '../util'
 import { CREATE_RAID, createNotification } from '../Raid'
+import { Helmet } from 'react-helmet'
+import image from '../../../assets/icons/favicon-32x32.png'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -127,20 +129,34 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   if (redirect) {
     return <Redirect to={redirect} push />
   }
+  const raid = raidQuery.data && raidQuery.data.raid
   return (
-    <Review
-      saved={saved}
-      state={state!}
-      data={raidQuery.data && raidQuery.data.raid}
-      isBuild={false}
-      error={raidQuery.error || meQuery.error}
-      loading={raidQuery.loading || meQuery.loading}
-      me={meQuery.data && meQuery.data.me}
-      local={local}
-      onCopy={handleCopyClick}
-      onDelete={handleDeleteConfirm}
-      onEdit={handleEditClick}
-    />
+    <>
+      <Helmet>
+        <title>{raid && raid.name}</title>
+        <meta
+          property='og:url'
+          content={`${window.location.origin}/raids/${raid && raid.id}`}
+        />
+        <meta property='og:type' content={'website'} />
+        <meta property='og:title' content={raid && raid.name} />
+        <meta property='og:description' content={raid && raid.description} />
+        <meta property='og:image' content={image} />
+      </Helmet>
+      <Review
+        saved={saved}
+        state={state!}
+        data={raidQuery.data && raidQuery.data.raid}
+        isBuild={false}
+        error={raidQuery.error || meQuery.error}
+        loading={raidQuery.loading || meQuery.loading}
+        me={meQuery.data && meQuery.data.me}
+        local={local}
+        onCopy={handleCopyClick}
+        onDelete={handleDeleteConfirm}
+        onEdit={handleEditClick}
+      />
+    </>
   )
 }
 
