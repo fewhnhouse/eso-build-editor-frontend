@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ISet, getItemType, getWeaponType } from './GearSlot'
 import { ISetSelection } from '../pages/build/BuildStateContext'
 import Flex from './Flex'
+import HasPiecesTag from './HasPiecesTag'
 
 const StyledCard = styled(Card)`
   display: 'flex';
@@ -158,6 +159,7 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
         hasLightArmor={set.has_light_armor === 1}
         traitsNeeded={set.traits_needed !== null}
       />
+      {set.type !== 'Craftable' ? <HasPiecesTag set={set} /> : ''}
       <Description big={size === 'big'}>
         <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map(count => (
