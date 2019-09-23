@@ -8,6 +8,7 @@ import { MundusCard } from '../overview/MundusStone'
 import ErrorPage from '../../components/ErrorPage'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
+import Helmet from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -60,9 +61,35 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
     return <ErrorPage title='Error occured.' />
   }
   if (data) {
+    const { mundusStone } = data
     return (
       <StyledFlex direction='row' align='flex-start'>
-        <MundusCard mundusStone={data.mundusStone} />
+        <Helmet>
+          <title>{mundusStone && mundusStone.name}</title>
+          <meta
+            property='og:url'
+            content={`${
+              window.location.origin
+            }/overview/mundusStones/${mundusStone && mundusStone.id}`}
+          />
+          <meta property='og:type' content={'website'} />
+          <meta property='og:title' content={mundusStone && mundusStone.name} />
+          <meta
+            property='og:description'
+            content={
+              mundusStone
+                ? `${mundusStone.effect} by ${mundusStone.value}.`
+                : ''
+            }
+          />
+          <meta
+            property='og:image'
+            content={`${
+              process.env.REACT_APP_IMAGE_SERVICE
+            }/mundusStones/${mundusStone && mundusStone.icon}`}
+          />
+        </Helmet>
+        <MundusCard mundusStone={mundusStone} />
       </StyledFlex>
     )
   }

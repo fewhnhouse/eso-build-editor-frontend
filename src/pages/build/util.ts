@@ -174,7 +174,7 @@ export const handleEditSave = async (
     })
   })
 
-  return await updateBuild({
+  await updateBuild({
     variables: {
       where: {
         id,
@@ -363,7 +363,7 @@ export const handleCreateSave = async (
     },
   })
 
-  return await createBuild({
+  await createBuild({
     variables: {
       data: {
         name,
@@ -536,7 +536,7 @@ export const handleCopy = async (
     },
   })
 
-  return await createBuild({
+  await createBuild({
     variables: {
       data: {
         name,

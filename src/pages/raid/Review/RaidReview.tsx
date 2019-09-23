@@ -3,15 +3,16 @@ import { RaidContext } from '../RaidStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps, withRouter, Redirect } from 'react-router'
-import { notification, Button } from 'antd'
+import { notification } from 'antd'
 import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
 import { handleCopy } from '../util'
-import { CREATE_RAID } from '../Raid'
-import Flex from '../../../components/Flex'
+import { CREATE_RAID, createNotification } from '../Raid'
+import { Helmet } from 'react-helmet'
+import image from '../../../assets/icons/favicon-32x32.png'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -78,6 +79,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         message: 'Raid Deletion',
         description: 'Raid successfully deleted.',
       })
+      setRedirect(`/`)
     } else if (error) {
       notification.error({
         message: 'Raid Deletion',
@@ -93,6 +95,13 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
       createRaidCopyResult.data.createRaid
     ) {
       localStorage.removeItem('raidState')
+      notification.success(
+        createNotification(
+          'Raid copy successful',
+          'Your raid was successfully copied. You can now view it and share it with others!',
+          createRaidCopyResult.data.createRaid.id
+        )
+      )
       setRedirect(`/raids/${createRaidCopyResult.data.createRaid.id}`)
     }
   }, [createRaidCopyResult.data, saved])
@@ -104,28 +113,6 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   const handleCopyClick = async () => {
     try {
       await handleCopy(createRaidCopy, raidQuery.data.raid)
-      notification.success({
-        message: 'Raid copy successful',
-        description: (
-          <Flex direction='column' align='center' justify='center'>
-            <div>
-              Your raid was successfully copied. You can now view it and share
-              it with others!
-            </div>
-            <Flex
-              style={{
-                width: '100%',
-                marginTop: '5px',
-              }}
-              direction='row'
-              align='center'
-              justify='space-between'
-            >
-              <Button icon='share-alt'>Share link</Button>
-            </Flex>
-          </Flex>
-        ),
-      })
       setSaved(true)
     } catch (e) {
       console.error(e)
@@ -142,20 +129,34 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   if (redirect) {
     return <Redirect to={redirect} push />
   }
+  const raid = raidQuery.data && raidQuery.data.raid
   return (
-    <Review
-      saved={saved}
-      state={state!}
-      data={raidQuery.data && raidQuery.data.raid}
-      isBuild={false}
-      error={raidQuery.error || meQuery.error}
-      loading={raidQuery.loading || meQuery.loading}
-      me={meQuery.data && meQuery.data.me}
-      local={local}
-      onCopy={handleCopyClick}
-      onDelete={handleDeleteConfirm}
-      onEdit={handleEditClick}
-    />
+    <>
+      <Helmet>
+        <title>{raid && raid.name}</title>
+        <meta
+          property='og:url'
+          content={`${window.location.origin}/raids/${raid && raid.id}`}
+        />
+        <meta property='og:type' content={'website'} />
+        <meta property='og:title' content={raid && raid.name} />
+        <meta property='og:description' content={raid && raid.description} />
+        <meta property='og:image' content={image} />
+      </Helmet>
+      <Review
+        saved={saved}
+        state={state!}
+        data={raidQuery.data && raidQuery.data.raid}
+        isBuild={false}
+        error={raidQuery.error || meQuery.error}
+        loading={raidQuery.loading || meQuery.loading}
+        me={meQuery.data && meQuery.data.me}
+        local={local}
+        onCopy={handleCopyClick}
+        onDelete={handleDeleteConfirm}
+        onEdit={handleEditClick}
+      />
+    </>
   )
 }
 

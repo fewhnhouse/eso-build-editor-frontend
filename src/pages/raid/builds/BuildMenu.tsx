@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import BuildCard from './BuildCard'
 import { IBuild } from '../../build/BuildStateContext'
-import { build, reducedBuild } from '../../../util/fragments'
+import { reducedBuild } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 import Scrollbars from 'react-custom-scrollbars'
 const { Option } = Select
