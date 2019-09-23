@@ -8,7 +8,7 @@ import { ABILITY_BAR_ONE, ABILITY_BAR_TWO } from '../Skills/AbilityBar'
 import { IBuildState } from '../BuildStateContext'
 import { classes, races } from '../RaceAndClass/data'
 import InformationCard from '../../../components/InformationCard'
-import { applicationAreas } from '../RaceAndClass/RaceClass'
+import { applicationAreas, accessRightOptions } from '../RaceAndClass/RaceClass'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../../../components/theme'
@@ -113,6 +113,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     ultimateTwo,
     description,
     applicationArea,
+    accessRights,
   } = loadedData
   const [, appDispatch] = useContext(AppContext)
   useEffect(() => {
@@ -157,7 +158,7 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
       new Map()
     )
   const area = applicationAreas.find(area => area.key === applicationArea)
-
+  const access = accessRightOptions.find(el => el.key === accessRights)
   return (
     <Scrollbars autoHide disabled={!isMobile}>
       <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
@@ -178,9 +179,9 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
               />
               <StyledDivider type='vertical' />
               <InformationCard
-                icon={published ? 'unlock' : 'lock'}
+                icon={access!.icon}
                 title='Access Rights'
-                description={published ? 'Public' : 'Private'}
+                description={access!.label}
               />
             </Flex>
           )}

@@ -24,6 +24,12 @@ export interface ISlot {
   index: number
 }
 
+export enum AccessRights {
+  UNLISTED = 'unlisted',
+  PRIVATE = 'private',
+  PUBLIC = 'public',
+}
+
 export interface IBuild {
   id?: string
   race: string
@@ -33,6 +39,7 @@ export interface IBuild {
   esoClass: string
   name: string
   applicationArea: string
+  accessRights: AccessRights
   role: string
   description: string
   bigPieceSelection: ISetSelection[]
@@ -157,6 +164,7 @@ export interface IModification {
 }
 export const defaultBuildState: IBuildState = {
   published: false,
+  accessRights: AccessRights.UNLISTED,
   skills: [],
   sets: [],
   skillLine: 0,
