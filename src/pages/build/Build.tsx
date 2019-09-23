@@ -192,9 +192,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-  const handlePrivateChange = () => {
-    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
-  }
+
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }

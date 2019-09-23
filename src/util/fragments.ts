@@ -112,6 +112,7 @@ export const reducedBuild = gql`
     description
     health
     magicka
+    accessRights
     stamina
     applicationArea
     mundusStone {
@@ -157,6 +158,7 @@ export const build = gql`
     description
     health
     magicka
+    accessRights
     stamina
     applicationArea
     mundusStone {

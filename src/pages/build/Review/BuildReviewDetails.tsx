@@ -107,7 +107,6 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     esoClass,
     race,
     newBarOne,
-    published,
     newBarTwo,
     ultimateOne,
     ultimateTwo,
