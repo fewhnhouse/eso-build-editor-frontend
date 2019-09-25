@@ -87,8 +87,12 @@ interface IRegisterResult {
   }
 }
 
-const hasErrors = (fieldsError: any) => {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
+const hasErrors = (fieldsError: any, tosChecked: boolean) => {
+  if (tosChecked === false) {
+    return true
+  } else {
+    return Object.keys(fieldsError).some(field => fieldsError[field])
+  }
 }
 
 const openNotification = (resendMutation: any) => {
@@ -205,6 +209,12 @@ const LoginForm = ({ form }: LoginFormProps) => {
   const emailError = isFieldTouched('email') && getFieldError('email')
   const usernameError = isFieldTouched('username') && getFieldError('username')
   const passwordError = isFieldTouched('password') && getFieldError('password')
+  const [tosChecked, setTosChecked] = useState(false)
+
+  const handleTosCheck = () => {
+    tosChecked === true ? setTosChecked(false) : setTosChecked(true)
+  }
+
   return (
     <StyledForm onSubmit={handleSubmit} className='login-form'>
       {register && (
@@ -274,18 +284,15 @@ const LoginForm = ({ form }: LoginFormProps) => {
           </a>
         )}
       </Form.Item>
-      {register ? (
-        <span>
-          By registering you agree to the
-          <br />
-          <Link to='/tos'>Terms of service</Link>.
-        </span>
-      ) : (
-        ''
+      {register && (
+        <Checkbox defaultChecked={false} onChange={handleTosCheck}>
+          I agree to the
+          <Link to='/tos'> Terms of service</Link>.
+        </Checkbox>
       )}
       <Form.Item>
         <StyledButton
-          disabled={hasErrors(getFieldsError())}
+          disabled={hasErrors(getFieldsError(), tosChecked)}
           loading={loginResult.loading || registerResult.loading}
           type='primary'
           htmlType='submit'
