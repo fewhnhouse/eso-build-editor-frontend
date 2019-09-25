@@ -3,18 +3,18 @@ import { ISet } from './GearSlot'
 import styled from 'styled-components'
 
 const IconImg = styled.img`
-  width: 15px;
-  height: 15px;
+  width: 24px;
+  height: 24px;
   margin-right: ${props => props.theme.margins.mini};
 `
 
 const HasPiecesDiv = styled.div`
   display: inline-block;
-  width: 60px;
+  width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: center;
+  text-align: left;
 `
 
 interface IHasPiecesTag {
