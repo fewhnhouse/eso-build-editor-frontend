@@ -10,6 +10,7 @@ import { titleCase } from '../../raid/builds/BuildMenu'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import { Redirect } from 'react-router'
+import HasPiecesTag from '../../../components/HasPiecesTag'
 
 const { Option } = Select
 const { Item } = List
@@ -347,7 +348,7 @@ const ArmorTypeTag = ({
     } else if (hasLightArmor) {
       return <StyledTag color='blue'>Light</StyledTag>
     } else {
-      return null;
+      return null
     }
   }
 }
@@ -397,7 +398,7 @@ const SetList = ({
         collapsed={collapsed}
         dataSource={trail}
         renderItem={(style: any, index) => {
-          const item = sets[index]
+          const item: ISet = sets[index]
           return (
             <animated.div style={style}>
               <StyledListItem onClick={handleClick(item)}>
@@ -418,6 +419,7 @@ const SetList = ({
                 >
                   {item.name}
                 </StyledItemNameDiv>
+                {item.type !== 'Craftable' ? <HasPiecesTag set={item} /> : ''}
               </StyledListItem>
             </animated.div>
           )
