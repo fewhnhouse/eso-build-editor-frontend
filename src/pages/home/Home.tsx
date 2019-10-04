@@ -4,6 +4,7 @@ import { Layout } from 'antd'
 import NotLoggedInHome from './NotLoggedInHome'
 import LoggedInHome from './LoggedInHome'
 import { AppContext } from '../../components/AppContainer'
+import Helmet from 'react-helmet'
 
 const { Content } = Layout
 
@@ -31,7 +32,12 @@ const Home = ({ loggedIn }: IHomeProps) => {
     })
   }, [appDispatch])
   return (
-    <Container>{loggedIn ? <LoggedInHome /> : <NotLoggedInHome />}</Container>
+    <Container>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
+      {loggedIn ? <LoggedInHome /> : <NotLoggedInHome />}
+    </Container>
   )
 }
 

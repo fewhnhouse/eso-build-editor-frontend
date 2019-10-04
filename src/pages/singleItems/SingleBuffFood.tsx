@@ -8,6 +8,7 @@ import ErrorPage from '../../components/ErrorPage'
 import { BuffCard } from '../overview/Buff'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
+import Helmet from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -57,12 +58,35 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
     return <ErrorPage title='Error occured.' />
   }
   if (data) {
+    const { buff } = data
     return (
-      <StyledFlex direction='row' align='flex-start'>
-        <Flex direction='column' fluid>
-          <BuffCard buff={data.buff} />
-        </Flex>
-      </StyledFlex>
+      <>
+        <Helmet>
+          <title>{buff && buff.name}</title>
+          <meta
+            property='og:url'
+            content={`${window.location.origin}/overview/buffs/${buff &&
+              buff.id}`}
+          />
+          <meta property='og:type' content={'website'} />
+          <meta property='og:title' content={buff && buff.name} />
+          <meta
+            property='og:description'
+            content={buff && buff.buffDescription}
+          />
+          <meta
+            property='og:image'
+            content={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff &&
+              buff.icon}`}
+          />
+        </Helmet>
+
+        <StyledFlex direction='row' align='flex-start'>
+          <Flex direction='column' fluid>
+            <BuffCard buff={buff} />
+          </Flex>
+        </StyledFlex>
+      </>
     )
   }
   return null

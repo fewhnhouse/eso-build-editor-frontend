@@ -1,6 +1,15 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
+import {
+  Layout,
+  Icon,
+  Button,
+  Steps,
+  Tooltip,
+  notification,
+  Input,
+  message,
+} from 'antd'
 import { Redirect } from 'react-router'
 import RaidGeneral from './general/RaidGeneral'
 import { RaidContext, raidReducer, IRole } from './RaidStateContext'
@@ -11,6 +20,7 @@ import Flex from '../../components/Flex'
 import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
 import { raid } from '../../util/fragments'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -72,7 +82,35 @@ interface IRaidProps {
   edit?: boolean
 }
 
-export default ({
+export const createNotification = (
+  title: string,
+  description: string,
+  id: string
+) => ({
+  message: title,
+  description: (
+    <Flex direction='column' align='center' justify='center'>
+      <div>{description}</div>
+      <div>
+        <Input
+          addonAfter={
+            <Tooltip title='Copy to clipboard'>
+              <CopyToClipboard
+                text={`${window.location.origin}/raids/${id}`}
+                onCopy={() => message.success('Copied to clipboard.')}
+              >
+                <Icon type='share-alt' />
+              </CopyToClipboard>
+            </Tooltip>
+          }
+          defaultValue={`${window.location.origin}/raids/${id}`}
+        />
+      </div>
+    </Flex>
+  ),
+})
+
+const Raid = ({
   raid,
   pageIndex,
   path,
@@ -100,8 +138,24 @@ export default ({
   useEffect(() => {
     if (createRaidResult.data && createRaidResult.data.createRaid) {
       localStorage.removeItem('raidState')
+
+      notification.success(
+        createNotification(
+          'Raid creation successful',
+          'Your raid was successfully saved. You can now view it and share it with others!',
+          createRaidResult.data.createRaid.id
+        )
+      )
+
       setRedirect(createRaidResult.data.createRaid.id)
     } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
+      notification.success(
+        createNotification(
+          'Raid update successful',
+          'Your raid was successfully edited. You can now view it and share it with others!',
+          updateRaidResult.data.updateRaid.id
+        )
+      )
       setRedirect(updateRaidResult.data.updateRaid.id)
     }
   }, [createRaidResult.data, updateRaidResult.data])
@@ -110,25 +164,6 @@ export default ({
     if (edit) {
       try {
         await handleEditSave(state, updateRaid, initialRoles)
-        notification.success({
-          message: 'Raid update successful',
-          description: (
-            <Flex direction='column' align='center' justify='center'>
-              <div>
-                Your raid was successfully edited. You can now view it and share
-                it with others!
-              </div>
-              <Flex
-                style={{ width: ' 100%', marginTop: '5px' }}
-                direction='row'
-                align='center'
-                justify='space-between'
-              >
-                <Button icon='share-alt'>Share link</Button>
-              </Flex>
-            </Flex>
-          ),
-        })
       } catch (e) {
         console.error(e)
         notification.error({
@@ -139,25 +174,6 @@ export default ({
     } else {
       try {
         await handleCreateSave(state, createRaid)
-        notification.success({
-          message: 'Raid creation successful',
-          description: (
-            <Flex direction='column' align='center' justify='center'>
-              <div>
-                Your raid was successfully saved. You can now view it and share
-                it with others!
-              </div>
-              <Flex
-                style={{ width: ' 100%', marginTop: '5px' }}
-                direction='row'
-                align='center'
-                justify='space-between'
-              >
-                <Button icon='share-alt'>Share link</Button>
-              </Flex>
-            </Flex>
-          ),
-        })
       } catch (e) {
         console.error(e)
         notification.error({
@@ -268,3 +284,5 @@ export default ({
     </RaidContext.Provider>
   )
 }
+
+export default Raid

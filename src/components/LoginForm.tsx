@@ -18,6 +18,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import { LoginContext } from '../App'
 import Flex from './Flex'
 import { RESEND_VERIFICATION } from './AppContainer'
+import { Link } from 'react-router-dom'
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -58,7 +59,7 @@ const StyledDivider = styled(Divider)`
 `
 
 const StyledIcon = styled(Icon)`
-  color: ${props => props.theme.colors.grey.light};;
+  color: ${props => props.theme.colors.grey.light};
 `
 
 const StyledButton = styled(Button)`
@@ -273,6 +274,15 @@ const LoginForm = ({ form }: LoginFormProps) => {
           </a>
         )}
       </Form.Item>
+      {register ? (
+        <span>
+          By registering you agree to the
+          <br />
+          <Link to='/tos'>Terms of service</Link>.
+        </span>
+      ) : (
+        ''
+      )}
       <Form.Item>
         <StyledButton
           disabled={hasErrors(getFieldsError())}
