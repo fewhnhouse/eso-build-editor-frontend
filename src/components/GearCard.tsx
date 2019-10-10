@@ -166,7 +166,10 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
         <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map(count => (
             <StyledSpan key={count} bold={count <= setSelectionCount}>
-              <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
+              <Flex align='center'>
+                <Tag>{count} pcs</Tag>{' '}
+                <span>{set && set[`bonus_item_${count}`]}</span>
+              </Flex>
               <StyledDivider />
             </StyledSpan>
           ))}
