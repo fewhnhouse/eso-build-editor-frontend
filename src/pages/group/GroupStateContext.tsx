@@ -1,5 +1,7 @@
 import React from 'react'
 import { generalReducer } from '../group/reducers/generalReducer'
+import { AccessRights } from '../build/BuildStateContext'
+import { IRaidState } from '../raid/RaidStateContext'
 
 interface IAssignedRole {
   build: string
@@ -17,8 +19,10 @@ export interface IGroupState {
   name: string
   selectedRaidId: string
   description: string
-  applicationArea: string
-  members: IGroupMember[]
+  accessRights: AccessRights
+  applicationAreas: string[]
+  raids: IRaidState[]
+  members: string[]
 }
 
 export const defaultGroupState: IGroupState = {
@@ -26,8 +30,10 @@ export const defaultGroupState: IGroupState = {
   name: '',
   selectedRaidId: '',
   description: '',
-  applicationArea: '',
+  applicationAreas: [],
+  accessRights: AccessRights.UNLISTED,
   members: [],
+  raids: [],
 }
 
 export interface IGroupAction {

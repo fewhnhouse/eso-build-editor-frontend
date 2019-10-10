@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import GroupRaidMenu from './GroupRaidMenu'
+import GroupAssignments from './GroupAssignments'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -14,8 +18,11 @@ export default () => {
     setUsedRaid(id)
   }
   return (
-    <>
-      <StyledDiv>asd </StyledDiv>
-    </>
+    <DndProvider backend={HTML5Backend}>
+      <StyledDiv>
+        <GroupRaidMenu />
+        <GroupAssignments />
+      </StyledDiv>
+    </DndProvider>
   )
 }

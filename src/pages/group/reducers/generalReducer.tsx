@@ -16,11 +16,18 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         description,
       }
     }
-    case 'SET_GROUP_APPLICATION_AREA': {
-      const { applicationArea } = action.payload
+    case 'SET_GROUP_APPLICATION_AREAS': {
+      const { applicationAreas } = action.payload
       return {
         ...state,
-        applicationArea,
+        applicationAreas,
+      }
+    }
+    case 'SET_GROUP_ACCESS_RIGHTS': {
+      const { accessRights } = action.payload
+      return {
+        ...state,
+        accessRights,
       }
     }
     case 'SET_GROUP_MEMBERS': {

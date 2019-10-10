@@ -42,28 +42,6 @@ export default ({ useRaid }: IGroupAssignments) => {
   const [state, dispatch] = useContext(GroupContext)
   const { name, members } = state!
 
-  const handlePrimaryChange = (build: string) => (selectedMembers: []) => {
-    members.map((member, index) => {
-      if (selectedMembers[index] === member.memberName) {
-        member.assignedRoles.push({ build: build, priority: 'primary' })
-      }
-      console.log(member.assignedRoles)
-    })
-    /*cconst newRole = { build: build, priority: 'primary' }
-    index ? members[index].assignedRoles.push(newRole) : ''
-    dispatch!({
-      type: 'SET_PRIMARY_ROLE',
-      payload: { assignedRoles: members[index].assignedRoles },
-    })*/
-  }
-
-  const handleSecondaryChange = () => {
-    dispatch!({
-      type: 'SET_GROUP_MEMBERS',
-      payload: { members: members },
-    })
-  }
-
   return (
     <RaidCardsWrapper
       direction='column'
@@ -83,29 +61,9 @@ export default ({ useRaid }: IGroupAssignments) => {
                 {role.builds.map((sortedBuild: any) => (
                   <RoleInnerCard type='inner' title={sortedBuild.build.name}>
                     <span>Primary members:</span>
-                    <Select
-                      onChange={handlePrimaryChange(sortedBuild.build.name)}
-                      mode='multiple'
-                      style={{ width: '100%' }}
-                    >
-                      {members.map(member => (
-                        <Option value={member.memberName}>
-                          {member.memberName}
-                        </Option>
-                      ))}
-                    </Select>
+                    <Select mode='multiple' style={{ width: '100%' }}></Select>
                     <span>Secondary members:</span>
-                    <Select
-                      onChange={handleSecondaryChange}
-                      mode='multiple'
-                      style={{ width: '100%' }}
-                    >
-                      {members.map(member => (
-                        <Option value={member.memberName}>
-                          {member.memberName}
-                        </Option>
-                      ))}
-                    </Select>
+                    <Select mode='multiple' style={{ width: '100%' }}></Select>
                   </RoleInnerCard>
                 ))}
               </RoleWrapper>

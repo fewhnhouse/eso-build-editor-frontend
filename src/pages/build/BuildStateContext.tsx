@@ -33,6 +33,10 @@ export enum AccessRights {
 export interface IBuild {
   id?: string
   race: string
+  owner?: {
+    id: string
+    name: string
+  }
   health: number
   magicka: number
   stamina: number

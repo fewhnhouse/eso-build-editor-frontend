@@ -87,7 +87,7 @@ interface IBuildProps {
 }
 
 interface IUserDataProps {
-  data: IBuildProps[]
+  data: any[]
   loading: boolean
 }
 
