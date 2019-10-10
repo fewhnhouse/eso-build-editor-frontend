@@ -8,6 +8,14 @@ export const raceNameReducer = (state: IBuildState, action: IBuildAction) => {
         published: !state.published,
       }
     }
+
+    case 'SET_ACCESS_RIGHTS': {
+      const { accessRights } = action.payload
+      return {
+        ...state,
+        accessRights
+      }
+    }
     case 'SET_APPLICATION_AREA': {
       const { applicationArea } = action.payload
       return {

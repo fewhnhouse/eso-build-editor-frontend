@@ -18,6 +18,8 @@ import { handleCopy } from '../util'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
+import Helmet from 'react-helmet'
+import image from '../../../assets/icons/favicon-32x32.png'
 
 interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
@@ -145,20 +147,34 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   if (redirect) {
     return <Redirect to={redirect} push />
   }
+  const build = buildQuery.data && buildQuery.data.build
   return (
-    <Review
-      saved={saved}
-      state={state!}
-      data={buildQuery.data && buildQuery.data.build}
-      isBuild
-      error={buildQuery.error || meQuery.error}
-      loading={buildQuery.loading || meQuery.loading}
-      me={meQuery.data && meQuery.data.me}
-      local={local}
-      onCopy={handleCopyClick}
-      onDelete={handleDeleteConfirm}
-      onEdit={handleEditClick}
-    />
+    <>
+      <Helmet>
+        <title>{build && build.name}</title>
+        <meta
+          property='og:url'
+          content={`${window.location.origin}/builds/${build && build.id}`}
+        />
+        <meta property='og:type' content={'website'} />
+        <meta property='og:title' content={build && build.name} />
+        <meta property='og:description' content={build && build.description} />
+        <meta property='og:image' content={image} />
+      </Helmet>
+      <Review
+        saved={saved}
+        state={state!}
+        data={buildQuery.data && buildQuery.data.build}
+        isBuild
+        dataError={buildQuery.error}
+        loading={buildQuery.loading || meQuery.loading}
+        me={meQuery.data && meQuery.data.me}
+        local={local}
+        onCopy={handleCopyClick}
+        onDelete={handleDeleteConfirm}
+        onEdit={handleEditClick}
+      />
+    </>
   )
 }
 

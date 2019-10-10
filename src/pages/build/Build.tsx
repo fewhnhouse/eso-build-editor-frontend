@@ -192,9 +192,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
-  const handlePrivateChange = () => {
-    dispatch!({ type: 'TOGGLE_IS_PUBLISHED', payload: {} })
-  }
+
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
@@ -409,20 +407,6 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         </Steps>
         <Tooltip title={setTooltipTitle()}>
           <StyledButtonGroup size='large'>
-            {tab === 4 && (
-              <Tooltip
-                title={
-                  state!.published
-                    ? 'Your build is set to public. It will be visible for anyone. Click to change.'
-                    : 'Your build is set to private. It will only be visible for you. Click to change.'
-                }
-              >
-                <Button
-                  onClick={handlePrivateChange}
-                  icon={state!.published ? 'unlock' : 'lock'}
-                />
-              </Tooltip>
-            )}
             <TabButton
               loading={createBuildResult.loading || updateBuildResult.loading}
               onClick={handleNextClick}

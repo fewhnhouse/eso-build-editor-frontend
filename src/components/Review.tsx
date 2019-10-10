@@ -8,7 +8,10 @@ import { Layout, Button, Spin, Popconfirm, Divider } from 'antd'
 
 import Flex from './Flex'
 import InformationCard from './InformationCard'
-import { applicationAreas } from '../pages/build/RaceAndClass/RaceClass'
+import {
+  applicationAreas,
+  accessRightOptions,
+} from '../pages/build/RaceAndClass/RaceClass'
 import ErrorPage from './ErrorPage'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
@@ -72,7 +75,7 @@ interface IReviewProps {
     name: string
   }
   loading: boolean
-  error?: ApolloError
+  dataError?: ApolloError
   onCopy: () => void
   onEdit: () => void
   onDelete: () => void
@@ -85,7 +88,7 @@ const Review = ({
   data,
   me,
   loading,
-  error,
+  dataError,
   onCopy,
   onEdit,
   onDelete,
@@ -103,10 +106,10 @@ const Review = ({
         </Container>
       )
     }
-    if (error) {
+    if (dataError) {
       return <ErrorPage />
     }
-    if (data && me) {
+    if (data) {
       const {
         name,
         owner,
@@ -114,9 +117,10 @@ const Review = ({
         applicationArea,
         roles,
         published,
+        accessRights,
       } = data
       const area = applicationAreas.find(area => area.key === applicationArea)
-
+      const access = accessRightOptions.find(el => el.key === accessRights)
       return (
         <>
           <Container isMobile={isMobile}>
@@ -168,9 +172,11 @@ const Review = ({
                   </>
                 )}
                 <InformationCard
-                  icon={published ? 'unlock' : 'lock'}
+                  icon={access ? access.icon : published ? 'unlock' : 'lock'}
                   title='Access Rights'
-                  description={published ? 'Public' : 'Private'}
+                  description={
+                    access ? access.label : published ? 'Public' : 'Private'
+                  }
                 />
               </StyledFlex80>
             </StyledScrollbars>

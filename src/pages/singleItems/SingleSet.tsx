@@ -9,6 +9,7 @@ import { ISet } from '../../components/GearSlot'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
+import Helmet from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -74,9 +75,9 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
       </Flex>
     )
   }
-  if (data) {
+  if (set) {
     return (
-      set && (
+      <>
         <Scrollbars autoHide>
           <StyledFlex direction='row' align='flex-start'>
             <Flex direction='column' fluid>
@@ -86,10 +87,34 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
             </Flex>
           </StyledFlex>
         </Scrollbars>
-      )
+        <Helmet>
+          <title>{set && set.name}</title>
+          <meta
+            property='og:url'
+            content={`${window.location.origin}/overview/sets/${set && set.id}`}
+          />
+          <meta property='og:type' content={'website'} />
+          <meta property='og:title' content={set && set.name} />
+          <meta
+            property='og:description'
+            content={setContent([
+              set.bonus_item_1,
+              set.bonus_item_2,
+              set.bonus_item_3,
+              set.bonus_item_4,
+              set.bonus_item_5,
+            ])}
+          />
+        </Helmet>
+      </>
     )
   }
   return null
 }
 
+const setContent = (bonusArray: (string | null)[]) =>
+  bonusArray.reduce<string>(
+    (prev, curr) => prev + (curr !== null ? ' | ' + curr : ''),
+    ''
+  )
 export default withRouter(SingleSet)

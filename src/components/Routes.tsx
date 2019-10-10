@@ -10,6 +10,7 @@ import SingleBuffFood from '../pages/singleItems/SingleBuffFood'
 import SingleMundus from '../pages/singleItems/SingleMundus'
 import SingleSet from '../pages/singleItems/SingleSet'
 import SingleSkillLine from '../pages/singleItems/SingleSkillLine'
+import Tos from '../pages/home/Tos'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
@@ -80,6 +81,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         />
         <Route exact path='/overview/buffs/:id' component={SingleBuffFood} />
         <Route exact path='/overview/sets/:id' component={SingleSet} />
+        <Route exact path='/tos' component={Tos} />
         <Route
           loggedIn={isLoggedIn}
           exact
