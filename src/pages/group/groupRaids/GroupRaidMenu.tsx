@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, CSSProperties } from 'react'
 import {
   List,
   Divider,
@@ -17,6 +17,7 @@ import { useQuery } from 'react-apollo'
 import Scrollbars from 'react-custom-scrollbars'
 import { IRaidState } from '../../raid/RaidStateContext'
 import { applicationAreas } from '../../build/RaceAndClass/RaceClass'
+import { useDrag } from 'react-dnd'
 const { Option } = Select
 const { Text } = Typography
 
@@ -279,28 +280,56 @@ const RaidsList = ({ raids, loading }: IRaidsListProps) => {
           )
 
           return (
-            <animated.div
-              style={{ ...style, display: 'inline-flex', width: '100%' }}
-            >
-              <StyledCard key={raid.id} hoverable>
-                <Title>
-                  <Flex direction='row' justify='space-between'>
-                    {raid.name ? raid.name : 'Unnamed raid'}
-                    <Text>
-                      <Icon type='team' />
-                      {size}
-                    </Text>
-                  </Flex>
-                </Title>
-                <StyledDivider />
-                <Description>
-                  {applicationArea ? applicationArea.label : ''}
-                </Description>
-              </StyledCard>
-            </animated.div>
+            <DraggableRaid
+              size={size}
+              applicationArea={applicationArea ? applicationArea.label : ''}
+              raid={raid}
+              style={style}
+            />
           )
         }}
       />
     </StyledScrollbars>
+  )
+}
+
+const DraggableRaid = ({
+  raid,
+  size,
+  applicationArea,
+  style,
+}: {
+  raid: IRaid
+  size: number
+  applicationArea: string
+  style: CSSProperties
+}) => {
+  const [{ isDragging }, drag] = useDrag({
+    item: {
+      type: 'Raid',
+    },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  })
+  return (
+    <animated.div
+      ref={drag}
+      style={{ ...style, display: 'inline-flex', width: '100%' }}
+    >
+      <StyledCard key={raid.id} hoverable>
+        <Title>
+          <Flex direction='row' justify='space-between'>
+            {raid.name ? raid.name : 'Unnamed raid'}
+            <Text>
+              <Icon type='team' />
+              {size}
+            </Text>
+          </Flex>
+        </Title>
+        <StyledDivider />
+        <Description>{applicationArea}</Description>
+      </StyledCard>
+    </animated.div>
   )
 }
