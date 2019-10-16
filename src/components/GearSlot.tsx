@@ -317,9 +317,11 @@ export default ({
         <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
         </TextPrimary>
-        <TextSecondary ellipsis type='secondary'>
-          {getWeaponType(slot.weaponType)}
-        </TextSecondary>
+        {!droppable && (
+          <TextSecondary ellipsis type='secondary'>
+            {getWeaponType(slot.weaponType)}
+          </TextSecondary>
+        )}
         {droppable ? (
           <>
             <TextSecondary ellipsis type='secondary'>
@@ -381,7 +383,6 @@ const DisplayCard = styled.div`
   align-items: flex-start;
   flex-direction: row;
   width: ${props => props.theme.widths.small};
-  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: ${props => props.theme.borderRadius};
   margin: ${props => props.theme.margins.small};
