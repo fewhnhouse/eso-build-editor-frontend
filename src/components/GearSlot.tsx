@@ -62,14 +62,13 @@ const TextSecondary = styled(Typography.Text)`
 const InnerDisplay = styled(Flex)`
   height: 100%;
   margin-left: ${props => props.theme.margins.small};
-  position: relative;
 `
 
 const StyledButton = styled(Button)`
   margin-top: ${props => props.theme.margins.mini};
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 5px;
+  bottom: 5px;
 `
 
 const StyledGearWrapper = styled.div`
@@ -379,12 +378,14 @@ export default ({
 const DisplayCard = styled.div`
   padding: ${props => props.theme.paddings.mini};
   display: flex;
+  align-items: flex-start;
   flex-direction: row;
   width: ${props => props.theme.widths.small};
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: ${props => props.theme.borderRadius};
   margin: ${props => props.theme.margins.small};
+  position: relative;
 `
 
 export const getItemType = (
