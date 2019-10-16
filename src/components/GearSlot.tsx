@@ -62,10 +62,14 @@ const TextSecondary = styled(Typography.Text)`
 const InnerDisplay = styled(Flex)`
   height: 100%;
   margin-left: ${props => props.theme.margins.small};
+  position: relative;
 `
 
 const StyledButton = styled(Button)`
   margin-top: ${props => props.theme.margins.mini};
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 `
 
 const StyledGearWrapper = styled.div`
@@ -314,6 +318,9 @@ export default ({
         <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
         </TextPrimary>
+        <TextSecondary ellipsis type='secondary'>
+          {getWeaponType(slot.weaponType)}
+        </TextSecondary>
         {droppable ? (
           <>
             <TextSecondary ellipsis type='secondary'>
@@ -532,7 +539,7 @@ export const DisplaySlot = ({
         <TextPrimary ellipsis strong>
           <InnerSpan color={getTypeColor(slot.type)}>
             {getItemType(slot.type)}
-          </InnerSpan>{' '}
+          </InnerSpan>
           {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
         </TextPrimary>
 
