@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { Divider } from 'antd'
+import { Divider, Empty } from 'antd'
 import GearView from '../../../components/GearView'
 import { ISet } from '../../../components/GearSlot'
 import {
@@ -384,7 +384,18 @@ const getSetups = ({
   ]
 }
 
-export default () => {
+interface ISetBarProps {
+  hasSelectedSet: boolean
+}
+
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`
+
+export default ({ hasSelectedSet }: ISetBarProps) => {
   const [state] = useContext(BuildContext)
   const {
     setTabKey,
@@ -506,9 +517,14 @@ export default () => {
     <DndProvider backend={HTML5Backend}>
       <StyledScrollbars autoHide>
         <OuterContainer>
-          <Divider>Active Selection</Divider>
-          <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
-
+          {hasSelectedSet ? (
+            <>
+              <Divider>Active Selection</Divider>
+              <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
+            </>
+          ) : (
+            <StyledEmpty>Select a set to get started.</StyledEmpty>
+          )}
           <Divider>Setup</Divider>
           <GearView
             droppable

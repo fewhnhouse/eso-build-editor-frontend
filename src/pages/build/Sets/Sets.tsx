@@ -84,6 +84,7 @@ export default ({ edit }: { edit: boolean }) => {
   }
   return (
     <StyledDiv>
+      {console.log(state)}
       <SetMenu
         collapsable
         collapsed={collapsed}
@@ -142,7 +143,7 @@ export default ({ edit }: { edit: boolean }) => {
         ) : (
           <StyledEmpty>Select a set to get started.</StyledEmpty>
         )}
-        {collapsed && <SetBar />}
+        <SetBar hasSelectedSet={set ? true : false} />
       </Content>
     </StyledDiv>
   )
