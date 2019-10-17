@@ -292,7 +292,7 @@ const LoginForm = ({ form }: LoginFormProps) => {
       )}
       <Form.Item>
         <StyledButton
-          disabled={hasErrors(getFieldsError(), tosChecked)}
+          disabled={hasErrors(getFieldsError(), register ? tosChecked : true)}
           loading={loginResult.loading || registerResult.loading}
           type='primary'
           htmlType='submit'
