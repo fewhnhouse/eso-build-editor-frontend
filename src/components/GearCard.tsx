@@ -8,6 +8,7 @@ import Flex from './Flex'
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
+  padding: 0;
   min-width: ${props => props.theme.widths.small}
   max-width: ${props => props.theme.widths.large}
   width: 100%;
@@ -142,6 +143,7 @@ const totalBonus = (set: ISet) => {
 export default ({ set, setSelectionCount, size }: IGearCard) => {
   return (
     <StyledCard
+      bordered={false}
       hoverable
       title={
         <Flex justify='space-between' align='center'>
