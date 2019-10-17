@@ -79,18 +79,29 @@ interface IBuildCardProps {
   style?: CSSProperties
   draggable?: boolean
   role?: IRole
+  isListView?: boolean
 }
-export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
+export default ({
+  item,
+  style,
+  draggable = true,
+  role,
+  isListView,
+}: IBuildCardProps) => {
   return draggable ? (
     <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard item={item} role={role} />
+      <BuildCard
+        item={item}
+        role={role}
+        isListView={isListView !== undefined}
+      />
     </div>
   )
 }
 
-const WithDnD = ({ item, style }: IBuildCardProps) => {
+const WithDnD = ({ item, style, isListView }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
@@ -103,7 +114,7 @@ const WithDnD = ({ item, style }: IBuildCardProps) => {
   })
   return (
     <div style={style} ref={drag}>
-      <BuildCard item={item} />
+      <BuildCard item={item} isListView={isListView !== undefined} />
     </div>
   )
 }
@@ -128,7 +139,15 @@ const ShortInfo = ({
   </Tooltip>
 )
 
-const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+const BuildCard = ({
+  item,
+  role,
+  isListView,
+}: {
+  item: IBuild
+  role?: IRole
+  isListView: boolean
+}) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
@@ -189,6 +208,8 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
               icon='delete'
               onClick={handleDeleteClick}
             />
+          ) : isListView ? (
+            <p>List view so link is local</p>
           ) : (
             <Tooltip title='Go to build'>
               <StyledLink to={`/builds/${item.id}`}>
