@@ -143,7 +143,7 @@ export default ({ edit }: { edit: boolean }) => {
         ) : (
           <StyledEmpty>Select a set to get started.</StyledEmpty>
         )}
-        <SetBar hasSelectedSet={set ? true : false} />
+        <SetBar hasSelectedSet={set !== undefined} />
       </Content>
     </StyledDiv>
   )
