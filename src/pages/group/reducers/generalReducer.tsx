@@ -2,6 +2,13 @@ import { IGroupAction, IGroupState } from '../GroupStateContext'
 
 export const generalReducer = (state: IGroupState, action: IGroupAction) => {
   switch (action.type) {
+    case 'ADD_RAID': {
+      const { raid } = action.payload
+      return {
+        ...state,
+        raids: [...state.raids, raid],
+      }
+    }
     case 'SET_GROUP_NAME': {
       const { name } = action.payload
       return {

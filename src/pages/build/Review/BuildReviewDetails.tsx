@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../../../components/theme'
 import { AppContext } from '../../../components/AppContainer'
+import { getSetsCount } from '../Sets/Sets'
 
 const { Title, Text } = Typography
 
@@ -144,18 +145,13 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
   const classData = classes.find(esoC => esoC.title === esoClass)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  const setsCount = selectedSetup
-    .map(setup => {
-      return setup.data
-    })
-    .flat()
-    .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
-    )
-    .reduce<Map<string, number>>(
-      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
-      new Map()
-    )
+  const setsCount = getSetsCount(
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
+  )
   const area = applicationAreas.find(area => area.key === applicationArea)
   const access = accessRightOptions.find(el => el.key === accessRights)
   return (

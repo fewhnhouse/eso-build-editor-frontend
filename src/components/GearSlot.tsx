@@ -13,7 +13,7 @@ import {
   SetType,
 } from '../pages/build/BuildStateContext'
 import { useMediaQuery } from 'react-responsive'
-import { GearCardContent } from './GearCard'
+import { GearCardContent } from './GearSlotCard'
 import Flex from './Flex'
 import { specialWeaponSets } from '../pages/build/Sets/selectionDetails'
 

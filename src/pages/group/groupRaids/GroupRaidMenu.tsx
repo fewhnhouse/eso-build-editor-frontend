@@ -306,7 +306,11 @@ const DraggableRaid = ({
 }) => {
   const [{ isDragging }, drag] = useDrag({
     item: {
-      type: 'Raid',
+      type: 'raid',
+      id: raid.id,
+      name: raid.name,
+      applicationArea: raid.applicationArea,
+      roles: raid.roles,
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),

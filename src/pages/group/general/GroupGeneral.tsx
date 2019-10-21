@@ -147,25 +147,6 @@ export default ({ edit }: IGroupGeneralProps) => {
               tokenSeparators={[',', ' ']}
             ></Select>
           </StyledFlex>
-          {/*<StyledFlex
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
-          >
-            <Typography.Text strong>Application Areas</Typography.Text>
-            <Select
-              size='large'
-              mode='multiple'
-              value={applicationAreas}
-              placeholder='Add application areas your group engages in'
-              style={{ width: '100%' }}
-              onChange={handleAreasChange}
-            >
-              {importedApplicationAreas.map(area => (
-                <Select.Option key={area.key}>{area.label}</Select.Option>
-              ))}
-            </Select>
-          </StyledFlex>*/}
           <Divider>Access Rights</Divider>
           <Radio.Group
             size='large'

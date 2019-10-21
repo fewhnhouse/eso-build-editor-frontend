@@ -8,6 +8,7 @@ import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Scrollbars from 'react-custom-scrollbars'
 import { specialWeaponSets, getSetups } from './selectionDetails'
+import { getSetsCount } from './Sets'
 
 const OuterContainer = styled.div`
   flex: 1;
@@ -136,20 +137,13 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
     }
   }
 
-  const concat = frontbarSelection.concat(
-    backbarSelection,
-    smallPieceSelection,
+  const setsCount = getSetsCount(
     bigPieceSelection,
-    jewelrySelection
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
   )
-  const setsCount = concat
-    .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
-    )
-    .reduce<Map<string, number>>(
-      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
-      new Map()
-    )
 
   return (
     <DndProvider backend={HTML5Backend}>

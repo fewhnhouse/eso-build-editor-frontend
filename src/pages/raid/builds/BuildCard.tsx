@@ -11,6 +11,7 @@ import { ITheme } from '../../../components/theme'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import ExpandedInformation from './ExpandedInformation'
+import { getSetsCount } from '../../build/Sets/Sets'
 
 const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
@@ -175,14 +176,14 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
     },
     [] as ISet[]
   )
-  const setsCount = concat
-    .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
-    )
-    .reduce<Map<string, number>>(
-      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
-      new Map()
-    )
+
+  const setsCount = getSetsCount(
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
+  )
 
   return (
     <StyledCard hoverable>

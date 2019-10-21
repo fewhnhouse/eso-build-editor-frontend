@@ -52,6 +52,7 @@ const RaidDropper = () => {
   const [, drop] = useDrop({
     accept: 'raid',
     drop: (raid: any, monitor) => {
+      console.log(raid)
       dispatch!({
         type: 'ADD_RAID',
         payload: { raid },
@@ -73,7 +74,7 @@ const RaidDropper = () => {
 export default () => {
   const [state, dispatch] = useContext(GroupContext)
   const { raids } = state!
-
+  console.log(raids)
   return (
     <StyledScrollbars autoHide>
       <StyledFlex direction='column' justify='flex-start' align='center' fluid>
