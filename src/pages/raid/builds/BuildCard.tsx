@@ -92,11 +92,7 @@ export default ({
     <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard
-        item={item}
-        role={role}
-        isListView={isListView !== undefined}
-      />
+      <BuildCard item={item} role={role} />
     </div>
   )
 }
@@ -114,7 +110,7 @@ const WithDnD = ({ item, style, isListView }: IBuildCardProps) => {
   })
   return (
     <div style={style} ref={drag}>
-      <BuildCard item={item} isListView={isListView !== undefined} />
+      <BuildCard item={item} />
     </div>
   )
 }
@@ -139,15 +135,7 @@ const ShortInfo = ({
   </Tooltip>
 )
 
-const BuildCard = ({
-  item,
-  role,
-  isListView,
-}: {
-  item: IBuild
-  role?: IRole
-  isListView: boolean
-}) => {
+const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
@@ -208,8 +196,6 @@ const BuildCard = ({
               icon='delete'
               onClick={handleDeleteClick}
             />
-          ) : isListView ? (
-            <p>List view so link is local</p>
           ) : (
             <Tooltip title='Go to build'>
               <StyledLink to={`/builds/${item.id}`}>

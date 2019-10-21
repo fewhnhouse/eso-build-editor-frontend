@@ -82,7 +82,6 @@ interface IReviewProps {
   isBuild: boolean
   saved: boolean
   state: IBuildState | IRaidState
-  isListView?: boolean
 }
 const Review = ({
   local,
@@ -96,7 +95,6 @@ const Review = ({
   isBuild,
   saved,
   state,
-  isListView,
 }: IReviewProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -129,7 +127,7 @@ const Review = ({
             {isBuild ? (
               <BuildReviewDetails loadedData={data} />
             ) : (
-              <RaidReviewDetails isListView={isListView} loadedData={data} />
+              <RaidReviewDetails loadedData={data} />
             )}
           </Container>
           <StyledFooter isMobile={isMobile}>
@@ -182,6 +180,7 @@ const Review = ({
                 />
               </StyledFlex80>
             </StyledScrollbars>
+
             {(owner && owner.id) === (me && me.id) && (
               <Flex direction='row'>
                 <Popconfirm

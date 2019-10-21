@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Typography, Divider } from 'antd'
+import { Card, Typography, Divider, Empty, Button } from 'antd'
 import { IRaidState, IRole } from '../RaidStateContext'
 import { Redirect } from 'react-router'
 import BuildCard from '../builds/BuildCard'
@@ -10,7 +10,8 @@ import { applicationAreas } from '../general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
 import Scrollbars from 'react-custom-scrollbars'
 import { AppContext } from '../../../components/AppContainer'
-import BuildReview from '../../build/Review/BuildReview'
+import BuildReviewDetails from '../../build/Review/BuildReviewDetails'
+import { defaultBuildState, IBuildState } from '../../build/BuildStateContext'
 
 const { Title } = Typography
 
@@ -31,11 +32,9 @@ const RaidContent = styled(Flex)`
 
 const RaidContentList = styled(Flex)`
   flex-wrap: nowrap;
-  padding: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '20px'};
+  padding: 0px;
   flex: 1;
-  max-height: ${(props: { local?: boolean; isMobile: boolean }) =>
-    props.isMobile ? '' : props.local ? '80%' : '100%'};
+  max-height: ${(props: { local?: boolean }) => (props.local ? '80%' : '100%')};
 `
 
 const BuildInformation = styled(Card)`
@@ -50,15 +49,28 @@ const BuildInformation = styled(Card)`
 const BuildInformationList = styled(Card)`
   height: 100%;
   flex: 1;
+  max-width: 450px;
+  min-width: 450px;
   flex-direction: column;
   flex-wrap: nowrap;
-  overflow: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'hidden' : 'auto'};
-  height: ${(props: { isMobile: boolean }) => (props.isMobile ? '' : '100%')};
+  overflow: auto;
+  height: 100%;
+`
+const StyledEmpty = styled(Empty)`
+  display: flex;
+  justify-content: center;
+  flex: 2;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
 `
 
-const BuildReviewList = styled(Flex)`
-  flex: 2;
+const StyledButton = styled(Button)`
+  position: fixed;
+  top: 100px;
+  right: 40px;
+  z-index: 300;
+  box-shadow: 0px 0px 3px 2px #868686;
 `
 
 const CardList = styled(Flex)`
@@ -85,20 +97,28 @@ const StyledDiv = styled.div`
 interface IRaidReviewDetailsProps {
   loadedData: IRaidState
   local?: boolean
-  isListView?: boolean
 }
 
-const RaidReviewDetails = ({
-  loadedData,
-  local,
-  isListView,
-}: IRaidReviewDetailsProps) => {
+const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const { name, roles, applicationArea, description, published } = loadedData
   const [path] = useState('')
+  const [isListView, setIsListView] = useState(false)
+  const [selectedBuild, setSelectedBuild] = useState<IBuildState | undefined>(
+    undefined
+  )
   const area = applicationAreas.find(area => area.key === applicationArea)
 
+  const handleBuildClick = (roleIndex: number, buildIndex: number) => () => {
+    setSelectedBuild(selectedBuild => ({
+      ...defaultBuildState,
+      ...roles[roleIndex].builds[buildIndex].build,
+    }))
+  }
   const isMobile = useMediaQuery({ maxWidth: 800 })
+  const isBigScreen = useMediaQuery({ minWidth: 1400 })
+
   const [, appDispatch] = useContext(AppContext)
+  const handleSwapListView = () => setIsListView(isListView => !isListView)
   useEffect(() => {
     appDispatch!({
       type: 'SET_HEADER_SUBTITLE',
@@ -108,34 +128,36 @@ const RaidReviewDetails = ({
   if (path !== '') {
     return <Redirect push to={`${path}`} />
   } else {
-    return isListView ? (
+    return isListView && isBigScreen ? (
       <StyledDiv>
-        <RaidContentList
-          isMobile={isMobile}
-          local={local}
-          direction='row'
-          align='flex-start'
-        >
+        <StyledButton
+          type='primary'
+          shape='circle'
+          size='large'
+          onClick={handleSwapListView}
+          icon={isListView ? 'align-left' : 'unordered-list'}
+        ></StyledButton>
+        <RaidContentList local={local} direction='row' align='flex-start'>
           <BuildInformationList
-            bodyStyle={{ padding: isMobile ? '0px' : '24px' }}
-            isMobile={isMobile}
+            bodyStyle={{ padding: isMobile ? '0px' : '5px' }}
             title={<Title level={2}>Builds</Title>}
           >
-            {roles.map((role, index) => {
+            {roles.map((role, roleIndex) => {
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={roleIndex}>
                   <Divider>
                     <Title level={3}>{role.name}</Title>
                   </Divider>
                   <CardList direction='column' justify='space-around'>
-                    {role.builds.map((build, index) => {
+                    {role.builds.map((build, buildIndex) => {
                       return (
-                        <BuildCard
-                          isListView={isListView}
-                          item={build.build}
-                          draggable={false}
-                          key={index}
-                        />
+                        <div onClick={handleBuildClick(roleIndex, buildIndex)}>
+                          <BuildCard
+                            item={build.build}
+                            draggable={false}
+                            key={buildIndex}
+                          />
+                        </div>
                       )
                     })}
                   </CardList>
@@ -143,13 +165,25 @@ const RaidReviewDetails = ({
               )
             })}
           </BuildInformationList>
-          <BuildReviewList direction='column'>
-            <BuildReview />
-          </BuildReviewList>
+          {selectedBuild ? (
+            <BuildReviewDetails local loadedData={selectedBuild} />
+          ) : (
+            <StyledEmpty>Select a build to see details.</StyledEmpty>
+          )}
         </RaidContentList>
       </StyledDiv>
     ) : (
       <Scrollbars autoHide disabled={!isMobile}>
+        {isBigScreen && (
+          <StyledButton
+            type='primary'
+            shape='circle'
+            size='large'
+            onClick={handleSwapListView}
+            icon={isListView ? 'align-left' : 'unordered-list'}
+          ></StyledButton>
+        )}
+
         <Wrapper
           isMobile={isMobile}
           direction='column'

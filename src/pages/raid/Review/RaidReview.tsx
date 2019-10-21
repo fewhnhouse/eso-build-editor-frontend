@@ -144,7 +144,6 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         <meta property='og:image' content={image} />
       </Helmet>
       <Review
-        isListView={true}
         saved={saved}
         state={state!}
         data={raidQuery.data && raidQuery.data.raid}
