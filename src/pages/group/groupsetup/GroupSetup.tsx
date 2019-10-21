@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import GroupRaidMenu from './GroupRaidMenu'
 import GroupAssignments from './GroupAssignments'
+import { GroupContext } from '../GroupStateContext'
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -10,16 +10,18 @@ const StyledDiv = styled.div`
   flex-direction: row;
 `
 
-export default () => {
-  const [usedRaid, setUsedRaid] = useState('')
-  const setSelectedRaid = (id: string) => {
-    setUsedRaid(id)
-  }
+export default ({ edit }: { edit?: boolean }) => {
+  const [state, dispatch] = useContext(GroupContext)
+
+  useEffect(() => {
+    if (!edit) {
+      localStorage.setItem('groupState', JSON.stringify(state))
+    }
+  }, [state, edit])
   return (
     <>
       <StyledDiv>
-        <GroupRaidMenu selectRaid={setSelectedRaid} />
-        <GroupAssignments useRaid={usedRaid} />
+        <GroupAssignments />
       </StyledDiv>
     </>
   )

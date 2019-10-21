@@ -79,26 +79,30 @@ interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
   draggable?: boolean
+  additionalContent?: React.ReactNode
   role?: IRole
-  isListView?: boolean
 }
 export default ({
   item,
   style,
   draggable = true,
   role,
-  isListView,
+  additionalContent,
 }: IBuildCardProps) => {
   return draggable ? (
     <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard item={item} role={role} />
+      <BuildCard
+        item={item}
+        role={role}
+        additionalContent={additionalContent}
+      />
     </div>
   )
 }
 
-const WithDnD = ({ item, style, isListView }: IBuildCardProps) => {
+const WithDnD = ({ item, style }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
@@ -136,7 +140,12 @@ const ShortInfo = ({
   </Tooltip>
 )
 
-const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+interface IBuildCardProps {
+  item: IBuild
+  role?: IRole
+  additionalContent?: React.ReactNode
+}
+const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
@@ -249,6 +258,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           icon={isExpanded ? 'minus' : 'plus'}
         />
       )}
+      {additionalContent}
     </StyledCard>
   )
 }

@@ -1,53 +1,15 @@
-import React, { useState, CSSProperties } from 'react'
-import {
-  List,
-  Divider,
-  Input,
-  Select,
-  Button,
-  Card,
-  Icon,
-  Typography,
-} from 'antd'
+import React, { useState, useContext, useEffect } from 'react'
+import { Divider, Input, Select, Button } from 'antd'
 import styled from 'styled-components'
-import { useTrail, animated } from 'react-spring'
 import Flex from '../../../components/Flex'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import Scrollbars from 'react-custom-scrollbars'
 import { IRaidState } from '../../raid/RaidStateContext'
 import { applicationAreas } from '../../build/RaceAndClass/RaceClass'
-import { useDrag } from 'react-dnd'
+import { GroupContext } from '../GroupStateContext'
+import DroppableRaidsList from './DroppableRaidsList'
+import { raid } from '../../../util/fragments'
 const { Option } = Select
-const { Text } = Typography
-
-const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.small};
-  line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
-`
-
-const Title = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
-  line-height: 1.5;
-  font-weight: 500;
-  color: ${props => props.theme.colors.grey.dark};
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: left;
-`
-
-const StyledCard = styled(Card)`
-  border-color: ${props => props.theme.mainBorderColor};
-  background: 'white';
-  border-width: 2px;
-  margin: ${props => props.theme.margins.small};
-  width: 90%;
-  max-width: ${props => props.theme.widths.medium};
-`
 
 const ListContainer = styled.div`
   width: 100%;
@@ -85,21 +47,6 @@ const StyledFlexExpanded = styled(Flex)`
   width: 100%;
 `
 
-const StyledFlexExpandedSecond = styled(Flex)`
-  margin: 0px ${props => props.theme.paddings.small};
-  width: 100%;
-`
-
-const StyledScrollbars = styled(Scrollbars)`
-  max-width: 420px;
-  width: 100%;
-  min-width: 370px;
-`
-
-const StyledList = styled(List)`
-  height: 100%;
-`
-
 export function titleCase(str: string): string {
   let string = str.toLowerCase().split(' ')
   for (var i = 0; i < string.length; i++) {
@@ -127,46 +74,23 @@ export const GET_RAIDS = gql`
       after: $after
       before: $before
     ) {
-      id
-      owner {
-        id
-        name
-      }
-      name
-      applicationArea
-      roles {
-        id
-        builds {
-          id
-        }
-      }
+      ...Raid
     }
   }
+  ${raid}
 `
-
-interface IRaid {
-  id: string
-  owner?: {
-    id: string
-    name: string
-  }
-  name: string
-  applicationArea: string
-  roles: {
-    id: string
-    builds: {
-      id: string
-    }[]
-  }[]
-}
 
 export default () => {
   const [selectedAppArea, setSelectedAppArea] = useState<string[]>([])
+  const [state] = useContext(GroupContext)
+  const { raids } = state!
+
   const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [remoteRaids, setRemoteRaids] = useState<IRaidState[]>([])
 
   // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ raids: IRaid[] }, {}>(GET_RAIDS, {
+  const { loading, data } = useQuery<{ raids: IRaidState[] }, {}>(GET_RAIDS, {
     variables: {
       where: {
         AND: [
@@ -187,6 +111,16 @@ export default () => {
       },
     },
   })
+
+  useEffect(() => {
+    if (data && data.raids) {
+      const newRaids = data.raids.filter(remoteRaid => {
+        const exists = raids.find(raid => raid.id === remoteRaid.id)
+        return exists === undefined
+      })
+      setRemoteRaids(newRaids)
+    }
+  }, [raids, data])
 
   const handleAreaSelectChange = (classes: string[]) => {
     setSelectedAppArea(classes)
@@ -243,97 +177,14 @@ export default () => {
           )}
         </StyledFlexOuter>
         {data && data.raids && (
-          <RaidsList raids={data.raids} loading={loading} />
+          <DroppableRaidsList
+            raids={remoteRaids}
+            loading={loading}
+            dropType={'removeRaid'}
+            dispatchType={'REMOVE_RAID'}
+          />
         )}
       </>
     </ListContainer>
-  )
-}
-
-interface IRaidsListProps {
-  raids: IRaid[]
-  loading: boolean
-}
-const RaidsList = ({ raids, loading }: IRaidsListProps) => {
-  const trail = useTrail(raids.length, {
-    opacity: 1,
-    transform: 'translate(0px, 0px)',
-    from: {
-      opacity: 0,
-      transform: 'translate(0px, -40px)',
-    },
-    config: { mass: 1, tension: 2000, friction: 300 },
-  })
-
-  return (
-    <StyledScrollbars autoHide>
-      <StyledList
-        loading={loading}
-        dataSource={trail}
-        renderItem={(style: any, index) => {
-          const raid = raids[index]
-          const size = raid.roles.reduce((prev, curr) => {
-            return prev + curr.builds.length
-          }, 0)
-          const applicationArea = applicationAreas.find(
-            area => area.key === raid.applicationArea
-          )
-
-          return (
-            <DraggableRaid
-              size={size}
-              applicationArea={applicationArea ? applicationArea.label : ''}
-              raid={raid}
-              style={style}
-            />
-          )
-        }}
-      />
-    </StyledScrollbars>
-  )
-}
-
-const DraggableRaid = ({
-  raid,
-  size,
-  applicationArea,
-  style,
-}: {
-  raid: IRaid
-  size: number
-  applicationArea: string
-  style: CSSProperties
-}) => {
-  const [{ isDragging }, drag] = useDrag({
-    item: {
-      type: 'raid',
-      id: raid.id,
-      name: raid.name,
-      applicationArea: raid.applicationArea,
-      roles: raid.roles,
-    },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  })
-  return (
-    <animated.div
-      ref={drag}
-      style={{ ...style, display: 'inline-flex', width: '100%' }}
-    >
-      <StyledCard key={raid.id} hoverable>
-        <Title>
-          <Flex direction='row' justify='space-between'>
-            {raid.name ? raid.name : 'Unnamed raid'}
-            <Text>
-              <Icon type='team' />
-              {size}
-            </Text>
-          </Flex>
-        </Title>
-        <StyledDivider />
-        <Description>{applicationArea}</Description>
-      </StyledCard>
-    </animated.div>
   )
 }

@@ -44,11 +44,11 @@ const StyledEmpty = styled(Empty)`
 `
 
 export const getSetsCount = (
-  bigPieceSelection: ISetSelection[],
-  smallPieceSelection: ISetSelection[],
-  jewelrySelection: ISetSelection[],
-  frontbarSelection: ISetSelection[],
-  backbarSelection: ISetSelection[]
+  bigPieceSelection: ISetSelection[] = [],
+  smallPieceSelection: ISetSelection[] = [],
+  jewelrySelection: ISetSelection[] = [],
+  frontbarSelection: ISetSelection[] = [],
+  backbarSelection: ISetSelection[] = []
 ) => {
   const isTwoHandedFrontbar = frontbarSelection[0].type === WeaponType.twohanded
   const isTwoHandedBackbar = backbarSelection[0].type === WeaponType.twohanded
@@ -67,9 +67,11 @@ export const getSetsCount = (
     setsCount.set(setName, 2 + (setsCount.get(setName) || 0))
   } else {
     frontbarSelection.forEach(selection => {
-      const setName = selection.selectedSet!.name
+      if (selection.selectedSet) {
+        const setName = selection.selectedSet!.name
 
-      setsCount.set(setName, 1 + (setsCount.get(setName) || 0))
+        setsCount.set(setName, 1 + (setsCount.get(setName) || 0))
+      }
     })
   }
 
@@ -78,9 +80,11 @@ export const getSetsCount = (
     setsCount.set(setName, 2 + (setsCount.get(setName) || 0))
   } else {
     backbarSelection.forEach(selection => {
-      const setName = selection.selectedSet!.name
+      if (selection.selectedSet) {
+        const setName = selection.selectedSet!.name
 
-      setsCount.set(setName, 1 + (setsCount.get(setName) || 0))
+        setsCount.set(setName, 1 + (setsCount.get(setName) || 0))
+      }
     })
   }
   return setsCount

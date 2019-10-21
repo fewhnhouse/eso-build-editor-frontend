@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import GroupRaidMenu from './GroupRaidMenu'
-import GroupAssignments from './GroupAssignments'
+import RemoteRaidMenu from './RemoteRaidMenu'
+import SelectedRaidMenu from './SelectedRaidMenu'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import { GroupContext } from '../GroupStateContext'
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -12,16 +13,19 @@ const StyledDiv = styled.div`
   flex-direction: row;
 `
 
-export default () => {
-  const [usedRaid, setUsedRaid] = useState('')
-  const setSelectedRaid = (id: string) => {
-    setUsedRaid(id)
-  }
+export default ({ edit }: { edit?: boolean }) => {
+  const [state, dispatch] = useContext(GroupContext)
+
+  useEffect(() => {
+    if (!edit) {
+      localStorage.setItem('groupState', JSON.stringify(state))
+    }
+  }, [state, edit])
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledDiv>
-        <GroupRaidMenu />
-        <GroupAssignments />
+        <RemoteRaidMenu />
+        <SelectedRaidMenu />
       </StyledDiv>
     </DndProvider>
   )

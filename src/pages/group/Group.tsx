@@ -83,7 +83,7 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
         {pageIndex === 0 ? (
           <GroupGeneral edit={edit} />
         ) : pageIndex === 1 ? (
-          <GroupRaids />
+          <GroupRaids edit={edit} />
         ) : pageIndex === 2 ? (
           <GroupSetup />
         ) : pageIndex === 3 ? (

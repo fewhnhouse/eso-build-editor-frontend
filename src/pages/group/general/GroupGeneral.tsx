@@ -78,13 +78,6 @@ export default ({ edit }: IGroupGeneralProps) => {
     })
   }
 
-  const handleAreasChange = (applicationAreas: string[]) => {
-    dispatch!({
-      type: 'SET_GROUP_APPLICATION_AREAS',
-      payload: { applicationAreas },
-    })
-  }
-
   const handleAccessRightsChange = (e: RadioChangeEvent) => {
     dispatch!({
       type: 'SET_GROUP_ACCESS_RIGHTS',
@@ -98,8 +91,6 @@ export default ({ edit }: IGroupGeneralProps) => {
       payload: { members },
     })
   }
-
-  console.log(state)
 
   return (
     <>

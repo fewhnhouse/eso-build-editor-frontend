@@ -23,6 +23,7 @@ export interface IGroupState {
   applicationAreas: string[]
   raids: IRaidState[]
   members: string[]
+  buildsMembers: { buildId: string; members: string[] }[]
 }
 
 export const defaultGroupState: IGroupState = {
@@ -34,6 +35,7 @@ export const defaultGroupState: IGroupState = {
   accessRights: AccessRights.UNLISTED,
   members: [],
   raids: [],
+  buildsMembers: [],
 }
 
 export interface IGroupAction {
