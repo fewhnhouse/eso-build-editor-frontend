@@ -14,7 +14,7 @@ import {
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import { specialWeaponSets } from './SetBar'
+import { specialWeaponSets } from './selectionDetails'
 
 const StyledFlex = styled(Flex)`
   margin-top: 20px;

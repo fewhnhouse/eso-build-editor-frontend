@@ -84,6 +84,7 @@ export default ({ edit }: { edit: boolean }) => {
   }
   return (
     <StyledDiv>
+      {console.log(state)}
       <SetMenu
         collapsable
         collapsed={collapsed}
@@ -91,58 +92,59 @@ export default ({ edit }: { edit: boolean }) => {
         context={BuildContext}
       />
       <Content>
-        {set ? (
-          <Scrollbars autoHide>
-            <AbilityContainer>
-              <Divider>Set</Divider>
+        <Scrollbars autoHide>
+          <AbilityContainer>
+            <Divider>Set</Divider>
+            {set ? (
               <GearCard
                 set={set}
                 setSelectionCount={setsCount.get(set.name) || 0}
               />
-              <Tabs
-                onChange={handleTabChange}
-                activeKey={setTabKey}
-                defaultActiveKey='frontbar'
+            ) : (
+              <StyledEmpty>Select a set to get started.</StyledEmpty>
+            )}
+            <Tabs
+              onChange={handleTabChange}
+              activeKey={setTabKey}
+              defaultActiveKey='frontbar'
+            >
+              <TabPane
+                disabled={set && !set.has_weapons}
+                tab='Front-Bar'
+                key={SetTab.frontbar}
               >
-                <TabPane
-                  disabled={!set!.has_weapons}
-                  tab='Front-Bar'
-                  key={SetTab.frontbar}
-                >
-                  <Weapons bar='frontbar' />
-                </TabPane>
-                <TabPane
-                  disabled={!set!.has_weapons}
-                  tab='Back-Bar'
-                  key={SetTab.backbar}
-                >
-                  <Weapons bar='backbar' />
-                </TabPane>
-                <TabPane
-                  disabled={
-                    !set!.has_heavy_armor &&
-                    !set!.has_medium_armor &&
-                    !set!.has_light_armor
-                  }
-                  tab='Armor'
-                  key={SetTab.armor}
-                >
-                  <Armor />
-                </TabPane>
-                <TabPane
-                  disabled={!set!.has_jewels}
-                  tab='Jewelry'
-                  key={SetTab.jewelry}
-                >
-                  <Jewelry />
-                </TabPane>
-              </Tabs>
-            </AbilityContainer>
-          </Scrollbars>
-        ) : (
-          <StyledEmpty>Select a set to get started.</StyledEmpty>
-        )}
-        {collapsed && <SetBar />}
+                <Weapons bar='frontbar' />
+              </TabPane>
+              <TabPane
+                disabled={set && !set.has_weapons}
+                tab='Back-Bar'
+                key={SetTab.backbar}
+              >
+                <Weapons bar='backbar' />
+              </TabPane>
+              <TabPane
+                disabled={
+                  set &&
+                  !set.has_heavy_armor &&
+                  !set.has_medium_armor &&
+                  !set.has_light_armor
+                }
+                tab='Armor'
+                key={SetTab.armor}
+              >
+                <Armor />
+              </TabPane>
+              <TabPane
+                disabled={set && !set.has_jewels}
+                tab='Jewelry'
+                key={SetTab.jewelry}
+              >
+                <Jewelry />
+              </TabPane>
+            </Tabs>
+          </AbilityContainer>
+        </Scrollbars>
+        <SetBar hasSelectedSet={set !== undefined} />
       </Content>
     </StyledDiv>
   )
