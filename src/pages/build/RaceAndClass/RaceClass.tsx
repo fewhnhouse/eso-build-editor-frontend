@@ -14,7 +14,7 @@ import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext, AccessRights } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { races, classes } from './data'
-import { RadioChangeEvent } from 'antd/lib/radio';
+import { RadioChangeEvent } from 'antd/lib/radio'
 
 const ButtonGroup = Button.Group
 

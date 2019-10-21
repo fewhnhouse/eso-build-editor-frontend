@@ -220,6 +220,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             <Divider />
             {sets.map(set => (
               <Popover
+                style={{ padding: 0, margin: 0 }}
                 key={set.id}
                 content={
                   <GearCard size='normal' set={set} setSelectionCount={0} />
