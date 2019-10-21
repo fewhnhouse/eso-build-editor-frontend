@@ -14,8 +14,8 @@ import {
 } from '../pages/build/BuildStateContext'
 import { useMediaQuery } from 'react-responsive'
 import { GearCardContent } from './GearCard'
-import { specialWeaponSets } from '../pages/build/Sets/SetBar'
 import Flex from './Flex'
+import { specialWeaponSets } from '../pages/build/Sets/selectionDetails'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
