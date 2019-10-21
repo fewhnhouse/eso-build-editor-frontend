@@ -159,19 +159,19 @@ export default () => {
           defaultValue={armorType || ArmorType.mediumArmor}
         >
           <Radio.Button
-            disabled={selectedSet!.has_light_armor === 0}
+            disabled={selectedSet && selectedSet.has_light_armor === 0}
             value={ArmorType.lightArmor}
           >
             Light Armor
           </Radio.Button>
           <Radio.Button
-            disabled={selectedSet!.has_medium_armor === 0}
+            disabled={selectedSet && selectedSet.has_medium_armor === 0}
             value={ArmorType.mediumArmor}
           >
             Medium Armor
           </Radio.Button>
           <Radio.Button
-            disabled={selectedSet!.has_heavy_armor === 0}
+            disabled={selectedSet && selectedSet.has_heavy_armor === 0}
             value={ArmorType.heavyArmor}
           >
             Heavy Armor

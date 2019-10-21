@@ -14,8 +14,8 @@ import {
 } from '../pages/build/BuildStateContext'
 import { useMediaQuery } from 'react-responsive'
 import { GearCardContent } from './GearCard'
-import { specialWeaponSets } from '../pages/build/Sets/SetBar'
 import Flex from './Flex'
+import { specialWeaponSets } from '../pages/build/Sets/selectionDetails'
 
 const GearImg = styled.img`
   width: ${(props: { size: 'normal' | 'small' }) =>
@@ -66,6 +66,9 @@ const InnerDisplay = styled(Flex)`
 
 const StyledButton = styled(Button)`
   margin-top: ${props => props.theme.margins.mini};
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 `
 
 const StyledGearWrapper = styled.div`
@@ -314,6 +317,11 @@ export default ({
         <TextPrimary ellipsis strong>
           {slot.selectedSet ? slot.selectedSet.name : 'Set not selected.'}
         </TextPrimary>
+        {!droppable && (
+          <TextSecondary ellipsis type='secondary'>
+            {getWeaponType(slot.weaponType)}
+          </TextSecondary>
+        )}
         {droppable ? (
           <>
             <TextSecondary ellipsis type='secondary'>
@@ -372,12 +380,13 @@ export default ({
 const DisplayCard = styled.div`
   padding: ${props => props.theme.paddings.mini};
   display: flex;
+  align-items: flex-start;
   flex-direction: row;
   width: ${props => props.theme.widths.small};
-  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: ${props => props.theme.borderRadius};
   margin: ${props => props.theme.margins.small};
+  position: relative;
 `
 
 export const getItemType = (
@@ -532,7 +541,7 @@ export const DisplaySlot = ({
         <TextPrimary ellipsis strong>
           <InnerSpan color={getTypeColor(slot.type)}>
             {getItemType(slot.type)}
-          </InnerSpan>{' '}
+          </InnerSpan>
           {slot.weaponType ? '-' : ''} {getWeaponType(slot.weaponType)}
         </TextPrimary>
 

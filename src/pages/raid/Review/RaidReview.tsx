@@ -7,12 +7,12 @@ import { notification } from 'antd'
 import { raid } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
-import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
 import { handleCopy } from '../util'
 import { CREATE_RAID, createNotification } from '../Raid'
 import { Helmet } from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
+import Review from '../../../components/Review'
 
 export const RAID = gql`
   query Raids($id: ID!) {

@@ -79,8 +79,15 @@ interface IBuildCardProps {
   style?: CSSProperties
   draggable?: boolean
   role?: IRole
+  isListView?: boolean
 }
-export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
+export default ({
+  item,
+  style,
+  draggable = true,
+  role,
+  isListView,
+}: IBuildCardProps) => {
   return draggable ? (
     <WithDnD item={item} style={style} />
   ) : (
@@ -90,7 +97,7 @@ export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
   )
 }
 
-const WithDnD = ({ item, style }: IBuildCardProps) => {
+const WithDnD = ({ item, style, isListView }: IBuildCardProps) => {
   const [, drag] = useDrag({
     item: {
       type: 'build',
@@ -220,6 +227,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             <Divider />
             {sets.map(set => (
               <Popover
+                style={{ padding: 0, margin: 0 }}
                 key={set.id}
                 content={
                   <GearCard size='normal' set={set} setSelectionCount={0} />

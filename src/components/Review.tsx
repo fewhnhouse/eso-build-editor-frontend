@@ -180,6 +180,7 @@ const Review = ({
                 />
               </StyledFlex80>
             </StyledScrollbars>
+
             {(owner && owner.id) === (me && me.id) && (
               <Flex direction='row'>
                 <Popconfirm

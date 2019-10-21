@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { ISet, getItemType, getWeaponType } from './GearSlot'
 import { ISetSelection } from '../pages/build/BuildStateContext'
 import Flex from './Flex'
-import HasPiecesTag from './HasPiecesTag'
 
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
+  padding: 0;
   min-width: ${props => props.theme.widths.small}
   max-width: ${props => props.theme.widths.large}
   width: 100%;
@@ -143,6 +143,7 @@ const totalBonus = (set: ISet) => {
 export default ({ set, setSelectionCount, size }: IGearCard) => {
   return (
     <StyledCard
+      bordered={false}
       hoverable
       title={
         <Flex justify='space-between' align='center'>
