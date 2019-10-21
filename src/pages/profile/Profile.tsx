@@ -22,6 +22,7 @@ import { Redirect } from 'react-router'
 import { RESEND_VERIFICATION, AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
 import UpdateWebhook from './UpdateWebhook'
+import Helmet from 'react-helmet'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -298,6 +299,10 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   }
   return (
     <>
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
+
       <Modal
         title='Confirm password'
         visible={action !== undefined}

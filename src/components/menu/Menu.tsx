@@ -17,7 +17,6 @@ interface IStyledHeaderProps {
   theme: ITheme
 }
 
-
 const MenuButton = styled(Button)`
   margin-right: 10px;
   width: 40px;
@@ -113,7 +112,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
       {isMobile && (
         <>
           <StyledPageHeader
-            backIcon={<Icon type="arrow-left" />}
+            backIcon={<Icon type='arrow-left' />}
             onBack={expanded ? undefined : () => history.goBack()}
             title={expanded ? 'Navigation' : appState!.headerTitle}
             subTitle={!expanded && appState!.headerSubTitle}
@@ -138,6 +137,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
       )}
       {!isMobile && (
         <DesktopMenu
+          me={me}
           handleLogout={handleLogout}
           isMobile={isMobile}
           setLoggedIn={setLoggedIn}

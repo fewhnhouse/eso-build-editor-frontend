@@ -1,10 +1,20 @@
 import React, { useContext, useEffect } from 'react'
-import { Divider, Input, Select, Typography, Button, Icon, Card } from 'antd'
+import {
+  Divider,
+  Input,
+  Select,
+  Typography,
+  Button,
+  Icon,
+  Card,
+  Radio,
+} from 'antd'
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
-import { BuildContext } from '../BuildStateContext'
+import { BuildContext, AccessRights } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { races, classes } from './data'
+import { RadioChangeEvent } from 'antd/lib/radio'
 
 const ButtonGroup = Button.Group
 
@@ -29,6 +39,10 @@ const ResourceCard = styled(Card)`
 const StyledFlex = styled(Flex)`
   margin: ${props => props.theme.margins.small};
   width: ${props => props.theme.widths.medium};
+`
+
+const RadioIcon = styled(Icon)`
+  margin-right: 5px;
 `
 
 const StyledWideFlex = styled(Flex)`
@@ -79,6 +93,24 @@ export const applicationAreas = [
   },
 ]
 
+export const accessRightOptions = [
+  {
+    label: 'Private',
+    key: AccessRights.PRIVATE,
+    icon: 'lock',
+  },
+  {
+    label: 'Unlisted',
+    key: AccessRights.UNLISTED,
+    icon: 'edit',
+  },
+  {
+    label: 'Public',
+    key: AccessRights.PUBLIC,
+    icon: 'unlock',
+  },
+]
+
 const TOTAL_ATTRIBUTES = 64
 export default ({ edit }: { edit: boolean }) => {
   const [state, dispatch] = useContext(BuildContext)
@@ -90,6 +122,7 @@ export default ({ edit }: { edit: boolean }) => {
     stamina,
     role,
     description,
+    accessRights,
   } = state!
   const totalAttributes = health + stamina + magicka
 
@@ -174,6 +207,13 @@ export default ({ edit }: { edit: boolean }) => {
     dispatch!({
       type: 'SET_ROLE',
       payload: { role: value },
+    })
+  }
+
+  const handleAccessRightsChange = (e: RadioChangeEvent) => {
+    dispatch!({
+      type: 'SET_ACCESS_RIGHTS',
+      payload: { accessRights: e.target.value },
     })
   }
 
@@ -314,6 +354,22 @@ export default ({ edit }: { edit: boolean }) => {
           </Flex>
         </StyledWideFlex>
       </GeneralContainer>
+
+      <Divider>Access Rights</Divider>
+
+      <Radio.Group
+        size='large'
+        onChange={handleAccessRightsChange}
+        defaultValue={accessRights}
+        buttonStyle='solid'
+      >
+        {accessRightOptions.map(el => (
+          <Radio.Button value={el.key}>
+            <RadioIcon type={el.icon} />
+            {el.label}
+          </Radio.Button>
+        ))}
+      </Radio.Group>
 
       <Divider>Race</Divider>
       <CardContainer>

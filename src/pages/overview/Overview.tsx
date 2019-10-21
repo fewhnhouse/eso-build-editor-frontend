@@ -15,6 +15,7 @@ import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
 import { RouteComponentProps, Redirect } from 'react-router'
+import Helmet from 'react-helmet'
 
 const { TabPane } = Tabs
 
@@ -93,6 +94,10 @@ export default ({ match }: RouteComponentProps<{ tab: string }>) => {
 
   return (
     <OverviewContext.Provider value={[state, dispatch]}>
+      <Helmet>
+        <title>Overview</title>
+      </Helmet>
+
       <StyledFlex direction='column' align='center'>
         <StyledTabs
           activeKey={tab}

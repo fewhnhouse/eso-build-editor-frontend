@@ -8,6 +8,7 @@ import Flex from './Flex'
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
+  padding: 0;
   min-width: ${props => props.theme.widths.small}
   max-width: ${props => props.theme.widths.large}
   width: 100%;
@@ -142,27 +143,35 @@ const totalBonus = (set: ISet) => {
 export default ({ set, setSelectionCount, size }: IGearCard) => {
   return (
     <StyledCard
+      bordered={false}
       hoverable
       title={
-        size === 'big' ? (
-          <Typography.Title level={3}>{set.name}</Typography.Title>
-        ) : (
-          set.name
-        )
+        <Flex justify='space-between' align='center'>
+          {size === 'big' ? (
+            <Typography.Title level={3}>{set.name}</Typography.Title>
+          ) : (
+            set.name
+          )}
+          <Flex align='center' justify='flex-end'>
+            <ArmorTypeTag
+              hasHeavyArmor={set.has_heavy_armor === 1}
+              hasMediumArmor={set.has_medium_armor === 1}
+              hasLightArmor={set.has_light_armor === 1}
+              traitsNeeded={set.traits_needed !== null}
+            />
+            <StyledTag color='#1890ff'>{set.type}</StyledTag>
+          </Flex>
+        </Flex>
       }
     >
-      <StyledTag color='#1890ff'>{set.type}</StyledTag>
-      <ArmorTypeTag
-        hasHeavyArmor={set.has_heavy_armor === 1}
-        hasMediumArmor={set.has_medium_armor === 1}
-        hasLightArmor={set.has_light_armor === 1}
-        traitsNeeded={set.traits_needed !== null}
-      />
       <Description big={size === 'big'}>
         <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map(count => (
             <StyledSpan key={count} bold={count <= setSelectionCount}>
-              <Tag>{count} pcs</Tag> {set && set[`bonus_item_${count}`]}
+              <Flex align='center'>
+                <Tag>{count} pcs</Tag>{' '}
+                <span>{set && set[`bonus_item_${count}`]}</span>
+              </Flex>
               <StyledDivider />
             </StyledSpan>
           ))}

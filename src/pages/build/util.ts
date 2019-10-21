@@ -25,6 +25,7 @@ export const handleEditSave = async (
     id,
     race,
     esoClass,
+    accessRights,
     frontbarSelection,
     backbarSelection,
     bigPieceSelection,
@@ -43,7 +44,6 @@ export const handleEditSave = async (
     stamina,
     health,
     description,
-    published,
   }: IBuildState = state!
 
   const createSetVariables = (setSelection: ISetSelection) => ({
@@ -183,9 +183,9 @@ export const handleEditSave = async (
         name,
         race,
         esoClass,
+        accessRights,
         description,
         applicationArea,
-        published,
         health,
         stamina,
         magicka,
@@ -234,6 +234,7 @@ export const handleCreateSave = async (
     race,
     esoClass,
     mundusStone,
+    accessRights,
     buff,
     ultimateOne,
     ultimateTwo,
@@ -247,7 +248,6 @@ export const handleCreateSave = async (
     applicationArea,
     role,
     name,
-    published,
     magicka,
     stamina,
     health,
@@ -368,7 +368,7 @@ export const handleCreateSave = async (
       data: {
         name,
         race,
-        published,
+        accessRights,
         esoClass,
         description,
         applicationArea,
@@ -459,7 +459,7 @@ export const handleCopy = async (
 ) => {
   const {
     race,
-    published,
+    accessRights,
     name,
     description,
     esoClass,
@@ -541,7 +541,6 @@ export const handleCopy = async (
       data: {
         name,
         race,
-        published,
         esoClass,
         description,
         applicationArea,
@@ -549,6 +548,7 @@ export const handleCopy = async (
         health,
         stamina,
         magicka,
+        accessRights,
         mundusStone: { connect: { name: mundusStone.name } },
         buff: { connect: { name: buff.name } },
         bigPieceSelection: {

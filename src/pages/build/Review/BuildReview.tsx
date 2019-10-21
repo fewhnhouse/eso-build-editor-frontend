@@ -166,7 +166,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         state={state!}
         data={buildQuery.data && buildQuery.data.build}
         isBuild
-        error={buildQuery.error || meQuery.error}
+        dataError={buildQuery.error}
         loading={buildQuery.loading || meQuery.loading}
         me={meQuery.data && meQuery.data.me}
         local={local}

@@ -148,7 +148,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         state={state!}
         data={raidQuery.data && raidQuery.data.raid}
         isBuild={false}
-        error={raidQuery.error || meQuery.error}
+        dataError={raidQuery.error}
         loading={raidQuery.loading || meQuery.loading}
         me={meQuery.data && meQuery.data.me}
         local={local}

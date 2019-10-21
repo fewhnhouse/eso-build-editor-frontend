@@ -90,6 +90,12 @@ export default () => {
         complete raid setups - to be shared with friends, guilds and
         communities,
         <br /> or saved privately as you choose.
+        <br />
+        <br />
+        <Link to='/tos'>
+          Terms of Service
+          <br /> Privacy Policy & <br /> Copyrights
+        </Link>
       </StyledText>
       <Divider />
 
