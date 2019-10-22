@@ -2,13 +2,20 @@ import React, { useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { GroupContext } from '../GroupStateContext'
 import Flex from '../../../components/Flex'
-import { Card, Divider } from 'antd'
+import { Card, Divider, Select, Checkbox } from 'antd'
 import { applicationAreas } from '../../raid/general/RaidGeneral'
 import { ISortedBuild } from '../../raid/RaidStateContext'
+
+const { Option } = Select
 
 const ReviewContainer = styled.div`
   width: 100%;
   height: 100%;
+`
+
+const StyledSelect = styled(Select)`
+  margin-top: ${props => props.theme.margins.medium};
+  min-width: ${props => props.theme.widths.small};
 `
 
 const BuildsContainer = styled(Flex)`
@@ -22,7 +29,7 @@ const SimpleBuildCard = styled(Card)`
 `
 
 export default ({ edit }: { edit?: boolean }) => {
-  const [state, dispatch] = useContext(GroupContext)
+  const [state] = useContext(GroupContext)
   const { buildsMembers, raids } = state!
 
   useEffect(() => {
@@ -47,6 +54,11 @@ export default ({ edit }: { edit?: boolean }) => {
 
   return (
     <ReviewContainer>
+      <StyledSelect defaultValue='Filter by raid' size='large'>
+        {raids.map(raid => (
+          <Option key={raid.id}>{raid.name}</Option>
+        ))}
+      </StyledSelect>
       {applicationAreas.map(area => {
         const areaBuilds = uniqueBuilds.filter(
           build => build.build.applicationArea === area.key
@@ -54,10 +66,10 @@ export default ({ edit }: { edit?: boolean }) => {
         return (
           <>
             <Divider>{area.label}</Divider>
-            <BuildsContainer direction='row' justify='center'>
+            <BuildsContainer direction='row' justify='center' align='center'>
               {areaBuilds.map(build => {
                 const buildMembers = buildsMembers.find(
-                  member => member.buildId === build.id
+                  member => member.buildId === build.build.id
                 )
                 return (
                   <SimpleBuildCard title={build.build.name} size='small'>

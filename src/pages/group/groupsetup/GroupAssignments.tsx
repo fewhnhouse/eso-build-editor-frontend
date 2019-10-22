@@ -36,6 +36,7 @@ const MembersContainer = styled(Flex)`
   width: 100%;
   height: 100px;
   overflow: auto;
+  margin-bottom: ${props => props.theme.margins.medium};
 `
 
 export default () => {
