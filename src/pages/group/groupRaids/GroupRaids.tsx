@@ -11,6 +11,7 @@ const StyledDiv = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
 `
 
 export default ({ edit }: { edit?: boolean }) => {
