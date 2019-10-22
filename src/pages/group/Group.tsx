@@ -6,6 +6,7 @@ import GroupGeneral from './general/GroupGeneral'
 import GroupSetup from './groupsetup/GroupSetup'
 import GroupReview from './review/GroupReview'
 import { IGroupState, GroupContext, groupReducer } from './GroupStateContext'
+import GroupRaids from './groupRaids/GroupRaids'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -82,8 +83,10 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
         {pageIndex === 0 ? (
           <GroupGeneral edit={edit} />
         ) : pageIndex === 1 ? (
-          <GroupSetup />
+          <GroupRaids edit={edit} />
         ) : pageIndex === 2 ? (
+          <GroupSetup />
+        ) : pageIndex === 3 ? (
           <GroupReview />
         ) : (
           <Redirect to={`${path}/0`} />
@@ -105,7 +108,11 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
             title='General Information'
             description='Add general group info.'
           />
-          <StyledStep title='Group setup' description='Form a group.' />
+          <StyledStep title='Group raids' description='Add raids to a group.' />
+          <StyledStep
+            title='Raid Members'
+            description='Assign members to builds.'
+          />
           <StyledStep title='Review' description='Review and save.' />
         </Steps>
         <StyledButtonGroup size='large'>

@@ -1,10 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Divider, Typography, Select, Input, Icon, Button } from 'antd'
+import { Divider, Typography, Select, Input, Icon, Button, Radio } from 'antd'
 import Flex from '../../../components/Flex'
 import { GroupContext } from '../GroupStateContext'
+import {
+  accessRightOptions,
+  applicationAreas as importedApplicationAreas,
+} from '../../build/RaceAndClass/RaceClass'
+import { RadioChangeEvent } from 'antd/lib/radio'
+import TextArea from 'antd/lib/input/TextArea'
 
 const { Option } = Select
+
+const RadioIcon = styled(Icon)`
+  margin-right: 5px;
+`
 
 const GeneralContainer = styled.div`
   display: flex;
@@ -20,6 +30,10 @@ const StyledFlex = styled(Flex)`
 const StyledWideFlex = styled(Flex)`
   width: ${props => props.theme.widths.medium};
   flex: 1;
+`
+
+const StyledArea = styled(TextArea)`
+  width: ${props => props.theme.widths.medium};
 `
 
 const StyledInput = styled(Input)`
@@ -41,7 +55,7 @@ interface IGroupGeneralProps {
 
 export default ({ edit }: IGroupGeneralProps) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { name, description, applicationArea, members } = state!
+  const { name, description, accessRights, applicationAreas, members } = state!
   const [customMember, setCustomMember] = useState('')
   const [customAdd, setCustomAdd] = useState(false)
 
@@ -56,7 +70,7 @@ export default ({ edit }: IGroupGeneralProps) => {
   }
 
   const handleGroupDescriptionChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     dispatch!({
       type: 'SET_GROUP_DESCRIPTION',
@@ -64,35 +78,19 @@ export default ({ edit }: IGroupGeneralProps) => {
     })
   }
 
-  const handleApplicationAreaChange = (value: string) => {
+  const handleAccessRightsChange = (e: RadioChangeEvent) => {
     dispatch!({
-      type: 'SET_GROUP_APPLICATION_AREA',
-      payload: { applicationArea: value },
+      type: 'SET_GROUP_ACCESS_RIGHTS',
+      payload: { accessRights: e.target.value },
     })
   }
 
-  const handleMembersChange = () => {
+  function handleMembersChange(members: string[]) {
     dispatch!({
       type: 'SET_GROUP_MEMBERS',
-      payload: { members: members },
+      payload: { members },
     })
   }
-
-  const handleAddCustom = () => {
-    setCustomAdd(true)
-  }
-
-  const handleAddCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomMember(e.target.value)
-  }
-
-  const handleAddCustomConfirm = () => {
-    const newMember = { memberName: customMember, assignedRoles: [] }
-    members.push(newMember)
-    setCustomMember('')
-    setCustomAdd(false)
-  }
-  console.log(state)
 
   return (
     <>
@@ -118,8 +116,7 @@ export default ({ edit }: IGroupGeneralProps) => {
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
-            <StyledInput
-              size='large'
+            <StyledArea
               placeholder='Type description...'
               value={description}
               onChange={handleGroupDescriptionChange}
@@ -130,72 +127,32 @@ export default ({ edit }: IGroupGeneralProps) => {
             justify='flex-start'
             align='flex-start'
           >
-            <Typography.Text strong>Application Area</Typography.Text>
-            <Select
-              style={{ width: 400 }}
-              size='large'
-              placeholder='Select application area...'
-              value={applicationArea}
-              onChange={handleApplicationAreaChange}
-            >
-              <Select.Option value='battlegrounds'>Battlegrounds</Select.Option>
-              <Select.Option value='cyrodiil_raid'>
-                Cyrodiil - Raid
-              </Select.Option>
-              <Select.Option value='cyrodiil_smallscale'>
-                Cyrodiil - Small Scale
-              </Select.Option>
-              <Select.Option value='pve_dungeons'>PvE - Dungeons</Select.Option>
-              <Select.Option value='pve_arena'>PvE - Arena</Select.Option>
-              <Select.Option value='pve_raid'>PvE - Raids</Select.Option>
-              <Select.Option value='pve_openworld'>
-                PvE - Open World
-              </Select.Option>
-            </Select>
-          </StyledFlex>
-          <StyledFlex
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
-          >
             <Typography.Text strong>Group Members</Typography.Text>
-            {customAdd ? (
-              <StyledWideFlex
-                direction='column'
-                justify='flex-start'
-                align='flex-start'
-              >
-                <Typography.Text strong>Add new member</Typography.Text>
-                <StyledInput
-                  size='large'
-                  placeholder='Name...'
-                  onChange={handleAddCustomChange}
-                />
-                <Button onClick={handleAddCustomConfirm}>Add</Button>
-              </StyledWideFlex>
-            ) : (
-              ''
-            )}
             <Select
-              mode='multiple'
-              placeholder='Select members for group'
-              style={{ width: 400 }}
+              size='large'
+              mode='tags'
+              value={members}
+              placeholder='Add members by typing and separating by comma or space'
+              style={{ width: '100%' }}
               onChange={handleMembersChange}
-              dropdownRender={menu => (
-                <div>
-                  {menu}
-                  <SelectDivider />
-                  <StyledSelectDiv onClick={handleAddCustom}>
-                    <Icon type='plus' /> Add member
-                  </StyledSelectDiv>
-                </div>
-              )}
-            >
-              {members.map(member => (
-                <Option value={member.memberName}>{member.memberName}</Option>
-              ))}
-            </Select>
+              tokenSeparators={[',', ' ']}
+            ></Select>
           </StyledFlex>
+          <Divider>Access Rights</Divider>
+          <Radio.Group
+            size='large'
+            value={accessRights}
+            onChange={handleAccessRightsChange}
+            defaultValue={accessRights}
+            buttonStyle='solid'
+          >
+            {accessRightOptions.map(el => (
+              <Radio.Button value={el.key}>
+                <RadioIcon type={el.icon} />
+                {el.label}
+              </Radio.Button>
+            ))}
+          </Radio.Group>{' '}
         </Flex>
       </GeneralContainer>
     </>

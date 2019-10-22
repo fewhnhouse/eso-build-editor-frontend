@@ -21,6 +21,7 @@ import { LoginContext } from '../../App'
 import { Redirect } from 'react-router'
 import { RESEND_VERIFICATION, AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
+import UpdateWebhook from './UpdateWebhook'
 import Helmet from 'react-helmet'
 
 const { Content } = Layout
@@ -65,6 +66,7 @@ const ME = gql`
       id
       email
       name
+      webhook
     }
   }
 `
@@ -79,6 +81,14 @@ const UPDATE_EMAIL = gql`
 const UPDATE_PASSWORD = gql`
   mutation updatePassword($oldPassword: String!, $newPassword: String!) {
     updatePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+      id
+    }
+  }
+`
+
+const UPDATE_WEBHOOK = gql`
+  mutation updateWebhook($webhook: String!) {
+    updateWebhook(webhook: $webhook) {
       id
     }
   }
@@ -100,6 +110,7 @@ export interface IActionProps {
   me?: {
     name: string
     email: string
+    webhook?: string
   }
   value?: string
   setValue?: React.Dispatch<React.SetStateAction<string>>
@@ -110,6 +121,7 @@ export enum ProfileAction {
   updateEmail = 'UPDATE_EMAIL',
   updatePassword = 'UPDATE_PASSWORD',
   deleteAccount = 'DELETE_ACCOUNT',
+  updateWebhook = 'UPDATE_WEBHOOK',
 }
 
 const openNotification = (resendMutation: any) => {
@@ -159,6 +171,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
 
   const [oldPassword, setOldPassword] = useState('')
   const [password, setPassword] = useState('')
+  const [webhook, setWebhook] = useState('')
   const [email, setEmail] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [, setLoggedIn] = useContext(LoginContext)
@@ -167,6 +180,9 @@ const Profile = ({ loggedIn }: IProfileProps) => {
     setAction(clickedAction)
   }
   const [resendMutation, resendResult] = useMutation(RESEND_VERIFICATION)
+  const [updateWebhook, updateWebhookResult] = useMutation<any, any>(
+    UPDATE_WEBHOOK
+  )
   const [updateEmail, updateEmailResult] = useMutation<any, any>(UPDATE_EMAIL)
   const [updatePassword, updatePasswordResult] = useMutation<any, any>(
     UPDATE_PASSWORD
@@ -179,13 +195,20 @@ const Profile = ({ loggedIn }: IProfileProps) => {
     if (
       updatePasswordResult.data ||
       updateEmailResult.data ||
-      deleteAccountResult.data
+      deleteAccountResult.data ||
+      updateWebhookResult.data
     ) {
       switch (action) {
         case ProfileAction.updateEmail:
           openNotification(resendMutation)
           break
         case ProfileAction.updatePassword:
+          notification.success({
+            message: action,
+            description: `${action} update successful!`,
+          })
+          break
+        case ProfileAction.updateWebhook:
           notification.success({
             message: action,
             description: `${action} update successful!`,
@@ -210,7 +233,8 @@ const Profile = ({ loggedIn }: IProfileProps) => {
     } else if (
       updatePasswordResult.error ||
       updateEmailResult.error ||
-      deleteAccountResult.error
+      deleteAccountResult.error ||
+      updateWebhookResult.error
     ) {
       notification.error({
         message: `${action} update failed.`,
@@ -224,6 +248,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
   }, [
     updatePasswordResult,
     updateEmailResult,
+    updateWebhookResult,
     deleteAccountResult,
     action,
     resendMutation,
@@ -246,6 +271,11 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       case ProfileAction.updatePassword:
         await updatePassword({
           variables: { oldPassword, newPassword: password },
+        })
+        break
+      case ProfileAction.updateWebhook:
+        await updateWebhook({
+          variables: { webhook },
         })
         break
       case ProfileAction.deleteAccount:
@@ -313,6 +343,13 @@ const Profile = ({ loggedIn }: IProfileProps) => {
               handleActionClick={handleActionClick}
             />
             <Divider />
+            <UpdateWebhook
+              value={webhook}
+              setValue={setWebhook}
+              handleActionClick={handleActionClick}
+            />
+            <Divider />
+
             <DeleteAccount handleActionClick={handleActionClick} />
           </StyledFlexFull>
         </Scrollbars>

@@ -11,6 +11,7 @@ import { ITheme } from '../../../components/theme'
 import { ISet } from '../../../components/GearSlot'
 import GearCard from '../../../components/GearCard'
 import ExpandedInformation from './ExpandedInformation'
+import { getSetsCount } from '../../build/Sets/Sets'
 
 const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
@@ -78,14 +79,25 @@ interface IBuildCardProps {
   item: IBuild
   style?: CSSProperties
   draggable?: boolean
+  additionalContent?: React.ReactNode
   role?: IRole
 }
-export default ({ item, style, draggable = true, role }: IBuildCardProps) => {
+export default ({
+  item,
+  style,
+  draggable = true,
+  role,
+  additionalContent,
+}: IBuildCardProps) => {
   return draggable ? (
     <WithDnD item={item} style={style} />
   ) : (
     <div style={style}>
-      <BuildCard item={item} role={role} />
+      <BuildCard
+        item={item}
+        role={role}
+        additionalContent={additionalContent}
+      />
     </div>
   )
 }
@@ -128,7 +140,12 @@ const ShortInfo = ({
   </Tooltip>
 )
 
-const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
+interface IBuildCardProps {
+  item: IBuild
+  role?: IRole
+  additionalContent?: React.ReactNode
+}
+const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
@@ -168,14 +185,14 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
     },
     [] as ISet[]
   )
-  const setsCount = concat
-    .map(setSelection =>
-      setSelection.selectedSet ? setSelection.selectedSet.name : ''
-    )
-    .reduce<Map<string, number>>(
-      (acc, curr) => acc.set(curr, 1 + (acc.get(curr) || 0)),
-      new Map()
-    )
+
+  const setsCount = getSetsCount(
+    bigPieceSelection,
+    smallPieceSelection,
+    jewelrySelection,
+    frontbarSelection,
+    backbarSelection
+  )
 
   return (
     <StyledCard hoverable>
@@ -220,6 +237,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
             <Divider />
             {sets.map(set => (
               <Popover
+                style={{ padding: 0, margin: 0 }}
                 key={set.id}
                 content={
                   <GearCard size='normal' set={set} setSelectionCount={0} />
@@ -240,6 +258,7 @@ const BuildCard = ({ item, role }: { item: IBuild; role?: IRole }) => {
           icon={isExpanded ? 'minus' : 'plus'}
         />
       )}
+      {additionalContent}
     </StyledCard>
   )
 }

@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import GroupAssignments from './GroupAssignments'
+import RemoteRaidMenu from './RemoteRaidMenu'
+import SelectedRaidMenu from './SelectedRaidMenu'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 import { GroupContext } from '../GroupStateContext'
 
 const StyledDiv = styled.div`
@@ -19,10 +22,11 @@ export default ({ edit }: { edit?: boolean }) => {
     }
   }, [state, edit])
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <StyledDiv>
-        <GroupAssignments />
+        <RemoteRaidMenu />
+        <SelectedRaidMenu />
       </StyledDiv>
-    </>
+    </DndProvider>
   )
 }

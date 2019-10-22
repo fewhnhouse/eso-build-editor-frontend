@@ -230,10 +230,10 @@ export const raid = gql`
         id
         index
         build {
-          ...ReducedBuild
+          ...Build
         }
       }
     }
   }
-  ${reducedBuild}
+  ${build}
 `
