@@ -59,7 +59,7 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
   }
 
   const handleNextClick = () => {
-    if (tab === 2) {
+    if (tab === 3) {
       alert('Handle group save')
     } else {
       setTab(tabIndex => tabIndex + 1)
@@ -116,14 +116,14 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
           <StyledStep title='Review' description='Review and save.' />
         </Steps>
         <StyledButtonGroup size='large'>
-          {tab === 2 && (
+          {tab === 3 && (
             <Tooltip title={'Group privacy settings'}>
               <Button icon={'lock'} />
             </Tooltip>
           )}
           <Tooltip title={setTooltipTitle()}>
             <TabButton onClick={handleNextClick} type='primary'>
-              {tab === 2 ? 'Save' : 'Next'}
+              {tab === 3 ? 'Save' : 'Next'}
             </TabButton>
           </Tooltip>
         </StyledButtonGroup>
