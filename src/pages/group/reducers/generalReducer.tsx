@@ -26,7 +26,6 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         return member || { buildId: build.id || '', members: [] }
       })
 
-      console.log(uniqueBuilds, uniqueMembers)
       return {
         ...state,
         raids: newRaids,
@@ -75,13 +74,7 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         description,
       }
     }
-    case 'SET_GROUP_APPLICATION_AREAS': {
-      const { applicationAreas } = action.payload
-      return {
-        ...state,
-        applicationAreas,
-      }
-    }
+
     case 'SET_GROUP_ACCESS_RIGHTS': {
       const { accessRights } = action.payload
       return {
@@ -106,13 +99,6 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       }
     }
 
-    case 'SET_PRIMARY_ROLE': {
-      const { assignedRoles } = action.payload
-      return {
-        ...state,
-        assignedRoles,
-      }
-    }
     default:
       return state
   }

@@ -1,12 +1,16 @@
 import React, { useState, useReducer } from 'react'
 import styled from 'styled-components'
-import { Layout, Steps, Button, Icon, Tooltip } from 'antd'
+import { Layout, Steps, Button, Icon, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import GroupGeneral from './general/GroupGeneral'
 import GroupSetup from './groupsetup/GroupSetup'
 import GroupReview from './review/GroupReview'
 import { IGroupState, GroupContext, groupReducer } from './GroupStateContext'
 import GroupRaids from './groupRaids/GroupRaids'
+import { handleEditSave, handleCreateSave } from './util'
+import gql from 'graphql-tag'
+import { group } from '../../util/fragments'
+import { useMutation } from 'react-apollo'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -42,6 +46,27 @@ const StyledButtonGroup = styled(ButtonGroup)`
   display: flex;
 `
 
+const CREATE_GROUP = gql`
+  mutation createGroup($data: GroupCreateInput!) {
+    createGroup(data: $data) {
+      ...Group
+    }
+  }
+  ${group}
+`
+
+const UPDATE_GROUP = gql`
+  mutation updateGroup(
+    $where: GroupWhereUniqueInput!
+    $data: GroupUpdateInput!
+  ) {
+    updateGroup(where: $where, data: $data) {
+      ...Group
+    }
+  }
+  ${group}
+`
+
 interface IGroupProps {
   group: IGroupState
   edit?: boolean
@@ -54,13 +79,42 @@ export default ({ group, edit, pageIndex, path }: IGroupProps) => {
   const [redirect, setRedirect] = useState('')
   const [tab, setTab] = useState(pageIndex || 0)
 
+  const [updateGroup, updateGroupResult] = useMutation<any, any>(UPDATE_GROUP)
+  const [createGroup, createGroupResult] = useMutation<any, any>(CREATE_GROUP)
+
   const handlePrevClick = () => {
     setTab(tabIndex => tabIndex - 1)
   }
 
+  const handleSave = async () => {
+    if (edit) {
+      try {
+        await handleEditSave(state, updateGroup)
+      } catch (e) {
+        notification.error({
+          message: 'Build update failed',
+          description: 'Your build could not be saved. Try again later.',
+        })
+      }
+    } else {
+      try {
+        await handleCreateSave(state!, createGroup)
+      } catch (e) {
+        await notification.error({
+          message: 'Build creation failed',
+          description: 'Your build could not be saved. Try again later.',
+        })
+        notification.error({
+          message: 'Build creation failed',
+          description: 'Your build could not be saved. Try again later.',
+        })
+      }
+    }
+  }
+
   const handleNextClick = () => {
     if (tab === 3) {
-      alert('Handle group save')
+      handleSave()
     } else {
       setTab(tabIndex => tabIndex + 1)
     }

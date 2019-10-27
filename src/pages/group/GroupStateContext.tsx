@@ -17,10 +17,8 @@ interface IGroupMember {
 export interface IGroupState {
   id?: string
   name: string
-  selectedRaidId: string
   description: string
   accessRights: AccessRights
-  applicationAreas: string[]
   raids: IRaidState[]
   members: string[]
   buildsMembers: { buildId: string; members: string[] }[]
@@ -29,9 +27,7 @@ export interface IGroupState {
 export const defaultGroupState: IGroupState = {
   id: '',
   name: '',
-  selectedRaidId: '',
   description: '',
-  applicationAreas: [],
   accessRights: AccessRights.UNLISTED,
   members: [],
   raids: [],
