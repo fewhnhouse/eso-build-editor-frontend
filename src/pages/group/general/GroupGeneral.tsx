@@ -55,9 +55,7 @@ interface IGroupGeneralProps {
 
 export default ({ edit }: IGroupGeneralProps) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { name, description, accessRights, applicationAreas, members } = state!
-  const [customMember, setCustomMember] = useState('')
-  const [customAdd, setCustomAdd] = useState(false)
+  const { name, description, accessRights, members } = state!
 
   useEffect(() => {
     if (!edit) {

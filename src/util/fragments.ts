@@ -237,3 +237,34 @@ export const raid = gql`
   }
   ${build}
 `
+
+export const groupBuild = gql`
+  fragment GroupBuild on GroupBuild {
+    id
+    build {
+      ...Build
+    }
+    members
+  }
+  ${build}
+`
+
+export const group = gql`
+  fragment Group on Group {
+    id
+    owner {
+      name
+    }
+    description
+    accessRights
+    members
+    raids {
+      ...Raid
+    }
+    groupBuilds {
+      ...GroupBuild
+    }
+  }
+  ${raid}
+  ${groupBuild}
+`
