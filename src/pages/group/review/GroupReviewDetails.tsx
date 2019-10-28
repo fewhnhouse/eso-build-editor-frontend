@@ -10,14 +10,13 @@ import { useMediaQuery } from 'react-responsive'
 
 const ReviewContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 140px);
   padding: ${props => props.theme.paddings.medium};
 `
 
 const Icon = styled.img`
   width: ${props => props.theme.smallIcon.width};
   height: ${props => props.theme.smallIcon.height};
-  margin-right: ${props => props.theme.margins.mini};
   border-radius: ${props => props.theme.borderRadius};
 `
 
@@ -96,23 +95,34 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
               {build.name}
             </Typography.Title>
           ) : (
-            <Flex direction='column'>
-              <Flex align='center'>
+            <Flex direction='column' style={{ maxWidth: 310 }}>
+              <Flex align='center' style={{ width: '100%' }}>
                 <Icon
                   src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
                 />
-                <Divider type='vertical' />
+                <Divider type='vertical' style={{ margin: '0px 5px' }} />
 
                 <Icon
                   src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
                 />
-                <Divider type='vertical' />
+                <Divider type='vertical' style={{ margin: '0px 5px' }} />
 
-                <Typography.Title style={{ margin: 0 }} level={3}>
+                <Typography.Title
+                  style={{
+                    margin: 0,
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                  }}
+                  level={4}
+                >
                   {build.name}
                 </Typography.Title>
               </Flex>
-              <Flex align='center'>
+              <Flex
+                align='center'
+                style={{ overflowX: 'auto', width: '100%', maxWidth: '310px' }}
+              >
                 {sets.map(set => (
                   <Tag style={{ margin: 5 }}>{set.name}</Tag>
                 ))}
@@ -121,7 +131,7 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
           )
         ) : null
       },
-      width: isMobile ? 100 : 250,
+      width: isMobile ? 100 : 350,
       fixed: 'left' as any,
     },
     ...memberColumns,
@@ -147,7 +157,10 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
       <Table
         dataSource={memberSource}
         columns={columns}
-        scroll={{ x: document.body.clientWidth }}
+        scroll={{
+          x: document.body.clientWidth,
+          y: document.body.clientHeight - 280,
+        }}
       />
     </ReviewContainer>
   )
