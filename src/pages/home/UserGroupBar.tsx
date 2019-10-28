@@ -134,10 +134,12 @@ const UserGroupBar = () => {
             bodyStyle={{ height: '100%' }}
             hoverable
           >
-            <Typography.Title style={{ margin: 0 }} level={4}>
-              <StyledIcon type='plus' />
-              Add Group
-            </Typography.Title>
+            <Flex fluid align='center' justify='center'>
+              <Typography.Title style={{ margin: 0 }} level={4}>
+                <StyledIcon type='plus' />
+                Add Group
+              </Typography.Title>
+            </Flex>
           </UserGroup>
         )}
       </GroupContainer>
