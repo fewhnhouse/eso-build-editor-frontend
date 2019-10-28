@@ -252,7 +252,9 @@ export const groupBuild = gql`
 export const group = gql`
   fragment Group on Group {
     id
+    name
     owner {
+      id
       name
     }
     description

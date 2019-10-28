@@ -1,5 +1,5 @@
 import { IGroupAction, IGroupState } from '../GroupStateContext'
-import { IRole, IRaidState } from '../../raid/RaidStateContext'
+import { IRaidState } from '../../raid/RaidStateContext'
 import { IBuild } from '../../build/BuildStateContext'
 
 export const generalReducer = (state: IGroupState, action: IGroupAction) => {
@@ -20,16 +20,16 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       )
 
       const uniqueMembers = uniqueBuilds.map(build => {
-        const member = state.buildsMembers.find(
-          member => member.buildId === build.id
+        const member = state.groupBuilds.find(
+          member => member.build.id === build.id
         )
-        return member || { buildId: build.id || '', members: [] }
+        return member || { build, members: [] }
       })
 
       return {
         ...state,
         raids: newRaids,
-        buildsMembers: uniqueMembers,
+        groupBuilds: uniqueMembers,
       }
     }
     case 'REMOVE_RAID': {
@@ -48,16 +48,16 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       )
 
       const uniqueMembers = uniqueBuilds.map(build => {
-        const member = state.buildsMembers.find(
-          member => member.buildId === build.id
+        const member = state.groupBuilds.find(
+          member => member.build.id === build.id
         )
-        return member || { buildId: build.id || '', members: [] }
+        return member || { build, members: [] }
       })
 
       return {
         ...state,
         raids: newRaids,
-        buildsMembers: uniqueMembers,
+        groupBuilds: uniqueMembers,
       }
     }
     case 'SET_GROUP_NAME': {
@@ -93,8 +93,10 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       const { members, buildId } = action.payload
       return {
         ...state,
-        buildsMembers: state.buildsMembers.map(member =>
-          member.buildId === buildId ? { members, buildId } : member
+        groupBuilds: state.groupBuilds.map(member =>
+          member.build.id === buildId
+            ? { members, build: member.build }
+            : member
         ),
       }
     }

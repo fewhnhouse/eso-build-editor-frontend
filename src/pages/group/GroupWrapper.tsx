@@ -9,13 +9,15 @@ import ErrorPage from '../../components/ErrorPage'
 import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
+import { group } from '../../util/fragments'
 
 const GET_GROUP = gql`
   query group($id: ID!) {
-    Group(id: $id) {
+    group(id: $id) {
       ...Group
     }
   }
+  ${group}
 `
 // ${group}
 
@@ -78,6 +80,7 @@ export default ({ edit, match }: IGroupWrapperProps) => {
     if (data) {
       return (
         <Group
+          initialGroupBuilds={data.group.groupBuilds}
           edit
           path={`/editGroup/${groupId}`}
           group={{ ...defaultGroupState, ...data.group }}

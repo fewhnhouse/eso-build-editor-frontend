@@ -36,13 +36,7 @@ export const generalReducer = (state: IRaidState, action: IRaidAction) => {
         published,
       }
     }
-    case 'SET_GROUP_SIZE': {
-      const { groupSize } = action.payload
-      return {
-        ...state,
-        groupSize,
-      }
-    }
+
     case 'SET_RAID_DESCRIPTION': {
       const { description } = action.payload
       return {

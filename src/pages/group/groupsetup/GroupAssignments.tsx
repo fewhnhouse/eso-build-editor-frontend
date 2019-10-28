@@ -90,9 +90,8 @@ export default () => {
 
 const MemberSelector = ({ id }: { id: string }) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { members, buildsMembers } = state!
-  const buildMembers = buildsMembers.find(member => member.buildId === id)
-  console.log(buildsMembers, buildMembers)
+  const { members, groupBuilds } = state!
+  const buildMembers = groupBuilds.find(member => member.build.id === id)
   if (!buildMembers) {
     return null
   }

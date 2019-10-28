@@ -6,6 +6,7 @@ import UserHomeCard from './UserHomeCard'
 import { wcdt } from '../../assets/backgrounds/index'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
+import UserGroupBar from './UserGroupBar'
 
 const { TabPane } = Tabs
 const { Title } = Typography
@@ -97,12 +98,15 @@ export default () => {
         {isMobile ? (
           <MobileWrapper>
             <MobileTabs>
-              <StyledTabPane tab='Builds' key='1'>
+              <StyledTabPane tab='Groups' key='1'>
+                <UserGroupBar />
+              </StyledTabPane>
+              <StyledTabPane tab='Builds' key='2'>
                 <UserCardWrapper>
                   <UserHomeCard isBuild />
                 </UserCardWrapper>
               </StyledTabPane>
-              <StyledTabPane tab='Raids' key='2'>
+              <StyledTabPane tab='Raids' key='3'>
                 <UserHomeCard isBuild={false} />
               </StyledTabPane>
             </MobileTabs>
@@ -110,6 +114,7 @@ export default () => {
         ) : (
           <Scrollbars autoHide>
             <Wrapper justify='center' align='center' wrap>
+              <UserGroupBar />
               <UserHomeCard isBuild />
               <UserHomeCard isBuild={false} />
             </Wrapper>

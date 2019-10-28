@@ -44,7 +44,7 @@ interface IDraggableRaidProps {
   size: number
   dragType: string
   applicationArea: string
-  style: CSSProperties
+  style?: CSSProperties
 }
 
 export default ({
@@ -69,7 +69,13 @@ export default ({
   return (
     <animated.div
       ref={drag}
-      style={{ ...style, display: 'inline-flex', width: '100%' }}
+      style={{
+        ...style,
+        display: 'inline-flex',
+        minWidth: 300,
+        maxWidth: 500,
+        width: '100%',
+      }}
     >
       <StyledCard key={raid.id} hoverable>
         <Title>

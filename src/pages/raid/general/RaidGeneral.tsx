@@ -74,7 +74,7 @@ export const applicationAreas = [
 const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const [state, dispatch] = useContext(RaidContext)
 
-  const { name, description, applicationArea, groupSize } = state!
+  const { name, description, applicationArea } = state!
 
   useEffect(() => {
     if (!edit) {
@@ -96,13 +96,6 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
     dispatch!({
       type: 'SET_RAID_APPLICATION_AREA',
       payload: { applicationArea: value },
-    })
-  }
-
-  const handleGroupSizeChange = (value: SliderValue) => {
-    dispatch!({
-      type: 'SET_GROUP_SIZE',
-      payload: { groupSize: value },
     })
   }
 
@@ -166,21 +159,6 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
                 PvE - Open World
               </Select.Option>
             </Select>
-          </StyledFlex>
-          <StyledFlex
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
-          >
-            <Typography.Text strong>Group Size</Typography.Text>
-            <StyledSlider
-              min={1}
-              max={24}
-              marks={marks}
-              step={1}
-              onChange={handleGroupSizeChange}
-              defaultValue={groupSize}
-            />
           </StyledFlex>
         </Flex>
       </GeneralContainer>

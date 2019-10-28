@@ -1,4 +1,4 @@
-import { IGroupState } from './GroupStateContext'
+import { IGroupState, IGroupBuild } from './GroupStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ME } from '../home/UserHomeCard'
 
@@ -6,7 +6,8 @@ export const handleEditSave = async (
   state: IGroupState,
   updateGroup: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>
+  ) => Promise<void | ExecutionResult<any>>,
+  initialGroupBuilds: IGroupBuild[]
 ) => {
   const {
     id,
@@ -15,7 +16,7 @@ export const handleEditSave = async (
     accessRights,
     raids,
     members,
-    buildsMembers,
+    groupBuilds,
   } = state!
 
   //make sure everyone who can edit can also view
@@ -28,8 +29,11 @@ export const handleEditSave = async (
         description,
         accessRights,
         groupBuilds: {
-          create: buildsMembers.map(build => ({
-            build: { connect: { id: build.buildId } },
+          delete: initialGroupBuilds.map(initialGroupBuild => ({
+            id: initialGroupBuild.id,
+          })),
+          create: groupBuilds.map(build => ({
+            build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),
         },
@@ -53,7 +57,7 @@ export const handleCreateSave = async (
     accessRights,
     raids,
     members,
-    buildsMembers,
+    groupBuilds,
   } = state!
 
   await createGroup({
@@ -65,8 +69,8 @@ export const handleCreateSave = async (
         description,
         accessRights,
         groupBuilds: {
-          create: buildsMembers.map(build => ({
-            build: { connect: { id: build.buildId } },
+          create: groupBuilds.map(build => ({
+            build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),
         },
@@ -82,14 +86,7 @@ export const handleCopy = async (
   ) => Promise<void | ExecutionResult<any>>,
   group: IGroupState
 ) => {
-  const {
-    name,
-    description,
-    accessRights,
-    buildsMembers,
-    members,
-    raids,
-  } = group
+  const { name, description, accessRights, groupBuilds, members, raids } = group
 
   await createGroup({
     variables: {
@@ -100,8 +97,8 @@ export const handleCopy = async (
         description,
         accessRights,
         groupBuilds: {
-          create: buildsMembers.map(build => ({
-            build: { connect: { id: build.buildId } },
+          create: groupBuilds.map(build => ({
+            build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),
         },
