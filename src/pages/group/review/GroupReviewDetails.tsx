@@ -6,6 +6,7 @@ import { Divider, Table, Tag, Typography } from 'antd'
 import { ISortedBuild } from '../../raid/RaidStateContext'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
+import { useMediaQuery } from 'react-responsive'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
     .flat()
     .map(roles => roles.builds)
     .flat()
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const uniqueBuilds = flattenedBuilds.reduce<ISortedBuild[]>(
     (prev, curr) =>
@@ -89,30 +91,38 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
           [] as ISet[]
         )
         return build ? (
-          <Flex direction='column'>
-            <Flex align='center'>
-              <Icon
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
-              />
-              <Divider type='vertical' />
+          isMobile ? (
+            <Typography.Title style={{ margin: 0 }} level={4}>
+              {build.name}
+            </Typography.Title>
+          ) : (
+            <Flex direction='column'>
+              <Flex align='center'>
+                <Icon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
+                />
+                <Divider type='vertical' />
 
-              <Icon
-                src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
-              />
-              <Divider type='vertical' />
+                <Icon
+                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
+                />
+                <Divider type='vertical' />
 
-              <Typography.Title style={{ margin: 0 }} level={3}>
-                {build.name}
-              </Typography.Title>
+                <Typography.Title style={{ margin: 0 }} level={3}>
+                  {build.name}
+                </Typography.Title>
+              </Flex>
+              <Flex align='center'>
+                {sets.map(set => (
+                  <Tag style={{ margin: 5 }}>{set.name}</Tag>
+                ))}
+              </Flex>
             </Flex>
-            <Flex align='center'>
-              {sets.map(set => (
-                <Tag style={{ margin: 5 }}>{set.name}</Tag>
-              ))}
-            </Flex>
-          </Flex>
+          )
         ) : null
       },
+      width: isMobile ? 100 : 250,
+      fixed: 'left' as any,
     },
     ...memberColumns,
   ]
