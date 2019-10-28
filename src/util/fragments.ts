@@ -238,15 +238,41 @@ export const raid = gql`
   ${build}
 `
 
+export const reducedRaid = gql`
+  fragment ReducedRaid on Raid {
+    id
+    name
+    description
+    published
+    owner {
+      name
+      id
+    }
+    applicationArea
+    roles {
+      id
+      name
+      builds {
+        id
+        index
+        build {
+          ...ReducedBuild
+        }
+      }
+    }
+  }
+  ${reducedBuild}
+`
+
 export const groupBuild = gql`
   fragment GroupBuild on GroupBuild {
     id
     build {
-      ...Build
+      ...ReducedBuild
     }
     members
   }
-  ${build}
+  ${reducedBuild}
 `
 
 export const group = gql`
@@ -261,12 +287,12 @@ export const group = gql`
     accessRights
     members
     raids {
-      ...Raid
+      ...ReducedRaid
     }
     groupBuilds {
       ...GroupBuild
     }
   }
-  ${raid}
+  ${reducedRaid}
   ${groupBuild}
 `

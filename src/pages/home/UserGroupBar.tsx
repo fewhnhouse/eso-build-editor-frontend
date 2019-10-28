@@ -77,10 +77,11 @@ const OWN_GROUPS = gql`
       after: $after
       before: $before
     ) {
-      ...Group
+      id
+      name
+      description
     }
   }
-  ${group}
 `
 
 const UserGroupBar = () => {
