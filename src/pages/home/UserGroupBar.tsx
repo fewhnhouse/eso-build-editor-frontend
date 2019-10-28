@@ -19,17 +19,23 @@ const UserGroupWrapper = styled(Flex)`
 const GroupContainer = styled(Flex)`
   width: calc(100% - 40px);
   margin: ${props => props.theme.margins.medium};
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 `
 
 const UserGroup = styled(Card)`
   margin: ${props => props.theme.margins.mini};
   width: ${props => props.theme.widths.small};
   min-width: 200px;
+  height: 100px;
 `
 
 const StyledDivider = styled(Divider)`
   margin: ${props => props.theme.margins.mini} 0px;
+`
+
+const StyledIcon = styled(Icon)`
+  margin-right: 5px;
 `
 
 const Description = styled.div`
@@ -92,9 +98,13 @@ const UserGroupBar = () => {
     setRedirect(`/groups/${id}`)
   }
 
+  const handleAddClick = () => {
+    setRedirect(`/groupEditor/0`)
+  }
+
   const raids = data.ownGroups
   return (
-    <UserGroupWrapper direction='column' justify='center'>
+    <UserGroupWrapper align='center' direction='column' justify='center'>
       <Divider>
         <Title level={3}>My groups</Title>
       </Divider>
@@ -118,6 +128,18 @@ const UserGroupBar = () => {
               </UserGroup>
             )
           })}
+        {!loading && (
+          <UserGroup
+            onClick={handleAddClick}
+            bodyStyle={{ height: '100%' }}
+            hoverable
+          >
+            <Typography.Title style={{ margin: 0 }} level={4}>
+              <StyledIcon type='plus' />
+              Add Group
+            </Typography.Title>
+          </UserGroup>
+        )}
       </GroupContainer>
     </UserGroupWrapper>
   )
