@@ -7,6 +7,7 @@ import { ISortedBuild } from '../../raid/RaidStateContext'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import { useMediaQuery } from 'react-responsive'
+import Scrollbars from 'react-custom-scrollbars'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -121,7 +122,11 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
               </Flex>
               <Flex
                 align='center'
-                style={{ overflowX: 'auto', width: '100%', maxWidth: '310px' }}
+                style={{
+                  overflowX: 'auto',
+                  width: '100%',
+                  maxWidth: '310px',
+                }}
               >
                 {sets.map(set => (
                   <Tag style={{ margin: 5 }}>{set.name}</Tag>
