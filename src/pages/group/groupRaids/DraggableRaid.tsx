@@ -54,7 +54,7 @@ export default ({
   applicationArea,
   style,
 }: IDraggableRaidProps) => {
-  const [{ isDragging }, drag] = useDrag({
+  const [, drag] = useDrag({
     item: {
       type: dragType,
       id: raid.id,
