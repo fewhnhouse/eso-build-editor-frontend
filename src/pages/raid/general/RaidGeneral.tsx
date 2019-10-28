@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Typography, Input, Divider, Select, Slider } from 'antd'
+import { Typography, Input, Divider, Select } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
-import { SliderValue } from 'antd/lib/slider'
 
 const GeneralContainer = styled.div`
   display: flex;
@@ -24,18 +23,6 @@ const StyledWideFlex = styled(Flex)`
 const StyledInput = styled(Input)`
   width: ${props => props.theme.widths.medium};
 `
-
-const StyledSlider = styled(Slider)`
-  width: 380px;
-`
-
-const marks = {
-  1: '1',
-  6: '6',
-  12: '12',
-  18: '18',
-  24: '24',
-}
 
 interface IRaidGeneralProps {
   edit: boolean
@@ -74,7 +61,7 @@ export const applicationAreas = [
 const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const [state, dispatch] = useContext(RaidContext)
 
-  const { name, description, applicationArea, groupSize } = state!
+  const { name, description, applicationArea } = state!
 
   useEffect(() => {
     if (!edit) {
@@ -96,13 +83,6 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
     dispatch!({
       type: 'SET_RAID_APPLICATION_AREA',
       payload: { applicationArea: value },
-    })
-  }
-
-  const handleGroupSizeChange = (value: SliderValue) => {
-    dispatch!({
-      type: 'SET_GROUP_SIZE',
-      payload: { groupSize: value },
     })
   }
 
@@ -166,21 +146,6 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
                 PvE - Open World
               </Select.Option>
             </Select>
-          </StyledFlex>
-          <StyledFlex
-            direction='column'
-            justify='flex-start'
-            align='flex-start'
-          >
-            <Typography.Text strong>Group Size</Typography.Text>
-            <StyledSlider
-              min={1}
-              max={24}
-              marks={marks}
-              step={1}
-              onChange={handleGroupSizeChange}
-              defaultValue={groupSize}
-            />
           </StyledFlex>
         </Flex>
       </GeneralContainer>

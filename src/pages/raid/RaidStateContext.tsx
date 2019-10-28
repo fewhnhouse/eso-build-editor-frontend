@@ -14,7 +14,6 @@ export interface IRaidState {
   applicationArea: string
   description: string
   published: boolean
-  groupSize: number
   canEdit: string[]
   canView: string[]
   roles: IRole[]
@@ -42,7 +41,6 @@ export const defaultRaidState: IRaidState = {
   name: '',
   applicationArea: '',
   published: false,
-  groupSize: 12,
   description: '',
   canEdit: [],
   canView: [],

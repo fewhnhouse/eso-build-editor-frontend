@@ -11,11 +11,13 @@ import SingleMundus from '../pages/singleItems/SingleMundus'
 import SingleSet from '../pages/singleItems/SingleSet'
 import SingleSkillLine from '../pages/singleItems/SingleSkillLine'
 import Tos from '../pages/home/Tos'
+import GroupReview from '../pages/group/review/GroupReview'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
 const BuildWrapper = lazy(() => import('../pages/build/BuildWrapper'))
 const RaidWrapper = lazy(() => import('../pages/raid/RaidWrapper'))
+const GroupWrapper = lazy(() => import('../pages/group/GroupWrapper'))
 const Overview = lazy(() => import('../pages/overview/Overview'))
 const Profile = lazy(() => import('../pages/profile/Profile'))
 
@@ -51,6 +53,11 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
+          path='/editGroup/:groupId/:id'
+          render={props => <GroupWrapper edit {...props} />}
+        />
+        <ProtectedRoute
+          loggedIn={isLoggedIn}
           exact
           path='/buildEditor/:id'
           render={props => <BuildWrapper {...props} />}
@@ -61,8 +68,17 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
           path='/raidEditor/:id'
           render={props => <RaidWrapper {...props} />}
         />
-        <Route exact path='/builds' render={() => <div>Test</div>} />
-        <Route exact path='/raids' render={() => <div>Test</div>} />
+        <ProtectedRoute
+          loggedIn={isLoggedIn}
+          exact
+          path='/groupEditor/:id'
+          render={props => <GroupWrapper {...props} />}
+        />
+        <Route exact path='/builds' render={() => <div>Test builds</div>} />
+        <Route exact path='/raids' render={() => <div>Test raids</div>} />
+        <Route exact path='/groups' render={() => <div>Test groups</div>} />
+        <Route exact path='/groups/:id' component={GroupReview} />
+
         <Route exact path='/overview/:tab' component={Overview} />
         <Route exact path='/builds/:id' component={BuildReview} />
         <Route exact path='/overview/mundus/:id' component={SingleMundus} />

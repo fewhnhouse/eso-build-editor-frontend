@@ -75,6 +75,19 @@ const MobileMenu = ({
           </Item>
         </ItemGroup>
         <Divider />
+        <ItemGroup key='group' title={<span>Groups</span>}>
+          <Item key='group:1'>
+            <Link onClick={handleFoldBtnClick} to='/raids'>
+              Groups
+            </Link>
+          </Item>
+          <Item key='raid:2'>
+            <Link onClick={handleFoldBtnClick} to='/groupEditor/0'>
+              Group Editor
+            </Link>
+          </Item>
+        </ItemGroup>
+        <Divider />
         <Item key='profile'>
           <Link onClick={handleFoldBtnClick} to='/profile'>
             <Icon type='user' />

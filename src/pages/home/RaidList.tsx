@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { List, Card, Typography, Divider, Icon } from 'antd'
 import styled from 'styled-components'
-import { Redirect } from 'react-router'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import Flex from '../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'
@@ -85,19 +84,12 @@ interface IRaidProps {
 interface IUserDataProps {
   data: IRaidProps[]
   loading: boolean
+  onCardClick?: any
 }
 
-const RaidCard = ({ data, loading }: IUserDataProps) => {
-  const [path, setRedirect] = useState('')
-
-  const handleClick = (path: string) => () => {
-    setRedirect(path)
-  }
+const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  if (path !== '') {
-    return <Redirect push to={`${path}`} />
-  }
   return (
     <StyledScrollbars>
       <StyledList
@@ -117,7 +109,7 @@ const RaidCard = ({ data, loading }: IUserDataProps) => {
               <StyledCard
                 key={raid.id}
                 hoverable
-                onClick={handleClick(`/raids/${raid.id}`)}
+                onClick={onCardClick(raid.id)}
               >
                 <Title>
                   <Flex direction='row' justify='space-between'>
