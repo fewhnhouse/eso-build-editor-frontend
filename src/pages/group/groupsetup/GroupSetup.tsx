@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import GroupAssignments from './GroupAssignments'
 import { GroupContext } from '../GroupStateContext'
@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
 `
 
 export default ({ edit }: { edit?: boolean }) => {
-  const [state, dispatch] = useContext(GroupContext)
+  const [state] = useContext(GroupContext)
 
   useEffect(() => {
     if (!edit) {

@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { GroupContext, IGroupState } from '../GroupStateContext'
+import { IGroupState } from '../GroupStateContext'
 import Flex from '../../../components/Flex'
 import { Divider, Table, Tag, Typography } from 'antd'
 import { ISortedBuild } from '../../raid/RaidStateContext'

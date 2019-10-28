@@ -4,7 +4,6 @@ import Flex from '../../../components/Flex'
 import { Select, Divider } from 'antd'
 import gql from 'graphql-tag'
 import { raid } from '../../../util/fragments'
-import { useQuery } from 'react-apollo'
 import { GroupContext } from '../GroupStateContext'
 import { ISortedBuild } from '../../raid/RaidStateContext'
 import BuildCard from '../../raid/builds/BuildCard'
@@ -40,8 +39,8 @@ const MembersContainer = styled(Flex)`
 `
 
 export default () => {
-  const [state, dispatch] = useContext(GroupContext)
-  const { raids, members } = state!
+  const [state] = useContext(GroupContext)
+  const { raids } = state!
 
   const flattenedBuilds = raids
     .map(raid => raid.roles)

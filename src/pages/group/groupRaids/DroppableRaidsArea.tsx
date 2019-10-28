@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Card, Icon, Typography } from 'antd'
 import styled from 'styled-components'
-import { useTrail } from 'react-spring'
 import Scrollbars from 'react-custom-scrollbars'
 import { IRaidState } from '../../raid/RaidStateContext'
 import { applicationAreas } from '../../build/RaceAndClass/RaceClass'
@@ -53,23 +52,8 @@ interface IRaidsListProps {
   dispatchType: string
 }
 
-export default ({
-  raids,
-  loading,
-  dropType,
-  dispatchType,
-}: IRaidsListProps) => {
+export default ({ raids, dropType, dispatchType }: IRaidsListProps) => {
   const [, dispatch] = useContext(GroupContext)
-
-  const trail = useTrail(raids.length, {
-    opacity: 1,
-    transform: 'translate(0px, 0px)',
-    from: {
-      opacity: 0,
-      transform: 'translate(0px, -40px)',
-    },
-    config: { mass: 1, tension: 2000, friction: 300 },
-  })
 
   const [{ canDrop }, drop] = useDrop({
     accept: dropType,

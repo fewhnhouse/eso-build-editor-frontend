@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { Card, Divider, Tag } from 'antd'
+import { Divider, Tag } from 'antd'
 import styled from 'styled-components'
 import { getItemType, getWeaponType } from './GearSlot'
 import Flex from './Flex'

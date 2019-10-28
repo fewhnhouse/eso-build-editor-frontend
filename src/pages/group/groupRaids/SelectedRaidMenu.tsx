@@ -12,7 +12,7 @@ const ListContainer = styled.div`
 `
 
 export default () => {
-  const [state, dispatch] = useContext(GroupContext)
+  const [state] = useContext(GroupContext)
   const { raids } = state!
 
   return (

@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Divider, Typography, Select, Input, Icon, Button, Radio } from 'antd'
+import { Divider, Typography, Select, Input, Icon, Radio } from 'antd'
 import Flex from '../../../components/Flex'
 import { GroupContext } from '../GroupStateContext'
-import {
-  accessRightOptions,
-  applicationAreas as importedApplicationAreas,
-} from '../../build/RaceAndClass/RaceClass'
+import { accessRightOptions } from '../../build/RaceAndClass/RaceClass'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import TextArea from 'antd/lib/input/TextArea'
-
-const { Option } = Select
 
 const RadioIcon = styled(Icon)`
   margin-right: 5px;
@@ -38,15 +33,6 @@ const StyledArea = styled(TextArea)`
 
 const StyledInput = styled(Input)`
   width: ${props => props.theme.widths.medium};
-`
-
-const SelectDivider = styled(Divider)`
-  margin: 0;
-`
-
-const StyledSelectDiv = styled.div`
-  padding: ${props => props.theme.paddings.mini};
-  cursor: pointer;
 `
 
 interface IGroupGeneralProps {

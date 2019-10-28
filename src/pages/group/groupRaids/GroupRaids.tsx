@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import RemoteRaidMenu from './RemoteRaidMenu'
 import SelectedRaidMenu from './SelectedRaidMenu'
@@ -15,7 +15,7 @@ const StyledDiv = styled.div`
 `
 
 export default ({ edit }: { edit?: boolean }) => {
-  const [state, dispatch] = useContext(GroupContext)
+  const [state] = useContext(GroupContext)
 
   useEffect(() => {
     if (!edit) {

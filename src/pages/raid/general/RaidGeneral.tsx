@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Typography, Input, Divider, Select, Slider } from 'antd'
+import { Typography, Input, Divider, Select } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
-import { SliderValue } from 'antd/lib/slider'
 
 const GeneralContainer = styled.div`
   display: flex;
@@ -24,18 +23,6 @@ const StyledWideFlex = styled(Flex)`
 const StyledInput = styled(Input)`
   width: ${props => props.theme.widths.medium};
 `
-
-const StyledSlider = styled(Slider)`
-  width: 380px;
-`
-
-const marks = {
-  1: '1',
-  6: '6',
-  12: '12',
-  18: '18',
-  24: '24',
-}
 
 interface IRaidGeneralProps {
   edit: boolean

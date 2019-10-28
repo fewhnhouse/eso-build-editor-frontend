@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import Flex from '../../components/Flex'
 import { group } from '../../util/fragments'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Button, Divider, Icon } from 'antd'
+import { Card, Spin, Typography, Divider, Icon } from 'antd'
 import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const UserGroupWrapper = styled(Flex)`
   width: 100%;
