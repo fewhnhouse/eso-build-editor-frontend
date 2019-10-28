@@ -134,7 +134,11 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
 
   return (
     <ReviewContainer>
-      <Table dataSource={memberSource} columns={columns} />
+      <Table
+        dataSource={memberSource}
+        columns={columns}
+        scroll={{ x: document.body.clientWidth }}
+      />
     </ReviewContainer>
   )
 }

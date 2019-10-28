@@ -6,8 +6,8 @@ import gql from 'graphql-tag'
 import { Card, Spin, Typography, Button, Divider, Icon } from 'antd'
 import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
-import Scrollbars from 'react-custom-scrollbars'
 import { Redirect } from 'react-router'
+import { useMediaQuery } from 'react-responsive'
 
 const { Title, Text } = Typography
 
@@ -25,8 +25,9 @@ const GroupContainer = styled(Flex)`
 
 const UserGroup = styled(Card)`
   margin: ${props => props.theme.margins.mini};
-  width: ${props => props.theme.widths.small};
   min-width: 200px;
+  max-width: 400px;
+  width: 100%;
   height: 100px;
 `
 
@@ -85,6 +86,7 @@ const OWN_GROUPS = gql`
 const UserGroupBar = () => {
   const [redirect, setRedirect] = useState('')
   const { loading, error, data } = useQuery(OWN_GROUPS)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   if (error) {
     return <div>Error.</div>
@@ -102,14 +104,15 @@ const UserGroupBar = () => {
     setRedirect(`/groupEditor/0`)
   }
 
-  const raids = data.ownGroups
   return (
     <UserGroupWrapper align='center' direction='column' justify='center'>
-      <Divider>
-        <Title level={3}>My groups</Title>
-      </Divider>
+      {!isMobile && (
+        <Divider>
+          <Title level={3}>My groups</Title>
+        </Divider>
+      )}
       {loading && <Spin />}
-      <GroupContainer>
+      <GroupContainer direction={isMobile ? 'column' : 'row'}>
         {data &&
           data.ownGroups &&
           data.ownGroups.map((ownGroup: IGroupState) => {
@@ -128,7 +131,7 @@ const UserGroupBar = () => {
               </UserGroup>
             )
           })}
-        {!loading && (
+        {!loading && !isMobile && (
           <UserGroup
             onClick={handleAddClick}
             bodyStyle={{ height: '100%' }}
