@@ -184,15 +184,10 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
   ]
 
   const memberSource = groupBuilds.map((build, index) => {
-    const dataMembers = build.members.reduce(
-      (prev, curr) => ({ ...prev, [curr]: 'Yes' }),
-      {}
-    )
     const finalMembers = members.reduce((prev, curr) => {
       const found = build.members.find(buildMember => buildMember === curr)
       return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
     }, {})
-    console.log(finalMembers)
     const actualBuild = uniqueBuilds.find(
       uniqueBuild => uniqueBuild.build.id === build.build.id
     )
