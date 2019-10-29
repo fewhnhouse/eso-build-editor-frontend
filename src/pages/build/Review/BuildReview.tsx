@@ -12,7 +12,6 @@ import {
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
   ISetSelectionData,
-  createNotification,
 } from '../Build'
 import { handleCopy } from '../util'
 import { LoginContext } from '../../../App'
@@ -20,6 +19,7 @@ import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
 import Helmet from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
+import { createNotification } from '../../../util/notification'
 
 interface IBuildReview extends RouteComponentProps<any> {
   local?: boolean
@@ -112,7 +112,8 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         createNotification(
           'Build copy successful',
           'Your build was successfully copied. You can now view it and share it with others!',
-          createBuildCopyResult.data.createBuild.id
+          createBuildCopyResult.data.createBuild.id,
+          'builds'
         )
       )
       setRedirect(`/builds/${createBuildCopyResult.data.createBuild.id}`)

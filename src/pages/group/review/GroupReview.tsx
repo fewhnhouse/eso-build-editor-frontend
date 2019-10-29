@@ -11,13 +11,14 @@ import { LoginContext } from '../../../App'
 import { AppContext } from '../../../components/AppContainer'
 import Helmet from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
-import { CREATE_GROUP, createNotification } from '../Group'
+import { CREATE_GROUP } from '../Group'
 import GroupReviewDetails from './GroupReviewDetails'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'
 import InformationCard from '../../../components/InformationCard'
 import { useMediaQuery } from 'react-responsive'
+import { createNotification } from '../../../util/notification'
 
 const { Content, Footer } = Layout
 
@@ -157,7 +158,8 @@ const GroupReview = ({ match, local }: IGroupReview) => {
         createNotification(
           'Group copy successful',
           'Your group was successfully copied. You can now view it and share it with others!',
-          createGroupCopyResult.data.createGroup.id
+          createGroupCopyResult.data.createGroup.id,
+          'groups'
         )
       )
       setRedirect(`/groups/${createGroupCopyResult.data.createGroup.id}`)

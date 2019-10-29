@@ -27,6 +27,7 @@ import { group } from '../../util/fragments'
 import { useMutation } from 'react-apollo'
 import Flex from '../../components/Flex'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -91,34 +92,6 @@ interface IGroupProps {
   initialGroupBuilds?: IGroupBuild[]
 }
 
-export const createNotification = (
-  title: string,
-  description: string,
-  id: string
-) => ({
-  message: title,
-  description: (
-    <Flex direction='column' align='center' justify='center'>
-      <div>{description}</div>
-      <div>
-        <Input
-          addonAfter={
-            <Tooltip title='Copy to clipboard'>
-              <CopyToClipboard
-                text={`${window.location.origin}/groups/${id}`}
-                onCopy={() => message.success('Copied to clipboard.')}
-              >
-                <Icon type='share-alt' />
-              </CopyToClipboard>
-            </Tooltip>
-          }
-          defaultValue={`${window.location.origin}/groups/${id}`}
-        />
-      </div>
-    </Flex>
-  ),
-})
-
 export default ({
   group,
   edit,
@@ -144,7 +117,8 @@ export default ({
         createNotification(
           'Group creation successful.',
           'Your group was successfully created. You can now view it and share it with others!',
-          createGroupResult.data.createGroup.id
+          createGroupResult.data.createGroup.id,
+          'groups'
         )
       )
       setRedirect(createGroupResult.data.createGroup.id)
@@ -153,7 +127,8 @@ export default ({
         createNotification(
           'Group update successful.',
           'Your group was successfully edited. You can now view it and share it with others!',
-          updateGroupResult.data.updateGroup.id
+          updateGroupResult.data.updateGroup.id,
+          'groups'
         )
       )
       setRedirect(updateGroupResult.data.updateGroup.id)

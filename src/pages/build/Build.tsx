@@ -32,6 +32,7 @@ import Flex from '../../components/Flex'
 import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout
 const ButtonGroup = Button.Group
@@ -160,34 +161,6 @@ interface IBuildProps {
   edit?: boolean
 }
 
-export const createNotification = (
-  title: string,
-  description: string,
-  id: string
-) => ({
-  message: title,
-  description: (
-    <Flex direction='column' align='center' justify='center'>
-      <div>{description}</div>
-      <div>
-        <Input
-          addonAfter={
-            <Tooltip title='Copy to clipboard'>
-              <CopyToClipboard
-                text={`${window.location.origin}/builds/${id}`}
-                onCopy={() => message.success('Copied to clipboard.')}
-              >
-                <Icon type='share-alt' />
-              </CopyToClipboard>
-            </Tooltip>
-          }
-          defaultValue={`${window.location.origin}/builds/${id}`}
-        />
-      </div>
-    </Flex>
-  ),
-})
-
 export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [state, dispatch] = useReducer(buildReducer, build)
   const [tab, setTab] = useState(pageIndex || 0)
@@ -218,7 +191,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         createNotification(
           'Build creation successful.',
           'Your build was successfully created. You can now view it and share it with others!',
-          createBuildResult.data.createBuild.id
+          createBuildResult.data.createBuild.id,
+          'builds'
         )
       )
       setRedirect(createBuildResult.data.createBuild.id)
@@ -227,7 +201,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         createNotification(
           'Build update successful.',
           'Your build was successfully edited. You can now view it and share it with others!',
-          updateBuildResult.data.updateBuild.id
+          updateBuildResult.data.updateBuild.id,
+          'builds'
         )
       )
       setRedirect(updateBuildResult.data.updateBuild.id)

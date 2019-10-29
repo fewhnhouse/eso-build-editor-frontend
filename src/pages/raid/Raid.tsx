@@ -21,6 +21,7 @@ import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
 import { raid } from '../../util/fragments'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -82,34 +83,6 @@ interface IRaidProps {
   edit?: boolean
 }
 
-export const createNotification = (
-  title: string,
-  description: string,
-  id: string
-) => ({
-  message: title,
-  description: (
-    <Flex direction='column' align='center' justify='center'>
-      <div>{description}</div>
-      <div>
-        <Input
-          addonAfter={
-            <Tooltip title='Copy to clipboard'>
-              <CopyToClipboard
-                text={`${window.location.origin}/raids/${id}`}
-                onCopy={() => message.success('Copied to clipboard.')}
-              >
-                <Icon type='share-alt' />
-              </CopyToClipboard>
-            </Tooltip>
-          }
-          defaultValue={`${window.location.origin}/raids/${id}`}
-        />
-      </div>
-    </Flex>
-  ),
-})
-
 const Raid = ({
   raid,
   pageIndex,
@@ -143,7 +116,8 @@ const Raid = ({
         createNotification(
           'Raid creation successful',
           'Your raid was successfully saved. You can now view it and share it with others!',
-          createRaidResult.data.createRaid.id
+          createRaidResult.data.createRaid.id,
+          'raids'
         )
       )
 
@@ -153,7 +127,8 @@ const Raid = ({
         createNotification(
           'Raid update successful',
           'Your raid was successfully edited. You can now view it and share it with others!',
-          updateRaidResult.data.updateRaid.id
+          updateRaidResult.data.updateRaid.id,
+          'raids'
         )
       )
       setRedirect(updateRaidResult.data.updateRaid.id)

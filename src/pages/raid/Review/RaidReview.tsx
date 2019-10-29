@@ -9,10 +9,11 @@ import { ME } from '../../home/UserHomeCard'
 import { LoginContext } from '../../../App'
 import { AppContext } from '../../../components/AppContainer'
 import { handleCopy } from '../util'
-import { CREATE_RAID, createNotification } from '../Raid'
+import { CREATE_RAID } from '../Raid'
 import { Helmet } from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
 import Review from '../../../components/Review'
+import { createNotification } from '../../../util/notification'
 
 export const RAID = gql`
   query Raids($id: ID!) {
@@ -99,7 +100,8 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
         createNotification(
           'Raid copy successful',
           'Your raid was successfully copied. You can now view it and share it with others!',
-          createRaidCopyResult.data.createRaid.id
+          createRaidCopyResult.data.createRaid.id,
+          'raids'
         )
       )
       setRedirect(`/raids/${createRaidCopyResult.data.createRaid.id}`)
