@@ -69,7 +69,7 @@ const data = {
 cache.writeData({ data })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink, httpLink, wsLink]),
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
   cache,
 })
 

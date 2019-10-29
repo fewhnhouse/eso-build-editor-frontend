@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
-import { group } from '../../util/fragments'
 import gql from 'graphql-tag'
 import { Card, Spin, Typography, Divider, Icon } from 'antd'
 import { useQuery } from 'react-apollo'

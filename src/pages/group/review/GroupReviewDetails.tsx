@@ -7,7 +7,7 @@ import { ISortedBuild } from '../../raid/RaidStateContext'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import { useMediaQuery } from 'react-responsive'
-import Scrollbars from 'react-custom-scrollbars'
+import { ColumnFilterItem } from 'antd/lib/table'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -25,7 +25,7 @@ interface IGroupReviewDetailsProps {
   local?: boolean
   loadedData: IGroupState
 }
-export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
+export default ({ loadedData }: IGroupReviewDetailsProps) => {
   const { groupBuilds, raids, members } = loadedData!
   const flattenedBuilds = raids
     .map(raid => raid.roles)
@@ -43,7 +43,7 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
   )
 
   const memberColumns = members.map((member, index) => ({
-    key: index,
+    key: index + 1,
     dataIndex: member,
     title: member,
     render: (tag: any) =>
@@ -58,9 +58,38 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
 
   const columns = [
     {
-      key: -1,
+      key: 0,
       dataIndex: 'build',
       title: 'Build',
+      filters: [
+        {
+          text: 'Sorcerer',
+          value: 'sorcerer',
+        },
+        {
+          text: 'Templar',
+          value: 'templar',
+        },
+        {
+          text: 'Dragonknight',
+          value: 'dragonknight',
+        },
+        {
+          text: 'Necromancer',
+          value: 'necromancer',
+        },
+        {
+          text: 'Warden',
+          value: 'warden',
+        },
+        {
+          text: 'Nightblade',
+          value: 'nightblade',
+        },
+      ] as ColumnFilterItem[],
+      onFilter: (value: string, record: any) => {
+        return record.build.esoClass.toLowerCase() === value.toLowerCase()
+      },
       render: (build: IBuild) => {
         const {
           frontbarSelection,
@@ -92,9 +121,9 @@ export default ({ local, loadedData }: IGroupReviewDetailsProps) => {
         )
         return build ? (
           isMobile ? (
-            <Typography.Title style={{ margin: 0 }} level={4}>
+            <Typography.Text style={{ margin: 0 }} strong>
               {build.name}
-            </Typography.Title>
+            </Typography.Text>
           ) : (
             <Flex direction='column' style={{ maxWidth: 310 }}>
               <Flex align='center' style={{ width: '100%' }}>
