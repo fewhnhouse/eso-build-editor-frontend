@@ -45,15 +45,27 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
   const memberColumns = members.map((member, index) => ({
     key: index + 1,
     dataIndex: member,
-    title: member,
-    render: (tag: any) =>
-      tag ? (
-        <Tag color='green' key={tag}>
-          {tag}
-        </Tag>
-      ) : (
-        <Tag color='red'>No</Tag>
-      ),
+    title: (
+      <div
+        style={{
+          maxWidth: 60,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {member}
+      </div>
+    ),
+    sorter: (a: any, b: any) => {
+      return a[member].length - b[member].length
+    },
+    width: 120,
+    render: (tag: any) => (
+      <Tag color={tag === 'yes' ? 'green' : 'red'} key={tag}>
+        {tag}
+      </Tag>
+    ),
   }))
 
   const columns = [
@@ -172,17 +184,22 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
   ]
 
   const memberSource = groupBuilds.map((build, index) => {
-    const members = build.members.reduce(
+    const dataMembers = build.members.reduce(
       (prev, curr) => ({ ...prev, [curr]: 'Yes' }),
       {}
     )
+    const finalMembers = members.reduce((prev, curr) => {
+      const found = build.members.find(buildMember => buildMember === curr)
+      return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
+    }, {})
+    console.log(finalMembers)
     const actualBuild = uniqueBuilds.find(
       uniqueBuild => uniqueBuild.build.id === build.build.id
     )
     return {
       key: index,
       build: actualBuild ? actualBuild.build : undefined,
-      ...members,
+      ...finalMembers,
     }
   })
 
