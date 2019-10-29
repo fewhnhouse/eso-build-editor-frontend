@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { GroupContext } from '../GroupStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { notification, Spin, Layout, Divider, Button, Popconfirm } from 'antd'
+import { notification, Spin, Layout } from 'antd'
 import { group } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import { handleCopy } from '../util'
@@ -14,51 +14,17 @@ import image from '../../../assets/icons/favicon-32x32.png'
 import { CREATE_GROUP } from '../Group'
 import GroupReviewDetails from './GroupReviewDetails'
 import styled from 'styled-components'
-import Flex from '../../../components/Flex'
-import Scrollbars from 'react-custom-scrollbars'
-import InformationCard from '../../../components/InformationCard'
-import { useMediaQuery } from 'react-responsive'
 import { createNotification } from '../../../util/notification'
+import Footer from '../../../components/Footer'
 
-const { Content, Footer } = Layout
+const { Content } = Layout
 
 interface IGroupReview extends RouteComponentProps<any> {
   local?: boolean
 }
 
-const ActionButton = styled(Button)`
-  width: 100px;
-  margin: ${props => props.theme.margins.small};
-`
-
-const StyledScrollbars = styled(Scrollbars)`
-  height: 80px !important;
-`
-
-const StyledFooter = styled(Footer)`
-  height: ${(props: { isMobile: boolean }) =>
-    `${props.isMobile ? '140px' : '80px'}`};
-  flex-direction: ${(props: { isMobile: boolean }) =>
-    `${props.isMobile ? 'column' : 'row'}`};
-  display: flex;
-  padding: 0px ${props => props.theme.paddings.medium};
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
-`
-
-const StyledFlex80 = styled(Flex)`
-  height: 80px;
-`
-
 const StyledSpin = styled(Spin)`
   margin-top: ${props => props.theme.paddings.mini};
-`
-
-const StyledDivider = styled(Divider)`
-  height: 50px;
-  margin: 0px ${props => props.theme.paddings.medium};
 `
 
 const Container = styled(Content)`
@@ -116,7 +82,6 @@ const GroupReview = ({ match, local }: IGroupReview) => {
   }, [appDispatch])
 
   const groupQuery = useQuery(GROUP, { variables: { id } })
-  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const [createGroupCopy, createGroupCopyResult] = useMutation<any, any>(
     CREATE_GROUP
@@ -202,6 +167,24 @@ const GroupReview = ({ match, local }: IGroupReview) => {
   const group = groupQuery.data && groupQuery.data.group
 
   const me = meQuery.data && meQuery.data.me
+  const information = [
+    {
+      icon: 'highlight',
+      title: 'Title',
+      description: group.name || '',
+    },
+    {
+      icon: 'edit',
+      title: 'Description',
+      description: group.description || '',
+    },
+    {
+      icon: 'user',
+      title: 'Owner',
+      description: group.owner ? group.owner.name : '',
+    },
+  ]
+
   return (
     <>
       <Helmet>
@@ -217,69 +200,17 @@ const GroupReview = ({ match, local }: IGroupReview) => {
       </Helmet>
       <GroupReviewDetails local={local} loadedData={local ? state! : group} />
       {!local && group && (
-        <StyledFooter isMobile={isMobile}>
-          <StyledScrollbars autoHide>
-            <StyledFlex80 direction='row' justify='flex-start' align='center'>
-              <InformationCard
-                icon='highlight'
-                title='Title'
-                description={group.name || ''}
-              />
-              <StyledDivider type='vertical' />
-              <InformationCard
-                icon='edit'
-                title='Description'
-                description={group.description || ''}
-              />
-              <StyledDivider type='vertical' />
-              <InformationCard
-                icon='user'
-                title='Owner'
-                description={group.owner ? group.owner.name : ''}
-              />
-            </StyledFlex80>
-          </StyledScrollbars>
-
-          {(group.owner && group.owner.id) === (me && me.id) && (
-            <Flex direction='row'>
-              <Popconfirm
-                title={`Are you sure you want to copy this Group?`}
-                onConfirm={handleCopyClick}
-                okText='Yes'
-                cancelText='No'
-              >
-                <ActionButton
-                  loading={createGroupCopyResult.loading}
-                  disabled={saved}
-                  icon='copy'
-                  size='large'
-                  type='default'
-                >
-                  Copy
-                </ActionButton>
-              </Popconfirm>
-
-              <ActionButton
-                onClick={handleEditClick}
-                icon='edit'
-                size='large'
-                type='primary'
-              >
-                Edit
-              </ActionButton>
-              <Popconfirm
-                title={`Are you sure you want to delete this Group?`}
-                onConfirm={handleDeleteConfirm}
-                okText='Yes'
-                cancelText='No'
-              >
-                <ActionButton icon='delete' size='large' type='danger'>
-                  Delete
-                </ActionButton>
-              </Popconfirm>
-            </Flex>
-          )}
-        </StyledFooter>
+        <Footer
+          information={information}
+          onCopy={handleCopyClick}
+          onEdit={handleEditClick}
+          onDelete={handleDeleteConfirm}
+          owner={group.owner}
+          me={me}
+          type={'group'}
+          loading={createGroupCopyResult.loading}
+          saved={saved}
+        />
       )}
     </>
   )

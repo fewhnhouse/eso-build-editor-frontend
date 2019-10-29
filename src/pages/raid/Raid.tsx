@@ -1,26 +1,15 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import {
-  Layout,
-  Icon,
-  Button,
-  Steps,
-  Tooltip,
-  notification,
-  Input,
-  message,
-} from 'antd'
+import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import RaidGeneral from './general/RaidGeneral'
 import { RaidContext, raidReducer, IRole } from './RaidStateContext'
 import Builds from './builds/Builds'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import Flex from '../../components/Flex'
 import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
 import { raid } from '../../util/fragments'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout

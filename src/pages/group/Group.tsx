@@ -1,15 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import {
-  Layout,
-  Steps,
-  Button,
-  Icon,
-  Tooltip,
-  notification,
-  Input,
-  message,
-} from 'antd'
+import { Layout, Steps, Button, Icon, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import GroupGeneral from './general/GroupGeneral'
 import GroupSetup from './groupsetup/GroupSetup'
@@ -25,8 +16,6 @@ import { handleEditSave, handleCreateSave } from './util'
 import gql from 'graphql-tag'
 import { group } from '../../util/fragments'
 import { useMutation } from 'react-apollo'
-import Flex from '../../components/Flex'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout

@@ -17,8 +17,6 @@ import {
   // message,
   Tooltip,
   notification,
-  Input,
-  message,
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -28,10 +26,8 @@ import RaceClass from './RaceAndClass/RaceClass'
 import BuildReview from './Review/BuildReview'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import Flex from '../../components/Flex'
 import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { createNotification } from '../../util/notification'
 
 const { Footer, Content } = Layout
