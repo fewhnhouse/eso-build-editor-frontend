@@ -104,7 +104,7 @@ export const buff = gql`
 `
 
 export const reducedBuild = gql`
-  fragment ReducedBuild on Build {
+  fragment Build on Build {
     id
     name
     published
@@ -147,6 +147,23 @@ export const reducedBuild = gql`
     }
   }
   ${reducedSetSelection}
+`
+
+export const linearBuild = gql`
+  fragment Build on Build {
+    id
+    name
+    published
+    race
+    esoClass
+    description
+    accessRights
+    applicationArea
+    owner {
+      id
+      name
+    }
+  }
 `
 
 export const build = gql`
@@ -212,6 +229,32 @@ export const build = gql`
   ${skillSelection}
   ${buff}
 `
+export const variableRaid = (buildFragment: any) => gql`
+  fragment Raid on Raid {
+    id
+    name
+    description
+    published
+    owner {
+      name
+      id
+    }
+    applicationArea
+    roles {
+      id
+      name
+      builds {
+        id
+        index
+        build {
+          ...Build
+        }
+      }
+    }
+  }
+  ${buildFragment}
+`
+
 export const raid = gql`
   fragment Raid on Raid {
     id
@@ -238,37 +281,11 @@ export const raid = gql`
   ${build}
 `
 
-export const reducedRaid = gql`
-  fragment ReducedRaid on Raid {
-    id
-    name
-    description
-    published
-    owner {
-      name
-      id
-    }
-    applicationArea
-    roles {
-      id
-      name
-      builds {
-        id
-        index
-        build {
-          ...ReducedBuild
-        }
-      }
-    }
-  }
-  ${reducedBuild}
-`
-
 export const groupBuild = gql`
   fragment GroupBuild on GroupBuild {
     id
     build {
-      ...ReducedBuild
+      ...Build
     }
     members
   }
@@ -287,12 +304,12 @@ export const group = gql`
     accessRights
     members
     raids {
-      ...ReducedRaid
+      ...Raid
     }
     groupBuilds {
       ...GroupBuild
     }
   }
-  ${reducedRaid}
+  ${variableRaid(reducedBuild)}
   ${groupBuild}
 `

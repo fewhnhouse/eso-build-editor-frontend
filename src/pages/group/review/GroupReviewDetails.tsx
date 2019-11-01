@@ -48,7 +48,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     title: (
       <div
         style={{
-          maxWidth: 60,
+          width: 80,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
@@ -60,11 +60,16 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     sorter: (a: any, b: any) => {
       return a[member].length - b[member].length
     },
-    width: 120,
     render: (tag: any) => (
-      <Tag color={tag === 'yes' ? 'green' : 'red'} key={tag}>
-        {tag}
-      </Tag>
+      <div style={{ width: 100 }}>
+        <Tag
+          style={{ marginLeft: 20 }}
+          color={tag === 'yes' ? 'green' : 'red'}
+          key={tag}
+        >
+          {tag}
+        </Tag>
+      </div>
     ),
   }))
 
@@ -72,7 +77,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     {
       key: 0,
       dataIndex: 'build',
-      title: 'Build',
+      title: <div style={{ width: isMobile ? 100 : 310 }}>Build</div>,
       filters: [
         {
           text: 'Sorcerer',
@@ -204,7 +209,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
         dataSource={memberSource}
         columns={columns}
         scroll={{
-          x: document.body.clientWidth,
+          x: true,
           y: document.body.clientHeight - 280,
         }}
       />
