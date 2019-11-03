@@ -146,6 +146,7 @@ const UserGroupBar = () => {
           </UserGroup>
         )}
       </GroupContainer>
+      <Divider />
     </UserGroupWrapper>
   )
 }

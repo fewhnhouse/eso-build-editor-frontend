@@ -94,7 +94,6 @@ export default () => {
   return (
     <OuterWrapper direction='row' justify='space-between' align='center' fluid>
       <InnerWrapper direction='column'>
-        {!isMobile && <ImageContainer />}
         {isMobile ? (
           <MobileWrapper>
             <MobileTabs>
@@ -137,20 +136,6 @@ export default () => {
             <Divider />
             <StyledDivActivity>
               <StyledTitle level={4}>ACTIVITY</StyledTitle>
-              {/*buildQuery.loading || raidQuery.loading ? <Spin /> : null}
-            {buildQuery.data &&
-              buildQuery.data.builds &&
-              raidQuery.data &&
-              raidQuery.data.builds && (
-                <div style={{ overflowY: 'auto', height: 'calc(100% - 50px)' }}>
-                  {buildQuery.data.builds.map((build: IBuild) => (
-                    <Card title='You created a build'>Name: {build.name}</Card>
-                  ))}
-                  {raidQuery.data.raids.map((raid: any) => (
-                    <Card title='You created a raid'>Name: {raid.name}</Card>
-                  ))}
-                </div>
-                  )*/}
             </StyledDivActivity>
           </RightWrapper>
         </RightSide>

@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { IGroupState } from '../GroupStateContext'
 import Flex from '../../../components/Flex'
-import { Divider, Table, Tag, Typography } from 'antd'
+import { Divider, Table, Tag, Typography, Tooltip, Button } from 'antd'
 import { ISortedBuild } from '../../raid/RaidStateContext'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
 import { useMediaQuery } from 'react-responsive'
 import { ColumnFilterItem } from 'antd/lib/table'
+import { Link } from 'react-router-dom'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -143,28 +144,43 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
             </Typography.Text>
           ) : (
             <Flex direction='column' style={{ maxWidth: 310 }}>
-              <Flex align='center' style={{ width: '100%' }}>
-                <Icon
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
-                />
-                <Divider type='vertical' style={{ margin: '0px 5px' }} />
-
-                <Icon
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
-                />
-                <Divider type='vertical' style={{ margin: '0px 5px' }} />
-
-                <Typography.Title
-                  style={{
-                    margin: 0,
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                  }}
-                  level={4}
+              <Flex
+                align='center'
+                justify='space-between'
+                style={{ width: '100%' }}
+              >
+                <Flex
+                  justify='flex-start'
+                  align='center'
+                  style={{ width: '100%', maxWidth: 250 }}
                 >
-                  {build.name}
-                </Typography.Title>
+                  <Icon
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
+                  />
+                  <Divider type='vertical' style={{ margin: '0px 5px' }} />
+
+                  <Icon
+                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
+                  />
+                  <Divider type='vertical' style={{ margin: '0px 5px' }} />
+
+                  <Typography.Title
+                    style={{
+                      margin: 0,
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                    }}
+                    level={4}
+                  >
+                    {build.name}
+                  </Typography.Title>
+                </Flex>
+                <Tooltip title='Go to build'>
+                  <Link to={`/builds/${build.id}`}>
+                    <Button ghost icon='select' type='primary' />
+                  </Link>
+                </Tooltip>
               </Flex>
               <Flex
                 align='center'
