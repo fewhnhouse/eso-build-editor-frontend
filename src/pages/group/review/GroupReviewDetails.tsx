@@ -9,6 +9,7 @@ import { ISet } from '../../../components/GearSlot'
 import { useMediaQuery } from 'react-responsive'
 import { ColumnFilterItem } from 'antd/lib/table'
 import { Link } from 'react-router-dom'
+import Scrollbars from 'react-custom-scrollbars'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -182,18 +183,19 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
                   </Link>
                 </Tooltip>
               </Flex>
-              <Flex
-                align='center'
-                style={{
-                  overflowX: 'auto',
-                  width: '100%',
-                  maxWidth: '310px',
-                }}
-              >
-                {sets.map(set => (
-                  <Tag style={{ margin: 5 }}>{set.name}</Tag>
-                ))}
-              </Flex>
+              <Scrollbars autoHide style={{ width: '100%', height: '40px' }}>
+                <Flex
+                  align='center'
+                  style={{
+                    width: '100%',
+                    maxWidth: '310px',
+                  }}
+                >
+                  {sets.map(set => (
+                    <Tag style={{ margin: 5 }}>{set.name}</Tag>
+                  ))}
+                </Flex>
+              </Scrollbars>
             </Flex>
           )
         ) : null
