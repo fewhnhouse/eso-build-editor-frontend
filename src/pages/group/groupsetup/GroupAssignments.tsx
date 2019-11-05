@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Select, Divider } from 'antd'
 import gql from 'graphql-tag'
 import { raid } from '../../../util/fragments'
-import { GroupContext } from '../GroupStateContext'
+import { GroupContext, IGroupBuild } from '../GroupStateContext'
 import { ISortedBuild } from '../../raid/RaidStateContext'
 import BuildCard from '../../raid/builds/BuildCard'
 import { applicationAreas } from '../../raid/general/RaidGeneral'
@@ -42,13 +42,13 @@ export default () => {
   const [state] = useContext(GroupContext)
   const { raids } = state!
 
-  const flattenedBuilds = raids
+  const flattenedRaidBuilds = raids
     .map(raid => raid.roles)
     .flat()
     .map(roles => roles.builds)
     .flat()
 
-  const uniqueBuilds = flattenedBuilds.reduce<ISortedBuild[]>(
+  const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
     (prev, curr) =>
       prev.find(build => build.build.id === curr.build.id)
         ? prev
@@ -58,9 +58,10 @@ export default () => {
   return (
     <AssignmentContainer>
       {applicationAreas.map(area => {
-        const areaBuilds = uniqueBuilds.filter(
+        const areaBuilds = uniqueRaidBuilds.filter(
           build => build.build.applicationArea === area.key
         )
+        console.log(areaBuilds)
 
         return areaBuilds.length ? (
           <>
@@ -89,11 +90,44 @@ export default () => {
 
 const MemberSelector = ({ id }: { id: string }) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { members, groupBuilds } = state!
-  const buildMembers = groupBuilds.find(member => member.build.id === id)
-  if (!buildMembers) {
-    return null
-  }
+  const { members, groupBuilds, raids } = state!
+  const [groupBuild, setGroupBuild] = useState<IGroupBuild | undefined>(
+    undefined
+  )
+
+  useEffect(() => {
+    const groupBuild = groupBuilds.find(member => member.build.id === id)
+    if (!groupBuild) {
+      const flattenedRaidBuilds = raids
+        .map(raid => raid.roles)
+        .flat()
+        .map(roles => roles.builds)
+        .flat()
+
+      const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
+        (prev, curr) =>
+          prev.find(build => build.build.id === curr.build.id)
+            ? prev
+            : [...prev, curr],
+        []
+      )
+
+      const build: ISortedBuild | undefined = uniqueRaidBuilds.find(
+        sortedBuild => sortedBuild.build.id === id
+      )
+
+      if (build) {
+        const newGroupBuild = { members: [], build: build.build }
+        dispatch!({
+          type: 'ADD_GROUP_BUILD',
+          payload: { groupBuild: newGroupBuild },
+        })
+        setGroupBuild(newGroupBuild)
+      }
+    } else {
+      setGroupBuild(groupBuild)
+    }
+  }, [groupBuilds, raids])
   const handleSelectChange = (values: unknown) => {
     dispatch!({
       type: 'SET_BUILD_MEMBERS',
@@ -104,7 +138,7 @@ const MemberSelector = ({ id }: { id: string }) => {
     <MembersContainer align='center' direction='column'>
       <Divider>Members</Divider>
       <StyledSelect
-        value={buildMembers.members}
+        value={groupBuild ? groupBuild.members : []}
         onChange={handleSelectChange}
         size='large'
         mode='multiple'

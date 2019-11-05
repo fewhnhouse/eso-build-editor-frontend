@@ -171,17 +171,17 @@ const GroupReview = ({ match, local }: IGroupReview) => {
     {
       icon: 'highlight',
       title: 'Title',
-      description: group.name || '',
+      description: group ? group.name || '' : '',
     },
     {
       icon: 'edit',
       title: 'Description',
-      description: group.description || '',
+      description: group ? group.descrtion || '' : '',
     },
     {
       icon: 'user',
       title: 'Owner',
-      description: group.owner ? group.owner.name : '',
+      description: group && group.owner ? group.owner.name : '',
     },
   ]
 

@@ -20,10 +20,10 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       )
 
       const uniqueMembers = uniqueBuilds.map(build => {
-        const member = state.groupBuilds.find(
-          member => member.build.id === build.id
+        const groupBuild = state.groupBuilds.find(
+          groupBuild => groupBuild.build.id === build.id
         )
-        return member || { build, members: [] }
+        return groupBuild || { build, members: [] }
       })
 
       return {
@@ -89,14 +89,21 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
         members,
       }
     }
+    case 'ADD_GROUP_BUILD': {
+      const { groupBuild } = action.payload
+      return {
+        ...state,
+        groupBuilds: [...state.groupBuilds, groupBuild],
+      }
+    }
     case 'SET_BUILD_MEMBERS': {
       const { members, buildId } = action.payload
       return {
         ...state,
-        groupBuilds: state.groupBuilds.map(member =>
-          member.build.id === buildId
-            ? { members, build: member.build }
-            : member
+        groupBuilds: state.groupBuilds.map(groupBuild =>
+          groupBuild.build.id === buildId
+            ? { members, build: groupBuild.build }
+            : groupBuild
         ),
       }
     }
