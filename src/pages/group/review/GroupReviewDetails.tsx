@@ -29,14 +29,14 @@ interface IGroupReviewDetailsProps {
 }
 export default ({ loadedData }: IGroupReviewDetailsProps) => {
   const { groupBuilds, raids, members } = loadedData!
-  const flattenedBuilds = raids
+  const flattenedRaidBuilds = raids
     .map(raid => raid.roles)
     .flat()
     .map(roles => roles.builds)
     .flat()
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  const uniqueBuilds = flattenedBuilds.reduce<ISortedBuild[]>(
+  const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
     (prev, curr) =>
       prev.find(build => build.build.id === curr.build.id)
         ? prev
@@ -109,7 +109,10 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
       onFilter: (value: string, record: any) => {
         return record.build.esoClass.toLowerCase() === value.toLowerCase()
       },
-      render: (build: IBuild) => {
+      render: (build?: IBuild) => {
+        if (!build) {
+          return null
+        }
         const {
           frontbarSelection,
           backbarSelection,
@@ -211,7 +214,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
       const found = build.members.find(buildMember => buildMember === curr)
       return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
     }, {})
-    const actualBuild = uniqueBuilds.find(
+    const actualBuild = uniqueRaidBuilds.find(
       uniqueBuild => uniqueBuild.build.id === build.build.id
     )
     return {
