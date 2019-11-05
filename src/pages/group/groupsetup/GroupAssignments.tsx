@@ -127,7 +127,7 @@ const MemberSelector = ({ id }: { id: string }) => {
     } else {
       setGroupBuild(groupBuild)
     }
-  }, [groupBuilds, raids])
+  }, [groupBuilds, raids, dispatch, id])
   const handleSelectChange = (values: unknown) => {
     dispatch!({
       type: 'SET_BUILD_MEMBERS',

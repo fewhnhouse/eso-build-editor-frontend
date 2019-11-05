@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Typography, Divider, Card, Tabs } from 'antd'
 import Flex from '../../components/Flex'
 import UserHomeCard from './UserHomeCard'
-import { wcdt } from '../../assets/backgrounds/index'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import UserGroupBar from './UserGroupBar'
@@ -40,13 +39,6 @@ const StyledDivDiscovery = styled.div`
 const StyledDivActivity = styled.div`
   padding: ${props => props.theme.paddings.mini};
   height: 60%;
-`
-
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 15%;
-  background-image: url(${wcdt});
-  background-size: cover;
 `
 
 const InnerWrapper = styled(Flex)`

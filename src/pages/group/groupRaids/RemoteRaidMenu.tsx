@@ -8,7 +8,7 @@ import { IRaidState } from '../../raid/RaidStateContext'
 import { applicationAreas } from '../../build/RaceAndClass/RaceClass'
 import { GroupContext } from '../GroupStateContext'
 import DroppableRaidsList from './DroppableRaidsList'
-import { variableRaid, linearBuild } from '../../../util/fragments'
+import { variableRaid, reducedBuild } from '../../../util/fragments'
 const { Option } = Select
 
 const ListContainer = styled.div`
@@ -77,7 +77,7 @@ export const GET_RAIDS = gql`
       ...Raid
     }
   }
-  ${variableRaid(linearBuild)}
+  ${variableRaid(reducedBuild)}
 `
 
 export default () => {
