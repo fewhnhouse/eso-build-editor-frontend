@@ -90,7 +90,7 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
-      ...ReducedBuild
+      ...Build
     }
   }
   ${reducedBuild}
