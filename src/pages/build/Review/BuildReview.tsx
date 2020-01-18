@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { BuildContext } from '../BuildStateContext'
 import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { notification } from 'antd'
+import { notification, Modal, Button } from 'antd'
 import { build } from '../../../util/fragments'
 import { ME } from '../../home/UserHomeCard'
 import {
@@ -12,8 +12,9 @@ import {
   CREATE_SKILL_SELECTIONS,
   ISkillSelectionData,
   ISetSelectionData,
+  CREATE_BUILD_REVISION,
 } from '../Build'
-import { handleCopy } from '../util'
+import { handleCopy } from '../utils/copy'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
@@ -50,9 +51,18 @@ const DELETE_BUILD = gql`
   }
 `
 
+const DELETE_REVISION = gql`
+  mutation deleteRevision($id: ID!) {
+    deleteRevision(id: $id) {
+      id
+    }
+  }
+`
+
 const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
   const [saved, setSaved] = useState(false)
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [redirect, setRedirect] = useState('')
 
   const [state] = useContext(BuildContext)
@@ -70,6 +80,10 @@ const BuildReview = ({ match, local }: IBuildReview) => {
   const [createBuildCopy, createBuildCopyResult] = useMutation<any, any>(
     CREATE_BUILD
   )
+  const [createBuildRevision, createBuildRevisionResult] = useMutation<
+    any,
+    any
+  >(CREATE_BUILD_REVISION)
   const [createSkillSelections] = useMutation<any, ISkillSelectionData>(
     CREATE_SKILL_SELECTIONS
   )
@@ -77,35 +91,44 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     CREATE_SET_SELECTIONS
   )
   const meQuery = useQuery(MY_ID)
-  const [deleteMutation, { data, error }] = useMutation(DELETE_BUILD, {
+  const [deleteMutation, deleteResult] = useMutation(DELETE_BUILD, {
     variables: { id },
     refetchQueries: [{ query: ME }],
   })
+
+  const [deleteRevisionMutation, deleteRevisionResult] = useMutation(
+    DELETE_REVISION,
+    {
+      variables: { id },
+      refetchQueries: [{ query: ME }],
+    }
+  )
 
   useEffect(() => {
     buildQuery.refetch({ id })
   }, [loggedIn, buildQuery, id])
 
   useEffect(() => {
-    if (data) {
+    if (deleteResult.data || deleteRevisionResult.data) {
       notification.success({
         message: 'Build Deletion',
         description: 'Build successfully deleted.',
       })
       setRedirect(`/`)
-    } else if (error) {
+    } else if (deleteResult.error || deleteRevisionResult.error) {
       notification.error({
         message: 'Build Deletion',
         description: 'Error while deleting build. Try again later.',
       })
     }
-  }, [data, error])
+  }, [deleteResult, deleteRevisionResult])
 
   useEffect(() => {
     if (
       saved &&
       createBuildCopyResult.data &&
-      createBuildCopyResult.data.createBuild
+      createBuildCopyResult.data.createBuild &&
+      createBuildRevisionResult.data
     ) {
       localStorage.removeItem('buildState')
       notification.success(
@@ -118,9 +141,9 @@ const BuildReview = ({ match, local }: IBuildReview) => {
       )
       setRedirect(`/builds/${createBuildCopyResult.data.createBuild.id}`)
     }
-  }, [createBuildCopyResult.data, saved])
-  const handleDeleteConfirm = () => {
-    deleteMutation({ variables: { id } })
+  }, [createBuildCopyResult.data, createBuildRevisionResult.data, saved])
+  const handleDelete = () => {
+    setDeleteModalVisible(true)
   }
 
   const handleCopyClick = async () => {
@@ -128,6 +151,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
       await handleCopy(
         createSkillSelections,
         createSetSelections,
+        createBuildRevision,
         createBuildCopy,
         buildQuery.data.build
       )
@@ -137,6 +161,32 @@ const BuildReview = ({ match, local }: IBuildReview) => {
       notification.error({
         message: 'Build copy failed',
         description: 'Your build could not be copied. Try again later.',
+      })
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteModalVisible(false)
+  }
+
+  const handleDeleteAll = async () => {
+    try {
+      await deleteRevisionMutation({ variables: { id } })
+    } catch (e) {
+      notification.error({
+        message: 'Build deletion failed',
+        description: 'Your build could not be deleted. Try again later.',
+      })
+    }
+  }
+
+  const handleDeleteRevision = async () => {
+    try {
+      await deleteMutation({ variables: { id } })
+    } catch (e) {
+      notification.error({
+        message: 'Build deletion failed',
+        description: 'Your build could not be deleted. Try again later.',
       })
     }
   }
@@ -172,9 +222,29 @@ const BuildReview = ({ match, local }: IBuildReview) => {
         me={meQuery.data && meQuery.data.me}
         local={local}
         onCopy={handleCopyClick}
-        onDelete={handleDeleteConfirm}
+        onDelete={handleDelete}
         onEdit={handleEditClick}
       />
+      <Modal
+        visible={deleteModalVisible}
+        title='Delete Build'
+        onOk={handleDeleteRevision}
+        onCancel={handleCancelDelete}
+        footer={[
+          <Button key='back' type='default' onClick={handleCancelDelete}>
+            Cancel
+          </Button>,
+          <Button key='submit' type='primary' onClick={handleDeleteRevision}>
+            Delete current
+          </Button>,
+          <Button key='submit' type='danger' onClick={handleDeleteAll}>
+            Delete all
+          </Button>,
+        ]}
+      >
+        You can either decide to delete only the current revision, or all
+        revisions. This action is irreversible.
+      </Modal>
     </>
   )
 }

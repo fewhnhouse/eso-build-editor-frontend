@@ -207,6 +207,7 @@ const GroupReview = ({ match, local }: IGroupReview) => {
           onDelete={handleDeleteConfirm}
           owner={group.owner}
           me={me}
+          state={state!}
           type={'group'}
           loading={createGroupCopyResult.loading}
           saved={saved}

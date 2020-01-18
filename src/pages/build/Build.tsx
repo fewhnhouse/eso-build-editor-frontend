@@ -5,7 +5,6 @@ import {
   SlotType,
   TwohandedWeapon,
   OnehandedWeapon,
-  WeaponType,
   IBuildState,
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
@@ -17,6 +16,7 @@ import {
   // message,
   Tooltip,
   notification,
+  Modal,
 } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
@@ -26,10 +26,14 @@ import RaceClass from './RaceAndClass/RaceClass'
 import BuildReview from './Review/BuildReview'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import { handleCreateSave, handleEditSave } from './util'
 import { build } from '../../util/fragments'
 import { createNotification } from '../../util/notification'
+import { handleAddRevision } from './utils/revision'
+import { handleEditSave } from './utils/edit'
+import { handleCreateSave } from './utils/create'
+import { verifyBuild } from './utils/verifyBuild'
 
+const { confirm } = Modal
 const { Footer, Content } = Layout
 const ButtonGroup = Button.Group
 
@@ -54,6 +58,22 @@ export const CREATE_BUILD = gql`
     }
   }
   ${build}
+`
+
+export const CREATE_BUILD_REVISION = gql`
+  mutation createBuildRevision($data: BuildRevisionCreateInput!) {
+    createBuildRevision(data: $data) {
+      id
+    }
+  }
+`
+
+export const ADD_BUILD_TO_REVISION = gql`
+  mutation addBuildToRevision($id: ID, $buildId: ID) {
+    addBuildToRevision(id: $id, buildId: $buildId) {
+      id
+    }
+  }
 `
 
 export interface ISetSelectionData {
@@ -167,7 +187,13 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   }
   const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD)
   const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
-
+  const [createBuildRevision, createBuildRevisionResult] = useMutation<
+    any,
+    any
+  >(CREATE_BUILD_REVISION)
+  const [addBuildToRevision, addBuildToRevisionResult] = useMutation<any, any>(
+    ADD_BUILD_TO_REVISION
+  )
   const [updateSetSelection] = useMutation<any, any>(UPDATE_SET_SELECTION)
   const [updateSkillSelection] = useMutation<any, any>(UPDATE_SKILL_SELECTION)
 
@@ -178,10 +204,56 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     CREATE_SET_SELECTIONS
   )
 
-  const { ultimateOne, ultimateTwo } = state!
+  const showEditConfirm = () => {
+    confirm({
+      title: 'Do you want to update the existing revision or create a new one?',
+      content:
+        'By creating a new revision, you can still revisit the state of this build before your changes later.',
+      okText: 'Create Revision',
+      okType: 'primary',
+      cancelText: 'Update Revision',
+      onOk: async () => {
+        try {
+          await handleAddRevision(
+            createSkillSelections,
+            createSetSelections,
+            createBuild,
+            addBuildToRevision,
+            state
+          )
+        } catch (e) {
+          notification.error({
+            message: 'Build update failed',
+            description: 'Your build could not be saved. Try again later.',
+          })
+        }
+      },
+      onCancel: async () => {
+        try {
+          await handleEditSave(
+            updateSkillSelection,
+            updateSetSelection,
+            updateBuild,
+            state,
+            build.frontbarSelection,
+            build.backbarSelection
+          )
+        } catch (e) {
+          notification.error({
+            message: 'Build update failed',
+            description: 'Your build could not be saved. Try again later.',
+          })
+        }
+      },
+    })
+  }
 
   useEffect(() => {
-    if (createBuildResult.data && createBuildResult.data.createBuild) {
+    if (
+      createBuildResult.data &&
+      createBuildResult.data.createBuild &&
+      createBuildResult.data
+    ) {
       localStorage.removeItem('buildState')
       notification.success(
         createNotification(
@@ -192,7 +264,10 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         )
       )
       setRedirect(createBuildResult.data.createBuild.id)
-    } else if (updateBuildResult.data && updateBuildResult.data.updateBuild) {
+    } else if (
+      (updateBuildResult.data && updateBuildResult.data.updateBuild) ||
+      (createBuildResult.data && addBuildToRevisionResult.data)
+    ) {
       notification.success(
         createNotification(
           'Build update successful.',
@@ -203,30 +278,22 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
       )
       setRedirect(updateBuildResult.data.updateBuild.id)
     }
-  }, [createBuildResult.data, updateBuildResult.data])
+  }, [
+    createBuildResult.data,
+    updateBuildResult.data,
+    createBuildRevisionResult,
+    addBuildToRevisionResult,
+  ])
 
   const handleSave = async () => {
     if (edit) {
-      try {
-        await handleEditSave(
-          updateSkillSelection,
-          updateSetSelection,
-          updateBuild,
-          state,
-          build.frontbarSelection,
-          build.backbarSelection
-        )
-      } catch (e) {
-        notification.error({
-          message: 'Build update failed',
-          description: 'Your build could not be saved. Try again later.',
-        })
-      }
+      showEditConfirm()
     } else {
       try {
         await handleCreateSave(
           createSkillSelections,
           createSetSelections,
+          createBuildRevision,
           createBuild,
           state!
         )
@@ -251,74 +318,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     }
   }
 
-  const {
-    frontbarSelection,
-    backbarSelection,
-    bigPieceSelection,
-    smallPieceSelection,
-    jewelrySelection,
-    newBarOne,
-    newBarTwo,
-  } = state!
-
-  const hasValidFrontbar = frontbarSelection[0].selectedSet
-    ? frontbarSelection[0].type === WeaponType.onehanded
-      ? frontbarSelection[1].selectedSet
-        ? true
-        : false
-      : true
-    : false
-  const hasValidBackbar = backbarSelection[0].selectedSet
-    ? backbarSelection[0].type === WeaponType.onehanded
-      ? backbarSelection[1].selectedSet
-        ? true
-        : false
-      : true
-    : false
-
-  const hasValidBigPieces = bigPieceSelection.reduce(
-    (prev, curr) => (prev && curr.selectedSet ? true : false),
-    true
-  )
-  const hasValidSmallPieces = smallPieceSelection.reduce(
-    (prev, curr) => (prev && curr.selectedSet ? true : false),
-    true
-  )
-  const hasValidJewelry = jewelrySelection.reduce(
-    (prev, curr) => (prev && curr.selectedSet ? true : false),
-    true
-  )
-
-  const hasValidSkillBarOne = newBarOne.reduce(
-    (prev, curr) =>
-      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
-    true
-  )
-  const hasValidSkillBarTwo = newBarTwo.reduce(
-    (prev, curr) =>
-      prev && curr.skill && curr.skill.skillId !== 0 ? true : false,
-    true
-  )
-  const hasValidUltimateOne = ultimateOne && ultimateOne.skillId !== 0
-  const hasValidUltimateTwo = ultimateTwo && ultimateTwo.skillId !== 0
-
-  const isDisabled =
-    (tab === 0 && (state.race === '' || state.esoClass === '')) ||
-    (tab === 1 &&
-      !(
-        hasValidSkillBarOne &&
-        hasValidSkillBarTwo &&
-        hasValidUltimateOne &&
-        hasValidUltimateTwo
-      )) ||
-    (tab === 2 &&
-      !(
-        hasValidJewelry &&
-        hasValidBigPieces &&
-        hasValidSmallPieces &&
-        hasValidFrontbar &&
-        hasValidBackbar
-      ))
+  const isDisabled = verifyBuild(state!, tab)
 
   const setTooltipTitle = () => {
     if (!isDisabled) {

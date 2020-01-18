@@ -31,19 +31,19 @@ const StyledSpin = styled(Spin)`
 `
 
 interface IGroupWrapperProps
-  extends RouteComponentProps<{ id: string; groupId: string }> {
+  extends RouteComponentProps<{ id: string; pageIndex: string }> {
   edit?: boolean
 }
 
 export default ({ edit, match }: IGroupWrapperProps) => {
-  const { id, groupId } = match.params
-  const pageIndex = parseInt(id || '0', 10)
+  const { pageIndex, id } = match.params
+  const actualPageIndex = parseInt(pageIndex || '0', 10)
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 900,
   })
   const [, appDispatch] = useContext(AppContext)
   const { loading, error, data } = useQuery(GET_GROUP, {
-    variables: { id: groupId },
+    variables: { id },
   })
 
   useEffect(() => {
@@ -82,15 +82,15 @@ export default ({ edit, match }: IGroupWrapperProps) => {
         <Group
           initialGroupBuilds={data.group.groupBuilds}
           edit
-          path={`/editGroup/${groupId}`}
+          path={`/editGroup/${id}`}
           group={{ ...defaultGroupState, ...data.group }}
-          pageIndex={pageIndex}
+          pageIndex={actualPageIndex}
         />
       )
     }
     return null
   } else {
-    return <NewGroup pageIndex={pageIndex} />
+    return <NewGroup pageIndex={actualPageIndex} />
   }
 }
 

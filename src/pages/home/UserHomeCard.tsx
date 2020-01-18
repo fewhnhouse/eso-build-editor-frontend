@@ -12,6 +12,7 @@ import { titleCase } from '../raid/builds/BuildMenu'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
+import { IBuildRevision } from '../build/BuildStateContext'
 
 const { Title } = Typography
 
@@ -133,6 +134,41 @@ export const OWN_BUILDS = gql`
   }
 `
 
+const BUILD_REVISIONS = gql`
+  query buildRevisions(
+    $where: BuildRevisionWhereInput
+    $orderBy: BuildRevisionOrderByInput
+    $first: Int
+    $last: Int
+    $skip: Int
+    $after: String
+    $before: String
+  ) {
+    buildRevisions(
+      where: $where
+      orderBy: $orderBy
+      first: $first
+      last: $last
+      skip: $skip
+      after: $after
+      before: $before
+    ) {
+      id
+      builds(orderBy: updatedAt_DESC) {
+        id
+        owner {
+          id
+          name
+        }
+        name
+        esoClass
+        race
+        applicationArea
+      }
+    }
+  }
+`
+
 export const OWN_RAIDS = gql`
   query ownRaids(
     $where: RaidWhereInput
@@ -172,40 +208,16 @@ export const OWN_RAIDS = gql`
 export default ({ isBuild }: { isBuild: boolean }) => {
   const [redirect, setRedirect] = useState('')
   const [search, setSearch] = useState('')
-  const [selectedRaces, setSelectedRaces] = useState<string[]>([])
+  const [, setSelectedRaces] = useState<string[]>([])
   const [selectedApplicationAreas, setSelectedApplicationAreas] = useState<
     string[]
   >([])
-  const [selectedClasses, setSelectedClasses] = useState<string[]>([])
+  const [, setSelectedClasses] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  const buildsQuery = useQuery(OWN_BUILDS, {
-    variables: {
-      where: {
-        AND: [
-          {
-            OR: [
-              { name_contains: search },
-              { name_contains: search.toLowerCase() },
-              { name_contains: search.toUpperCase() },
-              { name_contains: titleCase(search) },
-            ],
-          },
-          {
-            race_in: selectedRaces.length
-              ? selectedRaces
-              : races.map(race => race.title),
-          },
-          {
-            esoClass_in: selectedClasses.length
-              ? selectedClasses
-              : classes.map(esoClass => esoClass.title),
-          },
-        ],
-      },
-    },
-  })
+  const buildRevisionsQuery = useQuery(BUILD_REVISIONS)
+
   const raidsQuery = useQuery(OWN_RAIDS, {
     variables: {
       where: {
@@ -339,10 +351,15 @@ export default ({ isBuild }: { isBuild: boolean }) => {
         </CardHeader>
         {isBuild ? (
           <BuildCard
-            loading={buildsQuery.loading}
+            loading={buildRevisionsQuery.loading}
             data={
-              buildsQuery.data && buildsQuery.data.ownBuilds
-                ? buildsQuery.data.ownBuilds
+              buildRevisionsQuery.data &&
+              buildRevisionsQuery.data.buildRevisions
+                ? buildRevisionsQuery.data.buildRevisions
+                    .filter(
+                      (revision: IBuildRevision) => revision.builds.length
+                    )
+                    .map((revision: IBuildRevision) => revision.builds[0])
                 : []
             }
           />

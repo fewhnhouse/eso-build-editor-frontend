@@ -92,6 +92,7 @@ interface IUserDataProps {
 }
 
 const BuildCard = ({ data, loading }: IUserDataProps) => {
+  console.log(data)
   const [path, setRedirect] = useState('')
   const handleClick = (path: string) => () => {
     setRedirect(path)

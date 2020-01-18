@@ -30,8 +30,15 @@ export enum AccessRights {
   PUBLIC = 'public',
 }
 
+export interface IBuildRevision {
+  id?: string
+  builds: IBuild[]
+}
+
 export interface IBuild {
   id?: string
+  updatedAt?: string
+  createdAt?: string
   race: string
   owner?: {
     id: string
@@ -58,6 +65,7 @@ export interface IBuild {
   mundusStone: IMundus
   buff: ISpecialBuff
   published: boolean
+  revision: IBuildRevision
 }
 export interface IBuildState extends IBuild {
   published: boolean
@@ -343,6 +351,10 @@ export const defaultBuildState: IBuildState = {
   weapons: ['', ''],
   race: '',
   setTabKey: SetTab.armor,
+  revision: {
+    id: '',
+    builds: [] as IBuild[],
+  },
 }
 
 export interface IBuildAction {
