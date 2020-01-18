@@ -23,7 +23,7 @@ export const handleAddRevision = async (
     createBuild,
     state
   )
-  if (build && build.data) {
+  if (build && build.data && state.revision) {
     await addBuildToRevision({
       variables: { id: state.revision.id, buildId: build.data.createBuild.id },
     })
