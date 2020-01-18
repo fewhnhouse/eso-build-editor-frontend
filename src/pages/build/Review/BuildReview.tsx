@@ -61,6 +61,7 @@ const DELETE_REVISION = gql`
 
 const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
+  console.log(match)
   const [saved, setSaved] = useState(false)
   const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [redirect, setRedirect] = useState('')

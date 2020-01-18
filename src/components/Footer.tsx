@@ -155,8 +155,9 @@ export default ({
           </ActionButton>
         </Flex>
       )}
-      {type === 'build' && (
+      {type === 'build' && (state as IBuildState).revision && (
         <RevisionDrawer
+          //@ts-ignore
           revisionId={(state as IBuildState).revision.id}
           visible={drawerVisible}
           onClose={handleClose}

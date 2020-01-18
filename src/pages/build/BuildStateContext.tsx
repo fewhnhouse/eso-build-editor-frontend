@@ -65,7 +65,7 @@ export interface IBuild {
   mundusStone: IMundus
   buff: ISpecialBuff
   published: boolean
-  revision: IBuildRevision
+  revision?: IBuildRevision
 }
 export interface IBuildState extends IBuild {
   published: boolean

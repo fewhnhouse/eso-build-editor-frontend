@@ -57,24 +57,28 @@ const RevisionDrawer = ({
         <Spin />
       ) : (
         <Timeline>
-          {data.buildRevision.builds.map((build: IBuild, index: number) => {
-            const date = build.updatedAt ? new Date(build.updatedAt) : undefined
-            return (
-              <Timeline.Item color={id === build.id ? 'green' : 'blue'}>
-                Revision {date && date.toLocaleString()} <br />
-                {id === build.id ? (
-                  <Tag color='green'>Currently Selected</Tag>
-                ) : (
-                  <Button
-                    size='small'
-                    onClick={handleRevisionClick(build.id || '')}
-                  >
-                    Select
-                  </Button>
-                )}
-              </Timeline.Item>
-            )
-          })}
+          {data &&
+            data.buildRevision &&
+            data.buildRevision.builds.map((build: IBuild, index: number) => {
+              const date = build.updatedAt
+                ? new Date(build.updatedAt)
+                : undefined
+              return (
+                <Timeline.Item color={id === build.id ? 'green' : 'blue'}>
+                  Revision {date && date.toLocaleString()} <br />
+                  {id === build.id ? (
+                    <Tag color='green'>Currently Selected</Tag>
+                  ) : (
+                    <Button
+                      size='small'
+                      onClick={handleRevisionClick(build.id || '')}
+                    >
+                      Select
+                    </Button>
+                  )}
+                </Timeline.Item>
+              )
+            })}
         </Timeline>
       )}
     </Drawer>
