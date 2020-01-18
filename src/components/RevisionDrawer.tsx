@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { IBuild } from '../pages/build/BuildStateContext'
 import { Redirect, withRouter, RouteComponentProps } from 'react-router'
+import { useMediaQuery } from 'react-responsive'
 
 interface IRevisionDrawerProps extends RouteComponentProps<{ id: string }> {
   onClose: () => void
@@ -29,6 +30,8 @@ const RevisionDrawer = ({
   match,
 }: IRevisionDrawerProps) => {
   const { id } = match.params
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+
   const { data, loading } = useQuery(GET_CURRENT_REVISION, {
     variables: { id: revisionId },
   })
@@ -43,8 +46,9 @@ const RevisionDrawer = ({
   }
   return (
     <Drawer
+      height='100%'
       title='Revisions'
-      placement='right'
+      placement={isMobile ? 'bottom' : 'right'}
       closable
       onClose={onClose}
       visible={visible}
