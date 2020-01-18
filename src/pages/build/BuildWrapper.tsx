@@ -20,12 +20,12 @@ const GET_BUILD = gql`
 `
 
 interface IBuildWrapperProps
-  extends RouteComponentProps<{ id: string; buildId: string }> {
+  extends RouteComponentProps<{ pageIndex: string; id: string }> {
   edit?: boolean
 }
 export default ({ edit, match }: IBuildWrapperProps) => {
-  const { id, buildId } = match.params
-  const pageIndex = parseInt(id || '0', 10)
+  const { pageIndex, id } = match.params
+  const actualPageIndex = parseInt(pageIndex || '0', 10)
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 1100,
   })
@@ -43,7 +43,7 @@ export default ({ edit, match }: IBuildWrapperProps) => {
   }, [appDispatch])
 
   const { loading, error, data } = useQuery(GET_BUILD, {
-    variables: { id: buildId },
+    variables: { id: id },
   })
   if (!isDesktopOrLaptop) {
     return (
@@ -65,15 +65,15 @@ export default ({ edit, match }: IBuildWrapperProps) => {
       return (
         <Build
           edit
-          path={`/editBuild/${buildId}`}
+          path={`/editBuild/${id}`}
           build={{ ...defaultBuildState, ...data.build }}
-          pageIndex={pageIndex}
+          pageIndex={actualPageIndex}
         />
       )
     }
     return null
   } else {
-    return <NewBuild pageIndex={pageIndex} />
+    return <NewBuild pageIndex={actualPageIndex} />
   }
 }
 

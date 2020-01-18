@@ -152,6 +152,8 @@ export const reducedBuild = gql`
 export const linearBuild = gql`
   fragment Build on Build {
     id
+    createdAt
+    updatedAt
     name
     published
     race
@@ -169,6 +171,8 @@ export const linearBuild = gql`
 export const build = gql`
   fragment Build on Build {
     id
+    createdAt
+    updatedAt
     name
     published
     race
@@ -222,6 +226,9 @@ export const build = gql`
     }
     jewelrySelection {
       ...SetSelection
+    }
+    revision {
+      id
     }
   }
   ${setSelection}

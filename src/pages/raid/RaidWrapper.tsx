@@ -30,13 +30,13 @@ const GET_RAID = gql`
 `
 
 interface IRaidWrapperProps
-  extends RouteComponentProps<{ id: string; raidId: string }> {
+  extends RouteComponentProps<{ pageIndex: string; id: string }> {
   edit?: boolean
 }
 
 export default ({ edit, match }: IRaidWrapperProps) => {
-  const { id, raidId } = match.params
-  const pageIndex = parseInt(id || '0', 10)
+  const { pageIndex, id } = match.params
+  const actualPageIndex = parseInt(pageIndex || '0', 10)
   const isDesktopOrLaptop = useMediaQuery({
     minWidth: 900,
   })
@@ -53,7 +53,7 @@ export default ({ edit, match }: IRaidWrapperProps) => {
   }, [appDispatch])
 
   const { loading, error, data } = useQuery(GET_RAID, {
-    variables: { id: raidId },
+    variables: { id },
   })
   if (!isDesktopOrLaptop) {
     return (
@@ -80,15 +80,15 @@ export default ({ edit, match }: IRaidWrapperProps) => {
         <Raid
           edit
           initialRoles={data.raid.roles}
-          path={`/editRaid/${raidId}`}
+          path={`/editRaid/${id}`}
           raid={{ ...defaultRaidState, ...data.raid }}
-          pageIndex={pageIndex}
+          pageIndex={actualPageIndex}
         />
       )
     }
     return null
   } else {
-    return <NewRaid pageIndex={pageIndex} />
+    return <NewRaid pageIndex={actualPageIndex} />
   }
 }
 const NewRaid = ({ pageIndex }: { pageIndex: number }) => {

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from './Flex'
 import { useMediaQuery } from 'react-responsive'
 import { Layout, Divider, Popconfirm, Button } from 'antd'
 import Scrollbars from 'react-custom-scrollbars'
 import InformationCard from './InformationCard'
+import RevisionDrawer from './RevisionDrawer'
+import { IBuildState } from '../pages/build/BuildStateContext'
+import { IRaidState } from '../pages/raid/RaidStateContext'
+import { IGroupState } from '../pages/group/GroupStateContext'
 
 const { Footer } = Layout
 
@@ -22,7 +26,7 @@ const StyledFooter = styled(Footer)`
 `
 
 const ActionButton = styled(Button)`
-  width: 100px;
+  width: 110px;
   margin: ${props => props.theme.margins.small};
 `
 
@@ -45,6 +49,7 @@ interface IInformation {
 }
 interface IFooterProps {
   information: IInformation[]
+  state: IBuildState | IRaidState | IGroupState
   owner: {
     name: string
     id: string
@@ -55,13 +60,14 @@ interface IFooterProps {
   onCopy: (e?: React.MouseEvent<HTMLElement, MouseEvent> | undefined) => void
   onEdit: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onDelete: (e?: React.MouseEvent<HTMLElement, MouseEvent> | undefined) => void
-  type: string
+  type: 'build' | 'raid' | 'group'
   loading: boolean
   saved: boolean
 }
 
 export default ({
   information,
+  state,
   owner,
   me,
   onCopy,
@@ -71,7 +77,12 @@ export default ({
   loading,
   saved,
 }: IFooterProps) => {
+  const [drawerVisible, setDrawerVisible] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 800 })
+
+  const handleClose = () => setDrawerVisible(false)
+
+  const handleRevisionOpen = () => setDrawerVisible(true)
 
   return (
     <StyledFooter isMobile={isMobile}>
@@ -92,42 +103,64 @@ export default ({
 
       {(owner && owner.id) === (me && me.id) && (
         <Flex direction='row'>
-          <Popconfirm
-            title={`Are you sure you want to copy this ${type}?`}
-            onConfirm={onCopy}
-            okText='Yes'
-            cancelText='No'
-          >
+          {type === 'build' && (
             <ActionButton
+              onClick={handleRevisionOpen}
               loading={loading}
               disabled={saved}
-              icon='copy'
+              icon='interaction'
               size='large'
               type='default'
             >
-              Copy
+              Revision
             </ActionButton>
-          </Popconfirm>
+          )}
+          {!isMobile && (
+            <Popconfirm
+              title={`Are you sure you want to copy this ${type}?`}
+              onConfirm={onCopy}
+              okText='Yes'
+              cancelText='No'
+            >
+              <ActionButton
+                loading={loading}
+                disabled={saved}
+                icon='copy'
+                size='large'
+                type='default'
+              >
+                Copy
+              </ActionButton>
+            </Popconfirm>
+          )}
+
+          {!isMobile && (
+            <ActionButton
+              onClick={onEdit}
+              icon='edit'
+              size='large'
+              type='primary'
+            >
+              Edit
+            </ActionButton>
+          )}
 
           <ActionButton
-            onClick={onEdit}
-            icon='edit'
+            onClick={onDelete}
+            icon='delete'
             size='large'
-            type='primary'
+            type='danger'
           >
-            Edit
+            Delete
           </ActionButton>
-          <Popconfirm
-            title={`Are you sure you want to delete this ${type}?`}
-            onConfirm={onDelete}
-            okText='Yes'
-            cancelText='No'
-          >
-            <ActionButton icon='delete' size='large' type='danger'>
-              Delete
-            </ActionButton>
-          </Popconfirm>
         </Flex>
+      )}
+      {type === 'build' && (
+        <RevisionDrawer
+          revisionId={(state as IBuildState).revision.id}
+          visible={drawerVisible}
+          onClose={handleClose}
+        />
       )}
     </StyledFooter>
   )

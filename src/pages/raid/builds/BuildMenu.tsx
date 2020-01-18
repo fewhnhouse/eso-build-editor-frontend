@@ -6,7 +6,7 @@ import Flex from '../../../components/Flex'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import BuildCard from './BuildCard'
-import { IBuild } from '../../build/BuildStateContext'
+import { IBuild, IBuildRevision } from '../../build/BuildStateContext'
 import { reducedBuild } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 import Scrollbars from 'react-custom-scrollbars'
@@ -71,17 +71,17 @@ export function titleCase(str: string): string {
   return string.join(' ')
 }
 
-const GET_BUILDS = gql`
-  query builds(
-    $where: BuildWhereInput
-    $orderBy: BuildOrderByInput
+const GET_BUILD_REVISIONS = gql`
+  query buildRevisions(
+    $where: BuildRevisionWhereInput
+    $orderBy: BuildRevisionOrderByInput
     $first: Int
     $last: Int
     $skip: Int
     $after: String
     $before: String
   ) {
-    builds(
+    buildRevisions(
       where: $where
       orderBy: $orderBy
       first: $first
@@ -90,7 +90,10 @@ const GET_BUILDS = gql`
       after: $after
       before: $before
     ) {
-      ...Build
+      id
+      builds(first: 1, orderBy: updatedAt_DESC) {
+        ...Build
+      }
     }
   }
   ${reducedBuild}
@@ -102,34 +105,43 @@ export default () => {
   const [expanded, setExpanded] = useState(false)
   const [searchText, setSearchText] = useState('')
 
-  // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(GET_BUILDS, {
+  const { loading, data } = useQuery(GET_BUILD_REVISIONS, {
     variables: {
       where: {
-        AND: [
-          {
-            OR: [
-              { name_contains: searchText },
-              { name_contains: searchText.toLowerCase() },
-              { name_contains: searchText.toUpperCase() },
-              { name_contains: titleCase(searchText) },
-            ],
-          },
-          {
-            race_in: selectedRaces.length
-              ? selectedRaces
-              : races.map(race => race.title),
-          },
-          {
-            esoClass_in: selectedClasses.length
-              ? selectedClasses
-              : classes.map(esoClass => esoClass.title),
-          },
-        ],
+        builds_every: {
+          AND: [
+            {
+              OR: [
+                { name_contains: searchText },
+                { name_contains: searchText.toLowerCase() },
+                { name_contains: searchText.toUpperCase() },
+                { name_contains: titleCase(searchText) },
+              ],
+            },
+            {
+              race_in: selectedRaces.length
+                ? selectedRaces
+                : races.map(race => race.title),
+            },
+            {
+              esoClass_in: selectedClasses.length
+                ? selectedClasses
+                : classes.map(esoClass => esoClass.title),
+            },
+          ],
+        },
       },
     },
   })
 
+  const builds: IBuild[] =
+    data && data.buildRevisions
+      ? data.buildRevisions
+          .map((revision: IBuildRevision) =>
+            revision.builds.length ? [revision.builds[0]] : []
+          )
+          .reduce((prev: IBuild[], curr: IBuild[]) => [...prev, ...curr], [])
+      : []
   const handleClassSelectChange = (classes: string[]) => {
     setSelectedClasses(classes)
   }
@@ -202,11 +214,7 @@ export default () => {
             </>
           )}
         </StyledFlexOuter>
-        <BuildsList
-          expanded={expanded}
-          loading={loading}
-          builds={(data && data.builds) || []}
-        />
+        <BuildsList expanded={expanded} loading={loading} builds={builds} />
       </>
     </ListContainer>
   )

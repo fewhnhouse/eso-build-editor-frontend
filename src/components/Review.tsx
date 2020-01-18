@@ -142,6 +142,7 @@ const Review = ({
             onEdit={onEdit}
             onDelete={onDelete}
             owner={owner}
+            state={data}
             me={me}
             type={isBuild ? 'build' : 'raid'}
             loading={loading}
