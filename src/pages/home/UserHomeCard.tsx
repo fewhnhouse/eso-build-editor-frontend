@@ -21,13 +21,16 @@ const { Option } = Select
 const CardContainer = styled(Flex)`
   flex: 1;
   height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 120px)' : '700px'};
+    props.isMobile ? 'calc(100vh - 120px)' : 'calc(100vh - 100px)'};
+  min-height: 500px;
+  max-height: 800px;
+  padding-bottom: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? '0px' : '20px'};
 `
 
 const ListCard = styled(Card)`
   width: 100%;
-  height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '100%' : '80%'};
+  height: 100%;
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   display: flex;
