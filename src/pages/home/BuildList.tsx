@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { List, Avatar, Skeleton, Button } from 'antd'
+import { List, Avatar, Button } from 'antd'
 import styled from 'styled-components'
 import { Redirect } from 'react-router'
 import { applicationAreas } from '../build/RaceAndClass/RaceClass'
