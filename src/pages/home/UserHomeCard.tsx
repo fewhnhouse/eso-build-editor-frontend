@@ -124,7 +124,7 @@ export const OWN_BUILDS = gql`
   }
 `
 
-const BUILD_REVISIONS = gql`
+export const BUILD_REVISIONS = gql`
   query buildRevisions(
     $where: BuildRevisionWhereInput
     $orderBy: BuildRevisionOrderByInput
@@ -144,7 +144,7 @@ const BUILD_REVISIONS = gql`
       before: $before
     ) {
       id
-      builds(orderBy: updatedAt_DESC) {
+      builds(first: 1, orderBy: updatedAt_DESC) {
         id
         owner {
           id
@@ -153,6 +153,7 @@ const BUILD_REVISIONS = gql`
         name
         esoClass
         race
+        description
         applicationArea
       }
     }

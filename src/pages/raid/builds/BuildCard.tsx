@@ -172,19 +172,16 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
     jewelrySelection
   )
 
-  const sets = concat.reduce(
-    (prev: ISet[], curr: ISetSelection) => {
-      const isExisting = prev.find(
-        set => set && curr.selectedSet && set.name === curr.selectedSet.name
-      )
-      if (!isExisting) {
-        return curr.selectedSet ? [...prev, curr.selectedSet] : prev
-      } else {
-        return prev
-      }
-    },
-    [] as ISet[]
-  )
+  const sets = concat.reduce((prev: ISet[], curr: ISetSelection) => {
+    const isExisting = prev.find(
+      set => set && curr.selectedSet && set.name === curr.selectedSet.name
+    )
+    if (!isExisting) {
+      return curr.selectedSet ? [...prev, curr.selectedSet] : prev
+    } else {
+      return prev
+    }
+  }, [] as ISet[])
 
   const setsCount = getSetsCount(
     bigPieceSelection,
