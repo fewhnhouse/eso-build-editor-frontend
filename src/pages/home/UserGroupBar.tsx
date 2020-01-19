@@ -16,14 +16,15 @@ const UserGroupWrapper = styled(Flex)`
 `
 
 const GroupContainer = styled(Flex)`
-  width: calc(100% - 40px);
-  margin: ${props => props.theme.margins.medium};
-  overflow-x: auto;
-  overflow-y: hidden;
+  width: 100%;
+  overflow: auto hidden;
 `
 
 const UserGroup = styled(Card)`
-  width: 300px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
   margin: 0px ${props => props.theme.margins.small};
   text-align: start;
