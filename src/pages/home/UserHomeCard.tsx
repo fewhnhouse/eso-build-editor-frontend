@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
-import { Typography, Button, Input, Icon, Select } from 'antd'
+import { Typography, Button, Input, Icon, Select, Card } from 'antd'
 import { Redirect } from 'react-router'
 import RaidCard from './RaidList'
 import BuildCard from './BuildList'
@@ -19,14 +19,13 @@ const { Title } = Typography
 const { Option } = Select
 
 const CardContainer = styled(Flex)`
-  justify-content: center;
   flex: 1;
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'calc(100vh - 120px)' : '700px'};
 `
 
-const ListCard = styled.div`
-  width: ${(props: { isMobile: boolean }) => (props.isMobile ? '100%' : '80%')};
+const ListCard = styled(Card)`
+  width: 100%;
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '80%'};
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
@@ -34,12 +33,7 @@ const ListCard = styled.div`
   display: flex;
   flex-direction: column;
   max-width: ${props => props.theme.widths.large};
-  margin: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '20px'};
-  border-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
-  box-shadow: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '' : '0px 0px 5px 2px rgba(0, 0, 0, 0.2)'};
+  margin: 0px;
 `
 const CardTitle = styled(Title)`
   display: flex;
@@ -53,10 +47,6 @@ const CardHeader = styled(Flex)`
     props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
   padding: ${props => props.theme.paddings.medium};
-  border-top-left-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
-  border-top-right-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
 `
 
 const StyledFlexFull = styled(Flex)`
@@ -208,15 +198,42 @@ export const OWN_RAIDS = gql`
 export default ({ isBuild }: { isBuild: boolean }) => {
   const [redirect, setRedirect] = useState('')
   const [search, setSearch] = useState('')
-  const [, setSelectedRaces] = useState<string[]>([])
+  const [selectedRaces, setSelectedRaces] = useState<string[]>([])
   const [selectedApplicationAreas, setSelectedApplicationAreas] = useState<
     string[]
   >([])
-  const [, setSelectedClasses] = useState<string[]>([])
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  const buildRevisionsQuery = useQuery(BUILD_REVISIONS)
+  const buildRevisionsQuery = useQuery(BUILD_REVISIONS, {
+    variables: {
+      where: {
+        builds_every: {
+          AND: [
+            {
+              OR: [
+                { name_contains: search },
+                { name_contains: search.toLowerCase() },
+                { name_contains: search.toUpperCase() },
+                { name_contains: titleCase(search) },
+              ],
+            },
+            {
+              race_in: selectedRaces.length
+                ? selectedRaces
+                : races.map(race => race.title),
+            },
+            {
+              esoClass_in: selectedClasses.length
+                ? selectedClasses
+                : classes.map(esoClass => esoClass.title),
+            },
+          ],
+        },
+      },
+    },
+  })
 
   const raidsQuery = useQuery(OWN_RAIDS, {
     variables: {
@@ -270,10 +287,18 @@ export default ({ isBuild }: { isBuild: boolean }) => {
     <CardContainer
       isMobile={isMobile}
       direction='column'
-      justify='center'
+      justify='flex-start'
       align='center'
     >
-      <ListCard isMobile={isMobile}>
+      <ListCard
+        bodyStyle={{
+          padding: 0,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        isMobile={isMobile}
+      >
         <CardHeader
           isMobile={isMobile}
           direction='column'

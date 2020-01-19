@@ -15,6 +15,7 @@ import GroupReview from '../pages/group/review/GroupReview'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
+const BuildHome = lazy(() => import('../pages/build/Home/BuildHome'))
 const BuildWrapper = lazy(() => import('../pages/build/BuildWrapper'))
 const RaidWrapper = lazy(() => import('../pages/raid/RaidWrapper'))
 const GroupWrapper = lazy(() => import('../pages/group/GroupWrapper'))
@@ -30,6 +31,27 @@ const ProtectedRoute = ({ loggedIn, ...props }: IProtectedRouteProps) => {
   }
   return loggedIn ? <Route {...props} /> : <Redirect to='/' />
 }
+
+const PageNotFoundContainer = styled.div`
+  background: #ededed;
+  width: 100vw;
+  height: 100%;
+`
+
+const PageNotFound = () => (
+  <PageNotFoundContainer>
+    <Result
+      status='404'
+      title='404'
+      subTitle='Sorry, the page you visited does not exist.'
+      extra={
+        <Link to='/'>
+          <Button type='primary'>Back Home</Button>
+        </Link>
+      }
+    />
+  </PageNotFoundContainer>
+)
 
 export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
   if (isLoggedIn === undefined) {
@@ -74,7 +96,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
           path='/groupEditor/:id'
           render={props => <GroupWrapper {...props} />}
         />
-        <Route exact path='/builds' render={() => <div>Test builds</div>} />
+        <Route exact path='/builds' component={BuildHome} />
         <Route exact path='/raids' render={() => <div>Test raids</div>} />
         <Route exact path='/groups' render={() => <div>Test groups</div>} />
         <Route exact path='/groups/:id' component={GroupReview} />
@@ -107,24 +129,3 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
     </Suspense>
   )
 }
-
-const PageNotFoundContainer = styled.div`
-  background: #ededed;
-  width: 100vw;
-  height: 100%;
-`
-
-const PageNotFound = () => (
-  <PageNotFoundContainer>
-    <Result
-      status='404'
-      title='404'
-      subTitle='Sorry, the page you visited does not exist.'
-      extra={
-        <Link to='/'>
-          <Button type='primary'>Back Home</Button>
-        </Link>
-      }
-    />
-  </PageNotFoundContainer>
-)

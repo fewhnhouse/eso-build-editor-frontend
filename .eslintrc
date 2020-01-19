@@ -1,10 +1,27 @@
 {
-  "extends": ["plugin:prettier/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "comma-dangle": ["error", "always-multiline"],
-    "prettier/prettier": "error"
+    "max-lines": ["warn", 200],
+    "react/display-name": "off",
+    "prettier/prettier": "error",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/camelcase": "off"
   },
   "overrides": [
     {
@@ -13,5 +30,11 @@
         "@typescript-eslint/no-unused-vars": [2, { "args": "none" }]
       }
     }
-  ]
+  ],
+  "settings": {
+    "react": {
+      "pragma": "React", // Pragma to use, default to "React"
+      "version": "detect" // React version. "detect" automatically picks the version you have installed.
+    }
+  }
 }

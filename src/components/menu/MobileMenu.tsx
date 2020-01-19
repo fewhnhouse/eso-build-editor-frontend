@@ -49,7 +49,7 @@ const MobileMenu = ({
           </Link>
         </Item>
         <Divider />
-        <ItemGroup key='build' title={<span>Builds</span>}>
+        <ItemGroup key='build' title='Builds'>
           <Item key='build:1'>
             <Link onClick={handleFoldBtnClick} to='/builds'>
               Builds
@@ -62,7 +62,7 @@ const MobileMenu = ({
           </Item>
         </ItemGroup>
         <Divider />
-        <ItemGroup key='raid' title={<span>Raids</span>}>
+        <ItemGroup key='raid' title='Raids'>
           <Item key='raid:1'>
             <Link onClick={handleFoldBtnClick} to='/raids'>
               Raids
@@ -75,7 +75,7 @@ const MobileMenu = ({
           </Item>
         </ItemGroup>
         <Divider />
-        <ItemGroup key='group' title={<span>Groups</span>}>
+        <ItemGroup key='group' title='Groups'>
           <Item key='group:1'>
             <Link onClick={handleFoldBtnClick} to='/raids'>
               Groups

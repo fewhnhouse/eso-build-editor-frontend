@@ -1,40 +1,10 @@
-import React from 'react'
-import { List, Card, Typography, Divider, Icon } from 'antd'
+import React, { useState } from 'react'
+import { List, Divider, Icon, Button } from 'antd'
 import styled from 'styled-components'
 import { applicationAreas } from '../raid/general/RaidGeneral'
-import Flex from '../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
-
-const { Text } = Typography
-
-const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.small};
-  line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
-`
-
-const Title = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
-  line-height: 1.5;
-  font-weight: 500;
-  color: ${props => props.theme.colors.grey.dark};
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: left;
-`
-
-const StyledCard = styled(Card)`
-  border-color: ${props => props.theme.mainBorderColor};
-  background: 'white';
-  border-width: 2px;
-  margin: ${props => props.theme.margins.small};
-  width: 90%;
-  max-width: ${props => props.theme.widths.medium};
-`
+import { Redirect } from 'react-router'
 
 const StyledList = styled(List)`
   background: white;
@@ -44,16 +14,22 @@ const StyledList = styled(List)`
     props.isMobile ? '0px' : '10px'};
 `
 
-const StyledListItem = styled(List.Item)`
-  justify-content: center;
-`
-
 const StyledScrollbars = styled(Scrollbars)`
   height: calc(100% - 120px);
 `
 
-const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+const ActionButton = styled(Button)`
+  width: 50px;
+`
+
+const ListMeta = styled(List.Item.Meta)`
+  padding: ${props => props.theme.paddings.small};
+  text-align: start;
+`
+
+const ListItem = styled(List.Item)`
+  padding: 0;
+  margin: ${props => props.theme.margins.small};
 `
 
 interface IOwnerProps {
@@ -89,7 +65,15 @@ interface IUserDataProps {
 
 const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
+  const [path, setRedirect] = useState('')
 
+  const handleClick = (path: string) => () => {
+    setRedirect(path)
+  }
+
+  if (path) {
+    return <Redirect push to={`${path}`} />
+  }
   return (
     <StyledScrollbars>
       <StyledList
@@ -105,27 +89,39 @@ const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
             return prev + curr.builds.length
           }, 0)
           return (
-            <StyledListItem>
-              <StyledCard
-                key={raid.id}
-                hoverable
-                onClick={onCardClick(raid.id)}
-              >
-                <Title>
-                  <Flex direction='row' justify='space-between'>
-                    {raid.name ? raid.name : 'Unnamed raid'}
-                    <Text>
-                      <Icon type='team' />
-                      {size}
-                    </Text>
-                  </Flex>
-                </Title>
-                <StyledDivider />
-                <Description>
-                  {applicationArea ? applicationArea.label : ''}
-                </Description>
-              </StyledCard>
-            </StyledListItem>
+            <ListItem
+              actions={[
+                <ActionButton
+                  onClick={handleClick(`/editRaid/${raid.id}/0`)}
+                  size='small'
+                  type='default'
+                  key='list-edit'
+                >
+                  Edit
+                </ActionButton>,
+                <ActionButton
+                  onClick={handleClick(`/raids/${raid.id}`)}
+                  size='small'
+                  type='primary'
+                  key='list-view'
+                >
+                  View
+                </ActionButton>,
+              ]}
+            >
+              <ListMeta
+                style={{ textAlign: 'start' }}
+                title={
+                  <>
+                    <Icon type='team' />
+                    {size}
+                    <Divider type='vertical' />
+                    {raid.name || ''}
+                  </>
+                }
+                description={applicationArea?.label || ''}
+              />
+            </ListItem>
           )
         }}
       />

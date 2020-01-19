@@ -44,6 +44,8 @@ const Description = styled.div`
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
   text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 
 const StyledTitle = styled.div`
@@ -54,6 +56,8 @@ const StyledTitle = styled.div`
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
   text-align: left;
 `
 
@@ -118,14 +122,11 @@ const UserGroupBar = () => {
           data.ownGroups.map((ownGroup: IGroupState) => {
             return (
               <UserGroup
+                key={ownGroup.id}
                 hoverable
                 onClick={handleClick(ownGroup ? ownGroup.id || '' : '')}
               >
-                <StyledTitle>
-                  <Flex direction='row' justify='space-between'>
-                    {ownGroup.name}
-                  </Flex>
-                </StyledTitle>
+                <StyledTitle>{ownGroup.name}</StyledTitle>
                 <StyledDivider />
                 <Description>{ownGroup.description}</Description>
               </UserGroup>
