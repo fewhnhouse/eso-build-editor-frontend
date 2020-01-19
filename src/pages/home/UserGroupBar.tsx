@@ -78,8 +78,8 @@ const UserGroupBar = () => {
     return <Redirect push to={redirect} />
   }
 
-  const handleClick = (id: string) => () => {
-    setRedirect(`/groups/${id}`)
+  const handleClick = (path: string) => () => {
+    setRedirect(path)
   }
 
   const handleAddClick = () => {
@@ -105,9 +105,7 @@ const UserGroupBar = () => {
                     type='edit'
                     title='Edit'
                     key='group-edit'
-                    onClick={handleClick(
-                      `/groupEditor/${ownGroup?.id ?? ''}/0`
-                    )}
+                    onClick={handleClick(`/editGroup/${ownGroup?.id ?? ''}/0`)}
                   />,
                   <Icon
                     type='select'
