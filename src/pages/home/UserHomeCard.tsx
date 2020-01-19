@@ -183,7 +183,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
   const buildRevisionsQuery = useQuery(BUILD_REVISIONS, {
     variables: {
       where: {
-        builds_every: {
+        builds_some: {
           AND: [
             {
               OR: [
