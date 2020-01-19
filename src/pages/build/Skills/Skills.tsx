@@ -4,8 +4,6 @@ import Menu from './SkillMenu'
 import { BuildContext } from '../BuildStateContext'
 import AbilityBar from './AbilityBar'
 import { ISkill } from '../../../components/SkillSlot'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import SkillsDisplay from '../../../components/SkillsDisplay'
 
 const Content = styled.div`
@@ -54,14 +52,12 @@ export default ({ edit }: { edit: boolean }) => {
   const { skillLine } = state!
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <StyledDiv>
-        <StyledMenu context={BuildContext} collapsable singleClass />
-        <Content>
-          <SkillsDisplay interactive skillline={skillLine} />
-          <AbilityBar />
-        </Content>
-      </StyledDiv>
-    </DndProvider>
+    <StyledDiv>
+      <StyledMenu context={BuildContext} collapsable singleClass />
+      <Content>
+        <SkillsDisplay interactive skillline={skillLine} />
+        <AbilityBar />
+      </Content>
+    </StyledDiv>
   )
 }

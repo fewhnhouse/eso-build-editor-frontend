@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import { Divider, Empty } from 'antd'
 import GearView from '../../../components/GearView'
 import { BuildContext, WeaponType, SetTab } from '../BuildStateContext'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import Scrollbars from 'react-custom-scrollbars'
 import { specialWeaponSets, getSetups } from './selectionDetails'
 import { getSetsCount } from './Sets'
@@ -145,25 +143,23 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
   )
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <StyledScrollbars autoHide>
-        <OuterContainer>
-          {hasSelectedSet ? (
-            <>
-              <Divider>Active Selection</Divider>
-              <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
-            </>
-          ) : (
-            <StyledEmpty>Select a set to get started.</StyledEmpty>
-          )}
-          <Divider>Setup</Divider>
-          <GearView
-            droppable
-            setups={showSetup(setTabKey)}
-            setsCount={setsCount}
-          />
-        </OuterContainer>
-      </StyledScrollbars>
-    </DndProvider>
+    <StyledScrollbars autoHide>
+      <OuterContainer>
+        {hasSelectedSet ? (
+          <>
+            <Divider>Active Selection</Divider>
+            <GearView setups={showGear(setTabKey)} setsCount={setsCount} />
+          </>
+        ) : (
+          <StyledEmpty>Select a set to get started.</StyledEmpty>
+        )}
+        <Divider>Setup</Divider>
+        <GearView
+          droppable
+          setups={showSetup(setTabKey)}
+          setsCount={setsCount}
+        />
+      </OuterContainer>
+    </StyledScrollbars>
   )
 }

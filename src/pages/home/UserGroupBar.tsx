@@ -82,6 +82,10 @@ const UserGroupBar = () => {
     setRedirect(`/groups/${id}`)
   }
 
+  const handleAddClick = () => {
+    setRedirect(`/groupEditor/0`)
+  }
+
   return (
     <UserGroupWrapper align='center' direction='column' justify='center'>
       {!isMobile && (
@@ -123,7 +127,7 @@ const UserGroupBar = () => {
             )
           })}
         {!loading && !isMobile && (
-          <StyledButton size='large'>
+          <StyledButton size='large' onClick={handleAddClick}>
             <StyledIcon type='plus' />
           </StyledButton>
         )}

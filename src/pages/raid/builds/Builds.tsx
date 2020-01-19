@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import BuildMenu from './BuildMenu'
 import Roles from './Roles'
-import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import { RaidContext } from '../RaidStateContext'
 import styled from 'styled-components'
 
@@ -22,11 +20,9 @@ export default ({ edit }: { edit: boolean }) => {
     }
   }, [state, edit])
   return (
-    <DndProvider backend={HTML5Backend}>
-      <StyledDiv>
-        <BuildMenu />
-        <Roles />
-      </StyledDiv>
-    </DndProvider>
+    <StyledDiv>
+      <BuildMenu />
+      <Roles />
+    </StyledDiv>
   )
 }

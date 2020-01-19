@@ -13,6 +13,8 @@ import { ApolloLink } from 'apollo-link'
 import { ApolloProvider } from 'react-apollo'
 import { setContext } from 'apollo-link-context'
 import { notification } from 'antd'
+import { DndProvider } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -82,11 +84,13 @@ const App: React.FC = () => {
   return (
     <LoginContext.Provider value={[loggedIn, setLoggedIn]}>
       <ApolloProvider client={client}>
-        <Router>
-          <ThemeProvider theme={theme}>
-            <AppContainer />
-          </ThemeProvider>
-        </Router>
+        <DndProvider backend={HTML5Backend}>
+          <Router>
+            <ThemeProvider theme={theme}>
+              <AppContainer />
+            </ThemeProvider>
+          </Router>
+        </DndProvider>
       </ApolloProvider>
     </LoginContext.Provider>
   )
