@@ -18,6 +18,8 @@ const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))
 const BuildHome = lazy(() => import('../pages/build/Home/BuildHome'))
 const BuildWrapper = lazy(() => import('../pages/build/BuildWrapper'))
 const RaidWrapper = lazy(() => import('../pages/raid/RaidWrapper'))
+const RaidHome = lazy(() => import('../pages/raid/Home/RaidHome'))
+
 const GroupWrapper = lazy(() => import('../pages/group/GroupWrapper'))
 const Overview = lazy(() => import('../pages/overview/Overview'))
 const Profile = lazy(() => import('../pages/profile/Profile'))
@@ -97,7 +99,7 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
           render={props => <GroupWrapper {...props} />}
         />
         <Route exact path='/builds' component={BuildHome} />
-        <Route exact path='/raids' render={() => <div>Test raids</div>} />
+        <Route exact path='/raids' component={RaidHome} />
         <Route exact path='/groups' render={() => <div>Test groups</div>} />
         <Route exact path='/groups/:id' component={GroupReview} />
 

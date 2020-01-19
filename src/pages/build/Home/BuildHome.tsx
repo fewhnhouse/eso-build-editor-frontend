@@ -51,12 +51,14 @@ export default () => {
   if (redirect) {
     return <Redirect push to={redirect} />
   }
+
+  const active = CLASSES.map((esoClass, index) => ({ key: esoClass, index }))
+    .filter(esoClass => builds.find(build => build.esoClass === esoClass.key))
+    .map(esoClass => esoClass.index + '')
+
   return (
     <Container fluid direction='column'>
-      <Collapse
-        activeKey={['0', '1', '2', '3', '4', '5']}
-        style={{ width: '100%' }}
-      >
+      <Collapse activeKey={active} style={{ width: '100%' }}>
         {CLASSES.map((esoClass, index) => (
           <StyledPanel header={esoClass} key={index}>
             <Skeleton loading={loading}>

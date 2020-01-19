@@ -92,38 +92,6 @@ export const ME = gql`
   }
 `
 
-export const OWN_BUILDS = gql`
-  query ownBuilds(
-    $where: BuildWhereInput
-    $orderBy: BuildOrderByInput
-    $first: Int
-    $last: Int
-    $skip: Int
-    $after: String
-    $before: String
-  ) {
-    ownBuilds(
-      where: $where
-      orderBy: $orderBy
-      first: $first
-      last: $last
-      skip: $skip
-      after: $after
-      before: $before
-    ) {
-      id
-      owner {
-        id
-        name
-      }
-      name
-      esoClass
-      race
-      applicationArea
-    }
-  }
-`
-
 export const BUILD_REVISIONS = gql`
   query buildRevisions(
     $where: BuildRevisionWhereInput
@@ -185,6 +153,7 @@ export const OWN_RAIDS = gql`
         name
       }
       name
+      description
       applicationArea
       roles {
         id
