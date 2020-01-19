@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Card, Collapse, Skeleton, Empty, Icon, Avatar } from 'antd'
@@ -37,28 +37,48 @@ const CLASSES = [
 export default () => {
   const { loading, data } = useQuery(BUILD_REVISIONS)
 
+  const [activeKeys, setActiveKeys] = useState<string[]>([])
   const [redirect, setRedirect] = useState('')
+
+  const builds: IBuild[] = useMemo(
+    () =>
+      data?.buildRevisions
+        ?.map((revision: IBuildRevision) =>
+          revision.builds.length ? revision.builds[0] : []
+        )
+        .flat() ?? [],
+    [data]
+  )
+
+  useEffect(() => {
+    if (builds) {
+      const active = CLASSES.map((esoClass, index) => ({
+        key: esoClass,
+        index,
+      }))
+        .filter(esoClass =>
+          builds.find(build => build.esoClass === esoClass.key)
+        )
+        .map(esoClass => esoClass.index + '')
+      setActiveKeys(active)
+    }
+  }, [builds])
+
   const handleRedirect = (path: string) => () => {
     setRedirect(path)
   }
-  const builds: IBuild[] =
-    data?.buildRevisions
-      ?.map((revision: IBuildRevision) =>
-        revision.builds.length ? revision.builds[0] : []
-      )
-      .flat() ?? []
 
   if (redirect) {
     return <Redirect push to={redirect} />
   }
 
-  const active = CLASSES.map((esoClass, index) => ({ key: esoClass, index }))
-    .filter(esoClass => builds.find(build => build.esoClass === esoClass.key))
-    .map(esoClass => esoClass.index + '')
-
   return (
     <Container fluid direction='column'>
-      <Collapse activeKey={active} style={{ width: '100%' }}>
+      <Collapse
+        onChange={keys => setActiveKeys(keys as string[])}
+        activeKey={activeKeys}
+        style={{ width: '100%' }}
+      >
         {CLASSES.map((esoClass, index) => (
           <StyledPanel header={esoClass} key={index}>
             <Skeleton loading={loading}>

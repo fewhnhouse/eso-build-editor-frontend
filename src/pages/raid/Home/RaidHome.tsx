@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Card, Collapse, Skeleton, Empty, Icon } from 'antd'
@@ -30,26 +30,38 @@ const StyledPanel = styled(Panel)`
 export default () => {
   const { loading, data } = useQuery(OWN_RAIDS)
 
+  const [activeKeys, setActiveKeys] = useState<string[]>([])
   const [redirect, setRedirect] = useState('')
+
+  const raids: IRaidState[] = data?.ownRaids ?? []
+
+  useEffect(() => {
+    if (raids) {
+      const active = applicationAreas
+        .map((area, index) => ({ ...area, index }))
+        .filter(applicationArea =>
+          raids.find(raid => raid.applicationArea === applicationArea.key)
+        )
+        .map(area => area.index + '')
+      setActiveKeys(active)
+    }
+  }, [raids])
+
   const handleRedirect = (path: string) => () => {
     setRedirect(path)
   }
-  const raids: IRaidState[] = data?.ownRaids ?? []
 
   if (redirect) {
     return <Redirect push to={redirect} />
   }
 
-  const active = applicationAreas
-    .map((area, index) => ({ ...area, index }))
-    .filter(applicationArea =>
-      raids.find(raid => raid.applicationArea === applicationArea.key)
-    )
-    .map(area => area.index + '')
-
   return (
     <Container fluid direction='column'>
-      <Collapse activeKey={active} style={{ width: '100%' }}>
+      <Collapse
+        onChange={keys => setActiveKeys(keys as string[])}
+        activeKey={activeKeys}
+        style={{ width: '100%' }}
+      >
         {applicationAreas.map((applicationArea, index) => (
           <StyledPanel header={applicationArea.label} key={index}>
             <Skeleton loading={loading}>
