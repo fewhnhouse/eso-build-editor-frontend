@@ -25,15 +25,25 @@ const UserGroup = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 170px;
   margin: 0px ${props => props.theme.margins.small};
   text-align: start;
 `
 
 const StyledButton = styled(Button)`
   margin: 0px ${props => props.theme.margins.small};
-  height: 100%;
-  width: 140px;
+  height: 170px;
+  width: 170px;
+`
+
+const Description = styled.p`
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: break-spaces;
+  margin: 0;
 `
 
 const StyledIcon = styled(Icon)`
@@ -125,7 +135,9 @@ const UserGroupBar = () => {
               >
                 <Card.Meta
                   title={ownGroup.name}
-                  description={ownGroup.description}
+                  description={
+                    <Description>{ownGroup.description}</Description>
+                  }
                 ></Card.Meta>
               </UserGroup>
             )

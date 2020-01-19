@@ -15,6 +15,20 @@ const Container = styled(Flex)`
 const GroupCard = styled(Card)`
   margin: ${props => `${props.theme.margins.small}`};
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 170px;
+`
+
+const Description = styled.p`
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: break-spaces;
+  margin: 0;
 `
 
 export default () => {
@@ -36,6 +50,7 @@ export default () => {
     <Container fluid direction='row' wrap>
       {groups.map(group => (
         <GroupCard
+          hoverable
           actions={[
             <Icon
               onClick={handleRedirect(`/editGroup/${group.id}/0`)}
@@ -52,7 +67,10 @@ export default () => {
           ]}
           key={group.id}
         >
-          <Card.Meta title={group.name} description={group.description} />
+          <Card.Meta
+            title={group.name}
+            description={<Description>{group.description}</Description>}
+          />
         </GroupCard>
       ))}
     </Container>
