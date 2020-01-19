@@ -17,6 +17,7 @@ import gql from 'graphql-tag'
 import { group } from '../../util/fragments'
 import { useMutation } from 'react-apollo'
 import { createNotification } from '../../util/notification'
+import { IRaidState } from '../raid/RaidStateContext'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -78,6 +79,7 @@ interface IGroupProps {
   edit?: boolean
   pageIndex: number
   path: string
+  initialRaids?: IRaidState[]
   initialGroupBuilds?: IGroupBuild[]
 }
 
@@ -86,6 +88,7 @@ export default ({
   edit,
   pageIndex,
   path,
+  initialRaids = [],
   initialGroupBuilds = [],
 }: IGroupProps) => {
   const [state, dispatch] = useReducer(groupReducer, group)
@@ -127,7 +130,12 @@ export default ({
   const handleSave = async () => {
     if (edit) {
       try {
-        await handleEditSave(state, updateGroup, initialGroupBuilds)
+        await handleEditSave(
+          state,
+          updateGroup,
+          initialGroupBuilds,
+          initialRaids
+        )
       } catch (e) {
         notification.error({
           message: 'Group update failed',

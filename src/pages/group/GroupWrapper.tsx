@@ -80,6 +80,7 @@ export default ({ edit, match }: IGroupWrapperProps) => {
     if (data) {
       return (
         <Group
+          initialRaids={data.group.raids}
           initialGroupBuilds={data.group.groupBuilds}
           edit
           path={`/editGroup/${id}`}

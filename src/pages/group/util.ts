@@ -1,13 +1,15 @@
 import { IGroupState, IGroupBuild } from './GroupStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { ME } from '../home/UserHomeCard'
+import { IRaidState } from '../raid/RaidStateContext'
 
 export const handleEditSave = async (
   state: IGroupState,
   updateGroup: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
-  initialGroupBuilds: IGroupBuild[]
+  initialGroupBuilds: IGroupBuild[],
+  initialRaids: IRaidState[]
 ) => {
   const {
     id,
@@ -19,13 +21,19 @@ export const handleEditSave = async (
     groupBuilds,
   } = state!
 
+  const filteredInitialRaids = initialRaids.filter(
+    raid => !raids.find(newRaid => newRaid.id === raid.id)
+  )
   //make sure everyone who can edit can also view
   await updateGroup({
     variables: {
       data: {
         name,
         members: { set: members },
-        raids: { connect: raids.map(raid => ({ id: raid.id })) },
+        raids: {
+          connect: raids.map(raid => ({ id: raid.id })),
+          disconnect: filteredInitialRaids.map(raid => ({ id: raid.id })),
+        },
         description,
         accessRights,
         groupBuilds: {
