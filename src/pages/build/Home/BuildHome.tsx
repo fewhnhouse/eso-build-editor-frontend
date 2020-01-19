@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Collapse, Skeleton, Empty, Button, Icon, Avatar } from 'antd'
+import { Card, Collapse, Skeleton, Empty, Icon, Avatar } from 'antd'
 import { useQuery } from 'react-apollo'
 import { BUILD_REVISIONS } from '../../home/UserHomeCard'
 import { IBuildRevision, IBuild } from '../BuildStateContext'
