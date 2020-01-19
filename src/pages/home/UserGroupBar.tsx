@@ -82,10 +82,6 @@ const UserGroupBar = () => {
     setRedirect(`/groups/${id}`)
   }
 
-  const handleAddClick = () => {
-    setRedirect(`/groupEditor/0`)
-  }
-
   return (
     <UserGroupWrapper align='center' direction='column' justify='center'>
       {!isMobile && (
