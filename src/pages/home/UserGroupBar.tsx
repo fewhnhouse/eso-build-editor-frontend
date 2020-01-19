@@ -7,26 +7,34 @@ import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
+import { ITheme } from '../../components/theme'
 
 const { Title } = Typography
 
 const UserGroupWrapper = styled(Flex)`
   width: 100%;
   margin-top: ${props => props.theme.margins.medium};
+  height: ${(props: { isMobile: boolean }) =>
+    props.isMobile ? 'calc(100vh - 130px)' : ''};
 `
 
 const GroupContainer = styled(Flex)`
   width: 100%;
-  overflow: auto hidden;
+  height: 100%;
+  overflow: auto;
 `
 
 const UserGroup = styled(Card)`
-  width: 250px;
+  width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? `calc(100% - 20px)` : '250px'};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 170px;
-  margin: 0px ${props => props.theme.margins.small};
+  margin: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile
+      ? `${props.theme.margins.small}`
+      : `0px ${props.theme.margins.small}`};
   text-align: start;
 `
 
@@ -98,7 +106,12 @@ const UserGroupBar = () => {
   }
 
   return (
-    <UserGroupWrapper align='center' direction='column' justify='center'>
+    <UserGroupWrapper
+      isMobile={isMobile}
+      align='center'
+      direction='column'
+      justify={isMobile ? 'flex-start' : 'center'}
+    >
       {!isMobile && (
         <Divider>
           <Title level={3}>My groups</Title>
@@ -116,6 +129,7 @@ const UserGroupBar = () => {
           data.ownGroups.map((ownGroup: IGroupState) => {
             return (
               <UserGroup
+                isMobile={isMobile}
                 actions={[
                   <Icon
                     type='edit'
@@ -143,7 +157,7 @@ const UserGroupBar = () => {
             )
           })}
       </GroupContainer>
-      <Divider />
+      {!isMobile && <Divider />}
     </UserGroupWrapper>
   )
 }

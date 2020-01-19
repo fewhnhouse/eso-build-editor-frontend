@@ -32,7 +32,8 @@ const ListCard = styled(Card)`
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   display: flex;
   flex-direction: column;
-  max-width: ${props => props.theme.widths.large};
+  max-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
+    props.isMobile ? '100%' : props.theme.widths.large};
   margin: 0px;
 `
 const CardTitle = styled(Title)`
@@ -261,6 +262,7 @@ export default ({ isBuild }: { isBuild: boolean }) => {
       align='center'
     >
       <ListCard
+        bordered={!isMobile}
         bodyStyle={{
           padding: 0,
           height: '100%',
