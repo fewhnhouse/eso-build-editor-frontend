@@ -85,19 +85,19 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
-          path='/buildEditor/:id'
+          path='/buildEditor/:pageIndex'
           render={props => <BuildWrapper {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
-          path='/raidEditor/:id'
+          path='/raidEditor/:pageIndex'
           render={props => <RaidWrapper {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
-          path='/groupEditor/:id'
+          path='/groupEditor/:pageIndex'
           render={props => <GroupWrapper {...props} />}
         />
         <Route exact path='/builds' component={BuildHome} />
