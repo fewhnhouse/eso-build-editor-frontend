@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Divider, Icon } from 'antd'
+import { Card, Spin, Typography, Divider, Icon, Button } from 'antd'
 import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
@@ -23,42 +23,20 @@ const GroupContainer = styled(Flex)`
 `
 
 const UserGroup = styled(Card)`
-  margin: ${props => props.theme.margins.mini};
-  min-width: 200px;
-  max-width: 400px;
-  width: 100%;
-  height: 100px;
+  width: 300px;
+  height: 100%;
+  margin: 0px ${props => props.theme.margins.small};
+  text-align: start;
 `
 
-const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+const StyledButton = styled(Button)`
+  margin: 0px ${props => props.theme.margins.small};
+  height: 100%;
+  width: 140px;
 `
 
 const StyledIcon = styled(Icon)`
-  margin-right: 5px;
-`
-
-const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.small};
-  line-height: 1.5;
-  color: ${(props: { newEffect?: boolean }) =>
-    props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
-  text-align: left;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`
-
-const StyledTitle = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
-  line-height: 1.5;
-  font-weight: 500;
-  color: ${props => props.theme.colors.grey.dark};
-  margin-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  text-align: left;
+  font-size: 30px;
 `
 
 const OWN_GROUPS = gql`
@@ -122,29 +100,36 @@ const UserGroupBar = () => {
           data.ownGroups.map((ownGroup: IGroupState) => {
             return (
               <UserGroup
+                actions={[
+                  <Icon
+                    type='edit'
+                    title='Edit'
+                    key='group-edit'
+                    onClick={handleClick(
+                      `/groupEditor/${ownGroup?.id ?? ''}/0`
+                    )}
+                  />,
+                  <Icon
+                    type='select'
+                    title='Open'
+                    key='group-open'
+                    onClick={handleClick(`/groups/${ownGroup?.id ?? ''}`)}
+                  />,
+                ]}
                 key={ownGroup.id}
                 hoverable
-                onClick={handleClick(ownGroup ? ownGroup.id || '' : '')}
               >
-                <StyledTitle>{ownGroup.name}</StyledTitle>
-                <StyledDivider />
-                <Description>{ownGroup.description}</Description>
+                <Card.Meta
+                  title={ownGroup.name}
+                  description={ownGroup.description}
+                ></Card.Meta>
               </UserGroup>
             )
           })}
         {!loading && !isMobile && (
-          <UserGroup
-            onClick={handleAddClick}
-            bodyStyle={{ height: '100%' }}
-            hoverable
-          >
-            <Flex fluid align='center' justify='center'>
-              <Typography.Title style={{ margin: 0 }} level={4}>
-                <StyledIcon type='plus' />
-                Add Group
-              </Typography.Title>
-            </Flex>
-          </UserGroup>
+          <StyledButton size='large'>
+            <StyledIcon type='plus' />
+          </StyledButton>
         )}
       </GroupContainer>
       <Divider />
