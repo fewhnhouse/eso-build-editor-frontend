@@ -96,6 +96,11 @@ const UserGroupBar = () => {
       )}
       {loading && <Spin />}
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
+        {!loading && !isMobile && (
+          <StyledButton size='large' onClick={handleAddClick}>
+            <StyledIcon type='plus' />
+          </StyledButton>
+        )}
         {data &&
           data.ownGroups &&
           data.ownGroups.map((ownGroup: IGroupState) => {
@@ -125,11 +130,6 @@ const UserGroupBar = () => {
               </UserGroup>
             )
           })}
-        {!loading && !isMobile && (
-          <StyledButton size='large' onClick={handleAddClick}>
-            <StyledIcon type='plus' />
-          </StyledButton>
-        )}
       </GroupContainer>
       <Divider />
     </UserGroupWrapper>
