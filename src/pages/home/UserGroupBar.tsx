@@ -39,7 +39,7 @@ const StyledIcon = styled(Icon)`
   font-size: 30px;
 `
 
-const OWN_GROUPS = gql`
+export const OWN_GROUPS = gql`
   query OwnGroups(
     $where: GroupWhereInput
     $orderBy: GroupOrderByInput
