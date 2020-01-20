@@ -294,14 +294,16 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
   const handleSwapView = () => setShowSingle(show => !show)
   return (
     <ReviewContainer>
-      <StyledButton
-        type='primary'
-        shape='circle'
-        size='large'
-        onClick={handleSwapView}
-        icon={showSingle ? 'align-left' : 'unordered-list'}
-      ></StyledButton>
-      {showSingle && (
+      {!isMobile && (
+        <StyledButton
+          type='primary'
+          shape='circle'
+          size='large'
+          onClick={handleSwapView}
+          icon={showSingle ? 'align-left' : 'unordered-list'}
+        ></StyledButton>
+      )}
+      {(showSingle || isMobile) && (
         <SinglePlayerContainer>
           <Select
             showSearch
