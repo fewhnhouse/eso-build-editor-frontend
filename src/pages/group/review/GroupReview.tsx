@@ -81,7 +81,8 @@ const GroupReview = ({ match, local }: IGroupReview) => {
     })
   }, [appDispatch])
 
-  const groupQuery = useQuery(GROUP, { variables: { id } })
+  console.log(local)
+  const groupQuery = useQuery(GROUP, { variables: { id }, skip: local })
 
   const [createGroupCopy, createGroupCopyResult] = useMutation<any, any>(
     CREATE_GROUP
@@ -94,8 +95,10 @@ const GroupReview = ({ match, local }: IGroupReview) => {
   })
 
   useEffect(() => {
-    groupQuery.refetch({ id })
-  }, [loggedIn, groupQuery, id])
+    if (!local) {
+      groupQuery.refetch({ id })
+    }
+  }, [loggedIn, groupQuery, id, local])
 
   useEffect(() => {
     if (data) {

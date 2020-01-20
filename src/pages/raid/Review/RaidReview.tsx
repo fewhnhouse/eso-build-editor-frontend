@@ -60,7 +60,7 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
     })
   }, [appDispatch])
 
-  const raidQuery = useQuery(RAID, { variables: { id } })
+  const raidQuery = useQuery(RAID, { variables: { id }, skip: local })
   const [createRaidCopy, createRaidCopyResult] = useMutation<any, any>(
     CREATE_RAID
   )
@@ -71,8 +71,10 @@ const RaidOverview = ({ match, local }: IRaidOverviewProps) => {
   })
 
   useEffect(() => {
-    raidQuery.refetch({ id })
-  }, [loggedIn, id, raidQuery])
+    if (!local) {
+      raidQuery.refetch({ id })
+    }
+  }, [loggedIn, id, raidQuery, local])
 
   useEffect(() => {
     if (data) {

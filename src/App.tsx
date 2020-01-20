@@ -15,6 +15,7 @@ import { setContext } from 'apollo-link-context'
 import { notification } from 'antd'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -82,17 +83,19 @@ client.onResetStore(async () => cache.writeData({ data }))
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined)
   return (
-    <LoginContext.Provider value={[loggedIn, setLoggedIn]}>
-      <ApolloProvider client={client}>
-        <DndProvider backend={HTML5Backend}>
-          <Router>
-            <ThemeProvider theme={theme}>
-              <AppContainer />
-            </ThemeProvider>
-          </Router>
-        </DndProvider>
-      </ApolloProvider>
-    </LoginContext.Provider>
+    <ErrorBoundary>
+      <LoginContext.Provider value={[loggedIn, setLoggedIn]}>
+        <ApolloProvider client={client}>
+          <DndProvider backend={HTML5Backend}>
+            <Router>
+              <ThemeProvider theme={theme}>
+                <AppContainer />
+              </ThemeProvider>
+            </Router>
+          </DndProvider>
+        </ApolloProvider>
+      </LoginContext.Provider>
+    </ErrorBoundary>
   )
 }
 

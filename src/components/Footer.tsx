@@ -50,7 +50,7 @@ interface IInformation {
 interface IFooterProps {
   information: IInformation[]
   state: IBuildState | IRaidState | IGroupState
-  owner: {
+  owner?: {
     name: string
     id: string
   }

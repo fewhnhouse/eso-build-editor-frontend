@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IBuildState } from '../pages/build/BuildStateContext'
-import { IRole, IRaidState } from '../pages/raid/RaidStateContext'
+import { IBuildState, IBuild } from '../pages/build/BuildStateContext'
+import { IRole, IRaidState, IRaid } from '../pages/raid/RaidStateContext'
 import BuildReviewDetails from '../pages/build/Review/BuildReviewDetails'
 import RaidReviewDetails from '../pages/raid/Review/RaidReviewDetails'
 import { Layout, Spin } from 'antd'
@@ -35,7 +35,7 @@ const StyledSpin = styled(Spin)`
 
 interface IReviewProps {
   local?: boolean
-  data: any
+  data?: IBuild | IRaid
   me: {
     id: string
     name: string
@@ -81,7 +81,6 @@ const Review = ({
         owner,
         description,
         applicationArea,
-        roles,
         published,
         accessRights,
       } = data
@@ -114,10 +113,12 @@ const Review = ({
               {
                 icon: 'team',
                 title: 'Group Size',
-                description: roles.reduce(
-                  (prev: number, curr: IRole) => prev + curr.builds.length,
-                  0
-                ),
+                description: (data as IRaid).roles
+                  .reduce(
+                    (prev: number, curr: IRole) => prev + curr.builds.length,
+                    0
+                  )
+                  .toString(),
               },
             ]
           : []),
@@ -131,9 +132,9 @@ const Review = ({
         <>
           <Container isMobile={isMobile}>
             {isBuild ? (
-              <BuildReviewDetails loadedData={data} />
+              <BuildReviewDetails loadedData={data as IBuildState} />
             ) : (
-              <RaidReviewDetails loadedData={data} />
+              <RaidReviewDetails loadedData={data as IRaidState} />
             )}
           </Container>
           <Footer
@@ -142,7 +143,7 @@ const Review = ({
             onEdit={onEdit}
             onDelete={onDelete}
             owner={owner}
-            state={data}
+            state={data as IBuildState | IRaidState}
             me={me}
             type={isBuild ? 'build' : 'raid'}
             loading={loading}
@@ -155,9 +156,9 @@ const Review = ({
     }
   } else {
     return isBuild ? (
-      <BuildReviewDetails local loadedData={state! as IBuildState} />
+      <BuildReviewDetails local loadedData={state as IBuildState} />
     ) : (
-      <RaidReviewDetails local loadedData={state! as IRaidState} />
+      <RaidReviewDetails local loadedData={state as IRaidState} />
     )
   }
 }

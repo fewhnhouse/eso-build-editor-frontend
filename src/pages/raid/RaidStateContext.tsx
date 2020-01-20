@@ -1,22 +1,31 @@
 import React from 'react'
 import { generalReducer } from './reducers/generalReducer'
 import { buildsReducer } from './reducers/buildsReducer'
-import { IBuild } from '../build/BuildStateContext'
+import { IBuild, AccessRights } from '../build/BuildStateContext'
 
 export interface ISlot {
   id: number
   index: number
 }
 
-export interface IRaidState {
+export interface IRaid {
   id?: string
+  owner?: {
+    id: string
+    name: string
+  }
   name: string
-  applicationArea: string
   description: string
+  applicationArea: string
+  createdAt?: string
+  updatedAt?: string
   published: boolean
+  accessRights: AccessRights
+  roles: IRole[]
+}
+export interface IRaidState extends IRaid {
   canEdit: string[]
   canView: string[]
-  roles: IRole[]
 }
 
 export interface IUser {
@@ -39,6 +48,7 @@ export interface IRole {
 
 export const defaultRaidState: IRaidState = {
   name: '',
+  accessRights: AccessRights.UNLISTED,
   applicationArea: '',
   published: false,
   description: '',

@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { IGroupState } from '../GroupStateContext'
+import { IGroupState, IGroupBuild } from '../GroupStateContext'
 import Flex from '../../../components/Flex'
-import { Divider, Table, Tag, Typography, Tooltip, Button } from 'antd'
+import {
+  Divider,
+  Table,
+  Tag,
+  Typography,
+  Tooltip,
+  Button,
+  Select,
+  List,
+  Avatar,
+} from 'antd'
 import { ISortedBuild } from '../../raid/RaidStateContext'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/GearSlot'
@@ -14,7 +24,44 @@ import Scrollbars from 'react-custom-scrollbars'
 const ReviewContainer = styled.div`
   width: 100%;
   height: calc(100% - 140px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: ${props => props.theme.paddings.medium};
+`
+
+const StyledButton = styled(Button)`
+  position: fixed;
+  top: 100px;
+  right: 40px;
+  z-index: 300;
+  box-shadow: 0px 0px 3px 2px #868686;
+`
+
+const ActionButton = styled(Button)`
+  width: 50px;
+`
+
+const SinglePlayerContainer = styled.div`
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+`
+
+const StyledList = styled(List)`
+  overflow: auto;
+  height: calc(100% - 30px);
+`
+
+const ListMeta = styled(List.Item.Meta)`
+  padding: ${props => props.theme.paddings.small};
+  text-align: start;
+`
+
+const ListItem = styled(List.Item)`
+  padding: 0;
+  margin: ${props => props.theme.margins.small};
 `
 
 const Icon = styled.img`
@@ -28,7 +75,11 @@ interface IGroupReviewDetailsProps {
   loadedData: IGroupState
 }
 export default ({ loadedData }: IGroupReviewDetailsProps) => {
-  const { groupBuilds, raids, members } = loadedData!
+  const { groupBuilds, raids, members } = loadedData
+  const [showSingle, setShowSingle] = useState(true)
+  const [selectedMember, setSelectedMember] = useState<string | undefined>(
+    undefined
+  )
   const flattenedRaidBuilds = raids
     .map(raid => raid.roles)
     .flat()
@@ -127,20 +178,16 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
           jewelrySelection
         )
 
-        const sets = concat.reduce(
-          (prev: ISet[], curr: ISetSelection) => {
-            const isExisting = prev.find(
-              set =>
-                set && curr.selectedSet && set.name === curr.selectedSet.name
-            )
-            if (!isExisting) {
-              return curr.selectedSet ? [...prev, curr.selectedSet] : prev
-            } else {
-              return prev
-            }
-          },
-          [] as ISet[]
-        )
+        const sets = concat.reduce((prev: ISet[], curr: ISetSelection) => {
+          const isExisting = prev.find(
+            set => set && curr.selectedSet && set.name === curr.selectedSet.name
+          )
+          if (!isExisting) {
+            return curr.selectedSet ? [...prev, curr.selectedSet] : prev
+          } else {
+            return prev
+          }
+        }, [] as ISet[])
         return build ? (
           isMobile ? (
             <Typography.Text style={{ margin: 0 }} strong>
@@ -195,7 +242,9 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
                   }}
                 >
                   {sets.map(set => (
-                    <Tag style={{ margin: 5 }}>{set.name}</Tag>
+                    <Tag key={set.id} style={{ margin: 5 }}>
+                      {set.name}
+                    </Tag>
                   ))}
                 </Flex>
               </Scrollbars>
@@ -224,16 +273,109 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     }
   })
 
+  const onChange = (value: string) => {
+    setSelectedMember(value)
+    console.log(`selected ${value}`)
+  }
+
+  const onBlur = () => {
+    console.log('blur')
+  }
+
+  const onFocus = () => {
+    console.log('focus')
+  }
+
+  const onSearch = (val: string) => {
+    console.log('search:', val)
+  }
+
+  const handleClick = (path: string) => () => {}
+  const handleSwapView = () => setShowSingle(show => !show)
   return (
     <ReviewContainer>
-      <Table
-        dataSource={memberSource}
-        columns={columns}
-        scroll={{
-          x: true,
-          y: document.body.clientHeight - 280,
-        }}
-      />
+      <StyledButton
+        type='primary'
+        shape='circle'
+        size='large'
+        onClick={handleSwapView}
+        icon={showSingle ? 'align-left' : 'unordered-list'}
+      ></StyledButton>
+      {showSingle && (
+        <SinglePlayerContainer>
+          <Select
+            showSearch
+            value={selectedMember}
+            size='large'
+            style={{ width: '100%' }}
+            placeholder='Select a person'
+            optionFilterProp='children'
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onSearch={onSearch}
+            filterOption
+          >
+            {members.map((member, index) => (
+              <Select.Option key={index} value={member}>
+                {member}
+              </Select.Option>
+            ))}
+          </Select>
+          <StyledList
+            dataSource={groupBuilds.filter(
+              build => selectedMember && build.members.includes(selectedMember)
+            )}
+            renderItem={(build: any, index: number) => {
+              const actualBuild = build.build
+              return (
+                <ListItem
+                  actions={[
+                    <ActionButton
+                      onClick={handleClick(`/editBuild/${actualBuild.id}/0`)}
+                      size='small'
+                      type='default'
+                      key='list-edit'
+                    >
+                      Edit
+                    </ActionButton>,
+                    <ActionButton
+                      onClick={handleClick(`/builds/${actualBuild.id}`)}
+                      size='small'
+                      type='primary'
+                      key='list-view'
+                    >
+                      View
+                    </ActionButton>,
+                  ]}
+                >
+                  <ListMeta
+                    style={{ textAlign: 'start' }}
+                    avatar={
+                      <Avatar
+                        src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${actualBuild.esoClass}.png`}
+                      />
+                    }
+                    title={actualBuild.name}
+                    description={actualBuild.description}
+                  />
+                </ListItem>
+              )
+            }}
+          />
+        </SinglePlayerContainer>
+      )}
+
+      {!isMobile && !showSingle && (
+        <Table
+          dataSource={memberSource}
+          columns={columns}
+          scroll={{
+            x: true,
+            y: document.body.clientHeight - 280,
+          }}
+        />
+      )}
     </ReviewContainer>
   )
 }

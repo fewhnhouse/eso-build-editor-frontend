@@ -77,7 +77,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     })
   }, [appDispatch])
 
-  const buildQuery = useQuery(BUILD, { variables: { id } })
+  const buildQuery = useQuery(BUILD, { variables: { id }, skip: local })
   const [createBuildCopy, createBuildCopyResult] = useMutation<any, any>(
     CREATE_BUILD
   )
