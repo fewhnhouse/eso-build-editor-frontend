@@ -34,10 +34,8 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
   const [showSingle, setShowSingle] = useState(true)
 
   const flattenedRaidBuilds = raids
-    .map(raid => raid.roles)
-    .flat()
-    .map(roles => roles.builds)
-    .flat()
+    .flatMap(raid => raid.roles)
+    .flatMap(roles => roles.builds)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
@@ -48,20 +46,29 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     []
   )
 
-  const memberSource = groupBuilds.map((build, index) => {
-    const finalMembers = members.reduce((prev, curr) => {
-      const found = build.members.find(buildMember => buildMember === curr)
-      return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
-    }, {})
-    const actualBuild = uniqueRaidBuilds.find(
-      uniqueBuild => uniqueBuild.build.id === build.build.id
-    )
-    return {
-      key: index,
-      build: actualBuild ? actualBuild.build : undefined,
-      ...finalMembers,
-    }
-  })
+  const memberSource = groupBuilds
+    .filter(groupBuild => {
+      const actualBuild = uniqueRaidBuilds.find(
+        uniqueBuild => uniqueBuild.build.id === groupBuild.build.id
+      )
+      return !!actualBuild
+    })
+    .map((groupBuild, index) => {
+      const finalMembers = members.reduce((prev, curr) => {
+        const found = groupBuild.members.find(
+          buildMember => buildMember === curr
+        )
+        return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
+      }, {})
+      const actualBuild = uniqueRaidBuilds.find(
+        uniqueBuild => uniqueBuild.build.id === groupBuild.build.id
+      )
+      return {
+        key: index,
+        build: actualBuild ? actualBuild.build : undefined,
+        ...finalMembers,
+      }
+    })
 
   const columns = getColumns(isMobile, members)
 
