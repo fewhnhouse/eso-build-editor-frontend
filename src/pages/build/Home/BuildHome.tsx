@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Card, Collapse, Skeleton, Empty, Icon, Avatar } from 'antd'
+import { Collapse, Skeleton, Empty } from 'antd'
 import { useQuery } from 'react-apollo'
 import { BUILD_REVISIONS } from '../../home/UserHomeCard'
 import { IBuildRevision, IBuild } from '../BuildStateContext'
 import { Redirect } from 'react-router-dom'
+import SimpleCard from '../../../components/SimpleCard'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`
   padding: ${props => props.theme.paddings.medium};
   overflow: auto;
-`
-
-const BuildCard = styled(Card)`
-  margin: ${props => `0px ${props.theme.margins.small}`};
-  width: 300px;
 `
 
 const BuildsContainer = styled(Flex)`
@@ -87,33 +83,15 @@ export default () => {
                   builds
                     .filter(build => build.esoClass === esoClass)
                     .map(build => (
-                      <BuildCard
-                        actions={[
-                          <Icon
-                            onClick={handleRedirect(`/editBuild/${build.id}/0`)}
-                            key='build-edit'
-                            type='edit'
-                            title='Edit'
-                          />,
-                          <Icon
-                            onClick={handleRedirect(`/builds/${build.id}`)}
-                            key='build-open'
-                            type='select'
-                            title='Open'
-                          />,
-                        ]}
+                      <SimpleCard
                         key={build.id}
-                      >
-                        <Card.Meta
-                          avatar={
-                            <Avatar
-                              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
-                            />
-                          }
-                          title={build.name}
-                          description={build.description}
-                        />
-                      </BuildCard>
+                        item={build}
+                        onEditRedirect={handleRedirect(
+                          `/editBuild/${build.id}/0`
+                        )}
+                        onOpenRedirect={handleRedirect(`/builds/${build.id}`)}
+                        imageSrc={build.esoClass}
+                      />
                     ))
                 ) : (
                   <Empty />
