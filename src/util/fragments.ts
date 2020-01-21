@@ -310,13 +310,9 @@ export const group = gql`
     description
     accessRights
     members
-    raids {
-      ...Raid
-    }
     groupBuilds {
       ...GroupBuild
     }
   }
-  ${variableRaid(reducedBuild)}
   ${groupBuild}
 `
