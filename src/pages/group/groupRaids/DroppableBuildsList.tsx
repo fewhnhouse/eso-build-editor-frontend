@@ -1,18 +1,21 @@
 import React, { useContext } from 'react'
-import { List } from 'antd'
+import { List, Empty } from 'antd'
 import styled from 'styled-components'
 import { useTrail } from 'react-spring'
 import Scrollbars from 'react-custom-scrollbars'
-import { IRaidState } from '../../raid/RaidStateContext'
-import { applicationAreas } from '../../build/RaceAndClass/RaceClass'
 import { useDrop } from 'react-dnd'
 import { GroupContext } from '../GroupStateContext'
-import DraggableRaid from './DraggableRaid'
+import { IBuild } from '../../build/BuildStateContext'
+import DraggableBuild from './DraggableBuild'
 
 const StyledScrollbars = styled(Scrollbars)`
-  max-width: 420px;
+  max-width: 300px;
   width: 100%;
-  min-width: 370px;
+  min-width: 300px;
+`
+
+const StyledEmpty = styled(Empty)`
+  margin-top: ${props => props.theme.margins.medium};
 `
 
 const StyledList = styled(List)`
@@ -30,21 +33,21 @@ const StyledDropContainer = styled.div`
 `
 
 interface IRaidsListProps {
-  raids: IRaidState[]
+  builds: IBuild[]
   loading?: boolean
   dropType: string
   dispatchType: string
 }
 
 export default ({
-  raids,
+  builds,
   loading,
   dropType,
   dispatchType,
 }: IRaidsListProps) => {
   const [, dispatch] = useContext(GroupContext)
 
-  const trail = useTrail(raids.length, {
+  const trail = useTrail(builds.length, {
     opacity: 1,
     transform: 'translate(0px, 0px)',
     from: {
@@ -56,10 +59,13 @@ export default ({
 
   const [{ canDrop }, drop] = useDrop({
     accept: dropType,
-    drop: (raid: any, monitor) => {
+    drop: (
+      dropContext: { type: 'addBuild' | 'removeBuild'; build: IBuild },
+      monitor
+    ) => {
       dispatch!({
         type: dispatchType,
-        payload: { raid },
+        payload: { build: dropContext.build },
       })
     },
     collect: monitor => ({
@@ -71,29 +77,28 @@ export default ({
   return (
     <StyledScrollbars autoHide>
       <StyledDropContainer canDrop={canDrop} dropType={dropType} ref={drop}>
-        <StyledList
-          loading={loading}
-          dataSource={trail}
-          renderItem={(style: any, index) => {
-            const raid = raids[index]
-            const size = raid.roles.reduce((prev, curr) => {
-              return prev + curr.builds.length
-            }, 0)
-            const applicationArea = applicationAreas.find(
-              area => area.key === raid.applicationArea
-            )
+        {builds.length ? (
+          <StyledList
+            loading={loading}
+            dataSource={trail}
+            renderItem={(style: any, index) => {
+              const build = builds[index]
 
-            return (
-              <DraggableRaid
-                size={size}
-                applicationArea={applicationArea ? applicationArea.label : ''}
-                raid={raid}
-                style={style}
-                dragType={dropType === 'addRaid' ? 'removeRaid' : 'addRaid'}
-              />
-            )
-          }}
-        />
+              return (
+                <DraggableBuild
+                  customWidth='290px'
+                  build={build}
+                  style={style}
+                  dragType={
+                    dropType === 'addBuild' ? 'removeBuild' : 'addBuild'
+                  }
+                />
+              )
+            }}
+          />
+        ) : (
+          <StyledEmpty description='No builds found.' />
+        )}
       </StyledDropContainer>
     </StyledScrollbars>
   )

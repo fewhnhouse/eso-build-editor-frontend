@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import RemoteRaidMenu from './RemoteRaidMenu'
-import SelectedRaidMenu from './SelectedRaidMenu'
+import RemoteBuildMenu from './RemoteBuildMenu'
+import SelectedBuildMenu from './SelectedBuildMenu'
 import { GroupContext } from '../GroupStateContext'
 
 const StyledDiv = styled.div`
@@ -22,8 +22,8 @@ export default ({ edit }: { edit?: boolean }) => {
   }, [state, edit])
   return (
     <StyledDiv>
-      <RemoteRaidMenu />
-      <SelectedRaidMenu />
+      <RemoteBuildMenu />
+      <SelectedBuildMenu />
     </StyledDiv>
   )
 }

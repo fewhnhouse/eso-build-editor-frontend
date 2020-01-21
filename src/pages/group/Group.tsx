@@ -130,12 +130,7 @@ export default ({
   const handleSave = async () => {
     if (edit) {
       try {
-        await handleEditSave(
-          state,
-          updateGroup,
-          initialGroupBuilds,
-          initialRaids
-        )
+        await handleEditSave(state, updateGroup, initialGroupBuilds)
       } catch (e) {
         notification.error({
           message: 'Group update failed',

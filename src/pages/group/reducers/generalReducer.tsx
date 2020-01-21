@@ -1,63 +1,39 @@
 import { IGroupAction, IGroupState } from '../GroupStateContext'
-import { IRaidState } from '../../raid/RaidStateContext'
 import { IBuild } from '../../build/BuildStateContext'
 
 export const generalReducer = (state: IGroupState, action: IGroupAction) => {
   switch (action.type) {
-    case 'ADD_RAID': {
-      const { raid }: { raid: IRaidState } = action.payload
-      const newRaids = [...state.raids, raid]
-      const flattenedBuilds = newRaids
-        .map(raid => raid.roles)
-        .flat()
-        .map(role => role.builds)
-        .flat()
-        .map(sortedBuild => sortedBuild.build)
-      const uniqueBuilds = flattenedBuilds.reduce<IBuild[]>(
-        (prev, curr) =>
-          prev.find(build => build.id === curr.id) ? prev : [...prev, curr],
-        []
-      )
-
-      const uniqueMembers = uniqueBuilds.map(build => {
-        const groupBuild = state.groupBuilds.find(
-          groupBuild => groupBuild.build.id === build.id
-        )
-        return groupBuild || { build, members: [] }
-      })
-
+    case 'SET_CURRENT_CLASS': {
+      const { currentClass } = action.payload
       return {
         ...state,
-        raids: newRaids,
-        groupBuilds: uniqueMembers,
+        currentClass,
       }
     }
-    case 'REMOVE_RAID': {
-      const { raid } = action.payload
-      const newRaids = state.raids.filter(stateRaid => stateRaid.id !== raid.id)
-      const flattenedBuilds = newRaids
-        .map(raid => raid.roles)
-        .flat()
-        .map(role => role.builds)
-        .flat()
-        .map(sortedBuild => sortedBuild.build)
-      const uniqueBuilds = flattenedBuilds.reduce<IBuild[]>(
-        (prev, curr) =>
-          prev.find(build => build.id === curr.id) ? prev : [...prev, curr],
-        []
-      )
 
-      const uniqueMembers = uniqueBuilds.map(build => {
-        const member = state.groupBuilds.find(
-          member => member.build.id === build.id
-        )
-        return member || { build, members: [] }
-      })
+    case 'ADD_BUILD': {
+      const { build }: { build: IBuild } = action.payload
+      console.log(build, state.groupBuilds)
+      const newBuilds = state.groupBuilds.find(
+        groupBuild => groupBuild.build.id === build.id
+      )
+        ? [...state.groupBuilds]
+        : [...state.groupBuilds, { build, members: [] }]
 
       return {
         ...state,
-        raids: newRaids,
-        groupBuilds: uniqueMembers,
+        groupBuilds: newBuilds,
+      }
+    }
+    case 'REMOVE_BUILD': {
+      const { build }: { build: IBuild } = action.payload
+      const newBuilds = state.groupBuilds.filter(
+        groupBuild => groupBuild.build.id !== build.id
+      )
+
+      return {
+        ...state,
+        groupBuilds: newBuilds,
       }
     }
     case 'SET_GROUP_NAME': {

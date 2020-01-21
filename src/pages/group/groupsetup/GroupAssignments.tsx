@@ -1,23 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Select, Divider } from 'antd'
-import gql from 'graphql-tag'
-import { raid } from '../../../util/fragments'
-import { GroupContext, IGroupBuild } from '../GroupStateContext'
-import { ISortedBuild } from '../../raid/RaidStateContext'
 import BuildCard from '../../raid/builds/BuildCard'
-import { applicationAreas } from '../../raid/general/RaidGeneral'
+import { classes } from '../../build/RaceAndClass/data'
+import { GroupContext } from '../GroupStateContext'
 
 const { Option } = Select
-export const RAID = gql`
-  query Raids($id: ID!) {
-    raid(id: $id) {
-      ...Raid
-    }
-  }
-  ${raid}
-`
+
 const StyledSelect = styled(Select)`
   width: 100%;
 `
@@ -40,43 +30,30 @@ const MembersContainer = styled(Flex)`
 
 export default () => {
   const [state] = useContext(GroupContext)
-  const { raids } = state!
+  const { groupBuilds } = state!
 
-  const flattenedRaidBuilds = raids
-    .map(raid => raid.roles)
-    .flat()
-    .map(roles => roles.builds)
-    .flat()
-
-  const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
-    (prev, curr) =>
-      prev.find(build => build.build.id === curr.build.id)
-        ? prev
-        : [...prev, curr],
-    []
-  )
   return (
     <AssignmentContainer>
-      {applicationAreas.map(area => {
-        const areaBuilds = uniqueRaidBuilds.filter(
-          build => build.build.applicationArea === area.key
+      {classes.map(esoClass => {
+        const classBuilds = groupBuilds.filter(
+          groupBuild => groupBuild.build.esoClass === esoClass.title
         )
-        console.log(areaBuilds)
 
-        return areaBuilds.length ? (
+        return classBuilds.length ? (
           <>
-            <Divider>{area.label}</Divider>
+            <Divider>{esoClass.title}</Divider>
             <BuildsContainer
               direction='row'
               justify='flex-start'
               align='center'
             >
-              {areaBuilds.map(build => (
+              {classBuilds.map(groupBuild => (
                 <BuildCard
-                  item={build.build}
+                  key={groupBuild.build.id}
+                  item={groupBuild.build}
                   draggable={false}
                   additionalContent={
-                    <MemberSelector id={build.build.id || ''} />
+                    <MemberSelector id={groupBuild.build.id || ''} />
                   }
                 />
               ))}
@@ -90,44 +67,10 @@ export default () => {
 
 const MemberSelector = ({ id }: { id: string }) => {
   const [state, dispatch] = useContext(GroupContext)
-  const { members, groupBuilds, raids } = state!
-  const [groupBuild, setGroupBuild] = useState<IGroupBuild | undefined>(
-    undefined
-  )
+  const { members, groupBuilds } = state!
 
-  useEffect(() => {
-    const groupBuild = groupBuilds.find(member => member.build.id === id)
-    if (!groupBuild) {
-      const flattenedRaidBuilds = raids
-        .map(raid => raid.roles)
-        .flat()
-        .map(roles => roles.builds)
-        .flat()
+  const groupBuild = groupBuilds.find(build => build.build.id === id)
 
-      const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
-        (prev, curr) =>
-          prev.find(build => build.build.id === curr.build.id)
-            ? prev
-            : [...prev, curr],
-        []
-      )
-
-      const build: ISortedBuild | undefined = uniqueRaidBuilds.find(
-        sortedBuild => sortedBuild.build.id === id
-      )
-
-      if (build) {
-        const newGroupBuild = { members: [], build: build.build }
-        dispatch!({
-          type: 'ADD_GROUP_BUILD',
-          payload: { groupBuild: newGroupBuild },
-        })
-        setGroupBuild(newGroupBuild)
-      }
-    } else {
-      setGroupBuild(groupBuild)
-    }
-  }, [groupBuilds, raids, dispatch, id])
   const handleSelectChange = (values: unknown) => {
     dispatch!({
       type: 'SET_BUILD_MEMBERS',

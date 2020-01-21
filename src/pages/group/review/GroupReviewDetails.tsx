@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { IGroupState } from '../GroupStateContext'
 import { Table, Button } from 'antd'
-import { ISortedBuild } from '../../raid/RaidStateContext'
 import { useMediaQuery } from 'react-responsive'
 import { getColumns } from './columns'
 import SingleGroupReview from './SingleGroupReview'
@@ -30,45 +29,21 @@ interface IGroupReviewDetailsProps {
   loadedData: IGroupState
 }
 export default ({ loadedData }: IGroupReviewDetailsProps) => {
-  const { groupBuilds, raids, members } = loadedData
-  const [showSingle, setShowSingle] = useState(true)
-
-  const flattenedRaidBuilds = raids
-    .flatMap(raid => raid.roles)
-    .flatMap(roles => roles.builds)
+  const { groupBuilds, members } = loadedData
   const isMobile = useMediaQuery({ maxWidth: 800 })
+  const [showSingle, setShowSingle] = useState(false)
 
-  const uniqueRaidBuilds = flattenedRaidBuilds.reduce<ISortedBuild[]>(
-    (prev, curr) =>
-      prev.find(build => build.build.id === curr.build.id)
-        ? prev
-        : [...prev, curr],
-    []
-  )
-
-  const memberSource = groupBuilds
-    .filter(groupBuild => {
-      const actualBuild = uniqueRaidBuilds.find(
-        uniqueBuild => uniqueBuild.build.id === groupBuild.build.id
-      )
-      return !!actualBuild
-    })
-    .map((groupBuild, index) => {
-      const finalMembers = members.reduce((prev, curr) => {
-        const found = groupBuild.members.find(
-          buildMember => buildMember === curr
-        )
-        return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
-      }, {})
-      const actualBuild = uniqueRaidBuilds.find(
-        uniqueBuild => uniqueBuild.build.id === groupBuild.build.id
-      )
-      return {
-        key: index,
-        build: actualBuild ? actualBuild.build : undefined,
-        ...finalMembers,
-      }
-    })
+  const memberSource = groupBuilds.map((groupBuild, index) => {
+    const finalMembers = members.reduce((prev, curr) => {
+      const found = groupBuild.members.find(buildMember => buildMember === curr)
+      return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
+    }, {})
+    return {
+      key: index,
+      build: groupBuild.build ?? undefined,
+      ...finalMembers,
+    }
+  })
 
   const columns = getColumns(isMobile, members)
 
