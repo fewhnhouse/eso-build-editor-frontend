@@ -18,6 +18,7 @@ const Description = styled.p`
 const StyledCard = styled(Card)`
   text-align: left;
   width: ${(props: { width: string }) => props.width};
+  height: 100px;
 `
 
 interface IDraggableRaidProps {

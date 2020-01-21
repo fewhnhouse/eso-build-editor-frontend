@@ -206,7 +206,10 @@ export default ({
             title='General Information'
             description='Add general group info.'
           />
-          <StyledStep title='Group raids' description='Add raids to a group.' />
+          <StyledStep
+            title='Group builds'
+            description='Add builds to a group.'
+          />
           <StyledStep
             title='Raid Members'
             description='Assign members to groups.'
