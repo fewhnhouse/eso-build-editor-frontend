@@ -11,8 +11,8 @@ import {
   WeaponType,
   ISetSelection,
 } from '../BuildStateContext'
-import { ISet } from '../../../components/GearSlot'
-import GearCard from '../../../components/GearCard'
+import { ISet } from '../../../components/gear/GearSlot'
+import GearCard from '../../../components/gear/GearCard'
 import SetMenu from './SetMenu'
 import Scrollbars from 'react-custom-scrollbars'
 

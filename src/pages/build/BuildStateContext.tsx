@@ -1,8 +1,8 @@
 import React from 'react' // { useReducer }
-import { ISkill } from '../../components/SkillSlot'
+import { ISkill } from '../../components/skill/SkillSlot'
 import { skillReducer } from './reducers/skillReducer'
 import { skillBarReducer } from './reducers/skillBarReducer'
-import { ISet } from '../../components/GearSlot'
+import { ISet } from '../../components/gear/GearSlot'
 import { setReducer } from './reducers/setReducer'
 import { SelectValue } from 'antd/lib/select'
 import { raceNameReducer } from './reducers/raceNameReducer'

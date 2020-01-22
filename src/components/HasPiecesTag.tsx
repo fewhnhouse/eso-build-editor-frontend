@@ -1,5 +1,5 @@
 import React from 'react'
-import { ISet } from './GearSlot'
+import { ISet } from './gear/GearSlot'
 import styled from 'styled-components'
 
 const IconImg = styled.img`

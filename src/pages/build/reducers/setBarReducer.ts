@@ -7,8 +7,8 @@ import {
   TwohandedWeapon,
   SetTab,
   ISetSelection,
-} from '../BuildStateContext';
-import { ISet } from '../../../components/GearSlot';
+} from '../BuildStateContext'
+import { ISet } from '../../../components/gear/GearSlot'
 
 const getActualSlot = (slot: Slot, barSelection: ISetSelection[]) => {
   if (slot === Slot.eitherHand) {
@@ -22,7 +22,7 @@ const getActualSlot = (slot: Slot, barSelection: ISetSelection[]) => {
       return Slot.mainHand
     }
   } else {
-    return slot;
+    return slot
   }
 }
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
@@ -35,29 +35,29 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         icon,
         weaponType,
       }: {
-        set: ISet;
-        slot: Slot;
-        group: string;
-        icon: string;
-        weaponType: OnehandedWeapon | TwohandedWeapon | undefined;
-      } = action.payload;
-      const { setTabKey, frontbarSelection, backbarSelection } = state!;
+        set: ISet
+        slot: Slot
+        group: string
+        icon: string
+        weaponType: OnehandedWeapon | TwohandedWeapon | undefined
+      } = action.payload
+      const { setTabKey, frontbarSelection, backbarSelection } = state!
       if (setTabKey === SetTab.jewelry) {
         return {
           ...state,
           jewelrySelection: state.jewelrySelection.map(jewelry =>
             jewelry.slot === slot
               ? {
-                selectedSet: set,
-                slot,
-                icon,
-                glyph: jewelry.glyph,
-                trait: jewelry.trait,
-                id: jewelry.id,
-              }
+                  selectedSet: set,
+                  slot,
+                  icon,
+                  glyph: jewelry.glyph,
+                  trait: jewelry.trait,
+                  id: jewelry.id,
+                }
               : jewelry
           ),
-        };
+        }
       } else if (setTabKey === SetTab.frontbar) {
         const actualSlot = getActualSlot(slot, frontbarSelection)
 
@@ -67,45 +67,45 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
             frontbarSelection: state.frontbarSelection.map(frontbar =>
               frontbar.slot === actualSlot
                 ? {
-                  selectedSet: set,
-                  slot: actualSlot,
-                  icon,
-                  type: state.weaponType,
-                  glyph: frontbar.glyph,
-                  trait: frontbar.trait,
-                  id: frontbar.id,
-                  weaponType,
-                }
+                    selectedSet: set,
+                    slot: actualSlot,
+                    icon,
+                    type: state.weaponType,
+                    glyph: frontbar.glyph,
+                    trait: frontbar.trait,
+                    id: frontbar.id,
+                    weaponType,
+                  }
                 : {
-                  selectedSet: undefined,
-                  slot: frontbar.slot,
-                  type: undefined,
-                  icon: undefined,
-                  trait: undefined,
-                  glyph: undefined,
-                  weaponType: undefined,
-                  id: undefined,
-                }
+                    selectedSet: undefined,
+                    slot: frontbar.slot,
+                    type: undefined,
+                    icon: undefined,
+                    trait: undefined,
+                    glyph: undefined,
+                    weaponType: undefined,
+                    id: undefined,
+                  }
             ),
-          };
+          }
         }
         return {
           ...state,
           frontbarSelection: state.frontbarSelection.map(frontbar =>
             frontbar.slot === actualSlot
               ? {
-                selectedSet: set,
-                slot: actualSlot,
-                icon,
-                type: state.weaponType,
-                glyph: frontbar.glyph,
-                trait: frontbar.trait,
-                weaponType,
-                id: frontbar.id,
-              }
+                  selectedSet: set,
+                  slot: actualSlot,
+                  icon,
+                  type: state.weaponType,
+                  glyph: frontbar.glyph,
+                  trait: frontbar.trait,
+                  weaponType,
+                  id: frontbar.id,
+                }
               : frontbar
           ),
-        };
+        }
       } else if (setTabKey === SetTab.backbar) {
         const actualSlot = getActualSlot(slot, backbarSelection)
         if (state.weaponType === WeaponType.twohanded) {
@@ -114,6 +114,33 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
             backbarSelection: state.backbarSelection.map(backbar =>
               backbar.slot === actualSlot
                 ? {
+                    selectedSet: set,
+                    slot: actualSlot,
+                    icon,
+                    type: state.weaponType,
+                    glyph: backbar.glyph,
+                    trait: backbar.trait,
+                    weaponType,
+                    id: backbar.id,
+                  }
+                : {
+                    selectedSet: undefined,
+                    slot: backbar.slot,
+                    type: undefined,
+                    icon: undefined,
+                    trait: undefined,
+                    glyph: undefined,
+                    weaponType: undefined,
+                    id: undefined,
+                  }
+            ),
+          }
+        }
+        return {
+          ...state,
+          backbarSelection: state.backbarSelection.map(backbar =>
+            backbar.slot === actualSlot
+              ? {
                   selectedSet: set,
                   slot: actualSlot,
                   icon,
@@ -123,7 +150,8 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   weaponType,
                   id: backbar.id,
                 }
-                : {
+              : backbar.type === WeaponType.twohanded
+              ? {
                   selectedSet: undefined,
                   slot: backbar.slot,
                   type: undefined,
@@ -133,74 +161,48 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
                   weaponType: undefined,
                   id: undefined,
                 }
-            ),
-          };
-        }
-        return {
-          ...state,
-          backbarSelection: state.backbarSelection.map(backbar =>
-            backbar.slot === actualSlot
-              ? {
-                selectedSet: set,
-                slot: actualSlot,
-                icon,
-                type: state.weaponType,
-                glyph: backbar.glyph,
-                trait: backbar.trait,
-                weaponType,
-                id: backbar.id,
-              }
-              : backbar.type === WeaponType.twohanded ? {
-                selectedSet: undefined,
-                slot: backbar.slot,
-                type: undefined,
-                icon: undefined,
-                trait: undefined,
-                glyph: undefined,
-                weaponType: undefined,
-                id: undefined,
-              } : backbar
+              : backbar
           ),
-        };
-      } else if (setTabKey === SetTab.armor && group === "bigpieces") {
+        }
+      } else if (setTabKey === SetTab.armor && group === 'bigpieces') {
         return {
           ...state,
           bigPieceSelection: state.bigPieceSelection.map(bigPiece =>
             bigPiece.slot === slot
               ? {
-                selectedSet: set,
-                slot,
-                icon,
-                type: state.armorType,
-                glyph: bigPiece.glyph,
-                trait: bigPiece.trait,
-                id: bigPiece.id,
-              }
+                  selectedSet: set,
+                  slot,
+                  icon,
+                  type: state.armorType,
+                  glyph: bigPiece.glyph,
+                  trait: bigPiece.trait,
+                  id: bigPiece.id,
+                }
               : bigPiece
           ),
-        };
+        }
       } else if (setTabKey === SetTab.armor && group === 'smallpieces') {
         return {
           ...state,
           smallPieceSelection: state.smallPieceSelection.map(smallPiece =>
             smallPiece.slot === slot
               ? {
-                selectedSet: set,
-                slot,
-                icon,
-                type: state.armorType,
-                glyph: smallPiece.glyph,
-                trait: smallPiece.trait,
-                id: smallPiece.id,
-              }
+                  selectedSet: set,
+                  slot,
+                  icon,
+                  type: state.armorType,
+                  glyph: smallPiece.glyph,
+                  trait: smallPiece.trait,
+                  id: smallPiece.id,
+                }
               : smallPiece
           ),
-        };
+        }
       }
       return {
         ...state,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}

@@ -5,7 +5,7 @@ import Scrollbars from 'react-custom-scrollbars'
 import React from 'react'
 import { ColumnFilterItem } from 'antd/lib/table'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
-import { ISet } from '../../../components/GearSlot'
+import { ISet } from '../../../components/gear/GearSlot'
 import styled from 'styled-components'
 
 const Icon = styled.img`

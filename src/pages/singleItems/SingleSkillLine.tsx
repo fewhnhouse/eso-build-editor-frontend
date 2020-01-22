@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Flex from '../../components/Flex'
 import { RouteComponentProps, withRouter } from 'react-router'
-import SkillsDisplay from '../../components/SkillsDisplay'
+import SkillsDisplay from '../../components/skill/SkillsDisplay'
 import styled from 'styled-components'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'

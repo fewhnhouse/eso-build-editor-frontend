@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Card, Divider, Popover, Modal } from 'antd'
 import styled from 'styled-components'
-import { BuildContext } from '../pages/build/BuildStateContext'
+import { BuildContext } from '../../pages/build/BuildStateContext'
 import { ISkill } from './SkillSlot'
-import Flex from './Flex'
+import Flex from '../Flex'
 import { useMediaQuery } from 'react-responsive'
-import { ITheme } from './theme'
+import { ITheme } from '../theme'
 
 const StyledCard = styled(Card)`
   margin: ${props => props.theme.margins.mini} 0px;

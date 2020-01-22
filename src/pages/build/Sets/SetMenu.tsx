@@ -1,7 +1,7 @@
 import React, { useContext, useState, Dispatch, SetStateAction } from 'react'
 import { List, Tag, Divider, Button, Input, Select } from 'antd'
 import styled from 'styled-components'
-import { ISet } from '../../../components/GearSlot'
+import { ISet } from '../../../components/gear/GearSlot'
 import Flex from '../../../components/Flex'
 import { animated, useTrail } from 'react-spring'
 import gql from 'graphql-tag'

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Divider, Empty } from 'antd'
-import GearView from '../../../components/GearView'
+import GearView from '../../../components/gear/GearView'
 import { BuildContext, WeaponType, SetTab } from '../BuildStateContext'
 import Scrollbars from 'react-custom-scrollbars'
 import { specialWeaponSets, getSetups } from './selectionDetails'

@@ -2,7 +2,7 @@ import React from 'react'
 import Flex from '../../components/Flex'
 import { MenuCard, ContentCard } from './Overview'
 import SkillMenu from '../build/Skills/SkillMenu'
-import SkillsDisplay from '../../components/SkillsDisplay'
+import SkillsDisplay from '../../components/skill/SkillsDisplay'
 import styled from 'styled-components'
 import { ITheme } from '../../components/theme'
 

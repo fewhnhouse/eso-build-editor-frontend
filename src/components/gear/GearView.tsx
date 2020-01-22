@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Typography } from 'antd'
-import Flex from './Flex'
-import GearSlot, { DisplaySlot } from './GearSlot'
-import { ISetSelection, Slot } from '../pages/build/BuildStateContext'
+import Flex from '../Flex'
+import GearSlot from './GearSlot'
+import DisplaySlot from './DisplaySlot'
+import { ISetSelection, Slot } from '../../pages/build/BuildStateContext'
 
 const GearView = styled.div``
 

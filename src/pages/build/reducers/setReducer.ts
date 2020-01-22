@@ -6,7 +6,7 @@ import {
   SetTab,
 } from './../BuildStateContext'
 import { IBuildAction, IBuildState } from '../BuildStateContext'
-import { ISet } from '../../../components/GearSlot'
+import { ISet } from '../../../components/gear/GearSlot'
 
 interface ISelectPayload {
   value: IModification
@@ -57,14 +57,14 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
           ? selectedSet.has_medium_armor === 1
             ? ArmorType.mediumArmor
             : selectedSet.has_heavy_armor === 1
-              ? ArmorType.heavyArmor
-              : ArmorType.lightArmor
+            ? ArmorType.heavyArmor
+            : ArmorType.lightArmor
           : state.armorType,
         setTabKey: hasWeapons
           ? SetTab.frontbar
           : hasArmor
-            ? SetTab.armor
-            : SetTab.jewelry,
+          ? SetTab.armor
+          : SetTab.jewelry,
       }
     case 'SET_WEAPON_TYPE':
       const { weaponType } = action.payload
@@ -168,10 +168,10 @@ const updateStats = (
   return stateStats.map(stat =>
     slots.includes(stat.slot)
       ? {
-        ...stat,
-        glyph: type === 'selectedGlyphs' ? value : stat.glyph,
-        trait: type === 'selectedTraits' ? value : stat.trait,
-      }
+          ...stat,
+          glyph: type === 'selectedGlyphs' ? value : stat.glyph,
+          trait: type === 'selectedTraits' ? value : stat.trait,
+        }
       : stat
   )
 }

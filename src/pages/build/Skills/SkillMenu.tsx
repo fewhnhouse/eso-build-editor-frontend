@@ -13,6 +13,7 @@ import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import Scrollbars from 'react-custom-scrollbars'
 import { Redirect } from 'react-router'
+import { IBuildState, IBuildAction } from '../BuildStateContext'
 const { SubMenu } = Menu
 
 const EsoIcon = styled.img`
@@ -118,7 +119,10 @@ export const skillLines = [
   {
     title: 'Alliance War',
     icon: castle,
-    items: [{ title: 'Assault', id: 35 }, { title: 'Support', id: 36 }],
+    items: [
+      { title: 'Assault', id: 35 },
+      { title: 'Support', id: 36 },
+    ],
   },
   {
     title: 'Racial',
@@ -182,13 +186,16 @@ const StyledMenu = styled(Menu)`
 `
 
 interface ISkillMenuProps {
-  context: React.Context<any>
+  context: React.Context<
+    [(IBuildState | undefined)?, (React.Dispatch<IBuildAction> | undefined)?]
+  >
+
   collapsable?: boolean
   singleClass?: boolean
   style?: React.CSSProperties
 }
 
-export default ({
+const SkillMenu = ({
   context,
   collapsable,
   singleClass,
@@ -196,6 +203,7 @@ export default ({
 }: ISkillMenuProps) => {
   const [collapsed, setCollapsed] = useState(false)
   const [state, dispatch] = useContext(context)
+  const { skillLine, esoClass } = state!
   const [redirect, setRedirect] = useState('')
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -215,7 +223,7 @@ export default ({
   }
 
   const myClass = classSkillLines.find(
-    esoClass => esoClass.esoClass === state!.esoClass
+    existingClass => existingClass.esoClass === esoClass
   )
 
   const shownClasses = singleClass
@@ -255,7 +263,7 @@ export default ({
         <StyledMenu
           onClick={handleClick}
           collapsed={collapsed}
-          defaultSelectedKeys={state!.skillLine ? [state!.skillLine + ''] : []}
+          defaultSelectedKeys={skillLine ? [skillLine + ''] : []}
           defaultOpenKeys={[]}
           mode='inline'
         >
@@ -281,3 +289,5 @@ export default ({
     </MenuContainer>
   )
 }
+
+export default SkillMenu

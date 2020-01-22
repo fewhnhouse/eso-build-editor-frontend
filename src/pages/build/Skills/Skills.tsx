@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import Menu from './SkillMenu'
 import { BuildContext } from '../BuildStateContext'
 import AbilityBar from './AbilityBar'
-import { ISkill } from '../../../components/SkillSlot'
-import SkillsDisplay from '../../../components/SkillsDisplay'
+import { ISkill } from '../../../components/skill/SkillSlot'
+import SkillsDisplay from '../../../components/skill/SkillsDisplay'
 
 const Content = styled.div`
   width: 100%;

@@ -1,4 +1,4 @@
-import { ISet } from './../../../components/GearSlot'
+import { ISet } from '../../../components/gear/GearSlot'
 import {
   Slot,
   TwohandedWeapon,

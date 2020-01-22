@@ -1,10 +1,9 @@
 import React from 'react'
 import { Divider, Tag } from 'antd'
 import styled from 'styled-components'
-import { getItemType, getWeaponType } from './GearSlot'
-import Flex from './Flex'
-import { totalBonus } from './GearCard'
-import { ISetSelection } from '../pages/build/BuildStateContext'
+import { getItemType, getWeaponType, totalBonus } from './util'
+import Flex from '../Flex'
+import { ISetSelection } from '../../pages/build/BuildStateContext'
 
 const Container = styled.div`
   width: 350px;

@@ -2,14 +2,15 @@ import React from 'react'
 import { Card, Divider, Tag, Typography } from 'antd'
 import styled from 'styled-components'
 import { ISet } from './GearSlot'
-import Flex from './Flex'
+import Flex from '../Flex'
+import { totalBonus } from './util'
 
 const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
   padding: 0;
-  min-width: ${props => props.theme.widths.small}
-  max-width: ${props => props.theme.widths.large}
+  min-width: ${props => props.theme.widths.small};
+  max-width: ${props => props.theme.widths.large};
   width: 100%;
   position: relative;
 `
@@ -70,22 +71,6 @@ const ArmorTypeTag = ({
     } else {
       return <StyledTag color='blue'>Light</StyledTag>
     }
-  }
-}
-
-export const totalBonus = (set: ISet) => {
-  if (set.bonus_item_5 !== null && set.bonus_item_4 !== null) {
-    // 5 Piece Set
-    return [2, 3, 4, 5]
-  } else if (set.bonus_item_3 !== null) {
-    // 3 Piece Set
-    return [2, 3]
-  } else if (set.bonus_item_1 !== null && set.bonus_item_2 !== null) {
-    // Monster Set
-    return [1, 2]
-  } else {
-    // Arena Weapon
-    return [2]
   }
 }
 

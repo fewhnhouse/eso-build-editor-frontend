@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ABILITY_BAR_ONE } from '../pages/build/Skills/AbilityBar'
-import SkillSlot, { DisplaySlot, ISkill } from './SkillSlot'
+import { ABILITY_BAR_ONE } from '../../pages/build/Skills/AbilityBar'
+import SkillSlot, { ISkill } from './SkillSlot'
+import DisplaySlot from './DisplaySlot'
 import { useTrail, animated } from 'react-spring'
-import { ISkillSelection } from '../pages/build/BuildStateContext'
-import Flex from './Flex'
+import { ISkillSelection } from '../../pages/build/BuildStateContext'
+import Flex from '../Flex'
 
 export interface ISKillViewProps {
   skillSlots: ISkillSelection[]
