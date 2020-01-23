@@ -56,18 +56,20 @@ interface IAppAction {
 
 const appReducer = (state: IAppState, action: IAppAction) => {
   switch (action.type) {
-    case 'SET_HEADER_TITLE':
+    case 'SET_HEADER_TITLE': {
       const { headerTitle } = action.payload
       return {
         ...state,
         headerTitle,
       }
-    case 'SET_HEADER_SUBTITLE':
+    }
+    case 'SET_HEADER_SUBTITLE': {
       const { headerSubTitle } = action.payload
       return {
         ...state,
         headerSubTitle,
       }
+    }
     default:
       return state
   }
@@ -134,18 +136,13 @@ const AppContainer = ({ location }: RouteComponentProps<any>) => {
       message.error('Error sending Verification Email.')
     }
   }, [resendResult])
-  /*
-  useEffect(() => {
-    loggedIn !== undefined && refetch()
-  }, [loggedIn, refetch])
-  */
+
   useEffect(() => {
     if (data && data.me) {
       if (!data.me.verified) {
         openNotification(resendMutation)
       }
       setLoggedIn(true)
-    } else {
     }
   }, [data, setLoggedIn, resendMutation])
   useEffect(() => {

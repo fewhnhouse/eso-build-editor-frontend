@@ -1,24 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { List, Card, Input, Spin } from 'antd'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import Flex from '../../../components/Flex'
-import Meta from 'antd/lib/card/Meta'
-import { useTrail, animated } from 'react-spring'
-import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import { Redirect } from 'react-router'
-import { ITheme } from '../../../components/theme'
-
-const ListContainer = styled.div`
-  flex: 1;
-  border: 1px solid rgb(217, 217, 217);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  transition: width 0.2s ease-in-out;
-`
+import { ITheme } from '../../../../components/theme'
+import { List, Card, Input } from 'antd'
+import Flex from '../../../../components/Flex'
+import { useTrail, animated } from 'react-spring'
+import { ListContainer, IMundusData } from './MundusMenu'
 
 const StyledCard = styled(Card)`
   border-color: ${(props: { active: boolean; theme: ITheme }) =>
@@ -33,10 +22,6 @@ const Icon = styled.img`
   width: ${props => props.theme.icon.width};
   height: ${props => props.theme.icon.height};
   border-radius: ${props => props.theme.icon.borderRadius};
-`
-
-const StyledSpin = styled(Spin)`
-  margin-top: ${props => props.theme.margins.mini};
 `
 
 const StyledFlex = styled(Flex)`
@@ -59,51 +44,7 @@ const StyledList = styled(List)`
   transition: opacity 0.2s ease-in-out;
 `
 
-interface IMundusData {
-  id?: string
-  name: string
-  effect: string
-  value: string
-  icon: string
-}
-
-const GET_MUNDUS_STONES = gql`
-  query {
-    mundusStones {
-      id
-      name
-      effect
-      value
-      icon
-      aldmeri
-      daggerfall
-      ebonheart
-    }
-  }
-`
-export default ({ context }: { context: React.Context<any> }) => {
-  const { data, loading, error } = useQuery<
-    { mundusStones: IMundusData[] },
-    {}
-  >(GET_MUNDUS_STONES)
-
-  if (loading) {
-    return (
-      <ListContainer>
-        <StyledSpin />
-      </ListContainer>
-    )
-  }
-  if (error) {
-    return <div>Error.</div>
-  }
-  if (data) {
-    return <MundusList context={context} data={data} />
-  }
-  return null
-}
-
-const MundusList = ({
+const MundusMenuList = ({
   data,
   context,
 }: {
@@ -169,7 +110,7 @@ const MundusList = ({
                     hoverable
                     onClick={handleClick(item)}
                   >
-                    <Meta
+                    <List.Item.Meta
                       avatar={
                         <Icon
                           src={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${item.icon}`}
@@ -190,3 +131,5 @@ const MundusList = ({
     </ListContainer>
   )
 }
+
+export default MundusMenuList

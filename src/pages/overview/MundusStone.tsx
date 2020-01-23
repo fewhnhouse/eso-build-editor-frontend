@@ -3,7 +3,7 @@ import { IMundus } from '../build/BuildStateContext'
 import Flex from '../../components/Flex'
 import styled from 'styled-components'
 import { MenuCard, Image, Description, ContentCard } from './Overview'
-import MundusMenu from '../build/consumables/MundusMenu'
+import MundusMenu from '../build/consumables/mundus/MundusMenu'
 import { Typography, Divider, Card, Modal, Empty } from 'antd'
 import Scrollbars from 'react-custom-scrollbars'
 

@@ -64,7 +64,10 @@ const RevisionDrawer = ({
                 ? new Date(build.updatedAt)
                 : undefined
               return (
-                <Timeline.Item color={id === build.id ? 'green' : 'blue'}>
+                <Timeline.Item
+                  key={build.id || index}
+                  color={id === build.id ? 'green' : 'blue'}
+                >
                   Revision {date && date.toLocaleString()} <br />
                   {id === build.id ? (
                     <Tag color='green'>Currently Selected</Tag>

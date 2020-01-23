@@ -7,7 +7,7 @@ import { setReducer } from './reducers/setReducer'
 import { SelectValue } from 'antd/lib/select'
 import { raceNameReducer } from './reducers/raceNameReducer'
 import { setBarReducer } from './reducers/setBarReducer'
-import { ISpecialBuff } from './consumables/BuffMenu'
+import { ISpecialBuff } from './consumables/buff/BuffMenu'
 
 export interface IMundus {
   id: string

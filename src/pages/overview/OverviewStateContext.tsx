@@ -1,7 +1,7 @@
 import React from 'react' // { useReducer }
 
 import { rootReducer } from './rootReducer'
-import { ISpecialBuff } from '../build/consumables/BuffMenu'
+import { ISpecialBuff } from '../build/consumables/buff/BuffMenu'
 import { IMundus } from '../build/BuildStateContext'
 import { ISet } from '../../components/gear/GearSlot'
 

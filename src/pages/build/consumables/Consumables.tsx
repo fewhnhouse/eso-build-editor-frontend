@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import BuffMenu from './BuffMenu'
-import MundusMenu from './MundusMenu'
+import BuffMenu from './buff/BuffMenu'
+import MundusMenu from './mundus/MundusMenu'
 import { BuildContext } from '../BuildStateContext'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'

@@ -1,16 +1,16 @@
 import React from 'react'
-import BuffMenu, {
-  ISpecialBuff,
-  AttributeTag,
-  BuffTypeTag,
-  QualityTag,
-} from '../build/consumables/BuffMenu'
+import BuffMenu, { ISpecialBuff } from '../build/consumables/buff/BuffMenu'
 import Flex from '../../components/Flex'
 import { MenuCard, ContentCard, Description, Image } from './Overview'
 import { Typography, Divider, Card, Empty } from 'antd'
 import styled from 'styled-components'
 import { ITheme } from '../../components/theme'
 import Scrollbars from 'react-custom-scrollbars'
+import {
+  AttributeTag,
+  BuffTypeTag,
+  QualityTag,
+} from '../build/consumables/buff/BuffMenuList'
 
 interface IBuffProps {
   context: React.Context<any>
