@@ -52,15 +52,12 @@ interface IBuildsListProps {
 export default ({ dropType, dispatchType }: IBuildsListProps) => {
   const [state, dispatch] = useContext(GroupContext)
   const { currentClass, groupBuilds } = state!
-  console.log(groupBuilds)
   const [{ canDrop }, drop] = useDrop({
     accept: dropType,
     drop: (
       dropContext: { type: 'addBuild' | 'removeBuild'; build: IBuild },
       monitor
     ) => {
-      console.log(dropContext.build)
-
       dispatch!({
         type: dispatchType,
         payload: { build: dropContext.build },

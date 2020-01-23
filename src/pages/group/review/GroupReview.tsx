@@ -81,7 +81,6 @@ const GroupReview = ({ match, local }: IGroupReview) => {
     })
   }, [appDispatch])
 
-  console.log(local)
   const groupQuery = useQuery(GROUP, { variables: { id }, skip: local })
 
   const [createGroupCopy, createGroupCopyResult] = useMutation<any, any>(

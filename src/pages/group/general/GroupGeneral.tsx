@@ -131,7 +131,7 @@ export default ({ edit }: IGroupGeneralProps) => {
             buttonStyle='solid'
           >
             {accessRightOptions.map(el => (
-              <Radio.Button value={el.key}>
+              <Radio.Button key={el.key} value={el.key}>
                 <RadioIcon type={el.icon} />
                 {el.label}
               </Radio.Button>

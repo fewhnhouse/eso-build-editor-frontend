@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
-import { classSkillLines, skillLines } from '../build/Skills/SkillMenu'
+import { classSkillLines, skillLines } from '../build/Skills/skillLines'
 import Scrollbars from 'react-custom-scrollbars'
 import Helmet from 'react-helmet'
 
