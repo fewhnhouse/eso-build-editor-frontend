@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import styled, { CSSProperties } from 'styled-components'
-import { Popover, Modal } from 'antd'
+import styled from 'styled-components'
+import { Popover } from 'antd'
 import { abilityFrame } from '../../assets/misc'
 import { SkillCardContent } from './SkillCard'
 import { BuildContext } from '../../pages/build/BuildStateContext'
