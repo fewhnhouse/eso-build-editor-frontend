@@ -178,15 +178,17 @@ export default () => {
           direction='column'
           align='center'
         >
-          <Title level={3}>ESO Overview</Title>
-          <BlockText>
-            Build Editor offers a simple Web Interface to explore Sets, Skills,
-            Mundus Stones and Consumables of <b>The Elder Scrolls: Online</b>.
-            All the information you need, is available for you to explore and is
-            always kept up to date by the ESO Build Editor creators. You can
-            easily see when the information was last updated to verify that
-            everything is up to date.
-          </BlockText>
+          <GeneralContainer>
+            <Title level={3}>ESO Overview</Title>
+            <BlockText>
+              Build Editor offers a simple Web Interface to explore Sets,
+              Skills, Mundus Stones and Consumables of{' '}
+              <b>The Elder Scrolls: Online</b>. All the information you need, is
+              available for you to explore and is always kept up to date by the
+              ESO Build Editor creators. You can easily see when the information
+              was last updated to verify that everything is up to date.
+            </BlockText>
+          </GeneralContainer>
           <Divider />
 
           <StyledFlex
