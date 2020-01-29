@@ -1,5 +1,4 @@
 const theme = {
-  primary: '#1890ff',
   mainBg: 'rgb(155, 155, 155)',
   mainBorderColor: 'rgb(232, 232, 232)',
   fontSizes: {
@@ -8,6 +7,7 @@ const theme = {
     huge: '30px',
   },
   colors: {
+    primary: '#1890ff',
     grey: {
       light: 'rgba(0,0,0,0.25)',
       medium: 'rgba(0,0,0,0.45)',
