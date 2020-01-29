@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Typography, Divider, Button, Carousel } from 'antd'
 import Flex from '../../components/Flex'
