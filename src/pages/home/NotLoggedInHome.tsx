@@ -1,10 +1,11 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
 import { Typography, Divider, Button, Carousel } from 'antd'
 import Flex from '../../components/Flex'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { ayrenn, jorunn, emeric, ava, siege } from '../../assets/backgrounds'
+import { ButtonProps } from 'antd/lib/button'
 
 const { Title, Text } = Typography
 
@@ -90,20 +91,28 @@ const Footer = styled.footer`
   background: ${props => props.theme.colors.grey.dark};
   padding: ${props => props.theme.paddings.small};
 `
-interface IOverviewButtonProps {
-  children: ReactNode
-}
 
 const StyledOverviewBtn = styled(Button)`
   width: 140px;
   margin: ${props => props.theme.margins.small};
 `
-const OverviewButton = ({ children }: IOverviewButtonProps) => (
-  <StyledOverviewBtn size='large'>{children}</StyledOverviewBtn>
+const OverviewButton = ({ children, ...props }: ButtonProps) => (
+  <StyledOverviewBtn size='large' {...props}>
+    {children}
+  </StyledOverviewBtn>
 )
 
 export default () => {
+  const [redirect, setRedirect] = useState('')
   const isMobile = useMediaQuery({ maxWidth: 800 })
+
+  if (redirect) {
+    return <Redirect push to={redirect} />
+  }
+
+  const handleBtnClick = (path: string) => () => {
+    setRedirect(path)
+  }
   return (
     <Content>
       <Carousel autoplay style={{ height: '80vh', width: '100vw' }}>
@@ -197,10 +206,18 @@ export default () => {
             justify='space-between'
             align='center'
           >
-            <OverviewButton>Sets</OverviewButton>
-            <OverviewButton>Skills</OverviewButton>
-            <OverviewButton>Consumables</OverviewButton>
-            <OverviewButton>Mundus Stones</OverviewButton>
+            <OverviewButton onClick={handleBtnClick('/overview/2')}>
+              Sets
+            </OverviewButton>
+            <OverviewButton onClick={handleBtnClick('/overview/3')}>
+              Skills
+            </OverviewButton>
+            <OverviewButton onClick={handleBtnClick('/overview/0')}>
+              Consumables
+            </OverviewButton>
+            <OverviewButton onClick={handleBtnClick('/overview/1')}>
+              Mundus Stones
+            </OverviewButton>
           </StyledFlex>
           <Divider />
           <Link to='/overview'>
