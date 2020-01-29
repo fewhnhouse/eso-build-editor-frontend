@@ -40,8 +40,9 @@ const CardContainer = styled(Flex)`
 
 const OverviewContainer = styled(Flex)`
   flex: 1;
+  margin-top: 40px;
   background: 'white';
-  padding: ${props => props.theme.paddings.medium};
+  padding: 40px ${props => props.theme.paddings.medium};
   background-color: white;
   width: 100%;
 `
@@ -79,10 +80,6 @@ const StyledLink = styled(Link)`
 
 const StyledButton = styled(Button)`
   width: 100%;
-`
-
-const StyledWideButton = styled(Button)`
-  min-width: 300px;
 `
 
 const Footer = styled.footer`
@@ -219,12 +216,6 @@ export default () => {
               Mundus Stones
             </OverviewButton>
           </StyledFlex>
-          <Divider />
-          <Link to='/overview'>
-            <StyledWideButton size='large' type='primary'>
-              Explore
-            </StyledWideButton>
-          </Link>
         </OverviewContainer>
       </div>
       <Footer>
