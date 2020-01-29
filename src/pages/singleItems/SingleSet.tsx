@@ -47,6 +47,12 @@ const GET_SETS_BY_ID = gql`
   }
 `
 
+const setContent = (bonusArray: (string | null)[]) =>
+  bonusArray.reduce<string>(
+    (prev, curr) => prev + (curr !== null ? ' | ' + curr : ''),
+    ''
+  )
+
 const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const [, appDispatch] = useContext(AppContext)
@@ -55,7 +61,7 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
     variables: { id: id },
   })
 
-  const set: ISet = data.set ? data.set : ''
+  const set: ISet = data && data.set ? data.set : ''
   useEffect(() => {
     appDispatch!({
       type: 'SET_HEADER_TITLE',
@@ -88,13 +94,13 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
           </StyledFlex>
         </Scrollbars>
         <Helmet>
-          <title>{set && set.name}</title>
+          <title>{set.name}</title>
           <meta
             property='og:url'
-            content={`${window.location.origin}/overview/sets/${set && set.id}`}
+            content={`${window.location.origin}/overview/sets/${set.id}`}
           />
           <meta property='og:type' content={'website'} />
-          <meta property='og:title' content={set && set.name} />
+          <meta property='og:title' content={set.name} />
           <meta
             property='og:description'
             content={setContent([
@@ -112,9 +118,4 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
   return null
 }
 
-const setContent = (bonusArray: (string | null)[]) =>
-  bonusArray.reduce<string>(
-    (prev, curr) => prev + (curr !== null ? ' | ' + curr : ''),
-    ''
-  )
 export default withRouter(SingleSet)

@@ -42,13 +42,13 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
       type: 'SET_HEADER_TITLE',
       payload: { headerTitle: 'Mundus Stone' },
     })
-    if (data.mundusStone) {
+    if (data && data.mundusStone) {
       appDispatch!({
         type: 'SET_HEADER_SUBTITLE',
         payload: { headerSubTitle: data.mundusStone.name },
       })
     }
-  }, [appDispatch, data.mundusStone])
+  }, [appDispatch, data])
 
   if (loading) {
     return (

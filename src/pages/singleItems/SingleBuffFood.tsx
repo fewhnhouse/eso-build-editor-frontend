@@ -40,13 +40,13 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
       type: 'SET_HEADER_TITLE',
       payload: { headerTitle: 'Buff Food' },
     })
-    if (data.buff) {
+    if (data && data.buff) {
       appDispatch!({
         type: 'SET_HEADER_SUBTITLE',
         payload: { headerSubTitle: data.buff.name },
       })
     }
-  }, [appDispatch, data.buff])
+  }, [appDispatch, data])
   if (loading) {
     return (
       <Flex fluid justify='center'>
