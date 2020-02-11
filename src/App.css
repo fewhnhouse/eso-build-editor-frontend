@@ -1,1 +1,6 @@
 @import '~antd/dist/antd.css';
+
+th,
+td {
+  width: 120px;
+}
