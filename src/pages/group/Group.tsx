@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import { Layout, Steps, Button, Icon, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import GroupGeneral from './general/GroupGeneral'
-import GroupSetup from './groupsetup/GroupSetup'
-import GroupReview from './review/GroupReview'
+import GroupSetup from './GroupAssignments/GroupSetup'
+import GroupReview from './GroupReview/GroupReview'
 import {
   IGroupState,
   GroupContext,
   groupReducer,
   IGroupBuild,
 } from './GroupStateContext'
-import GroupRaids from './groupRaids/GroupRaids'
+import GroupRaids from './GroupBuilds/GroupBuilds'
 import { handleEditSave, handleCreateSave } from './util'
 import gql from 'graphql-tag'
 import { group } from '../../util/fragments'

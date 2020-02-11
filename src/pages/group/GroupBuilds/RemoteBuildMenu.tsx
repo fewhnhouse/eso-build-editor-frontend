@@ -2,14 +2,42 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Divider, Input, Select, Empty } from 'antd'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { GroupContext } from '../GroupStateContext'
-import DroppableBuildsList from './DroppableBuildsList'
-import { build } from '../../../util/fragments'
-import { IBuild } from '../../build/BuildStateContext'
+import RemoteBuildList from './RemoteBuildList'
+import { IBuild, IBuildRevision } from '../../build/BuildStateContext'
 import { classes } from '../../build/RaceAndClass/data'
+import { build } from '../../../util/fragments'
+import gql from 'graphql-tag'
 const { Option } = Select
+
+const DETAILED_BUILD_REVISIONS = gql`
+  query buildRevisions(
+    $where: BuildRevisionWhereInput
+    $orderBy: BuildRevisionOrderByInput
+    $first: Int
+    $last: Int
+    $skip: Int
+    $after: String
+    $before: String
+  ) {
+    buildRevisions(
+      where: $where
+      orderBy: $orderBy
+      first: $first
+      last: $last
+      skip: $skip
+      after: $after
+      before: $before
+    ) {
+      id
+      builds(first: 1, orderBy: updatedAt_DESC) {
+        ...Build
+      }
+    }
+  }
+  ${build}
+`
 
 const ListContainer = styled.div`
   width: 100%;
@@ -44,31 +72,6 @@ export function titleCase(str: string): string {
   return string.join(' ')
 }
 
-export const GET_BUILDS = gql`
-  query builds(
-    $where: BuildWhereInput
-    $orderBy: BuildOrderByInput
-    $first: Int
-    $last: Int
-    $skip: Int
-    $after: String
-    $before: String
-  ) {
-    builds(
-      where: $where
-      orderBy: $orderBy
-      first: $first
-      last: $last
-      skip: $skip
-      after: $after
-      before: $before
-    ) {
-      ...Build
-    }
-  }
-  ${build}
-`
-
 export default () => {
   const [state, dispatch] = useContext(GroupContext)
   const { groupBuilds, currentClass } = state!
@@ -76,34 +79,40 @@ export default () => {
   const [searchText, setSearchText] = useState('')
   const [remoteBuilds, setRemoteBuilds] = useState<IBuild[]>([])
   // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ builds: IBuild[] }, {}>(GET_BUILDS, {
-    variables: {
-      where: {
-        AND: [
-          {
-            OR: [
-              { name_contains: searchText },
-              { name_contains: searchText.toLowerCase() },
-              { name_contains: searchText.toUpperCase() },
-              { name_contains: titleCase(searchText) },
+  const { loading, data } = useQuery<{ buildRevisions: IBuildRevision[] }, {}>(
+    DETAILED_BUILD_REVISIONS,
+    {
+      variables: {
+        where: {
+          builds_some: {
+            AND: [
+              {
+                OR: [
+                  { name_contains: searchText },
+                  { name_contains: searchText.toLowerCase() },
+                  { name_contains: searchText.toUpperCase() },
+                  { name_contains: titleCase(searchText) },
+                ],
+              },
+
+              {
+                esoClass: currentClass,
+              },
             ],
           },
-          {
-            esoClass: currentClass,
-          },
-        ],
+        },
       },
-    },
-  })
+    }
+  )
 
   useEffect(() => {
-    if (data && data.builds) {
-      const newBuilds = data.builds.filter(remoteBuild => {
+    if (data && data.buildRevisions) {
+      const newBuilds = data.buildRevisions.filter(remoteBuildRevision => {
         return !groupBuilds.find(
-          groupBuild => groupBuild.build.id === remoteBuild.id
+          groupBuild => groupBuild.build.id === remoteBuildRevision.builds[0].id
         )
       })
-      setRemoteBuilds(newBuilds)
+      setRemoteBuilds(newBuilds.map(buildRevision => buildRevision.builds[0]))
     }
   }, [groupBuilds, data])
 
@@ -137,8 +146,8 @@ export default () => {
             type='text'
           />
         </StyledFlexOuter>
-        {data && data.builds && currentClass ? (
-          <DroppableBuildsList
+        {data && data.buildRevisions && currentClass ? (
+          <RemoteBuildList
             builds={remoteBuilds}
             loading={loading}
             dropType={'removeBuild'}

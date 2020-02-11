@@ -11,7 +11,7 @@ import SingleMundus from '../pages/singleItems/SingleMundus'
 import SingleSet from '../pages/singleItems/SingleSet'
 import SingleSkillLine from '../pages/singleItems/SingleSkillLine'
 import Tos from '../pages/home/Tos'
-import GroupReview from '../pages/group/review/GroupReview'
+import GroupReview from '../pages/group/GroupReview/GroupReview'
 
 const RaidReview = lazy(() => import('../pages/raid/Review/RaidReview'))
 const BuildReview = lazy(() => import('../pages/build/Review/BuildReview'))

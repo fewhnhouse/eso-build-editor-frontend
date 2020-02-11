@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import DroppableBuildsArea from './DroppableBuildsArea'
+import SelectedBuildList from './SelectedBuildList'
 
 const ListContainer = styled.div`
   width: 100%;
@@ -13,7 +13,7 @@ const ListContainer = styled.div`
 export default () => {
   return (
     <ListContainer>
-      <DroppableBuildsArea dropType={'addBuild'} dispatchType={'ADD_BUILD'} />
+      <SelectedBuildList dropType={'addBuild'} dispatchType={'ADD_BUILD'} />
     </ListContainer>
   )
 }
