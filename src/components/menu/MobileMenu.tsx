@@ -77,7 +77,7 @@ const MobileMenu = ({
         <Divider />
         <ItemGroup key='group' title='Groups'>
           <Item key='group:1'>
-            <Link onClick={handleFoldBtnClick} to='/raids'>
+            <Link onClick={handleFoldBtnClick} to='/groups'>
               Groups
             </Link>
           </Item>
