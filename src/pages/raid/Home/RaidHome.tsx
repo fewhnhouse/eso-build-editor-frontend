@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
-import { Collapse, Skeleton, Empty } from 'antd'
+import { Collapse, Empty, Spin } from 'antd'
 import { useQuery } from 'react-apollo'
 import { OWN_RAIDS } from '../../home/UserHomeCard'
 import { Redirect } from 'react-router-dom'
 import { applicationAreas } from '../general/RaidGeneral'
 import { IRaidState } from '../RaidStateContext'
 import SimpleCard from '../../../components/SimpleCard'
+import ErrorPage from '../../../components/ErrorPage'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`
@@ -24,7 +25,7 @@ const StyledPanel = styled(Panel)`
 `
 
 export default () => {
-  const { loading, data } = useQuery(OWN_RAIDS)
+  const { loading, data, error } = useQuery(OWN_RAIDS)
 
   const [activeKeys, setActiveKeys] = useState<string[]>([])
   const [redirect, setRedirect] = useState('')
@@ -51,20 +52,26 @@ export default () => {
     return <Redirect push to={redirect} />
   }
 
+  if (error) {
+    return <ErrorPage status='404' />
+  }
+
   return (
     <Container fluid direction='column'>
-      <Collapse
-        onChange={keys => setActiveKeys(keys as string[])}
-        activeKey={activeKeys}
-        style={{ width: '100%' }}
-      >
-        {applicationAreas.map((applicationArea, index) => (
-          <StyledPanel header={applicationArea.label} key={index}>
-            <Skeleton loading={loading}>
+      {loading ? (
+        <Spin />
+      ) : (
+        <Collapse
+          onChange={keys => setActiveKeys(keys as string[])}
+          activeKey={activeKeys}
+          style={{ width: '100%' }}
+        >
+          {applicationAreas.map((applicationArea, index) => (
+            <StyledPanel header={applicationArea.label} key={index}>
               <RaidsContainer fluid>
                 {raids.filter(
                   raid => raid.applicationArea === applicationArea.key
-                ).length ? (
+                )?.length ? (
                   raids
                     .filter(
                       raid => raid.applicationArea === applicationArea.key
@@ -83,10 +90,10 @@ export default () => {
                   <Empty />
                 )}
               </RaidsContainer>
-            </Skeleton>
-          </StyledPanel>
-        ))}
-      </Collapse>
+            </StyledPanel>
+          ))}
+        </Collapse>
+      )}
     </Container>
   )
 }
