@@ -160,8 +160,14 @@ export const DisplaySkillCard = ({
         passive
           ? []
           : isMobile
-          ? [<MobileAction morph={morph1} />, <MobileAction morph={morph2} />]
-          : [<DesktopAction morph={morph1} />, <DesktopAction morph={morph2} />]
+          ? [
+              <MobileAction key='0' morph={morph1} />,
+              <MobileAction key='1' morph={morph2} />,
+            ]
+          : [
+              <DesktopAction key='0' morph={morph1} />,
+              <DesktopAction key='1' morph={morph2} />,
+            ]
       }
     >
       <SkillCardContent skill={skill} />
@@ -234,7 +240,10 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
         passive
           ? []
           : [
-              <Popover content={<SkillCardContent skill={morph1} />}>
+              <Popover
+                key='popover-0'
+                content={<SkillCardContent skill={morph1} />}
+              >
                 <RaceContainer onClick={handleFirstClick}>
                   <MorphLabel
                     active={firstActive || false}
@@ -249,7 +258,10 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
                   />
                 </RaceContainer>
               </Popover>,
-              <Popover content={<SkillCardContent skill={morph2} />}>
+              <Popover
+                key='popover-1'
+                content={<SkillCardContent skill={morph2} />}
+              >
                 <RaceContainer onClick={handleSecondClick}>
                   <MorphLabel
                     active={secondActive || false}
@@ -276,9 +288,9 @@ export const SkillCardContent = ({ skill }: { skill: ISkill }) => {
   if (!skill) {
     return null
   }
-  const isMagicka = skill.cost.includes('Magicka')
-  const isStamina = skill.cost.includes('Stamina')
-  const isFree = skill.cost.includes('Nothing')
+  const isMagicka = skill.cost && skill.cost.includes('Magicka')
+  const isStamina = skill.cost && skill.cost.includes('Stamina')
+  const isFree = skill.cost ? skill.cost.includes('Nothing') : true
   return (
     <StyledFlex>
       <IconContainer>

@@ -201,6 +201,9 @@ export const totalBonus = (set: ISet) => {
   } else if (set.bonus_item_1 !== null && set.bonus_item_2 !== null) {
     // Monster Set
     return [1, 2]
+  } else if (set.bonus_item_1 !== null && set.bonus_item_2 === null) {
+    //Mythic
+    return [1]
   } else {
     // Arena Weapon
     return [2]

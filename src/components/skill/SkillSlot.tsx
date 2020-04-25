@@ -19,7 +19,7 @@ interface ISkillSlotProps {
 
 export interface ISkill {
   cast_time: string
-  cost: string
+  cost?: string
   effect_1: string
   effect_2: string | null
   icon: string

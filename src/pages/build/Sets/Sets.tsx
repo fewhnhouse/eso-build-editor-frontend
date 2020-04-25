@@ -129,7 +129,6 @@ export default ({ edit }: { edit: boolean }) => {
   }
   return (
     <StyledDiv>
-      {console.log(state)}
       <SetMenu
         collapsable
         collapsed={collapsed}

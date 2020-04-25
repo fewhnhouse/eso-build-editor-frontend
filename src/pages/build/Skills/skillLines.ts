@@ -85,8 +85,10 @@ export const skillLines = [
     items: [
       { title: 'Soul Magic', id: 25 },
       { title: 'Legerdemain', id: 28 },
-      { title: 'Vampirism', id: 26 },
+      { title: 'Vampirism', id: 58 },
       { title: 'Werewolf', id: 27 },
+      { title: 'Scrying', id: 59 },
+      { title: 'Excavation', id: 60 },
     ],
   },
   {

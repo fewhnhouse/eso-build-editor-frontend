@@ -150,6 +150,7 @@ const setTypes = [
   'Dungeon',
   'Battleground',
   'Craftable',
+  'Mythic',
 ]
 const setWeight = ['Light', 'Medium', 'Heavy', 'Jewelry', 'Weapons']
 
