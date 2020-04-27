@@ -156,12 +156,17 @@ export const getGearSlot = (slot: ISetSelection) => {
         set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
-      if (slot.selectedSet.name.includes('Perfected')) {
-        slot.selectedSet.slug = slot.selectedSet.slug.split('-perfected-')[0]
+      const getSlug = () => {
+        if (slot?.selectedSet?.name.includes('Perfected')) {
+          return slot?.selectedSet?.slug.split('-perfected-')[0]
+        } else if (slot?.selectedSet?.name.includes('Perfect')) {
+          return slot?.selectedSet?.slug.split('perfect-')[1]
+        }
       }
-      return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${
-        slot.selectedSet.slug
-      }_${getImageSource(slot.weaponType)}`
+      const slug = getSlug()
+      return `${
+        process.env.REACT_APP_IMAGE_SERVICE
+      }/gear/weaponSets/${slug}_${getImageSource(slot.weaponType)}`
     }
   }
   if (slot.type === WeaponType.onehanded) {
