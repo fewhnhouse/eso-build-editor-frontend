@@ -19,6 +19,24 @@ export interface IMundus {
   daggerfall: string
   ebonheart: string
 }
+
+export type UniqueItem =
+  | 'destructionstaff'
+  | 'restorationstaff'
+  | 'swordandshield'
+  | 'dualwield'
+  | 'twohander'
+  | 'bow'
+  | 'head'
+  | 'legs'
+  | 'arms'
+  | 'feet'
+  | 'body'
+  | 'shoulders'
+  | 'waist'
+  | 'ring'
+  | 'necklace'
+  | null
 export interface ISlot {
   id: number
   index: number

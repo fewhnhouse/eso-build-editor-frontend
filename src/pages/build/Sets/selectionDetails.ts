@@ -8,7 +8,76 @@ import {
   ISetSelection,
   ArmorType,
   IModification,
+  UniqueItem,
 } from './../BuildStateContext'
+
+export const convertTypes = (uniqueItem?: UniqueItem) => {
+  switch (uniqueItem) {
+    case 'ring':
+      return { type: 'jewelry', items: [Slot.ring1, Slot.ring2] }
+    case 'necklace':
+      return { type: 'jewelry', items: [Slot.neck] }
+    case 'restorationstaff':
+      return { type: 'twohanded', items: [TwohandedWeapon.restorationStaff] }
+    case 'bow':
+      return { type: 'twohanded', items: [TwohandedWeapon.bow] }
+    case 'twohander':
+      return {
+        type: 'twohanded',
+        items: [
+          TwohandedWeapon.axe,
+          TwohandedWeapon.mace,
+          TwohandedWeapon.sword,
+        ],
+      }
+    case 'destructionstaff':
+      return {
+        type: 'twohanded',
+        items: [
+          TwohandedWeapon.fireStaff,
+          TwohandedWeapon.iceStaff,
+          TwohandedWeapon.lightningStaff,
+        ],
+      }
+    case 'dualwield':
+      return {
+        type: 'onehanded',
+        items: [
+          OnehandedWeapon.axe,
+          OnehandedWeapon.dagger,
+          OnehandedWeapon.sword,
+          OnehandedWeapon.mace,
+        ],
+      }
+    case 'swordandshield':
+      return {
+        type: 'onehanded',
+        items: [
+          OnehandedWeapon.axe,
+          OnehandedWeapon.dagger,
+          OnehandedWeapon.mace,
+          OnehandedWeapon.shield,
+          OnehandedWeapon.sword,
+        ],
+      }
+    case 'body':
+      return { type: 'bigpieces', items: [Slot.chest] }
+    case 'feet':
+      return { type: 'smallpieces', items: [Slot.feet] }
+    case 'arms':
+      return { type: 'smallpieces', items: [Slot.hands] }
+    case 'legs':
+      return { type: 'bigpieces', items: [Slot.legs] }
+    case 'shoulders':
+      return { type: 'smallpieces', items: [Slot.shoulders] }
+    case 'head':
+      return { type: 'bigpieces', items: [Slot.head] }
+    case 'waist':
+      return { type: 'smallpieces', items: [Slot.waist] }
+    default:
+      return null
+  }
+}
 export const specialWeaponSets = [
   {
     name: 'Precise Regeneration',

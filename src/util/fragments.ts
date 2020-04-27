@@ -8,6 +8,7 @@ export const set = gql`
     location
     type
     slug
+    uniqueItem
     bonus_item_1
     bonus_item_2
     bonus_item_3
@@ -28,6 +29,7 @@ export const reducedSetSelection = gql`
       id
       name
       type
+      uniqueItem
       bonus_item_1
       bonus_item_2
       bonus_item_3

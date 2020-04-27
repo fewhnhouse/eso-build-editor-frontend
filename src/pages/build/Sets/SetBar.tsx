@@ -4,7 +4,7 @@ import { Divider, Empty } from 'antd'
 import GearView from '../../../components/gear/GearView'
 import { BuildContext, WeaponType, SetTab } from '../BuildStateContext'
 import Scrollbars from 'react-custom-scrollbars'
-import { specialWeaponSets, getSetups } from './selectionDetails'
+import { getSetups, convertTypes } from './selectionDetails'
 import { getSetsCount } from './Sets'
 
 const OuterContainer = styled.div`
@@ -56,24 +56,31 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
   })
 
   const showGear = (key: string) => {
-    const specialWeaponSet: any = specialWeaponSets.find(
-      set => selectedSet && selectedSet.name.includes(set.name)
-    )
-    if (specialWeaponSet) {
-      const actualSetup = mySetups.find(
-        setup => setup.id === specialWeaponSet.type
-      )
+    if (selectedSet?.uniqueItem !== null) {
+      const types = convertTypes(selectedSet?.uniqueItem)
+      const actualSetup = mySetups.find(setup => types?.type === setup.id)
+      console.log(actualSetup, types, selectedSet?.uniqueItem)
       return actualSetup
         ? [
             {
               ...actualSetup,
-              data: actualSetup.data.filter(setupData =>
-                specialWeaponSet
-                  ? specialWeaponSet.weaponTypes.find(
-                      (type: any) => setupData.weaponType === type
-                    )
-                  : false
-              ),
+              data:
+                actualSetup.data.filter(setupData => {
+                  if (
+                    types?.type === 'bigpieces' ||
+                    types?.type === 'smallpieces' ||
+                    types?.type === 'jewelry'
+                  ) {
+                    console.log(setupData)
+                    return (types?.items as string[]).includes(setupData.slot)
+                  } else {
+                    return setupData.weaponType
+                      ? (types?.items as string[]).includes(
+                          setupData.weaponType
+                        )
+                      : false
+                  }
+                }) ?? [],
             },
           ]
         : []

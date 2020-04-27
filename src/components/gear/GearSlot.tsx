@@ -6,6 +6,7 @@ import {
   BuildContext,
   Slot,
   ISetSelection,
+  UniqueItem,
 } from '../../pages/build/BuildStateContext'
 import { GearCardContent } from './GearSlotCard'
 import Flex from '../Flex'
@@ -103,6 +104,7 @@ export interface ISet {
   pts: number
   eso_id: null | number
   [key: string]: string | null | number
+  uniqueItem: UniqueItem
 }
 
 export interface IGearSlotProps {
