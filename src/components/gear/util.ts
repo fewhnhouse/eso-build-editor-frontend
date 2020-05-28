@@ -156,7 +156,6 @@ export const getGearSlot = (slot: ISetSelection) => {
         set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
-      console.log(slot)
       const getSlug = () => {
         if (slot?.selectedSet?.name.includes('Perfected')) {
           return slot?.selectedSet?.slug.split('-perfected-')[0]

@@ -58,7 +58,6 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
       dropContext: { type: 'addBuild' | 'removeBuild'; build: IBuild },
       monitor
     ) => {
-      console.log(dropContext)
       dispatch!({
         type: dispatchType,
         payload: { build: dropContext.build },

@@ -59,7 +59,6 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
     if (selectedSet?.uniqueItem !== null) {
       const types = convertTypes(selectedSet?.uniqueItem)
       const actualSetup = mySetups.find(setup => types?.type === setup.id)
-      console.log(actualSetup, types, selectedSet?.uniqueItem)
       return actualSetup
         ? [
             {
@@ -71,7 +70,6 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
                     types?.type === 'smallpieces' ||
                     types?.type === 'jewelry'
                   ) {
-                    console.log(setupData)
                     return (types?.items as string[]).includes(setupData.slot)
                   } else {
                     return setupData.weaponType

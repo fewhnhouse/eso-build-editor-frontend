@@ -13,7 +13,6 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
 
     case 'ADD_BUILD': {
       const { build }: { build: IBuild } = action.payload
-      console.log(build, state.groupBuilds)
       const newBuilds = state.groupBuilds.find(
         groupBuild => groupBuild.build.id === build.id
       )
