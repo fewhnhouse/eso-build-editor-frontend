@@ -156,11 +156,14 @@ export const getGearSlot = (slot: ISetSelection) => {
         set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
+      console.log(slot)
       const getSlug = () => {
         if (slot?.selectedSet?.name.includes('Perfected')) {
           return slot?.selectedSet?.slug.split('-perfected-')[0]
         } else if (slot?.selectedSet?.name.includes('Perfect')) {
           return slot?.selectedSet?.slug.split('perfect-')[1]
+        } else {
+          return slot?.selectedSet?.slug
         }
       }
       const slug = getSlug()
