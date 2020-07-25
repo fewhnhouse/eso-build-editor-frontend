@@ -156,7 +156,7 @@ export const getGearSlot = (slot: ISetSelection) => {
         set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
-      if (slot.selectedSet.name.includes('Perfected')) {
+      if (slot.selectedSet.name.includes('Perfect')) {
         slot.selectedSet.slug = slot.selectedSet.slug.split('-perfected-')[0]
       }
       return `${process.env.REACT_APP_IMAGE_SERVICE}/gear/weaponSets/${

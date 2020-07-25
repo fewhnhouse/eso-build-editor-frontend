@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.3",
     "@types/react-helmet": "^5.0.15",
+    "@types/recharts": "^1.8.5",
     "antd": "^3.26.7",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
@@ -28,6 +29,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "react-spring": "^8.0.27",
+    "recharts": "^2.0.0-beta.1",
     "styled-components": "^5.0.0",
     "subscriptions-transport-ws": "^0.9.16",
     "typescript": "3.7.5"

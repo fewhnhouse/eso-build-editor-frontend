@@ -5,6 +5,7 @@ import { Table, Button } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import { getColumns } from './columns'
 import SingleGroupReview from './SingleGroupReview'
+import Chart from './Chart'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -45,12 +46,20 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
     }
   })
 
+  const chartData = groupBuilds.map(groupBuild => ({
+    name: groupBuild.build.name,
+    id: groupBuild.build.id || '',
+    build: groupBuild.build,
+    membersCount: groupBuild.members.length,
+  }))
+
   const columns = getColumns(isMobile, members)
 
   const handleSwapView = () => setShowSingle(show => !show)
 
   return (
     <ReviewContainer>
+      <Chart chartData={chartData} />
       {!isMobile && (
         <StyledButton
           type='primary'
