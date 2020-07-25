@@ -229,7 +229,7 @@ export const createNewBuild = async (
             })
           ),
         },
-        ...(state.revision
+        ...(state.revision?.id
           ? {
               revision: {
                 connect: { id: state.revision.id },
