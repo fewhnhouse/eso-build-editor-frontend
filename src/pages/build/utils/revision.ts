@@ -1,20 +1,20 @@
-import { IBuildState, IBuild } from '../BuildStateContext'
+import { IBuildState } from '../BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
 import { createNewBuild } from './create'
 
 export const handleAddRevision = async (
   createSkillSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   createSetSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   addBuildToRevision: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   state: IBuildState
 ) => {
   const build: any = await createNewBuild(

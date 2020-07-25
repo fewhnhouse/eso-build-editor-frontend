@@ -2,7 +2,6 @@ import {
   IBuildState,
   ISetSelection,
   WeaponType,
-  IBuild,
   IBuildRevision,
 } from '../BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
@@ -11,10 +10,10 @@ import { ME } from '../../home/UserHomeCard'
 export const createNewBuild = async (
   createSkillSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>,
+  ) => Promise<ExecutionResult<any>>,
   createSetSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>,
+  ) => Promise<ExecutionResult<any>>,
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<ExecutionResult<any>>,
@@ -238,13 +237,13 @@ export const createNewBuild = async (
 export const handleCreateSave = async (
   createSkillSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>,
+  ) => Promise<ExecutionResult<any>>,
   createSetSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>,
+  ) => Promise<ExecutionResult<any>>,
   createBuildRevision: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuildRevision>>,
+  ) => Promise<ExecutionResult<IBuildRevision>>,
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<ExecutionResult<any>>,
