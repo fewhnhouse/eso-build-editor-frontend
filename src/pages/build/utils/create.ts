@@ -11,15 +11,15 @@ import { ME } from '../../home/UserHomeCard'
 export const createNewBuild = async (
   createSkillSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<void | ExecutionResult<any>>,
   createSetSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<void | ExecutionResult<any>>,
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   state: IBuildState
-): Promise<void | ExecutionResult<IBuild>> => {
+): Promise<ExecutionResult<any>> => {
   const {
     race,
     esoClass,
@@ -238,27 +238,29 @@ export const createNewBuild = async (
 export const handleCreateSave = async (
   createSkillSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<void | ExecutionResult<any>>,
   createSetSelections: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<void | ExecutionResult<any>>,
   createBuildRevision: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<IBuildRevision>>,
   createBuild: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<IBuild>>,
+  ) => Promise<ExecutionResult<any>>,
   state: IBuildState
-): Promise<void | ExecutionResult<IBuild>> => {
+): Promise<void | ExecutionResult<any>> => {
   const build = await createNewBuild(
     createSkillSelections,
     createSetSelections,
     createBuild,
     state
   )
-  if (build && build.data && build.data.id) {
+  if (build?.data?.createBuild?.id) {
     await createBuildRevision({
-      variables: { data: { builds: [{ connect: { id: build.data.id } }] } },
+      variables: {
+        data: { builds: [{ connect: { id: build?.data?.createBuild?.id } }] },
+      },
     })
     return build
   }
