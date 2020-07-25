@@ -12,6 +12,15 @@ import Scrollbars from 'react-custom-scrollbars'
 import { AppContext } from '../../../components/AppContainer'
 import BuildReviewDetails from '../../build/Review/BuildReviewDetails'
 import { defaultBuildState, IBuildState } from '../../build/BuildStateContext'
+import {
+  EnvironmentOutlined,
+  TeamOutlined,
+  UnlockOutlined,
+  LockOutlined,
+  EditOutlined,
+  AlignLeftOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons'
 
 const { Title } = Typography
 
@@ -84,7 +93,7 @@ const StyledFlex = styled(Flex)`
 
 const StyledDivider = styled(Divider)`
   height: 50px;
-  margin: 0px ${props => props.theme.margins.medium};
+  margin: 0px ${(props) => props.theme.margins.medium};
 `
 
 const StyledDiv = styled.div`
@@ -106,10 +115,10 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const [selectedBuild, setSelectedBuild] = useState<IBuildState | undefined>(
     undefined
   )
-  const area = applicationAreas.find(area => area.key === applicationArea)
+  const area = applicationAreas.find((area) => area.key === applicationArea)
 
   const handleBuildClick = (roleIndex: number, buildIndex: number) => () => {
-    setSelectedBuild(selectedBuild => ({
+    setSelectedBuild((selectedBuild) => ({
       ...defaultBuildState,
       ...roles[roleIndex].builds[buildIndex].build,
     }))
@@ -118,7 +127,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
   const isBigScreen = useMediaQuery({ minWidth: 1400 })
 
   const [, appDispatch] = useContext(AppContext)
-  const handleSwapListView = () => setIsListView(isListView => !isListView)
+  const handleSwapListView = () => setIsListView((isListView) => !isListView)
   useEffect(() => {
     appDispatch!({
       type: 'SET_HEADER_SUBTITLE',
@@ -135,7 +144,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
           shape='circle'
           size='large'
           onClick={handleSwapListView}
-          icon={isListView ? 'align-left' : 'unordered-list'}
+          icon={isListView ? <AlignLeftOutlined /> : <UnorderedListOutlined />}
         ></StyledButton>
         <RaidContentList local={local} direction='row' align='flex-start'>
           <BuildInformationList
@@ -180,7 +189,9 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
             shape='circle'
             size='large'
             onClick={handleSwapListView}
-            icon={isListView ? 'align-left' : 'unordered-list'}
+            icon={
+              isListView ? <AlignLeftOutlined /> : <UnorderedListOutlined />
+            }
           ></StyledButton>
         )}
 
@@ -196,19 +207,19 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
             {local && (
               <Flex direction='row'>
                 <InformationCard
-                  icon='edit'
+                  Icon={EditOutlined}
                   title='Description'
                   description={description}
                 />
                 <StyledDivider type='vertical' />
                 <InformationCard
-                  icon='environment'
+                  Icon={EnvironmentOutlined}
                   title='Application Area'
                   description={area ? area.label : ''}
                 />
                 <StyledDivider type='vertical' />
                 <InformationCard
-                  icon='team'
+                  Icon={TeamOutlined}
                   title='Group Size'
                   description={roles.reduce(
                     (prev: number, curr: IRole) => prev + curr.builds.length,
@@ -217,7 +228,7 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                 />
                 <StyledDivider type='vertical' />
                 <InformationCard
-                  icon={published ? 'unlock' : 'lock'}
+                  Icon={published ? UnlockOutlined : LockOutlined}
                   title='Access Rights'
                   description={published ? 'Public' : 'Private'}
                 />

@@ -11,6 +11,12 @@ import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import { Redirect } from 'react-router'
 import HasPiecesTag from '../../../components/HasPiecesTag'
+import {
+  ShrinkOutlined,
+  ArrowsAltOutlined,
+  DoubleLeftOutlined,
+  DoubleRightOutlined,
+} from '@ant-design/icons'
 
 const { Option } = Select
 const { Item } = List
@@ -32,13 +38,13 @@ const ListContainer = styled.div`
 const StyledListItem = styled(Item)`
   cursor: pointer;
   display: flex;
-  margin: ${props => props.theme.margins.mini};
+  margin: ${(props) => props.theme.margins.mini};
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px ${props => props.theme.margins.mini};
-  border-radius: ${props => props.theme.borderRadius};
-  padding: ${props => props.theme.paddings.small};
-  ${props => props.theme.margins.mini};
+  margin: 0px ${(props) => props.theme.margins.mini};
+  border-radius: ${(props) => props.theme.borderRadius};
+  padding: ${(props) => props.theme.paddings.small};
+  ${(props) => props.theme.margins.mini};
   &:hover > div {
     font-weight: 500;
   }
@@ -55,16 +61,16 @@ const StyledTag = styled(Tag)`
 `
 
 const StyledIconBtn = styled(Button)`
-  margin: ${props => props.theme.margins.small};
-  margin-top: ${props => props.theme.margins.small};
-  height: ${props => props.theme.icon.height};
-  width: ${props => props.theme.icon.width};
-  margin-right: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
+  margin-top: ${(props) => props.theme.margins.small};
+  height: ${(props) => props.theme.icon.height};
+  width: ${(props) => props.theme.icon.width};
+  margin-right: ${(props) => props.theme.margins.small};
 `
 
 const StyledFlex = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   opacity: ${(flexProps: { collapsed: boolean }) =>
     flexProps.collapsed ? 0 : 1};
   pointer-events: ${(flexProps: { collapsed: boolean }) =>
@@ -77,18 +83,18 @@ const StyledInnerFlex = styled(Flex)`
 `
 
 const StyledSelectFlex = styled(Flex)`
-  margin: 0px ${props => props.theme.margins.small};
+  margin: 0px ${(props) => props.theme.margins.small};
   overflow: auto;
   width: 100%;
 `
 
 const StyledInput = styled(Input)`
   width: 100%;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const StyledList = styled(List)`
@@ -237,7 +243,7 @@ export default ({
     setSearchText(e.target.value)
   }
   const handleExpandChange = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
   return (
     <ListContainer isMobile={isMobile} collapsed={collapsed}>
@@ -246,7 +252,7 @@ export default ({
           type='primary'
           ghost
           onClick={handleIconClick(false)}
-          icon='double-right'
+          icon={<DoubleRightOutlined />}
         />
       )}
       <>
@@ -267,7 +273,7 @@ export default ({
             />
             <Button
               size='large'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
+              icon={expanded ? <ShrinkOutlined /> : <ArrowsAltOutlined />}
               onClick={handleExpandChange}
             />
             {collapsable && (
@@ -275,7 +281,7 @@ export default ({
                 type='primary'
                 ghost
                 onClick={handleIconClick(true)}
-                icon='double-left'
+                icon={<DoubleLeftOutlined />}
               />
             )}
           </StyledInnerFlex>
@@ -290,7 +296,9 @@ export default ({
                   onChange={handleTypeSelectChange}
                 >
                   {setTypes.map((type, index) => (
-                    <Option key={type}>{type}</Option>
+                    <Option value={type} key={type}>
+                      {type}
+                    </Option>
                   ))}
                 </Select>
               </StyledSelectFlex>
@@ -302,7 +310,9 @@ export default ({
                   onChange={handleWeightSelectChange}
                 >
                   {setWeight.map((weight, index) => (
-                    <Option key={weight}>{weight}</Option>
+                    <Option value={weight} key={weight}>
+                      {weight}
+                    </Option>
                   ))}
                 </Select>
               </StyledSelectFlex>

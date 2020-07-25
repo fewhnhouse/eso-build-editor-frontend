@@ -7,6 +7,7 @@ import { useQuery } from 'react-apollo'
 import { buff } from '../../../../util/fragments'
 import { titleCase } from '../../../raid/builds/BuildMenu'
 import BuffMenuList from './BuffMenuList'
+import { ShrinkOutlined, ArrowsAltOutlined } from '@ant-design/icons'
 
 const { Option } = Select
 
@@ -42,7 +43,7 @@ const ListContainer = styled.div`
 
 const StyledFlex = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   transition: opacity 0.2s ease-in-out;
 `
 
@@ -51,7 +52,7 @@ const StyledInnerFlex = styled(Flex)`
 `
 
 const StyledExpandedFlex = styled(Flex)`
-  margin: 0px ${props => props.theme.margins.small};
+  margin: 0px ${(props) => props.theme.margins.small};
   overflow: auto;
   width: 100%;
 `
@@ -62,7 +63,7 @@ const StyledInput = styled(Input)`
 `
 
 export const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const buffTypes = [
@@ -87,7 +88,7 @@ export default ({ context }: IBuffMenuProps) => {
   const [selectedQualities, setSelectedQualities] = useState<string[]>([])
 
   const handleExpandChange = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -117,11 +118,13 @@ export default ({ context }: IBuffMenuProps) => {
             {
               quality_in: selectedQualities.length
                 ? selectedQualities.map(
-                    (v, index) => buffQualities.findIndex(q => q === v) + 1
+                    (v, index) => buffQualities.findIndex((q) => q === v) + 1
                   )
                 : buffQualities.map((value, index) => index + 1),
             },
-            ...selectedTypes.map(type => ({ buffDescription_contains: type })),
+            ...selectedTypes.map((type) => ({
+              buffDescription_contains: type,
+            })),
           ],
         },
       },
@@ -145,7 +148,7 @@ export default ({ context }: IBuffMenuProps) => {
           />
           <Button
             size='large'
-            icon={expanded ? 'shrink' : 'arrows-alt'}
+            icon={expanded ? <ShrinkOutlined /> : <ArrowsAltOutlined />}
             onClick={handleExpandChange}
           />
         </StyledInnerFlex>
@@ -160,7 +163,9 @@ export default ({ context }: IBuffMenuProps) => {
                 onChange={handleTypeSelectChange}
               >
                 {buffTypes.map((type, index) => (
-                  <Option key={type}>{type}</Option>
+                  <Option key={type} value={type}>
+                    {type}
+                  </Option>
                 ))}
               </Select>
             </StyledExpandedFlex>
@@ -173,7 +178,9 @@ export default ({ context }: IBuffMenuProps) => {
                 onChange={handleQualitySelectChange}
               >
                 {buffQualities.map((quality, index) => (
-                  <Option key={quality}>{quality}</Option>
+                  <Option value={quality} key={quality}>
+                    {quality}
+                  </Option>
                 ))}
               </Select>
             </StyledExpandedFlex>

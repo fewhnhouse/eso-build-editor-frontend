@@ -18,10 +18,11 @@ import { LoginContext } from '../App'
 import Flex from './Flex'
 import Menu from './menu/Menu'
 import Div100vh from 'react-div-100vh'
+import { MailOutlined } from '@ant-design/icons'
 
 const LoadingContainer = styled.div`
   text-align: center;
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
   margin-bottom: 20px;
   padding: 30px 50px;
   margin: 20px 0;
@@ -100,7 +101,11 @@ const openNotification = (resendMutation: any) => {
       <Typography.Text style={{ marginRight: 30 }}>
         Didnt get an email?{' '}
       </Typography.Text>
-      <Button onClick={handleResendClick} icon='mail' type='primary'>
+      <Button
+        onClick={handleResendClick}
+        icon={<MailOutlined />}
+        type='primary'
+      >
         {'Resend'}
       </Button>
     </Flex>

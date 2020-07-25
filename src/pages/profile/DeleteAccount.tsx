@@ -7,11 +7,11 @@ import styled from 'styled-components'
 const { Text } = Typography
 
 const StyledText = styled(Text)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 const StyledButton = styled(Button)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 export default ({ handleActionClick }: IActionProps) => {
@@ -31,7 +31,8 @@ export default ({ handleActionClick }: IActionProps) => {
         onClick={handleActionClick(ProfileAction.deleteAccount)}
         block
         size='large'
-        type='danger'
+        danger
+        type='primary'
       >
         Delete account
       </StyledButton>

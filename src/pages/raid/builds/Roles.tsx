@@ -1,11 +1,19 @@
 import React, { useState, useContext } from 'react'
 import Flex from '../../../components/Flex'
-import { Divider, Button, Empty, Input, Icon, Typography, Card } from 'antd'
+import { Divider, Button, Empty, Input, Typography, Card } from 'antd'
 import { RaidContext, IRole } from '../RaidStateContext'
 import styled from 'styled-components'
 import { useDrop } from 'react-dnd'
 import BuildCard from './BuildCard'
 import Scrollbars from 'react-custom-scrollbars'
+import {
+  InboxOutlined,
+  PlusOutlined,
+  SaveOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  CloseOutlined,
+} from '@ant-design/icons'
 const { Search } = Input
 
 const RoleContainer = styled.div`
@@ -26,7 +34,7 @@ const RoleDropContainer = styled.div`
 
 const StyledCard = styled(Card)`
   width: calc(100% - 40px);
-  margin: ${props => props.theme.margins.medium};
+  margin: ${(props) => props.theme.margins.medium};
 `
 
 const StyledButton = styled(Button)`
@@ -35,18 +43,18 @@ const StyledButton = styled(Button)`
 `
 
 const StyledInput = styled(Input)`
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
 `
 
 const StyledBuildCard = styled(BuildCard)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 const StyledSearch = styled(Search)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
-const StyledIcon = styled(Icon)`
+const StyledInbox = styled(InboxOutlined)`
   width: 100px;
   height: 100px;
   font-size: 50px;
@@ -82,7 +90,7 @@ const RoleDropper = ({ role }: { role: IRole }) => {
         payload: { name: role.name, build: item.build },
       })
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),
@@ -91,7 +99,7 @@ const RoleDropper = ({ role }: { role: IRole }) => {
   return (
     <RoleContainer>
       <RoleDropContainer ref={drop}>
-        <StyledIcon type='inbox' />
+        <StyledInbox />
         <StyledTitle level={3}>Drag a build here</StyledTitle>
       </RoleDropContainer>
     </RoleContainer>
@@ -164,11 +172,14 @@ export default () => {
                   <Flex direction='row'>
                     {edit ? (
                       <>
-                        <StyledButton icon='close' onClick={handleCancelClick}>
+                        <StyledButton
+                          icon={<CloseOutlined />}
+                          onClick={handleCancelClick}
+                        >
                           Cancel
                         </StyledButton>
                         <StyledButton
-                          icon='save'
+                          icon={<SaveOutlined />}
                           ghost
                           type='primary'
                           onClick={handleSaveClick(role.name)}
@@ -179,15 +190,15 @@ export default () => {
                     ) : (
                       <>
                         <StyledButton
-                          icon='delete'
+                          icon={<DeleteOutlined />}
                           ghost
-                          type='danger'
+                          danger
                           onClick={handleDeleteClick(role.name)}
                         >
                           Delete
                         </StyledButton>
                         <StyledButton
-                          icon='edit'
+                          icon={<EditOutlined />}
                           ghost
                           type='primary'
                           onClick={handleEditClick(role.name)}
@@ -231,11 +242,12 @@ export default () => {
                   role === '' ||
                   (roles &&
                     roles.find(
-                      existingRole => existingRole && existingRole.name === role
+                      (existingRole) =>
+                        existingRole && existingRole.name === role
                     ) !== undefined)
                 }
                 type='primary'
-                icon='plus'
+                icon={<PlusOutlined />}
               >
                 Add Role
               </Button>

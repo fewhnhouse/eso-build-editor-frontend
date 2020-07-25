@@ -13,6 +13,15 @@ import ErrorPage from './ErrorPage'
 import { useMediaQuery } from 'react-responsive'
 import { ApolloError } from 'apollo-client'
 import Footer from './Footer'
+import {
+  UnlockOutlined,
+  LockOutlined,
+  HighlightOutlined,
+  EditOutlined,
+  UserOutlined,
+  EnvironmentOutlined,
+  TeamOutlined,
+} from '@ant-design/icons'
 
 const { Content } = Layout
 
@@ -26,11 +35,11 @@ const Container = styled(Content)`
   overflow-x: hidden;
   height: ${(props: { isMobile: boolean }) =>
     `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 const StyledSpin = styled(Spin)`
-  margin-top: ${props => props.theme.paddings.mini};
+  margin-top: ${(props) => props.theme.paddings.mini};
 `
 
 interface IReviewProps {
@@ -84,34 +93,34 @@ const Review = ({
         published,
         accessRights,
       } = data
-      const area = applicationAreas.find(area => area.key === applicationArea)
-      const access = accessRightOptions.find(el => el.key === accessRights)
+      const area = applicationAreas.find((area) => area.key === applicationArea)
+      const access = accessRightOptions.find((el) => el.key === accessRights)
 
       const information = [
         {
-          icon: 'highlight',
+          Icon: HighlightOutlined,
           title: 'Title',
           description: name || '',
         },
         {
-          icon: 'edit',
+          Icon: EditOutlined,
           title: 'Description',
           description: description || '',
         },
         {
-          icon: 'user',
+          Icon: UserOutlined,
           title: 'Owner',
           description: owner ? owner.name : '',
         },
         {
-          icon: 'environment',
+          Icon: EnvironmentOutlined,
           title: 'Application Area',
           description: area ? area.label : '',
         },
         ...(!isBuild
           ? [
               {
-                icon: 'team',
+                Icon: TeamOutlined,
                 title: 'Group Size',
                 description: (data as IRaid).roles
                   .reduce(
@@ -123,7 +132,11 @@ const Review = ({
             ]
           : []),
         {
-          icon: access ? access.icon : published ? 'unlock' : 'lock',
+          icon: access
+            ? access.Icon
+            : published
+            ? UnlockOutlined
+            : LockOutlined,
           title: 'Access Rights',
           description: access ? access.label : published ? 'Public' : 'Private',
         },

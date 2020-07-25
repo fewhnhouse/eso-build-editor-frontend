@@ -9,12 +9,12 @@ import { ISet } from '../../components/gear/GearSlot'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
   width: 100%;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
 `
 
 const StyledCard = styled(Card)`

@@ -1,12 +1,13 @@
 import React from 'react'
-import { Icon, Card, Avatar } from 'antd'
+import { Card, Avatar } from 'antd'
 import styled from 'styled-components'
 import { IBuild } from '../pages/build/BuildStateContext'
 import { IRaid } from '../pages/raid/RaidStateContext'
 import { IGroupState } from '../pages/group/GroupStateContext'
+import { EditOutlined, SelectOutlined } from '@ant-design/icons'
 
 const BuildCard = styled(Card)`
-  margin: ${props => `0px ${props.theme.margins.small}`};
+  margin: ${(props) => `0px ${props.theme.margins.small}`};
   width: 300px;
   height: 170px;
   display: flex;
@@ -39,16 +40,14 @@ export default ({
   return item ? (
     <BuildCard
       actions={[
-        <Icon
+        <EditOutlined
           onClick={onEditRedirect}
           key='simple-card-edit'
-          type='edit'
           title='Edit'
         />,
-        <Icon
+        <SelectOutlined
           onClick={onOpenRedirect}
           key='simple-card-open'
-          type='select'
           title='Open'
         />,
       ]}

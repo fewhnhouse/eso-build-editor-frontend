@@ -1,10 +1,11 @@
 import React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import { Menu, Divider, Icon } from 'antd'
+import { Menu, Divider } from 'antd'
 import styled from 'styled-components'
 import { StyledMenu, getSelectedKey } from './Menu'
 import LoginForm from '../LoginForm'
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 
 const { Item, ItemGroup } = Menu
 
@@ -28,7 +29,7 @@ const MobileMenu = ({
   location,
 }: IMobileMenuProps) => {
   const handleFoldBtnClick = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
 
   return loggedIn ? (
@@ -90,12 +91,12 @@ const MobileMenu = ({
         <Divider />
         <Item key='profile'>
           <Link onClick={handleFoldBtnClick} to='/profile'>
-            <Icon type='user' />
+            <UserOutlined />
             Profile
           </Link>
         </Item>
         <Item onClick={handleLogout}>
-          <Icon type='logout' />
+          <LogoutOutlined />
           Log out
         </Item>
       </StyledMenu>
@@ -121,7 +122,7 @@ const MobileMenu = ({
         </Item>
         <Divider />
         <StyledItem key='5'>
-          <LoginForm setLoggedIn={setLoggedIn} />
+          <LoginForm />
         </StyledItem>
       </StyledMenu>
     </>

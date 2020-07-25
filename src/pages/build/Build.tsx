@@ -12,7 +12,6 @@ import {
   Layout,
   Button,
   Steps,
-  Icon,
   // message,
   Tooltip,
   notification,
@@ -32,6 +31,7 @@ import { handleAddRevision } from './utils/revision'
 import { handleEditSave } from './utils/edit'
 import { handleCreateSave } from './utils/create'
 import { verifyBuild } from './utils/verifyBuild'
+import { LeftOutlined, SaveOutlined, RightOutlined } from '@ant-design/icons'
 
 const { confirm } = Modal
 const { Footer, Content } = Layout
@@ -45,7 +45,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: 100%;
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 const TabButton = styled(Button)`
   margin: 0px 10px;
@@ -183,7 +183,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
   const [redirect, setRedirect] = useState('')
 
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1)
+    setTab((tabIndex) => tabIndex - 1)
   }
   const [updateBuild, updateBuildResult] = useMutation<any, any>(UPDATE_BUILD)
   const [createBuild, createBuildResult] = useMutation<any, any>(CREATE_BUILD)
@@ -314,7 +314,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
     if (tab === 4) {
       handleSave()
     } else {
-      setTab(tabIndex => tabIndex + 1)
+      setTab((tabIndex) => tabIndex + 1)
     }
   }
 
@@ -360,7 +360,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           size='large'
           type='primary'
         >
-          <Icon type='left' />
+          <LeftOutlined />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
@@ -387,9 +387,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
               type='primary'
             >
               {tab === 4 ? 'Save' : 'Next'}
-              {!(createBuildResult.loading || updateBuildResult.loading) && (
-                <Icon type={tab === 4 ? 'save' : 'right'} />
-              )}
+              {!(createBuildResult.loading || updateBuildResult.loading) &&
+                (tab === 4 ? <SaveOutlined /> : <RightOutlined />)}
             </TabButton>
           </StyledButtonGroup>
         </Tooltip>

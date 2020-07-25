@@ -3,15 +3,16 @@ import Flex from '../../../components/Flex'
 import { Link } from 'react-router-dom'
 import Scrollbars from 'react-custom-scrollbars'
 import React from 'react'
-import { ColumnFilterItem } from 'antd/lib/table'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/gear/GearSlot'
 import styled from 'styled-components'
+import { ColumnFilterItem } from 'antd/lib/table/interface'
+import { SelectOutlined } from '@ant-design/icons'
 
 const Icon = styled.img`
-  width: ${props => props.theme.smallIcon.width};
-  height: ${props => props.theme.smallIcon.height};
-  border-radius: ${props => props.theme.borderRadius};
+  width: ${(props) => props.theme.smallIcon.width};
+  height: ${(props) => props.theme.smallIcon.height};
+  border-radius: ${(props) => props.theme.borderRadius};
 `
 
 export const getMemberColumns = (members: string[]) =>
@@ -77,7 +78,7 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
         value: 'nightblade',
       },
     ] as ColumnFilterItem[],
-    onFilter: (value: string, record: any) => {
+    onFilter: (value: any, record: any) => {
       return record.build.esoClass.toLowerCase() === value.toLowerCase()
     },
     render: (build?: IBuild) => {
@@ -100,7 +101,7 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
 
       const sets = concat.reduce((prev: ISet[], curr: ISetSelection) => {
         const isExisting = prev.find(
-          set => set && curr.selectedSet && set.name === curr.selectedSet.name
+          (set) => set && curr.selectedSet && set.name === curr.selectedSet.name
         )
         if (!isExisting) {
           return curr.selectedSet ? [...prev, curr.selectedSet] : prev
@@ -149,7 +150,7 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
               </Flex>
               <Tooltip title='Go to build'>
                 <Link to={`/builds/${build.id}`}>
-                  <Button ghost icon='select' type='primary' />
+                  <Button ghost icon={<SelectOutlined />} type='primary' />
                 </Link>
               </Tooltip>
             </Flex>
@@ -161,7 +162,7 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
                   maxWidth: '310px',
                 }}
               >
-                {sets.map(set => (
+                {sets.map((set) => (
                   <Tag key={set.id} style={{ margin: 5 }}>
                     {set.name}
                   </Tag>

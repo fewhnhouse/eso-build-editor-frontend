@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Icon, Collapse } from 'antd'
+import { Collapse } from 'antd'
 import styled from 'styled-components'
 import Scrollbars from 'react-custom-scrollbars'
 import { useDrop } from 'react-dnd'
@@ -8,6 +8,7 @@ import { classes } from '../../build/RaceAndClass/data'
 import Flex from '../../../components/Flex'
 import DraggableBuild from './DraggableBuild'
 import { IBuild } from '../../build/BuildStateContext'
+import { InboxOutlined } from '@ant-design/icons'
 
 const StyledScrollbars = styled(Scrollbars)``
 
@@ -34,7 +35,7 @@ const RoleDropContainer = styled.div`
   border: ${(props: { canDrop: boolean }) =>
     `2px dashed ${props.canDrop ? '#1890ff' : '#d9d9d9'}`};
 `
-const StyledIcon = styled(Icon)`
+const StyledInbox = styled(InboxOutlined)`
   width: 100px;
   height: 100px;
   display: flex;
@@ -63,7 +64,7 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
         payload: { build: dropContext.build },
       })
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),
@@ -74,7 +75,7 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
   }
 
   const currentClassBuilds = groupBuilds.filter(
-    groupBuild => groupBuild.build.esoClass === currentClass
+    (groupBuild) => groupBuild.build.esoClass === currentClass
   )
   return (
     <StyledScrollbars autoHide>
@@ -84,13 +85,13 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
         activeKey={currentClass}
         onChange={handleCollapseChange as (key: string | string[]) => void}
       >
-        {classes.map(esoClass => (
+        {classes.map((esoClass) => (
           <Collapse.Panel header={esoClass.title} key={esoClass.title}>
             <DropContainer>
               <RoleDropContainer ref={drop} canDrop={canDrop}>
                 {currentClassBuilds.length ? (
                   <StyledFlex>
-                    {currentClassBuilds.map(groupBuild => (
+                    {currentClassBuilds.map((groupBuild) => (
                       <DraggableBuild
                         customWidth='200px'
                         key={groupBuild.build.id}
@@ -101,7 +102,7 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
                   </StyledFlex>
                 ) : (
                   <>
-                    <StyledIcon type='inbox' />
+                    <StyledInbox />
                   </>
                 )}
               </RoleDropContainer>

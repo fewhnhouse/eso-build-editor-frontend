@@ -1,6 +1,5 @@
 import {
   Form,
-  Icon,
   Input,
   Button,
   Checkbox,
@@ -13,12 +12,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { LoginContext } from '../App'
 import Flex from './Flex'
 import { RESEND_VERIFICATION } from './AppContainer'
 import { Link } from 'react-router-dom'
+import { MailOutlined, UserOutlined, LockOutlined } from '@ant-design/icons'
+import { FormProps } from 'antd/lib/form'
+import { useForm } from 'antd/lib/form/Form'
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -55,11 +56,11 @@ const StyledText = styled(Typography.Text)`
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
-const StyledIcon = styled(Icon)`
-  color: ${props => props.theme.colors.grey.light};
+const getStyledIcon = (Icon: any) => styled(Icon)`
+  color: ${(props) => props.theme.colors.grey.light};
 `
 
 const StyledButton = styled(Button)`
@@ -87,11 +88,15 @@ interface IRegisterResult {
   }
 }
 
+const StyledEmail = getStyledIcon(MailOutlined)
+const StyledUser = getStyledIcon(UserOutlined)
+const StyledLock = getStyledIcon(LockOutlined)
+
 const hasErrors = (fieldsError: any, tosChecked: boolean) => {
   if (tosChecked === false) {
     return true
   } else {
-    return Object.keys(fieldsError).some(field => fieldsError[field])
+    return Object.keys(fieldsError).some((field) => fieldsError[field])
   }
 }
 
@@ -104,7 +109,11 @@ const openNotification = (resendMutation: any) => {
   const btn = (
     <StyledFlex direction='row' align='center' justify='space-between'>
       <StyledText>Didnt get an email?</StyledText>
-      <Button onClick={handleResendClick} icon='mail' type='primary'>
+      <Button
+        onClick={handleResendClick}
+        icon={<MailOutlined />}
+        type='primary'
+      >
         {'Resend'}
       </Button>
     </StyledFlex>
@@ -126,11 +135,13 @@ const openNotification = (resendMutation: any) => {
   })
 }
 
-interface LoginFormProps extends FormComponentProps, RouteComponentProps<any> {
+interface LoginFormProps extends RouteComponentProps<any> {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
-const LoginForm = ({ form }: LoginFormProps) => {
+const LoginForm = () => {
   const [register, setRegister] = useState(false)
+  const [form] = useForm()
+  const { isFieldTouched, getFieldError, getFieldsError, validateFields } = form
   const [, setLoggedIn] = useContext(LoginContext)
   const [mutateLogin, loginResult] = useMutation<ILoginResult, ILoginData>(
     LOGIN
@@ -142,36 +153,20 @@ const LoginForm = ({ form }: LoginFormProps) => {
     IRegisterData
   >(REGISTER)
 
-  const {
-    getFieldDecorator,
-    getFieldsError,
-    getFieldError,
-    isFieldTouched,
-    validateFields,
-  } = form
-  useEffect(() => {
-    validateFields()
-  }, [validateFields])
-
-  const handleSubmit = (e: React.SyntheticEvent<any>) => {
-    e.preventDefault()
-    validateFields((err: any, values: any) => {
-      if (!err) {
-        if (register) {
-          mutateRegister({
-            variables: {
-              email: values.email,
-              username: values.username,
-              password: values.password,
-            },
-          })
-        } else {
-          mutateLogin({
-            variables: { email: values.email, password: values.password },
-          })
-        }
-      }
-    })
+  const handleFinish = (values: any) => {
+    if (register) {
+      mutateRegister({
+        variables: {
+          email: values.email,
+          username: values.username,
+          password: values.password,
+        },
+      })
+    } else {
+      mutateLogin({
+        variables: { email: values.email, password: values.password },
+      })
+    }
   }
 
   useEffect(() => {
@@ -216,68 +211,56 @@ const LoginForm = ({ form }: LoginFormProps) => {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit} className='login-form'>
+    <StyledForm
+      initialValues={{ remember: true }}
+      name='login-form'
+      onFinish={handleFinish}
+      className='login-form'
+    >
       {register && (
         <Form.Item
-          validateStatus={usernameError ? 'error' : ''}
-          help={usernameError || ''}
+          name='username'
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              min: 2,
+              message: 'Please input your username!',
+            },
+          ]}
         >
-          {getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your username!',
-                whitespace: true,
-                min: 2,
-              },
-            ],
-          })(
-            <Input prefix={<StyledIcon type='user' />} placeholder='Username' />
-          )}
+          <Input prefix={<StyledUser />} placeholder='Username' />
         </Form.Item>
       )}
       <Form.Item
-        validateStatus={emailError ? 'error' : ''}
-        help={emailError || ''}
+        name='email'
+        rules={[
+          {
+            required: true,
+            message: 'Please input a valid email!',
+            whitespace: true,
+            //eslint-disable-next-line
+            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          },
+        ]}
       >
-        {getFieldDecorator('email', {
-          rules: [
-            {
-              required: true,
-              message: 'Please input a valid email!',
-              whitespace: true,
-              //eslint-disable-next-line
-              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            },
-          ],
-        })(<Input prefix={<StyledIcon type='email' />} placeholder='Email' />)}
+        <Input prefix={<StyledEmail />} placeholder='Email' />
       </Form.Item>
       <Form.Item
-        validateStatus={passwordError ? 'error' : ''}
-        help={passwordError || ''}
+        name='password'
+        rules={[
+          {
+            required: true,
+            message: 'Please input a valid Password!',
+            min: 6,
+            whitespace: true,
+          },
+        ]}
       >
-        {getFieldDecorator('password', {
-          rules: [
-            {
-              required: true,
-              message: 'Please input a valid Password!',
-              min: 6,
-              whitespace: true,
-            },
-          ],
-        })(
-          <Input
-            prefix={<StyledIcon type='lock' />}
-            type='password'
-            placeholder='Password'
-          />
-        )}
+        <Input prefix={<StyledLock />} type='password' placeholder='Password' />
       </Form.Item>
-      <Form.Item>
-        {getFieldDecorator('remember', {
-          valuePropName: 'checked',
-          initialValue: true,
-        })(<Checkbox>Remember me</Checkbox>)}
+      <Form.Item name='remember' valuePropName='checked'>
+        <Checkbox>Remember me</Checkbox>
         {!register && (
           <a className='login-form-forgot' href='/resetPassword'>
             Forgot password
@@ -302,7 +285,10 @@ const LoginForm = ({ form }: LoginFormProps) => {
         </StyledButton>
         <br />
         Or
-        <Button type='link' onClick={() => setRegister(register => !register)}>
+        <Button
+          type='link'
+          onClick={() => setRegister((register) => !register)}
+        >
           {register ? 'login.' : 'register now!'}
         </Button>
       </Form.Item>
@@ -310,8 +296,4 @@ const LoginForm = ({ form }: LoginFormProps) => {
   )
 }
 
-const WrappedNormalLoginForm = Form.create<LoginFormProps>({
-  name: 'normal_login',
-})(LoginForm)
-
-export default withRouter(WrappedNormalLoginForm)
+export default withRouter(LoginForm)

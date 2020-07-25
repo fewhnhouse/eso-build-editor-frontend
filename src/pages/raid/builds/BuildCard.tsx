@@ -12,11 +12,17 @@ import { ISet } from '../../../components/gear/GearSlot'
 import GearCard from '../../../components/gear/GearCard'
 import ExpandedInformation from './ExpandedInformation'
 import { getSetsCount } from '../../build/Sets/Sets'
+import {
+  SelectOutlined,
+  DeleteOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from '@ant-design/icons'
 
 const Icon = styled.img`
-  width: ${props => props.theme.smallIcon.width};
-  height: ${props => props.theme.smallIcon.height};
-  margin-right: ${props => props.theme.margins.mini};
+  width: ${(props) => props.theme.smallIcon.width};
+  height: ${(props) => props.theme.smallIcon.height};
+  margin-right: ${(props) => props.theme.margins.mini};
   border-radius: ${(props: { isMundusStone: boolean; theme: ITheme }) =>
     props.isMundusStone ? props.theme.borderRadius : ''};
 `
@@ -35,9 +41,9 @@ const InfoLabel = styled.label`
 `
 
 const Description = styled(Flex)`
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.small};
   line-height: 1.5;
-  color: ${props => props.theme.colors.grey.medium};
+  color: ${(props) => props.theme.colors.grey.medium};
 `
 
 const StyledCard = styled(Card)`
@@ -46,9 +52,9 @@ const StyledCard = styled(Card)`
   background: ${(props: { active?: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
   min-height: 80px;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledLink = styled(Link)`
@@ -108,7 +114,7 @@ const WithDnD = ({ item, style }: IBuildCardProps) => {
       type: 'build',
       build: item,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
       didDrop: !!monitor.didDrop(),
     }),
@@ -149,7 +155,7 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
-    setIsExpanded(expanded => !expanded)
+    setIsExpanded((expanded) => !expanded)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const handleDeleteClick = () => {
@@ -174,7 +180,7 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
 
   const sets = concat.reduce((prev: ISet[], curr: ISetSelection) => {
     const isExisting = prev.find(
-      set => set && curr.selectedSet && set.name === curr.selectedSet.name
+      (set) => set && curr.selectedSet && set.name === curr.selectedSet.name
     )
     if (!isExisting) {
       return curr.selectedSet ? [...prev, curr.selectedSet] : prev
@@ -198,15 +204,15 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
           <StyledTitle level={3}>{item.name}</StyledTitle>
           {role ? (
             <Button
-              type='danger'
+              danger
               ghost
-              icon='delete'
+              icon={<DeleteOutlined />}
               onClick={handleDeleteClick}
             />
           ) : (
             <Tooltip title='Go to build'>
               <StyledLink to={`/builds/${item.id}`}>
-                <Button ghost icon='select' type='primary' />
+                <Button ghost icon={<SelectOutlined />} type='primary' />
               </StyledLink>
             </Tooltip>
           )}
@@ -232,7 +238,7 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
         {!isExpanded && (
           <>
             <Divider />
-            {sets.map(set => (
+            {sets.map((set) => (
               <Popover
                 style={{ padding: 0, margin: 0 }}
                 key={set.id}
@@ -252,7 +258,7 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
       {!isMobile && (
         <MoreButton
           onClick={handleExpandClick}
-          icon={isExpanded ? 'minus' : 'plus'}
+          icon={isExpanded ? <MinusOutlined /> : <PlusOutlined />}
         />
       )}
       {additionalContent}

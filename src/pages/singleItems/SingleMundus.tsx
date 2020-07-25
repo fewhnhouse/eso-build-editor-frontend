@@ -8,12 +8,12 @@ import { MundusCard } from '../overview/MundusStone'
 import ErrorPage from '../../components/ErrorPage'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
   width: 100%;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
 `
 
 const GET_MUNDUS_BY_ID = gql`
@@ -68,9 +68,9 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
           <title>{mundusStone && mundusStone.name}</title>
           <meta
             property='og:url'
-            content={`${
-              window.location.origin
-            }/overview/mundusStones/${mundusStone && mundusStone.id}`}
+            content={`${window.location.origin}/overview/mundusStones/${
+              mundusStone && mundusStone.id
+            }`}
           />
           <meta property='og:type' content={'website'} />
           <meta property='og:title' content={mundusStone && mundusStone.name} />
@@ -84,9 +84,9 @@ const SingleMundus = ({ match }: RouteComponentProps<any>) => {
           />
           <meta
             property='og:image'
-            content={`${
-              process.env.REACT_APP_IMAGE_SERVICE
-            }/mundusStones/${mundusStone && mundusStone.icon}`}
+            content={`${process.env.REACT_APP_IMAGE_SERVICE}/mundusStones/${
+              mundusStone && mundusStone.icon
+            }`}
           />
         </Helmet>
         <MundusCard mundusStone={mundusStone} />

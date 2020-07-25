@@ -22,11 +22,11 @@ const StyledTitleFlex = styled(Flex)`
 `
 
 const StyledText = styled(Typography.Text)`
-  color: ${props => props.theme.colors.grey.light};;
+  color: ${(props) => props.theme.colors.grey.light};
   white-space: normal;
 `
 
-export interface ICustomSelectProps extends SelectProps {
+export interface ICustomSelectProps extends SelectProps<any> {
   items: IModification[]
   className?: string
 }
@@ -62,6 +62,7 @@ export const CustomSelect = ({
 export interface ISelectWithTitleProps extends ICustomSelectProps {
   title: string | ReactNode
 }
+
 export const SelectWithTitle = ({
   items,
   title,

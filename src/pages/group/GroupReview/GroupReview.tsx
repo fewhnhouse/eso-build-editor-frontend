@@ -9,7 +9,7 @@ import { ME } from '../../home/UserHomeCard'
 import { handleCopy } from '../util'
 import { LoginContext } from '../../../App'
 import { AppContext } from '../../../components/AppContainer'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
 import { CREATE_GROUP } from '../Group'
 import GroupReviewDetails from './GroupReviewDetails'
@@ -24,7 +24,7 @@ interface IGroupReview extends RouteComponentProps<any> {
 }
 
 const StyledSpin = styled(Spin)`
-  margin-top: ${props => props.theme.paddings.mini};
+  margin-top: ${(props) => props.theme.paddings.mini};
 `
 
 const Container = styled(Content)`
@@ -37,7 +37,7 @@ const Container = styled(Content)`
   overflow-x: hidden;
   height: ${(props: { isMobile: boolean }) =>
     `calc(100% - ${props.isMobile ? '204px' : '144px'})`};
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 export const GROUP = gql`

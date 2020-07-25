@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { Menu, Button } from 'antd'
-import { ClickParam } from 'antd/lib/menu'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
@@ -8,6 +7,7 @@ import Scrollbars from 'react-custom-scrollbars'
 import { Redirect } from 'react-router'
 import { IBuildState, IBuildAction } from '../BuildStateContext'
 import { classSkillLines, skillLines } from './skillLines'
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons'
 const { SubMenu } = Menu
 
 const EsoIcon = styled.img`
@@ -17,10 +17,10 @@ const EsoIcon = styled.img`
 `
 
 const StyledIconBtn = styled(Button)`
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
   height: 40px;
   width: 40px;
-  margin-top: ${props => props.theme.margins.small};
+  margin-top: ${(props) => props.theme.margins.small};
 `
 
 const MenuContainer = styled.div`
@@ -68,7 +68,7 @@ const SkillMenu = ({
   const [redirect, setRedirect] = useState('')
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  const handleClick = (e: ClickParam) => {
+  const handleClick = (e: any) => {
     if (isMobile) {
       setRedirect(e.key || '')
     } else {
@@ -84,7 +84,7 @@ const SkillMenu = ({
   }
 
   const myClass = classSkillLines.find(
-    existingClass => existingClass.esoClass === esoClass
+    (existingClass) => existingClass.esoClass === esoClass
   )
 
   const shownClasses = singleClass
@@ -97,7 +97,7 @@ const SkillMenu = ({
           items: singleClass && myClass ? myClass.items : [],
         },
       ]
-    : classSkillLines.map(esoClass => ({
+    : classSkillLines.map((esoClass) => ({
         title: esoClass.esoClass,
         icon: `${process.env.REACT_APP_IMAGE_SERVICE}/classes/${
           esoClass ? esoClass.esoClass : ''
@@ -117,7 +117,7 @@ const SkillMenu = ({
           type='primary'
           ghost
           onClick={handleIconClick(!collapsed)}
-          icon={collapsed ? 'double-right' : 'double-left'}
+          icon={collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
         />
       )}
       <Scrollbars autoHide>

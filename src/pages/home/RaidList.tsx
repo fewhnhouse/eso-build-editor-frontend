@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { List, Divider, Icon, Button } from 'antd'
+import { List, Divider, Button } from 'antd'
 import styled from 'styled-components'
 import { applicationAreas } from '../raid/general/RaidGeneral'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import { Redirect } from 'react-router'
+import { TeamOutlined } from '@ant-design/icons'
 
 const StyledList = styled(List)`
   background: white;
@@ -23,13 +24,13 @@ const ActionButton = styled(Button)`
 `
 
 const ListMeta = styled(List.Item.Meta)`
-  padding: ${props => props.theme.paddings.small};
+  padding: ${(props) => props.theme.paddings.small};
   text-align: start;
 `
 
 const ListItem = styled(List.Item)`
   padding: 0;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 interface IOwnerProps {
@@ -83,7 +84,7 @@ const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
         renderItem={(item, index) => {
           const raid = data[index]
           const applicationArea = applicationAreas.find(
-            area => area.key === raid.applicationArea
+            (area) => area.key === raid.applicationArea
           )
           const size = raid.roles.reduce((prev, curr) => {
             return prev + curr.builds.length
@@ -113,7 +114,7 @@ const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
                 style={{ textAlign: 'start' }}
                 title={
                   <>
-                    <Icon type='team' />
+                    <TeamOutlined />
                     {size}
                     <Divider type='vertical' />
                     {raid.name || ''}

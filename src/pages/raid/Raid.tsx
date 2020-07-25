@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Icon, Button, Steps, Tooltip, notification } from 'antd'
+import { Layout, Button, Steps, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import RaidGeneral from './general/RaidGeneral'
 import { RaidContext, raidReducer, IRole } from './RaidStateContext'
@@ -11,6 +11,7 @@ import RaidReview from './Review/RaidReview'
 import { handleCreateSave, handleEditSave } from './util'
 import { raid } from '../../util/fragments'
 import { createNotification } from '../../util/notification'
+import { LeftOutlined, SaveOutlined, RightOutlined } from '@ant-design/icons'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -24,7 +25,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: 100%;
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 const StyledFooter = styled(Footer)`
@@ -83,7 +84,7 @@ const Raid = ({
   const [tab, setTab] = useState(pageIndex || 0)
   const [redirect, setRedirect] = useState('')
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1)
+    setTab((tabIndex) => tabIndex - 1)
   }
 
   const handlePrivateChange = () => {
@@ -152,7 +153,7 @@ const Raid = ({
     if (tab === 2) {
       handleSave()
     } else {
-      setTab(tabIndex => tabIndex + 1)
+      setTab((tabIndex) => tabIndex + 1)
     }
   }
 
@@ -198,7 +199,7 @@ const Raid = ({
           size='large'
           type='primary'
         >
-          <Icon type='left' />
+          <LeftOutlined />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
@@ -232,14 +233,13 @@ const Raid = ({
               loading={createRaidResult.loading || updateRaidResult.loading}
               onClick={handleNextClick}
               disabled={
-                isDisabled || (createRaidResult.data || updateRaidResult.data)
+                isDisabled || createRaidResult.data || updateRaidResult.data
               }
               type='primary'
             >
               {tab === 2 ? 'Save' : 'Next'}
-              {!(createRaidResult.loading || updateRaidResult.loading) && (
-                <Icon type={tab === 2 ? 'save' : 'right'} />
-              )}
+              {!(createRaidResult.loading || updateRaidResult.loading) &&
+                (tab === 2 ? <SaveOutlined /> : <RightOutlined />)}
             </TabButton>
           </Tooltip>
         </StyledButtonGroup>

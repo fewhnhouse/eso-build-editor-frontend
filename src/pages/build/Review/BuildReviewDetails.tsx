@@ -14,35 +14,36 @@ import Scrollbars from 'react-custom-scrollbars'
 import { ITheme } from '../../../components/theme'
 import { AppContext } from '../../../components/AppContainer'
 import { getSetsCount } from '../Sets/Sets'
+import { EditOutlined, EnvironmentOutlined } from '@ant-design/icons'
 
 const { Title, Text } = Typography
 
 const ResourceCard = styled.div`
   display: flex;
   width: 100px;
-  color: ${props => props.theme.colors.grey.normal};
+  color: ${(props) => props.theme.colors.grey.normal};
   border: 1px solid #e8e8e8;
   border-radius: 2px;
-  padding: ${props => props.theme.paddings.small};
+  padding: ${(props) => props.theme.paddings.small};
   flex-direction: column;
   margin: 0px 5px;
 `
 
 const Icon = styled.img`
-  width: ${props => props.theme.icon.width};
-  height: ${props => props.theme.icon.height};
+  width: ${(props) => props.theme.icon.width};
+  height: ${(props) => props.theme.icon.height};
   margin-right: 10px;
-  border: ${props => props.theme.icon.border};
-  border-radius: ${props => props.theme.icon.borderRadius};
+  border: ${(props) => props.theme.icon.border};
+  border-radius: ${(props) => props.theme.icon.borderRadius};
 `
 
 const StyledTitle = styled(Typography.Title)`
-  margin: ${props => props.theme.margins.mini};
+  margin: ${(props) => props.theme.margins.mini};
 `
 
 const StyledDivider = styled(Divider)`
   height: 50px;
-  margin: 0px ${props => props.theme.paddings.medium};
+  margin: 0px ${(props) => props.theme.paddings.medium};
 `
 
 const Wrapper = styled(Flex)`
@@ -80,11 +81,11 @@ const GeneralInformation = styled(Card)`
     props.isMobile ? '' : 'auto'};
 `
 const SkillsView = styled.div`
-  margin-bottom: ${props => props.theme.margins.small};
+  margin-bottom: ${(props) => props.theme.margins.small};
   width: 100%;
 `
 const MiscView = styled(Flex)`
-  margin-bottom: ${props => props.theme.margins.small};
+  margin-bottom: ${(props) => props.theme.margins.small};
 `
 
 interface IDetailViewProps {
@@ -141,8 +142,8 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     },
     { id: 'backbar', label: 'Backbar', data: backbarSelection || [] },
   ]
-  const raceData = races.find(rc => rc.title === race)
-  const classData = classes.find(esoC => esoC.title === esoClass)
+  const raceData = races.find((rc) => rc.title === race)
+  const classData = classes.find((esoC) => esoC.title === esoClass)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const setsCount = getSetsCount(
@@ -152,8 +153,8 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
     frontbarSelection,
     backbarSelection
   )
-  const area = applicationAreas.find(area => area.key === applicationArea)
-  const access = accessRightOptions.find(el => el.key === accessRights)
+  const area = applicationAreas.find((area) => area.key === applicationArea)
+  const access = accessRightOptions.find((el) => el.key === accessRights)
   return (
     <Scrollbars autoHide disabled={!isMobile}>
       <StyledFlex isMobile={isMobile} fluid direction='column' align='center'>
@@ -162,19 +163,19 @@ const BuildReviewDetails = ({ loadedData, local }: IDetailViewProps) => {
           {local && (
             <Flex direction='row'>
               <InformationCard
-                icon='edit'
+                Icon={EditOutlined}
                 title='Description'
                 description={description}
               />
               <StyledDivider type='vertical' />
               <InformationCard
-                icon='environment'
+                Icon={EnvironmentOutlined}
                 title='Application Area'
                 description={area ? area.label : ''}
               />
               <StyledDivider type='vertical' />
               <InformationCard
-                icon={access!.icon}
+                Icon={access!.Icon}
                 title='Access Rights'
                 description={access!.label}
               />

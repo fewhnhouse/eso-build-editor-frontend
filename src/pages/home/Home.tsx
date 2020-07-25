@@ -4,7 +4,7 @@ import { Layout } from 'antd'
 import NotLoggedInHome from './NotLoggedInHome'
 import LoggedInHome from './LoggedInHome'
 import { AppContext } from '../../components/AppContainer'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const { Content } = Layout
 
@@ -16,7 +16,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: hidden;
   height: 100%;
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 interface IHomeProps {

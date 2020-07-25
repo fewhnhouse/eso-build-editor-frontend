@@ -51,12 +51,12 @@ const ListContainer = styled.div`
 `
 
 const StyledEmpty = styled(Empty)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 const StyledFlexOuter = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   transition: opacity 0.2s ease-in-out;
 `
 
@@ -107,12 +107,13 @@ export default () => {
 
   useEffect(() => {
     if (data && data.buildRevisions) {
-      const newBuilds = data.buildRevisions.filter(remoteBuildRevision => {
+      const newBuilds = data.buildRevisions.filter((remoteBuildRevision) => {
         return !groupBuilds.find(
-          groupBuild => groupBuild.build.id === remoteBuildRevision.builds[0].id
+          (groupBuild) =>
+            groupBuild.build.id === remoteBuildRevision.builds[0].id
         )
       })
-      setRemoteBuilds(newBuilds.map(buildRevision => buildRevision.builds[0]))
+      setRemoteBuilds(newBuilds.map((buildRevision) => buildRevision.builds[0]))
     }
   }, [groupBuilds, data])
 
@@ -134,7 +135,9 @@ export default () => {
             onChange={handleClassSelectChange}
           >
             {classes.map((esoClass, index) => (
-              <Option key={esoClass.title}>{esoClass.title}</Option>
+              <Option value={esoClass.title} key={esoClass.title}>
+                {esoClass.title}
+              </Option>
             ))}
           </Select>
           <Divider style={{ margin: '5px 0px' }} />

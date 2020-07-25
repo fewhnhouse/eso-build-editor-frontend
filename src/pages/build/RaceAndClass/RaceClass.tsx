@@ -1,20 +1,18 @@
 import React, { useContext, useEffect } from 'react'
-import {
-  Divider,
-  Input,
-  Select,
-  Typography,
-  Button,
-  Icon,
-  Card,
-  Radio,
-} from 'antd'
+import { Divider, Input, Select, Typography, Button, Card, Radio } from 'antd'
 import styled from 'styled-components'
 import { EsoClassCard, RaceCard } from './Card'
 import { BuildContext, AccessRights } from '../BuildStateContext'
 import Flex from '../../../components/Flex'
 import { races, classes } from './data'
 import { RadioChangeEvent } from 'antd/lib/radio'
+import {
+  MinusOutlined,
+  PlusOutlined,
+  LockOutlined,
+  EditOutlined,
+  UnlockOutlined,
+} from '@ant-design/icons'
 
 const ButtonGroup = Button.Group
 
@@ -37,25 +35,21 @@ const ResourceCard = styled(Card)`
 `
 
 const StyledFlex = styled(Flex)`
-  margin: ${props => props.theme.margins.small};
-  width: ${props => props.theme.widths.medium};
-`
-
-const RadioIcon = styled(Icon)`
-  margin-right: 5px;
+  margin: ${(props) => props.theme.margins.small};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 const StyledWideFlex = styled(Flex)`
   flex: 1;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledTitle = styled(Typography.Title)`
-  margin: ${props => props.theme.margins.mini};
+  margin: ${(props) => props.theme.margins.mini};
 `
 
 const StyledInput = styled(Input)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 export const applicationAreas = [
@@ -97,17 +91,17 @@ export const accessRightOptions = [
   {
     label: 'Private',
     key: AccessRights.PRIVATE,
-    icon: 'lock',
+    Icon: LockOutlined,
   },
   {
     label: 'Unlisted',
     key: AccessRights.UNLISTED,
-    icon: 'edit',
+    Icon: EditOutlined,
   },
   {
     label: 'Public',
     key: AccessRights.PUBLIC,
-    icon: 'unlock',
+    Icon: UnlockOutlined,
   },
 ]
 
@@ -299,14 +293,14 @@ export default ({ edit }: { edit: boolean }) => {
                   onClick={handleAttributeChange('stamina', 'minus')}
                   type='default'
                 >
-                  <Icon type='minus' />
+                  <MinusOutlined />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
                   onClick={handleAttributeChange('stamina', 'plus')}
                   type='primary'
                 >
-                  <Icon type='plus' />
+                  <PlusOutlined />
                 </Button>
               </ButtonGroup>
             </ResourceCard>
@@ -319,14 +313,14 @@ export default ({ edit }: { edit: boolean }) => {
                   onClick={handleAttributeChange('health', 'minus')}
                   type='default'
                 >
-                  <Icon type='minus' />
+                  <MinusOutlined />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
                   onClick={handleAttributeChange('health', 'plus')}
                   type='primary'
                 >
-                  <Icon type='plus' />
+                  <PlusOutlined />
                 </Button>
               </ButtonGroup>
             </ResourceCard>
@@ -340,14 +334,14 @@ export default ({ edit }: { edit: boolean }) => {
                   onClick={handleAttributeChange('magicka', 'minus')}
                   type='default'
                 >
-                  <Icon type='minus' />
+                  <MinusOutlined />
                 </Button>
                 <Button
                   disabled={totalAttributes >= 64}
                   onClick={handleAttributeChange('magicka', 'plus')}
                   type='primary'
                 >
-                  <Icon type='plus' />
+                  <PlusOutlined />
                 </Button>
               </ButtonGroup>
             </ResourceCard>
@@ -363,10 +357,10 @@ export default ({ edit }: { edit: boolean }) => {
         defaultValue={accessRights}
         buttonStyle='solid'
       >
-        {accessRightOptions.map(el => (
-          <Radio.Button value={el.key}>
-            <RadioIcon type={el.icon} />
-            {el.label}
+        {accessRightOptions.map(({ key, Icon, label }) => (
+          <Radio.Button value={key}>
+            <Icon style={{ marginRight: 5 }} />
+            {label}
           </Radio.Button>
         ))}
       </Radio.Group>

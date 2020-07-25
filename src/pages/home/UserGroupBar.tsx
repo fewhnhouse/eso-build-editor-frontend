@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Divider, Icon, Button } from 'antd'
+import { Card, Spin, Typography, Divider, Button } from 'antd'
 import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
+import { EditOutlined, SelectOutlined, PlusOutlined } from '@ant-design/icons'
 
 const { Title } = Typography
 
 const UserGroupWrapper = styled(Flex)`
   width: 100%;
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
   height: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'calc(100vh - 130px)' : ''};
 `
@@ -39,7 +40,7 @@ const UserGroup = styled(Card)`
 `
 
 const StyledButton = styled(Button)`
-  margin: 0px ${props => props.theme.margins.small};
+  margin: 0px ${(props) => props.theme.margins.small};
   height: 170px;
   width: 170px;
 `
@@ -54,7 +55,7 @@ const Description = styled.p`
   margin: 0;
 `
 
-const StyledIcon = styled(Icon)`
+const StyledPlus = styled(PlusOutlined)`
   font-size: 30px;
 `
 
@@ -121,7 +122,7 @@ const UserGroupBar = () => {
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
         {!loading && !isMobile && (
           <StyledButton size='large' onClick={handleAddClick}>
-            <StyledIcon type='plus' />
+            <StyledPlus />
           </StyledButton>
         )}
         {data &&
@@ -131,14 +132,12 @@ const UserGroupBar = () => {
               <UserGroup
                 isMobile={isMobile}
                 actions={[
-                  <Icon
-                    type='edit'
+                  <EditOutlined
                     title='Edit'
                     key='group-edit'
                     onClick={handleClick(`/editGroup/${ownGroup?.id ?? ''}/0`)}
                   />,
-                  <Icon
-                    type='select'
+                  <SelectOutlined
                     title='Open'
                     key='group-open'
                     onClick={handleClick(`/groups/${ownGroup?.id ?? ''}`)}

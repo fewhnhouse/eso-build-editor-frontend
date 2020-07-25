@@ -14,7 +14,7 @@ import { ApolloProvider } from 'react-apollo'
 import { setContext } from 'apollo-link-context'
 import { notification } from 'antd'
 import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { ErrorBoundary } from './components/ErrorBoundary'
 
 const authLink = setContext((_, { headers }) => {

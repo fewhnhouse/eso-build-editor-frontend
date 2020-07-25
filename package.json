@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "@babel/runtime": "^7.10.5",
     "@types/react-helmet": "^6.0.0",
     "antd": "^4.4.3",

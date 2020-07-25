@@ -10,6 +10,7 @@ import { IBuild, IBuildRevision } from '../../build/BuildStateContext'
 import { reducedBuild } from '../../../util/fragments'
 import { races, classes } from '../../build/RaceAndClass/data'
 import Scrollbars from 'react-custom-scrollbars'
+import { ShrinkOutlined, ArrowsAltOutlined } from '@ant-design/icons'
 const { Option } = Select
 
 const ListContainer = styled.div`
@@ -25,7 +26,7 @@ const ListContainer = styled.div`
 
 const StyledFlexOuter = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   transition: opacity 0.2s ease-in-out;
 `
 
@@ -35,21 +36,21 @@ const StyledFlexInner = styled(Flex)`
 
 const StyledInput = styled(Input)`
   width: 100%;
-  margin: ${props => props.theme.paddings.small};
+  margin: ${(props) => props.theme.paddings.small};
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.paddings.small} 0px;
+  margin: ${(props) => props.theme.paddings.small} 0px;
 `
 
 const StyledFlexExpanded = styled(Flex)`
-  margin: 0px ${props => props.theme.paddings.small};
+  margin: 0px ${(props) => props.theme.paddings.small};
   overflow: auto;
   width: 100%;
 `
 
 const StyledFlexExpandedSecond = styled(Flex)`
-  margin: 0px ${props => props.theme.paddings.small};
+  margin: 0px ${(props) => props.theme.paddings.small};
   width: 100%;
 `
 
@@ -121,12 +122,12 @@ export default () => {
             {
               race_in: selectedRaces.length
                 ? selectedRaces
-                : races.map(race => race.title),
+                : races.map((race) => race.title),
             },
             {
               esoClass_in: selectedClasses.length
                 ? selectedClasses
-                : classes.map(esoClass => esoClass.title),
+                : classes.map((esoClass) => esoClass.title),
             },
           ],
         },
@@ -150,7 +151,7 @@ export default () => {
   }
 
   const handleExpandChange = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +172,7 @@ export default () => {
             />
             <Button
               size='large'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
+              icon={expanded ? <ShrinkOutlined /> : <ArrowsAltOutlined />}
               onClick={handleExpandChange}
             />
           </StyledFlexInner>
@@ -190,7 +191,9 @@ export default () => {
                   onChange={handleClassSelectChange}
                 >
                   {classes.map((esoClass, index) => (
-                    <Option key={esoClass.title}>{esoClass.title}</Option>
+                    <Option value={esoClass.title} key={esoClass.title}>
+                      {esoClass.title}
+                    </Option>
                   ))}
                 </Select>
               </StyledFlexExpanded>
@@ -207,7 +210,9 @@ export default () => {
                   onChange={handleRaceSelectChange}
                 >
                   {races.map((race, index) => (
-                    <Option key={race.title}>{race.title}</Option>
+                    <Option value={race.title} key={race.title}>
+                      {race.title}
+                    </Option>
                   ))}
                 </Select>
               </StyledFlexExpandedSecond>

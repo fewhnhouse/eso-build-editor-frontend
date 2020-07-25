@@ -1,15 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Divider, Typography, Select, Input, Icon, Radio } from 'antd'
+import { Divider, Typography, Select, Input, Radio } from 'antd'
 import Flex from '../../../components/Flex'
 import { GroupContext } from '../GroupStateContext'
 import { accessRightOptions } from '../../build/RaceAndClass/RaceClass'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import TextArea from 'antd/lib/input/TextArea'
-
-const RadioIcon = styled(Icon)`
-  margin-right: 5px;
-`
 
 const GeneralContainer = styled.div`
   display: flex;
@@ -18,21 +14,21 @@ const GeneralContainer = styled.div`
 `
 
 const StyledFlex = styled(Flex)`
-  width: ${props => props.theme.widths.medium};
-  margin: ${props => props.theme.margins.small};
+  width: ${(props) => props.theme.widths.medium};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledWideFlex = styled(Flex)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
   flex: 1;
 `
 
 const StyledArea = styled(TextArea)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 const StyledInput = styled(Input)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 interface IGroupGeneralProps {
@@ -130,10 +126,10 @@ export default ({ edit }: IGroupGeneralProps) => {
             defaultValue={accessRights}
             buttonStyle='solid'
           >
-            {accessRightOptions.map(el => (
-              <Radio.Button key={el.key} value={el.key}>
-                <RadioIcon type={el.icon} />
-                {el.label}
+            {accessRightOptions.map(({ key, Icon, label }) => (
+              <Radio.Button key={key} value={key}>
+                <Icon style={{ marginRight: 5 }} />
+                {label}
               </Radio.Button>
             ))}
           </Radio.Group>{' '}

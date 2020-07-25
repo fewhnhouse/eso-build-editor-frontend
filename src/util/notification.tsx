@@ -1,7 +1,8 @@
 import React from 'react'
 import Flex from '../components/Flex'
-import { Input, Tooltip, Icon, message } from 'antd'
+import { Input, Tooltip, message } from 'antd'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { ShareAltOutlined } from '@ant-design/icons'
 
 export const createNotification = (
   title: string,
@@ -21,7 +22,7 @@ export const createNotification = (
                 text={`${window.location.origin}/${path}/${id}`}
                 onCopy={() => message.success('Copied to clipboard.')}
               >
-                <Icon type='share-alt' />
+                <ShareAltOutlined />
               </CopyToClipboard>
             </Tooltip>
           }

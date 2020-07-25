@@ -8,12 +8,12 @@ import ErrorPage from '../../components/ErrorPage'
 import { BuffCard } from '../overview/Buff'
 import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
   width: 100%;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
 `
 
 const GET_BUFF_BY_ID = gql`
@@ -65,8 +65,9 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
           <title>{buff && buff.name}</title>
           <meta
             property='og:url'
-            content={`${window.location.origin}/overview/buffs/${buff &&
-              buff.id}`}
+            content={`${window.location.origin}/overview/buffs/${
+              buff && buff.id
+            }`}
           />
           <meta property='og:type' content={'website'} />
           <meta property='og:title' content={buff && buff.name} />
@@ -76,8 +77,9 @@ const SingleBuffFood = ({ match }: RouteComponentProps<any>) => {
           />
           <meta
             property='og:image'
-            content={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${buff &&
-              buff.icon}`}
+            content={`${process.env.REACT_APP_IMAGE_SERVICE}/buffs/${
+              buff && buff.icon
+            }`}
           />
         </Helmet>
 

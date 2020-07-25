@@ -18,7 +18,7 @@ import { handleCopy } from '../utils/copy'
 import { LoginContext } from '../../../App'
 import Review from '../../../components/Review'
 import { AppContext } from '../../../components/AppContainer'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import image from '../../../assets/icons/favicon-32x32.png'
 import { createNotification } from '../../../util/notification'
 
@@ -61,6 +61,7 @@ const DELETE_REVISION = gql`
 
 const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
+  console.log(id)
   const [saved, setSaved] = useState(false)
   const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [redirect, setRedirect] = useState('')
@@ -237,7 +238,7 @@ const BuildReview = ({ match, local }: IBuildReview) => {
           <Button key='submit' type='primary' onClick={handleDeleteRevision}>
             Delete current
           </Button>,
-          <Button key='submit' type='danger' onClick={handleDeleteAll}>
+          <Button key='submit' danger onClick={handleDeleteAll}>
             Delete all
           </Button>,
         ]}

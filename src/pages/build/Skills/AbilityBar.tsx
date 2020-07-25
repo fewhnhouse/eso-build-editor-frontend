@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Divider, Icon } from 'antd'
+import { Divider } from 'antd'
 import { BuildContext, ISkillSelection } from '../BuildStateContext'
 import SkillView from '../../../components/skill/SkillView'
 import { ISkill } from '../../../components/skill/SkillSlot'
 import { useDrop } from 'react-dnd'
 import Flex from '../../../components/Flex'
+import { DeleteOutlined } from '@ant-design/icons'
 
 export const ABILITY_BAR_ONE = 'abilityBar1'
 export const ABILITY_BAR_TWO = 'abilityBar2'
@@ -26,8 +27,8 @@ const StyledAbilityFlex = styled(Flex)`
 const AbilityBarContainer = styled(Flex)`
   flex: 1;
   height: 100%;
-  padding: ${props => props.theme.paddings.large};
-  max-width: ${props => props.theme.widths.large};
+  padding: ${(props) => props.theme.paddings.large};
+  max-width: ${(props) => props.theme.widths.large};
   background: white;
 `
 
@@ -36,8 +37,8 @@ const TrashContainer = styled.div`
   border: 1px dashed
     ${(props: { hasTrash: boolean }) =>
       props.hasTrash ? '#40a9ff' : '#d9d9d9'};
-  border-radius: ${props => props.theme.borderRadius};
-  width: ${props => props.theme.widths.small};
+  border-radius: ${(props) => props.theme.borderRadius};
+  width: ${(props) => props.theme.widths.small};
   height: 80px;
   text-align: center;
   display: flex;
@@ -45,7 +46,7 @@ const TrashContainer = styled.div`
   justify-content: center;
 `
 
-const StyledIcon = styled(Icon)`
+const StyledDelete = styled(DeleteOutlined)`
   font-size: 30px;
   color: ${(props: { isOver: boolean }) =>
     props.isOver ? '#40a9ff' : 'rgb(155,155,155)'};
@@ -85,7 +86,7 @@ export default () => {
         payload: { hasTrash: false },
       })
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),
@@ -93,7 +94,7 @@ export default () => {
 
   useEffect(() => {
     const selectedSkillLine = selectedSkillLines.find(
-      line => line.id === skillLine
+      (line) => line.id === skillLine
     )
     if (selectedSkillLine) {
       const { selectedSkills, selectedUltimate } = selectedSkillLine
@@ -138,7 +139,7 @@ export default () => {
           />
         </AbilityBar>
         <TrashContainer hasTrash={isOver} ref={drop}>
-          <StyledIcon isOver={isOver} type='delete' />
+          <StyledDelete isOver={isOver} />
         </TrashContainer>
       </StyledAbilityFlex>
     </AbilityBarContainer>

@@ -4,20 +4,20 @@ import Flex from './Flex'
 import { Avatar, Typography } from 'antd'
 
 interface IInformationCardProps {
-  icon: string
+  Icon: any
   title: string
   description: string | number
 }
 
 const FlexCard = styled(Flex)`
-  padding: ${props => props.theme.paddings.small};
-  border: 1px solid ${props => props.theme.mainBorderColor};
+  padding: ${(props) => props.theme.paddings.small};
+  border: 1px solid ${(props) => props.theme.mainBorderColor};
   border-radius: 2px;
   background: white;
 `
 
 const StyledFlex = styled(Flex)`
-  margin-left: ${props => props.theme.paddings.small};
+  margin-left: ${(props) => props.theme.paddings.small};
 `
 
 const StyledText = styled(Typography.Text)`
@@ -27,10 +27,10 @@ const StyledText = styled(Typography.Text)`
   max-width: 300px;
 `
 
-export default ({ icon, title, description }: IInformationCardProps) => {
+export default ({ Icon, title, description }: IInformationCardProps) => {
   return (
     <FlexCard direction='row'>
-      <Avatar icon={icon} shape='square' />
+      <Avatar shape='square' />
       <StyledFlex align='flex-start' direction='column'>
         <StyledText strong>{title}</StyledText>
         <StyledText>{description}</StyledText>

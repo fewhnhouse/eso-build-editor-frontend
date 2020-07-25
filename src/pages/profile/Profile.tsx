@@ -22,7 +22,8 @@ import { Redirect } from 'react-router'
 import { RESEND_VERIFICATION, AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
 import UpdateWebhook from './UpdateWebhook'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
+import { MailOutlined } from '@ant-design/icons'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -35,7 +36,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: 100%;
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 export const ItemCard = styled(Card)`
@@ -53,7 +54,7 @@ const StyledText = styled(Typography.Text)`
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 const StyledFlexFull = styled(Flex)`
@@ -133,7 +134,11 @@ const openNotification = (resendMutation: any) => {
   const btn = (
     <StyledFlexButton direction='row' align='center' justify='space-between'>
       <StyledText>Didnt get an email? </StyledText>
-      <Button onClick={handleResendClick} icon='mail' type='primary'>
+      <Button
+        onClick={handleResendClick}
+        icon={<MailOutlined />}
+        type='primary'
+      >
         {'Resend'}
       </Button>
     </StyledFlexButton>
@@ -324,7 +329,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
       </Modal>
       <Container>
         <Scrollbars autoHide>
-          <Title>Hello {me && me.data.me ? me.data.me.name : ''}!</Title>
+          <Title>Hello {me?.data?.me?.name ?? ''}!</Title>
           <StyledFlexFull
             direction='column'
             justify='space-around'
@@ -333,7 +338,7 @@ const Profile = ({ loggedIn }: IProfileProps) => {
             <UpdateEmail
               value={email}
               setValue={setEmail}
-              me={me.data.me}
+              me={me?.data?.me}
               handleActionClick={handleActionClick}
             />
             <Divider />

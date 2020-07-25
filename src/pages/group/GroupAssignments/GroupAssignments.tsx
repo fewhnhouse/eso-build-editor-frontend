@@ -25,7 +25,7 @@ const MembersContainer = styled(Flex)`
   width: 100%;
   height: 100px;
   overflow: auto;
-  margin-bottom: ${props => props.theme.margins.medium};
+  margin-bottom: ${(props) => props.theme.margins.medium};
 `
 
 export default () => {
@@ -34,9 +34,9 @@ export default () => {
 
   return (
     <AssignmentContainer>
-      {classes.map(esoClass => {
+      {classes.map((esoClass) => {
         const classBuilds = groupBuilds.filter(
-          groupBuild => groupBuild.build.esoClass === esoClass.title
+          (groupBuild) => groupBuild.build.esoClass === esoClass.title
         )
 
         return classBuilds.length ? (
@@ -47,7 +47,7 @@ export default () => {
               justify='flex-start'
               align='center'
             >
-              {classBuilds.map(groupBuild => (
+              {classBuilds.map((groupBuild) => (
                 <BuildCard
                   key={groupBuild.build.id}
                   item={groupBuild.build}
@@ -69,7 +69,7 @@ const MemberSelector = ({ id }: { id: string }) => {
   const [state, dispatch] = useContext(GroupContext)
   const { members, groupBuilds } = state!
 
-  const groupBuild = groupBuilds.find(build => build.build.id === id)
+  const groupBuild = groupBuilds.find((build) => build.build.id === id)
 
   const handleSelectChange = (values: unknown) => {
     dispatch!({
@@ -86,8 +86,10 @@ const MemberSelector = ({ id }: { id: string }) => {
         size='large'
         mode='multiple'
       >
-        {members.map(member => (
-          <Option key={member}>{member}</Option>
+        {members.map((member) => (
+          <Option value={member} key={member}>
+            {member}
+          </Option>
         ))}
       </StyledSelect>
     </MembersContainer>

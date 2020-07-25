@@ -8,7 +8,7 @@ import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
 import { classSkillLines, skillLines } from '../build/Skills/skillLines'
 import Scrollbars from 'react-custom-scrollbars'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const StyledFlex = styled(Flex)`
   width: 100%;
@@ -21,7 +21,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const [, appDispatch] = useContext(AppContext)
   const skillLine = [...classSkillLines, ...skillLines]
-    .map(skillLine => skillLine.items)
+    .map((skillLine) => skillLine.items)
     .flat()
     .find((item: any) => item.id === parseInt(id))
 
@@ -31,7 +31,7 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
       payload: { headerTitle: 'Skill Line' },
     })
     const skillLine = [...classSkillLines, ...skillLines]
-      .map(skillLine => skillLine.items)
+      .map((skillLine) => skillLine.items)
       .flat()
       .find((item: any) => item.id === parseInt(id))
     appDispatch!({
@@ -47,9 +47,9 @@ const SingleSkillLine = ({ match }: RouteComponentProps<any>) => {
         <title>{skillLine && skillLine.title}</title>
         <meta
           property='og:url'
-          content={`${
-            window.location.origin
-          }/overview/mundusStones/${skillLine && skillLine.id}`}
+          content={`${window.location.origin}/overview/mundusStones/${
+            skillLine && skillLine.id
+          }`}
         />
         <meta property='og:type' content={'website'} />
         <meta property='og:title' content={skillLine && skillLine.title} />

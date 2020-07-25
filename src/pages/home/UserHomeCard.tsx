@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from '../../components/Flex'
-import { Typography, Button, Input, Icon, Select, Card } from 'antd'
+import { Typography, Button, Input, Select, Card } from 'antd'
 import { Redirect } from 'react-router'
 import RaidCard from './RaidList'
 import BuildCard from './BuildList'
@@ -13,6 +13,11 @@ import { applicationAreas } from '../raid/general/RaidGeneral'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { IBuildRevision } from '../build/BuildStateContext'
+import {
+  SearchOutlined,
+  ShrinkOutlined,
+  ArrowsAltOutlined,
+} from '@ant-design/icons'
 
 const { Title } = Typography
 
@@ -50,7 +55,7 @@ const CardHeader = styled(Flex)`
   background-color: ${(props: { isMobile: boolean }) =>
     props.isMobile ? 'transparent' : '#e8e8e8'};
   margin-bottom: 0;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
 `
 
 const StyledFlexFull = styled(Flex)`
@@ -58,7 +63,7 @@ const StyledFlexFull = styled(Flex)`
 `
 
 const StyledButton = styled(Button)`
-  margin-left: ${props => props.theme.margins.mini};
+  margin-left: ${(props) => props.theme.margins.mini};
 `
 
 export const ME = gql`
@@ -196,12 +201,12 @@ export default ({ isBuild }: { isBuild: boolean }) => {
             {
               race_in: selectedRaces.length
                 ? selectedRaces
-                : races.map(race => race.title),
+                : races.map((race) => race.title),
             },
             {
               esoClass_in: selectedClasses.length
                 ? selectedClasses
-                : classes.map(esoClass => esoClass.title),
+                : classes.map((esoClass) => esoClass.title),
             },
           ],
         },
@@ -224,14 +229,14 @@ export default ({ isBuild }: { isBuild: boolean }) => {
           {
             applicationArea_in: selectedApplicationAreas.length
               ? selectedApplicationAreas
-              : applicationAreas.map(area => area.key),
+              : applicationAreas.map((area) => area.key),
           },
         ],
       },
     },
   })
   const handleExpandChange = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
   const handleCreateClick = (path: string) => () => {
     setRedirect(path)
@@ -301,12 +306,12 @@ export default ({ isBuild }: { isBuild: boolean }) => {
               placeholder={isBuild ? 'Search for builds' : 'Search for raids'}
               value={search}
               onChange={handleSearchChange}
-              addonAfter={<Icon type='search' />}
+              addonAfter={<SearchOutlined />}
               defaultValue='mysite'
             />
             <StyledButton
               type='primary'
-              icon={expanded ? 'shrink' : 'arrows-alt'}
+              icon={expanded ? <ShrinkOutlined /> : <ArrowsAltOutlined />}
               ghost={true}
               onClick={handleExpandChange}
             ></StyledButton>
@@ -321,7 +326,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
                   onChange={handleClassSelectChange}
                 >
                   {classes.map((esoClass, index) => (
-                    <Option key={esoClass.title}>{esoClass.title}</Option>
+                    <Option value={esoClass.title} key={esoClass.title}>
+                      {esoClass.title}
+                    </Option>
                   ))}
                 </Select>
 
@@ -332,7 +339,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
                   onChange={handleRaceSelectChange}
                 >
                   {races.map((race, index) => (
-                    <Option key={race.title}>{race.title}</Option>
+                    <Option value={race.title} key={race.title}>
+                      {race.title}
+                    </Option>
                   ))}
                 </Select>
               </>
@@ -344,7 +353,9 @@ export default ({ isBuild }: { isBuild: boolean }) => {
                 onChange={handleAppAreaChange}
               >
                 {applicationAreas.map((area, index) => (
-                  <Option key={area.key}>{area.label}</Option>
+                  <Option value={area.key} key={area.key}>
+                    {area.label}
+                  </Option>
                 ))}
               </Select>
             ))}

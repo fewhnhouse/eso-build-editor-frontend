@@ -15,7 +15,7 @@ import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
 import { RouteComponentProps, Redirect } from 'react-router'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const { TabPane } = Tabs
 
@@ -32,7 +32,7 @@ export const MenuCard = styled.div`
 `
 
 export const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${(props) => props.theme.fontSizes.normal};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
@@ -53,7 +53,7 @@ export const Image = styled.img`
   width: 64px;
   height: 64px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
 `
 
 const StyledFlex = styled(Flex)`

@@ -9,6 +9,12 @@ import RevisionDrawer from './RevisionDrawer'
 import { IBuildState } from '../pages/build/BuildStateContext'
 import { IRaidState } from '../pages/raid/RaidStateContext'
 import { IGroupState } from '../pages/group/GroupStateContext'
+import {
+  DeleteOutlined,
+  EditOutlined,
+  CopyOutlined,
+  InteractionOutlined,
+} from '@ant-design/icons'
 
 const { Footer } = Layout
 
@@ -18,7 +24,7 @@ const StyledFooter = styled(Footer)`
   flex-direction: ${(props: { isMobile: boolean }) =>
     `${props.isMobile ? 'column' : 'row'}`};
   display: flex;
-  padding: 0px ${props => props.theme.paddings.medium};
+  padding: 0px ${(props) => props.theme.paddings.medium};
   overflow: hidden;
   justify-content: center;
   align-items: center;
@@ -27,7 +33,7 @@ const StyledFooter = styled(Footer)`
 
 const ActionButton = styled(Button)`
   width: 110px;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledFlex80 = styled(Flex)`
@@ -40,10 +46,10 @@ const StyledScrollbars = styled(Scrollbars)`
 
 const StyledDivider = styled(Divider)`
   height: 50px;
-  margin: 0px ${props => props.theme.paddings.medium};
+  margin: 0px ${(props) => props.theme.paddings.medium};
 `
 interface IInformation {
-  icon: string
+  Icon?: any
   title: string
   description: string
 }
@@ -88,12 +94,12 @@ export default ({
     <StyledFooter isMobile={isMobile}>
       <StyledScrollbars autoHide>
         <StyledFlex80 direction='row' justify='flex-start' align='center'>
-          {information.map((info, index) => (
+          {information.map(({ Icon, title, description }, index) => (
             <>
               <InformationCard
-                icon={info.icon}
-                title={info.title}
-                description={info.description}
+                Icon={Icon}
+                title={title}
+                description={description}
               />
               {index < information.length && <StyledDivider type='vertical' />}
             </>
@@ -108,9 +114,8 @@ export default ({
               onClick={handleRevisionOpen}
               loading={loading}
               disabled={saved}
-              icon='interaction'
+              icon={<InteractionOutlined />}
               size='large'
-              type='default'
             >
               Revision
             </ActionButton>
@@ -125,9 +130,8 @@ export default ({
               <ActionButton
                 loading={loading}
                 disabled={saved}
-                icon='copy'
+                icon={<CopyOutlined />}
                 size='large'
-                type='default'
               >
                 Copy
               </ActionButton>
@@ -137,7 +141,7 @@ export default ({
           {!isMobile && (
             <ActionButton
               onClick={onEdit}
-              icon='edit'
+              icon={<EditOutlined />}
               size='large'
               type='primary'
             >
@@ -147,9 +151,9 @@ export default ({
 
           <ActionButton
             onClick={onDelete}
-            icon='delete'
+            icon={<DeleteOutlined />}
             size='large'
-            type='danger'
+            danger
           >
             Delete
           </ActionButton>

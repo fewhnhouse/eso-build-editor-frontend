@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Steps, Button, Icon, Tooltip, notification } from 'antd'
+import { Layout, Steps, Button, Tooltip, notification } from 'antd'
 import { Redirect } from 'react-router'
 import GroupGeneral from './general/GroupGeneral'
 import GroupSetup from './GroupAssignments/GroupSetup'
@@ -18,6 +18,7 @@ import { group } from '../../util/fragments'
 import { useMutation } from 'react-apollo'
 import { createNotification } from '../../util/notification'
 import { IRaidState } from '../raid/RaidStateContext'
+import { LeftOutlined, SaveOutlined, RightOutlined } from '@ant-design/icons'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
@@ -31,7 +32,7 @@ const Container = styled(Content)`
   width: 100%;
   overflow: auto;
   height: 100%;
-  color: ${props => props.theme.mainBg};
+  color: ${(props) => props.theme.mainBg};
 `
 
 const StyledFooter = styled(Footer)`
@@ -99,7 +100,7 @@ export default ({
   const [createGroup, createGroupResult] = useMutation<any, any>(CREATE_GROUP)
 
   const handlePrevClick = () => {
-    setTab(tabIndex => tabIndex - 1)
+    setTab((tabIndex) => tabIndex - 1)
   }
 
   useEffect(() => {
@@ -157,7 +158,7 @@ export default ({
     if (tab === 3) {
       handleSave()
     } else {
-      setTab(tabIndex => tabIndex + 1)
+      setTab((tabIndex) => tabIndex + 1)
     }
   }
 
@@ -198,7 +199,7 @@ export default ({
           size='large'
           type='primary'
         >
-          <Icon type='left' />
+          <LeftOutlined />
           Prev
         </TabButton>
         <Steps progressDot current={tab}>
@@ -227,9 +228,8 @@ export default ({
               type='primary'
             >
               {tab === 3 ? 'Save' : 'Next'}
-              {!(createGroupResult.loading || updateGroupResult.loading) && (
-                <Icon type={tab === 3 ? 'save' : 'right'} />
-              )}
+              {!(createGroupResult.loading || updateGroupResult.loading) &&
+                (tab === 3 ? <SaveOutlined /> : <RightOutlined />)}
             </TabButton>
           </StyledButtonGroup>
         </Tooltip>

@@ -5,6 +5,7 @@ import { Table, Button } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import { getColumns } from './columns'
 import SingleGroupReview from './SingleGroupReview'
+import { AlignLeftOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
 const ReviewContainer = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const ReviewContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
 `
 
 const StyledButton = styled(Button)`
@@ -35,7 +36,9 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
 
   const memberSource = groupBuilds.map((groupBuild, index) => {
     const finalMembers = members.reduce((prev, curr) => {
-      const found = groupBuild.members.find(buildMember => buildMember === curr)
+      const found = groupBuild.members.find(
+        (buildMember) => buildMember === curr
+      )
       return found ? { ...prev, [curr]: 'yes' } : { ...prev, [curr]: 'no' }
     }, {})
     return {
@@ -47,7 +50,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
 
   const columns = getColumns(isMobile, members)
 
-  const handleSwapView = () => setShowSingle(show => !show)
+  const handleSwapView = () => setShowSingle((show) => !show)
 
   return (
     <ReviewContainer>
@@ -57,7 +60,7 @@ export default ({ loadedData }: IGroupReviewDetailsProps) => {
           shape='circle'
           size='large'
           onClick={handleSwapView}
-          icon={showSingle ? 'align-left' : 'unordered-list'}
+          icon={showSingle ? <AlignLeftOutlined /> : <UnorderedListOutlined />}
         ></StyledButton>
       )}
       {(showSingle || isMobile) && (

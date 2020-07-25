@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
-import { Menu, Icon, Button, Avatar, Popover } from 'antd'
+import { Menu, Button, Avatar, Popover } from 'antd'
 import styled from 'styled-components'
 import { StyledMenu, getSelectedKey } from './Menu'
 import Flex from '../Flex'
 import LoginForm from '../LoginForm'
+import { LogoutOutlined, DownOutlined, UserOutlined } from '@ant-design/icons'
 
 const { Item, SubMenu } = Menu
 
@@ -22,22 +23,25 @@ const StyledFlexDesktop = styled(Flex)`
   height: 100%;
 `
 
-const StyledIcon = styled(Icon)`
-  margin-left: ${props => props.theme.margins.mini};
+const getStyledIcon = (Icon: any) => styled(Icon)`
+  margin-left: ${(props: any) => props.theme.margins.mini};
   font-size: 10px !important;
 `
 
 const StyledAvatar = styled(Avatar)`
-  margin-right: ${props => props.theme.margins.mini};
+  margin-right: ${(props: any) => props.theme.margins.mini};
 `
 
-const StyledUserIcon = styled(Icon)`
+const StyledUserIcon = styled(UserOutlined)`
   margin-right: 8px;
 `
 
 const StyledLoginButton = styled(Button)`
   float: right;
 `
+
+const StyledLogout = getStyledIcon(LogoutOutlined)
+const StyledDown = getStyledIcon(DownOutlined)
 
 interface IDesktopMenuProps extends RouteComponentProps<any> {
   loggedIn: boolean
@@ -73,7 +77,7 @@ const DesktopMenu = ({
               title={
                 <span>
                   Builds
-                  <StyledIcon type='down' />
+                  <StyledDown />
                 </span>
               }
             >
@@ -89,7 +93,7 @@ const DesktopMenu = ({
               title={
                 <span>
                   Raids
-                  <StyledIcon type='down' />
+                  <StyledDown />
                 </span>
               }
             >
@@ -105,7 +109,7 @@ const DesktopMenu = ({
               title={
                 <span>
                   Groups
-                  <StyledIcon type='down' />
+                  <StyledDown />
                 </span>
               }
             >
@@ -134,7 +138,7 @@ const DesktopMenu = ({
                 <span>
                   <StyledAvatar />
                   Hello, {me && me.name}
-                  <StyledIcon type='down' />
+                  <StyledDown />
                 </span>
               }
             >
@@ -145,7 +149,7 @@ const DesktopMenu = ({
                 </Link>
               </Item>
               <Item onClick={handleLogout}>
-                <Icon type='logout' />
+                <StyledLogout />
                 Log out
               </Item>
             </StyledSubMenu>
@@ -174,10 +178,14 @@ const DesktopMenu = ({
           <Popover
             placement='bottomRight'
             title='Login'
-            content={<LoginForm setLoggedIn={setLoggedIn} />}
+            content={<LoginForm />}
             trigger='click'
           >
-            <StyledLoginButton type='primary' icon='user' size='large'>
+            <StyledLoginButton
+              type='primary'
+              icon={<UserOutlined />}
+              size='large'
+            >
               Login
             </StyledLoginButton>
           </Popover>

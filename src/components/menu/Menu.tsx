@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Menu, Button, PageHeader, Icon } from 'antd'
+import { Layout, Menu, Button, PageHeader } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { LoginContext } from '../../App'
 import { useMediaQuery } from 'react-responsive'
@@ -8,6 +8,7 @@ import { ITheme } from '../theme'
 import { AppContext } from '../AppContainer'
 import MobileMenu from './MobileMenu'
 import DesktopMenu from './DesktopMenu'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 
 const { Header } = Layout
 
@@ -104,7 +105,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
   }, [loggedIn])
 
   const handleFoldBtnClick = () => {
-    setExpanded(expanded => !expanded)
+    setExpanded((expanded) => !expanded)
   }
   const isMobile = useMediaQuery({ maxWidth: 800 })
   return (
@@ -112,7 +113,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
       {isMobile && (
         <>
           <StyledPageHeader
-            backIcon={<Icon type='arrow-left' />}
+            backIcon={<ArrowLeftOutlined />}
             onBack={expanded ? undefined : () => history.goBack()}
             title={expanded ? 'Navigation' : appState!.headerTitle}
             subTitle={!expanded && appState!.headerSubTitle}
