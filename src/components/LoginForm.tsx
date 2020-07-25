@@ -18,7 +18,6 @@ import Flex from './Flex'
 import { RESEND_VERIFICATION } from './AppContainer'
 import { Link } from 'react-router-dom'
 import { MailOutlined, UserOutlined, LockOutlined } from '@ant-design/icons'
-import { FormProps } from 'antd/lib/form'
 import { useForm } from 'antd/lib/form/Form'
 
 const LOGIN = gql`
@@ -141,7 +140,7 @@ interface LoginFormProps extends RouteComponentProps<any> {
 const LoginForm = () => {
   const [register, setRegister] = useState(false)
   const [form] = useForm()
-  const { isFieldTouched, getFieldError, getFieldsError, validateFields } = form
+  const { getFieldsError } = form
   const [, setLoggedIn] = useContext(LoginContext)
   const [mutateLogin, loginResult] = useMutation<ILoginResult, ILoginData>(
     LOGIN
@@ -201,9 +200,6 @@ const LoginForm = () => {
     }
   }, [loginResult, registerResult, setLoggedIn, resendMutation])
 
-  const emailError = isFieldTouched('email') && getFieldError('email')
-  const usernameError = isFieldTouched('username') && getFieldError('username')
-  const passwordError = isFieldTouched('password') && getFieldError('password')
   const [tosChecked, setTosChecked] = useState(false)
 
   const handleTosCheck = () => {
