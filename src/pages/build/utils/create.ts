@@ -229,13 +229,6 @@ export const createNewBuild = async (
             })
           ),
         },
-        ...(state.revision?.id
-          ? {
-              revision: {
-                connect: { id: state.revision.id },
-              },
-            }
-          : {}),
       },
     },
     refetchQueries: [{ query: ME }],
