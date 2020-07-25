@@ -8,7 +8,7 @@ import { ITheme } from '../theme'
 import { AppContext } from '../AppContainer'
 import MobileMenu from './MobileMenu'
 import DesktopMenu from './DesktopMenu'
-import { ArrowLeftOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, UpOutlined, DownOutlined } from '@ant-design/icons'
 
 const { Header } = Layout
 
@@ -120,7 +120,7 @@ const NavMenu = ({ me, history }: IMenuProps) => {
           />
           <MenuButton
             size='large'
-            icon={expanded ? 'up' : 'down'}
+            icon={expanded ? <UpOutlined /> : <DownOutlined />}
             onClick={handleFoldBtnClick}
           ></MenuButton>
         </>
