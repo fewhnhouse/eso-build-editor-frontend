@@ -99,31 +99,31 @@ export const createNewBuild = async (
   }
 
   const createSetVariables = (setSelections: ISetSelection[]) => ({
-    slots: setSelections.map(setSelection => setSelection.slot),
-    types: setSelections.map(setSelection => setSelection.type || ''),
+    slots: setSelections.map((setSelection) => setSelection.slot),
+    types: setSelections.map((setSelection) => setSelection.type || ''),
     weaponTypes: setSelections.map(
-      setSelection => setSelection.weaponType || ''
+      (setSelection) => setSelection.weaponType || ''
     ),
-    setIds: setSelections.map(setSelection =>
+    setIds: setSelections.map((setSelection) =>
       setSelection.selectedSet ? setSelection.selectedSet.setId : 0
     ),
-    glyphDescriptions: setSelections.map(setSelection =>
+    glyphDescriptions: setSelections.map((setSelection) =>
       setSelection.glyph ? setSelection.glyph.description : ''
     ),
-    traitDescriptions: setSelections.map(setSelection =>
+    traitDescriptions: setSelections.map((setSelection) =>
       setSelection.trait ? setSelection.trait.description : ''
     ),
   })
   const frontbarSkillSelections: any = await createSkillSelections({
     variables: {
-      indices: newBarOne.map(sel => sel.index),
-      skillIds: newBarOne.map(sel => (sel.skill ? sel.skill.skillId : 0)),
+      indices: newBarOne.map((sel) => sel.index),
+      skillIds: newBarOne.map((sel) => (sel.skill ? sel.skill.skillId : 0)),
     },
   })
   const backbarSkillSelections: any = await createSkillSelections({
     variables: {
-      indices: newBarTwo.map(sel => sel.index),
-      skillIds: newBarTwo.map(sel => (sel.skill ? sel.skill.skillId : 0)),
+      indices: newBarTwo.map((sel) => sel.index),
+      skillIds: newBarTwo.map((sel) => (sel.skill ? sel.skill.skillId : 0)),
     },
   })
   const bigPieceSetSelections: any = await createSetSelections({
@@ -258,7 +258,7 @@ export const handleCreateSave = async (
   if (build?.data?.createBuild?.id) {
     await createBuildRevision({
       variables: {
-        data: { builds: [{ connect: { id: build?.data?.createBuild?.id } }] },
+        data: { builds: { connect: [{ id: build?.data?.createBuild?.id }] } },
       },
     })
     return build
