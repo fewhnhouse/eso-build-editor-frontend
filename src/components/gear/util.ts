@@ -199,20 +199,5 @@ export const getGearSlot = (slot: ISetSelection) => {
 }
 
 export const totalBonus = (set: ISet) => {
-  if (set.bonus_item_5 !== null && set.bonus_item_4 !== null) {
-    // 5 Piece Set
-    return [2, 3, 4, 5]
-  } else if (set.bonus_item_3 !== null) {
-    // 3 Piece Set
-    return [2, 3]
-  } else if (set.bonus_item_1 !== null && set.bonus_item_2 !== null) {
-    // Monster Set
-    return [1, 2]
-  } else if (set.bonus_item_1 !== null && set.bonus_item_2 === null) {
-    //Mythic
-    return [1]
-  } else {
-    // Arena Weapon
-    return [2]
-  }
+  return [1, 2, 3, 4, 5].filter(number => set[`bonus_item_${number}`] !== null)
 }
