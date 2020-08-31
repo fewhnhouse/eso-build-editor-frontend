@@ -4,15 +4,15 @@ import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
 import { Card, Spin, Typography, Divider, Button } from 'antd'
 import { useQuery } from 'react-apollo'
-import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
-import { EditOutlined, SelectOutlined, PlusOutlined } from '@ant-design/icons'
+import { EditOutlined, SelectOutlined } from '@ant-design/icons'
+import { IRaid } from '../raid/RaidStateContext'
 
 const { Title } = Typography
 
-const UserGroupWrapper = styled(Flex)`
+const Wrapper = styled(Flex)`
   width: 100%;
   margin-top: ${(props) => props.theme.margins.medium};
   height: ${(props: { isMobile: boolean }) =>
@@ -22,10 +22,20 @@ const UserGroupWrapper = styled(Flex)`
 const GroupContainer = styled(Flex)`
   width: 100%;
   height: 100%;
+  padding: 10px;
   overflow: auto;
 `
 
-const UserGroup = styled(Card)`
+const HeaderContainer = styled(Flex)`
+  padding: 0px 10px;
+`
+
+const Header = styled(Title)`
+  margin-bottom: 0px;
+`
+
+const StyledCard = styled(Card)`
+    min-width: 300px;
   width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? `calc(100% - 20px)` : '250px'};
   display: flex;
@@ -39,11 +49,6 @@ const UserGroup = styled(Card)`
   text-align: start;
 `
 
-const StyledButton = styled(Button)`
-  margin: 0px ${(props) => props.theme.margins.small};
-  height: 170px;
-  width: 170px;
-`
 
 const Description = styled.p`
   -webkit-line-clamp: 2;
@@ -55,21 +60,18 @@ const Description = styled.p`
   margin: 0;
 `
 
-const StyledPlus = styled(PlusOutlined)`
-  font-size: 30px;
-`
 
-export const OWN_GROUPS = gql`
-  query OwnGroups(
-    $where: GroupWhereInput
-    $orderBy: GroupOrderByInput
+export const OWN_RAIDS = gql`
+  query ownRaids(
+    $where: RaidWhereInput
+    $orderBy: RaidOrderByInput
     $first: Int
     $last: Int
     $skip: Int
     $after: String
     $before: String
   ) {
-    ownGroups(
+    ownRaids(
       where: $where
       orderBy: $orderBy
       first: $first
@@ -79,20 +81,29 @@ export const OWN_GROUPS = gql`
       before: $before
     ) {
       id
+      owner {
+        id
+        name
+      }
       name
       description
+      applicationArea
+      roles {
+        id
+        builds {
+          id
+        }
+      }
     }
   }
 `
 
-const UserGroupBar = () => {
-  const [redirect, setRedirect] = useState('')
-  const { loading, error, data } = useQuery(OWN_GROUPS)
-  const isMobile = useMediaQuery({ maxWidth: 800 })
 
-  if (error) {
-    return <div>Error.</div>
-  }
+const HorizontalRaidCards = () => {
+  const { data, loading } = useQuery<{ ownRaids: IRaid[] }>(OWN_RAIDS)
+
+  const [redirect, setRedirect] = useState('')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   if (redirect) {
     return <Redirect push to={redirect} />
@@ -103,62 +114,60 @@ const UserGroupBar = () => {
   }
 
   const handleAddClick = () => {
-    setRedirect(`/groupEditor/0`)
+    setRedirect(`/raidEditor/0`)
   }
 
   return (
-    <UserGroupWrapper
+    <Wrapper
       isMobile={isMobile}
       align='center'
       direction='column'
       justify={isMobile ? 'flex-start' : 'center'}
     >
-      {!isMobile && (
-        <Divider>
-          <Title level={3}>My groups</Title>
-        </Divider>
-      )}
       {loading && <Spin />}
+      {!isMobile && (<>
+        <HeaderContainer fluid justify="space-between">
+          <Header level={3}>Raids</Header>
+          <Button onClick={handleAddClick} size="large" type="primary">Create</Button>
+        </HeaderContainer>
+        <Divider />
+      </>)}
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
-        {!loading && !isMobile && (
-          <StyledButton size='large' onClick={handleAddClick}>
-            <StyledPlus />
-          </StyledButton>
-        )}
-        {data &&
-          data.ownGroups &&
-          data.ownGroups.map((ownGroup: IGroupState) => {
+
+        {data?.ownRaids
+          .map((item) => {
+            console.log(item)
             return (
-              <UserGroup
+              <StyledCard
                 isMobile={isMobile}
                 actions={[
                   <EditOutlined
                     title='Edit'
-                    key='group-edit'
-                    onClick={handleClick(`/editGroup/${ownGroup?.id ?? ''}/0`)}
+                    key='raid-edit'
+                    onClick={handleClick(`/editRaid/${item?.id ?? ''}/0`)}
                   />,
                   <SelectOutlined
                     title='Open'
-                    key='group-open'
-                    onClick={handleClick(`/groups/${ownGroup?.id ?? ''}`)}
+                    key='raid-open'
+                    onClick={handleClick(`/raids/${item?.id ?? ''}`)}
                   />,
                 ]}
-                key={ownGroup.id}
-                hoverable
+                key={item.id}
               >
                 <Card.Meta
-                  title={ownGroup.name}
+                  title={item.name}
                   description={
-                    <Description>{ownGroup.description}</Description>
+                    <Description>{item.description}</Description>
                   }
                 ></Card.Meta>
-              </UserGroup>
+              </StyledCard>
             )
-          })}
+          })
+        }
       </GroupContainer>
       {!isMobile && <Divider />}
-    </UserGroupWrapper>
+    </Wrapper>
   )
 }
 
-export default UserGroupBar
+export default HorizontalRaidCards
