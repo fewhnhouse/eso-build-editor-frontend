@@ -44,45 +44,21 @@ const MobileMenu = ({
             Home
           </Link>
         </Item>
-        <Divider />
-        <ItemGroup key='build' title='Builds'>
-          <Item key='build:1'>
-            <Link onClick={handleFoldBtnClick} to='/builds'>
-              Builds
-            </Link>
-          </Item>
-          <Item key='build:2'>
-            <Link onClick={handleFoldBtnClick} to='/buildEditor/0'>
-              Build Editor
-            </Link>
-          </Item>
-        </ItemGroup>
-        <Divider />
-        <ItemGroup key='raid' title='Raids'>
-          <Item key='raid:1'>
-            <Link onClick={handleFoldBtnClick} to='/raids'>
-              Raids
-            </Link>
-          </Item>
-          <Item key='raid:2'>
-            <Link onClick={handleFoldBtnClick} to='/raidEditor/0'>
-              Raid Editor
-            </Link>
-          </Item>
-        </ItemGroup>
-        <Divider />
-        <ItemGroup key='group' title='Groups'>
-          <Item key='group:1'>
-            <Link onClick={handleFoldBtnClick} to='/groups'>
-              Groups
-            </Link>
-          </Item>
-          <Item key='raid:2'>
-            <Link onClick={handleFoldBtnClick} to='/groupEditor/0'>
-              Group Editor
-            </Link>
-          </Item>
-        </ItemGroup>
+        <Item key='raid:1'>
+          <Link onClick={handleFoldBtnClick} to='/raids'>
+            Raids
+          </Link>
+        </Item>
+        <Item key='group:1'>
+          <Link onClick={handleFoldBtnClick} to='/groups'>
+            Groups
+          </Link>
+        </Item>
+        <Item key='build:1'>
+          <Link onClick={handleFoldBtnClick} to='/builds'>
+            Builds
+          </Link>
+        </Item>
         <Divider />
         <ItemGroup key='overview' title='Overview'>
           <Item key='overview:1'>
