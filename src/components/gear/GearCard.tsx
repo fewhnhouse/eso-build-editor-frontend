@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Divider, Tag, Typography } from 'antd'
+import { Card, Tag, Typography } from 'antd'
 import styled from 'styled-components'
 import { ISet } from './GearSlot'
 import Flex from '../Flex'
@@ -29,15 +29,12 @@ const StyledTag = styled(Tag)`
   text-align: center;
 `
 
-const StyledSpan = styled.span`
+const PieceContainer = styled.span`
   text-align: left;
+  padding: 5px 0px;
   width: 100%;
   font-weight: ${(props: { bold: boolean }) =>
     props.bold ? 'bold' : 'normal'};
-`
-
-const StyledDivider = styled(Divider)`
-  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 interface IGearCard {
@@ -77,14 +74,12 @@ const ArmorTypeTag = ({
 export default ({ set, setSelectionCount, size }: IGearCard) => {
   return (
     <StyledCard
-      bordered={false}
-      hoverable
       title={
-        <Flex justify='space-between' align='center'>
+        <Flex direction='column' justify='space-between' align='center'>
           {size === 'big' ? (
             <Typography.Title level={3}>{set.name}</Typography.Title>
           ) : (
-            set.name
+            <Typography.Title level={4}>{set.name}</Typography.Title>
           )}
           <Flex align='center' justify='flex-end'>
             <ArmorTypeTag
@@ -101,13 +96,12 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
       <Description big={size === 'big'}>
         <Flex direction='column' justify='flex-start'>
           {totalBonus(set).map((count) => (
-            <StyledSpan key={count} bold={count <= setSelectionCount}>
+            <PieceContainer key={count} bold={count <= setSelectionCount}>
               <Flex align='center'>
                 <Tag>{count} pcs</Tag>{' '}
                 <span>{set && set[`bonus_item_${count}`]}</span>
               </Flex>
-              <StyledDivider />
-            </StyledSpan>
+            </PieceContainer>
           ))}
         </Flex>
       </Description>

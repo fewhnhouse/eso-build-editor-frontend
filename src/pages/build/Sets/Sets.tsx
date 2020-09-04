@@ -138,7 +138,6 @@ export default ({ edit }: { edit: boolean }) => {
       <Content>
         <Scrollbars autoHide>
           <AbilityContainer>
-            <Divider>Set</Divider>
             {set ? (
               <GearCard
                 set={set}
@@ -148,6 +147,7 @@ export default ({ edit }: { edit: boolean }) => {
               <StyledEmpty>Select a set to get started.</StyledEmpty>
             )}
             <Tabs
+              tabBarStyle={{ margin: 'auto' }}
               onChange={handleTabChange}
               activeKey={setTabKey}
               defaultActiveKey='frontbar'
