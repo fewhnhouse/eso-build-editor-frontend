@@ -127,21 +127,21 @@ export const handleEditSave = async (
       },
     })
   })
-  await bigPieceSelection.map(async setSelection => {
+  await bigPieceSelection.map(async (setSelection) => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     })
   })
-  await smallPieceSelection.map(async setSelection => {
+  await smallPieceSelection.map(async (setSelection) => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
       },
     })
   })
-  await jewelrySelection.map(async setSelection => {
+  await jewelrySelection.map(async (setSelection) => {
     return updateSetSelection({
       variables: {
         ...createSetVariables(setSelection),
@@ -158,14 +158,14 @@ export const handleEditSave = async (
         : undefined,
     },
   })
-  await newBarOne.map(async skillSelection => {
+  await newBarOne.map(async (skillSelection) => {
     return updateSkillSelection({
       variables: {
         ...createSkillVariables(skillSelection),
       },
     })
   })
-  await newBarTwo.map(async skillSelection => {
+  await newBarTwo.map(async (skillSelection) => {
     return updateSkillSelection({
       variables: {
         ...createSkillVariables(skillSelection),

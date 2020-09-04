@@ -14,7 +14,7 @@ interface IMundusStoneProps {
 }
 
 const StyledCard = styled(Card)`
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 const StyledCardWrapper = styled(Card)`
   width: 100%;
@@ -30,18 +30,18 @@ const Map = styled.img`
   width: 256px;
   height: 256px;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
 `
 
 const ModalMap = styled.img`
   width: 100%;
   height: 100%;
   border: 2px solid rgba(0, 0, 0, 0.45);
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
 `
 
 const StyledFlexTitle = styled(Flex)`
-  margin-left: ${props => props.theme.margins.medium};
+  margin-left: ${(props) => props.theme.margins.medium};
   max-width: 600px;
 `
 
@@ -50,7 +50,7 @@ const StyledTitle = styled(Typography.Title)`
 `
 
 const StyledDidiver = styled(Divider)`
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const StyledSpan = styled.span`
@@ -66,7 +66,7 @@ const StyledFlex = styled(Flex)`
   height: 100%;
   width: 100%;
   padding: ${(flexProps: { isMobile: boolean }) =>
-    flexProps.isMobile ? 0 : props => props.theme.paddings.medium};
+    flexProps.isMobile ? 0 : (props) => props.theme.paddings.medium};
 `
 
 const StyledEmpty = styled(Empty)`

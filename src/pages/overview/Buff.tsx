@@ -19,7 +19,7 @@ interface IBuffProps {
 }
 
 const StyledBuffFlexInner = styled(Flex)`
-  margin-left: ${props => props.theme.margins.medium};
+  margin-left: ${(props) => props.theme.margins.medium};
   max-width: 600px;
 `
 
@@ -29,15 +29,15 @@ const StyledTitle = styled(Typography.Title)`
 
 const StyledFlexAttrWrap = styled(Flex)`
   width: 100%;
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const StyledDividerSmall = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 const StyledDescription = styled(Description)`

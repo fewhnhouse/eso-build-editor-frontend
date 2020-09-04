@@ -67,7 +67,7 @@ const AbilityBarContainer = styled(Flex)`
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 const LoadingContainer = styled(Flex)`

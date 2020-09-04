@@ -24,11 +24,11 @@ const SkillView = styled(Flex)`
 `
 
 const UltimateDisplaySlot = styled(DisplaySlot)`
-  margin-left: ${props => props.theme.margins.small};
+  margin-left: ${(props) => props.theme.margins.small};
 `
 
 const UltimateSlot = styled(SkillSlot)`
-  margin-left: ${props => props.theme.margins.small};
+  margin-left: ${(props) => props.theme.margins.small};
 `
 
 export default ({

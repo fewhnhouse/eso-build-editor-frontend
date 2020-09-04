@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 
 const StyledButton = styled(Button)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 export default ({ handleActionClick, value, setValue }: IActionProps) => {

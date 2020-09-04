@@ -34,7 +34,7 @@ const MobileSlot = ({
 }) => {
   const [visible, setVisible] = useState(false)
   const toggleModal = () => {
-    setVisible(visible => !visible)
+    setVisible((visible) => !visible)
   }
 
   return (

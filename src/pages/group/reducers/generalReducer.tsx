@@ -14,7 +14,7 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
     case 'ADD_BUILD': {
       const { build }: { build: IBuild } = action.payload
       const newBuilds = state.groupBuilds.find(
-        groupBuild => groupBuild.build.id === build.id
+        (groupBuild) => groupBuild.build.id === build.id
       )
         ? [...state.groupBuilds]
         : [...state.groupBuilds, { build, members: [] }]
@@ -27,7 +27,7 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
     case 'REMOVE_BUILD': {
       const { build }: { build: IBuild } = action.payload
       const newBuilds = state.groupBuilds.filter(
-        groupBuild => groupBuild.build.id !== build.id
+        (groupBuild) => groupBuild.build.id !== build.id
       )
 
       return {
@@ -75,7 +75,7 @@ export const generalReducer = (state: IGroupState, action: IGroupAction) => {
       const { members, buildId } = action.payload
       return {
         ...state,
-        groupBuilds: state.groupBuilds.map(groupBuild =>
+        groupBuilds: state.groupBuilds.map((groupBuild) =>
           groupBuild.build.id === buildId
             ? { members, build: groupBuild.build }
             : groupBuild

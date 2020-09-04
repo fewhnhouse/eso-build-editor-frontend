@@ -17,7 +17,7 @@ const GET_USERS = gql`
 
 const StyledFlex = styled(Flex)`
   flex: 1;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 export default () => {

@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
 `
 
 const StyledSpin = styled(Spin)`
-  margin-top: ${props => props.theme.margins.small};
+  margin-top: ${(props) => props.theme.margins.small};
 `
 
 const GET_RAID = gql`

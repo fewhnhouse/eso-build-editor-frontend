@@ -16,25 +16,25 @@ const BlockText = styled(Text)`
 const GeneralContainer = styled.div`
   max-width: 700px;
   margin: auto;
-  padding: 0px ${props => props.theme.paddings.medium};
+  padding: 0px ${(props) => props.theme.paddings.medium};
 `
 
 const Wrapper = styled(Flex)`
   display: flex;
-  padding-top: ${props => props.theme.paddings.medium};
+  padding-top: ${(props) => props.theme.paddings.medium};
   flex-wrap: wrap;
 `
 
 const CardContainer = styled(Flex)`
   flex: 1;
-  border-color: ${props => props.theme.mainBorderColor};
+  border-color: ${(props) => props.theme.mainBorderColor};
   background: 'white';
   border-width: 2px;
   border-radius: 10px;
-  padding: ${props => props.theme.paddings.medium};
-  margin: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
+  margin: ${(props) => props.theme.paddings.medium};
   background-color: white;
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
   min-width: 300px;
 `
 
@@ -42,7 +42,7 @@ const OverviewContainer = styled(Flex)`
   flex: 1;
   margin-top: 40px;
   background: 'white';
-  padding: 40px ${props => props.theme.paddings.medium};
+  padding: 40px ${(props) => props.theme.paddings.medium};
   background-color: white;
   width: 100%;
 `
@@ -52,7 +52,7 @@ const StyledTitle = styled.h1`
   letter-spacing: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '2px' : '5px'};
 
-  margin-top: ${props => props.theme.margins.small};
+  margin-top: ${(props) => props.theme.margins.small};
   font-size: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '30px' : '50px'};
 `
@@ -85,13 +85,13 @@ const StyledButton = styled(Button)`
 const Footer = styled.footer`
   width: 100%;
   height: 100px;
-  background: ${props => props.theme.colors.grey.dark};
-  padding: ${props => props.theme.paddings.small};
+  background: ${(props) => props.theme.colors.grey.dark};
+  padding: ${(props) => props.theme.paddings.small};
 `
 
 const StyledOverviewBtn = styled(Button)`
   width: 140px;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 const OverviewButton = ({ children, ...props }: ButtonProps) => (
   <StyledOverviewBtn size='large' {...props}>

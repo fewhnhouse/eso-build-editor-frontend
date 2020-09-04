@@ -48,9 +48,9 @@ const GET_MODIFICATIONS = gql`
 export default () => {
   const [state, dispatch] = useContext(BuildContext)
   const { jewelrySelection } = state!
-  const neck = jewelrySelection.find(slot => slot.slot === Slot.neck)
-  const ring1 = jewelrySelection.find(slot => slot.slot === Slot.ring1)
-  const ring2 = jewelrySelection.find(slot => slot.slot === Slot.ring2)
+  const neck = jewelrySelection.find((slot) => slot.slot === Slot.neck)
+  const ring1 = jewelrySelection.find((slot) => slot.slot === Slot.ring1)
+  const ring2 = jewelrySelection.find((slot) => slot.slot === Slot.ring2)
 
   const pieces: IPiece[] = [
     { title: 'Necklace', slot: Slot.neck, value: neck },
@@ -88,8 +88,8 @@ export default () => {
           slots,
           value:
             type === 'selectedTraits'
-              ? jewelryTraits.find(trait => trait.type === value)
-              : jewelryGlyphs.find(glyph => glyph.type === value),
+              ? jewelryTraits.find((trait) => trait.type === value)
+              : jewelryGlyphs.find((glyph) => glyph.type === value),
           type,
         },
       })
@@ -97,7 +97,7 @@ export default () => {
 
     return (
       <StyledFlex direction='column' justify='center' align='center'>
-        {modes.map(mode => (
+        {modes.map((mode) => (
           <div key={mode.title}>
             <Divider>{mode.title}</Divider>
             <StyledInnerFlex
@@ -106,7 +106,7 @@ export default () => {
               justify='space-between'
               align='flex-start'
             >
-              {pieces.map(piece => (
+              {pieces.map((piece) => (
                 <StyledSelectWithTitle
                   key={mode.title + '-' + piece.title}
                   value={

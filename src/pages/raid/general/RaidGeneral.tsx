@@ -11,17 +11,17 @@ const GeneralContainer = styled.div`
 `
 
 const StyledFlex = styled(Flex)`
-  width: ${props => props.theme.widths.medium};
-  margin: ${props => props.theme.margins.small};
+  width: ${(props) => props.theme.widths.medium};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledWideFlex = styled(Flex)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
   flex: 1;
 `
 
 const StyledInput = styled(Input)`
-  width: ${props => props.theme.widths.medium};
+  width: ${(props) => props.theme.widths.medium};
 `
 
 interface IRaidGeneralProps {

@@ -67,15 +67,15 @@ export default () => {
     smallPieceSelection,
   } = state!
 
-  const head = bigPieceSelection.find(slot => slot.slot === Slot.head)
-  const legs = bigPieceSelection.find(slot => slot.slot === Slot.legs)
-  const chest = bigPieceSelection.find(slot => slot.slot === Slot.chest)
-  const hands = smallPieceSelection.find(slot => slot.slot === Slot.hands)
-  const feet = smallPieceSelection.find(slot => slot.slot === Slot.feet)
+  const head = bigPieceSelection.find((slot) => slot.slot === Slot.head)
+  const legs = bigPieceSelection.find((slot) => slot.slot === Slot.legs)
+  const chest = bigPieceSelection.find((slot) => slot.slot === Slot.chest)
+  const hands = smallPieceSelection.find((slot) => slot.slot === Slot.hands)
+  const feet = smallPieceSelection.find((slot) => slot.slot === Slot.feet)
   const shoulders = smallPieceSelection.find(
-    slot => slot.slot === Slot.shoulders
+    (slot) => slot.slot === Slot.shoulders
   )
-  const waist = smallPieceSelection.find(slot => slot.slot === Slot.waist)
+  const waist = smallPieceSelection.find((slot) => slot.slot === Slot.waist)
 
   const bigPieces = [
     { title: 'Head', slot: Slot.head, value: head },
@@ -133,8 +133,8 @@ export default () => {
           slots,
           value:
             type === 'selectedTraits'
-              ? armorTraits.find(trait => trait.type === value)
-              : armorGlyphs.find(glyph => glyph.type === value),
+              ? armorTraits.find((trait) => trait.type === value)
+              : armorGlyphs.find((glyph) => glyph.type === value),
           type,
           itemType,
         },
@@ -148,7 +148,7 @@ export default () => {
       itemType: 'bigPieces' | 'smallPieces' | 'frontbar' | 'backbar'
     ) => (e: CheckboxChangeEvent) => {
       onChangeSelect(resetSlots, 'SET_ARMOR_STATS', type, itemType)('')
-      setCheckbox(checkbox => !checkbox)
+      setCheckbox((checkbox) => !checkbox)
     }
 
     return (
@@ -178,9 +178,9 @@ export default () => {
           </Radio.Button>
         </Radio.Group>
 
-        {modes.map(mode => (
+        {modes.map((mode) => (
           <div key={mode.type}>
-            {pieces.map(piece => (
+            {pieces.map((piece) => (
               <div key={mode.type + '-' + piece.type}>
                 <Divider>{mode.title + ': ' + piece.title}</Divider>
                 <Checkbox
@@ -216,18 +216,16 @@ export default () => {
                   justify='space-between'
                   align='flex-start'
                 >
-                  {(mode.type === 'selectedGlyphs' ? (
-                    piece.type === 'bigPieces' ? (
-                      enchantBigIndividual
-                    ) : (
-                      enchantSmallIndividual
-                    )
-                  ) : piece.type === 'bigPieces' ? (
-                    traitBigIndividual
-                  ) : (
-                    traitSmallIndividual
-                  )) ? (
-                    piece.pieces.map(item => (
+                  {(
+                    mode.type === 'selectedGlyphs'
+                      ? piece.type === 'bigPieces'
+                        ? enchantBigIndividual
+                        : enchantSmallIndividual
+                      : piece.type === 'bigPieces'
+                      ? traitBigIndividual
+                      : traitSmallIndividual
+                  ) ? (
+                    piece.pieces.map((item) => (
                       <StyledSelectWithTitle
                         value={
                           mode.type === 'selectedGlyphs'

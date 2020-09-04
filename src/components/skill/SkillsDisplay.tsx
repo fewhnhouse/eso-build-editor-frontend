@@ -53,18 +53,18 @@ interface ISkillListProps {
 const SkillList = ({ interactive, skills, skillline }: ISkillListProps) => {
   const [, dispatch] = useContext(BuildContext)
 
-  const actives = skills.filter(skill => skill.type === 1)
-  const passives = skills.filter(skill => skill.type === 2)
-  const ultimates = skills.filter(skill => skill.type === 3)
+  const actives = skills.filter((skill) => skill.type === 1)
+  const passives = skills.filter((skill) => skill.type === 2)
+  const ultimates = skills.filter((skill) => skill.type === 3)
 
-  const baseActives = actives.filter(skill => skill.parent === null)
+  const baseActives = actives.filter((skill) => skill.parent === null)
 
-  const morphedActives = actives.filter(skill => skill.parent !== null)
-  const morphedUltimates = ultimates.filter(skill => skill.parent !== null)
+  const morphedActives = actives.filter((skill) => skill.parent !== null)
+  const morphedUltimates = ultimates.filter((skill) => skill.parent !== null)
   const baseUltimate =
-    ultimates.find(skill => skill.parent === null) || defaultUltimate
+    ultimates.find((skill) => skill.parent === null) || defaultUltimate
 
-  const morphs = morphedUltimates.filter(ultimate =>
+  const morphs = morphedUltimates.filter((ultimate) =>
     ultimate.parent === baseUltimate.skillId ? baseUltimate.skillId : 0
   )
   const [trail, set]: any = useTrail(baseActives.length, () => ({
@@ -75,7 +75,7 @@ const SkillList = ({ interactive, skills, skillline }: ISkillListProps) => {
   useEffect(() => {
     if (interactive) {
       const baseActives = skills.filter(
-        skill => skill.type === 1 && skill.parent === null
+        (skill) => skill.type === 1 && skill.parent === null
       )
 
       dispatch!({
@@ -137,7 +137,7 @@ const SkillList = ({ interactive, skills, skillline }: ISkillListProps) => {
         <>
           {trail.map(({ opacity, transform }: any, index: number) => {
             const morphs = morphedActives.filter(
-              morph => morph.parent === baseActives[index].skillId
+              (morph) => morph.parent === baseActives[index].skillId
             )
             return (
               <animated.div

@@ -37,49 +37,49 @@ export const GearFrame = styled.div`
   border: 2px solid;
   border-color: ${(props: IGearFrameProps) =>
     props.canDrop ? '#27ae60' : 'rgba(0, 0, 0, 0.45)'};
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
   background-image: url(${(props: IGearFrameProps) =>
     props.hasIcon ? '' : props.backgroundSource});
   background-repeat: no-repeat;
 `
 
 export const TextPrimary = styled(Typography.Text)`
-  width: ${props => props.theme.widths.mini};
+  width: ${(props) => props.theme.widths.mini};
   text-align: left;
 `
 
 export const TextSecondary = styled(Typography.Text)`
   font-size: 12px;
-  width: ${props => props.theme.widths.mini};
+  width: ${(props) => props.theme.widths.mini};
   text-align: left;
 `
 
 export const InnerDisplay = styled(Flex)`
   height: 100%;
-  margin-left: ${props => props.theme.margins.small};
+  margin-left: ${(props) => props.theme.margins.small};
 `
 
 const StyledButton = styled(Button)`
-  margin-top: ${props => props.theme.margins.mini};
+  margin-top: ${(props) => props.theme.margins.mini};
   position: absolute;
   right: 5px;
   bottom: 5px;
 `
 
 const StyledGearWrapper = styled.div`
-  margin: ${props =>
+  margin: ${(props) =>
     `${props.theme.margins.mini} ${props.theme.margins.small}`};
 `
 
 export const DisplayCard = styled.div`
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  width: ${props => props.theme.widths.small};
+  width: ${(props) => props.theme.widths.small};
   border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: ${props => props.theme.borderRadius};
-  margin: ${props => props.theme.margins.small};
+  border-radius: ${(props) => props.theme.borderRadius};
+  margin: ${(props) => props.theme.margins.small};
   position: relative;
 `
 
@@ -133,7 +133,7 @@ export default ({
       icon: slot.icon,
       weaponType: slot.weaponType,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   })
@@ -157,7 +157,7 @@ export default ({
         },
       })
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
     }),
   })

@@ -11,10 +11,10 @@ interface IStyledCardProps {
   }
 }
 const StyledCard = styled(Card)`
-  margin: ${props => props.theme.margins.mini}
-    ${props => props.theme.margins.small} 0
-    ${props => props.theme.margins.small};
-  width: ${props => props.theme.widths.small};
+  margin: ${(props) => props.theme.margins.mini}
+    ${(props) => props.theme.margins.small} 0
+    ${(props) => props.theme.margins.small};
+  width: ${(props) => props.theme.widths.small};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -32,15 +32,15 @@ const Image = styled.img`
 `
 
 const Icon = styled.img`
-  width: ${props => props.theme.smallIcon.width};
-  height: ${props => props.theme.smallIcon.height};
+  width: ${(props) => props.theme.smallIcon.width};
+  height: ${(props) => props.theme.smallIcon.height};
 `
 
 const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px ${props => props.theme.paddings.small};
+  padding: 0px ${(props) => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
 `

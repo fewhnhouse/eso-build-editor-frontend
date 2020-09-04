@@ -10,7 +10,7 @@ import { ISpecialBuff, StyledDivider } from './BuffMenu'
 import { List, Tag, Card } from 'antd'
 
 const Title = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${(props) => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
@@ -21,30 +21,30 @@ const Title = styled.div`
 
 export const StyledTag = styled(Tag)`
   min-width: 50px;
-  margin: ${props => props.theme.margins.mini};
+  margin: ${(props) => props.theme.margins.mini};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `
 
 const ListWrapper = styled(Flex)`
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
 `
 
 const StyledListFlex = styled(Flex)`
   width: 100%;
-  margin: ${props => props.theme.margins.small} 0px;
+  margin: ${(props) => props.theme.margins.small} 0px;
 `
 
 const Icon = styled.img`
-  width: ${props => props.theme.icon.width};
-  height: ${props => props.theme.icon.height};
-  border-radius: ${props => props.theme.icon.borderRadius};
-  border: ${props => props.theme.icon.border};
+  width: ${(props) => props.theme.icon.width};
+  height: ${(props) => props.theme.icon.height};
+  border-radius: ${(props) => props.theme.icon.borderRadius};
+  border: ${(props) => props.theme.icon.border};
 `
 
 const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.small};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean; theme: ITheme }) =>
     props.newEffect
@@ -62,7 +62,7 @@ const StyledDescription = styled(Description)`
 `
 
 const IconContainer = styled.div`
-  padding-right: ${props => props.theme.icon.containerPadding};
+  padding-right: ${(props) => props.theme.icon.containerPadding};
 `
 
 const StyledCard = styled(Card)`
@@ -71,7 +71,7 @@ const StyledCard = styled(Card)`
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 interface IBuffMenuListProps {

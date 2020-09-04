@@ -20,10 +20,10 @@ export const handleEditSave = async (
         description,
         accessRights,
         groupBuilds: {
-          delete: initialGroupBuilds.map(initialGroupBuild => ({
+          delete: initialGroupBuilds.map((initialGroupBuild) => ({
             id: initialGroupBuild.id,
           })),
-          create: groupBuilds.map(build => ({
+          create: groupBuilds.map((build) => ({
             build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),
@@ -52,7 +52,7 @@ export const handleCreateSave = async (
         description,
         accessRights,
         groupBuilds: {
-          create: groupBuilds.map(build => ({
+          create: groupBuilds.map((build) => ({
             build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),
@@ -79,7 +79,7 @@ export const handleCopy = async (
         description,
         accessRights,
         groupBuilds: {
-          create: groupBuilds.map(build => ({
+          create: groupBuilds.map((build) => ({
             build: { connect: { id: build.build.id } },
             members: { set: build.members },
           })),

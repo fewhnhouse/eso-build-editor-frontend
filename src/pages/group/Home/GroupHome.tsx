@@ -8,7 +8,7 @@ import { IGroupState } from '../GroupStateContext'
 import SimpleCard from '../../../components/SimpleCard'
 
 const Container = styled(Flex)`
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
   overflow: auto;
 `
 
@@ -29,7 +29,7 @@ export default () => {
 
   return (
     <Container fluid direction='row' wrap>
-      {groups.map(group => (
+      {groups.map((group) => (
         <SimpleCard
           key={group.id}
           onEditRedirect={handleRedirect(`/editGroup/${group.id}/0`)}

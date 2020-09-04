@@ -20,13 +20,13 @@ const StyledList = styled(List)`
 `
 
 const ListMeta = styled(List.Item.Meta)`
-  padding: ${props => props.theme.paddings.small};
+  padding: ${(props) => props.theme.paddings.small};
   text-align: start;
 `
 
 const ListItem = styled(List.Item)`
   padding: 0;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 interface ISingleGroupReviewProps {
@@ -72,7 +72,7 @@ export default ({ members, groupBuilds }: ISingleGroupReviewProps) => {
       </Select>
       <StyledList
         dataSource={groupBuilds.filter(
-          build => selectedMember && build.members.includes(selectedMember)
+          (build) => selectedMember && build.members.includes(selectedMember)
         )}
         renderItem={(build: any, index: number) => {
           const actualBuild = build.build

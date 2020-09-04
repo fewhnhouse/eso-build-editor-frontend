@@ -4,7 +4,7 @@ import Flex from '../../components/Flex'
 
 const Wrapper = styled(Flex)`
   max-width: 800px;
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
   overflow: scroll;
   margin: 0 auto;
 `

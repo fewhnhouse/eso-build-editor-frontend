@@ -12,13 +12,13 @@ const ActionButton = styled(Button)`
 `
 
 const ListMeta = styled(List.Item.Meta)`
-  padding: ${props => props.theme.paddings.small};
+  padding: ${(props) => props.theme.paddings.small};
   text-align: start;
 `
 
 const ListItem = styled(List.Item)`
   padding: 0;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const StyledList = styled(List)`
@@ -71,7 +71,7 @@ const BuildCard = ({ data, loading }: IUserDataProps) => {
         renderItem={(_, index: number) => {
           const build = data[index]
           const applicationArea = applicationAreas.find(
-            area => area.key === build.applicationArea
+            (area) => area.key === build.applicationArea
           )
           return (
             <ListItem

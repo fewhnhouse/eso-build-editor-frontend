@@ -35,7 +35,7 @@ const Header = styled(Title)`
 `
 
 const StyledCard = styled(Card)`
-    min-width: 300px;
+  min-width: 300px;
   width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? `calc(100% - 20px)` : '250px'};
   display: flex;
@@ -49,7 +49,6 @@ const StyledCard = styled(Card)`
   text-align: start;
 `
 
-
 const Description = styled.p`
   -webkit-line-clamp: 2;
   display: -webkit-box;
@@ -59,7 +58,6 @@ const Description = styled.p`
   white-space: break-spaces;
   margin: 0;
 `
-
 
 export const OWN_RAIDS = gql`
   query ownRaids(
@@ -98,7 +96,6 @@ export const OWN_RAIDS = gql`
   }
 `
 
-
 const HorizontalRaidCards = () => {
   const { data, loading } = useQuery<{ ownRaids: IRaid[] }>(OWN_RAIDS)
 
@@ -125,45 +122,44 @@ const HorizontalRaidCards = () => {
       justify={isMobile ? 'flex-start' : 'center'}
     >
       {loading && <Spin />}
-      {!isMobile && (<>
-        <HeaderContainer fluid justify="space-between">
-          <Header level={3}>Raids</Header>
-          <Button onClick={handleAddClick} size="large" type="primary">Create</Button>
-        </HeaderContainer>
-        <Divider />
-      </>)}
+      {!isMobile && (
+        <>
+          <HeaderContainer fluid justify='space-between'>
+            <Header level={3}>Raids</Header>
+            <Button onClick={handleAddClick} size='large' type='primary'>
+              Create
+            </Button>
+          </HeaderContainer>
+          <Divider />
+        </>
+      )}
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
-
-        {data?.ownRaids
-          .map((item) => {
-            console.log(item)
-            return (
-              <StyledCard
-                isMobile={isMobile}
-                actions={[
-                  <EditOutlined
-                    title='Edit'
-                    key='raid-edit'
-                    onClick={handleClick(`/editRaid/${item?.id ?? ''}/0`)}
-                  />,
-                  <SelectOutlined
-                    title='Open'
-                    key='raid-open'
-                    onClick={handleClick(`/raids/${item?.id ?? ''}`)}
-                  />,
-                ]}
-                key={item.id}
-              >
-                <Card.Meta
-                  title={item.name}
-                  description={
-                    <Description>{item.description}</Description>
-                  }
-                ></Card.Meta>
-              </StyledCard>
-            )
-          })
-        }
+        {data?.ownRaids.map((item) => {
+          console.log(item)
+          return (
+            <StyledCard
+              isMobile={isMobile}
+              actions={[
+                <EditOutlined
+                  title='Edit'
+                  key='raid-edit'
+                  onClick={handleClick(`/editRaid/${item?.id ?? ''}/0`)}
+                />,
+                <SelectOutlined
+                  title='Open'
+                  key='raid-open'
+                  onClick={handleClick(`/raids/${item?.id ?? ''}`)}
+                />,
+              ]}
+              key={item.id}
+            >
+              <Card.Meta
+                title={item.name}
+                description={<Description>{item.description}</Description>}
+              ></Card.Meta>
+            </StyledCard>
+          )
+        })}
       </GroupContainer>
       {!isMobile && <Divider />}
     </Wrapper>

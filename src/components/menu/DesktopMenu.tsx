@@ -120,9 +120,28 @@ const DesktopMenu = ({
                 <Link to='/groupEditor/0'>Group Editor</Link>
               </Item>
             </SubMenu>
-            <Item key='overview'>
-              <Link to='/overview/0'>Overview</Link>
-            </Item>
+            <SubMenu
+              key='overview'
+              title={
+                <span>
+                  Overview
+                  <StyledDown />
+                </span>
+              }
+            >
+              <Item key='overview:1'>
+                <Link to='/overview/0'>Buff Food</Link>
+              </Item>
+              <Item key='overview:2'>
+                <Link to='/overview/1'>Mundus Stones</Link>
+              </Item>
+              <Item key='overview:3'>
+                <Link to='/overview/2'>Sets</Link>
+              </Item>
+              <Item key='overview:4'>
+                <Link to='/overview/3'>Skills</Link>
+              </Item>
+            </SubMenu>
           </StyledMenu>
           <StyledMenuNarrow
             theme='light'
@@ -165,15 +184,28 @@ const DesktopMenu = ({
             <Item key='1'>
               <Link to='/'>Home</Link>
             </Item>
-            <Item key='2'>
-              <Link to='/builds'>Builds</Link>
-            </Item>
-            <Item key='3'>
-              <Link to='/raids'>Raids</Link>
-            </Item>
-            <Item key='4'>
-              <Link to='/overview/0'>Overview</Link>
-            </Item>
+            <SubMenu
+              key='overview'
+              title={
+                <span>
+                  Overview
+                  <StyledDown />
+                </span>
+              }
+            >
+              <Item key='overview:1'>
+                <Link to='/overview/0'>Buff Food</Link>
+              </Item>
+              <Item key='overview:2'>
+                <Link to='/overview/1'>Mundus Stones</Link>
+              </Item>
+              <Item key='overview:3'>
+                <Link to='/overview/2'>Sets</Link>
+              </Item>
+              <Item key='overview:4'>
+                <Link to='/overview/3'>Skills</Link>
+              </Item>
+            </SubMenu>
           </StyledMenu>
           <Popover
             placement='bottomRight'

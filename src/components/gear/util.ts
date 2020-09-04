@@ -153,7 +153,7 @@ export const getGearSlot = (slot: ISetSelection) => {
       }_${getImageSource(slot.slot)}`
     } else if (
       specialWeaponSets.find(
-        set => slot.selectedSet && slot.selectedSet.name.includes(set.name)
+        (set) => slot.selectedSet && slot.selectedSet.name.includes(set.name)
       )
     ) {
       const getSlug = () => {
@@ -199,5 +199,7 @@ export const getGearSlot = (slot: ISetSelection) => {
 }
 
 export const totalBonus = (set: ISet) => {
-  return [1, 2, 3, 4, 5].filter(number => set[`bonus_item_${number}`] !== null)
+  return [1, 2, 3, 4, 5].filter(
+    (number) => set[`bonus_item_${number}`] !== null
+  )
 }

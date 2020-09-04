@@ -15,18 +15,18 @@ const StyledCard = styled(Card)`
   background: ${(props: { active: boolean }) =>
     props.active ? 'rgba(0,0,0,0.05)' : 'white'};
   border-width: 2px;
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
 `
 
 const Icon = styled.img`
-  width: ${props => props.theme.icon.width};
-  height: ${props => props.theme.icon.height};
-  border-radius: ${props => props.theme.icon.borderRadius};
+  width: ${(props) => props.theme.icon.width};
+  height: ${(props) => props.theme.icon.height};
+  border-radius: ${(props) => props.theme.icon.borderRadius};
 `
 
 const StyledFlex = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px 0px;
-  padding: ${props => props.theme.paddings.mini};
+  padding: ${(props) => props.theme.paddings.mini};
   transition: opacity 0.2s ease-in-out;
 `
 
@@ -35,7 +35,7 @@ const StyledInnerFlex = styled(Flex)`
 `
 
 const StyledInput = styled(Input)`
-  margin: ${props => props.theme.margins.small};
+  margin: ${(props) => props.theme.margins.small};
   width: 100%;
 `
 
@@ -67,7 +67,7 @@ const MundusMenuList = ({
       dispatch!({ type: 'SET_MUNDUS', payload: { mundusStone } })
     }
   }
-  const filteredMundusStones = data.mundusStones.filter(mundus =>
+  const filteredMundusStones = data.mundusStones.filter((mundus) =>
     mundus.name.toLowerCase().includes(searchText.toLowerCase())
   )
   const trail = useTrail(filteredMundusStones.length, {

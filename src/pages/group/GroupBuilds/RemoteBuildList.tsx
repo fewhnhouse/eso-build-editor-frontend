@@ -15,7 +15,7 @@ const StyledScrollbars = styled(Scrollbars)`
 `
 
 const StyledEmpty = styled(Empty)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 const StyledList = styled(List)`
@@ -68,7 +68,7 @@ export default ({
         payload: { build: dropContext.build },
       })
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),

@@ -11,7 +11,7 @@ const StyledFlex = styled(Flex)`
   height: 100%;
   width: 100%;
   padding: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 0 : props => props.theme.paddings.medium};
+    props.isMobile ? 0 : (props) => props.theme.paddings.medium};
 `
 
 const StyledEmpty = styled(Empty)`

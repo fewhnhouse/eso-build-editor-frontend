@@ -39,7 +39,7 @@ export default ({
       type: dragType,
       build,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   })

@@ -1,6 +1,5 @@
-import React, { useReducer, useContext, useEffect, useState } from 'react'
-import Flex from '../../components/Flex'
-import { Tabs, Card } from 'antd'
+import React, { useReducer, useContext, useEffect } from 'react'
+import { Card } from 'antd'
 import {
   OverviewContext,
   defaultOverviewState,
@@ -14,10 +13,8 @@ import Skills from './Skills'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../../components/theme'
 import { AppContext } from '../../components/AppContainer'
-import { RouteComponentProps, Redirect } from 'react-router'
+import { RouteComponentProps } from 'react-router'
 import { Helmet } from 'react-helmet'
-
-const { TabPane } = Tabs
 
 export const MenuCard = styled.div`
   height: calc(100vh - 100px);
@@ -56,27 +53,10 @@ export const Image = styled.img`
   border-radius: ${(props) => props.theme.borderRadius};
 `
 
-const StyledFlex = styled(Flex)`
-  width: 100%;
-  height: calc(100vh - 64px);
-`
-
-const StyledTabs = styled(Tabs)`
-  width: 100%;
-  height: 100%;
-`
-
 export default ({ match }: RouteComponentProps<{ tab: string }>) => {
   const [state, dispatch] = useReducer(overviewReducer, defaultOverviewState)
   const [, appDispatch] = useContext(AppContext)
-  const [tab, setTab] = useState(match.params.tab || '0')
-  const handleTabClick = (key: string) => {
-    setTab(key)
-  }
-
-  useEffect(() => {
-    setTab(match.params.tab)
-  }, [match.params.tab])
+  const { tab } = match.params
 
   useEffect(() => {
     appDispatch!({
@@ -98,40 +78,30 @@ export default ({ match }: RouteComponentProps<{ tab: string }>) => {
         <title>Overview</title>
       </Helmet>
 
-      <StyledFlex direction='column' align='center'>
-        <StyledTabs
-          activeKey={tab}
-          tabPosition='top'
-          size='large'
-          onTabClick={handleTabClick}
-        >
-          <TabPane tab='Buff Food' key='0'>
-            <Buff context={OverviewContext} buff={buff} isMobile={isMobile} />
-          </TabPane>
-          <TabPane tab='Mundus Stones' key='1'>
-            <MundusStone
-              mundusStone={mundusStone}
-              context={OverviewContext}
-              isMobile={isMobile}
-            />
-          </TabPane>
-          <TabPane tab='Sets' key='2'>
-            <Set
-              selectedSet={selectedSet}
-              context={OverviewContext}
-              isMobile={isMobile}
-            />
-          </TabPane>
-          <TabPane tab='Skills' key='3'>
-            <Skills
-              context={OverviewContext}
-              skillLine={skillLine}
-              isMobile={isMobile}
-            />
-          </TabPane>
-        </StyledTabs>
-      </StyledFlex>
-      <Redirect push to={`/overview/${tab}`} />
+      {tab === '0' && (
+        <Buff context={OverviewContext} buff={buff} isMobile={isMobile} />
+      )}
+      {tab === '1' && (
+        <MundusStone
+          mundusStone={mundusStone}
+          context={OverviewContext}
+          isMobile={isMobile}
+        />
+      )}
+      {tab === '2' && (
+        <Set
+          selectedSet={selectedSet}
+          context={OverviewContext}
+          isMobile={isMobile}
+        />
+      )}
+      {tab === '3' && (
+        <Skills
+          context={OverviewContext}
+          skillLine={skillLine}
+          isMobile={isMobile}
+        />
+      )}
     </OverviewContext.Provider>
   )
 }

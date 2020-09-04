@@ -74,7 +74,7 @@ export default ({
       index: skillIndex,
       abilityBar,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   })
@@ -145,7 +145,7 @@ export default ({
         }
       }
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
       isOver: !!monitor.isOver(),
     }),

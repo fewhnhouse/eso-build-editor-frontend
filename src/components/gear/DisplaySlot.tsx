@@ -32,7 +32,7 @@ interface IContentProps {
 const MobileContent = ({ slot, setSelectionCount }: IContentProps) => {
   const [visible, setVisible] = useState(false)
   const toggleModal = () => {
-    setVisible(visible => !visible)
+    setVisible((visible) => !visible)
   }
   return (
     <GearFrame

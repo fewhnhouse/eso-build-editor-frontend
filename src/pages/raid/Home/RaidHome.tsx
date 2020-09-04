@@ -12,7 +12,7 @@ import ErrorPage from '../../../components/ErrorPage'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
   overflow: auto;
 `
 
@@ -36,10 +36,10 @@ export default () => {
     if (raids) {
       const active = applicationAreas
         .map((area, index) => ({ ...area, index }))
-        .filter(applicationArea =>
-          raids.find(raid => raid.applicationArea === applicationArea.key)
+        .filter((applicationArea) =>
+          raids.find((raid) => raid.applicationArea === applicationArea.key)
         )
-        .map(area => area.index + '')
+        .map((area) => area.index + '')
       setActiveKeys(active)
     }
   }, [raids])
@@ -62,7 +62,7 @@ export default () => {
         <Spin />
       ) : (
         <Collapse
-          onChange={keys => setActiveKeys(keys as string[])}
+          onChange={(keys) => setActiveKeys(keys as string[])}
           activeKey={activeKeys}
           style={{ width: '100%' }}
         >
@@ -70,13 +70,13 @@ export default () => {
             <StyledPanel header={applicationArea.label} key={index}>
               <RaidsContainer fluid>
                 {raids.filter(
-                  raid => raid.applicationArea === applicationArea.key
+                  (raid) => raid.applicationArea === applicationArea.key
                 )?.length ? (
                   raids
                     .filter(
-                      raid => raid.applicationArea === applicationArea.key
+                      (raid) => raid.applicationArea === applicationArea.key
                     )
-                    .map(raid => (
+                    .map((raid) => (
                       <SimpleCard
                         key={raid.id}
                         onEditRedirect={handleRedirect(

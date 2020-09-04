@@ -48,7 +48,6 @@ const UserGroup = styled(Card)`
   text-align: start;
 `
 
-
 const Description = styled.p`
   -webkit-line-clamp: 2;
   display: -webkit-box;
@@ -114,15 +113,18 @@ const UserGroupBar = () => {
       justify={isMobile ? 'flex-start' : 'center'}
     >
       {loading && <Spin />}
-      {!isMobile && (<>
-        <HeaderContainer fluid justify="space-between">
-          <Header level={3}>Groups</Header>
-          <Button onClick={handleAddClick} size="large" type="primary">Create</Button>
-        </HeaderContainer>
-        <Divider />
-      </>)}
+      {!isMobile && (
+        <>
+          <HeaderContainer fluid justify='space-between'>
+            <Header level={3}>Groups</Header>
+            <Button onClick={handleAddClick} size='large' type='primary'>
+              Create
+            </Button>
+          </HeaderContainer>
+          <Divider />
+        </>
+      )}
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
-       
         {data &&
           data.ownGroups &&
           data.ownGroups.map((ownGroup: IGroupState) => {

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const IconImg = styled.img`
   width: 24px;
   height: 24px;
-  margin-right: ${props => props.theme.margins.mini};
+  margin-right: ${(props) => props.theme.margins.mini};
 `
 
 const HasPiecesDiv = styled.div`

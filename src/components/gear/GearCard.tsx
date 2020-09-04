@@ -9,8 +9,8 @@ const StyledCard = styled(Card)`
   display: 'flex';
   margin: 0 auto;
   padding: 0;
-  min-width: ${props => props.theme.widths.small};
-  max-width: ${props => props.theme.widths.large};
+  min-width: ${(props) => props.theme.widths.small};
+  max-width: ${(props) => props.theme.widths.large};
   width: 100%;
   position: relative;
 `
@@ -18,7 +18,7 @@ const StyledCard = styled(Card)`
 const Description = styled.div`
   font-size: ${(props: { big?: boolean }) => (props.big ? '16px' : '14px')};
   line-height: 1.5;
-  margin-top: ${props => props.theme.margins.mini};
+  margin-top: ${(props) => props.theme.margins.mini};
 `
 
 const StyledTag = styled(Tag)`
@@ -37,7 +37,7 @@ const StyledSpan = styled.span`
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 interface IGearCard {
@@ -100,7 +100,7 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
     >
       <Description big={size === 'big'}>
         <Flex direction='column' justify='flex-start'>
-          {totalBonus(set).map(count => (
+          {totalBonus(set).map((count) => (
             <StyledSpan key={count} bold={count <= setSelectionCount}>
               <Flex align='center'>
                 <Tag>{count} pcs</Tag>{' '}

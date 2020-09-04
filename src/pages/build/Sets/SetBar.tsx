@@ -10,14 +10,14 @@ import { getSetsCount } from './Sets'
 const OuterContainer = styled.div`
   flex: 1;
   height: 100%;
-  padding: ${props => props.theme.paddings.medium};
-  max-width: ${props => props.theme.widths.medium};
+  padding: ${(props) => props.theme.paddings.medium};
+  max-width: ${(props) => props.theme.widths.medium};
   background: white;
 `
 
 const StyledScrollbars = styled(Scrollbars)`
   background-color: white;
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
 `
 
 interface ISetBarProps {
@@ -58,13 +58,13 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
   const showGear = (key: string) => {
     if (selectedSet?.uniqueItem !== null) {
       const types = convertTypes(selectedSet?.uniqueItem)
-      const actualSetup = mySetups.find(setup => types?.type === setup.id)
+      const actualSetup = mySetups.find((setup) => types?.type === setup.id)
       return actualSetup
         ? [
             {
               ...actualSetup,
               data:
-                actualSetup.data.filter(setupData => {
+                actualSetup.data.filter((setupData) => {
                   if (
                     types?.type === 'bigpieces' ||
                     types?.type === 'smallpieces' ||
@@ -86,22 +86,22 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
 
     if (key === SetTab.frontbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter((setup) => setup.id === 'onehanded')
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter((setup) => setup.id === 'twohanded')
       }
     } else if (key === SetTab.backbar) {
       if (weaponType === WeaponType.onehanded) {
-        return mySetups.filter(setup => setup.id === 'onehanded')
+        return mySetups.filter((setup) => setup.id === 'onehanded')
       } else {
-        return mySetups.filter(setup => setup.id === 'twohanded')
+        return mySetups.filter((setup) => setup.id === 'twohanded')
       }
     } else if (key === SetTab.armor) {
       return mySetups.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
+        (setup) => setup.id === 'bigpieces' || setup.id === 'smallpieces'
       )
     } else {
-      return mySetups.filter(setup => setup.id === 'jewelry')
+      return mySetups.filter((setup) => setup.id === 'jewelry')
     }
   }
 
@@ -127,15 +127,15 @@ export default ({ hasSelectedSet }: ISetBarProps) => {
 
   const showSetup = (key: string) => {
     if (key === SetTab.frontbar) {
-      return selectedSetup.filter(setup => setup.id === 'frontbar')
+      return selectedSetup.filter((setup) => setup.id === 'frontbar')
     } else if (key === SetTab.backbar) {
-      return selectedSetup.filter(setup => setup.id === 'backbar')
+      return selectedSetup.filter((setup) => setup.id === 'backbar')
     } else if (key === SetTab.armor) {
       return selectedSetup.filter(
-        setup => setup.id === 'bigpieces' || setup.id === 'smallpieces'
+        (setup) => setup.id === 'bigpieces' || setup.id === 'smallpieces'
       )
     } else {
-      return selectedSetup.filter(setup => setup.id === 'jewelry')
+      return selectedSetup.filter((setup) => setup.id === 'jewelry')
     }
   }
 

@@ -26,7 +26,7 @@ const Container = styled.div`
 `
 
 const StyledSpin = styled(Spin)`
-  margin-top: ${props => props.theme.margins.mini};
+  margin-top: ${(props) => props.theme.margins.mini};
 `
 
 export default ({ match }: RouteComponentProps<{ token: string }>) => {

@@ -35,7 +35,7 @@ const Header = styled(Title)`
 `
 
 const StyledCard = styled(Card)`
-    min-width: 300px;
+  min-width: 300px;
   width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? `calc(100% - 20px)` : '250px'};
   display: flex;
@@ -96,7 +96,9 @@ export const BUILD_REVISIONS = gql`
 `
 
 const HorizontalBuildCards = () => {
-  const { data, loading } = useQuery<{ buildRevisions: IBuildRevision[] }>(BUILD_REVISIONS)
+  const { data, loading } = useQuery<{ buildRevisions: IBuildRevision[] }>(
+    BUILD_REVISIONS
+  )
 
   const [redirect, setRedirect] = useState('')
   const isMobile = useMediaQuery({ maxWidth: 800 })
@@ -122,15 +124,18 @@ const HorizontalBuildCards = () => {
     >
       {loading && <Spin />}
 
-      {!isMobile && (<>
-        <HeaderContainer fluid justify="space-between">
-          <Header level={3}>Builds</Header>
-          <Button onClick={handleAddClick} size="large" type="primary">Create</Button>
-        </HeaderContainer>
-        <Divider />
-      </>)}
+      {!isMobile && (
+        <>
+          <HeaderContainer fluid justify='space-between'>
+            <Header level={3}>Builds</Header>
+            <Button onClick={handleAddClick} size='large' type='primary'>
+              Create
+            </Button>
+          </HeaderContainer>
+          <Divider />
+        </>
+      )}
       <GroupContainer direction={isMobile ? 'column' : 'row'}>
-
         {data?.buildRevisions
           .filter((revision) => revision.builds.length)
           .map((revision) => revision.builds[0])
@@ -154,18 +159,17 @@ const HorizontalBuildCards = () => {
                 key={item.id}
               >
                 <Card.Meta
-                  avatar={<Avatar
-                    src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
-                  />}
-                  title={item.name}
-                  description={
-                    <Description>{item.description}</Description>
+                  avatar={
+                    <Avatar
+                      src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${item.esoClass}.png`}
+                    />
                   }
+                  title={item.name}
+                  description={<Description>{item.description}</Description>}
                 ></Card.Meta>
               </StyledCard>
             )
-          })
-        }
+          })}
       </GroupContainer>
       {!isMobile && <Divider />}
     </Wrapper>

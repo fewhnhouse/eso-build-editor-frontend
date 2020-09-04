@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const { Text } = Typography
 
 const StyledButton = styled(Button)`
-  margin-top: ${props => props.theme.margins.medium};
+  margin-top: ${(props) => props.theme.margins.medium};
 `
 
 export default ({ me, handleActionClick, value, setValue }: IActionProps) => {

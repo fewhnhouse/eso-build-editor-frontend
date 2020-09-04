@@ -8,17 +8,17 @@ import { useMediaQuery } from 'react-responsive'
 import { ITheme } from '../theme'
 
 const StyledCard = styled(Card)`
-  margin: ${props => props.theme.margins.mini} 0px;
-  min-width: ${props => props.theme.widths.small};
-  max-width: ${props => props.theme.widths.medium};
+  margin: ${(props) => props.theme.margins.mini} 0px;
+  min-width: ${(props) => props.theme.widths.small};
+  max-width: ${(props) => props.theme.widths.medium};
   width: 100%;
   position: relative;
 `
 
 const Image = styled.img`
-  width: ${props => props.theme.icon.width};
-  height: ${props => props.theme.icon.height};
-  border-radius: ${props => props.theme.icon.borderRadius};
+  width: ${(props) => props.theme.icon.width};
+  height: ${(props) => props.theme.icon.height};
+  border-radius: ${(props) => props.theme.icon.borderRadius};
   border: ${(props: { active: boolean }) =>
     props.active ? '2px solid #1890ff' : 'none'};
   filter: ${(props: { active: boolean }) =>
@@ -26,26 +26,26 @@ const Image = styled.img`
 `
 
 const Icon = styled.img`
-  width: ${props => props.theme.icon.width};
-  height: ${props => props.theme.icon.height};
-  border-radius: ${props => props.theme.icon.borderRadius};
+  width: ${(props) => props.theme.icon.width};
+  height: ${(props) => props.theme.icon.height};
+  border-radius: ${(props) => props.theme.icon.borderRadius};
 `
 
 const IconContainer = styled.div`
-  padding-right: ${props => props.theme.icon.containerPadding};
+  padding-right: ${(props) => props.theme.icon.containerPadding};
 `
 
 const RaceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0px ${props => props.theme.paddings.small};
+  padding: 0px ${(props) => props.theme.paddings.small};
   justify-content: space-between;
   align-items: center;
 `
 
 const Description = styled.div`
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.small};
   line-height: 1.5;
   color: ${(props: { newEffect?: boolean }) =>
     props.newEffect ? '#2ecc71' : 'rgba(0, 0, 0, 0.45)'};
@@ -53,14 +53,14 @@ const Description = styled.div`
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.paddings.mini} 0px;
+  margin: ${(props) => props.theme.paddings.mini} 0px;
 `
 
 const Title = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${(props) => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: ${props => props.theme.colors.grey.dark};
+  color: ${(props) => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -80,11 +80,11 @@ const CostSpan = styled.span`
 `
 
 const StyledFlex = styled(Flex)`
-  max-width: ${props => props.theme.widths.medium};
+  max-width: ${(props) => props.theme.widths.medium};
 `
 
 const MorphLabel = styled.span`
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${(props) => props.theme.fontSizes.normal};
   font-weight: 500;
   max-width: 140px;
   color: ${(props: { active: boolean; disabled: boolean }) =>
@@ -125,7 +125,7 @@ const DesktopAction = ({ morph }: { morph: ISkill }) => (
 const MobileAction = ({ morph }: { morph: ISkill }) => {
   const [visible, setVisible] = useState(false)
   const toggleVisible = () => {
-    setVisible(visible => !visible)
+    setVisible((visible) => !visible)
   }
   return (
     <RaceContainer onClick={toggleVisible}>
@@ -179,7 +179,7 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const [state, dispatch] = useContext(BuildContext)
   const { selectedSkillLines, skillLine } = state!
   const selectedSkillLine = selectedSkillLines.find(
-    line => line.id === skillLine
+    (line) => line.id === skillLine
   )
   if (!selectedSkillLine) {
     return null
@@ -188,12 +188,12 @@ export default ({ skill, morph1, morph2, passive, ultimate }: ICardProps) => {
   const firstActive = ultimate
     ? selectedUltimate && selectedUltimate.skillId === morph1.skillId
     : selectedSkills.find(
-        slot => slot.skill && slot.skill.skillId === morph1.skillId
+        (slot) => slot.skill && slot.skill.skillId === morph1.skillId
       ) !== undefined
   const secondActive = ultimate
     ? selectedUltimate && selectedUltimate.skillId === morph2.skillId
     : selectedSkills.find(
-        slot => slot.skill && slot.skill.skillId === morph2.skillId
+        (slot) => slot.skill && slot.skill.skillId === morph2.skillId
       ) !== undefined
   const handleFirstClick = () => {
     if (firstActive) {

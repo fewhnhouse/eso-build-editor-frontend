@@ -10,7 +10,7 @@ import SimpleCard from '../../../components/SimpleCard'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`
-  padding: ${props => props.theme.paddings.medium};
+  padding: ${(props) => props.theme.paddings.medium};
   overflow: auto;
 `
 
@@ -52,10 +52,10 @@ export default () => {
         key: esoClass,
         index,
       }))
-        .filter(esoClass =>
-          builds.find(build => build.esoClass === esoClass.key)
+        .filter((esoClass) =>
+          builds.find((build) => build.esoClass === esoClass.key)
         )
-        .map(esoClass => esoClass.index + '')
+        .map((esoClass) => esoClass.index + '')
       setActiveKeys(active)
     }
   }, [builds])
@@ -71,7 +71,7 @@ export default () => {
   return (
     <Container fluid direction='column'>
       <Collapse
-        onChange={keys => setActiveKeys(keys as string[])}
+        onChange={(keys) => setActiveKeys(keys as string[])}
         activeKey={activeKeys}
         style={{ width: '100%' }}
       >
@@ -79,10 +79,11 @@ export default () => {
           <StyledPanel header={esoClass} key={index}>
             <Skeleton loading={loading}>
               <BuildsContainer fluid>
-                {builds.filter(build => build.esoClass === esoClass).length ? (
+                {builds.filter((build) => build.esoClass === esoClass)
+                  .length ? (
                   builds
-                    .filter(build => build.esoClass === esoClass)
-                    .map(build => (
+                    .filter((build) => build.esoClass === esoClass)
+                    .map((build) => (
                       <SimpleCard
                         key={build.id}
                         item={build}

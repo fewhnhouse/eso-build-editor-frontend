@@ -69,7 +69,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
 
   useEffect(() => {
     const specialWeaponSet: any = specialWeaponSets.find(
-      set => selectedSet && selectedSet.name.includes(set.name)
+      (set) => selectedSet && selectedSet.name.includes(set.name)
     )
 
     if (specialWeaponSet && specialWeaponSet.type === 'onehanded') {
@@ -93,12 +93,12 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
 
     setMainHand(
       [...(bar === 'frontbar' ? frontbarSelection : backbarSelection)].find(
-        slot => slot.slot === Slot.mainHand
+        (slot) => slot.slot === Slot.mainHand
       )
     )
     setOffHand(
       [...(bar === 'frontbar' ? frontbarSelection : backbarSelection)].find(
-        slot => slot.slot === Slot.offHand
+        (slot) => slot.slot === Slot.offHand
       )
     )
   }, [selectedSet, frontbarSelection, backbarSelection, bar, dispatch])
@@ -155,8 +155,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
       if (shield && slots[0] === Slot.offHand) {
         const itemValue =
           type === 'selectedTraits'
-            ? armorTraits.find(trait => trait.type === value)
-            : armorGlyphs.find(glyph => glyph.type === value)
+            ? armorTraits.find((trait) => trait.type === value)
+            : armorGlyphs.find((glyph) => glyph.type === value)
 
         dispatch!({
           type: actionType,
@@ -170,8 +170,8 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
       } else {
         const itemValue =
           type === 'selectedTraits'
-            ? weaponTraits.find(trait => trait.type === value)
-            : weaponGlyphs.find(glyph => glyph.type === value)
+            ? weaponTraits.find((trait) => trait.type === value)
+            : weaponGlyphs.find((glyph) => glyph.type === value)
 
         dispatch!({
           type: actionType,

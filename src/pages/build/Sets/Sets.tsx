@@ -55,7 +55,7 @@ export const getSetsCount = (
 
   const setsCount = bigPieceSelection
     .concat(smallPieceSelection, jewelrySelection)
-    .map(item => {
+    .map((item) => {
       return item.selectedSet ? item.selectedSet.name : ''
     })
     .reduce<Map<string, number>>(
@@ -66,7 +66,7 @@ export const getSetsCount = (
     const setName = frontbarSelection[0].selectedSet!.name
     setsCount.set(setName, 2 + (setsCount.get(setName) || 0))
   } else {
-    frontbarSelection.forEach(selection => {
+    frontbarSelection.forEach((selection) => {
       if (selection.selectedSet) {
         const setName = selection.selectedSet!.name
 
@@ -79,7 +79,7 @@ export const getSetsCount = (
     const setName = backbarSelection[0].selectedSet!.name
     setsCount.set(setName, 2 + (setsCount.get(setName) || 0))
   } else {
-    backbarSelection.forEach(selection => {
+    backbarSelection.forEach((selection) => {
       if (selection.selectedSet) {
         const setName = selection.selectedSet!.name
 

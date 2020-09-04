@@ -297,12 +297,12 @@ export const getSetups = ({
       id: 'bigpieces',
       label: 'Big Pieces',
       data: bigPieceSelection
-        .filter(bigPiece =>
+        .filter((bigPiece) =>
           selectedSet && selectedSet.type === SetType.undaunted
             ? bigPiece.slot === Slot.head || bigPiece.slot === Slot.shoulders
             : true
         )
-        .map(bigPiece => ({
+        .map((bigPiece) => ({
           slot: bigPiece.slot,
           type: armorType,
           selectedSet,
@@ -314,13 +314,13 @@ export const getSetups = ({
       id: 'smallpieces',
       label: 'Small Pieces',
       data: smallPieceSelection
-        .filter(smallPiece =>
+        .filter((smallPiece) =>
           selectedSet && selectedSet.type === SetType.undaunted
             ? smallPiece.slot === Slot.head ||
               smallPiece.slot === Slot.shoulders
             : true
         )
-        .map(smallPiece => ({
+        .map((smallPiece) => ({
           slot: smallPiece.slot,
           type: armorType,
           selectedSet,
@@ -331,7 +331,7 @@ export const getSetups = ({
     {
       id: 'jewelry',
       label: 'Jewelry',
-      data: jewelrySelection.map(jewelry => ({
+      data: jewelrySelection.map((jewelry) => ({
         slot: jewelry.slot,
         selectedSet,
         glyph: jewelry.glyph,

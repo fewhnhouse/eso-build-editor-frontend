@@ -23,7 +23,7 @@ export const handleEditSave = async (
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
-    ...canEdit.filter(editId => !canView.includes(editId)),
+    ...canEdit.filter((editId) => !canView.includes(editId)),
   ]
   await updateRaid({
     variables: {
@@ -31,14 +31,14 @@ export const handleEditSave = async (
         name,
         description,
         applicationArea,
-        canEdit: { connect: canEdit.map(id => ({ id })) },
-        canView: { connect: enhancedCanView.map(id => ({ id })) },
+        canEdit: { connect: canEdit.map((id) => ({ id })) },
+        canView: { connect: enhancedCanView.map((id) => ({ id })) },
         published,
         roles: {
           delete: initialRoles.map((initialRole: IRole) => ({
             id: initialRole.id,
           })),
-          create: roles.map(role => {
+          create: roles.map((role) => {
             return {
               name: role.name,
               builds: {
@@ -76,7 +76,7 @@ export const handleCreateSave = async (
   //make sure everyone who can edit can also view
   const enhancedCanView: string[] = [
     ...canView,
-    ...canEdit.filter(editId => !canView.includes(editId)),
+    ...canEdit.filter((editId) => !canView.includes(editId)),
   ]
 
   await createRaid({
@@ -85,11 +85,11 @@ export const handleCreateSave = async (
         name,
         description,
         applicationArea,
-        canEdit: { connect: canEdit.map(id => ({ id })) },
-        canView: { connect: enhancedCanView.map(id => ({ id })) },
+        canEdit: { connect: canEdit.map((id) => ({ id })) },
+        canView: { connect: enhancedCanView.map((id) => ({ id })) },
         published,
         roles: {
-          create: roles.map(role => ({
+          create: roles.map((role) => ({
             name: role.name,
             builds: {
               create: role.builds.map((build, index) => ({
@@ -121,7 +121,7 @@ export const handleCopy = async (
         applicationArea,
         published,
         roles: {
-          create: roles.map(role => ({
+          create: roles.map((role) => ({
             name: role.name,
             builds: {
               create: role.builds.map((build, index) => ({

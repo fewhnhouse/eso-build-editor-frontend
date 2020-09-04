@@ -1,6 +1,5 @@
 version: '2'
 services:
-
   web:
     restart: always
     image: build-editor-frontend

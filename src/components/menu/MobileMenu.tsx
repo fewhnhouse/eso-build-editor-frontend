@@ -44,11 +44,6 @@ const MobileMenu = ({
             Home
           </Link>
         </Item>
-        <Item key='overview'>
-          <Link onClick={handleFoldBtnClick} to='/overview/0'>
-            Overview
-          </Link>
-        </Item>
         <Divider />
         <ItemGroup key='build' title='Builds'>
           <Item key='build:1'>
@@ -89,6 +84,29 @@ const MobileMenu = ({
           </Item>
         </ItemGroup>
         <Divider />
+        <ItemGroup key='overview' title='Overview'>
+          <Item key='overview:1'>
+            <Link onClick={handleFoldBtnClick} to='/overview/0'>
+              Buff Food
+            </Link>
+          </Item>
+          <Item key='overview:2'>
+            <Link onClick={handleFoldBtnClick} to='/overview/1'>
+              Mundus Stones
+            </Link>
+          </Item>
+          <Item key='overview:3'>
+            <Link onClick={handleFoldBtnClick} to='/overview/2'>
+              Sets
+            </Link>
+          </Item>
+          <Item key='overview:4'>
+            <Link onClick={handleFoldBtnClick} to='/overview/3'>
+              Skills
+            </Link>
+          </Item>
+        </ItemGroup>
+        <Divider />
         <Item key='profile'>
           <Link onClick={handleFoldBtnClick} to='/profile'>
             <UserOutlined />
@@ -111,15 +129,29 @@ const MobileMenu = ({
         <Item key='1'>
           <Link to='/'>Home</Link>
         </Item>
-        <Item key='2'>
-          <Link to='/builds'>Builds</Link>
-        </Item>
-        <Item key='3'>
-          <Link to='/raids'>Raids</Link>
-        </Item>
-        <Item key='4'>
-          <Link to='/overview/0'>Overview</Link>
-        </Item>
+        <Divider />
+        <ItemGroup key='overview' title='Overview'>
+          <Item key='overview:1'>
+            <Link onClick={handleFoldBtnClick} to='/overview/0'>
+              Buff Food
+            </Link>
+          </Item>
+          <Item key='overview:2'>
+            <Link onClick={handleFoldBtnClick} to='/overview/1'>
+              Mundus Stones
+            </Link>
+          </Item>
+          <Item key='overview:3'>
+            <Link onClick={handleFoldBtnClick} to='/overview/2'>
+              Sets
+            </Link>
+          </Item>
+          <Item key='overview:4'>
+            <Link onClick={handleFoldBtnClick} to='/overview/3'>
+              Skills
+            </Link>
+          </Item>
+        </ItemGroup>
         <Divider />
         <StyledItem key='5'>
           <LoginForm />

@@ -12,14 +12,14 @@ const Container = styled.div`
 const Description = styled.div`
   font-size: ${(props: { big?: boolean }) => (props.big ? '16px' : '14px')};
   line-height: 1.5;
-  margin-top: ${props => props.theme.margins.mini};
+  margin-top: ${(props) => props.theme.margins.mini};
 `
 
 const Title = styled.div`
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${(props) => props.theme.fontSizes.normal};
   line-height: 1.5;
   font-weight: 500;
-  color: ${props => props.theme.colors.grey.dark};
+  color: ${(props) => props.theme.colors.grey.dark};
   margin-bottom: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -27,9 +27,9 @@ const Title = styled.div`
 `
 
 const SmallTitle = styled.div`
-  color: ${props => props.theme.colors.grey.medium};
+  color: ${(props) => props.theme.colors.grey.medium};
   font-weight: 400;
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.small};
   display: inline;
 `
 
@@ -44,13 +44,13 @@ const StyledTag = styled(Tag)`
 const IconImg = styled.img`
   width: 30px;
   height: 30px;
-  margin-right: ${props => props.theme.margins.mini};
+  margin-right: ${(props) => props.theme.margins.mini};
 `
 
 const GlyphIconImg = styled.img`
   width: 25px;
   height: 25px;
-  margin-right: ${props => props.theme.margins.mini};
+  margin-right: ${(props) => props.theme.margins.mini};
 `
 
 const StyledSpan = styled.span`
@@ -61,11 +61,11 @@ const StyledSpan = styled.span`
 `
 
 const StyledSpanColor = styled.span`
-  color: ${props => props.theme.colors.grey.medium};
+  color: ${(props) => props.theme.colors.grey.medium};
 `
 
 const StyledDivider = styled(Divider)`
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 const StyledSetTitle = styled(Title)`
@@ -77,7 +77,7 @@ const StyledDescription = styled(Description)`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: ${props => props.theme.margins.mini} 0px;
+  margin: ${(props) => props.theme.margins.mini} 0px;
 `
 
 interface IGearCardContent {
@@ -127,7 +127,7 @@ export const GearCardContent = ({
       <Description>
         <Flex direction='column'>
           {gear.selectedSet ? (
-            totalBonus(gear.selectedSet).map(count => (
+            totalBonus(gear.selectedSet).map((count) => (
               <StyledSpan bold={count <= setSelectionCount} key={count}>
                 {count} pcs:{' '}
                 {gear.selectedSet && gear.selectedSet[`bonus_item_${count}`]}

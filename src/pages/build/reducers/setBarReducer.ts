@@ -45,7 +45,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
       if (setTabKey === SetTab.jewelry) {
         return {
           ...state,
-          jewelrySelection: state.jewelrySelection.map(jewelry =>
+          jewelrySelection: state.jewelrySelection.map((jewelry) =>
             jewelry.slot === slot
               ? {
                   selectedSet: set,
@@ -64,7 +64,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         if (state.weaponType === WeaponType.twohanded) {
           return {
             ...state,
-            frontbarSelection: state.frontbarSelection.map(frontbar =>
+            frontbarSelection: state.frontbarSelection.map((frontbar) =>
               frontbar.slot === actualSlot
                 ? {
                     selectedSet: set,
@@ -91,7 +91,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         }
         return {
           ...state,
-          frontbarSelection: state.frontbarSelection.map(frontbar =>
+          frontbarSelection: state.frontbarSelection.map((frontbar) =>
             frontbar.slot === actualSlot
               ? {
                   selectedSet: set,
@@ -111,7 +111,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         if (state.weaponType === WeaponType.twohanded) {
           return {
             ...state,
-            backbarSelection: state.backbarSelection.map(backbar =>
+            backbarSelection: state.backbarSelection.map((backbar) =>
               backbar.slot === actualSlot
                 ? {
                     selectedSet: set,
@@ -138,7 +138,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
         }
         return {
           ...state,
-          backbarSelection: state.backbarSelection.map(backbar =>
+          backbarSelection: state.backbarSelection.map((backbar) =>
             backbar.slot === actualSlot
               ? {
                   selectedSet: set,
@@ -167,7 +167,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
       } else if (setTabKey === SetTab.armor && group === 'bigpieces') {
         return {
           ...state,
-          bigPieceSelection: state.bigPieceSelection.map(bigPiece =>
+          bigPieceSelection: state.bigPieceSelection.map((bigPiece) =>
             bigPiece.slot === slot
               ? {
                   selectedSet: set,
@@ -184,7 +184,7 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
       } else if (setTabKey === SetTab.armor && group === 'smallpieces') {
         return {
           ...state,
-          smallPieceSelection: state.smallPieceSelection.map(smallPiece =>
+          smallPieceSelection: state.smallPieceSelection.map((smallPiece) =>
             smallPiece.slot === slot
               ? {
                   selectedSet: set,

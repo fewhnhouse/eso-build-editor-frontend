@@ -8,8 +8,8 @@ ReactDOM.render(<App />, document.getElementById('root'))
 
 // @ts-ignore
 if (module.hot) {
-    // @ts-ignore
-    module.hot.accept();
+  // @ts-ignore
+  module.hot.accept()
 }
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

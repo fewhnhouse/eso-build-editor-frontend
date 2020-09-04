@@ -70,35 +70,35 @@ export default ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         <ProtectedRoute
           loggedIn={isLoggedIn}
           path='/editBuild/:id/:pageIndex'
-          render={props => <BuildWrapper edit {...props} />}
+          render={(props) => <BuildWrapper edit {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           path='/editRaid/:id/:pageIndex'
-          render={props => <RaidWrapper edit {...props} />}
+          render={(props) => <RaidWrapper edit {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           path='/editGroup/:id/:pageIndex'
-          render={props => <GroupWrapper edit {...props} />}
+          render={(props) => <GroupWrapper edit {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
           path='/buildEditor/:pageIndex'
-          render={props => <BuildWrapper {...props} />}
+          render={(props) => <BuildWrapper {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
           path='/raidEditor/:pageIndex'
-          render={props => <RaidWrapper {...props} />}
+          render={(props) => <RaidWrapper {...props} />}
         />
         <ProtectedRoute
           loggedIn={isLoggedIn}
           exact
           path='/groupEditor/:pageIndex'
-          render={props => <GroupWrapper {...props} />}
+          render={(props) => <GroupWrapper {...props} />}
         />
         <Route exact path='/builds' component={BuildHome} />
         <Route exact path='/raids' component={RaidHome} />

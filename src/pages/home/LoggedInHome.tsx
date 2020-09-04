@@ -76,16 +76,15 @@ export default () => {
             </MobileTabs>
           </MobileWrapper>
         ) : (
-            <Scrollbars autoHide>
-              <Wrapper justify='center' align='center' wrap>
-                <UserGroupBar />
-                <HorizontalBuildCards />
-                <HorizontalRaidCards />
-              </Wrapper>
-            </Scrollbars>
-          )}
+          <Scrollbars autoHide>
+            <Wrapper justify='center' align='center' wrap>
+              <UserGroupBar />
+              <HorizontalBuildCards />
+              <HorizontalRaidCards />
+            </Wrapper>
+          </Scrollbars>
+        )}
       </InnerWrapper>
-
     </OuterWrapper>
   )
 }
