@@ -61,7 +61,7 @@ export default () => {
       <InnerWrapper direction='column'>
         {isMobile ? (
           <MobileWrapper>
-            <MobileTabs tabBarStyle={{ margin: 0 }}>
+            <MobileTabs tabBarStyle={{ margin: '0 auto' }}>
               <StyledTabPane tab='Groups' key='1'>
                 <UserGroupBar />
               </StyledTabPane>
