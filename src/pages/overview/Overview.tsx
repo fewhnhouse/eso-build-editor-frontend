@@ -17,12 +17,12 @@ import { RouteComponentProps } from 'react-router'
 import { Helmet } from 'react-helmet'
 
 export const MenuCard = styled.div`
-  height: calc(100vh - 100px);
+  height: 100%;
   max-width: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '100%' : '50%'};
   margin-right: ${(props: { isMobile: boolean }) =>
     props.isMobile ? '0px' : '10px'};
-  max-height: 90%;
+  max-height: 100%;
   min-width: ${(props: { isMobile: boolean; theme: ITheme }) =>
     props.isMobile ? props.theme.widths.small : props.theme.widths.medium};
   flex: 1;
@@ -37,9 +37,8 @@ export const Description = styled.div`
 `
 
 export const ContentCard = styled(Card)`
-  height: calc(100vh - 150px);
+  height: 100%;
   margin-left: 10px;
-  max-height: 90%;
   width: 100%;
   max-width: 70%;
   min-width: 50%;
