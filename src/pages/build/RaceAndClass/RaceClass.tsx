@@ -14,6 +14,8 @@ import {
   UnlockOutlined,
 } from '@ant-design/icons'
 
+const { TextArea } = Input
+
 const ButtonGroup = Button.Group
 
 const CardContainer = styled.div`
@@ -48,7 +50,19 @@ const StyledTitle = styled(Typography.Title)`
   margin: ${(props) => props.theme.margins.mini};
 `
 
+const StyledRadioGroup = styled(Radio.Group)`
+  width: ${(props) => props.theme.widths.medium};
+`
+
+const StyledRadioButton = styled(Radio.Button)`
+  width: 33.3%;
+`
+
 const StyledInput = styled(Input)`
+  width: ${(props) => props.theme.widths.medium};
+`
+
+const StyledTextArea = styled(TextArea)`
   width: ${(props) => props.theme.widths.medium};
 `
 
@@ -183,7 +197,9 @@ export default ({ edit }: { edit: boolean }) => {
   const handleBuildNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_BUILD_NAME', payload: { name: e.target.value } })
   }
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     dispatch!({
       type: 'SET_DESCRIPTION',
       payload: { description: e.target.value },
@@ -214,6 +230,7 @@ export default ({ edit }: { edit: boolean }) => {
   return (
     <div>
       <Divider>General Information</Divider>
+
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
           <StyledFlex
@@ -235,8 +252,8 @@ export default ({ edit }: { edit: boolean }) => {
             align='flex-start'
           >
             <Typography.Text strong>Description</Typography.Text>
-            <StyledInput
-              size='large'
+            <StyledTextArea
+              rows={4}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'
@@ -281,89 +298,96 @@ export default ({ edit }: { edit: boolean }) => {
               <Select.Option value='pve_raid'>Tank</Select.Option>
             </Select>
           </StyledFlex>
-        </Flex>
-        <StyledWideFlex direction='column' justify='flex-start' align='center'>
-          <Flex direction='row' justify='space-between'>
-            <ResourceCard>
-              <Typography.Text strong>Stamina</Typography.Text>
-              <StyledTitle level={4}>{stamina}</StyledTitle>
-              <ButtonGroup>
-                <Button
-                  disabled={stamina === 0}
-                  onClick={handleAttributeChange('stamina', 'minus')}
-                  type='default'
-                >
-                  <MinusOutlined />
-                </Button>
-                <Button
-                  disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('stamina', 'plus')}
-                  type='primary'
-                >
-                  <PlusOutlined />
-                </Button>
-              </ButtonGroup>
-            </ResourceCard>
-            <ResourceCard>
-              <Typography.Text strong>Health</Typography.Text>
-              <StyledTitle level={4}>{health}</StyledTitle>
-              <ButtonGroup>
-                <Button
-                  disabled={health === 0}
-                  onClick={handleAttributeChange('health', 'minus')}
-                  type='default'
-                >
-                  <MinusOutlined />
-                </Button>
-                <Button
-                  disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('health', 'plus')}
-                  type='primary'
-                >
-                  <PlusOutlined />
-                </Button>
-              </ButtonGroup>
-            </ResourceCard>
+          <StyledFlex
+            direction='column'
+            justify='flex-start'
+            align='flex-start'
+          >
+            <Typography.Text strong>Access Rights</Typography.Text>
 
-            <ResourceCard>
-              <Typography.Text strong>Magicka</Typography.Text>
-              <StyledTitle level={4}>{magicka}</StyledTitle>
-              <ButtonGroup>
-                <Button
-                  disabled={magicka === 0}
-                  onClick={handleAttributeChange('magicka', 'minus')}
-                  type='default'
-                >
-                  <MinusOutlined />
-                </Button>
-                <Button
-                  disabled={totalAttributes >= 64}
-                  onClick={handleAttributeChange('magicka', 'plus')}
-                  type='primary'
-                >
-                  <PlusOutlined />
-                </Button>
-              </ButtonGroup>
-            </ResourceCard>
-          </Flex>
-        </StyledWideFlex>
+            <StyledRadioGroup
+              size='large'
+              onChange={handleAccessRightsChange}
+              defaultValue={accessRights}
+              buttonStyle='solid'
+            >
+              {accessRightOptions.map(({ key, Icon, label }) => (
+                <StyledRadioButton key={key} value={key}>
+                  <Icon style={{ marginRight: 5 }} />
+                  {label}
+                </StyledRadioButton>
+              ))}
+            </StyledRadioGroup>
+          </StyledFlex>
+        </Flex>
       </GeneralContainer>
 
-      <Divider>Access Rights</Divider>
+      <Divider>Attributes</Divider>
+      <StyledWideFlex direction='column' justify='flex-start' align='center'>
+        <Flex direction='row' justify='space-between'>
+          <ResourceCard>
+            <Typography.Text strong>Stamina</Typography.Text>
+            <StyledTitle level={4}>{stamina}</StyledTitle>
+            <ButtonGroup>
+              <Button
+                disabled={stamina === 0}
+                onClick={handleAttributeChange('stamina', 'minus')}
+                type='default'
+              >
+                <MinusOutlined />
+              </Button>
+              <Button
+                disabled={totalAttributes >= 64}
+                onClick={handleAttributeChange('stamina', 'plus')}
+                type='primary'
+              >
+                <PlusOutlined />
+              </Button>
+            </ButtonGroup>
+          </ResourceCard>
+          <ResourceCard>
+            <Typography.Text strong>Health</Typography.Text>
+            <StyledTitle level={4}>{health}</StyledTitle>
+            <ButtonGroup>
+              <Button
+                disabled={health === 0}
+                onClick={handleAttributeChange('health', 'minus')}
+                type='default'
+              >
+                <MinusOutlined />
+              </Button>
+              <Button
+                disabled={totalAttributes >= 64}
+                onClick={handleAttributeChange('health', 'plus')}
+                type='primary'
+              >
+                <PlusOutlined />
+              </Button>
+            </ButtonGroup>
+          </ResourceCard>
 
-      <Radio.Group
-        size='large'
-        onChange={handleAccessRightsChange}
-        defaultValue={accessRights}
-        buttonStyle='solid'
-      >
-        {accessRightOptions.map(({ key, Icon, label }) => (
-          <Radio.Button value={key}>
-            <Icon style={{ marginRight: 5 }} />
-            {label}
-          </Radio.Button>
-        ))}
-      </Radio.Group>
+          <ResourceCard>
+            <Typography.Text strong>Magicka</Typography.Text>
+            <StyledTitle level={4}>{magicka}</StyledTitle>
+            <ButtonGroup>
+              <Button
+                disabled={magicka === 0}
+                onClick={handleAttributeChange('magicka', 'minus')}
+                type='default'
+              >
+                <MinusOutlined />
+              </Button>
+              <Button
+                disabled={totalAttributes >= 64}
+                onClick={handleAttributeChange('magicka', 'plus')}
+                type='primary'
+              >
+                <PlusOutlined />
+              </Button>
+            </ButtonGroup>
+          </ResourceCard>
+        </Flex>
+      </StyledWideFlex>
 
       <Divider>Race</Divider>
       <CardContainer>

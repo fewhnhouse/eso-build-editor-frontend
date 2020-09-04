@@ -4,6 +4,8 @@ import { Typography, Input, Divider, Select } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
 
+const { TextArea } = Input
+
 const GeneralContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +23,10 @@ const StyledWideFlex = styled(Flex)`
 `
 
 const StyledInput = styled(Input)`
+  width: ${(props) => props.theme.widths.medium};
+`
+
+const StyledTextArea = styled(TextArea)`
   width: ${(props) => props.theme.widths.medium};
 `
 
@@ -72,7 +78,9 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
   const handleRaidNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch!({ type: 'SET_RAID_NAME', payload: { name: e.target.value } })
   }
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     dispatch!({
       type: 'SET_RAID_DESCRIPTION',
       payload: { description: e.target.value },
@@ -88,7 +96,6 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
 
   return (
     <>
-      <Divider>General Information</Divider>
       <GeneralContainer>
         <Flex direction='column' justify='space-around' align='center'>
           <StyledFlex
@@ -111,8 +118,8 @@ const RaidGeneral = ({ edit }: IRaidGeneralProps) => {
           >
             <Typography.Text strong>Description</Typography.Text>
 
-            <StyledInput
-              size='large'
+            <StyledTextArea
+              rows={4}
               value={description}
               onChange={handleDescriptionChange}
               placeholder='Type description...'
