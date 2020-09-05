@@ -110,7 +110,7 @@ const InnerList = ({ data, loading }: IUserDataProps) => {
             <ListItem
               actions={[
                 <ActionButton
-                  onClick={handleClick(`/editBuild/${group.id}/0`)}
+                  onClick={handleClick(`/editGroup/${group.id}/0`)}
                   size='small'
                   type='default'
                   key='list-edit'
@@ -118,7 +118,7 @@ const InnerList = ({ data, loading }: IUserDataProps) => {
                   Edit
                 </ActionButton>,
                 <ActionButton
-                  onClick={handleClick(`/builds/${group.id}`)}
+                  onClick={handleClick(`/groups/${group.id}`)}
                   size='small'
                   type='primary'
                   key='list-view'
