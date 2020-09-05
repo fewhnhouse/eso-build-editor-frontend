@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Typography, Input, Divider, Select } from 'antd'
+import { Typography, Input, Select } from 'antd'
 import Flex from '../../../components/Flex'
 import { RaidContext } from '../RaidStateContext'
 

@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Collapse, Empty, Spin } from 'antd'
 import { useQuery } from 'react-apollo'
-import { OWN_RAIDS } from '../../home/UserHomeCard'
 import { Redirect } from 'react-router-dom'
 import { applicationAreas } from '../general/RaidGeneral'
 import { IRaidState } from '../RaidStateContext'
 import SimpleCard from '../../../components/SimpleCard'
 import ErrorPage from '../../../components/ErrorPage'
+import { OWN_RAIDS } from '../../home/RaidList'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`

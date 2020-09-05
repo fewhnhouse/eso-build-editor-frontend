@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Collapse, Skeleton, Empty } from 'antd'
 import { useQuery } from 'react-apollo'
-import { BUILD_REVISIONS } from '../../home/UserHomeCard'
 import { IBuildRevision, IBuild } from '../BuildStateContext'
 import { Redirect } from 'react-router-dom'
 import SimpleCard from '../../../components/SimpleCard'
+import { BUILD_REVISIONS } from '../../home/BuildList'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`

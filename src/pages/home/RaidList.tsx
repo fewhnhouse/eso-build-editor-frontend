@@ -1,60 +1,45 @@
 import React, { useState } from 'react'
-import { List, Divider, Button } from 'antd'
-import styled from 'styled-components'
+import { Divider, Select } from 'antd'
 import { applicationAreas } from '../raid/general/RaidGeneral'
-import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import { Redirect } from 'react-router'
 import { TeamOutlined } from '@ant-design/icons'
+import {
+  StyledScrollbars,
+  StyledList,
+  ListItem,
+  ActionButton,
+  ListMeta,
+} from './StyledComponents'
+import { useQuery } from 'react-apollo'
+import gql from 'graphql-tag'
+import { titleCase } from '../raid/builds/BuildMenu'
+import ListWrapper from './ListWrapper'
 
-const StyledList = styled(List)`
-  background: white;
-  border-bottom-left-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
-  border-bottom-right-radius: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? '0px' : '10px'};
-`
+const { Option } = Select
 
-const StyledScrollbars = styled(Scrollbars)`
-  height: calc(100% - 120px);
-`
-
-const ActionButton = styled(Button)`
-  width: 50px;
-`
-
-const ListMeta = styled(List.Item.Meta)`
-  padding: ${(props) => props.theme.paddings.small};
-  text-align: start;
-`
-
-const ListItem = styled(List.Item)`
-  padding: 0;
-  margin: ${(props) => props.theme.margins.small};
-`
-
-interface IOwnerProps {
+interface IOwner {
   name: string
 }
 
-interface IBuildProps {
+interface IBuild {
   id: number
   name: string
   esoClass: string
   race: string
   applicationArea: string
-  owner: IOwnerProps
+  owner: IOwner
 }
 
 interface IRaidRoleProps {
-  builds: IBuildProps[]
+  builds: IBuild[]
 }
 
 interface IRaidProps {
   id: number
   name: string
   applicationArea: string
-  owner: IOwnerProps
+  owner: IOwner
   roles: IRaidRoleProps[]
 }
 
@@ -64,7 +49,121 @@ interface IUserDataProps {
   onCardClick?: any
 }
 
-const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
+export const OWN_RAIDS = gql`
+  query ownRaids(
+    $where: RaidWhereInput
+    $orderBy: RaidOrderByInput
+    $first: Int
+    $last: Int
+    $skip: Int
+    $after: String
+    $before: String
+  ) {
+    ownRaids(
+      where: $where
+      orderBy: $orderBy
+      first: $first
+      last: $last
+      skip: $skip
+      after: $after
+      before: $before
+    ) {
+      id
+      owner {
+        id
+        name
+      }
+      name
+      description
+      applicationArea
+      roles {
+        id
+        builds {
+          id
+        }
+      }
+    }
+  }
+`
+
+const RaidList = () => {
+  const [search, setSearch] = useState('')
+  const [selectedApplicationAreas, setSelectedApplicationAreas] = useState<
+    string[]
+  >([])
+  const [expanded, setExpanded] = useState(false)
+
+  const raidsQuery = useQuery(OWN_RAIDS, {
+    variables: {
+      where: {
+        AND: [
+          {
+            OR: [
+              { name_contains: search },
+              { name_contains: search.toLowerCase() },
+              { name_contains: search.toUpperCase() },
+              { name_contains: titleCase(search) },
+            ],
+          },
+          {
+            applicationArea_in: selectedApplicationAreas.length
+              ? selectedApplicationAreas
+              : applicationAreas.map((area) => area.key),
+          },
+        ],
+      },
+    },
+  })
+
+  const handleExpandChange = () => {
+    setExpanded((expanded) => !expanded)
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
+  const handleAppAreaChange = (applicationAreas: string[]) => {
+    setSelectedApplicationAreas(applicationAreas)
+  }
+
+  return (
+    <ListWrapper
+      placeholder='Search for Raids...'
+      expanded={expanded}
+      handleExpandChange={handleExpandChange}
+      search={search}
+      handleSearchChange={handleSearchChange}
+      InnerList={
+        <InnerList
+          loading={raidsQuery.loading}
+          data={
+            raidsQuery.data && raidsQuery.data.ownRaids
+              ? raidsQuery.data.ownRaids
+              : []
+          }
+        />
+      }
+    >
+      {expanded && (
+        <Select
+          mode='multiple'
+          style={{ width: '100%', marginTop: 10 }}
+          placeholder='Filter by Application Area...'
+          onChange={handleAppAreaChange}
+        >
+          {applicationAreas.map((area, index) => (
+            <Option value={area.key} key={area.key}>
+              {area.label}
+            </Option>
+          ))}
+        </Select>
+      )}
+    </ListWrapper>
+  )
+}
+
+const InnerList = ({ data, loading }: IUserDataProps) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const [path, setRedirect] = useState('')
 
@@ -130,4 +229,4 @@ const RaidCard = ({ data, loading, onCardClick }: IUserDataProps) => {
   )
 }
 
-export default RaidCard
+export default RaidList

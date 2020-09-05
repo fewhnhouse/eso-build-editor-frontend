@@ -1,63 +1,13 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Divider, Button, Avatar } from 'antd'
+import { Card, Spin, Divider, Avatar } from 'antd'
 import { useQuery } from 'react-apollo'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
-import { ITheme } from '../../components/theme'
 import { EditOutlined, SelectOutlined } from '@ant-design/icons'
 import { IBuildRevision } from '../build/BuildStateContext'
-
-const { Title } = Typography
-
-const Wrapper = styled(Flex)`
-  width: 100%;
-  margin-top: ${(props) => props.theme.margins.medium};
-  height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 130px)' : ''};
-`
-
-const GroupContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  overflow: auto;
-`
-
-const HeaderContainer = styled(Flex)`
-  padding: 0px 10px;
-`
-
-const Header = styled(Title)`
-  margin-bottom: 0px;
-`
-
-const StyledCard = styled(Card)`
-  min-width: 300px;
-  width: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile ? `calc(100% - 20px)` : '250px'};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 170px;
-  margin: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile
-      ? `${props.theme.margins.small}`
-      : `0px ${props.theme.margins.small}`};
-  text-align: start;
-`
-
-const Description = styled.p`
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: break-spaces;
-  margin: 0;
-`
+import Header from './Header'
+import { Wrapper, Container, StyledCard, Description } from './StyledComponents'
 
 export const BUILD_REVISIONS = gql`
   query buildRevisions(
@@ -111,10 +61,6 @@ const HorizontalBuildCards = () => {
     setRedirect(path)
   }
 
-  const handleAddClick = () => {
-    setRedirect(`/buildEditor/0`)
-  }
-
   return (
     <Wrapper
       isMobile={isMobile}
@@ -125,17 +71,9 @@ const HorizontalBuildCards = () => {
       {loading && <Spin />}
 
       {!isMobile && (
-        <>
-          <HeaderContainer fluid justify='space-between'>
-            <Header level={3}>Builds</Header>
-            <Button onClick={handleAddClick} size='large' type='primary'>
-              Create
-            </Button>
-          </HeaderContainer>
-          <Divider />
-        </>
+        <Header createPath='/buildEditor/0' allPath='/builds' title='Builds' />
       )}
-      <GroupContainer direction={isMobile ? 'column' : 'row'}>
+      <Container direction={isMobile ? 'column' : 'row'}>
         {data?.buildRevisions
           .filter((revision) => revision.builds.length)
           .map((revision) => revision.builds[0])
@@ -170,7 +108,7 @@ const HorizontalBuildCards = () => {
               </StyledCard>
             )
           })}
-      </GroupContainer>
+      </Container>
       {!isMobile && <Divider />}
     </Wrapper>
   )

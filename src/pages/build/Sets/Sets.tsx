@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Divider, Tabs, Empty } from 'antd'
+import { Tabs, Empty } from 'antd'
 import styled from 'styled-components'
 import Weapons from './Weapons'
 import Armor from './Armor'

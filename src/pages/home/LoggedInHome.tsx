@@ -2,12 +2,50 @@ import React from 'react'
 import styled from 'styled-components'
 import { Tabs } from 'antd'
 import Flex from '../../components/Flex'
-import UserHomeCard from './UserHomeCard'
 import Scrollbars from 'react-custom-scrollbars'
 import { useMediaQuery } from 'react-responsive'
 import UserGroupBar from './HorizontalGroupCards'
 import HorizontalBuildCards from './HorizontalBuildCards'
 import HorizontalRaidCards from './HorizontalRaidCards'
+import BuildList from './BuildList'
+import RaidList from './RaidList'
+import gql from 'graphql-tag'
+import GroupList from './GroupList'
+
+export const ME = gql`
+  query {
+    me {
+      id
+      name
+      builds {
+        id
+        owner {
+          id
+          name
+        }
+        name
+        esoClass
+        race
+        applicationArea
+      }
+      raids {
+        id
+        owner {
+          id
+          name
+        }
+        name
+        applicationArea
+        roles {
+          id
+          builds {
+            id
+          }
+        }
+      }
+    }
+  }
+`
 
 const { TabPane } = Tabs
 
@@ -63,15 +101,15 @@ export default () => {
           <MobileWrapper>
             <MobileTabs tabBarStyle={{ margin: '0 auto' }}>
               <StyledTabPane tab='Groups' key='1'>
-                <UserGroupBar />
+                <GroupList />
               </StyledTabPane>
               <StyledTabPane tab='Builds' key='2'>
                 <UserCardWrapper>
-                  <UserHomeCard isBuild />
+                  <BuildList />
                 </UserCardWrapper>
               </StyledTabPane>
               <StyledTabPane tab='Raids' key='3'>
-                <UserHomeCard isBuild={false} />
+                <RaidList />
               </StyledTabPane>
             </MobileTabs>
           </MobileWrapper>

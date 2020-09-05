@@ -5,7 +5,7 @@ import { useQuery, useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { notification, Modal, Button } from 'antd'
 import { build } from '../../../util/fragments'
-import { ME } from '../../home/UserHomeCard'
+import { ME } from '../../home/LoggedInHome'
 import {
   CREATE_BUILD,
   CREATE_SET_SELECTIONS,

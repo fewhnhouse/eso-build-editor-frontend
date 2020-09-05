@@ -1,6 +1,6 @@
 import { IRaidState, IRole } from './RaidStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
-import { ME } from '../home/UserHomeCard'
+import { ME } from '../home/LoggedInHome'
 
 export const handleEditSave = async (
   state: IRaidState,

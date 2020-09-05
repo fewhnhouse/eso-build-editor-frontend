@@ -1,6 +1,6 @@
 import { IGroupState, IGroupBuild } from './GroupStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
-import { ME } from '../home/UserHomeCard'
+import { ME } from '../home/LoggedInHome'
 
 export const handleEditSave = async (
   state: IGroupState,

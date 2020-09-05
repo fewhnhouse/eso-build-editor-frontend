@@ -1,63 +1,13 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Divider, Button } from 'antd'
+import { Card, Spin, Divider } from 'antd'
 import { useQuery } from 'react-apollo'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
-import { ITheme } from '../../components/theme'
 import { EditOutlined, SelectOutlined } from '@ant-design/icons'
 import { IRaid } from '../raid/RaidStateContext'
-
-const { Title } = Typography
-
-const Wrapper = styled(Flex)`
-  width: 100%;
-  margin-top: ${(props) => props.theme.margins.medium};
-  height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 130px)' : ''};
-`
-
-const GroupContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  overflow: auto;
-`
-
-const HeaderContainer = styled(Flex)`
-  padding: 0px 10px;
-`
-
-const Header = styled(Title)`
-  margin-bottom: 0px;
-`
-
-const StyledCard = styled(Card)`
-  min-width: 300px;
-  width: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile ? `calc(100% - 20px)` : '250px'};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 170px;
-  margin: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile
-      ? `${props.theme.margins.small}`
-      : `0px ${props.theme.margins.small}`};
-  text-align: start;
-`
-
-const Description = styled.p`
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: break-spaces;
-  margin: 0;
-`
+import { Wrapper, Container, StyledCard, Description } from './StyledComponents'
+import Header from './Header'
 
 export const OWN_RAIDS = gql`
   query ownRaids(
@@ -110,10 +60,6 @@ const HorizontalRaidCards = () => {
     setRedirect(path)
   }
 
-  const handleAddClick = () => {
-    setRedirect(`/raidEditor/0`)
-  }
-
   return (
     <Wrapper
       isMobile={isMobile}
@@ -123,17 +69,9 @@ const HorizontalRaidCards = () => {
     >
       {loading && <Spin />}
       {!isMobile && (
-        <>
-          <HeaderContainer fluid justify='space-between'>
-            <Header level={3}>Raids</Header>
-            <Button onClick={handleAddClick} size='large' type='primary'>
-              Create
-            </Button>
-          </HeaderContainer>
-          <Divider />
-        </>
+        <Header createPath='/raidEditor/0' allPath='/raids' title='Raids' />
       )}
-      <GroupContainer direction={isMobile ? 'column' : 'row'}>
+      <Container direction={isMobile ? 'column' : 'row'}>
         {data?.ownRaids.map((item) => {
           console.log(item)
           return (
@@ -160,7 +98,7 @@ const HorizontalRaidCards = () => {
             </StyledCard>
           )
         })}
-      </GroupContainer>
+      </Container>
       {!isMobile && <Divider />}
     </Wrapper>
   )

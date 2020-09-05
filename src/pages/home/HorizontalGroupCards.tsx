@@ -1,62 +1,13 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
 import gql from 'graphql-tag'
-import { Card, Spin, Typography, Divider, Button } from 'antd'
+import { Card, Spin, Divider } from 'antd'
 import { useQuery } from 'react-apollo'
 import { IGroupState } from '../group/GroupStateContext'
 import { Redirect } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
-import { ITheme } from '../../components/theme'
 import { EditOutlined, SelectOutlined } from '@ant-design/icons'
-
-const { Title } = Typography
-
-const UserGroupWrapper = styled(Flex)`
-  width: 100%;
-  margin-top: ${(props) => props.theme.margins.medium};
-  height: ${(props: { isMobile: boolean }) =>
-    props.isMobile ? 'calc(100vh - 130px)' : ''};
-`
-
-const GroupContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  overflow: auto;
-`
-
-const HeaderContainer = styled(Flex)`
-  padding: 0px 10px;
-`
-
-const Header = styled(Title)`
-  margin-bottom: 0px;
-`
-
-const UserGroup = styled(Card)`
-  width: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile ? `calc(100% - 20px)` : '250px'};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 170px;
-  margin: ${(props: { isMobile: boolean; theme: ITheme }) =>
-    props.isMobile
-      ? `${props.theme.margins.small}`
-      : `0px ${props.theme.margins.small}`};
-  text-align: start;
-`
-
-const Description = styled.p`
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: break-spaces;
-  margin: 0;
-`
+import Header from './Header'
+import { Wrapper, Container, StyledCard, Description } from './StyledComponents'
 
 export const OWN_GROUPS = gql`
   query OwnGroups(
@@ -101,12 +52,8 @@ const UserGroupBar = () => {
     setRedirect(path)
   }
 
-  const handleAddClick = () => {
-    setRedirect(`/groupEditor/0`)
-  }
-
   return (
-    <UserGroupWrapper
+    <Wrapper
       isMobile={isMobile}
       align='center'
       direction='column'
@@ -114,22 +61,14 @@ const UserGroupBar = () => {
     >
       {loading && <Spin />}
       {!isMobile && (
-        <>
-          <HeaderContainer fluid justify='space-between'>
-            <Header level={3}>Groups</Header>
-            <Button onClick={handleAddClick} size='large' type='primary'>
-              Create
-            </Button>
-          </HeaderContainer>
-          <Divider />
-        </>
+        <Header createPath='/groupEditor/0' allPath='/groups' title='Groups' />
       )}
-      <GroupContainer direction={isMobile ? 'column' : 'row'}>
+      <Container direction={isMobile ? 'column' : 'row'}>
         {data &&
           data.ownGroups &&
           data.ownGroups.map((ownGroup: IGroupState) => {
             return (
-              <UserGroup
+              <StyledCard
                 isMobile={isMobile}
                 actions={[
                   <EditOutlined
@@ -151,12 +90,12 @@ const UserGroupBar = () => {
                     <Description>{ownGroup.description}</Description>
                   }
                 ></Card.Meta>
-              </UserGroup>
+              </StyledCard>
             )
           })}
-      </GroupContainer>
+      </Container>
       {!isMobile && <Divider />}
-    </UserGroupWrapper>
+    </Wrapper>
   )
 }
 

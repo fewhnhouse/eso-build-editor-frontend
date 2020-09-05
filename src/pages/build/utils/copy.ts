@@ -1,6 +1,6 @@
 import { ISetSelection, IBuild, IBuildRevision } from '../BuildStateContext'
 import { MutationFunctionOptions, ExecutionResult } from 'react-apollo'
-import { ME } from '../../home/UserHomeCard'
+import { ME } from '../../home/LoggedInHome'
 
 export const handleCopy = async (
   createSkillSelections: (
