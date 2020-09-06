@@ -258,7 +258,7 @@ export const handleCreateSave = async (
   if (build?.data?.createBuild?.id) {
     await createBuildRevision({
       variables: {
-        data: { builds: { connect: [{ id: build?.data?.createBuild?.id }] } },
+        data: { builds: { connect: [{ id: build.data.createBuild.id }] } },
       },
     })
     return build

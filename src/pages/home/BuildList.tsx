@@ -13,9 +13,9 @@ import {
 } from './StyledComponents'
 import { classes, races } from '../build/RaceAndClass/data'
 import { useQuery } from 'react-apollo'
-import gql from 'graphql-tag'
 import { titleCase } from '../raid/builds/BuildMenu'
 import ListWrapper from './ListWrapper'
+import { BUILD_REVISIONS } from './HorizontalBuildCards'
 
 const { Option } = Select
 
@@ -23,42 +23,6 @@ interface IUserDataProps {
   data: IBuild[]
   loading: boolean
 }
-
-export const BUILD_REVISIONS = gql`
-  query buildRevisions(
-    $where: BuildRevisionWhereInput
-    $orderBy: BuildRevisionOrderByInput
-    $first: Int
-    $last: Int
-    $skip: Int
-    $after: String
-    $before: String
-  ) {
-    buildRevisions(
-      where: $where
-      orderBy: $orderBy
-      first: $first
-      last: $last
-      skip: $skip
-      after: $after
-      before: $before
-    ) {
-      id
-      builds(first: 1, orderBy: updatedAt_DESC) {
-        id
-        owner {
-          id
-          name
-        }
-        name
-        esoClass
-        race
-        description
-        applicationArea
-      }
-    }
-  }
-`
 
 const BuildList = () => {
   const [search, setSearch] = useState('')
@@ -119,11 +83,9 @@ const BuildList = () => {
         <InnerList
           loading={buildRevisionsQuery.loading}
           data={
-            buildRevisionsQuery.data && buildRevisionsQuery.data.buildRevisions
-              ? buildRevisionsQuery.data.buildRevisions
-                  .filter((revision: IBuildRevision) => revision.builds.length)
-                  .map((revision: IBuildRevision) => revision.builds[0])
-              : []
+            buildRevisionsQuery?.data?.buildRevisions
+              .filter((revision: IBuildRevision) => revision.builds.length)
+              .map((revision: IBuildRevision) => revision.builds[0]) ?? []
           }
         />
       }

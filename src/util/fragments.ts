@@ -249,6 +249,9 @@ export const variableRaid = (buildFragment: any) => gql`
       id
     }
     applicationArea
+    revision {
+      id
+    }
     roles {
       id
       name
@@ -275,6 +278,9 @@ export const raid = gql`
       id
     }
     applicationArea
+    revision {
+      id
+    }
     roles {
       id
       name

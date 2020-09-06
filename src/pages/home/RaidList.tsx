@@ -12,9 +12,10 @@ import {
   ListMeta,
 } from './StyledComponents'
 import { useQuery } from 'react-apollo'
-import gql from 'graphql-tag'
 import { titleCase } from '../raid/builds/BuildMenu'
 import ListWrapper from './ListWrapper'
+import { IRaidRevision } from '../raid/RaidStateContext'
+import { RAID_REVISIONS } from './HorizontalRaidCards'
 
 const { Option } = Select
 
@@ -49,43 +50,6 @@ interface IUserDataProps {
   onCardClick?: any
 }
 
-export const OWN_RAIDS = gql`
-  query ownRaids(
-    $where: RaidWhereInput
-    $orderBy: RaidOrderByInput
-    $first: Int
-    $last: Int
-    $skip: Int
-    $after: String
-    $before: String
-  ) {
-    ownRaids(
-      where: $where
-      orderBy: $orderBy
-      first: $first
-      last: $last
-      skip: $skip
-      after: $after
-      before: $before
-    ) {
-      id
-      owner {
-        id
-        name
-      }
-      name
-      description
-      applicationArea
-      roles {
-        id
-        builds {
-          id
-        }
-      }
-    }
-  }
-`
-
 const RaidList = () => {
   const [search, setSearch] = useState('')
   const [selectedApplicationAreas, setSelectedApplicationAreas] = useState<
@@ -93,24 +57,26 @@ const RaidList = () => {
   >([])
   const [expanded, setExpanded] = useState(false)
 
-  const raidsQuery = useQuery(OWN_RAIDS, {
+  const raidRevisionsQuery = useQuery(RAID_REVISIONS, {
     variables: {
       where: {
-        AND: [
-          {
-            OR: [
-              { name_contains: search },
-              { name_contains: search.toLowerCase() },
-              { name_contains: search.toUpperCase() },
-              { name_contains: titleCase(search) },
-            ],
-          },
-          {
-            applicationArea_in: selectedApplicationAreas.length
-              ? selectedApplicationAreas
-              : applicationAreas.map((area) => area.key),
-          },
-        ],
+        raids_some: {
+          AND: [
+            {
+              OR: [
+                { name_contains: search },
+                { name_contains: search.toLowerCase() },
+                { name_contains: search.toUpperCase() },
+                { name_contains: titleCase(search) },
+              ],
+            },
+            {
+              applicationArea_in: selectedApplicationAreas.length
+                ? selectedApplicationAreas
+                : applicationAreas.map((area) => area.key),
+            },
+          ],
+        },
       },
     },
   })
@@ -136,11 +102,11 @@ const RaidList = () => {
       handleSearchChange={handleSearchChange}
       InnerList={
         <InnerList
-          loading={raidsQuery.loading}
+          loading={raidRevisionsQuery.loading}
           data={
-            raidsQuery.data && raidsQuery.data.ownRaids
-              ? raidsQuery.data.ownRaids
-              : []
+            raidRevisionsQuery?.data?.raidRevisions
+              .filter((revision: IRaidRevision) => revision.raids.length)
+              .map((revision: IRaidRevision) => revision.raids[0]) ?? []
           }
         />
       }

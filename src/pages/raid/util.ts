@@ -6,7 +6,7 @@ export const handleEditSave = async (
   state: IRaidState,
   updateRaid: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>,
+  ) => Promise<ExecutionResult<any>>,
   initialRoles: IRole[]
 ) => {
   const {
@@ -57,11 +57,12 @@ export const handleEditSave = async (
     },
   })
 }
-export const handleCreateSave = async (
+
+export const createNewRaid = async (
   state: IRaidState,
   createRaid: (
     options?: MutationFunctionOptions<any, any> | undefined
-  ) => Promise<void | ExecutionResult<any>>
+  ) => Promise<ExecutionResult<any>>
 ) => {
   const {
     name,
@@ -79,7 +80,7 @@ export const handleCreateSave = async (
     ...canEdit.filter((editId) => !canView.includes(editId)),
   ]
 
-  await createRaid({
+  const raid = await createRaid({
     variables: {
       data: {
         name,
@@ -103,17 +104,41 @@ export const handleCreateSave = async (
     },
     refetchQueries: [{ query: ME }],
   })
+  return raid
+}
+
+export const handleCreateSave = async (
+  state: IRaidState,
+  createRaid: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<ExecutionResult<any>>,
+  createRaidRevision: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<ExecutionResult<any>>
+) => {
+  const raid = await createNewRaid(state, createRaid)
+  if (raid?.data?.createRaid?.id) {
+    await createRaidRevision({
+      variables: {
+        data: { raids: { connect: [{ id: raid.data.createRaid.id }] } },
+      },
+    })
+    return raid
+  }
 }
 
 export const handleCopy = async (
   createRaid: (
     options?: MutationFunctionOptions<any, any> | undefined
   ) => Promise<void | ExecutionResult<any>>,
+  createRaidRevision: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<void | ExecutionResult<any>>,
   raid: IRaidState
 ) => {
   const { name, description, applicationArea, published, roles } = raid
 
-  await createRaid({
+  const createdRaid = await createRaid({
     variables: {
       data: {
         name,
@@ -135,4 +160,29 @@ export const handleCopy = async (
     },
     refetchQueries: [{ query: ME }],
   })
+  if (createdRaid && createdRaid.data && createdRaid.data.createRaid.id) {
+    await createRaidRevision({
+      variables: {
+        data: { raids: { connect: { id: createdRaid.data.createRaid.id } } },
+      },
+    })
+    return raid
+  }
+}
+
+export const handleAddRevision = async (
+  state: IRaidState,
+  createRaid: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<ExecutionResult<any>>,
+  addRaidToRevision: (
+    options?: MutationFunctionOptions<any, any> | undefined
+  ) => Promise<ExecutionResult<any>>
+) => {
+  const raid = await createNewRaid(state, createRaid)
+  if (raid && raid.data && state.revision) {
+    await addRaidToRevision({
+      variables: { id: state.revision.id, raidId: raid.data.createRaid.id },
+    })
+  }
 }

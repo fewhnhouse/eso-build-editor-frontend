@@ -75,10 +75,9 @@ const HorizontalBuildCards = () => {
       )}
       <Container direction={isMobile ? 'column' : 'row'}>
         {data?.buildRevisions
-          .filter((revision) => revision.builds.length)
-          .map((revision) => revision.builds[0])
+          .filter((revision: IBuildRevision) => revision.builds.length)
+          .map((revision: IBuildRevision) => revision.builds[0])
           .map((item) => {
-            console.log(item)
             return (
               <StyledCard
                 isMobile={isMobile}

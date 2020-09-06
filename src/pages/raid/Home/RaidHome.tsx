@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import Flex from '../../../components/Flex'
 import { Collapse, Empty, Spin } from 'antd'
 import { useQuery } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 import { applicationAreas } from '../general/RaidGeneral'
-import { IRaidState } from '../RaidStateContext'
+import { IRaid, IRaidRevision } from '../RaidStateContext'
 import SimpleCard from '../../../components/SimpleCard'
-import ErrorPage from '../../../components/ErrorPage'
-import { OWN_RAIDS } from '../../home/RaidList'
+import { RAID_REVISIONS } from '../../home/HorizontalRaidCards'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`
@@ -25,12 +24,20 @@ const StyledPanel = styled(Panel)`
 `
 
 export default () => {
-  const { loading, data, error } = useQuery(OWN_RAIDS)
+  const { loading, data } = useQuery(RAID_REVISIONS)
 
   const [activeKeys, setActiveKeys] = useState<string[]>([])
   const [redirect, setRedirect] = useState('')
 
-  const raids: IRaidState[] = data?.ownRaids ?? []
+  const raids: IRaid[] = useMemo(
+    () =>
+      data?.raidRevisions
+        ?.map((revision: IRaidRevision) =>
+          revision.raids.length ? revision.raids[0] : []
+        )
+        .flat() ?? [],
+    [data]
+  )
 
   useEffect(() => {
     if (raids) {
@@ -50,10 +57,6 @@ export default () => {
 
   if (redirect) {
     return <Redirect push to={redirect} />
-  }
-
-  if (error) {
-    return <ErrorPage status='404' />
   }
 
   return (
