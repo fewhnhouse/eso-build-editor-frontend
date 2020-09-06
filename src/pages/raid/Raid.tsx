@@ -161,8 +161,8 @@ const Raid = ({
 
   useEffect(() => {
     if (
-      createRaidResult?.data?.createRaid &&
-      createRaidRevisionResult?.data?.createRaidRevision
+      createRaidResult.data?.createRaid &&
+      createRaidRevisionResult.data?.createRaidRevision
     ) {
       localStorage.removeItem('raidState')
 
@@ -197,7 +197,12 @@ const Raid = ({
       )
       setRedirect(createRaidResult.data.createRaid.id)
     }
-  }, [createRaidResult.data, updateRaidResult.data, addRaidToRevisionResult])
+  }, [
+    createRaidResult.data,
+    updateRaidResult.data,
+    addRaidToRevisionResult,
+    createRaidRevisionResult.data,
+  ])
 
   const handleSave = async () => {
     if (edit) {

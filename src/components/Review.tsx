@@ -143,7 +143,7 @@ const Review = ({
       ]
       return (
         <>
-          <Container isMobile={isMobile}>
+          <Container key='reviewContainer' isMobile={isMobile}>
             {isBuild ? (
               <BuildReviewDetails loadedData={data as IBuildState} />
             ) : (
@@ -151,6 +151,7 @@ const Review = ({
             )}
           </Container>
           <Footer
+            key='footer'
             information={information}
             onCopy={onCopy}
             onEdit={onEdit}

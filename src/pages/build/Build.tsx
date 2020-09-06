@@ -276,7 +276,12 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
       )
       setRedirect(updateBuildResult.data.updateBuild.id)
     }
-  }, [createBuildResult.data, updateBuildResult.data, addBuildToRevisionResult])
+  }, [
+    createBuildResult.data,
+    updateBuildResult.data,
+    addBuildToRevisionResult,
+    createBuildRevisionResult.data,
+  ])
 
   const handleSave = async () => {
     if (edit) {
