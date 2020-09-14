@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import styled from 'styled-components'
-import { Layout, Button, Steps, Tooltip, notification } from 'antd'
+import { Layout, Button, Steps, Tooltip, notification, Modal } from 'antd'
 import { Redirect } from 'react-router'
 import RaidGeneral from './general/RaidGeneral'
 import { RaidContext, raidReducer, IRole } from './RaidStateContext'
@@ -8,14 +8,21 @@ import Builds from './builds/Builds'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import RaidReview from './Review/RaidReview'
-import { handleCreateSave, handleEditSave } from './util'
+import { handleCreateSave, handleEditSave, handleAddRevision } from './util'
 import { raid } from '../../util/fragments'
 import { createNotification } from '../../util/notification'
-import { LeftOutlined, SaveOutlined, RightOutlined } from '@ant-design/icons'
+import {
+  LeftOutlined,
+  SaveOutlined,
+  RightOutlined,
+  UnlockOutlined,
+  LockOutlined,
+} from '@ant-design/icons'
 
 const { Footer, Content } = Layout
 const { Step } = Steps
 const ButtonGroup = Button.Group
+const { confirm } = Modal
 
 const Container = styled(Content)`
   display: flex;
@@ -65,6 +72,22 @@ const UPDATE_RAID = gql`
   ${raid}
 `
 
+export const CREATE_RAID_REVISION = gql`
+  mutation createRaidRevision($data: RaidRevisionCreateInput!) {
+    createRaidRevision(data: $data) {
+      id
+    }
+  }
+`
+
+export const ADD_RAID_TO_REVISION = gql`
+  mutation addRaidToRevision($id: ID, $raidId: ID) {
+    addRaidToRevision(id: $id, raidId: $raidId) {
+      id
+    }
+  }
+`
+
 interface IRaidProps {
   raid: any
   pageIndex: number
@@ -95,11 +118,52 @@ const Raid = ({
 
   const [createRaid, createRaidResult] = useMutation<any, any>(CREATE_RAID)
 
+  const [createRaidRevision, createRaidRevisionResult] = useMutation<any, any>(
+    CREATE_RAID_REVISION
+  )
+  const [addRaidToRevision, addRaidToRevisionResult] = useMutation<any, any>(
+    ADD_RAID_TO_REVISION
+  )
+
   const isDisabled =
     (tab === 0 && state.name === '') || (tab === 1 && state.roles.length <= 0)
 
+  const showEditConfirm = () => {
+    confirm({
+      title: 'Do you want to update the existing revision or create a new one?',
+      content:
+        'By creating a new revision, you can still revisit the state of this raid before your changes later.',
+      okText: 'Create Revision',
+      okType: 'primary',
+      cancelText: 'Update Revision',
+      onOk: async () => {
+        try {
+          await handleAddRevision(state, createRaid, addRaidToRevision)
+        } catch (e) {
+          notification.error({
+            message: 'Build update failed',
+            description: 'Your build could not be saved. Try again later.',
+          })
+        }
+      },
+      onCancel: async () => {
+        try {
+          await handleEditSave(state, updateRaid, initialRoles)
+        } catch (e) {
+          notification.error({
+            message: 'Build update failed',
+            description: 'Your build could not be saved. Try again later.',
+          })
+        }
+      },
+    })
+  }
+
   useEffect(() => {
-    if (createRaidResult.data && createRaidResult.data.createRaid) {
+    if (
+      createRaidResult.data?.createRaid &&
+      createRaidRevisionResult.data?.createRaidRevision
+    ) {
       localStorage.removeItem('raidState')
 
       notification.success(
@@ -112,7 +176,7 @@ const Raid = ({
       )
 
       setRedirect(createRaidResult.data.createRaid.id)
-    } else if (updateRaidResult.data && updateRaidResult.data.updateRaid) {
+    } else if (updateRaidResult.data?.updateRaid) {
       notification.success(
         createNotification(
           'Raid update successful',
@@ -122,23 +186,30 @@ const Raid = ({
         )
       )
       setRedirect(updateRaidResult.data.updateRaid.id)
+    } else if (createRaidResult.data && addRaidToRevisionResult.data) {
+      notification.success(
+        createNotification(
+          'Raid Revision creation successful',
+          'Your raid revision was successfully created. You can now view it and share it with others!',
+          createRaidResult.data.createRaid.id,
+          'raids'
+        )
+      )
+      setRedirect(createRaidResult.data.createRaid.id)
     }
-  }, [createRaidResult.data, updateRaidResult.data])
+  }, [
+    createRaidResult.data,
+    updateRaidResult.data,
+    addRaidToRevisionResult,
+    createRaidRevisionResult.data,
+  ])
 
   const handleSave = async () => {
     if (edit) {
-      try {
-        await handleEditSave(state, updateRaid, initialRoles)
-      } catch (e) {
-        console.error(e)
-        notification.error({
-          message: 'Raid Update failed',
-          description: 'Your raid could not be updated. Try again later.',
-        })
-      }
+      showEditConfirm()
     } else {
       try {
-        await handleCreateSave(state, createRaid)
+        await handleCreateSave(state, createRaid, createRaidRevision)
       } catch (e) {
         console.error(e)
         notification.error({
@@ -224,7 +295,7 @@ const Raid = ({
               <Button
                 disabled={publishDisabled}
                 onClick={handlePrivateChange}
-                icon={state!.published ? 'unlock' : 'lock'}
+                icon={state!.published ? <UnlockOutlined /> : <LockOutlined />}
               />
             </Tooltip>
           )}

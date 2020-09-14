@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo'
 import { IBuildRevision, IBuild } from '../BuildStateContext'
 import { Redirect } from 'react-router-dom'
 import SimpleCard from '../../../components/SimpleCard'
-import { BUILD_REVISIONS } from '../../home/BuildList'
+import { BUILD_REVISIONS } from '../../home/HorizontalBuildCards'
 
 const { Panel } = Collapse
 const Container = styled(Flex)`

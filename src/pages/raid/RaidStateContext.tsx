@@ -8,6 +8,11 @@ export interface ISlot {
   index: number
 }
 
+export interface IRaidRevision {
+  id?: string
+  raids: IRaid[]
+}
+
 export interface IRaid {
   id?: string
   owner?: {
@@ -22,6 +27,7 @@ export interface IRaid {
   published: boolean
   accessRights: AccessRights
   roles: IRole[]
+  revision?: IRaidRevision
 }
 export interface IRaidState extends IRaid {
   canEdit: string[]

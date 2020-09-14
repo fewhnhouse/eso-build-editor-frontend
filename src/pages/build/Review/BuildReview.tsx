@@ -52,8 +52,8 @@ const DELETE_BUILD = gql`
 `
 
 const DELETE_REVISION = gql`
-  mutation deleteRevision($id: ID!) {
-    deleteRevision(id: $id) {
+  mutation deleteBuildRevision($id: ID!) {
+    deleteBuildRevision(id: $id) {
       id
     }
   }
@@ -61,7 +61,6 @@ const DELETE_REVISION = gql`
 
 const BuildReview = ({ match, local }: IBuildReview) => {
   const { id } = match.params
-  console.log(id)
   const [saved, setSaved] = useState(false)
   const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [redirect, setRedirect] = useState('')
@@ -113,7 +112,9 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     if (deleteResult.data || deleteRevisionResult.data) {
       notification.success({
         message: 'Build Deletion',
-        description: 'Build successfully deleted.',
+        description: deleteRevisionResult.data
+          ? 'All build revisions successfully deleted.'
+          : 'Build revision successfully deleted.',
       })
       setRedirect(`/`)
     } else if (deleteResult.error || deleteRevisionResult.error) {
@@ -147,6 +148,10 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     setDeleteModalVisible(true)
   }
 
+  const handleCancelDelete = () => {
+    setDeleteModalVisible(false)
+  }
+
   const handleCopyClick = async () => {
     try {
       await handleCopy(
@@ -166,13 +171,12 @@ const BuildReview = ({ match, local }: IBuildReview) => {
     }
   }
 
-  const handleCancelDelete = () => {
-    setDeleteModalVisible(false)
-  }
-
   const handleDeleteAll = async () => {
     try {
-      await deleteRevisionMutation({ variables: { id } })
+      await deleteRevisionMutation({
+        variables: { id },
+        refetchQueries: [{ query: ME }],
+      })
     } catch (e) {
       notification.error({
         message: 'Build deletion failed',
@@ -183,7 +187,10 @@ const BuildReview = ({ match, local }: IBuildReview) => {
 
   const handleDeleteRevision = async () => {
     try {
-      await deleteMutation({ variables: { id } })
+      await deleteMutation({
+        variables: { id },
+        refetchQueries: [{ query: ME }],
+      })
     } catch (e) {
       notification.error({
         message: 'Build deletion failed',

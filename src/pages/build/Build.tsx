@@ -8,15 +8,7 @@ import {
   IBuildState,
 } from './BuildStateContext'
 import { Redirect } from 'react-router'
-import {
-  Layout,
-  Button,
-  Steps,
-  // message,
-  Tooltip,
-  notification,
-  Modal,
-} from 'antd'
+import { Layout, Button, Steps, Tooltip, notification, Modal } from 'antd'
 import styled from 'styled-components'
 import Consumables from './consumables/Consumables'
 import Sets from './Sets/Sets'
@@ -250,9 +242,8 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
 
   useEffect(() => {
     if (
-      createBuildResult.data &&
-      createBuildResult.data.createBuild &&
-      createBuildResult.data
+      createBuildResult.data?.createBuild &&
+      createBuildRevisionResult.data?.createBuildRevision
     ) {
       localStorage.removeItem('buildState')
       notification.success(
@@ -264,10 +255,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         )
       )
       setRedirect(createBuildResult.data.createBuild.id)
-    } else if (
-      (updateBuildResult.data && updateBuildResult.data.updateBuild) ||
-      (createBuildResult.data && addBuildToRevisionResult.data)
-    ) {
+    } else if (updateBuildResult.data?.updateBuild) {
       notification.success(
         createNotification(
           'Build update successful.',
@@ -277,12 +265,22 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
         )
       )
       setRedirect(updateBuildResult.data.updateBuild.id)
+    } else if (createBuildResult.data && addBuildToRevisionResult.data) {
+      notification.success(
+        createNotification(
+          'Build Revision creation successful.',
+          'Your raid revision was successfully created. You can now view it and share it with others!',
+          createBuildResult.data.createBuild.id,
+          'builds'
+        )
+      )
+      setRedirect(updateBuildResult.data.updateBuild.id)
     }
   }, [
     createBuildResult.data,
     updateBuildResult.data,
-    createBuildRevisionResult,
     addBuildToRevisionResult,
+    createBuildRevisionResult.data,
   ])
 
   const handleSave = async () => {

@@ -109,7 +109,7 @@ export default ({
 
       {(owner && owner.id) === (me && me.id) && (
         <Flex direction='row'>
-          {type === 'build' && (
+          {(type === 'build' || type === 'raid') && (
             <ActionButton
               onClick={handleRevisionOpen}
               loading={loading}
@@ -159,14 +159,15 @@ export default ({
           </ActionButton>
         </Flex>
       )}
-      {type === 'build' && (state as IBuildState).revision && (
-        <RevisionDrawer
-          //@ts-ignore
-          revisionId={(state as IBuildState).revision.id}
-          visible={drawerVisible}
-          onClose={handleClose}
-        />
-      )}
+      {(type === 'build' || type === 'raid') &&
+        (state as IBuildState | IRaidState).revision && (
+          <RevisionDrawer
+            //@ts-ignore
+            revisionId={(state as IBuildState | IRaidState).revision.id}
+            visible={drawerVisible}
+            onClose={handleClose}
+          />
+        )}
     </StyledFooter>
   )
 }
