@@ -79,31 +79,31 @@ export default () => {
   const [searchText, setSearchText] = useState('')
   const [remoteBuilds, setRemoteBuilds] = useState<IBuild[]>([])
   // const [, dispatch] = useContext(RaidContext);
-  const { loading, data } = useQuery<{ buildRevisions: IBuildRevision[] }, {}>(
-    DETAILED_BUILD_REVISIONS,
-    {
-      variables: {
-        where: {
-          builds_some: {
-            AND: [
-              {
-                OR: [
-                  { name_contains: searchText },
-                  { name_contains: searchText.toLowerCase() },
-                  { name_contains: searchText.toUpperCase() },
-                  { name_contains: titleCase(searchText) },
-                ],
-              },
+  const { loading, data } = useQuery<
+    { buildRevisions: IBuildRevision[] },
+    unknown
+  >(DETAILED_BUILD_REVISIONS, {
+    variables: {
+      where: {
+        builds_some: {
+          AND: [
+            {
+              OR: [
+                { name_contains: searchText },
+                { name_contains: searchText.toLowerCase() },
+                { name_contains: searchText.toUpperCase() },
+                { name_contains: titleCase(searchText) },
+              ],
+            },
 
-              {
-                esoClass: currentClass,
-              },
-            ],
-          },
+            {
+              esoClass: currentClass,
+            },
+          ],
         },
       },
-    }
-  )
+    },
+  })
 
   useEffect(() => {
     if (data && data.buildRevisions) {

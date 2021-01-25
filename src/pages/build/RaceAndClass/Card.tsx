@@ -64,13 +64,10 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
     handleClick()
   }
 
-  const cancel = () => {}
-
   return !selected && state!.esoClass !== '' && type === 'SET_CLASS' ? (
     <Popconfirm
       title='Are you sure you want to swap classes? This will reset your class skills.'
       onConfirm={confirm}
-      onCancel={cancel}
       okText='Yes'
       cancelText='No'
     >

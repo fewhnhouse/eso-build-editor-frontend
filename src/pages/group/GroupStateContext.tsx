@@ -2,17 +2,6 @@ import React from 'react'
 import { generalReducer } from '../group/reducers/generalReducer'
 import { AccessRights, IBuild } from '../build/BuildStateContext'
 
-interface IAssignedRole {
-  build: string
-  priority: string
-}
-
-interface IGroupMember {
-  memberId?: string
-  memberName: string
-  assignedRoles: IAssignedRole[]
-}
-
 export interface IGroupBuild {
   id?: string
   build: IBuild

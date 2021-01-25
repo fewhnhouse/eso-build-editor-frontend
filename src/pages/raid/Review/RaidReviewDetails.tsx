@@ -160,7 +160,10 @@ const RaidReviewDetails = ({ loadedData, local }: IRaidReviewDetailsProps) => {
                   <CardList direction='column' justify='space-around'>
                     {role.builds.map((build, buildIndex) => {
                       return (
-                        <div onClick={handleBuildClick(roleIndex, buildIndex)}>
+                        <div
+                          key={build.id}
+                          onClick={handleBuildClick(roleIndex, buildIndex)}
+                        >
                           <BuildCard
                             item={build.build}
                             draggable={false}

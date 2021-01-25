@@ -177,6 +177,7 @@ export default ({
         (state as IBuildState | IRaidState).revision && (
           <RevisionDrawer
             isBuild={type === 'build'}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
             revisionId={(state as IBuildState | IRaidState).revision.id}
             visible={drawerVisible}

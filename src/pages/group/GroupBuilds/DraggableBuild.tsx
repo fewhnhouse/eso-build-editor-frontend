@@ -4,21 +4,29 @@ import styled from 'styled-components'
 import { animated } from 'react-spring'
 import { useDrag } from 'react-dnd'
 import { IBuild } from '../../build/BuildStateContext'
+import Flex from '../../../components/Flex'
 
 const Description = styled.p`
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: break-spaces;
+  white-space: nowrap;
   margin: 0;
+  width: 100%;
+  color: #a7a1a1;
+`
+
+const Title = styled.h4`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 `
 
 const StyledCard = styled(Card)`
   text-align: left;
   width: ${(props: { width: string }) => props.width};
-  height: 100px;
+  min-width: 200px;
+  height: 75px;
 `
 
 interface IDraggableRaidProps {
@@ -52,16 +60,27 @@ export default ({
         ...style,
       }}
     >
-      <StyledCard width={customWidth} key={build.id} hoverable>
-        <Card.Meta
-          avatar={
-            <Avatar
-              src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
-            />
-          }
-          title={build.name}
-          description={<Description>{build.description}</Description>}
+      <StyledCard
+        bodyStyle={{
+          padding: 12,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        width={customWidth}
+        key={build.id}
+        hoverable
+      >
+        <Avatar
+          style={{ marginRight: 8 }}
+          size='small'
+          src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
         />
+        <Flex direction='column' style={{ width: 'calc(100% - 40px)' }}>
+          <Title title={build.name}>{build.name}</Title>
+          <Description title={build.description}>
+            {build.description || 'No Description'}
+          </Description>
+        </Flex>
       </StyledCard>
     </animated.div>
   )

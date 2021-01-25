@@ -41,10 +41,9 @@ const GET_MUNDUS_STONES = gql`
   }
 `
 export default ({ context }: { context: React.Context<any> }) => {
-  const { data, loading, error } = useQuery<
-    { mundusStones: IMundusData[] },
-    {}
-  >(GET_MUNDUS_STONES)
+  const { data, loading, error } = useQuery<{ mundusStones: IMundusData[] }>(
+    GET_MUNDUS_STONES
+  )
 
   if (loading) {
     return (

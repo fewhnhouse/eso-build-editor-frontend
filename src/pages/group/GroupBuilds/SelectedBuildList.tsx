@@ -20,7 +20,6 @@ const StyledFlex = styled(Flex)`
 `
 const DropContainer = styled.div`
   width: 100%;
-  height: 120px;
 `
 
 const RoleDropContainer = styled.div`
@@ -90,7 +89,7 @@ export default ({ dropType, dispatchType }: IBuildsListProps) => {
             <DropContainer>
               <RoleDropContainer ref={drop} canDrop={canDrop}>
                 {currentClassBuilds.length ? (
-                  <StyledFlex>
+                  <StyledFlex wrap>
                     {currentClassBuilds.map((groupBuild) => (
                       <DraggableBuild
                         customWidth='200px'

@@ -12,7 +12,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { withRouter } from 'react-router'
 import { LoginContext } from '../App'
 import Flex from './Flex'
 import { RESEND_VERIFICATION } from './AppContainer'
@@ -134,9 +134,6 @@ const openNotification = (resendMutation: any) => {
   })
 }
 
-interface LoginFormProps extends RouteComponentProps<any> {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
-}
 const LoginForm = () => {
   const [register, setRegister] = useState(false)
   const [form] = useForm()

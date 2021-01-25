@@ -18,7 +18,7 @@ export interface FlexProps {
     | 'space-around'
     | 'space-between'
   fluid?: boolean
-  style?: object
+  style?: React.CSSProperties
   wrap?: boolean
   children?: React.ReactNode | React.ReactNode[]
   className?: string

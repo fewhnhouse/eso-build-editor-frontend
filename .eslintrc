@@ -18,6 +18,7 @@
   "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
     "max-lines": ["warn", 200],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/display-name": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/ban-ts-ignore": "off",

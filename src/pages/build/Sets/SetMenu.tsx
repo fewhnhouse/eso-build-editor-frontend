@@ -143,7 +143,7 @@ interface IMenuProps {
   collapsed: boolean
   collapsable?: boolean
   context: React.Context<any>
-  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+  setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const setTypes = [
@@ -234,7 +234,7 @@ export default ({
     setSelectedWeights(weight)
   }
   const handleIconClick = (collapse: boolean) => () => {
-    setCollapsed(collapse)
+    setCollapsed && setCollapsed(collapse)
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -386,7 +386,7 @@ const SetList = ({
     if (isMobile) {
       setRedirect(set.id || '')
     } else {
-      setCollapsed(true)
+      setCollapsed && setCollapsed(true)
       dispatch!({ type: 'SET_ITEMSET', payload: { selectedSet: set } })
     }
   }

@@ -109,7 +109,7 @@ export default () => {
     return <Spin />
   } else if (glyphQuery.error || traitQuery.error) {
     console.error(glyphQuery.error || traitQuery.error)
-    return <div>"Error"</div>
+    return <div>Error</div>
   } else if (glyphQuery.data && traitQuery.data) {
     const onChange = (e: RadioChangeEvent) => {
       dispatch!({
@@ -225,8 +225,9 @@ export default () => {
                       ? traitBigIndividual
                       : traitSmallIndividual
                   ) ? (
-                    piece.pieces.map((item) => (
+                    piece.pieces.map((item, index) => (
                       <StyledSelectWithTitle
+                        key={index}
                         value={
                           mode.type === 'selectedGlyphs'
                             ? item.value && item.value.glyph

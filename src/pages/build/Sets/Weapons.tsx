@@ -134,7 +134,7 @@ export default ({ bar }: { bar: 'frontbar' | 'backbar' }) => {
         armorGlyphQuery.error ||
         armorTraitQuery.error
     )
-    return <div>"Error"</div>
+    return <div>Error</div>
   } else if (
     weaponGlyphQuery.data &&
     weaponTraitQuery.data &&

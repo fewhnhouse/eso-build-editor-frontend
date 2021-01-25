@@ -17,25 +17,28 @@ interface ISelectPayload {
 
 export const setReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
-    case 'SET_SETS':
+    case 'SET_SETS': {
       const { sets } = action.payload
       return {
         ...state,
         sets,
       }
-    case 'SET_BUFF':
+    }
+    case 'SET_BUFF': {
       const { buff } = action.payload
       return {
         ...state,
         buff,
       }
-    case 'SET_MUNDUS':
+    }
+    case 'SET_MUNDUS': {
       const { mundusStone } = action.payload
       return {
         ...state,
         mundusStone,
       }
-    case 'SET_ITEMSET':
+    }
+    case 'SET_ITEMSET': {
       const { selectedSet }: { selectedSet: ISet } = action.payload
       const { armorType } = state
       const swapArmor =
@@ -66,12 +69,14 @@ export const setReducer = (state: IBuildState, action: IBuildAction) => {
           ? SetTab.armor
           : SetTab.jewelry,
       }
-    case 'SET_WEAPON_TYPE':
+    }
+    case 'SET_WEAPON_TYPE': {
       const { weaponType } = action.payload
       return {
         ...state,
         weaponType,
       }
+    }
     case 'SET_ARMOR_TYPE': {
       const { armorType } = action.payload
       return {

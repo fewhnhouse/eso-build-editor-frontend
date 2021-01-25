@@ -101,7 +101,7 @@ export default ({ context }: IBuffMenuProps) => {
     setSelectedQualities(qualities)
   }
 
-  const { data, error, loading } = useQuery<{ buffs: ISpecialBuff[] }, {}>(
+  const { data, error, loading } = useQuery<{ buffs: ISpecialBuff[] }>(
     GET_BUFFS,
     {
       variables: {

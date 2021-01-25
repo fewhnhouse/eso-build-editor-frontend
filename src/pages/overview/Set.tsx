@@ -31,7 +31,7 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
   return (
     <StyledFlex direction='row' align='flex-start' isMobile={isMobile}>
       <MenuCard isMobile={isMobile}>
-        <SetMenu collapsed={false} setCollapsed={() => {}} context={context} />
+        <SetMenu collapsed={false} context={context} />
       </MenuCard>
       {isMobile ? (
         ''

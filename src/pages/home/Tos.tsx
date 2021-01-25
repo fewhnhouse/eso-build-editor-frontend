@@ -116,12 +116,12 @@ export default () => {
       <h3 id='radpp'>Registry and data privacy policies</h3>
       <p>
         This is the GDPR compliant registry and data privacy policy for ESO
-        Build Editor (Application).{' '}
+        Build Editor (Application).
       </p>
       <b>1. Register holder and application administrators</b>
       <p>@RealPhoenix, @tietokonna some.email@here.com</p>
       <b>3. Name of the register </b>
-      <p>User register for Application  </p>
+      <p>User register for Application</p>
       <b>
         4. Legal basis and the purpose of collecting and handling the user
         information
@@ -134,7 +134,7 @@ export default () => {
         providing the user with an account and access rights to the restricted
         information within the Application. Basic usage of the Application does
         not require registration. Collected information is not used for
-        automated decision making, profiling or marketing.  {' '}
+        automated decision making, profiling or marketing.
       </p>
       <b>5. Contents of the register</b>
       <p>
@@ -143,7 +143,7 @@ export default () => {
         access rights to builds and raids of the user. The information saved in
         the register forms an Account for the Application. The Account will be
         held in the register until the user deletes the account or requests the
-        deletion of their account.  {' '}
+        deletion of their account.
       </p>
       <b>6. Regular sources of information </b>
       <p>
@@ -152,7 +152,7 @@ export default () => {
         access the extended features of the Application. Build and raid
         information for user is saved when user creates a build or a raid and
         saves it user is granted access rights to an existing build or a raid,
-        and these rights are saved{' '}
+        and these rights are saved.
       </p>
       <b>
         7. Regular extraditions and transfers of information outside the EU and
@@ -160,7 +160,7 @@ export default () => {
       </b>
       <p>
         Information is not regularly extradited or transferred outside the EU
-        and ETA areas, if not specifically agreed with the user.{' '}
+        and ETA areas, if not specifically agreed with the user.
       </p>
       <b>8. Register protection principles</b>
       <p>
@@ -180,7 +180,7 @@ export default () => {
         review and correction in the user’s account when logged in to the
         Application. No other information is being collected and user has
         complete control over their information, so no further requests for data
-        from the register are necessary.  {' '}
+        from the register are necessary.
       </p>
       <b>10. Other personal information related rights</b>
       <p>

@@ -27,7 +27,7 @@ const getActualSlot = (slot: Slot, barSelection: ISetSelection[]) => {
 }
 export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
-    case 'DROP_SET_ITEM':
+    case 'DROP_SET_ITEM': {
       const {
         set,
         slot,
@@ -202,6 +202,8 @@ export const setBarReducer = (state: IBuildState, action: IBuildAction) => {
       return {
         ...state,
       }
+    }
+
     default:
       return state
   }

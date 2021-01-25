@@ -72,7 +72,7 @@ export default () => {
     return <Spin />
   } else if (glyphQuery.error || traitQuery.error) {
     console.error(glyphQuery.error || traitQuery.error)
-    return <div>"Error"</div>
+    return <div>Error</div>
   } else if (glyphQuery.data && traitQuery.data) {
     const jewelryGlyphs: IModification[] = glyphQuery.data.modifications
     const jewelryTraits: IModification[] = traitQuery.data.modifications
