@@ -23,9 +23,12 @@ const MenuButton = styled(Button)`
   width: 40px;
 `
 const StyledPageHeader = styled(PageHeader)`
-  width: 100%;
+  width: calc(100% - 40px);
   padding: 0px 10px;
   display: flex;
+  .ant-page-header-heading {
+    width: 100%;
+  }
 `
 const StyledHeader = styled(Header)`
   display: flex;
