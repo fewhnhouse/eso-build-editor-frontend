@@ -148,13 +148,13 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
         ultimateOne: currentClassSkillLines?.items.find(
           (item) => item.id === state.ultimateOne?.skillline
         )
-          ? undefined
-          : ultimateOne,
+          ? ultimateOne
+          : state.ultimateOne,
         ultimateTwo: currentClassSkillLines?.items.find(
           (item) => item.id === state.ultimateTwo?.skillline
         )
-          ? undefined
-          : ultimateTwo,
+          ? ultimateTwo
+          : state.ultimateTwo,
         newBarOne: state!.newBarOne.map((item) => {
           const hasClassSkill = !!currentClassSkillLines?.items.find(
             (classLine) => classLine.id === item.skill?.skillline
