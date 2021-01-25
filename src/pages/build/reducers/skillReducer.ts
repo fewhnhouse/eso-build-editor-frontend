@@ -4,6 +4,7 @@ import {
   ISkillSelection,
 } from './../BuildStateContext'
 import { IBuildAction } from '../BuildStateContext'
+import { classSkillLines, skillLines } from '../Skills/skillLines'
 
 export const skillReducer = (state: IBuildState, action: IBuildAction) => {
   switch (action.type) {
@@ -130,20 +131,45 @@ export const skillReducer = (state: IBuildState, action: IBuildAction) => {
             ],
       }
     }
-    case 'SET_SKILLLINE':
+    case 'SET_SKILLLINE': {
       const { skillLine } = action.payload
       return {
         ...state,
         skillLine,
       }
-    case 'RESET_SKILLS':
-      const { ultimateOne, ultimateTwo } = defaultBuildState
+    }
+    case 'RESET_SKILLS': {
+      const { ultimateOne, ultimateTwo, esoClass } = defaultBuildState
+      const currentClassSkillLines = classSkillLines.find(
+        (line) => line.esoClass === esoClass
+      )
       return {
         ...state,
-        ultimateOne,
-        ultimateTwo,
+        ultimateOne: currentClassSkillLines?.items.find(
+          (item) => item.id === state.ultimateOne?.skillline
+        )
+          ? undefined
+          : ultimateOne,
+        ultimateTwo: currentClassSkillLines?.items.find(
+          (item) => item.id === state.ultimateTwo?.skillline
+        )
+          ? undefined
+          : ultimateTwo,
+        newBarOne: state!.newBarOne.map((item) => {
+          const hasClassSkill = !!currentClassSkillLines?.items.find(
+            (classLine) => classLine.id === item.skill?.skillline
+          )
+          return hasClassSkill ? { ...item, skill: undefined } : item
+        }),
+        newBarTwo: state!.newBarTwo.map((item) => {
+          const hasClassSkill = !!currentClassSkillLines?.items.find(
+            (classLine) => classLine.id === item.skill?.skillline
+          )
+          return hasClassSkill ? { ...item, skill: undefined } : item
+        }),
         skillLine: 0,
       }
+    }
     default:
       return state
   }

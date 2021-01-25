@@ -51,10 +51,12 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
       type,
       payload: selected ? '' : title,
     })
-    dispatch!({
-      type: 'RESET_SKILLS',
-      payload: {},
-    })
+    if (type === 'SET_CLASS') {
+      dispatch!({
+        type: 'RESET_SKILLS',
+        payload: {},
+      })
+    }
   }
 
   const confirm = () => {
