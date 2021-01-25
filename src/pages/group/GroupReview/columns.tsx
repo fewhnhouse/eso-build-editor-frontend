@@ -1,18 +1,28 @@
-import { Typography, Divider, Tooltip, Button, Tag } from 'antd'
+import { Typography, Divider, Tooltip, Tag } from 'antd'
 import Flex from '../../../components/Flex'
 import { Link } from 'react-router-dom'
-import Scrollbars from 'react-custom-scrollbars'
 import React from 'react'
 import { IBuild, ISetSelection } from '../../build/BuildStateContext'
 import { ISet } from '../../../components/gear/GearSlot'
 import styled from 'styled-components'
 import { ColumnFilterItem } from 'antd/lib/table/interface'
-import { SelectOutlined } from '@ant-design/icons'
 
 const Icon = styled.img`
-  width: ${(props) => props.theme.smallIcon.width};
-  height: ${(props) => props.theme.smallIcon.height};
+  width: 20px;
+  height: 20px;
   border-radius: ${(props) => props.theme.borderRadius};
+`
+
+const StyledText = styled(Typography.Text)`
+  display: block;
+  margin: 0px;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  &:hover {
+    color: black;
+  }
 `
 
 export const getMemberColumns = (members: string[]) =>
@@ -85,30 +95,7 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
       if (!build) {
         return null
       }
-      const {
-        frontbarSelection,
-        backbarSelection,
-        smallPieceSelection,
-        bigPieceSelection,
-        jewelrySelection,
-      } = build
-      const concat = frontbarSelection.concat(
-        backbarSelection,
-        smallPieceSelection,
-        bigPieceSelection,
-        jewelrySelection
-      )
 
-      const sets = concat.reduce((prev: ISet[], curr: ISetSelection) => {
-        const isExisting = prev.find(
-          (set) => set && curr.selectedSet && set.name === curr.selectedSet.name
-        )
-        if (!isExisting) {
-          return curr.selectedSet ? [...prev, curr.selectedSet] : prev
-        } else {
-          return prev
-        }
-      }, [] as ISet[])
       return build ? (
         isMobile ? (
           <Typography.Text style={{ margin: 0 }} strong>
@@ -127,48 +114,19 @@ export const getColumns = (isMobile: boolean, members: string[]) => [
                 style={{ width: '100%', maxWidth: 250 }}
               >
                 <Icon
+                  width={16}
+                  height={16}
                   src={`${process.env.REACT_APP_IMAGE_SERVICE}/classes/${build.esoClass}.png`}
                 />
                 <Divider type='vertical' style={{ margin: '0px 5px' }} />
 
-                <Icon
-                  src={`${process.env.REACT_APP_IMAGE_SERVICE}/races/${build.race}.png`}
-                />
-                <Divider type='vertical' style={{ margin: '0px 5px' }} />
-
-                <Typography.Title
-                  style={{
-                    margin: 0,
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                  }}
-                  level={4}
-                >
-                  {build.name}
-                </Typography.Title>
+                <Tooltip title='Go to build'>
+                  <Link to={`/builds/${build.id}`}>
+                    <StyledText>{build.name}</StyledText>
+                  </Link>
+                </Tooltip>
               </Flex>
-              <Tooltip title='Go to build'>
-                <Link to={`/builds/${build.id}`}>
-                  <Button ghost icon={<SelectOutlined />} type='primary' />
-                </Link>
-              </Tooltip>
             </Flex>
-            <Scrollbars autoHide style={{ width: '100%', height: '40px' }}>
-              <Flex
-                align='center'
-                style={{
-                  width: '100%',
-                  maxWidth: '310px',
-                }}
-              >
-                {sets.map((set) => (
-                  <Tag key={set.id} style={{ margin: 5 }}>
-                    {set.name}
-                  </Tag>
-                ))}
-              </Flex>
-            </Scrollbars>
           </Flex>
         )
       ) : null
