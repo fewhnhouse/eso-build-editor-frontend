@@ -54,7 +54,6 @@ const StyledListItem = styled(Item)`
 `
 
 const StyledTag = styled(Tag)`
-  min-width: 60px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,9 +104,8 @@ const StyledList = styled(List)`
   transition: opacity 0.2s ease-in-out;
 `
 
-const StyledTagDiv = styled.div`
+const StyledTagDiv = styled(Flex)`
   width: 140px;
-  display: flex;
 `
 
 const StyledItemNameDiv = styled.div`
@@ -414,24 +412,28 @@ const SetList = ({
           return (
             <animated.div style={style}>
               <StyledListItem onClick={handleClick(item)}>
-                <StyledTagDiv>
-                  <ArmorTypeTag
-                    hasHeavyArmor={item.has_heavy_armor === 1}
-                    hasMediumArmor={item.has_medium_armor === 1}
-                    hasLightArmor={item.has_light_armor === 1}
-                    traitsNeeded={item.traits_needed !== null}
-                  />
-                  <StyledTag color='geekblue'>{item.type}</StyledTag>
-                </StyledTagDiv>
-                <StyledItemNameDiv
-                  bold={
-                    state!.selectedSet &&
-                    item.setId === state!.selectedSet.setId
-                  }
-                >
-                  {item.name}
-                </StyledItemNameDiv>
-                {item.type !== 'Craftable' ? <HasPiecesTag set={item} /> : ''}
+                <Flex direction='column'>
+                  <StyledItemNameDiv
+                    bold={
+                      state!.selectedSet &&
+                      item.setId === state!.selectedSet.setId
+                    }
+                  >
+                    {item.name}
+                  </StyledItemNameDiv>
+                  <Flex style={{ width: '100%' }} justify='space-between'>
+                    <StyledTagDiv>
+                      <ArmorTypeTag
+                        hasHeavyArmor={item.has_heavy_armor === 1}
+                        hasMediumArmor={item.has_medium_armor === 1}
+                        hasLightArmor={item.has_light_armor === 1}
+                        traitsNeeded={item.traits_needed !== null}
+                      />
+                      <StyledTag color='geekblue'>{item.type}</StyledTag>
+                    </StyledTagDiv>
+                  </Flex>
+                </Flex>
+                <HasPiecesTag set={item} />
               </StyledListItem>
             </animated.div>
           )

@@ -9,12 +9,8 @@ const IconImg = styled.img`
 `
 
 const HasPiecesDiv = styled.div`
-  display: inline-block;
-  width: 100px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
+  display: flex;
+  justify-content: flex-end;
 `
 
 interface IHasPiecesTag {
