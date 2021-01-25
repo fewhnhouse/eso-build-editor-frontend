@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import { AppContext } from '../../components/AppContainer'
 import Scrollbars from 'react-custom-scrollbars'
 import { Helmet } from 'react-helmet'
+import { useMediaQuery } from 'react-responsive'
 
 const StyledFlex = styled(Flex)`
   height: calc(100vh - 100px);
@@ -56,6 +57,7 @@ const setContent = (bonusArray: (string | null)[]) =>
 const SingleSet = ({ match }: RouteComponentProps<any>) => {
   const { id } = match.params
   const [, appDispatch] = useContext(AppContext)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   const { data, loading } = useQuery(GET_SETS_BY_ID, {
     variables: { id: id },
@@ -87,7 +89,7 @@ const SingleSet = ({ match }: RouteComponentProps<any>) => {
         <Scrollbars autoHide>
           <StyledFlex direction='row' align='flex-start'>
             <Flex direction='column' fluid>
-              <StyledCard>
+              <StyledCard bodyStyle={{ padding: isMobile ? 0 : 24 }}>
                 <GearCard size='big' set={set} setSelectionCount={0} />
               </StyledCard>
             </Flex>
