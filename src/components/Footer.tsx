@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Flex from './Flex'
 import { useMediaQuery } from 'react-responsive'
-import { Layout, Divider, Popconfirm, Button } from 'antd'
+import { Layout, Divider, Popconfirm, Button, message } from 'antd'
 import Scrollbars from 'react-custom-scrollbars'
 import InformationCard from './InformationCard'
 import RevisionDrawer from './RevisionDrawer'
@@ -14,7 +14,10 @@ import {
   EditOutlined,
   CopyOutlined,
   InteractionOutlined,
+  LinkOutlined,
 } from '@ant-design/icons'
+import { useParams } from 'react-router'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const { Footer } = Layout
 
@@ -83,6 +86,7 @@ export default ({
   loading,
   saved,
 }: IFooterProps) => {
+  const { id } = useParams<{ id: string }>()
   const [drawerVisible, setDrawerVisible] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 800 })
 
@@ -119,6 +123,16 @@ export default ({
             >
               Revision
             </ActionButton>
+          )}
+          {isMobile && (
+            <CopyToClipboard
+              text={`${window.location.origin}/${type}s/${id}`}
+              onCopy={() => message.success('Copied to clipboard.')}
+            >
+              <ActionButton icon={<LinkOutlined />} size='large'>
+                Link
+              </ActionButton>
+            </CopyToClipboard>
           )}
           {!isMobile && (
             <Popconfirm

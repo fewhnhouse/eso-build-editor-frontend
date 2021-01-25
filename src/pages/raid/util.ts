@@ -166,7 +166,7 @@ export const handleCopy = async (
         data: { raids: { connect: { id: createdRaid.data.createRaid.id } } },
       },
     })
-    return raid
+    return createdRaid
   }
 }
 

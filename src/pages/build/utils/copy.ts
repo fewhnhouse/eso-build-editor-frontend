@@ -183,6 +183,6 @@ export const handleCopy = async (
         data: { builds: { connect: { id: createdBuild.data.createBuild.id } } },
       },
     })
-    return build
+    return createdBuild
   }
 }

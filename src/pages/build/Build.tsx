@@ -274,7 +274,7 @@ export default ({ build, pageIndex, path, edit = false }: IBuildProps) => {
           'builds'
         )
       )
-      setRedirect(updateBuildResult.data.updateBuild.id)
+      setRedirect(createBuildResult.data.createBuild.id)
     }
   }, [
     createBuildResult.data,
