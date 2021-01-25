@@ -67,7 +67,7 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
 
   return !selected && state!.esoClass !== '' && type === 'SET_CLASS' ? (
     <Popconfirm
-      title='Are you sure you want to swap classes? This will reset all your skills.'
+      title='Are you sure you want to swap classes? This will reset your class skills.'
       onConfirm={confirm}
       onCancel={cancel}
       okText='Yes'
