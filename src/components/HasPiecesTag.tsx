@@ -3,8 +3,8 @@ import { ISet } from './gear/GearSlot'
 import styled from 'styled-components'
 
 const IconImg = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   margin-right: ${(props) => props.theme.margins.mini};
 `
 

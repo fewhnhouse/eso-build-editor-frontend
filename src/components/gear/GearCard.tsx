@@ -1,9 +1,11 @@
 import React from 'react'
-import { Card, Tag, Typography } from 'antd'
+import { Card, Divider, Tag, Typography } from 'antd'
 import styled from 'styled-components'
 import { ISet } from './GearSlot'
 import Flex from '../Flex'
 import { totalBonus } from './util'
+import { PushpinOutlined } from '@ant-design/icons'
+import HasPiecesTag from '../HasPiecesTag'
 
 const StyledCard = styled(Card)`
   display: 'flex';
@@ -75,13 +77,15 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
   return (
     <StyledCard
       title={
-        <Flex direction='column' justify='space-between' align='center'>
-          {size === 'big' ? (
-            <Typography.Title level={3}>{set.name}</Typography.Title>
-          ) : (
-            <Typography.Title level={4}>{set.name}</Typography.Title>
-          )}
-          <Flex align='center' justify='flex-end'>
+        <Flex direction='column' justify='space-between' align='flex-start'>
+          <Typography.Title level={4}>
+            <Flex align='center'>
+              {set.name}
+              <Divider type='vertical' />
+              <HasPiecesTag set={set} />
+            </Flex>
+          </Typography.Title>
+          <Flex style={{ marginBottom: 5 }}>
             <ArmorTypeTag
               hasHeavyArmor={set.has_heavy_armor === 1}
               hasMediumArmor={set.has_medium_armor === 1}
@@ -89,7 +93,21 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
               traitsNeeded={set.traits_needed !== null}
             />
             <StyledTag color='#1890ff'>{set.type}</StyledTag>
+            {set.type === 'Craftable' && (
+              <StyledTag color='blue'>Traits : {set.traits_needed}</StyledTag>
+            )}
           </Flex>
+          {size === 'big' && (
+            <Flex>
+              <>
+                {set.location?.split(',')?.map((el) => (
+                  <StyledTag key={el} color='orange'>
+                    <PushpinOutlined /> {el.trim()}
+                  </StyledTag>
+                ))}
+              </>
+            </Flex>
+          )}
         </Flex>
       }
     >

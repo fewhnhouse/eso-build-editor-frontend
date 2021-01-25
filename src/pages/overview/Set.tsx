@@ -41,7 +41,7 @@ export default ({ context, selectedSet, isMobile }: ISetProps) => {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-start',
           }}
         >
           {selectedSet ? (

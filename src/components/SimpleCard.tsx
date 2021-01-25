@@ -9,6 +9,7 @@ import { EditOutlined, SelectOutlined } from '@ant-design/icons'
 const BuildCard = styled(Card)`
   margin: ${(props) => `0px ${props.theme.margins.small}`};
   width: 300px;
+  min-width: 300px;
   height: 170px;
   display: flex;
   flex-direction: column;
