@@ -85,7 +85,7 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
               <HasPiecesTag set={set} />
             </Flex>
           </Typography.Title>
-          <Flex style={{ marginBottom: 5 }}>
+          <Flex>
             <ArmorTypeTag
               hasHeavyArmor={set.has_heavy_armor === 1}
               hasMediumArmor={set.has_medium_armor === 1}
@@ -98,14 +98,12 @@ export default ({ set, setSelectionCount, size }: IGearCard) => {
             )}
           </Flex>
           {size === 'big' && (
-            <Flex>
-              <>
-                {set.location?.split(',')?.map((el) => (
-                  <StyledTag key={el} color='orange'>
-                    <PushpinOutlined /> {el.trim()}
-                  </StyledTag>
-                ))}
-              </>
+            <Flex wrap>
+              {set.location?.split(',')?.map((el) => (
+                <StyledTag style={{ marginTop: 4 }} key={el} color='orange'>
+                  <PushpinOutlined /> {el.trim()}
+                </StyledTag>
+              ))}
             </Flex>
           )}
         </Flex>
