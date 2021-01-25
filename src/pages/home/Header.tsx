@@ -9,6 +9,7 @@ const { Title } = Typography
 
 const HeaderContainer = styled(Flex)`
   padding: 0px 10px;
+  width: calc(100% - 40px);
 `
 
 const Header = styled(Title)`
@@ -32,7 +33,7 @@ const SectionHeader = ({
   return (
     <>
       <HeaderContainer fluid justify='space-between'>
-        <Flex direction='column'>
+        <Flex style={{ width: '100%' }} direction='column'>
           <Header level={3}>{title}</Header>
           <Link to={allPath}>See all</Link>
         </Flex>
