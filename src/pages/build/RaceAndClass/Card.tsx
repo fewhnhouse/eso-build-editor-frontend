@@ -47,16 +47,17 @@ const MyCard = ({ title, imageSource, type, description }: ICardProps) => {
   const selected =
     type === 'SET_CLASS' ? state!.esoClass === title : state!.race === title
   const handleClick = () => {
-    dispatch!({
-      type,
-      payload: selected ? '' : title,
-    })
+    console.log('handleclick reset skills')
     if (type === 'SET_CLASS') {
       dispatch!({
         type: 'RESET_SKILLS',
         payload: {},
       })
     }
+    dispatch!({
+      type,
+      payload: selected ? '' : title,
+    })
   }
 
   const confirm = () => {
