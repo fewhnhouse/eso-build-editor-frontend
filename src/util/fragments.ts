@@ -111,6 +111,7 @@ export const reducedBuild = gql`
     name
     published
     race
+    role
     description
     health
     magicka
@@ -178,6 +179,7 @@ export const build = gql`
     name
     published
     race
+    role
     description
     health
     magicka
