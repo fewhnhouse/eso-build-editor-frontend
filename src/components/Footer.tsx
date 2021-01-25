@@ -176,6 +176,7 @@ export default ({
       {(type === 'build' || type === 'raid') &&
         (state as IBuildState | IRaidState).revision && (
           <RevisionDrawer
+            isBuild={type === 'build'}
             //@ts-ignore
             revisionId={(state as IBuildState | IRaidState).revision.id}
             visible={drawerVisible}
