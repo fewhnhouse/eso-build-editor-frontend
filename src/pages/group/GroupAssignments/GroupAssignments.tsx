@@ -86,6 +86,7 @@ const MemberSelector = ({ id }: { id: string }) => {
         onChange={handleSelectChange}
         size='large'
         mode='multiple'
+        maxTagCount='responsive'
       >
         {members.map((member) => (
           <Option value={member} key={member}>
