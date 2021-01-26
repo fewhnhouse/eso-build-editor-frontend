@@ -49,6 +49,7 @@ export default () => {
             >
               {classBuilds.map((groupBuild) => (
                 <BuildCard
+                  hasExpansion={false}
                   key={groupBuild.build.id}
                   item={groupBuild.build}
                   draggable={false}

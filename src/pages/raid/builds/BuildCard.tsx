@@ -64,15 +64,23 @@ const StyledLink = styled(Link)`
 `
 
 const StyledTag = styled(Tag)`
+  max-width: 100px;
   margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const StyledTitle = styled(Typography.Title)`
   max-width: 350px;
   width: 80%;
   overflow: hidden;
+  text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+`
+
+const SetOverview = styled.div`
+  height: 55px;
 `
 
 const MoreButton = styled(Button)`
@@ -149,9 +157,15 @@ const ShortInfo = ({
 interface IBuildCardProps {
   item: IBuild
   role?: IRole
+  hasExpansion?: boolean
   additionalContent?: React.ReactNode
 }
-const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
+const BuildCard = ({
+  item,
+  role,
+  additionalContent,
+  hasExpansion = true,
+}: IBuildCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [, dispatch] = useContext(RaidContext)
   const handleExpandClick = () => {
@@ -201,7 +215,7 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
     <StyledCard hoverable>
       <div>
         <Flex direction='row' justify='space-between'>
-          <StyledTitle level={3}>{item.name}</StyledTitle>
+          <StyledTitle level={4}>{item.name}</StyledTitle>
           {role ? (
             <Button
               danger
@@ -238,24 +252,26 @@ const BuildCard = ({ item, role, additionalContent }: IBuildCardProps) => {
         {!isExpanded && (
           <>
             <Divider />
-            {sets.map((set) => (
-              <Popover
-                style={{ padding: 0, margin: 0 }}
-                key={set.id}
-                content={
-                  <GearCard size='normal' set={set} setSelectionCount={0} />
-                }
-              >
-                <StyledTag>{set.name}</StyledTag>
-              </Popover>
-            ))}
+            <SetOverview>
+              {sets.map((set) => (
+                <Popover
+                  style={{ padding: 0, margin: 0 }}
+                  key={set.id}
+                  content={
+                    <GearCard size='normal' set={set} setSelectionCount={0} />
+                  }
+                >
+                  <StyledTag>{set.name}</StyledTag>
+                </Popover>
+              ))}
+            </SetOverview>
           </>
         )}
         {isExpanded && (
           <ExpandedInformation setsCount={setsCount} id={item.id} />
         )}
       </div>
-      {!isMobile && (
+      {!isMobile && hasExpansion && (
         <MoreButton
           onClick={handleExpandClick}
           icon={isExpanded ? <MinusOutlined /> : <PlusOutlined />}
